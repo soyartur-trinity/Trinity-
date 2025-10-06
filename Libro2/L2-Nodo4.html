@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amor Sin Amante Ni Amado</title>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #0a0000, #000);
+            color: #fff;
+            font-family: 'Palatino', serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: none;
+        }
+        .love-field {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .love-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,200,200,0.1), transparent);
+            animation: love-expand 10s infinite linear;
+            animation-delay: calc(var(--delay) * 2.5s);
+        }
+        @keyframes love-expand {
+            0% { width: 0; height: 0; opacity: 0.8; }
+            100% { width: 200vw; height: 200vh; opacity: 0; }
+        }
+        .love-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+        .no-lover {
+            font-size: 1.5em;
+            margin: 20px 0;
+            opacity: 0;
+            animation: appear-disappear 12s infinite;
+            animation-delay: calc(var(--phase) * 4s);
+            letter-spacing: 0.3em;
+        }
+        @keyframes appear-disappear {
+            0%, 70%, 100% { opacity: 0; }
+            75%, 85% { opacity: 0.6; }
+        }
+        .love-itself {
+            font-size: 3em;
+            letter-spacing: 0.5em;
+            animation: love-pulse 6s infinite ease-in-out;
+        }
+        @keyframes love-pulse {
+            0%, 100% { 
+                opacity: 0.3; 
+                transform: scale(0.95);
+                color: rgba(255,200,200,0.8);
+            }
+            50% { 
+                opacity: 0.7; 
+                transform: scale(1.05);
+                color: rgba(255,255,255,1);
+            }
+        }
+        .love-paradox {
+            position: absolute;
+            bottom: 15%;
+            width: 100%;
+            text-align: center;
+            font-style: italic;
+            opacity: 0.25;
+            letter-spacing: 0.2em;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="love-field">
+        <div class="love-wave" style="--delay: 0;"></div>
+        <div class="love-wave" style="--delay: 1;"></div>
+        <div class="love-wave" style="--delay: 2;"></div>
+        <div class="love-wave" style="--delay: 3;"></div>
+        <div class="love-text">
+            <div class="no-lover" style="--phase: 0;">Sin amante</div>
+            <div class="love-itself">AMOR</div>
+            <div class="no-lover" style="--phase: 1;">Sin amado</div>
+            <div class="no-lover" style="--phase: 2;">Amándose a sí mismo</div>
+        </div>
+        <div class="love-paradox">
+            El amor que no necesita objeto · El amor que no tiene sujeto<br>
+            El amor como la sustancia misma del vacío
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        let soundInitialized = false;
+
+        async function initSound() {
+            if (soundInitialized) return;
+            await Tone.start();
+
+            const reverb = new Tone.Reverb({ decay: 12, wet: 0.5 }).toDestination();
+            const vibrato = new Tone.Vibrato(5, 0.1).connect(reverb); // Vibrato para los sonidos melódicos
+
+            // 1. La Frecuencia de la Coherencia (AFINACIÓN BINAURAL)
+            const baseFreq = 120; // Frecuencia elevada para mayor percepción
+            const binauralBeat = 8; // 8 Hz
+            // Conexión directa a la reverb, evitando el vibrato para mayor pureza
+            const oscL = new Tone.Oscillator(baseFreq, "sine").connect(new Tone.Panner(-1).connect(reverb)).start();
+            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").connect(new Tone.Panner(1).connect(reverb)).start();
+            // Volumen aumentado para mayor presencia
+            oscL.volume.value = -32;
+            oscR.volume.value = -32;
+
+            // 2. Las Olas del Amor (Ahora conectadas al vibrato)
+            const waveSynth = new Tone.PolySynth(Tone.FMSynth, {
+                harmonicity: 1.5,
+                modulationIndex: 2,
+                envelope: { attack: 4, release: 6 },
+                volume: -20
+            }).connect(vibrato); // Conectado al vibrato para calidez
+            const waveNotes = ["C3", "G3", "C4", "E4"];
+            new Tone.Loop(time => {
+                waveNotes.forEach((note, index) => {
+                    waveSynth.triggerAttackRelease(note, "10s", `+${index * 2.5}`);
+                });
+            }, "10s").start(0);
+
+            // 3. El Latido del Corazón Cósmico
+            const heartbeatSynth = new Tone.FMSynth({
+                harmonicity: 2,
+                modulationIndex: 10,
+                envelope: { attack: 0.1, decay: 0.2, release: 0.5 },
+                volume: -15
+            }).connect(reverb);
+            new Tone.Loop(time => {
+                heartbeatSynth.triggerAttackRelease("C5", "8n", time + 3);
+            }, "6s").start(0);
+
+            // 4. El Coro de la Revelación (Ahora conectado al vibrato)
+            const choirSynth = new Tone.PolySynth(Tone.AMSynth, {
+                harmonicity: 1.01,
+                envelope: { attack: 2, release: 3 },
+                volume: -24
+            }).connect(vibrato); // Conectado al vibrato para calidez
+            const choirPart = new Tone.Part((time, value) => {
+                choirSynth.triggerAttackRelease(value.chord, "5s", time);
+            }, [
+                { time: 12 * 0.75, chord: ["C4", "G4"] },
+                { time: (12 * 0.75) + 4, chord: ["D4", "A4"] },
+                { time: (12 * 0.75) + 8, chord: ["E4", "B4"] }
+            ]).start(0);
+            choirPart.loop = true;
+            choirPart.loopEnd = 12 + 8;
+
+            Tone.Transport.start();
+            soundInitialized = true;
+            console.log("Sinfonía del Amor Incondicional (Afinada) ha comenzado.");
+        }
+
+        document.body.addEventListener('click', initSound, { once: true });
+    </script>
+    </body>
+</html>

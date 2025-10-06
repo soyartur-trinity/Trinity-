@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiencia Sin Experimentador</title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            cursor: none;
+        }
+        .experience-flow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sensation {
+            position: absolute;
+            padding: 20px;
+            opacity: 0;
+            animation: sensation-pass 12s infinite ease-in-out;
+            animation-delay: calc(var(--delay) * 2s);
+            font-size: 1.1em;
+            letter-spacing: 0.2em;
+        }
+        @keyframes sensation-pass {
+            0% { 
+                opacity: 0; 
+                transform: translate(var(--startX), var(--startY)) scale(0.5);
+            }
+            50% { 
+                opacity: 0.8; 
+                transform: translate(0, 0) scale(1);
+            }
+            100% { 
+                opacity: 0; 
+                transform: translate(var(--endX), var(--endY)) scale(0.5);
+            }
+        }
+        .no-experiencer {
+            position: relative;
+            z-index: 10;
+            font-size: 2em;
+            letter-spacing: 0.5em;
+            text-align: center;
+            animation: center-pulse 8s infinite ease-in-out;
+        }
+        @keyframes center-pulse {
+            0%, 100% { 
+                opacity: 0.2; 
+                transform: scale(0.9);
+            }
+            50% { 
+                opacity: 0.5; 
+                transform: scale(1);
+            }
+        }
+        .experience-note {
+            position: absolute;
+            bottom: 10%;
+            width: 100%;
+            text-align: center;
+            font-style: italic;
+            opacity: 0.3;
+            font-size: 0.9em;
+            letter-spacing: 0.3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="experience-flow">
+        <div class="sensation" style="--delay: 0; --startX: -250px; --startY: -150px; --endX: 250px; --endY: 150px;">Ver ocurre</div>
+        <div class="sensation" style="--delay: 1; --startX: 250px; --startY: -180px; --endX: -250px; --endY: 180px;">Oír sucede</div>
+        <div class="sensation" style="--delay: 2; --startX: -200px; --startY: 200px; --endX: 200px; --endY: -200px;">Sentir surge</div>
+        <div class="sensation" style="--delay: 3; --startX: 300px; --startY: 80px; --endX: -300px; --endY: -80px;">Pensar acontece</div>
+        <div class="sensation" style="--delay: 4; --startX: 0px; --startY: -250px; --endX: 0px; --endY: 250px;">Dolor aparece</div>
+        <div class="sensation" style="--delay: 5; --startX: -280px; --startY: 0px; --endX: 280px; --endY: 0px;">Placer fluye</div>
+        <div class="no-experiencer">
+            NADIE<br>
+            experimenta
+        </div>
+    </div>
+    <div class="experience-note">
+        La experiencia es · No hay experimentador
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        let soundInitialized = false;
+
+        async function initSound() {
+            if (soundInitialized) return;
+            await Tone.start();
+
+            const reverb = new Tone.Reverb({ decay: 10, wet: 0.6 }).toDestination();
+
+            // 1. El Espacio de la Observación (Binaural Alpha con Pulso) - VOLUMEN REDUCIDO
+            const baseFreq = 90;
+            const binauralBeat = 10; // 10 Hz = Onda Alpha
+            const oscL = new Tone.Oscillator(baseFreq, "sine").toDestination();
+            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").toDestination();
+            const pannerL = new Tone.Panner(-1).connect(reverb);
+            const pannerR = new Tone.Panner(1).connect(reverb);
+            oscL.connect(pannerL);
+            oscR.connect(pannerR);
+            
+            // LFO para el pulso del volumen del drone, con valores mucho más bajos
+            const volumeLFO = new Tone.LFO({
+                frequency: "8s",
+                min: -50, // Mucho más silencioso
+                max: -42  // El pico es ahora más bajo que el mínimo anterior
+            }).start();
+            volumeLFO.connect(oscL.volume);
+            volumeLFO.connect(oscR.volume);
+            
+            oscL.start();
+            oscR.start();
+
+            // 2. El Flujo de las Sensaciones (NUEVO INSTRUMENTO Y LÓGICA)
+            const sensationData = [
+                { note: "C5", pan: [-1, 1] },
+                { note: "E5", pan: [1, -1] },
+                { note: "G5", pan: [-0.8, 0.8] },
+                { note: "A5", pan: [0.9, -0.9] },
+                { note: "C6", pan: [0, 0] },
+                { note: "D6", pan: [-1, 1] }
+            ];
+
+            // Crear un sintetizador de campana de cristal y un panner para cada sensación
+            const sensations = sensationData.map(data => {
+                const synth = new Tone.FMSynth({
+                    harmonicity: 3.01,
+                    modulationIndex: 14,
+                    envelope: { attack: 0.01, decay: 2, sustain: 0.1, release: 2 },
+                    volume: -10 // Volumen aumentado para que se destaque
+                }).toDestination();
+                const panner = new Tone.Panner(data.pan[0]).connect(reverb);
+                synth.connect(panner);
+                return { synth, panner, data };
+            });
+
+            // Programar la parte musical con una lógica clara
+            const sensationPart = new Tone.Part((time, value) => {
+                // Tocar la nota
+                value.synth.triggerAttackRelease(value.data.note, "4s", time);
+                // Iniciar el paneo
+                value.panner.pan.setValueAtTime(value.data.pan[0], time);
+                value.panner.pan.linearRampToValueAtTime(value.data.pan[1], time + 10); // Ramp más corto para que sea perceptible
+            }, []).start(0);
+
+            sensationPart.loop = true;
+            sensationPart.loopEnd = 14; // Ciclo total
+
+            sensations.forEach((s, index) => {
+                sensationPart.add(index * 2, s); // Stagger the start of each sensation
+            });
+
+            Tone.Transport.start();
+            soundInitialized = true;
+            console.log("El Río de la Experiencia (Re-orquestado) ha sido activado.");
+        }
+
+        document.body.addEventListener('click', initSound, { once: true });
+    </script>
+    </body>
+</html>

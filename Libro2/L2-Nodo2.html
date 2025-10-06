@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conocimiento Sin Conocedor</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, #000, #0a0a0a, #000);
+            color: #fff;
+            font-family: 'Georgia', serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            overflow: hidden;
+            cursor: none;
+        }
+        .knowledge-void {
+            max-width: 700px;
+            text-align: center;
+        }
+        .knowing {
+            margin: 50px 0;
+            font-size: 1.1em;
+            letter-spacing: 0.3em;
+            opacity: 0;
+            animation: knowing-emergence calc(8s + var(--delay) * 1s) infinite;
+            animation-delay: calc(var(--delay) * 1.2s);
+        }
+        @keyframes knowing-emergence {
+            0%, 70%, 100% { 
+                opacity: 0; 
+                transform: translateY(20px);
+            }
+            75%, 85% { 
+                opacity: 0.5; 
+                transform: translateY(0);
+            }
+        }
+        .no-knower {
+            font-size: 2.5em;
+            margin: 80px 0;
+            letter-spacing: 0.8em;
+            animation: dissolve-knower 10s infinite ease-in-out;
+        }
+        @keyframes dissolve-knower {
+            0%, 100% { 
+                opacity: 0.1; 
+                letter-spacing: 0.8em;
+                filter: blur(3px);
+            }
+            50% { 
+                opacity: 0.6; 
+                letter-spacing: 0.4em;
+                filter: blur(0);
+            }
+        }
+        .wisdom-particles {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: wisdom-float 15s infinite linear;
+            animation-delay: calc(var(--delay) * 3s);
+        }
+        @keyframes wisdom-float {
+            0% { 
+                opacity: 0; 
+                transform: translateY(100vh) translateX(0);
+            }
+            50% { 
+                opacity: 0.3; 
+                transform: translateY(50vh) translateX(calc(var(--drift) * 50px));
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(0) translateX(calc(var(--drift) * 100px));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wisdom-particles" style="left: 10%; --delay: 0; --drift: 1;"></div>
+    <div class="wisdom-particles" style="left: 30%; --delay: 1; --drift: -1;"></div>
+    <div class="wisdom-particles" style="left: 50%; --delay: 2; --drift: 0.5;"></div>
+    <div class="wisdom-particles" style="left: 70%; --delay: 3; --drift: -0.5;"></div>
+    <div class="wisdom-particles" style="left: 90%; --delay: 4; --drift: 1;"></div>
+
+    <div class="knowledge-void">
+        <div class="knowing" style="--delay: 0;">El saber surge</div>
+        <div class="knowing" style="--delay: 1;">Sin alguien que sepa</div>
+        <div class="knowing" style="--delay: 2;">La comprensión ocurre</div>
+        <div class="knowing" style="--delay: 3;">Sin mente que comprenda</div>
+        <div class="no-knower">∅</div>
+        <div class="knowing" style="--delay: 4;">Como el amanecer</div>
+        <div class="knowing" style="--delay: 5;">No necesita testigo</div>
+        <div class="knowing" style="--delay: 6;">Para iluminar</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        let soundInitialized = false;
+
+        async function initSound() {
+            if (soundInitialized) return;
+            await Tone.start();
+
+            const reverb = new Tone.Reverb({ decay: 10, wet: 0.5 }).toDestination();
+
+            // 1. El Campo de la Intuición (Binaural Theta)
+            const baseFreq = 80;
+            const binauralBeat = 7; // 7 Hz = Onda Theta
+            const oscL = new Tone.Oscillator(baseFreq, "sine").connect(new Tone.Panner(-1).connect(reverb)).start();
+            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").connect(new Tone.Panner(1).connect(reverb)).start();
+            oscL.volume.value = -36;
+            oscR.volume.value = -36;
+
+            // 2. La Ascensión de la Sabiduría
+            const particleSynth = new Tone.PluckSynth({
+                attackNoise: 0.2,
+                dampening: 5000,
+                resonance: 0.95,
+                volume: -18
+            }).connect(reverb);
+            const particleArpeggio = ["C5", "E5", "G5", "C6"];
+            const particlePart = new Tone.Part((time, value) => {
+                particleSynth.triggerAttack(value.note, time);
+            }, []).start(0);
+            particlePart.loop = true;
+            particlePart.loopEnd = "15s";
+            
+            for (let i = 0; i < 5; i++) {
+                const particleDelay = i * 3;
+                particleArpeggio.forEach((note, noteIndex) => {
+                    particlePart.add(particleDelay + noteIndex * 0.5, { note });
+                });
+            }
+
+            // 3. El Sonido de la Vacuidad (∅)
+            const voidSynth = new Tone.NoiseSynth({
+                noise: { type: 'brown' },
+                envelope: { attack: 4, decay: 1, sustain: 0.5, release: 4 },
+                volume: -25
+            }).connect(reverb);
+            new Tone.Loop(time => {
+                voidSynth.triggerAttackRelease("5s", time + 5);
+            }, "10s").start(0);
+
+            // 4. La Claridad del Saber
+            const knowingSynth = new Tone.PolySynth(Tone.AMSynth, {
+                envelope: { attack: 2, release: 2 },
+                volume: -20
+            }).connect(reverb);
+            const knowingNotes = ["C4", "E4", "G4", "A4", "C5", "E5", "G5"];
+            const knowingPart = new Tone.Part((time, value) => {
+                knowingSynth.triggerAttackRelease(value.note, `${(8 + value.index) * 0.15}s`, time);
+            }, []).start(0);
+            knowingPart.loop = true;
+            knowingPart.loopEnd = "15s"; // Ciclo largo para abarcar todas las animaciones
+
+            knowingNotes.forEach((note, index) => {
+                const animationDuration = 8 + index;
+                const appearanceTime = animationDuration * 0.75;
+                const totalDelay = index * 1.2;
+                knowingPart.add(totalDelay + appearanceTime, { note, index });
+            });
+
+
+            Tone.Transport.start();
+            soundInitialized = true;
+            console.log("La Sinfonía del Saber Emergente ha comenzado.");
+        }
+
+        document.body.addEventListener('click', initSound, { once: true });
+    </script>
+    </body>
+</html>
