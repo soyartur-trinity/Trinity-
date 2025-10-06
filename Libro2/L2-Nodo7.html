@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Ojo Que No Puede Verse</title>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #000, #050505);
+            color: #fff;
+            font-family: 'Garamond', serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: none;
+        }
+        .vision-paradox {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .eye-symbol {
+            font-size: 8em;
+            animation: eye-pulse 12s infinite ease-in-out;
+            opacity: 0.1;
+        }
+        @keyframes eye-pulse {
+            0%, 100% { opacity: 0.1; transform: scale(1) rotate(0deg); }
+            25% { opacity: 0.3; transform: scale(1.1) rotate(90deg); }
+            50% { opacity: 0.2; transform: scale(0.9) rotate(180deg); }
+            75% { opacity: 0.4; transform: scale(1.05) rotate(270deg); }
+        }
+        .seeing-text {
+            position: absolute;
+            font-size: 1em;
+            letter-spacing: 0.3em;
+            opacity: 0;
+            animation: text-emerge 15s infinite;
+            animation-delay: calc(var(--delay) * 2s);
+        }
+        @keyframes text-emerge {
+            0%, 85%, 100% { opacity: 0; transform: scale(0.8); }
+            88%, 95% { opacity: 0.5; transform: scale(1); }
+        }
+        .impossible-vision {
+            position: absolute;
+            bottom: 15%;
+            width: 100%;
+            text-align: center;
+            font-style: italic;
+            line-height: 2;
+            opacity: 0;
+            animation: final-truth 20s infinite;
+        }
+        @keyframes final-truth {
+            0%, 80%, 100% { opacity: 0; }
+            85%, 95% { opacity: 0.3; }
+        }
+        .vision-layer {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 50%;
+            animation: layer-rotate 30s infinite linear;
+            animation-direction: var(--direction);
+        }
+        @keyframes layer-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="vision-paradox">
+        <div class="vision-layer" style="--direction: normal;"></div>
+        <div class="vision-layer" style="--direction: reverse; width: 400px; height: 400px;"></div>
+        <div class="vision-layer" style="--direction: normal; width: 500px; height: 500px;"></div>
+        <div class="eye-symbol">👁</div>
+        <div class="seeing-text" style="top: 10%; left: 50%; transform: translateX(-50%); --delay: 0;">Ve todo</div>
+        <div class="seeing-text" style="top: 30%; left: 10%; --delay: 1;">Excepto</div>
+        <div class="seeing-text" style="top: 30%; right: 10%; --delay: 2;">A sí mismo</div>
+        <div class="seeing-text" style="bottom: 30%; left: 5%; --delay: 3;">La visión</div>
+        <div class="seeing-text" style="bottom: 30%; right: 5%; --delay: 4;">Sin vidente</div>
+        <div class="impossible-vision">
+            El ojo no puede verse<br>
+            Porque ES la visión misma<br>
+            <br>
+            Tú no puedes verte<br>
+            Porque ERES la consciencia misma<br>
+            <br>
+            No hay nadie observando<br>
+            Solo observación ocurriendo
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        let soundInitialized = false;
+
+        async function initSound() {
+            if (soundInitialized) return;
+            await Tone.start();
+
+            const reverb = new Tone.Reverb({ decay: 15, wet: 0.5 }).toDestination();
+
+            // 1. El Campo de la Pura Observación (Binaural Gamma)
+            const baseFreq = 100;
+            const binauralBeat = 40; // 40 Hz
+            const oscL = new Tone.Oscillator(baseFreq, "sine").connect(new Tone.Panner(-1).connect(reverb));
+            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").connect(new Tone.Panner(1).connect(reverb));
+            oscL.volume.value = -Infinity; oscR.volume.value = -Infinity;
+            oscL.start(); oscR.start();
+            oscL.volume.rampTo(-40, 3); oscR.volume.rampTo(-40, 3);
+
+            // 2. El Giro de la Percepción
+            const choir = new Tone.PolySynth(Tone.FMSynth, {
+                harmonicity: 1.5,
+                modulationIndex: 1.2,
+                envelope: { attack: 6, release: 6 },
+                volume: -18
+            }).toDestination();
+            const panner = new Tone.AutoPanner("30s").connect(reverb).start();
+            choir.connect(panner);
+            choir.triggerAttack(["C3", "G3", "C4"]);
+
+            // 3. El Pulso del Ojo
+            const eyePulseSynth = new Tone.MembraneSynth({
+                pitchDecay: 0.05, octaves: 4,
+                envelope: { attack: 0.01, decay: 2, sustain: 0.1, release: 4 },
+                volume: -12
+            }).connect(reverb);
+            new Tone.Loop(time => {
+                eyePulseSynth.triggerAttackRelease("C1", "4s", time);
+            }, "12s").start(0);
+
+            // 4. Los Susurros de la Sabiduría
+            const whisperSynth = new Tone.PluckSynth({
+                dampening: 6000, resonance: 0.95, volume: -20
+            }).connect(reverb);
+            const whisperNotes = ["C6", "D6", "E6", "G6", "A6"];
+            const textAnimationDuration = 15;
+            const appearancePoint = textAnimationDuration * 0.88; // 88%
+            const loopDuration = textAnimationDuration + (whisperNotes.length * 2);
+
+            whisperNotes.forEach((note, index) => {
+                const triggerTime = index * 2 + appearancePoint;
+                Tone.Transport.scheduleRepeat(time => {
+                    whisperSynth.triggerAttack(note, time);
+                }, loopDuration, triggerTime);
+            });
+
+            Tone.Transport.start();
+            soundInitialized = true;
+            console.log("La Sinfonía de la Visión Pura ha comenzado.");
+        }
+
+        document.body.addEventListener('click', initSound, { once: true });
+    </script>
+    </body>
+</html>
