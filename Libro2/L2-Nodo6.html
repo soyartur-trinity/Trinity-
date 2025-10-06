@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presencia Sin Centro</title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: none;
+        }
+        .presence-field {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        .presence-point {
+            position: absolute;
+            font-size: 0.9em;
+            opacity: 0;
+            animation: presence-manifest 12s infinite;
+            animation-delay: calc(var(--delay) * 1.5s);
+            letter-spacing: 0.2em;
+        }
+        @keyframes presence-manifest {
+            0%, 80%, 100% { 
+                opacity: 0; 
+                transform: scale(0.5);
+            }
+            85%, 95% { 
+                opacity: 0.5; 
+                transform: scale(1);
+            }
+        }
+        .no-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5em;
+            letter-spacing: 1em;
+            animation: center-dissolve 10s infinite ease-in-out;
+        }
+        @keyframes center-dissolve {
+            0%, 100% { 
+                opacity: 0.1; 
+                letter-spacing: 1em;
+                filter: blur(5px);
+            }
+            50% { 
+                opacity: 0.4; 
+                letter-spacing: 0.5em;
+                filter: blur(0);
+            }
+        }
+        .everywhere-circle {
+            position: absolute;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: expand-everywhere 15s infinite linear;
+            animation-delay: calc(var(--ring) * 3s);
+        }
+        @keyframes expand-everywhere {
+            0% {
+                width: 50px;
+                height: 50px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0.3;
+            }
+            100% {
+                width: 150vw;
+                height: 150vh;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presence-field">
+        <div class="everywhere-circle" style="--ring: 0;"></div>
+        <div class="everywhere-circle" style="--ring: 1;"></div>
+        <div class="everywhere-circle" style="--ring: 2;"></div>
+        <div class="everywhere-circle" style="--ring: 3;"></div>
+        <div class="everywhere-circle" style="--ring: 4;"></div>
+
+        <div class="presence-point" data-pan="-0.6" style="top: 15%; left: 20%; --delay: 0;">Aquí</div>
+        <div class="presence-point" data-pan="0.4" style="top: 25%; right: 30%; --delay: 1;">Aquí</div>
+        <div class="presence-point" data-pan="-0.7" style="bottom: 35%; left: 15%; --delay: 2;">Aquí</div>
+        <div class="presence-point" data-pan="0.6" style="top: 60%; right: 20%; --delay: 3;">Aquí</div>
+        <div class="presence-point" data-pan="-0.2" style="bottom: 20%; left: 40%; --delay: 4;">Aquí</div>
+        <div class="presence-point" data-pan="0.2" style="top: 40%; left: 60%; --delay: 5;">Aquí</div>
+        <div class="presence-point" data-pan="0.3" style="bottom: 45%; right: 35%; --delay: 6;">Aquí</div>
+        <div class="presence-point" data-pan="0" style="top: 70%; left: 50%; --delay: 7;">Aquí</div>
+        
+        <div class="no-center">◯</div>
+        
+        <div style="position: absolute; bottom: 8%; width: 100%; text-align: center; opacity: 0.25; font-style: italic; letter-spacing: 0.3em; font-size: 0.9em;">
+            El centro está en todas partes · La circunferencia en ninguna
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        let soundInitialized = false;
+
+        async function initSound() {
+            if (soundInitialized) return;
+            await Tone.start();
+
+            const reverb = new Tone.Reverb({ decay: 15, wet: 0.6 }).toDestination();
+
+            // 1. El Campo de la Pura Conciencia (Binaural Alpha)
+            const baseFreq = 100;
+            const binauralBeat = 10; // 10 Hz
+            const oscL = new Tone.Oscillator(baseFreq, "sine").connect(new Tone.Panner(-1).connect(reverb)).start();
+            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").connect(new Tone.Panner(1).connect(reverb)).start();
+            oscL.volume.value = -36;
+            oscR.volume.value = -36;
+            
+            // 2. La Respiración del Cosmos
+            const cosmicBreathSynth = new Tone.PolySynth(Tone.FMSynth, {
+                envelope: { attack: 5, release: 10 },
+                volume: -28
+            }).connect(reverb);
+            new Tone.Loop(time => {
+                const notes = ["C2", "G2"];
+                notes.forEach((note, index) => {
+                    cosmicBreathSynth.triggerAttackRelease(note, "15s", `+${index * 3}`);
+                });
+            }, "15s").start(0);
+
+            // 3. La Lluvia de la Presencia
+            const presenceSynth = new Tone.MetalSynth({
+                frequency: 800,
+                envelope: { attack: 0.001, decay: 0.8, release: 0.5 },
+                harmonicity: 8, modulationIndex: 15, resonance: 7000, octaves: 1.5,
+                volume: -20
+            }).toDestination();
+            
+            const presencePoints = document.querySelectorAll('.presence-point');
+            const presencePart = new Tone.Part((time, value) => {
+                const panner = new Tone.Panner(value.pan).connect(reverb);
+                presenceSynth.connect(panner);
+                presenceSynth.triggerAttack(time);
+            }, []).start(0);
+            
+            presencePart.loop = true;
+            presencePart.loopEnd = "12s";
+
+            presencePoints.forEach(point => {
+                const delay = parseFloat(point.style.getPropertyValue('--delay'));
+                const pan = parseFloat(point.getAttribute('data-pan'));
+                const appearanceTime = 12 * 0.85; // 85% de la animación
+                presencePart.add(delay * 1.5 + appearanceTime, { pan });
+            });
+
+            Tone.Transport.start();
+            soundInitialized = true;
+            console.log("La Sinfonía de la Ubicuidad ha comenzado.");
+        }
+
+        document.body.addEventListener('click', initSound, { once: true });
+    </script>
+    </body>
+</html>
