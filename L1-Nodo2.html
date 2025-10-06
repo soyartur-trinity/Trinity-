@@ -15,14 +15,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: none;
         }
-        
         .quantum-text {
             position: relative;
             max-width: 700px;
             text-align: center;
         }
-        
         .state {
             margin: 40px 0;
             opacity: 0;
@@ -31,19 +30,16 @@
             font-size: 1.1em;
             letter-spacing: 0.2em;
         }
-        
         @keyframes state-flash {
             0%, 85%, 100% { opacity: 0; }
             90%, 95% { opacity: 0.6; }
         }
-        
         .no-state {
             font-size: 2em;
             margin: 80px 0;
             letter-spacing: 0.5em;
-            animation: dissolve 8s infinite;
+            animation: dissolve 8s infinite ease-in-out;
         }
-        
         @keyframes dissolve {
             0%, 100% { 
                 opacity: 0.1; 
@@ -56,7 +52,6 @@
                 filter: blur(0);
             }
         }
-        
         .primordial {
             position: absolute;
             width: 100%;
@@ -69,16 +64,14 @@
             letter-spacing: 1em;
             pointer-events: none;
         }
-        
         .void-line {
             width: 100px;
             height: 1px;
             background: white;
             margin: 60px auto;
             opacity: 0.2;
-            animation: expand-contract 6s infinite;
+            animation: expand-contract 6s infinite ease-in-out;
         }
-        
         @keyframes expand-contract {
             0%, 100% { width: 100px; opacity: 0.2; }
             50% { width: 300px; opacity: 0.4; }
@@ -88,23 +81,17 @@
 <body>
     <div class="quantum-text">
         <div class="primordial">VACÍO</div>
-        
         <div class="state" style="--index: 0">No dormido</div>
         <div class="state" style="--index: 1">No despierto</div>
         <div class="state" style="--index: 2">No consciente</div>
         <div class="state" style="--index: 3">No inconsciente</div>
-        
         <div class="void-line"></div>
-        
         <div class="no-state">NO-ESTADO</div>
-        
         <div class="void-line"></div>
-        
         <div class="state" style="--index: 4">Anterior a la calma</div>
         <div class="state" style="--index: 5">Anterior al movimiento</div>
         <div class="state" style="--index: 6">Anterior a la existencia</div>
         <div class="state" style="--index: 7">Anterior a anterior</div>
-        
         <div style="margin-top: 100px; opacity: 0.3; font-style: italic;">
             El estado sin características<br>
             Del cual surgen todos los estados<br>
@@ -112,5 +99,75 @@
             Sin haber salido nunca
         </div>
     </div>
-</body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        let soundInitialized = false;
+
+        async function initSound() {
+            if (soundInitialized) return;
+            await Tone.start();
+
+            const reverb = new Tone.Reverb({ decay: 20, wet: 0.7 }).toDestination();
+
+            // 1. La Frecuencia del Sueño Profundo (Binaural Delta)
+            const baseFreq = 40; 
+            const binauralBeat = 2; // 2 Hz = Onda Delta
+            const oscL = new Tone.Oscillator(baseFreq, "sine").toDestination();
+            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").toDestination();
+            const pannerL = new Tone.Panner(-1).connect(reverb);
+            const pannerR = new Tone.Panner(1).connect(reverb);
+            oscL.connect(pannerL);
+            oscR.connect(pannerR);
+            oscL.volume.value = -40; 
+            oscR.volume.value = -40;
+            oscL.start();
+            oscR.start();
+
+            // 2. El Pulso del "No-Estado"
+            const noStateSynth = new Tone.AMSynth({
+                harmonicity: 0.5,
+                envelope: { attack: 4, decay: 0.1, sustain: 0.5, release: 4 },
+                volume: -18
+            }).connect(reverb);
+            new Tone.Loop(time => {
+                noStateSynth.triggerAttackRelease("A1", "8s", time);
+            }, "8s").start(0);
+
+            // 3. Los Destellos de la Dualidad
+            const chimeSynth = new Tone.MetalSynth({
+                frequency: 600,
+                envelope: { attack: 0.001, decay: 1.5, release: 1 },
+                harmonicity: 5.1,
+                modulationIndex: 32,
+                resonance: 4000,
+                octaves: 1.5,
+                volume: -28
+            }).connect(reverb);
+
+            const flashTimes = [0, 1.5, 3, 4.5, 6, 7.5, 9, 10.5];
+            const totalDuration = 10;
+            const animationAppearancePoint = totalDuration * 0.9; // 90%
+            
+            new Tone.Loop(time => {
+                 flashTimes.forEach(delay => {
+                    const scheduledTime = delay + animationAppearancePoint;
+                    Tone.Transport.scheduleOnce((t) => {
+                        // LA CORRECCIÓN ESTÁ AQUÍ:
+                        // Usamos 'undefined' para la nota, para que toque su frecuencia base,
+                        // y 't' para el tiempo exacto.
+                        chimeSynth.triggerAttack(undefined, t);
+                    }, `+${scheduledTime}`);
+                 });
+            }, totalDuration + flashTimes[flashTimes.length-1] + 2).start(0); // Añadido un poco de margen al bucle
+
+
+            Tone.Transport.start();
+            soundInitialized = true;
+            console.log("La Voz del No-Estado ha sido activada.");
+        }
+
+        document.body.addEventListener('click', initSound, { once: true });
+    </script>
+    </body>
 </html>

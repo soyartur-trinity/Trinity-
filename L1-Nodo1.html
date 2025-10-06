@@ -15,56 +15,46 @@
             min-height: 100vh;
             margin: 0;
             overflow: hidden;
+            cursor: none; /* Ocultamos el cursor para una inmersión total */
         }
-        
         .container {
             text-align: center;
             max-width: 800px;
             padding: 40px;
-            animation: breathe 8s infinite;
+            animation: breathe 8s infinite ease-in-out;
         }
-        
         @keyframes breathe {
             0%, 100% { opacity: 0.3; transform: scale(0.95); }
             50% { opacity: 1; transform: scale(1); }
         }
-        
         .void-text {
             font-size: 1.2em;
             line-height: 3;
             letter-spacing: 0.3em;
             opacity: 0;
-            animation: emerge 12s infinite;
+            animation: emerge 12s infinite ease-in-out;
         }
-        
         @keyframes emerge {
             0%, 100% { opacity: 0; }
             40%, 60% { opacity: 0.7; }
         }
-        
         .symbol {
             font-size: 3em;
             margin: 60px 0;
             opacity: 0.2;
-            animation: pulse 4s infinite;
+            animation: pulse 4s infinite ease-in-out;
         }
-        
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 0.2; }
             50% { transform: scale(1.1); opacity: 0.5; }
         }
-        
-        .space {
-            height: 100px;
-        }
-        
+        .space { height: 100px; }
         .question {
             opacity: 0;
-            animation: question-emerge 16s infinite;
+            animation: question-emerge 16s infinite ease-in-out;
             font-style: italic;
             color: #666;
         }
-        
         @keyframes question-emerge {
             0%, 70%, 100% { opacity: 0; }
             80%, 90% { opacity: 0.4; }
@@ -74,47 +64,96 @@
 <body>
     <div class="container">
         <div class="space"></div>
-        
         <div class="void-text">
             Antes de que algo fuera<br>
             Antes de que nada no-fuera
         </div>
-        
         <div class="symbol">◯</div>
-        
         <div class="void-text">
             Antes del primer "esto" o "aquello"<br>
             Antes de la primera división
         </div>
-        
         <div class="space"></div>
-        
         <div class="void-text">
             ¿Qué había?
         </div>
-        
         <div class="space"></div>
-        
         <div class="void-text">
             No preguntes qué<br>
             No había un qué<br>
             No había un había
         </div>
-        
         <div class="symbol">—</div>
-        
         <div class="void-text">
             Solo... esto<br>
             Que no es un esto<br>
             Que siempre Es<br>
             Sin ser
         </div>
-        
         <div class="space"></div>
-        
         <div class="question">
             ¿Puedes recordar el momento antes de tu primer pensamiento?
         </div>
     </div>
-</body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        let soundInitialized = false;
+
+        async function initSound() {
+            if (soundInitialized) return;
+            await Tone.start();
+
+            const reverb = new Tone.Reverb({ decay: 15, wet: 0.6 }).toDestination();
+
+            // 1. El Pulso del Vacío (Frecuencia Binaural Theta)
+            // Crea un estado meditativo profundo
+            const baseFreq = 60; // Frecuencia base muy grave
+            const binauralBeat = 5; // 5 Hz = Onda Theta
+            const oscL = new Tone.Oscillator(baseFreq, "sine").toDestination();
+            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").toDestination();
+            const pannerL = new Tone.Panner(-1).connect(reverb);
+            const pannerR = new Tone.Panner(1).connect(reverb);
+            oscL.connect(pannerL);
+            oscR.connect(pannerR);
+            oscL.volume.value = -35;
+            oscR.volume.value = -35;
+            oscL.start();
+            oscR.start();
+
+            // 2. La Respiración del Ser (El Ritmo Principal)
+            // Un sonido que se hincha y deshincha cada 8 segundos con la animación
+            const breatheSynth = new Tone.FMSynth({
+                harmonicity: 0.5,
+                envelope: { attack: 4, decay: 4, sustain: 0, release: 4 },
+                volume: -20
+            }).connect(reverb);
+            new Tone.Loop(time => {
+                breatheSynth.triggerAttackRelease("C2", "8s", time);
+            }, "8s").start(0);
+
+            // 3. El Brillo de la Totalidad (El Símbolo ◯)
+            // Un brillo sutil cada 4 segundos, sincronizado con el símbolo
+            const symbolSynth = new Tone.MetalSynth({
+                frequency: 400,
+                envelope: { attack: 0.001, decay: 1, release: 1 },
+                harmonicity: 8,
+                modulationIndex: 20,
+                resonance: 800,
+                octaves: 1.5,
+                volume: -30
+            }).connect(reverb);
+            new Tone.Loop(time => {
+                symbolSynth.triggerAttack(time);
+            }, "4s").start(0);
+
+
+            Tone.Transport.start();
+            soundInitialized = true;
+            console.log("Sinfonía del Silencio activada.");
+        }
+
+        document.body.addEventListener('click', initSound, { once: true });
+    </script>
+    </body>
 </html>

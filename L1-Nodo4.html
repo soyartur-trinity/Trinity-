@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -16,84 +15,73 @@
             align-items: center;
             justify-content: center;
             perspective: 1000px;
+            cursor: none;
         }
-
-```
-    .witness-layers {
-        position: relative;
-        width: 500px;
-        height: 500px;
-        transform-style: preserve-3d;
-        animation: rotate 20s infinite linear;
-    }
-    
-    @keyframes rotate {
-        from { transform: rotateY(0deg); }
-        to { transform: rotateY(360deg); }
-    }
-    
-    .witness {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2em;
-        letter-spacing: 0.3em;
-        opacity: 0.3;
-        transform: translateZ(calc(var(--depth) * 100px));
-        animation: witness-pulse 8s infinite;
-        animation-delay: calc(var(--depth) * 0.5s);
-    }
-    
-    @keyframes witness-pulse {
-        0%, 100% { opacity: 0.1; }
-        50% { opacity: 0.6; }
-    }
-    
-    .center-eye {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 4em;
-        animation: blink 10s infinite;
-    }
-    
-    @keyframes blink {
-        0%, 48%, 52%, 100% { opacity: 0.8; }
-        50% { opacity: 0; }
-    }
-    
-    .question-cascade {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        opacity: 0;
-        animation: cascade 12s infinite;
-        animation-delay: calc(var(--level) * 2s);
-        font-style: italic;
-        color: #666;
-    }
-    
-    @keyframes cascade {
-        0%, 80%, 100% { opacity: 0; transform: translateY(-20px); }
-        85%, 95% { opacity: 0.4; transform: translateY(0); }
-    }
-    
-    .infinite-regression {
-        position: absolute;
-        bottom: 50px;
-        width: 100%;
-        text-align: center;
-        font-size: 0.8em;
-        letter-spacing: 0.5em;
-        opacity: 0.2;
-    }
-</style>
-```
-
+        .witness-layers {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+        }
+        @keyframes rotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        .witness {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            letter-spacing: 0.3em;
+            opacity: 0.3;
+            transform: translateZ(calc(var(--depth) * 100px));
+            animation: witness-pulse 8s infinite;
+            animation-delay: calc(var(--depth) * 0.5s);
+        }
+        @keyframes witness-pulse {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.6; }
+        }
+        .center-eye {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4em;
+            animation: blink 10s infinite;
+        }
+        @keyframes blink {
+            0%, 48%, 52%, 100% { opacity: 0.8; }
+            50% { opacity: 0; }
+        }
+        .question-cascade {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            animation: cascade 12s infinite;
+            animation-delay: calc(var(--level) * 2s);
+            font-style: italic;
+            color: #666;
+        }
+        @keyframes cascade {
+            0%, 80%, 100% { opacity: 0; transform: translateY(-20px); }
+            85%, 95% { opacity: 0.4; transform: translateY(0); }
+        }
+        .infinite-regression {
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8em;
+            letter-spacing: 0.5em;
+            opacity: 0.2;
+        }
+    </style>
 </head>
 <body>
     <div class="witness-layers">
@@ -102,21 +90,87 @@
         <div class="witness" style="--depth: 2;">Observando al que observa al que observa</div>
         <div class="witness" style="--depth: 3;">Observando al que...</div>
         <div class="witness" style="--depth: 4;">...</div>
+        <div class="center-eye">👁</div>
+        <div class="question-cascade" style="top: 10%; --level: 0;">¿Quién observa?</div>
+        <div class="question-cascade" style="top: 30%; --level: 1;">¿Quién observa al observador?</div>
+        <div class="question-cascade" style="top: 50%; --level: 2;">¿Quién hace la pregunta?</div>
+        <div class="question-cascade" style="top: 70%; --level: 3;">¿Hay alguien?</div>
+    </div>
+    <div class="infinite-regression">
+        EL OJO QUE NO PUEDE VERSE A SÍ MISMO<br>
+        PORQUE ES LA VISIÓN MISMA
+    </div>
 
-```
-    <div class="center-eye">👁</div>
-    
-    <div class="question-cascade" style="top: 10%; --level: 0;">¿Quién observa?</div>
-    <div class="question-cascade" style="top: 30%; --level: 1;">¿Quién observa al observador?</div>
-    <div class="question-cascade" style="top: 50%; --level: 2;">¿Quién hace la pregunta?</div>
-    <div class="question-cascade" style="top: 70%; --level: 3;">¿Hay alguien?</div>
-</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        let soundInitialized = false;
 
-<div class="infinite-regression">
-    EL OJO QUE NO PUEDE VERSE A SÍ MISMO<br>
-    PORQUE ES LA VISIÓN MISMA
-</div>
-```
+        async function initSound() {
+            if (soundInitialized) return;
+            await Tone.start();
 
-</body>
+            const reverb = new Tone.Reverb({ decay: 10, wet: 0.4 }).toDestination();
+
+            // 1. El Espacio de la Conciencia (Binaural Alpha)
+            const baseFreq = 100;
+            const binauralBeat = 10; // 10 Hz = Onda Alpha
+            const oscL = new Tone.Oscillator(baseFreq, "sine").toDestination();
+            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").toDestination();
+            const pannerL = new Tone.Panner(-1).connect(reverb);
+            const pannerR = new Tone.Panner(1).connect(reverb);
+            oscL.connect(pannerL);
+            oscR.connect(pannerR);
+            oscL.volume.value = -38;
+            oscR.volume.value = -38;
+            oscL.start();
+            oscR.start();
+            
+            // 2. El Carrusel de la Observación (Sonido Giratorio)
+            const rotatingPad = new Tone.FMSynth({
+                harmonicity: 1.5,
+                modulationIndex: 5,
+                envelope: { attack: 4, decay: 1, sustain: 1, release: 4 },
+                volume: -25
+            }).toDestination();
+            const autoPanner = new Tone.AutoPanner({
+                frequency: "20s", // Sincronizado con la animación CSS de 20s
+                depth: 0.8
+            }).connect(reverb).start();
+            rotatingPad.connect(autoPanner);
+            rotatingPad.triggerAttack("C3");
+
+            // 3. El Latido del Testigo Silencioso
+            const heartbeat = new Tone.MembraneSynth({
+                pitchDecay: 0.01,
+                octaves: 2,
+                envelope: { attack: 0.001, decay: 0.5, sustain: 0 },
+                volume: -15
+            }).connect(reverb);
+            new Tone.Loop(time => {
+                // Sincronizado con el parpadeo del ojo al 50% de su animación de 10s
+                heartbeat.triggerAttackRelease("C1", "8n", time + 5);
+            }, "10s").start(0);
+
+            // 4. Los Susurros de la Mente (Preguntas)
+            const whisperSynth = new Tone.PluckSynth({
+                attackNoise: 1,
+                dampening: 6000,
+                resonance: 0.9,
+                volume: -22
+            }).toDestination();
+            const whisperPanner = new Tone.Panner(0).connect(reverb); // Paneo dinámico
+            whisperSynth.connect(whisperPanner);
+            new Tone.Loop(time => {
+                whisperPanner.pan.rampTo(Math.random() * 2 - 1, 0.5);
+                whisperSynth.triggerAttack("C7", time);
+            }, "3.7s").start("1s");
+            
+            Tone.Transport.start();
+            soundInitialized = true;
+            console.log("La Sinfonía del Testigo ha comenzado.");
+        }
+
+        document.body.addEventListener('click', initSound, { once: true });
+    </script>
+    </body>
 </html>
