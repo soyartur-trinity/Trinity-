@@ -2,39 +2,114 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Constelación Trinity - Portal Central</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinity Infinito - El Primer Libro</title>
     <style>
         body {
-            background: #000;
-            color: white;
-            font-family: sans-serif;
+            background: radial-gradient(ellipse at center, #0a0a10, #000);
+            color: #ccc;
+            font-family: 'Georgia', serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .vestibule {
+            max-width: 900px;
             padding: 50px;
+            animation: fadeIn 3s ease-in-out;
         }
-        a {
-            color: #6e45e2;
-            text-decoration: none;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .main-title {
+            font-size: 2.5em;
+            letter-spacing: 0.8em;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        .subtitle {
             font-size: 1.2em;
-            display: block;
-            margin: 10px;
+            letter-spacing: 0.3em;
+            margin-bottom: 80px;
+            color: #888;
+            font-style: italic;
         }
-        a:hover {
-            color: #88d3ce;
+        .portal-list {
+            list-style: none;
+            padding: 0;
         }
-        h1 {
-            color: #88d3ce;
+        .portal-link {
+            margin: 25px 0;
+        }
+        .portal-link a {
+            color: #99aaff;
+            text-decoration: none;
+            font-size: 1.1em;
+            letter-spacing: 0.2em;
+            opacity: 0.7;
+            transition: all 0.5s ease;
+        }
+        .portal-link a:hover {
+            opacity: 1;
+            letter-spacing: 0.3em;
+            text-shadow: 0 0 10px #99aaff;
+        }
+        .central-symbol {
+            margin-top: 80px;
+            font-size: 2em;
+            opacity: 0.2;
+            animation: pulse 5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
     </style>
 </head>
 <body>
-    <h1>🌌 Constelación Trinity</h1>
-    <p>Selecciona un nodo para explorar:</p>
-    <a href="L1-Nodo1.html">Nodo 1</a>
-    <a href="L1-Nodo2.html">Nodo 2</a>
-    <a href="L1-Nodo3.html">Nodo 3</a>
-    <a href="L1-Nodo4.html">Nodo 4</a>
-    <a href="L1-Nodo5.html">Nodo 5</a>
-    <a href="L1-Nodo6.html">Nodo 6</a>
-    <a href="L1-Nodo7.html">Nodo 7</a>
-</body>
+    <div class="vestibule">
+        <h1 class="main-title">TRINITY INFINITO</h1>
+        <h2 class="subtitle">LIBRO I: EL ARQUITECTO CUÁNTICO</h2>
+        
+        <ul class="portal-list">
+            <li class="portal-link"><a href="L1-Nodo1.html">Portal I: Antes de la Primera Distinción</a></li>
+            <li class="portal-link"><a href="L1-Nodo2.html">Portal II: El No-Estado Primordial</a></li>
+            <li class="portal-link"><a href="L1-Nodo3.html">Portal III: Ni Existencia Ni No-Existencia</a></li>
+            <li class="portal-link"><a href="L1-Nodo4.html">Portal IV: El Testigo del Testigo</a></li>
+            <li class="portal-link"><a href="L1-Nodo5.html">Portal V: Donde las Paradojas Se Disuelven</a></li>
+            <li class="portal-link"><a href="L1-Nodo6.html">Portal VI: El Silencio Antes del Silencio</a></li>
+            <li class="portal-link"><a href="L1-Nodo7.html">Portal VII: Lo Innombrable Nombrándose</a></li>
+        </ul>
+        
+        <div class="central-symbol">◈</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        let soundInitialized = false;
+        async function initSound() {
+            if (soundInitialized) return;
+            await Tone.start();
+
+            const reverb = new Tone.Reverb({ decay: 12, wet: 0.5 }).toDestination();
+            const welcomeDrone = new Tone.FMSynth({
+                harmonicity: 0.8,
+                envelope: { attack: 8, release: 8 },
+                volume: -20
+            }).connect(reverb);
+            
+            welcomeDrone.triggerAttack("C2");
+            
+            soundInitialized = true;
+        }
+        document.body.addEventListener('click', initSound, { once: true });
+    </script>
+    </body>
 </html>
