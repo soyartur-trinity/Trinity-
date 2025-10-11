@@ -15,8 +15,8 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            cursor: none;
         }
+        
         .awareness-field {
             position: relative;
             width: 100vw;
@@ -25,29 +25,42 @@
             align-items: center;
             justify-content: center;
         }
+        
         .awareness-ripple {
             position: absolute;
             width: 100px;
             height: 100px;
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 50%;
-            animation: expand 8s infinite ease-out;
+            animation: expand 8s infinite;
             animation-delay: calc(var(--delay) * 2s);
         }
+        
         @keyframes expand {
-            0% { width: 100px; height: 100px; opacity: 0.5; }
-            100% { width: 800px; height: 800px; opacity: 0; }
+            0% {
+                width: 100px;
+                height: 100px;
+                opacity: 0.5;
+            }
+            100% {
+                width: 800px;
+                height: 800px;
+                opacity: 0;
+            }
         }
+        
         .no-one {
             font-size: 2em;
             letter-spacing: 0.5em;
             opacity: 0;
             animation: no-one-appear 12s infinite;
         }
+        
         @keyframes no-one-appear {
             0%, 40%, 60%, 100% { opacity: 0; }
             45%, 55% { opacity: 0.6; }
         }
+        
         .conscious-text {
             position: absolute;
             font-size: 1em;
@@ -56,10 +69,12 @@
             animation-delay: calc(var(--index) * 1.5s);
             letter-spacing: 0.2em;
         }
+        
         @keyframes conscious-flash {
             0%, 85%, 100% { opacity: 0; }
             90%, 95% { opacity: 0.4; }
         }
+        
         .observer-void {
             position: absolute;
             top: 50%;
@@ -69,8 +84,9 @@
             height: 200px;
             border-radius: 50%;
             background: radial-gradient(circle, transparent, rgba(255,255,255,0.05));
-            animation: void-pulse 6s infinite ease-in-out;
+            animation: void-pulse 6s infinite;
         }
+        
         @keyframes void-pulse {
             0%, 100% { transform: translate(-50%, -50%) scale(1); }
             50% { transform: translate(-50%, -50%) scale(1.2); }
@@ -83,83 +99,34 @@
         <div class="awareness-ripple" style="--delay: 1;"></div>
         <div class="awareness-ripple" style="--delay: 2;"></div>
         <div class="awareness-ripple" style="--delay: 3;"></div>
+        
         <div class="observer-void"></div>
-        <div class="conscious-text" style="top: 20%; left: 50%; transform: translateX(-50%); --index: 0;">Consciencia ocurre</div>
-        <div class="conscious-text" style="top: 35%; left: 20%; --index: 1;">Sin sujeto</div>
-        <div class="conscious-text" style="top: 35%; right: 20%; --index: 2;">Sin objeto</div>
+        
+        <div class="conscious-text" style="top: 20%; left: 50%; transform: translateX(-50%); --index: 0;">
+            Consciencia ocurre
+        </div>
+        
+        <div class="conscious-text" style="top: 35%; left: 20%; --index: 1;">
+            Sin sujeto
+        </div>
+        
+        <div class="conscious-text" style="top: 35%; right: 20%; --index: 2;">
+            Sin objeto
+        </div>
+        
         <div class="no-one">NADIE</div>
-        <div class="conscious-text" style="bottom: 35%; left: 25%; --index: 3;">Aware</div>
-        <div class="conscious-text" style="bottom: 35%; right: 25%; --index: 4;">Despierto</div>
-        <div class="conscious-text" style="bottom: 20%; left: 50%; transform: translateX(-50%); --index: 5;">El testigo sin rostro</div>
+        
+        <div class="conscious-text" style="bottom: 35%; left: 25%; --index: 3;">
+            Aware
+        </div>
+        
+        <div class="conscious-text" style="bottom: 35%; right: 25%; --index: 4;">
+            Despierto
+        </div>
+        
+        <div class="conscious-text" style="bottom: 20%; left: 50%; transform: translateX(-50%); --index: 5;">
+            El testigo sin rostro
+        </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
-    <script>
-        let soundInitialized = false;
-
-        async function initSound() {
-            if (soundInitialized) return;
-            await Tone.start();
-
-            const reverb = new Tone.Reverb({ decay: 12, wet: 0.6 }).toDestination();
-
-            // 1. El Mar de Fondo (Binaural Delta)
-            const baseFreq = 30; // Muy grave, en el límite de la audición
-            const binauralBeat = 2; // 2 Hz = Onda Delta
-            const filter = new Tone.Filter(200, "lowpass").connect(reverb);
-            const oscL = new Tone.Oscillator(baseFreq, "sine").connect(new Tone.Panner(-1).connect(filter)).start();
-            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").connect(new Tone.Panner(1).connect(filter)).start();
-            oscL.volume.value = -30;
-            oscR.volume.value = -30;
-
-            // 2. Las Ondas de la Conciencia
-            const rippleSynth = new Tone.PolySynth(Tone.FMSynth, {
-                harmonicity: 0.8,
-                envelope: { attack: 3, decay: 1, sustain: 0.5, release: 4 },
-                volume: -24
-            }).connect(reverb);
-            const rippleNotes = ["C2", "G2", "C3", "Eb3"];
-            new Tone.Loop(time => {
-                rippleNotes.forEach((note, index) => {
-                    rippleSynth.triggerAttackRelease(note, "8s", `+${index * 2}`);
-                });
-            }, "8s").start(0);
-
-            // 3. El Vacío Sonoro de "NADIE"
-            new Tone.Loop(time => {
-                // Sincronizado con la animación de 12s, el efecto ocurre al 45% (5.4s)
-                const effectTime = time + (12 * 0.45);
-                filter.frequency.rampTo(50, '1s', effectTime); // Cierra el filtro (hace un hueco)
-                filter.frequency.rampTo(200, '1s', effectTime + 1.2); // Lo vuelve a abrir
-            }, "12s").start(0);
-
-            // 4. Los Ecos del Testigo sin Rostro
-            const textSynth = new Tone.MetalSynth({
-                frequency: 800,
-                envelope: { attack: 0.001, decay: 1, release: 1 },
-                harmonicity: 10.1,
-                modulationIndex: 10,
-                resonance: 8000,
-                octaves: 1.5,
-                volume: -32
-            }).connect(reverb);
-            const textFlashTimes = [0, 1.5, 3, 4.5, 6, 7.5];
-            const textAnimationDuration = 10;
-            const textAppearancePoint = textAnimationDuration * 0.9;
-            new Tone.Loop(time => {
-                 textFlashTimes.forEach(delay => {
-                    const scheduledTime = time + delay + textAppearancePoint;
-                    textSynth.triggerAttack(scheduledTime);
-                 });
-            }, textAnimationDuration + textFlashTimes[textFlashTimes.length-1] + 2).start(0);
-
-
-            Tone.Transport.start();
-            soundInitialized = true;
-            console.log("El Océano de la Conciencia ha sido activado.");
-        }
-
-        document.body.addEventListener('click', initSound, { once: true });
-    </script>
-    </body>
+</body>
 </html>
