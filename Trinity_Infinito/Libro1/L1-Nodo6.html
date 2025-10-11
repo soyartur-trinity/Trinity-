@@ -15,14 +15,15 @@
             align-items: center;
             justify-content: center;
             cursor: none;
-            overflow: hidden; /* Añadido para consistencia */
         }
+        
         .silence-container {
             width: 100%;
             max-width: 600px;
             text-align: center;
             padding: 40px;
         }
+        
         .word {
             opacity: 0;
             margin: 60px 0;
@@ -31,10 +32,12 @@
             animation: word-appearance 20s infinite;
             animation-delay: calc(var(--delay) * 4s);
         }
+        
         @keyframes word-appearance {
             0%, 15%, 25%, 100% { opacity: 0; }
             18%, 22% { opacity: 0.3; }
         }
+        
         .deep-silence {
             height: 200px;
             display: flex;
@@ -44,15 +47,18 @@
             opacity: 0.02;
             letter-spacing: 2em;
         }
+        
         .pre-silence {
             margin: 100px 0;
             opacity: 0;
             animation: pre-silence-show 30s infinite;
         }
+        
         @keyframes pre-silence-show {
             0%, 85%, 100% { opacity: 0; }
             90%, 95% { opacity: 0.2; }
         }
+        
         .listening-instruction {
             position: fixed;
             bottom: 40px;
@@ -63,6 +69,7 @@
             font-size: 0.9em;
             letter-spacing: 0.3em;
         }
+        
         .void-sound {
             position: absolute;
             width: 10px;
@@ -74,7 +81,6 @@
             animation-delay: calc(var(--delay) * 2s);
         }
         
-        /* AFINACIÓN VISUAL: La escala se ha reducido para evitar el recorte en los bordes */
         @keyframes void-ripple {
             0%, 100% { 
                 opacity: 0; 
@@ -82,7 +88,7 @@
             }
             50% { 
                 opacity: 0.1; 
-                transform: scale(25); /* Reducido de 50 a 25 */
+                transform: scale(50);
             }
         }
     </style>
@@ -94,10 +100,15 @@
     
     <div class="silence-container">
         <div class="word" style="--delay: 0;">Antes del sonido</div>
+        
         <div class="word" style="--delay: 1;">Antes de la ausencia de sonido</div>
+        
         <div class="deep-silence">...</div>
+        
         <div class="word" style="--delay: 2;">Antes del primer Om</div>
+        
         <div class="word" style="--delay: 3;">Antes del espacio donde surge el sonido</div>
+        
         <div class="pre-silence">
             No el silencio entre palabras<br><br>
             No el silencio después del trueno<br><br>
@@ -111,56 +122,5 @@
     <div class="listening-instruction">
         Escucha... más profundo que escuchar
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
-    <script>
-        let soundInitialized = false;
-
-        async function initSound() {
-            if (soundInitialized) return;
-            await Tone.start();
-
-            const reverb = new Tone.Reverb({ decay: 15, wet: 0.6 }).toDestination();
-
-            // 1. Pulso Binaural Theta para la meditación
-            const baseFreq = 70; 
-            const binauralBeat = 6; // 6 Hz = Onda Theta
-            const oscL = new Tone.Oscillator(baseFreq, "sine").connect(new Tone.Panner(-1).connect(reverb)).start();
-            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").connect(new Tone.Panner(1).connect(reverb)).start();
-            oscL.volume.value = -38;
-            oscR.volume.value = -38;
-
-            // 2. La "Respiración" del universo sonoro
-            const breatheSynth = new Tone.FMSynth({
-                harmonicity: 0.5,
-                envelope: { attack: 4, decay: 4, sustain: 0, release: 4 },
-                volume: -25
-            }).connect(reverb);
-            new Tone.Loop(time => {
-                breatheSynth.triggerAttackRelease("C2", "8s", time);
-            }, "8s").start(0);
-
-            // 3. Los "Brillos" de los cuencos de cristal
-            const chimeSynth = new Tone.MetalSynth({
-                frequency: 500,
-                envelope: { attack: 0.001, decay: 1.5, release: 1 },
-                harmonicity: 7.1,
-                modulationIndex: 20,
-                resonance: 6000,
-                octaves: 1.5,
-                volume: -30
-            }).connect(reverb);
-            new Tone.Loop(time => {
-                chimeSynth.triggerAttack(time);
-            }, "8s").start("2s"); // Sincronizado con la animación de void-ripple
-
-
-            Tone.Transport.start();
-            soundInitialized = true;
-            console.log("La Voz del Silencio (Afinada) ha sido activada.");
-        }
-
-        document.body.addEventListener('click', initSound, { once: true });
-    </script>
-    </body>
+</body>
 </html>
