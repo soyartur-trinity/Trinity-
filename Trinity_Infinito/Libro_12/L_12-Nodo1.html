@@ -1,1 +1,145 @@
-desarrollo 
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>El Silencio Que Habla - Trinity Infinito</title>
+<style>
+body {
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: 'Georgia', serif;
+}
+
+.silence {
+position: absolute;
+width: 200px;
+height: 200px;
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 50%;
+animation: silence-speaks 12s infinite;
+}
+
+@keyframes silence-speaks {
+0%, 100% { transform: scale(1); opacity: 0.1; }
+50% { transform: scale(1.5); opacity: 0; }
+}
+
+.word-void {
+position: absolute;
+color: rgba(255,255,255,0.3);
+font-size: 18px;
+opacity: 0;
+animation: void-word 10s infinite;
+}
+
+@keyframes void-word {
+0%, 100% { opacity: 0; transform: scale(0.8); }
+50% { opacity: 0.4; transform: scale(1); }
+}
+
+.unspoken {
+position: absolute;
+width: 100px;
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+animation: unspeak 8s infinite;
+}
+
+@keyframes unspeak {
+0% { transform: scaleX(0); opacity: 0; }
+50% { transform: scaleX(1); opacity: 0.3; }
+100% { transform: scaleX(0); opacity: 0; }
+}
+
+.resonance {
+position: absolute;
+width: 4px;
+height: 4px;
+background: white;
+border-radius: 50%;
+animation: resonate-silence 6s infinite;
+}
+
+@keyframes resonate-silence {
+0%, 100% { transform: scale(0); opacity: 0; }
+50% { transform: scale(10); opacity: 0.1; }
+}
+
+.text {
+position: absolute;
+bottom: 50px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 5px;
+font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="word-void">...</div>
+<div class="text">EL VACÍO PRONUNCIA TODO</div>
+<script>
+const b = document.body;
+const words = ["", "...", "○", "—", "∅", " "];
+
+function c(cls, st) {
+const e = document.createElement(‘div’);
+e.className = cls;
+if(st) Object.assign(e.style, st);
+b.appendChild(e);
+setTimeout(() => e.remove(), 12000);
+}
+
+setInterval(() => {
+c(‘silence’, {
+left: ‘50%’,
+top: ‘50%’,
+transform: ‘translate(-50%, -50%)’,
+width: 100 + Math.random() * 200 + ‘px’,
+height: 100 + Math.random() * 200 + ‘px’
+});
+
+c(‘word-void’, {
+textContent: words[Math.floor(Math.random() * words.length)],
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’
+});
+
+c(‘unspoken’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+transform: `rotate(${Math.random() * 180}deg)`
+});
+
+if(Math.random() > 0.7) {
+c(‘resonance’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’
+});
+}
+}, 2000);
+
+b.addEventListener(‘click’, e => {
+// El silencio resuena
+for(let i = 0; i < 5; i++) {
+setTimeout(() => {
+c(‘silence’, {
+left: e.clientX - 50 * i + ‘px’,
+top: e.clientY - 50 * i + ‘px’,
+width: 100 * i + ‘px’,
+height: 100 * i + ‘px’,
+animation: ‘silence-speaks 2s ease-out forwards’
+});
+}, i * 100);
+}
+});
+</script>
+
+</body>
+</html>
