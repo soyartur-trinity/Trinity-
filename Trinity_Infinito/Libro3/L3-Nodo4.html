@@ -1,1 +1,147 @@
-Contenido en desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Tablero Infinito</title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Palatino', serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+```
+    .infinite-board {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        transform-style: preserve-3d;
+        animation: board-rotate 30s infinite linear;
+    }
+    
+    @keyframes board-rotate {
+        from { transform: rotateX(0deg) rotateY(0deg); }
+        to { transform: rotateX(360deg) rotateY(360deg); }
+    }
+    
+    .board-square {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border: 1px solid rgba(255,255,255,0.1);
+        animation: square-pulse 10s infinite;
+        animation-delay: calc(var(--x) * 0.1s + var(--y) * 0.1s);
+        transform: translateZ(calc(var(--z) * 20px));
+    }
+    
+    @keyframes square-pulse {
+        0%, 100% { 
+            opacity: 0.1; 
+            background: transparent;
+        }
+        50% { 
+            opacity: 0.3; 
+            background: rgba(255,255,255,0.05);
+        }
+    }
+    
+    .infinity-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4em;
+        opacity: 0.2;
+        animation: infinity-breathe 8s infinite;
+    }
+    
+    @keyframes infinity-breathe {
+        0%, 100% { 
+            opacity: 0.2; 
+            transform: translate(-50%, -50%) scale(1);
+        }
+        50% { 
+            opacity: 0.4; 
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+    }
+    
+    .dimension-text {
+        position: absolute;
+        font-size: 0.9em;
+        letter-spacing: 0.3em;
+        opacity: 0;
+        animation: dimension-flash 12s infinite;
+        animation-delay: calc(var(--dim) * 3s);
+    }
+    
+    @keyframes dimension-flash {
+        0%, 90%, 100% { opacity: 0; }
+        93%, 97% { opacity: 0.4; }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="infinite-board">
+        <!-- Crear grid 3D -->
+        <div class="board-square" style="left: 100px; top: 100px; --x: 1; --y: 1; --z: 0;"></div>
+        <div class="board-square" style="left: 200px; top: 100px; --x: 2; --y: 1; --z: 1;"></div>
+        <div class="board-square" style="left: 300px; top: 100px; --x: 3; --y: 1; --z: 2;"></div>
+        <div class="board-square" style="left: 400px; top: 100px; --x: 4; --y: 1; --z: 1;"></div>
+        <div class="board-square" style="left: 500px; top: 100px; --x: 5; --y: 1; --z: 0;"></div>
+
+```
+    <div class="board-square" style="left: 100px; top: 200px; --x: 1; --y: 2; --z: 1;"></div>
+    <div class="board-square" style="left: 200px; top: 200px; --x: 2; --y: 2; --z: 2;"></div>
+    <div class="board-square" style="left: 300px; top: 200px; --x: 3; --y: 2; --z: 3;"></div>
+    <div class="board-square" style="left: 400px; top: 200px; --x: 4; --y: 2; --z: 2;"></div>
+    <div class="board-square" style="left: 500px; top: 200px; --x: 5; --y: 2; --z: 1;"></div>
+    
+    <div class="board-square" style="left: 100px; top: 300px; --x: 1; --y: 3; --z: 2;"></div>
+    <div class="board-square" style="left: 200px; top: 300px; --x: 2; --y: 3; --z: 3;"></div>
+    <div class="board-square" style="left: 300px; top: 300px; --x: 3; --y: 3; --z: 4;"></div>
+    <div class="board-square" style="left: 400px; top: 300px; --x: 4; --y: 3; --z: 3;"></div>
+    <div class="board-square" style="left: 500px; top: 300px; --x: 5; --y: 3; --z: 2;"></div>
+    
+    <div class="board-square" style="left: 100px; top: 400px; --x: 1; --y: 4; --z: 1;"></div>
+    <div class="board-square" style="left: 200px; top: 400px; --x: 2; --y: 4; --z: 2;"></div>
+    <div class="board-square" style="left: 300px; top: 400px; --x: 3; --y: 4; --z: 3;"></div>
+    <div class="board-square" style="left: 400px; top: 400px; --x: 4; --y: 4; --z: 2;"></div>
+    <div class="board-square" style="left: 500px; top: 400px; --x: 5; --y: 4; --z: 1;"></div>
+    
+    <div class="board-square" style="left: 100px; top: 500px; --x: 1; --y: 5; --z: 0;"></div>
+    <div class="board-square" style="left: 200px; top: 500px; --x: 2; --y: 5; --z: 1;"></div>
+    <div class="board-square" style="left: 300px; top: 500px; --x: 3; --y: 5; --z: 2;"></div>
+    <div class="board-square" style="left: 400px; top: 500px; --x: 4; --y: 5; --z: 1;"></div>
+    <div class="board-square" style="left: 500px; top: 500px; --x: 5; --y: 5; --z: 0;"></div>
+    
+    <div class="infinity-text">∞</div>
+    
+    <div class="dimension-text" style="top: 10%; left: 50%; transform: translateX(-50%); --dim: 0;">
+        Sin bordes
+    </div>
+    <div class="dimension-text" style="bottom: 10%; left: 50%; transform: translateX(-50%); --dim: 1;">
+        Sin límites
+    </div>
+    <div class="dimension-text" style="top: 50%; left: 10%; --dim: 2;">
+        Sin dimensiones fijas
+    </div>
+    <div class="dimension-text" style="top: 50%; right: 10%; --dim: 3;">
+        Expansión perpetua
+    </div>
+</div>
+```
+
+</body>
+</html>
