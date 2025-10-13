@@ -1,1 +1,150 @@
-desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>El Significado Sin Signo - Trinity Infinito</title>
+<style>
+body {
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.meaning {
+position: absolute;
+width: 100px;
+height: 100px;
+background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+border-radius: 50%;
+animation: meaning-float 15s infinite;
+}
+
+@keyframes meaning-float {
+0% { transform: translate(0, 0) scale(0); opacity: 0; }
+25% { transform: translate(var(–mx), var(–my)) scale(1); opacity: 0.3; }
+50% { transform: translate(calc(var(–mx) * -1), var(–my)) scale(1.5); opacity: 0.2; }
+75% { transform: translate(var(–mx), calc(var(–my) * -1)) scale(1); opacity: 0.3; }
+100% { transform: translate(0, 0) scale(0); opacity: 0; }
+}
+
+.empty-sign {
+position: absolute;
+width: 60px;
+height: 60px;
+border: 2px solid rgba(255,255,255,0.2);
+animation: sign-empty 10s infinite;
+}
+
+@keyframes sign-empty {
+0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.2; }
+50% { transform: rotate(180deg) scale(0.5); opacity: 0; }
+}
+
+.essence-flow {
+position: absolute;
+width: 200px;
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(100,200,255,0.3), transparent);
+animation: flow-essence 8s linear infinite;
+}
+
+@keyframes flow-essence {
+0% { transform: translateX(-100%) rotate(0deg); }
+100% { transform: translateX(100%) rotate(360deg); }
+}
+
+.void-content {
+position: absolute;
+color: transparent;
+font-size: 20px;
+text-shadow: 0 0 10px rgba(255,255,255,0.2);
+animation: content-void 12s infinite;
+}
+
+@keyframes content-void {
+0%, 100% { opacity: 0; }
+50% { opacity: 0.5; }
+}
+
+.text {
+position: absolute;
+bottom: 50px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 4px;
+font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="void-content">∅</div>
+<div class="text">LA ESENCIA PRECEDE AL SÍMBOLO</div>
+<script>
+const b = document.body;
+
+function c(cls, st) {
+const e = document.createElement(‘div’);
+e.className = cls;
+if(st) Object.assign(e.style, st);
+b.appendChild(e);
+setTimeout(() => e.remove(), 15000);
+}
+
+setInterval(() => {
+c(‘meaning’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+‘–mx’: (Math.random() - 0.5) * 200 + ‘px’,
+‘–my’: (Math.random() - 0.5) * 200 + ‘px’
+});
+
+c(‘empty-sign’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+borderRadius: Math.random() > 0.5 ? ‘50%’ : ‘0’
+});
+
+if(Math.random() > 0.6) {
+c(‘essence-flow’, {
+top: Math.random() * 100 + ‘%’,
+transform: `rotate(${Math.random() * 360}deg)`
+});
+}
+
+c(‘void-content’, {
+textContent: ’   ’,
+left: ‘50%’,
+top: ‘50%’
+});
+}, 2500);
+
+b.addEventListener(‘click’, e => {
+// Significado sin forma
+c(‘meaning’, {
+left: e.clientX - 50 + ‘px’,
+top: e.clientY - 50 + ‘px’,
+animation: ‘meaning-float 3s ease-out forwards’,
+‘–mx’: ‘0px’,
+‘–my’: ‘0px’
+});
+
+// Signos vacíos alrededor
+for(let i = 0; i < 6; i++) {
+const angle = (i / 6) * Math.PI * 2;
+c(‘empty-sign’, {
+left: e.clientX + Math.cos(angle) * 80 - 30 + ‘px’,
+top: e.clientY + Math.sin(angle) * 80 - 30 + ‘px’,
+animation: ‘sign-empty 2s ease-out forwards’,
+animationDelay: i * 0.1 + ‘s’
+});
+}
+});
+</script>
+
+</body>
+</html>
