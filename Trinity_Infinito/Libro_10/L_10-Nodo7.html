@@ -1,1 +1,166 @@
-desarrrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>El Sueño Que Se Sueña Solo - Trinity Infinito</title>
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(ellipse, #0a0a1a, #000);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.bubble {
+position: absolute;
+border-radius: 50%;
+background: radial-gradient(circle at 30% 30%, rgba(150,100,255,0.2), transparent);
+border: 1px solid rgba(255,255,255,0.05);
+animation: float 15s infinite;
+}
+
+@keyframes float {
+0%, 100% { transform: translate(0, 0) scale(0); opacity: 0; }
+25% { transform: translate(var(–x1), var(–y1)) scale(1); opacity: 0.4; }
+50% { transform: translate(var(–x2), var(–y2)) scale(1.5); opacity: 0.6; }
+75% { transform: translate(var(–x1), var(–y1)) scale(1); opacity: 0.4; }
+}
+
+.symbol {
+position: absolute;
+font-size: 24px;
+color: rgba(255,255,255,0.2);
+animation: manifest 10s infinite;
+}
+
+@keyframes manifest {
+0%, 100% { transform: scale(0) rotate(0); opacity: 0; }
+50% { transform: scale(1) rotate(180deg); opacity: 0.3; }
+}
+
+.rem {
+position: absolute;
+width: 100%;
+height: 2px;
+background: linear-gradient(90deg, transparent, rgba(200,150,255,0.3), transparent);
+animation: rem-flow 6s linear infinite;
+}
+
+@keyframes rem-flow {
+0% { transform: translateX(-100%); opacity: 0; }
+50% { transform: translateX(0); opacity: 0.5; }
+100% { transform: translateX(100%); opacity: 0; }
+}
+
+.lucid {
+position: absolute;
+width: 150px;
+height: 150px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+animation: pulse 8s infinite;
+}
+
+@keyframes pulse {
+0%, 100% { transform: scale(0); opacity: 0; }
+50% { transform: scale(2); opacity: 0.3; }
+}
+
+.veil {
+position: fixed;
+width: 100%;
+height: 100%;
+background: radial-gradient(ellipse, transparent 30%, rgba(0,0,20,0.3));
+animation: breathe 12s infinite;
+}
+
+@keyframes breathe {
+0%, 100% { opacity: 0.3; }
+50% { opacity: 0.6; }
+}
+
+.text {
+position: absolute;
+bottom: 50px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 5px;
+font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="veil"></div>
+<div class="text">EL SUEÑO SE SUEÑA A SÍ MISMO</div>
+<script>
+const b = document.body;
+const s = ['∞', '◯', '△', '☽', '☉', '✦'];
+
+function c(cls, st) {
+const e = document.createElement(‘div’);
+e.className = cls;
+if(st) Object.assign(e.style, st);
+b.appendChild(e);
+setTimeout(() => e.remove(), 15000);
+}
+
+setInterval(() => {
+c(‘bubble’, {
+width: 50 + Math.random() * 100 + ‘px’,
+height: 50 + Math.random() * 100 + ‘px’,
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+‘–x1’: (Math.random() - 0.5) * 200 + ‘px’,
+‘–y1’: (Math.random() - 0.5) * 200 + ‘px’,
+‘–x2’: (Math.random() - 0.5) * 200 + ‘px’,
+‘–y2’: (Math.random() - 0.5) * 200 + ‘px’
+});
+
+if(Math.random() > 0.5) {
+c(‘symbol’, {
+textContent: s[Math.floor(Math.random() * s.length)],
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’
+});
+}
+
+if(Math.random() > 0.7) {
+c(‘rem’, {
+top: Math.random() * 100 + ‘%’
+});
+}
+
+if(Math.random() > 0.9) {
+c(‘lucid’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’
+});
+}
+}, 2000);
+
+b.addEventListener(‘click’, e => {
+c(‘lucid’, {
+left: e.clientX - 75 + ‘px’,
+top: e.clientY - 75 + ‘px’,
+animation: ‘pulse 2s ease-out forwards’
+});
+
+for(let i = 0; i < 5; i++) {
+setTimeout(() => {
+c(‘symbol’, {
+textContent: s[Math.floor(Math.random() * s.length)],
+left: e.clientX + (Math.random() - 0.5) * 100 + ‘px’,
+top: e.clientY + (Math.random() - 0.5) * 100 + ‘px’,
+animation: ‘manifest 2s ease-out forwards’
+});
+}, i * 100);
+}
+});
+</script>
+
+</body>
+</html>
