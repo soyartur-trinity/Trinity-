@@ -1,1 +1,149 @@
-desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>El Nombre Sin Nombrado - Trinity Infinito</title>
+<style>
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #0a0a0f, #0f0a0a);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.unnamed {
+position: absolute;
+color: rgba(255,255,255,0.4);
+font-size: 24px;
+font-style: italic;
+animation: unnamed-drift 15s infinite;
+}
+
+@keyframes unnamed-drift {
+0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+25% { opacity: 0.3; transform: translate(var(–x), var(–y)) scale(1); }
+50% { opacity: 0.5; transform: translate(calc(var(–x) * -1), calc(var(–y) * -1)) scale(1.2); }
+75% { opacity: 0.3; transform: translate(var(–x), calc(var(–y) * -1)) scale(1); }
+100% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+}
+
+.symbol {
+position: absolute;
+font-size: 32px;
+color: rgba(100,200,255,0.2);
+animation: symbol-form 10s infinite;
+}
+
+@keyframes symbol-form {
+0%, 100% { transform: rotate(0deg) scale(0); opacity: 0; }
+50% { transform: rotate(180deg) scale(1); opacity: 0.4; }
+}
+
+.essence {
+position: absolute;
+width: 150px;
+height: 150px;
+border: 1px dashed rgba(255,255,255,0.1);
+border-radius: 50%;
+animation: essence-pulse 12s infinite;
+}
+
+@keyframes essence-pulse {
+0%, 100% { transform: scale(1); opacity: 0.1; }
+50% { transform: scale(1.3); opacity: 0.2; }
+}
+
+.letter {
+position: absolute;
+color: rgba(255,255,255,0.3);
+font-size: 16px;
+animation: letter-dance 8s infinite;
+}
+
+@keyframes letter-dance {
+0% { transform: translate(0, 50px) rotate(0deg); opacity: 0; }
+50% { transform: translate(var(–lx), var(–ly)) rotate(360deg); opacity: 0.5; }
+100% { transform: translate(0, -50px) rotate(720deg); opacity: 0; }
+}
+
+.text {
+position: absolute;
+bottom: 50px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 4px;
+font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="text">LO INNOMBRABLE SE NOMBRA SOLO</div>
+<script>
+const b = document.body;
+const symbols = ['א', 'Ω', '∞', '※', '◈', '❋', '✦'];
+const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+function c(cls, st) {
+const e = document.createElement(‘div’);
+e.className = cls;
+if(st) Object.assign(e.style, st);
+b.appendChild(e);
+setTimeout(() => e.remove(), 15000);
+}
+
+setInterval(() => {
+c(‘unnamed’, {
+textContent: ‘____’,
+left: ‘50%’,
+top: ‘50%’,
+‘–x’: (Math.random() - 0.5) * 200 + ‘px’,
+‘–y’: (Math.random() - 0.5) * 200 + ‘px’
+});
+
+c(‘symbol’, {
+textContent: symbols[Math.floor(Math.random() * symbols.length)],
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’
+});
+
+if(Math.random() > 0.5) {
+c(‘letter’, {
+textContent: letters[Math.floor(Math.random() * letters.length)],
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+‘–lx’: (Math.random() - 0.5) * 100 + ‘px’,
+‘–ly’: (Math.random() - 0.5) * 100 + ‘px’
+});
+}
+
+if(Math.random() > 0.8) {
+c(‘essence’, {
+left: ‘50%’,
+top: ‘50%’,
+transform: ‘translate(-50%, -50%)’
+});
+}
+}, 2500);
+
+b.addEventListener(‘click’, e => {
+// Formar un nombre que se desvanece
+const name = ‘___’;
+for(let i = 0; i < name.length; i++) {
+setTimeout(() => {
+c(‘unnamed’, {
+textContent: name[i],
+left: e.clientX + i * 20 - 30 + ‘px’,
+top: e.clientY + ‘px’,
+animation: ‘unnamed-drift 3s ease-out forwards’
+});
+}, i * 100);
+}
+});
+</script>
+
+</body>
+</html>
