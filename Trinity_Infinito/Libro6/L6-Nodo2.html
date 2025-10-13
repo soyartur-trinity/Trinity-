@@ -1,1 +1,377 @@
-en desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravedad del Corazón</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        background: linear-gradient(135deg, #0a0020, #200040);
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1000px;
+    }
+    
+    .gravity-container {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        transform-style: preserve-3d;
+        animation: universeRotate 40s infinite linear;
+    }
+    
+    @keyframes universeRotate {
+        from { transform: rotateX(0deg) rotateY(0deg); }
+        to { transform: rotateX(360deg) rotateY(360deg); }
+    }
+    
+    .love-center {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle,
+            rgba(255,20,147,1) 0%,
+            rgba(255,20,147,0.7) 30%,
+            rgba(255,20,147,0.3) 60%,
+            transparent 100%);
+        border-radius: 50%;
+        box-shadow: 0 0 100px rgba(255,20,147,0.8),
+                    0 0 200px rgba(255,20,147,0.5);
+        animation: gravityPulse 3s infinite;
+    }
+    
+    @keyframes gravityPulse {
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+            box-shadow: 0 0 100px rgba(255,20,147,0.8),
+                       0 0 200px rgba(255,20,147,0.5);
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.3);
+            box-shadow: 0 0 150px rgba(255,20,147,1),
+                       0 0 300px rgba(255,20,147,0.7);
+        }
+    }
+    
+    .orbiting-heart {
+        position: absolute;
+        width: 30px;
+        height: 27px;
+        animation: orbit 10s infinite linear;
+        transform-style: preserve-3d;
+    }
+    
+    .orbiting-heart::before,
+    .orbiting-heart::after {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 25px;
+        background: rgba(255,100,150,0.8);
+        border-radius: 15px 15px 0 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+        left: 15px;
+        top: 0;
+    }
+    
+    .orbiting-heart::after {
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+    }
+    
+    @keyframes orbit {
+        from {
+            transform: rotateZ(0deg) translateX(var(--orbit-radius)) rotateZ(0deg) rotateY(0deg);
+        }
+        to {
+            transform: rotateZ(360deg) translateX(var(--orbit-radius)) rotateZ(-360deg) rotateY(360deg);
+        }
+    }
+    
+    .gravity-field {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: repeating-radial-gradient(
+            circle at center,
+            transparent 0px,
+            transparent 30px,
+            rgba(255,20,147,0.05) 30px,
+            rgba(255,20,147,0.05) 31px
+        );
+        animation: fieldWarp 10s infinite linear;
+    }
+    
+    @keyframes fieldWarp {
+        0% { transform: scale(1) rotate(0deg); }
+        100% { transform: scale(1.5) rotate(360deg); }
+    }
+    
+    .attraction-line {
+        position: absolute;
+        width: 1px;
+        background: linear-gradient(to right,
+            transparent,
+            rgba(255,100,200,0.5),
+            transparent);
+        transform-origin: left center;
+        animation: attractionPulse 2s infinite;
+    }
+    
+    @keyframes attractionPulse {
+        0%, 100% {
+            opacity: 0.3;
+            transform: scaleX(1);
+        }
+        50% {
+            opacity: 0.8;
+            transform: scaleX(1.2);
+        }
+    }
+    
+    .love-physics {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 16px;
+        color: gold;
+        text-shadow: 0 0 10px gold;
+        animation: physicsFade 8s infinite;
+    }
+    
+    @keyframes physicsFade {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+    }
+    
+    .gravity-wisdom {
+        position: absolute;
+        bottom: 8%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 18px;
+        color: rgba(255,100,200,0.9);
+        text-shadow: 0 0 20px rgba(255,20,147,0.8);
+        animation: wisdomFloat 6s infinite;
+        width: 85%;
+        z-index: 100;
+    }
+    
+    @keyframes wisdomFloat {
+        0%, 100% {
+            transform: translateX(-50%) translateY(5px);
+            opacity: 0.6;
+        }
+        50% {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="gravityCanvas"></canvas>
+
+```
+<div class="love-physics">
+    F = G(m₁♡m₂)/r²<br>
+    La ecuación oculta del universo
+</div>
+
+<div class="gravity-container">
+    <div class="gravity-field"></div>
+    <div class="love-center"></div>
+</div>
+
+<div class="gravity-wisdom">
+    No es la masa lo que curva el espacio-tiempo<br>
+    Es el amor inherente en cada partícula<br>
+    Atrayendo todo hacia la unidad
+</div>
+
+<script>
+    // Canvas para las líneas de gravedad
+    const canvas = document.getElementById('gravityCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    
+    // Sistema de partículas gravitacionales
+    const particles = [];
+    
+    class GravityParticle {
+        constructor() {
+            this.reset();
+        }
+        
+        reset() {
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 300 + 100;
+            this.x = centerX + Math.cos(angle) * distance;
+            this.y = centerY + Math.sin(angle) * distance;
+            this.vx = (Math.random() - 0.5) * 2;
+            this.vy = (Math.random() - 0.5) * 2;
+            this.size = Math.random() * 3 + 1;
+        }
+        
+        update() {
+            // Atracción hacia el centro
+            const dx = centerX - this.x;
+            const dy = centerY - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance > 5) {
+                const force = 50 / (distance * distance);
+                this.vx += (dx / distance) * force;
+                this.vy += (dy / distance) * force;
+            }
+            
+            // Fricción
+            this.vx *= 0.98;
+            this.vy *= 0.98;
+            
+            this.x += this.vx;
+            this.y += this.vy;
+            
+            // Reset si llega muy cerca del centro
+            if (distance < 10) {
+                this.reset();
+            }
+        }
+        
+        draw() {
+            // Línea de atracción
+            ctx.strokeStyle = `rgba(255, 100, 200, ${0.2 * (1 - Math.min(1, Math.hypot(centerX - this.x, centerY - this.y) / 300))})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(centerX, centerY);
+            ctx.stroke();
+            
+            // Partícula
+            ctx.fillStyle = 'rgba(255, 100, 200, 0.8)';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    
+    // Crear partículas
+    for (let i = 0; i < 50; i++) {
+        particles.push(new GravityParticle());
+    }
+    
+    function animateGravity() {
+        ctx.fillStyle = 'rgba(10, 0, 32, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        
+        requestAnimationFrame(animateGravity);
+    }
+    
+    animateGravity();
+    
+    // Crear corazones orbitando
+    const container = document.querySelector('.gravity-container');
+    
+    for (let i = 0; i < 8; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'orbiting-heart';
+        heart.style.left = '50%';
+        heart.style.top = '50%';
+        heart.style.setProperty('--orbit-radius', (100 + i * 30) + 'px');
+        heart.style.animationDelay = i * 1.25 + 's';
+        heart.style.animationDuration = (8 + i * 2) + 's';
+        container.appendChild(heart);
+    }
+    
+    // Crear líneas de atracción
+    for (let i = 0; i < 12; i++) {
+        const line = document.createElement('div');
+        line.className = 'attraction-line';
+        const angle = (i / 12) * Math.PI * 2;
+        const length = 200;
+        
+        line.style.width = length + 'px';
+        line.style.height = '1px';
+        line.style.left = '50%';
+        line.style.top = '50%';
+        line.style.transform = `translate(-50%, -50%) rotate(${angle}rad)`;
+        line.style.animationDelay = i * 0.16 + 's';
+        
+        container.appendChild(line);
+    }
+    
+    // Sabiduría gravitacional cambiante
+    const wisdoms = [
+        "No es la masa lo que curva el espacio-tiempo<br>Es el amor inherente en cada partícula<br>Atrayendo todo hacia la unidad",
+        "La gravedad es amor disfrazado de física<br>Por eso nada puede escapar<br>Ni siquiera la luz",
+        "Los planetas orbitan soles<br>Los electrones orbitan núcleos<br>Todo danza alrededor del amor",
+        "Einstein lo llamó curvatura<br>Los místicos lo llaman atracción divina<br>Es lo mismo: el universo amándose",
+        "No caes hacia la Tierra<br>La Tierra y tú se abrazan<br>En el campo gravitacional del amor"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+        document.querySelector('.gravity-wisdom').innerHTML = wisdoms[wisdomIndex];
+    }, 6000);
+    
+    // Cambiar ecuación de física
+    const equations = [
+        'F = G(m₁♡m₂)/r²<br>La ecuación oculta del universo',
+        'Gravedad = Amor / Distancia²<br>La ley fundamental',
+        'E = mc² = Amor × Conciencia²<br>La trinidad de Einstein',
+        'Atracción ∝ Amor<br>Repulsión = Ilusión',
+        '∇ × Amor = ∞<br>El campo es infinito'
+    ];
+    
+    let eqIndex = 0;
+    setInterval(() => {
+        eqIndex = (eqIndex + 1) % equations.length;
+        document.querySelector('.love-physics').innerHTML = equations[eqIndex];
+    }, 8000);
+</script>
+```
+
+</body>
+</html>
