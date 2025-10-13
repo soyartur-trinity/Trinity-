@@ -1,1 +1,334 @@
-Contenido en desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autosimilitud Total</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+    body {
+        background: black;
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .similarity-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .golden-spiral {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border: 2px solid gold;
+        border-radius: 50%;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        animation: spiralRotate 10s infinite linear;
+    }
+    
+    @keyframes spiralRotate {
+        from { transform: rotate(0deg) scale(1); }
+        to { transform: rotate(360deg) scale(1); }
+    }
+    
+    .fibonacci-square {
+        position: absolute;
+        border: 1px solid rgba(255,215,0,0.5);
+        animation: fibPulse 8s infinite;
+    }
+    
+    @keyframes fibPulse {
+        0%, 100% {
+            transform: scale(1) rotate(0deg);
+            opacity: 0.3;
+        }
+        50% {
+            transform: scale(1.1) rotate(90deg);
+            opacity: 0.8;
+        }
+    }
+    
+    .self-similar-text {
+        position: absolute;
+        font-size: var(--size);
+        color: rgba(255,255,255,0.8);
+        animation: selfEcho 12s infinite;
+        text-shadow: 0 0 10px currentColor;
+    }
+    
+    @keyframes selfEcho {
+        0% {
+            transform: translate(-50%, -50%) scale(0.1);
+            opacity: 0;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(10);
+            opacity: 0;
+        }
+    }
+    
+    .dna-helix {
+        position: absolute;
+        width: 100px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .dna-strand {
+        position: absolute;
+        width: 4px;
+        height: 20px;
+        background: linear-gradient(45deg, #00ffff, #ff00ff);
+        border-radius: 50%;
+        animation: helixRotate 4s infinite linear;
+    }
+    
+    @keyframes helixRotate {
+        0% {
+            transform: rotateY(0deg) translateZ(30px);
+        }
+        100% {
+            transform: rotateY(360deg) translateZ(30px);
+        }
+    }
+    
+    .pattern-echo {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center,
+            transparent 0%,
+            rgba(255,255,255,0.02) 25%,
+            transparent 50%,
+            rgba(255,255,255,0.02) 75%,
+            transparent 100%);
+        animation: echoExpand 6s infinite;
+    }
+    
+    @keyframes echoExpand {
+        0% {
+            transform: scale(0);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(3);
+            opacity: 0;
+        }
+    }
+    
+    .wisdom-similar {
+        position: absolute;
+        bottom: 8%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 18px;
+        color: gold;
+        text-shadow: 0 0 20px gold;
+        animation: wisdomGlow 5s infinite;
+        width: 85%;
+        z-index: 100;
+    }
+    
+    @keyframes wisdomGlow {
+        0%, 100% { 
+            opacity: 0.5;
+            filter: blur(1px);
+        }
+        50% { 
+            opacity: 1;
+            filter: blur(0px);
+        }
+    }
+    
+    .phi-symbol {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 64px;
+        color: gold;
+        text-shadow: 0 0 30px gold;
+        animation: phiRotate 20s infinite linear;
+    }
+    
+    @keyframes phiRotate {
+        from { transform: translateX(-50%) rotate(0deg); }
+        to { transform: translateX(-50%) rotate(360deg); }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+    }
+</style>
+
+
+</head>
+<body>
+    <canvas id="similarCanvas"></canvas>
+
+
+<div class="phi-symbol">φ</div>
+
+<div class="similarity-container">
+    <div class="golden-spiral"></div>
+    <div class="dna-helix"></div>
+    <div class="pattern-echo"></div>
+</div>
+
+<div class="wisdom-similar">
+    Como es arriba, es abajo<br>
+    Como es adentro, es afuera<br>
+    El patrón único danzando consigo mismo
+</div>
+
+<script>
+    // Canvas para patrones autosimilares
+    const canvas = document.getElementById('similarCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Función para dibujar triángulo de Sierpinski
+    function drawSierpinski(x, y, size, depth) {
+        if (depth === 0) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + size, y);
+            ctx.lineTo(x + size/2, y - size * 0.866);
+            ctx.closePath();
+            ctx.stroke();
+            return;
+        }
+        
+        const halfSize = size / 2;
+        drawSierpinski(x, y, halfSize, depth - 1);
+        drawSierpinski(x + halfSize, y, halfSize, depth - 1);
+        drawSierpinski(x + halfSize/2, y - halfSize * 0.866, halfSize, depth - 1);
+    }
+    
+    function animate() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const time = Date.now() * 0.0005;
+        ctx.strokeStyle = `hsla(${time * 30 % 360}, 100%, 50%, 0.3)`;
+        ctx.lineWidth = 1;
+        
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const size = 200 + Math.sin(time) * 50;
+        
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(time);
+        drawSierpinski(-size/2, size/2, size, 4);
+        ctx.restore();
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+    
+    // Crear cuadrados de Fibonacci
+    const container = document.querySelector('.similarity-container');
+    const fibSizes = [8, 13, 21, 34, 55, 89, 144];
+    
+    fibSizes.forEach((size, i) => {
+        const square = document.createElement('div');
+        square.className = 'fibonacci-square';
+        square.style.width = size * 2 + 'px';
+        square.style.height = size * 2 + 'px';
+        square.style.left = '50%';
+        square.style.top = '50%';
+        square.style.transform = `translate(-50%, -50%) rotate(${i * 45}deg)`;
+        square.style.animationDelay = i * 0.5 + 's';
+        container.appendChild(square);
+    });
+    
+    // Crear hélice de ADN
+    const helix = document.querySelector('.dna-helix');
+    for (let i = 0; i < 15; i++) {
+        const strand = document.createElement('div');
+        strand.className = 'dna-strand';
+        strand.style.top = i * 20 + 'px';
+        strand.style.animationDelay = i * 0.1 + 's';
+        helix.appendChild(strand);
+        
+        const strand2 = document.createElement('div');
+        strand2.className = 'dna-strand';
+        strand2.style.top = i * 20 + 'px';
+        strand2.style.animationDelay = (i * 0.1 + 2) + 's';
+        strand2.style.background = 'linear-gradient(45deg, #ffff00, #00ff00)';
+        helix.appendChild(strand2);
+    }
+    
+    // Textos autosimilares
+    const texts = ['TODO', 'EN', 'UNO', 'UNO', 'EN', 'TODO'];
+    texts.forEach((text, i) => {
+        const element = document.createElement('div');
+        element.className = 'self-similar-text';
+        element.textContent = text;
+        element.style.setProperty('--size', (8 + i * 4) + 'px');
+        element.style.left = '50%';
+        element.style.top = '50%';
+        element.style.animationDelay = i * 2 + 's';
+        container.appendChild(element);
+    });
+    
+    // Crear ecos de patrón
+    setInterval(() => {
+        const echo = document.createElement('div');
+        echo.className = 'pattern-echo';
+        container.appendChild(echo);
+        setTimeout(() => echo.remove(), 6000);
+    }, 2000);
+    
+    // Sabiduría cambiante
+    const wisdoms = [
+        "Como es arriba, es abajo<br>Como es adentro, es afuera<br>El patrón único danzando consigo mismo",
+        "En la semilla está el árbol<br>En el árbol, infinitas semillas<br>¿Dónde comienza el ciclo?",
+        "El ADN en cada célula<br>Contiene el plano completo<br>Cada parte es el todo",
+        "La proporción áurea<br>En la galaxia y en la flor<br>La misma espiral en todas partes",
+        "No hay copias, solo el original<br>Repitiéndose infinitamente<br>Siempre igual, siempre único"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+        document.querySelector('.wisdom-similar').innerHTML = wisdoms[wisdomIndex];
+    }, 5000);
+</script>
+
+
+</body>
+</html>
