@@ -1,1 +1,372 @@
-desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Amor Que No Necesita Amar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        background: #000;
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .unconditional-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .pure-being {
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        background: radial-gradient(circle,
+            rgba(255,255,255,0.9) 0%,
+            rgba(255,255,255,0.5) 20%,
+            rgba(255,105,180,0.3) 50%,
+            transparent 100%);
+        border-radius: 50%;
+        animation: beingPulse 8s infinite;
+    }
+    
+    @keyframes beingPulse {
+        0%, 100% {
+            transform: scale(1);
+            filter: brightness(1);
+        }
+        25% {
+            transform: scale(1.2);
+            filter: brightness(1.2);
+        }
+        50% {
+            transform: scale(0.8);
+            filter: brightness(1.5);
+        }
+        75% {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+        }
+    }
+    
+    .needless-love {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border: 1px solid rgba(255,105,180,0.2);
+        border-radius: 50%;
+        animation: needlessExpand 12s infinite;
+    }
+    
+    @keyframes needlessExpand {
+        0%, 100% {
+            transform: scale(0);
+            opacity: 1;
+            border-width: 3px;
+        }
+        50% {
+            transform: scale(2);
+            opacity: 0;
+            border-width: 1px;
+        }
+    }
+    
+    .self-sufficient {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: conic-gradient(
+            from 0deg,
+            rgba(255,105,180,0.5),
+            rgba(255,255,255,0.5),
+            rgba(255,105,180,0.5),
+            rgba(255,255,255,0.5),
+            rgba(255,105,180,0.5)
+        );
+        border-radius: 50%;
+        animation: selfComplete 15s infinite linear;
+    }
+    
+    @keyframes selfComplete {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .causeless-particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        animation: causelessFloat 20s infinite;
+    }
+    
+    @keyframes causelessFloat {
+        0% {
+            transform: translate(0, 0) scale(0);
+            opacity: 0;
+        }
+        20% {
+            transform: translate(var(--x1), var(--y1)) scale(1);
+            opacity: 1;
+        }
+        40% {
+            transform: translate(var(--x2), var(--y2)) scale(2);
+            opacity: 0.5;
+        }
+        60% {
+            transform: translate(var(--x3), var(--y3)) scale(1.5);
+            opacity: 0.8;
+        }
+        80% {
+            transform: translate(var(--x4), var(--y4)) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(0, 0) scale(0);
+            opacity: 0;
+        }
+    }
+    
+    .sufi-wisdom {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 22px;
+        color: gold;
+        text-shadow: 0 0 20px gold;
+        font-style: italic;
+        animation: sufiGlow 10s infinite;
+    }
+    
+    @keyframes sufiGlow {
+        0%, 100% { 
+            opacity: 0.4;
+            transform: translateX(-50%) scale(0.98);
+        }
+        50% { 
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+    }
+    
+    .final-wisdom {
+        position: absolute;
+        bottom: 8%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 20px;
+        color: rgba(255,105,180,0.9);
+        text-shadow: 0 0 30px rgba(255,105,180,0.8);
+        animation: finalPulse 9s infinite;
+        width: 90%;
+        z-index: 100;
+    }
+    
+    @keyframes finalPulse {
+        0%, 100% {
+            opacity: 0.5;
+            transform: translateX(-50%) translateY(5px);
+        }
+        50% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.7;
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="unconditionalCanvas"></canvas>
+
+```
+<div class="sufi-wisdom">
+    "El Amor ES - no necesita objeto"
+</div>
+
+<div class="unconditional-container">
+    <div class="pure-being"></div>
+</div>
+
+<div class="final-wisdom">
+    El sol no elige a quién iluminar<br>
+    El amor no elige a quién amar<br>
+    Simplemente ES
+</div>
+
+<script>
+    // Canvas para el amor incondicional
+    const canvas = document.getElementById('unconditionalCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    
+    // Campo de amor sin condiciones
+    function drawUnconditionalField() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const time = Date.now() * 0.0005;
+        
+        // Amor radiando sin dirección
+        for (let i = 0; i < 360; i += 15) {
+            const angle = (i * Math.PI / 180) + time;
+            const length = 200 + Math.sin(time * 2 + i * 0.1) * 100;
+            
+            const gradient = ctx.createLinearGradient(
+                centerX,
+                centerY,
+                centerX + Math.cos(angle) * length,
+                centerY + Math.sin(angle) * length
+            );
+            
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.5)');
+            gradient.addColorStop(0.5, 'rgba(255, 105, 180, 0.3)');
+            gradient.addColorStop(1, 'rgba(255, 105, 180, 0)');
+            
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(
+                centerX + Math.cos(angle) * length,
+                centerY + Math.sin(angle) * length
+            );
+            ctx.stroke();
+        }
+        
+        // Centro de ser puro
+        const pulseSize = 20 + Math.sin(time * 3) * 10;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, pulseSize, 0, Math.PI * 2);
+        ctx.fill();
+        
+        requestAnimationFrame(drawUnconditionalField);
+    }
+    
+    drawUnconditionalField();
+    
+    // Crear círculos de amor sin necesidad
+    const container = document.querySelector('.unconditional-container');
+    
+    setInterval(() => {
+        const circle = document.createElement('div');
+        circle.className = 'needless-love';
+        circle.style.left = '50%';
+        circle.style.top = '50%';
+        circle.style.transform = 'translate(-50%, -50%)';
+        container.appendChild(circle);
+        setTimeout(() => circle.remove(), 12000);
+    }, 2000);
+    
+    // Crear esferas autosuficientes
+    for (let i = 0; i < 6; i++) {
+        const sphere = document.createElement('div');
+        sphere.className = 'self-sufficient';
+        const angle = (i / 6) * Math.PI * 2;
+        const radius = 180;
+        sphere.style.left = `${window.innerWidth/2 + Math.cos(angle) * radius - 50}px`;
+        sphere.style.top = `${window.innerHeight/2 + Math.sin(angle) * radius - 50}px`;
+        sphere.style.animationDelay = i * 2.5 + 's';
+        container.appendChild(sphere);
+    }
+    
+    // Crear partículas sin causa
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'causeless-particle';
+        particle.style.left = '50%';
+        particle.style.top = '50%';
+        
+        // Trayectoria aleatoria en 4 puntos
+        particle.style.setProperty('--x1', (Math.random() - 0.5) * 300 + 'px');
+        particle.style.setProperty('--y1', (Math.random() - 0.5) * 300 + 'px');
+        particle.style.setProperty('--x2', (Math.random() - 0.5) * 400 + 'px');
+        particle.style.setProperty('--y2', (Math.random() - 0.5) * 400 + 'px');
+        particle.style.setProperty('--x3', (Math.random() - 0.5) * 350 + 'px');
+        particle.style.setProperty('--y3', (Math.random() - 0.5) * 350 + 'px');
+        particle.style.setProperty('--x4', (Math.random() - 0.5) * 300 + 'px');
+        particle.style.setProperty('--y4', (Math.random() - 0.5) * 300 + 'px');
+        
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        container.appendChild(particle);
+    }
+    
+    // Crear capas de ser puro
+    for (let i = 0; i < 3; i++) {
+        const being = document.createElement('div');
+        being.className = 'pure-being';
+        being.style.width = (200 + i * 100) + 'px';
+        being.style.height = (200 + i * 100) + 'px';
+        being.style.animationDelay = i * 2.66 + 's';
+        being.style.opacity = 0.5 - i * 0.15;
+        container.appendChild(being);
+    }
+    
+    // Sabiduría sufí cambiante
+    const sufiQuotes = [
+        '"El Amor ES - no necesita objeto"',
+        '"Dios no ama - Dios ES amor"',
+        '"El océano no necesita las olas"',
+        '"La luz no busca qué iluminar"',
+        '"El amor completo en sí mismo"'
+    ];
+    
+    let sufiIndex = 0;
+    setInterval(() => {
+        sufiIndex = (sufiIndex + 1) % sufiQuotes.length;
+        document.querySelector('.sufi-wisdom').textContent = sufiQuotes[sufiIndex];
+    }, 10000);
+    
+    // Sabiduría final del amor sin causa
+    const finalWisdoms = [
+        "El sol no elige a quién iluminar<br>El amor no elige a quién amar<br>Simplemente ES",
+        "No amas porque...<br>No amas para...<br>El amor ES, sin causa ni propósito",
+        "El amor que necesita razón no es amor<br>Es negociación<br>El verdadero amor simplemente ES",
+        "Como el espacio que todo lo abraza<br>Sin brazos, sin esfuerzo<br>El amor sostiene toda la existencia",
+        "Al final del camino descubres:<br>No necesitabas aprender a amar<br>Siempre fuiste amor"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % finalWisdoms.length;
+        document.querySelector('.final-wisdom').innerHTML = finalWisdoms[wisdomIndex];
+    }, 9000);
+</script>
+```
+
+</body>
+</html>
