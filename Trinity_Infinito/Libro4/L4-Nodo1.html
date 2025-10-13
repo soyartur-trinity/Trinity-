@@ -1,1 +1,263 @@
-Contenido en desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Fractal Primordial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        background: #000;
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        perspective: 1500px;
+    }
+    
+    .fractal-container {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        transform-style: preserve-3d;
+        animation: rotateSpace 30s infinite linear;
+    }
+    
+    @keyframes rotateSpace {
+        from { transform: rotateY(0deg) rotateX(0deg); }
+        to { transform: rotateY(360deg) rotateX(360deg); }
+    }
+    
+    .fractal-level {
+        position: absolute;
+        border: 2px solid;
+        border-radius: 50%;
+        transform-style: preserve-3d;
+        animation: pulse 4s infinite alternate;
+    }
+    
+    @keyframes pulse {
+        0% { 
+            transform: scale(1) rotateZ(0deg);
+            filter: hue-rotate(0deg);
+        }
+        100% { 
+            transform: scale(1.2) rotateZ(180deg);
+            filter: hue-rotate(360deg);
+        }
+    }
+    
+    .level-1 {
+        width: 100%;
+        height: 100%;
+        border-color: #ff00ff;
+        box-shadow: 0 0 50px #ff00ff, inset 0 0 50px #ff00ff;
+    }
+    
+    .level-2 {
+        width: 70%;
+        height: 70%;
+        top: 15%;
+        left: 15%;
+        border-color: #00ffff;
+        box-shadow: 0 0 40px #00ffff, inset 0 0 40px #00ffff;
+        animation-delay: 0.5s;
+    }
+    
+    .level-3 {
+        width: 49%;
+        height: 49%;
+        top: 25.5%;
+        left: 25.5%;
+        border-color: #ffff00;
+        box-shadow: 0 0 30px #ffff00, inset 0 0 30px #ffff00;
+        animation-delay: 1s;
+    }
+    
+    .level-4 {
+        width: 34.3%;
+        height: 34.3%;
+        top: 32.85%;
+        left: 32.85%;
+        border-color: #ff00ff;
+        box-shadow: 0 0 20px #ff00ff, inset 0 0 20px #ff00ff;
+        animation-delay: 1.5s;
+    }
+    
+    .infinity-point {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: white;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 30px white, 0 0 60px white, 0 0 90px white;
+        animation: infinityPulse 2s infinite;
+    }
+    
+    @keyframes infinityPulse {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); }
+        50% { transform: translate(-50%, -50%) scale(2); }
+    }
+    
+    .wisdom-text {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 18px;
+        color: #fff;
+        text-shadow: 0 0 20px rgba(255,255,255,0.8);
+        animation: fadeInOut 6s infinite;
+        width: 90%;
+        z-index: 100;
+    }
+    
+    @keyframes fadeInOut {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+    }
+    
+    .particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        animation: float 10s infinite linear;
+    }
+    
+    @keyframes float {
+        from {
+            transform: translate(0, 0) scale(0);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        to {
+            transform: translate(var(--endX), var(--endY)) scale(2);
+            opacity: 0;
+        }
+    }
+    
+    .sacred-symbol {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 48px;
+        animation: rotate 10s infinite linear;
+        color: gold;
+        text-shadow: 0 0 30px gold;
+    }
+    
+    @keyframes rotate {
+        from { transform: translateX(-50%) rotate(0deg); }
+        to { transform: translateX(-50%) rotate(360deg); }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="sacred-symbol">∞</div>
+
+```
+<div class="fractal-container">
+    <div class="fractal-level level-1"></div>
+    <div class="fractal-level level-2"></div>
+    <div class="fractal-level level-3"></div>
+    <div class="fractal-level level-4"></div>
+    <div class="infinity-point"></div>
+</div>
+
+<div class="wisdom-text">
+    "En cada átomo danza un universo completo<br>
+    En cada universo, infinitos átomos danzan<br>
+    La escala es ilusión - Todo contiene todo"
+</div>
+
+<script>
+    // Crear partículas fractales
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        const startX = Math.random() * window.innerWidth;
+        const startY = Math.random() * window.innerHeight;
+        const endX = (Math.random() - 0.5) * 1000;
+        const endY = (Math.random() - 0.5) * 1000;
+        
+        particle.style.left = startX + 'px';
+        particle.style.top = startY + 'px';
+        particle.style.setProperty('--endX', endX + 'px');
+        particle.style.setProperty('--endY', endY + 'px');
+        particle.style.animationDelay = Math.random() * 10 + 's';
+        particle.style.animationDuration = (5 + Math.random() * 10) + 's';
+        
+        document.body.appendChild(particle);
+        
+        setTimeout(() => particle.remove(), 15000);
+    }
+    
+    // Generar partículas continuamente
+    setInterval(createParticle, 200);
+    
+    // Textos de sabiduría fractal
+    const wisdoms = [
+        "En cada átomo danza un universo completo<br>En cada universo, infinitos átomos danzan<br>La escala es ilusión - Todo contiene todo",
+        "El patrón que se repite en lo pequeño<br>Es el mismo que gobierna lo grande<br>Como es arriba, es abajo",
+        "Cada parte contiene el todo<br>El todo está en cada parte<br>No hay fragmentos, solo hologramas",
+        "La gota contiene el océano<br>El océano está en la gota<br>¿Dónde comienza uno y termina el otro?",
+        "Zoom infinito hacia adentro<br>Expansión infinita hacia afuera<br>El mismo paisaje en todas las escalas"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+        document.querySelector('.wisdom-text').innerHTML = wisdoms[wisdomIndex];
+    }, 6000);
+    
+    // Crear más niveles fractales dinámicamente
+    function createFractalLevel(size, delay) {
+        const level = document.createElement('div');
+        level.className = 'fractal-level';
+        level.style.width = size + '%';
+        level.style.height = size + '%';
+        level.style.top = (50 - size/2) + '%';
+        level.style.left = (50 - size/2) + '%';
+        level.style.borderColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        level.style.animationDelay = delay + 's';
+        level.style.boxShadow = `0 0 ${size/2}px currentColor, inset 0 0 ${size/2}px currentColor`;
+        
+        document.querySelector('.fractal-container').appendChild(level);
+        
+        setTimeout(() => level.remove(), 8000);
+    }
+    
+    // Generar niveles fractales adicionales
+    setInterval(() => {
+        createFractalLevel(Math.random() * 80 + 10, Math.random() * 2);
+    }, 3000);
+</script>
+```
+
+</body>
+</html>
