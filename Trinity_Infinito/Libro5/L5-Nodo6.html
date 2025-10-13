@@ -1,1 +1,382 @@
-En desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Presente Eterno</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        background: #000;
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1500px;
+    }
+    
+    .eternal-now {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .now-point {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 0 100px white, 0 0 200px white, 0 0 300px white;
+        animation: nowPulse 3s infinite;
+    }
+    
+    @keyframes nowPulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 0 100px white, 0 0 200px white, 0 0 300px white;
+        }
+        50% {
+            transform: scale(1.5);
+            box-shadow: 0 0 200px white, 0 0 400px white, 0 0 600px rgba(255,255,255,0.5);
+        }
+    }
+    
+    .time-ring {
+        position: absolute;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 50%;
+        animation: timeExpand 4s infinite;
+    }
+    
+    @keyframes timeExpand {
+        0% {
+            width: 20px;
+            height: 20px;
+            opacity: 1;
+        }
+        100% {
+            width: 600px;
+            height: 600px;
+            opacity: 0;
+        }
+    }
+    
+    .past-ghost {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background: radial-gradient(circle, 
+            rgba(100,100,255,0.5), 
+            transparent);
+        border-radius: 50%;
+        animation: pastFade 8s infinite;
+    }
+    
+    @keyframes pastFade {
+        0% {
+            transform: translateX(-300px) scale(1);
+            opacity: 0;
+        }
+        50% {
+            transform: translateX(0) scale(1);
+            opacity: 0.5;
+        }
+        100% {
+            transform: translateX(300px) scale(0);
+            opacity: 0;
+        }
+    }
+    
+    .future-shadow {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background: radial-gradient(circle, 
+            rgba(255,100,100,0.5), 
+            transparent);
+        border-radius: 50%;
+        animation: futureFade 8s infinite;
+    }
+    
+    @keyframes futureFade {
+        0% {
+            transform: translateX(300px) scale(1);
+            opacity: 0;
+        }
+        50% {
+            transform: translateX(0) scale(1);
+            opacity: 0.5;
+        }
+        100% {
+            transform: translateX(-300px) scale(0);
+            opacity: 0;
+        }
+    }
+    
+    .eternal-text {
+        position: absolute;
+        font-size: 24px;
+        color: gold;
+        text-shadow: 0 0 20px gold;
+        animation: eternalFloat 10s infinite;
+    }
+    
+    @keyframes eternalFloat {
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+    }
+    
+    .moment-particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        animation: momentDrift 6s infinite;
+    }
+    
+    @keyframes momentDrift {
+        0% {
+            transform: translate(0, 0) scale(0);
+            opacity: 0;
+        }
+        50% {
+            transform: translate(var(--driftX), var(--driftY)) scale(2);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(calc(var(--driftX) * 2), calc(var(--driftY) * 2)) scale(0);
+            opacity: 0;
+        }
+    }
+    
+    .clock-illusion {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border: 2px solid rgba(255,255,255,0.1);
+        border-radius: 50%;
+        animation: clockDissolve 12s infinite;
+    }
+    
+    @keyframes clockDissolve {
+        0%, 100% {
+            transform: rotate(0deg);
+            opacity: 0.5;
+            border-style: solid;
+        }
+        50% {
+            transform: rotate(180deg);
+            opacity: 0.1;
+            border-style: dashed;
+        }
+    }
+    
+    .eternal-wisdom {
+        position: absolute;
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 20px;
+        color: #fff;
+        text-shadow: 0 0 30px rgba(255,255,255,0.8);
+        animation: wisdomPresent 6s infinite;
+        width: 85%;
+        z-index: 100;
+    }
+    
+    @keyframes wisdomPresent {
+        0%, 100% {
+            opacity: 0.3;
+            transform: translateX(-50%) scale(0.95);
+        }
+        50% {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.4;
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="nowCanvas"></canvas>
+
+```
+<div class="eternal-now">
+    <div class="clock-illusion"></div>
+    <div class="now-point"></div>
+</div>
+
+<div class="eternal-wisdom">
+    No hay pasado, no hay futuro<br>
+    Solo este momento eterno<br>
+    Donde la muerte nunca puede entrar
+</div>
+
+<script>
+    // Canvas para el presente eterno
+    const canvas = document.getElementById('nowCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    
+    // Dibujar el flujo temporal
+    function drawTimeFlow() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const time = Date.now() * 0.001;
+        
+        // Líneas de tiempo convergentes
+        for (let i = 0; i < 12; i++) {
+            const angle = (i / 12) * Math.PI * 2;
+            const startRadius = 300 + Math.sin(time + i) * 50;
+            const endRadius = 10;
+            
+            const startX = centerX + Math.cos(angle) * startRadius;
+            const startY = centerY + Math.sin(angle) * startRadius;
+            const endX = centerX + Math.cos(angle) * endRadius;
+            const endY = centerY + Math.sin(angle) * endRadius;
+            
+            const gradient = ctx.createLinearGradient(startX, startY, endX, endY);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0.5)');
+            
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+        }
+        
+        requestAnimationFrame(drawTimeFlow);
+    }
+    
+    drawTimeFlow();
+    
+    // Crear anillos de tiempo
+    const container = document.querySelector('.eternal-now');
+    
+    setInterval(() => {
+        const ring = document.createElement('div');
+        ring.className = 'time-ring';
+        ring.style.left = '50%';
+        ring.style.top = '50%';
+        ring.style.transform = 'translate(-50%, -50%)';
+        container.appendChild(ring);
+        
+        setTimeout(() => ring.remove(), 4000);
+    }, 500);
+    
+    // Crear fantasmas del pasado
+    for (let i = 0; i < 5; i++) {
+        const ghost = document.createElement('div');
+        ghost.className = 'past-ghost';
+        ghost.style.left = '50%';
+        ghost.style.top = (30 + i * 10) + '%';
+        ghost.style.animationDelay = i * 1.6 + 's';
+        container.appendChild(ghost);
+    }
+    
+    // Crear sombras del futuro
+    for (let i = 0; i < 5; i++) {
+        const shadow = document.createElement('div');
+        shadow.className = 'future-shadow';
+        shadow.style.left = '50%';
+        shadow.style.top = (30 + i * 10) + '%';
+        shadow.style.animationDelay = i * 1.6 + 's';
+        container.appendChild(shadow);
+    }
+    
+    // Textos eternos flotantes
+    const eternalWords = ['AHORA', 'NOW', 'MAINTENANT', 'JETZT', '今'];
+    eternalWords.forEach((word, i) => {
+        const text = document.createElement('div');
+        text.className = 'eternal-text';
+        text.textContent = word;
+        text.style.left = '50%';
+        text.style.top = '50%';
+        text.style.animationDelay = i * 2 + 's';
+        container.appendChild(text);
+    });
+    
+    // Partículas del momento
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'moment-particle';
+        particle.style.left = '50%';
+        particle.style.top = '50%';
+        particle.style.setProperty('--driftX', (Math.random() - 0.5) * 400 + 'px');
+        particle.style.setProperty('--driftY', (Math.random() - 0.5) * 400 + 'px');
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        container.appendChild(particle);
+    }
+    
+    // Manecillas del reloj que se disuelven
+    for (let i = 0; i < 3; i++) {
+        const hand = document.createElement('div');
+        hand.style.position = 'absolute';
+        hand.style.width = '2px';
+        hand.style.height = (100 + i * 50) + 'px';
+        hand.style.background = `rgba(255, 255, 255, ${0.3 - i * 0.1})`;
+        hand.style.left = '50%';
+        hand.style.top = '50%';
+        hand.style.transformOrigin = 'bottom center';
+        hand.style.transform = `translateX(-50%) translateY(-100%) rotate(${i * 120}deg)`;
+        hand.style.animation = `clockDissolve ${4 + i * 2}s infinite`;
+        container.appendChild(hand);
+    }
+    
+    // Sabiduría del presente eterno
+    const wisdoms = [
+        "No hay pasado, no hay futuro<br>Solo este momento eterno<br>Donde la muerte nunca puede entrar",
+        "El ahora es todo lo que existe<br>El ahora es todo lo que existió<br>El ahora es todo lo que existirá",
+        "En este instante está la eternidad<br>En este punto, todo el tiempo<br>Aquí y ahora, siempre",
+        "La muerte existe en el tiempo<br>Pero el presente es atemporal<br>Aquí, eres inmortal",
+        "Cada momento muere para dar paso al siguiente<br>Pero el Ahora nunca muere<br>Es el escenario inmutable de todo cambio"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+        document.querySelector('.eternal-wisdom').innerHTML = wisdoms[wisdomIndex];
+    }, 6000);
+</script>
+```
+
+</body>
+</html>
