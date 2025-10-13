@@ -1,1 +1,116 @@
-desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>El Artista Ausente - Trinity Infinito</title>
+<style>
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #0a0a0a, #1a0a1a);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.brush {
+position: absolute;
+width: 200px;
+height: 2px;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+animation: paint 8s infinite;
+}
+
+@keyframes paint {
+0% { transform: rotate(0deg) translateX(0) scale(0); opacity: 0; }
+50% { transform: rotate(180deg) translateX(100px) scale(2); opacity: 0.8; }
+100% { transform: rotate(360deg) translateX(0) scale(0); opacity: 0; }
+}
+
+.frame {
+width: 400px;
+height: 400px;
+border: 2px solid rgba(255,255,255,0.1);
+animation: float 15s ease-in-out infinite;
+}
+
+@keyframes float {
+0%, 100% { transform: rotateY(0deg) rotateX(0deg); }
+50% { transform: rotateY(20deg) rotateX(10deg); }
+}
+
+.splash {
+position: absolute;
+width: 80px;
+height: 80px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(255,100,200,0.3), transparent);
+filter: blur(20px);
+animation: appear 10s infinite;
+}
+
+@keyframes appear {
+0%, 100% { transform: scale(0); opacity: 0; }
+50% { transform: scale(3); opacity: 0.6; }
+}
+
+.text {
+position: absolute;
+bottom: 50px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 4px;
+font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="frame"></div>
+<div class="text">EL ARTE SE PINTA SOLO</div>
+<script>
+const b = document.body;
+let n = 0;
+
+function create(cls, s) {
+const e = document.createElement(‘div’);
+e.className = cls;
+if(s) Object.assign(e.style, s);
+b.appendChild(e);
+setTimeout(() => e.remove(), 10000);
+}
+
+setInterval(() => {
+n++;
+create(‘brush’, {
+left: 20 + Math.random() * 60 + ‘%’,
+top: 20 + Math.random() * 60 + ‘%’,
+transform: `rotate(${n * 45}deg)`,
+animationDelay: Math.random() * 8 + ‘s’
+});
+if(n % 3 === 0) {
+create(‘splash’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+animationDelay: Math.random() * 10 + ‘s’
+});
+}
+}, 2000);
+
+b.addEventListener(‘click’, e => {
+for(let i = 0; i < 5; i++) {
+setTimeout(() => {
+create(‘brush’, {
+left: e.clientX + ‘px’,
+top: e.clientY + ‘px’,
+transform: `rotate(${i * 72}deg)`,
+animation: ‘paint 2s ease-out forwards’
+});
+}, i * 100);
+}
+});
+</script>
+
+</body>
+</html>
