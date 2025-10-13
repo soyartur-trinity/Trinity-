@@ -1,1 +1,142 @@
+<!DOCTYPE html>
 
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>La Escritura Antes del Alfabeto - Trinity Infinito</title>
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(ellipse, #0a0a15, #000);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.proto-glyph {
+position: absolute;
+width: 30px;
+height: 30px;
+border: 1px solid rgba(255,255,255,0.3);
+animation: glyph-form 12s infinite;
+}
+
+@keyframes glyph-form {
+0% { transform: rotate(0deg) scale(0); opacity: 0; clip-path: circle(50%); }
+25% { transform: rotate(90deg) scale(1); opacity: 0.5; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+50% { transform: rotate(180deg) scale(1.2); opacity: 0.3; clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); }
+75% { transform: rotate(270deg) scale(0.8); opacity: 0.5; clip-path: circle(30%); }
+100% { transform: rotate(360deg) scale(0); opacity: 0; clip-path: circle(50%); }
+}
+
+.pre-letter {
+position: absolute;
+width: 2px;
+height: 20px;
+background: rgba(255,255,255,0.4);
+animation: pre-script 8s infinite;
+}
+
+@keyframes pre-script {
+0% { transform: scaleY(0) rotate(0deg); opacity: 0; }
+50% { transform: scaleY(1) rotate(var(–angle)); opacity: 0.6; }
+100% { transform: scaleY(0) rotate(calc(var(–angle) * 2)); opacity: 0; }
+}
+
+.ancient-mark {
+position: absolute;
+width: 50px;
+height: 50px;
+background: radial-gradient(circle, rgba(200,150,100,0.2), transparent);
+border-radius: 50%;
+animation: mark-appear 10s infinite;
+}
+
+@keyframes mark-appear {
+0%, 100% { transform: scale(0); opacity: 0; }
+50% { transform: scale(1); opacity: 0.3; }
+}
+
+.script-wave {
+position: absolute;
+width: 100%;
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+animation: wave-write 6s linear infinite;
+}
+
+@keyframes wave-write {
+0% { transform: translateX(-100%) scaleY(1); }
+100% { transform: translateX(100%) scaleY(1); }
+}
+
+.text {
+position: absolute;
+bottom: 50px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 4px;
+font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="text">EL TRAZO PRECEDE A LA LETRA</div>
+<script>
+const b = document.body;
+
+function c(cls, st) {
+const e = document.createElement(‘div’);
+e.className = cls;
+if(st) Object.assign(e.style, st);
+b.appendChild(e);
+setTimeout(() => e.remove(), 12000);
+}
+
+setInterval(() => {
+c(‘proto-glyph’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+animationDelay: Math.random() * 12 + ‘s’
+});
+
+c(‘pre-letter’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+‘–angle’: Math.random() * 360 + ‘deg’,
+height: 10 + Math.random() * 30 + ‘px’
+});
+
+if(Math.random() > 0.6) {
+c(‘ancient-mark’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’
+});
+}
+
+if(Math.random() > 0.7) {
+c(‘script-wave’, {
+top: Math.random() * 100 + ‘%’
+});
+}
+}, 2000);
+
+b.addEventListener(‘click’, e => {
+// Crear escritura primordial
+for(let i = 0; i < 8; i++) {
+const angle = (i / 8) * Math.PI * 2;
+const radius = 50;
+c(‘pre-letter’, {
+left: e.clientX + Math.cos(angle) * radius + ‘px’,
+top: e.clientY + Math.sin(angle) * radius + ‘px’,
+transform: `rotate(${angle * 180 / Math.PI}deg)`,
+animation: ‘pre-script 2s ease-out forwards’
+});
+}
+});
+</script>
+
+</body>
+</html>
