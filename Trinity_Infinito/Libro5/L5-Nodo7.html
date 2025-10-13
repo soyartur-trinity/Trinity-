@@ -1,1 +1,399 @@
-En desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Vida Sin Opuesto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        background: radial-gradient(circle at center, #001122, #000);
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .undying-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+    }
+    
+    .life-sphere {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle,
+            rgba(0,255,150,0.8) 0%,
+            rgba(0,255,150,0.4) 30%,
+            rgba(0,255,150,0.2) 60%,
+            transparent 100%);
+        border-radius: 50%;
+        animation: lifePulse 5s infinite;
+    }
+    
+    @keyframes lifePulse {
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+            filter: brightness(1);
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.3);
+            filter: brightness(1.5);
+        }
+    }
+    
+    .beyond-duality {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: beyondRotate 20s infinite linear;
+    }
+    
+    @keyframes beyondRotate {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    .unity-symbol {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: conic-gradient(
+            from 0deg,
+            rgba(255,255,255,0.8),
+            rgba(0,0,0,0.8),
+            rgba(255,255,255,0.8)
+        );
+        border-radius: 50%;
+        animation: unityMerge 8s infinite;
+    }
+    
+    @keyframes unityMerge {
+        0%, 100% {
+            transform: scale(1) rotate(0deg);
+            filter: blur(0px);
+        }
+        50% {
+            transform: scale(1.5) rotate(180deg);
+            filter: blur(2px);
+        }
+    }
+    
+    .eternal-life {
+        position: absolute;
+        width: 2px;
+        background: linear-gradient(to top,
+            transparent,
+            rgba(0,255,150,1),
+            transparent);
+        animation: lifeStream 4s infinite linear;
+    }
+    
+    @keyframes lifeStream {
+        from {
+            height: 0;
+            opacity: 0;
+        }
+        50% {
+            height: 200px;
+            opacity: 1;
+        }
+        to {
+            height: 0;
+            opacity: 0;
+        }
+    }
+    
+    .no-opposite {
+        position: absolute;
+        font-size: 72px;
+        color: rgba(255,255,255,0.1);
+        font-weight: bold;
+        animation: noOpposite 10s infinite;
+    }
+    
+    @keyframes noOpposite {
+        0%, 100% {
+            transform: scale(1) rotate(0deg);
+            opacity: 0.1;
+        }
+        50% {
+            transform: scale(2) rotate(180deg);
+            opacity: 0;
+        }
+    }
+    
+    .consciousness-field {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: repeating-radial-gradient(
+            circle at center,
+            transparent 0px,
+            transparent 50px,
+            rgba(0,255,150,0.05) 50px,
+            rgba(0,255,150,0.05) 52px
+        );
+        animation: fieldExpand 10s infinite linear;
+    }
+    
+    @keyframes fieldExpand {
+        from { transform: scale(1); }
+        to { transform: scale(2); }
+    }
+    
+    .deathless-wisdom {
+        position: absolute;
+        bottom: 8%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 20px;
+        color: rgba(0,255,150,0.9);
+        text-shadow: 0 0 30px rgba(0,255,150,0.8);
+        animation: wisdomEternal 7s infinite;
+        width: 90%;
+        z-index: 100;
+    }
+    
+    @keyframes wisdomEternal {
+        0%, 100% {
+            opacity: 0.5;
+            transform: translateX(-50%) translateY(10px);
+        }
+        50% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="lifeCanvas"></canvas>
+
+```
+<div class="undying-container">
+    <div class="consciousness-field"></div>
+    <div class="beyond-duality"></div>
+    <div class="life-sphere"></div>
+    <div class="no-opposite">MUERTE</div>
+</div>
+
+<div class="deathless-wisdom">
+    La Vida con V mayúscula no tiene opuesto<br>
+    Lo que nace y muere son las formas<br>
+    La Vida misma es eterna, sin principio ni fin
+</div>
+
+<script>
+    // Canvas para el campo de vida
+    const canvas = document.getElementById('lifeCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Partículas de vida eterna
+    class LifeParticle {
+        constructor() {
+            this.reset();
+        }
+        
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = (Math.random() - 0.5) * 2;
+            this.speedY = (Math.random() - 0.5) * 2;
+            this.life = 1;
+            this.color = `hsl(${150 + Math.random() * 60}, 100%, 50%)`;
+        }
+        
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            
+            // Atracción hacia el centro
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const dx = centerX - this.x;
+            const dy = centerY - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance > 100) {
+                this.speedX += dx / distance * 0.05;
+                this.speedY += dy / distance * 0.05;
+            }
+            
+            // Rebote en los bordes
+            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            
+            // La vida nunca decae
+            this.life = 1;
+        }
+        
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = this.life * 0.8;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Halo de vida
+            ctx.strokeStyle = this.color;
+            ctx.globalAlpha = this.life * 0.3;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+    }
+    
+    const particles = [];
+    for (let i = 0; i < 100; i++) {
+        particles.push(new LifeParticle());
+    }
+    
+    function animateLife() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.globalAlpha = 1;
+        
+        // Dibujar conexiones entre partículas cercanas
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 100) {
+                    ctx.strokeStyle = `rgba(0, 255, 150, ${0.2 * (1 - distance / 100)})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // Actualizar y dibujar partículas
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        
+        requestAnimationFrame(animateLife);
+    }
+    
+    animateLife();
+    
+    // Crear símbolo de unidad más allá de la dualidad
+    const duality = document.querySelector('.beyond-duality');
+    for (let i = 0; i < 4; i++) {
+        const symbol = document.createElement('div');
+        symbol.className = 'unity-symbol';
+        const angle = (i / 4) * Math.PI * 2;
+        const radius = 150;
+        symbol.style.left = `${200 + Math.cos(angle) * radius - 50}px`;
+        symbol.style.top = `${200 + Math.sin(angle) * radius - 50}px`;
+        symbol.style.animationDelay = i * 2 + 's';
+        duality.appendChild(symbol);
+    }
+    
+    // Crear corrientes de vida eterna
+    const container = document.querySelector('.undying-container');
+    for (let i = 0; i < 20; i++) {
+        const stream = document.createElement('div');
+        stream.className = 'eternal-life';
+        stream.style.left = Math.random() * 100 + '%';
+        stream.style.top = Math.random() * 100 + '%';
+        stream.style.animationDelay = Math.random() * 4 + 's';
+        stream.style.transform = `rotate(${Math.random() * 360}deg)`;
+        container.appendChild(stream);
+    }
+    
+    // Texto "MUERTE" que se desvanece
+    const deathText = document.querySelector('.no-opposite');
+    setInterval(() => {
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        deathText.style.left = x + 'px';
+        deathText.style.top = y + 'px';
+    }, 5000);
+    
+    // Crear esferas de vida adicionales
+    for (let i = 0; i < 3; i++) {
+        const sphere = document.createElement('div');
+        sphere.className = 'life-sphere';
+        sphere.style.width = (200 + i * 100) + 'px';
+        sphere.style.height = (200 + i * 100) + 'px';
+        sphere.style.animationDelay = i * 1.66 + 's';
+        sphere.style.opacity = 0.3 - i * 0.1;
+        container.appendChild(sphere);
+    }
+    
+    // Sabiduría de la vida sin opuesto
+    const wisdoms = [
+        "La Vida con V mayúscula no tiene opuesto<br>Lo que nace y muere son las formas<br>La Vida misma es eterna, sin principio ni fin",
+        "La muerte es un concepto<br>La Vida es la realidad<br>Los conceptos van y vienen, la realidad ES",
+        "No eres algo vivo que puede morir<br>Eres la Vida misma<br>Expresándose temporalmente como forma",
+        "El cuerpo muere, la mente muere<br>Pero lo que eres realmente<br>Nunca nació, nunca puede morir",
+        "Más allá del nacimiento y la muerte<br>Está Aquello que observa ambos<br>Eso eres tú: la Vida consciente de sí misma"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+        document.querySelector('.deathless-wisdom').innerHTML = wisdoms[wisdomIndex];
+    }, 7000);
+    
+    // Crear campo de conciencia pulsante
+    const field = document.querySelector('.consciousness-field');
+    setInterval(() => {
+        const pulse = document.createElement('div');
+        pulse.style.position = 'absolute';
+        pulse.style.width = '100%';
+        pulse.style.height = '100%';
+        pulse.style.background = 'radial-gradient(circle at center, rgba(0,255,150,0.3), transparent)';
+        pulse.style.animation = 'fieldExpand 3s ease-out';
+        pulse.style.pointerEvents = 'none';
+        field.appendChild(pulse);
+        
+        setTimeout(() => pulse.remove(), 3000);
+    }, 2000);
+</script>
+```
+
+</body>
+</html>
