@@ -1,1 +1,441 @@
-desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ideas Sin Pensador - Trinity Infinito</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+background: #050505;
+overflow: hidden;
+font-family: ‘Times New Roman’, serif;
+color: rgba(255,255,255,0.8);
+}
+
+.noosphere {
+position: fixed;
+width: 100%;
+height: 100%;
+perspective: 1000px;
+}
+
+.thought-bubble {
+position: absolute;
+width: 120px;
+height: 120px;
+border-radius: 50%;
+background: radial-gradient(circle at 30% 30%,
+rgba(255,255,255,0.2),
+rgba(100,150,255,0.1),
+transparent
+);
+border: 1px solid rgba(255,255,255,0.1);
+animation: float-thought 20s infinite;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 10px;
+text-align: center;
+padding: 10px;
+color: rgba(255,255,255,0.6);
+}
+
+@keyframes float-thought {
+0% {
+transform: translate(0, 100vh) rotateX(0deg) rotateY(0deg) scale(0);
+opacity: 0;
+}
+20% {
+transform: translate(var(–x1), var(–y1)) rotateX(180deg) rotateY(90deg) scale(1);
+opacity: 0.7;
+}
+40% {
+transform: translate(var(–x2), var(–y2)) rotateX(360deg) rotateY(180deg) scale(1.2);
+opacity: 0.5;
+}
+60% {
+transform: translate(var(–x3), var(–y3)) rotateX(540deg) rotateY(270deg) scale(0.8);
+opacity: 0.7;
+}
+80% {
+transform: translate(var(–x4), var(–y4)) rotateX(720deg) rotateY(360deg) scale(1);
+opacity: 0.5;
+}
+100% {
+transform: translate(0, -100vh) rotateX(900deg) rotateY(450deg) scale(0);
+opacity: 0;
+}
+}
+
+.synaptic-connection {
+position: absolute;
+width: 1px;
+background: linear-gradient(to bottom,
+transparent,
+rgba(100,200,255,0.5),
+transparent
+);
+animation: synapse-fire 3s infinite;
+transform-origin: top;
+}
+
+@keyframes synapse-fire {
+0%, 100% {
+height: 0;
+opacity: 0;
+}
+50% {
+height: var(–length);
+opacity: 0.8;
+}
+}
+
+.concept-node {
+position: absolute;
+width: 8px;
+height: 8px;
+background: white;
+border-radius: 50%;
+box-shadow: 0 0 20px rgba(255,255,255,0.5);
+animation: pulse-node 4s ease-in-out infinite;
+}
+
+@keyframes pulse-node {
+0%, 100% {
+transform: scale(1);
+opacity: 0.5;
+}
+50% {
+transform: scale(2);
+opacity: 1;
+}
+}
+
+.empty-mind {
+position: absolute;
+width: 300px;
+height: 300px;
+border: 2px dashed rgba(255,255,255,0.1);
+border-radius: 50%;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+animation: mind-void 15s linear infinite;
+}
+
+@keyframes mind-void {
+from {
+transform: translate(-50%, -50%) rotate(0deg);
+}
+to {
+transform: translate(-50%, -50%) rotate(360deg);
+}
+}
+
+.ideation-text {
+position: absolute;
+bottom: 50px;
+width: 100%;
+text-align: center;
+color: rgba(255,255,255,0.3);
+font-size: 15px;
+letter-spacing: 4px;
+animation: text-emerge 8s infinite;
+}
+
+@keyframes text-emerge {
+0%, 100% {
+opacity: 0;
+transform: translateY(20px);
+}
+50% {
+opacity: 0.4;
+transform: translateY(0);
+}
+}
+
+.quantum-thought {
+position: absolute;
+width: 60px;
+height: 60px;
+border-radius: 50%;
+background: radial-gradient(circle,
+rgba(255,255,255,0.4),
+transparent
+);
+filter: blur(10px);
+animation: quantum-think 10s infinite;
+}
+
+@keyframes quantum-think {
+0% {
+transform: translate(0, 0) scale(0);
+opacity: 0;
+}
+25% {
+transform: translate(var(–qx1), var(–qy1)) scale(1);
+opacity: 0.5;
+}
+50% {
+transform: translate(var(–qx2), var(–qy2)) scale(1.5);
+opacity: 0.3;
+}
+75% {
+transform: translate(var(–qx3), var(–qy3)) scale(1);
+opacity: 0.5;
+}
+100% {
+transform: translate(0, 0) scale(0);
+opacity: 0;
+}
+}
+
+.neural-spark {
+position: absolute;
+width: 2px;
+height: 2px;
+background: white;
+border-radius: 50%;
+animation: spark-travel 2s linear infinite;
+}
+
+@keyframes spark-travel {
+0% {
+transform: translate(0, 0) scale(1);
+opacity: 1;
+}
+100% {
+transform: translate(var(–dx), var(–dy)) scale(0);
+opacity: 0;
+}
+}
+
+.thought-constellation {
+position: absolute;
+width: 100%;
+height: 100%;
+opacity: 0.2;
+}
+</style>
+
+</head>
+<body>
+
+<div class="noosphere" id="noosphere">
+  <div class="empty-mind"></div>
+  <div class="thought-constellation" id="constellation"></div>
+  <div class="ideation-text">LAS IDEAS SE PIENSAN SOLAS</div>
+</div>
+
+<script>
+const noosphere = document.getElementById('noosphere');
+const constellation = document.getElementById('constellation');
+
+// Banco de conceptos sin origen
+const concepts = [
+  "∞", "√-1", "∃", "∀", "Φ", "π", "e", "0/0", "∅", "ℵ",
+  "tiempo", "espacio", "ser", "nada", "todo", "uno", "caos", "orden",
+  "?", "!", "...", "( )", "{ }", "[ ]", "< >"
+];
+
+// Burbujas de pensamiento autónomas
+function createThoughtBubble() {
+  const bubble = document.createElement('div');
+  bubble.className = 'thought-bubble';
+  bubble.textContent = concepts[Math.floor(Math.random() * concepts.length)];
+  
+  // Trayectoria aleatoria
+  bubble.style.setProperty('--x1', (Math.random() - 0.5) * 400 + 'px');
+  bubble.style.setProperty('--y1', (Math.random() - 0.5) * 400 + 'px');
+  bubble.style.setProperty('--x2', (Math.random() - 0.5) * 400 + 'px');
+  bubble.style.setProperty('--y2', (Math.random() - 0.5) * 400 + 'px');
+  bubble.style.setProperty('--x3', (Math.random() - 0.5) * 400 + 'px');
+  bubble.style.setProperty('--y3', (Math.random() - 0.5) * 400 + 'px');
+  bubble.style.setProperty('--x4', (Math.random() - 0.5) * 400 + 'px');
+  bubble.style.setProperty('--y4', (Math.random() - 0.5) * 400 + 'px');
+  
+  bubble.style.left = Math.random() * 100 + '%';
+  bubble.style.animationDelay = Math.random() * 20 + 's';
+  bubble.style.animationDuration = (15 + Math.random() * 10) + 's';
+  
+  noosphere.appendChild(bubble);
+  setTimeout(() => bubble.remove(), 25000);
+}
+
+// Nodos conceptuales
+function createConceptNode() {
+  const node = document.createElement('div');
+  node.className = 'concept-node';
+  node.style.left = Math.random() * 100 + '%';
+  node.style.top = Math.random() * 100 + '%';
+  node.style.animationDelay = Math.random() * 4 + 's';
+  
+  constellation.appendChild(node);
+  
+  // Conectar con otros nodos cercanos
+  setTimeout(() => {
+    const nodes = constellation.querySelectorAll('.concept-node');
+    if (nodes.length > 1) {
+      const lastNode = nodes[nodes.length - 1];
+      const prevNode = nodes[nodes.length - 2];
+      
+      if (lastNode && prevNode) {
+        createSynapticConnection(
+          prevNode.offsetLeft, prevNode.offsetTop,
+          lastNode.offsetLeft, lastNode.offsetTop
+        );
+      }
+    }
+  }, 100);
+  
+  setTimeout(() => node.remove(), 8000);
+}
+
+// Conexiones sinápticas
+function createSynapticConnection(x1, y1, x2, y2) {
+  const connection = document.createElement('div');
+  connection.className = 'synaptic-connection';
+  
+  const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+  
+  connection.style.setProperty('--length', length + 'px');
+  connection.style.left = x1 + 'px';
+  connection.style.top = y1 + 'px';
+  connection.style.transform = `rotate(${angle + 90}deg)`;
+  connection.style.animationDelay = Math.random() * 3 + 's';
+  
+  noosphere.appendChild(connection);
+  setTimeout(() => connection.remove(), 3000);
+}
+
+// Pensamientos cuánticos
+function createQuantumThought() {
+  const thought = document.createElement('div');
+  thought.className = 'quantum-thought';
+  
+  thought.style.left = 50 + (Math.random() - 0.5) * 50 + '%';
+  thought.style.top = 50 + (Math.random() - 0.5) * 50 + '%';
+  
+  thought.style.setProperty('--qx1', (Math.random() - 0.5) * 200 + 'px');
+  thought.style.setProperty('--qy1', (Math.random() - 0.5) * 200 + 'px');
+  thought.style.setProperty('--qx2', (Math.random() - 0.5) * 200 + 'px');
+  thought.style.setProperty('--qy2', (Math.random() - 0.5) * 200 + 'px');
+  thought.style.setProperty('--qx3', (Math.random() - 0.5) * 200 + 'px');
+  thought.style.setProperty('--qy3', (Math.random() - 0.5) * 200 + 'px');
+  
+  thought.style.animationDelay = Math.random() * 10 + 's';
+  
+  noosphere.appendChild(thought);
+  setTimeout(() => thought.remove(), 10000);
+}
+
+// Chispas neurales
+function createNeuralSpark(x, y) {
+  const spark = document.createElement('div');
+  spark.className = 'neural-spark';
+  spark.style.left = x + 'px';
+  spark.style.top = y + 'px';
+  spark.style.setProperty('--dx', (Math.random() - 0.5) * 100 + 'px');
+  spark.style.setProperty('--dy', (Math.random() - 0.5) * 100 + 'px');
+  
+  noosphere.appendChild(spark);
+  setTimeout(() => spark.remove(), 2000);
+}
+
+// Generación continua
+setInterval(createThoughtBubble, 2000);
+setInterval(createConceptNode, 1500);
+setInterval(createQuantumThought, 3000);
+
+// Campo ideacional
+let ideaField = [];
+function updateIdeaField() {
+  const time = Date.now() * 0.001;
+  
+  // Emergencia espontánea de ideas
+  if (Math.sin(time * 0.5) > 0.8) {
+    const x = window.innerWidth / 2 + Math.cos(time) * 200;
+    const y = window.innerHeight / 2 + Math.sin(time) * 200;
+    
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => createNeuralSpark(x, y), i * 50);
+    }
+  }
+  
+  requestAnimationFrame(updateIdeaField);
+}
+
+updateIdeaField();
+
+// Interacción genera cascadas de pensamiento
+document.addEventListener('click', (e) => {
+  // Crear explosión de ideas
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const bubble = document.createElement('div');
+      bubble.className = 'thought-bubble';
+      bubble.textContent = concepts[Math.floor(Math.random() * concepts.length)];
+      bubble.style.left = e.clientX + 'px';
+      bubble.style.top = e.clientY + 'px';
+      bubble.style.animation = 'float-thought 3s ease-out forwards';
+      bubble.style.transform = `rotate(${i * 45}deg)`;
+      
+      noosphere.appendChild(bubble);
+      setTimeout(() => bubble.remove(), 3000);
+    }, i * 100);
+  }
+  
+  // Crear red neural temporal
+  for (let i = 0; i < 10; i++) {
+    createNeuralSpark(e.clientX, e.clientY);
+  }
+});
+
+// Constelación de conceptos
+function createConceptConstellation() {
+  const nodes = [];
+  const nodeCount = 5;
+  
+  for (let i = 0; i < nodeCount; i++) {
+    const angle = (i / nodeCount) * Math.PI * 2;
+    const radius = 150;
+    const x = window.innerWidth / 2 + Math.cos(angle) * radius;
+    const y = window.innerHeight / 2 + Math.sin(angle) * radius;
+    
+    const node = document.createElement('div');
+    node.className = 'concept-node';
+    node.style.left = x + 'px';
+    node.style.top = y + 'px';
+    
+    constellation.appendChild(node);
+    nodes.push({ x, y, node });
+  }
+  
+  // Conectar todos los nodos
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      createSynapticConnection(
+        nodes[i].x, nodes[i].y,
+        nodes[j].x, nodes[j].y
+      );
+    }
+  }
+  
+  setTimeout(() => {
+    nodes.forEach(n => n.node.remove());
+  }, 5000);
+}
+
+// Crear constelaciones periódicamente
+setInterval(createConceptConstellation, 10000);
+</script>
+
+</body>
+</html>
