@@ -1,1 +1,287 @@
-Contenido en desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hologramas del Ser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+    body {
+        background: black;
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .hologram-container {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        transform-style: preserve-3d;
+        animation: hologramRotate 20s infinite linear;
+    }
+    
+    @keyframes hologramRotate {
+        from { transform: rotateY(0deg) rotateX(0deg); }
+        to { transform: rotateY(360deg) rotateX(360deg); }
+    }
+    
+    .hologram-shard {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(45deg, 
+            rgba(0,255,255,0.3), 
+            rgba(255,0,255,0.3), 
+            rgba(255,255,0,0.3));
+        clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        transform-style: preserve-3d;
+        animation: shardFloat 6s infinite ease-in-out;
+    }
+    
+    @keyframes shardFloat {
+        0%, 100% {
+            transform: translateZ(0px) scale(1);
+            filter: brightness(1);
+        }
+        50% {
+            transform: translateZ(200px) scale(1.5);
+            filter: brightness(2);
+        }
+    }
+    
+    .whole-image {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: radial-gradient(circle, 
+            rgba(255,255,255,0.8) 0%, 
+            rgba(255,255,255,0.4) 30%, 
+            transparent 70%);
+        animation: wholePulse 4s infinite;
+    }
+    
+    @keyframes wholePulse {
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+            box-shadow: 0 0 50px white;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow: 0 0 100px white, 0 0 200px rgba(255,255,255,0.5);
+        }
+    }
+    
+    .fragment {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background: radial-gradient(circle, white, transparent);
+        border-radius: 50%;
+        animation: fragmentOrbit 10s infinite linear;
+    }
+    
+    @keyframes fragmentOrbit {
+        from {
+            transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg) scale(1);
+        }
+        to {
+            transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg) scale(1);
+        }
+    }
+    
+    .wisdom-hologram {
+        position: absolute;
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 18px;
+        color: cyan;
+        text-shadow: 0 0 20px cyan, 0 0 40px cyan;
+        animation: hologramText 5s infinite;
+        width: 80%;
+    }
+    
+    @keyframes hologramText {
+        0%, 100% {
+            opacity: 0.3;
+            filter: blur(2px);
+        }
+        50% {
+            opacity: 1;
+            filter: blur(0px);
+        }
+    }
+    
+    .interference-pattern {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0,255,255,0.1) 2px,
+            rgba(0,255,255,0.1) 4px
+        );
+        animation: interferenceShift 3s infinite linear;
+        mix-blend-mode: screen;
+    }
+    
+    @keyframes interferenceShift {
+        from { transform: translateY(0); }
+        to { transform: translateY(4px); }
+    }
+    
+    .laser-beam {
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(to bottom, 
+            transparent, 
+            rgba(255,0,0,0.8), 
+            transparent);
+        left: 50%;
+        transform: translateX(-50%);
+        animation: laserScan 4s infinite linear;
+        box-shadow: 0 0 10px red, 0 0 20px red;
+    }
+    
+    @keyframes laserScan {
+        0%, 100% { transform: translateX(-50%) rotateZ(0deg); }
+        50% { transform: translateX(-50%) rotateZ(180deg); }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+    }
+</style>
+
+
+</head>
+<body>
+    <canvas id="hologramCanvas"></canvas>
+
+
+<div class="hologram-container">
+    <div class="interference-pattern"></div>
+    <div class="laser-beam"></div>
+    <div class="whole-image"></div>
+</div>
+
+<div class="wisdom-hologram">
+    Rompe el holograma en mil pedazos<br>
+    Cada fragmento contiene la imagen completa<br>
+    Así es la conciencia: indivisible
+</div>
+
+<script>
+    // Canvas para patrones holográficos
+    const canvas = document.getElementById('hologramCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    function drawHologramPattern() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const time = Date.now() * 0.001;
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        
+        // Dibujar ondas de interferencia
+        for (let i = 0; i < 5; i++) {
+            const radius = 100 + i * 50 + Math.sin(time + i) * 20;
+            ctx.strokeStyle = `rgba(0, 255, 255, ${0.3 - i * 0.05})`;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(centerX + Math.cos(time) * 50, 
+                   centerY + Math.sin(time) * 50, 
+                   radius, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+        
+        requestAnimationFrame(drawHologramPattern);
+    }
+    
+    drawHologramPattern();
+    
+    // Crear fragmentos holográficos
+    const container = document.querySelector('.hologram-container');
+    
+    for (let i = 0; i < 8; i++) {
+        const shard = document.createElement('div');
+        shard.className = 'hologram-shard';
+        const angle = (i / 8) * Math.PI * 2;
+        const radius = 150;
+        shard.style.left = `${250 + Math.cos(angle) * radius - 50}px`;
+        shard.style.top = `${250 + Math.sin(angle) * radius - 50}px`;
+        shard.style.animationDelay = `${i * 0.75}s`;
+        shard.style.transform = `rotateZ(${i * 45}deg)`;
+        container.appendChild(shard);
+    }
+    
+    // Crear fragmentos orbitales
+    for (let i = 0; i < 12; i++) {
+        const fragment = document.createElement('div');
+        fragment.className = 'fragment';
+        fragment.style.setProperty('--orbit-radius', `${100 + i * 20}px`);
+        fragment.style.left = '50%';
+        fragment.style.top = '50%';
+        fragment.style.animationDelay = `${i * 0.5}s`;
+        fragment.style.animationDuration = `${8 + i * 2}s`;
+        container.appendChild(fragment);
+    }
+    
+    // Textos de sabiduría holográfica
+    const wisdoms = [
+        "Rompe el holograma en mil pedazos<br>Cada fragmento contiene la imagen completa<br>Así es la conciencia: indivisible",
+        "La información del todo<br>Está codificada en cada parte<br>No hay pérdida en la división",
+        "Cada punto del espacio<br>Contiene toda la información del universo<br>El registro holográfico de la existencia",
+        "Tu conciencia es un fragmento<br>Que contiene la conciencia total<br>Eres el universo mirándose a sí mismo",
+        "No hay observador y observado<br>Solo el holograma observándose<br>A través de infinitos puntos de vista"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+        document.querySelector('.wisdom-hologram').innerHTML = wisdoms[wisdomIndex];
+    }, 5000);
+    
+    // Crear patrones de interferencia adicionales
+    function createInterferenceWave() {
+        const wave = document.createElement('div');
+        wave.style.position = 'absolute';
+        wave.style.width = '100%';
+        wave.style.height = '2px';
+        wave.style.background = `linear-gradient(90deg, transparent, rgba(0,255,255,0.5), transparent)`;
+        wave.style.top = Math.random() * 100 + '%';
+        wave.style.animation = `interferenceShift ${2 + Math.random() * 3}s infinite linear`;
+        container.appendChild(wave);
+        
+        setTimeout(() => wave.remove(), 5000);
+    }
+    
+    setInterval(createInterferenceWave, 500);
