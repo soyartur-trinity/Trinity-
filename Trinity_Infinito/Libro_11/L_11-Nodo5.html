@@ -1,1 +1,155 @@
-desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>La Respuesta Antes de la Pregunta - Trinity Infinito</title>
+<style>
+body {
+  margin: 0;
+  background: linear-gradient(45deg, #0a0a15, #15000a);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: 'Courier New', monospace;
+}
+
+.answer {
+position: absolute;
+color: rgba(255,255,255,0.7);
+font-size: 20px;
+text-align: center;
+animation: answer-first 10s infinite;
+}
+
+@keyframes answer-first {
+0% { opacity: 0; transform: scale(0.5); }
+30% { opacity: 0.8; transform: scale(1); }
+60% { opacity: 0.4; transform: scale(0.9); }
+100% { opacity: 0; transform: scale(0.5); }
+}
+
+.question {
+position: absolute;
+color: rgba(100,200,255,0.5);
+font-size: 16px;
+text-align: center;
+animation: question-later 10s infinite;
+animation-delay: 5s;
+}
+
+@keyframes question-later {
+0% { opacity: 0; transform: translateY(20px); }
+50% { opacity: 0.6; transform: translateY(0); }
+100% { opacity: 0; transform: translateY(-20px); }
+}
+
+.oracle-line {
+position: absolute;
+width: 200px;
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+animation: oracle-speak 8s infinite;
+}
+
+@keyframes oracle-speak {
+0% { transform: scaleX(0) rotate(0deg); opacity: 0; }
+50% { transform: scaleX(1) rotate(180deg); opacity: 0.5; }
+100% { transform: scaleX(0) rotate(360deg); opacity: 0; }
+}
+
+.paradox {
+position: absolute;
+width: 150px;
+height: 150px;
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 50%;
+animation: paradox-spin 15s linear infinite;
+}
+
+@keyframes paradox-spin {
+from { transform: rotate(360deg); }
+to { transform: rotate(0deg); }
+}
+
+.text {
+position: absolute;
+bottom: 50px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 4px;
+font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="answer" id="a">42</div>
+<div class="question" id="q">¿?</div>
+<div class="text">LA SOLUCIÓN PRECEDE AL PROBLEMA</div>
+<script>
+const b = document.body;
+const answers = ["Sí", "No", "42", "∞", "Ahora", "Nunca", "Todo", "Nada", "Aquí"];
+const questions = ["¿Por qué?", "¿Cuándo?", "¿Dónde?", "¿Cómo?", "¿Quién?", "¿?"];
+
+function c(cls, st) {
+const e = document.createElement(‘div’);
+e.className = cls;
+if(st) Object.assign(e.style, st);
+b.appendChild(e);
+setTimeout(() => e.remove(), 10000);
+}
+
+setInterval(() => {
+// Primero la respuesta
+document.getElementById(‘a’).textContent = answers[Math.floor(Math.random() * answers.length)];
+
+// Luego la pregunta
+setTimeout(() => {
+document.getElementById(‘q’).textContent = questions[Math.floor(Math.random() * questions.length)];
+}, 3000);
+
+c(‘oracle-line’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+transform: `rotate(${Math.random() * 360}deg)`
+});
+
+if(Math.random() > 0.7) {
+c(‘paradox’, {
+left: ‘50%’,
+top: ‘50%’,
+transform: ‘translate(-50%, -50%)’
+});
+}
+}, 4000);
+
+b.addEventListener(‘click’, e => {
+// La respuesta aparece inmediatamente
+const ans = document.createElement(‘div’);
+ans.className = ‘answer’;
+ans.textContent = answers[Math.floor(Math.random() * answers.length)];
+ans.style.left = e.clientX + ‘px’;
+ans.style.top = e.clientY - 30 + ‘px’;
+ans.style.animation = ‘answer-first 3s ease-out forwards’;
+b.appendChild(ans);
+
+// La pregunta aparece después
+setTimeout(() => {
+const q = document.createElement(‘div’);
+q.className = ‘question’;
+q.textContent = questions[Math.floor(Math.random() * questions.length)];
+q.style.left = e.clientX + ‘px’;
+q.style.top = e.clientY + 30 + ‘px’;
+q.style.animation = ‘question-later 3s ease-out forwards’;
+b.appendChild(q);
+setTimeout(() => q.remove(), 3000);
+}, 1500);
+
+setTimeout(() => ans.remove(), 3000);
+});
+</script>
+
+</body>
+</html>
