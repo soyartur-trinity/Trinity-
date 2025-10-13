@@ -1,1 +1,376 @@
-Contenido en desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Geometría Sagrada del Vacío</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+    body {
+        background: radial-gradient(ellipse at center, #1a0033, #000);
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1500px;
+    }
+    
+    .sacred-container {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        transform-style: preserve-3d;
+        animation: sacredRotation 60s infinite linear;
+    }
+    
+    @keyframes sacredRotation {
+        from { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+        to { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+    }
+    
+    .metatron-cube {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .sacred-circle {
+        position: absolute;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        animation: circleExpand 8s infinite;
+    }
+    
+    @keyframes circleExpand {
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.3;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.5);
+            opacity: 0.8;
+        }
+    }
+    
+    .platonic-solid {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border: 2px solid;
+        transform-style: preserve-3d;
+        animation: solidRotate 10s infinite linear;
+    }
+    
+    @keyframes solidRotate {
+        from { transform: rotateX(0deg) rotateY(0deg); }
+        to { transform: rotateX(360deg) rotateY(360deg); }
+    }
+    
+    .void-center {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, 
+            rgba(0,0,0,1) 0%, 
+            rgba(0,0,0,0.8) 30%, 
+            transparent 70%);
+        border-radius: 50%;
+        box-shadow: inset 0 0 50px black, 0 0 100px rgba(138,43,226,0.8);
+        animation: voidPulse 4s infinite;
+    }
+    
+    @keyframes voidPulse {
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+            box-shadow: inset 0 0 50px black, 0 0 100px rgba(138,43,226,0.8);
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.5);
+            box-shadow: inset 0 0 100px black, 0 0 200px rgba(138,43,226,1);
+        }
+    }
+    
+    .flower-of-life {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+    }
+    
+    .petal {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border: 1px solid gold;
+        border-radius: 50%;
+        animation: petalGlow 6s infinite;
+    }
+    
+    @keyframes petalGlow {
+        0%, 100% {
+            box-shadow: 0 0 10px gold;
+            opacity: 0.3;
+        }
+        50% {
+            box-shadow: 0 0 30px gold, 0 0 50px gold;
+            opacity: 0.8;
+        }
+    }
+    
+    .sacred-text {
+        position: absolute;
+        font-size: 14px;
+        color: rgba(255,215,0,0.8);
+        text-shadow: 0 0 10px gold;
+        animation: textOrbit 15s infinite linear;
+    }
+    
+    @keyframes textOrbit {
+        from {
+            transform: rotate(0deg) translateX(250px) rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg) translateX(250px) rotate(-360deg);
+        }
+    }
+    
+    .wisdom-geometry {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 18px;
+        color: #fff;
+        text-shadow: 0 0 20px rgba(255,255,255,0.8);
+        animation: geometryWisdom 6s infinite;
+        width: 90%;
+        z-index: 100;
+    }
+    
+    @keyframes geometryWisdom {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+    }
+</style>
+
+
+</head>
+<body>
+    <canvas id="geometryCanvas"></canvas>
+
+
+<div class="sacred-container">
+    <div class="flower-of-life"></div>
+    <div class="metatron-cube"></div>
+    <div class="void-center"></div>
+</div>
+
+<div class="wisdom-geometry">
+    En el vacío perfecto surge la geometría<br>
+    Los ángulos del no-espacio<br>
+    Las formas de la nada formándolo todo
+</div>
+
+<script>
+    // Canvas para geometría sagrada
+    const canvas = document.getElementById('geometryCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    
+    // Dibujar estrella de David / Merkaba
+    function drawMerkaba(x, y, size, rotation) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rotation);
+        
+        ctx.strokeStyle = 'rgba(138, 43, 226, 0.5)';
+        ctx.lineWidth = 1;
+        
+        // Triángulo hacia arriba
+        ctx.beginPath();
+        for (let i = 0; i < 3; i++) {
+            const angle = (i * 120 - 90) * Math.PI / 180;
+            const px = Math.cos(angle) * size;
+            const py = Math.sin(angle) * size;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.stroke();
+        
+        // Triángulo hacia abajo
+        ctx.beginPath();
+        for (let i = 0; i < 3; i++) {
+            const angle = (i * 120 + 90) * Math.PI / 180;
+            const px = Math.cos(angle) * size;
+            const py = Math.sin(angle) * size;
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.stroke();
+        
+        ctx.restore();
+    }
+    
+    // Dibujar flor de la vida
+    function drawFlowerOfLife(x, y, radius, layers) {
+        ctx.strokeStyle = 'rgba(255, 215, 0, 0.2)';
+        ctx.lineWidth = 1;
+        
+        // Centro
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.stroke();
+        
+        // Pétalos
+        for (let layer = 1; layer <= layers; layer++) {
+            for (let i = 0; i < 6 * layer; i++) {
+                const angle = (i * 60 / layer) * Math.PI / 180;
+                const px = x + Math.cos(angle) * radius * layer;
+                const py = y + Math.sin(angle) * radius * layer;
+                
+                ctx.beginPath();
+                ctx.arc(px, py, radius, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        }
+    }
+    
+    function animate() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const time = Date.now() * 0.0005;
+        
+        // Merkaba rotatorio
+        drawMerkaba(centerX, centerY, 150, time);
+        drawMerkaba(centerX, centerY, 100, -time * 1.5);
+        drawMerkaba(centerX, centerY, 50, time * 2);
+        
+        // Flor de la vida
+        const pulseRadius = 30 + Math.sin(time * 2) * 10;
+        drawFlowerOfLife(centerX, centerY, pulseRadius, 2);
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+    
+    // Crear círculos sagrados
+    const container = document.querySelector('.metatron-cube');
+    const numCircles = 13; // Número sagrado del Metatrón
+    
+    for (let i = 0; i < numCircles; i++) {
+        const circle = document.createElement('div');
+        circle.className = 'sacred-circle';
+        
+        if (i === 0) {
+            // Círculo central
+            circle.style.width = '100px';
+            circle.style.height = '100px';
+            circle.style.left = '50%';
+            circle.style.top = '50%';
+        } else {
+            // Círculos exteriores
+            const angle = ((i - 1) * 60) * Math.PI / 180;
+            const radius = 100;
+            circle.style.width = '100px';
+            circle.style.height = '100px';
+            circle.style.left = `${200 + Math.cos(angle) * radius}px`;
+            circle.style.top = `${200 + Math.sin(angle) * radius}px`;
+        }
+        
+        circle.style.animationDelay = `${i * 0.3}s`;
+        container.appendChild(circle);
+    }
+    
+    // Crear sólidos platónicos
+    const solids = ['Tetraedro', 'Cubo', 'Octaedro', 'Dodecaedro', 'Icosaedro'];
+    solids.forEach((solid, i) => {
+        const element = document.createElement('div');
+        element.className = 'platonic-solid';
+        element.style.width = `${50 + i * 20}px`;
+        element.style.height = `${50 + i * 20}px`;
+        element.style.left = '50%';
+        element.style.top = '50%';
+        element.style.transform = `translate(-50%, -50%)`;
+        element.style.borderColor = `hsla(${i * 72}, 100%, 50%, 0.3)`;
+        element.style.animationDelay = `${i * 2}s`;
+        document.querySelector('.sacred-container').appendChild(element);
+    });
+    
+    // Textos orbitales
+    const sacredWords = ['φ', '√2', 'π', '∞', '0'];
+    sacredWords.forEach((word, i) => {
+        const text = document.createElement('div');
+        text.className = 'sacred-text';
+        text.textContent = word;
+        text.style.left = '50%';
+        text.style.top = '50%';
+        text.style.animationDelay = `${i * 3}s`;
+        document.querySelector('.sacred-container').appendChild(text);
+    });
+    
+    // Pétalos de la flor de la vida
+    const flowerContainer = document.querySelector('.flower-of-life');
+    for (let i = 0; i < 6; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        const angle = i * 60 * Math.PI / 180;
+        const radius = 50;
+        petal.style.left = `${300 + Math.cos(angle) * radius - 50}px`;
+        petal.style.top = `${300 + Math.sin(angle) * radius - 50}px`;
+        petal.style.animationDelay = `${i * 0.5}s`;
+        flowerContainer.appendChild(petal);
+    }
+    
+    // Sabiduría cambiante
+    const wisdoms = [
+        "En el vacío perfecto surge la geometría<br>Los ángulos del no-espacio<br>Las formas de la nada formándolo todo",
+        "Cinco sólidos perfectos<br>Infinitas combinaciones<br>La arquitectura del cosmos",
+        "El círculo sin principio ni fin<br>El triángulo de la trinidad<br>El cuadrado de la manifestación",
+        "Geometría: el lenguaje de Dios<br>Matemática: el pensamiento del vacío<br>Forma: la danza de la nada",
+        "Antes que la materia, la proporción<br>Antes que la energía, el patrón<br>Antes que todo, la geometría sagrada"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+        document.querySelector('.wisdom-geometry').innerHTML = wisdoms[wisdomIndex];
+    }, 6000);
+</script>
+
+
+</body>
+</html>
