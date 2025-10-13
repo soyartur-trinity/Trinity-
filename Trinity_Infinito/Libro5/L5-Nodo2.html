@@ -1,1 +1,343 @@
-En desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Danza de Shiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+    body {
+        background: radial-gradient(ellipse at center, #1a0033, #000);
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .nataraja-container {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        transform-style: preserve-3d;
+        animation: cosmicDance 30s infinite linear;
+    }
+    
+    @keyframes cosmicDance {
+        from { transform: rotateY(0deg); }
+        to { transform: rotateY(360deg); }
+    }
+    
+    .ring-of-fire {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 3px solid transparent;
+        border-radius: 50%;
+        background: conic-gradient(
+            from 0deg,
+            #ff6600,
+            #ff9900,
+            #ffcc00,
+            #ff9900,
+            #ff6600,
+            #ff3300,
+            #ff6600
+        );
+        -webkit-mask: radial-gradient(
+            transparent 45%,
+            black 45%,
+            black 55%,
+            transparent 55%
+        );
+        mask: radial-gradient(
+            transparent 45%,
+            black 45%,
+            black 55%,
+            transparent 55%
+        );
+        animation: fireRing 4s infinite linear;
+    }
+    
+    @keyframes fireRing {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    .creation-particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #00ffff;
+        border-radius: 50%;
+        animation: createDestroy 8s infinite;
+    }
+    
+    @keyframes createDestroy {
+        0% {
+            transform: scale(0) translate(0, 0);
+            background: #00ffff;
+            opacity: 0;
+        }
+        25% {
+            transform: scale(1) translate(var(--x1), var(--y1));
+            background: #00ff00;
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.5) translate(var(--x2), var(--y2));
+            background: #ffff00;
+            opacity: 1;
+        }
+        75% {
+            transform: scale(1) translate(var(--x3), var(--y3));
+            background: #ff0000;
+            opacity: 1;
+        }
+        100% {
+            transform: scale(0) translate(0, 0);
+            background: #000;
+            opacity: 0;
+        }
+    }
+    
+    .om-symbol {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 120px;
+        color: gold;
+        text-shadow: 0 0 50px gold, 0 0 100px gold;
+        animation: omPulse 4s infinite;
+    }
+    
+    @keyframes omPulse {
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.3;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(1.2);
+            opacity: 0.8;
+        }
+    }
+    
+    .drum-beat {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        border: 2px solid rgba(255,255,255,0.2);
+        animation: drumExpand 2s infinite;
+    }
+    
+    @keyframes drumExpand {
+        0% {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 1;
+            border-color: rgba(255,255,255,0.8);
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(2);
+            opacity: 0;
+            border-color: rgba(255,255,255,0);
+        }
+    }
+    
+    .cosmic-dancer {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .dance-trail {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(138,43,226,0.3);
+        border-radius: 50%;
+        animation: trailSpin 3s infinite linear;
+    }
+    
+    @keyframes trailSpin {
+        from { 
+            transform: rotate(0deg) scale(1);
+            opacity: 1;
+        }
+        to { 
+            transform: rotate(360deg) scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    .shiva-wisdom {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 18px;
+        color: #fff;
+        text-shadow: 0 0 20px rgba(255,255,255,0.8);
+        animation: wisdomGlow 6s infinite;
+        width: 90%;
+        z-index: 100;
+    }
+    
+    @keyframes wisdomGlow {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.4;
+    }
+</style>
+
+
+</head>
+<body>
+    <canvas id="danceCanvas"></canvas>
+
+
+<div class="nataraja-container">
+    <div class="ring-of-fire"></div>
+    <div class="om-symbol">ॐ</div>
+    <div class="cosmic-dancer"></div>
+</div>
+
+<div class="shiva-wisdom">
+    Creación y destrucción: dos caras de la misma moneda<br>
+    En mi danza, los universos nacen y mueren<br>
+    Pero la danza misma es eterna
+</div>
+
+<script>
+    // Canvas para la energía cósmica
+    const canvas = document.getElementById('danceCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    
+    function drawCosmicEnergy() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const time = Date.now() * 0.001;
+        
+        // Espirales de energía
+        for (let i = 0; i < 5; i++) {
+            const angle = time + (i * Math.PI * 2 / 5);
+            const radius = 150 + Math.sin(time * 2 + i) * 50;
+            
+            ctx.strokeStyle = `hsla(${i * 72}, 100%, 50%, 0.3)`;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            for (let j = 0; j < 100; j++) {
+                const t = j / 100;
+                const r = radius * t;
+                const a = angle + t * Math.PI * 4;
+                const x = centerX + Math.cos(a) * r;
+                const y = centerY + Math.sin(a) * r;
+                
+                if (j === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            
+            ctx.stroke();
+        }
+        
+        requestAnimationFrame(drawCosmicEnergy);
+    }
+    
+    drawCosmicEnergy();
+    
+    // Crear partículas de creación/destrucción
+    const container = document.querySelector('.nataraja-container');
+    
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'creation-particle';
+        
+        const angle = (i / 50) * Math.PI * 2;
+        const radius = 150 + Math.random() * 100;
+        
+        particle.style.left = `${300 + Math.cos(angle) * radius}px`;
+        particle.style.top = `${300 + Math.sin(angle) * radius}px`;
+        
+        particle.style.setProperty('--x1', (Math.random() - 0.5) * 200 + 'px');
+        particle.style.setProperty('--y1', (Math.random() - 0.5) * 200 + 'px');
+        particle.style.setProperty('--x2', (Math.random() - 0.5) * 300 + 'px');
+        particle.style.setProperty('--y2', (Math.random() - 0.5) * 300 + 'px');
+        particle.style.setProperty('--x3', (Math.random() - 0.5) * 200 + 'px');
+        particle.style.setProperty('--y3', (Math.random() - 0.5) * 200 + 'px');
+        
+        particle.style.animationDelay = (i * 0.16) + 's';
+        
+        container.appendChild(particle);
+    }
+    
+    // Crear latidos del tambor cósmico
+    setInterval(() => {
+        const drum = document.createElement('div');
+        drum.className = 'drum-beat';
+        container.appendChild(drum);
+        setTimeout(() => drum.remove(), 2000);
+    }, 1000);
+    
+    // Crear rastros de danza
+    const dancer = document.querySelector('.cosmic-dancer');
+    setInterval(() => {
+        const trail = document.createElement('div');
+        trail.className = 'dance-trail';
+        dancer.appendChild(trail);
+        setTimeout(() => trail.remove(), 3000);
+    }, 500);
+    
+    // Sabiduría de Shiva cambiante
+    const wisdoms = [
+        "Creación y destrucción: dos caras de la misma moneda<br>En mi danza, los universos nacen y mueren<br>Pero la danza misma es eterna",
+        "No hay muerte, solo transformación<br>No hay nacimiento, solo manifestación<br>La danza continúa sin principio ni fin",
+        "Destruyo para crear<br>Creo para destruir<br>El ciclo eterno del devenir",
+        "En cada latido del tambor, un universo nace<br>En cada silencio entre latidos, un universo muere<br>El ritmo es eterno",
+        "Soy el que danza y la danza misma<br>El destructor y lo destruido<br>El creador y la creación"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+        document.querySelector('.shiva-wisdom').innerHTML = wisdoms[wisdomIndex];
+    }, 6000);
+</script>
+
+
+</body>
+</html>
