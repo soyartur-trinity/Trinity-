@@ -1,1 +1,361 @@
-En desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olas en el Océano</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        background: linear-gradient(to bottom, #001a33, #003366, #004080);
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        position: relative;
+    }
+    
+    .ocean-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        perspective: 1000px;
+    }
+    
+    .wave {
+        position: absolute;
+        width: 200%;
+        height: 100px;
+        background: linear-gradient(to top,
+            rgba(0,100,200,0.8),
+            rgba(0,150,255,0.5),
+            transparent);
+        border-radius: 50%;
+        animation: waveMotion 8s infinite ease-in-out;
+        transform-origin: center;
+    }
+    
+    @keyframes waveMotion {
+        0%, 100% {
+            transform: translateX(-50%) translateY(0) scaleY(1);
+        }
+        50% {
+            transform: translateX(-50%) translateY(-30px) scaleY(1.5);
+        }
+    }
+    
+    .individual-drop {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: radial-gradient(circle, 
+            rgba(255,255,255,0.9), 
+            rgba(100,200,255,0.5));
+        border-radius: 50%;
+        animation: dropJourney 10s infinite;
+    }
+    
+    @keyframes dropJourney {
+        0% {
+            transform: translate(0, -300px) scale(1);
+            opacity: 1;
+        }
+        40% {
+            transform: translate(var(--arcX), var(--arcY)) scale(1.2);
+            opacity: 1;
+        }
+        60% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.8;
+        }
+        80% {
+            transform: translate(0, 50px) scale(2);
+            opacity: 0.3;
+        }
+        100% {
+            transform: translate(0, 100px) scale(5);
+            opacity: 0;
+        }
+    }
+    
+    .ocean-depth {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(to top,
+            rgba(0,20,40,1),
+            rgba(0,50,100,0.8),
+            transparent);
+        animation: depthPulse 12s infinite;
+    }
+    
+    @keyframes depthPulse {
+        0%, 100% {
+            opacity: 0.8;
+        }
+        50% {
+            opacity: 1;
+        }
+    }
+    
+    .unity-point {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: white;
+        border-radius: 50%;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 50px white, 0 0 100px white, 0 0 150px white;
+        animation: unityGlow 4s infinite;
+    }
+    
+    @keyframes unityGlow {
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.5;
+        }
+        50% {
+            transform: translate(-50%, -50%) scale(2);
+            opacity: 1;
+        }
+    }
+    
+    .foam-particle {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.7;
+        animation: foamFloat 6s infinite;
+    }
+    
+    @keyframes foamFloat {
+        0% {
+            transform: translate(0, 0) scale(0);
+            opacity: 0;
+        }
+        50% {
+            transform: translate(var(--floatX), var(--floatY)) scale(1);
+            opacity: 0.7;
+        }
+        100% {
+            transform: translate(var(--endX), var(--endY)) scale(0);
+            opacity: 0;
+        }
+    }
+    
+    .ocean-wisdom {
+        position: absolute;
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 20px;
+        color: rgba(255,255,255,0.9);
+        text-shadow: 0 0 30px rgba(255,255,255,0.8);
+        animation: wisdomWave 8s infinite;
+        width: 85%;
+        z-index: 100;
+    }
+    
+    @keyframes wisdomWave {
+        0%, 100% {
+            transform: translateX(-50%) translateY(10px);
+            opacity: 0.5;
+        }
+        50% {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    .moon-reflection {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 100px;
+        background: radial-gradient(circle,
+            rgba(255,255,200,0.9),
+            rgba(255,255,200,0.5),
+            transparent);
+        border-radius: 50%;
+        animation: moonGlow 6s infinite;
+    }
+    
+    @keyframes moonGlow {
+        0%, 100% {
+            transform: translateX(-50%) scale(1);
+            filter: brightness(1);
+        }
+        50% {
+            transform: translateX(-50%) scale(1.1);
+            filter: brightness(1.5);
+        }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="oceanCanvas"></canvas>
+
+```
+<div class="moon-reflection"></div>
+
+<div class="ocean-container">
+    <div class="ocean-depth"></div>
+    <div class="unity-point"></div>
+</div>
+
+<div class="ocean-wisdom">
+    La ola cree que muere al regresar al mar<br>
+    Pero solo está volviendo a casa<br>
+    Nunca fue diferente del océano
+</div>
+
+<script>
+    // Canvas para el océano
+    const canvas = document.getElementById('oceanCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Sistema de olas
+    class WaveSystem {
+        constructor() {
+            this.waves = [];
+            this.time = 0;
+        }
+        
+        update() {
+            this.time += 0.02;
+            
+            ctx.fillStyle = 'rgba(0, 20, 40, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Dibujar múltiples capas de olas
+            for (let layer = 0; layer < 5; layer++) {
+                ctx.strokeStyle = `rgba(100, 200, 255, ${0.3 - layer * 0.05})`;
+                ctx.lineWidth = 2 - layer * 0.2;
+                ctx.beginPath();
+                
+                for (let x = 0; x <= canvas.width; x += 5) {
+                    const y = canvas.height * 0.6 + 
+                             Math.sin(x * 0.01 + this.time + layer) * 30 +
+                             Math.sin(x * 0.02 + this.time * 1.5 + layer) * 20 +
+                             layer * 20;
+                    
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                
+                ctx.stroke();
+            }
+        }
+    }
+    
+    const waveSystem = new WaveSystem();
+    
+    function animateOcean() {
+        waveSystem.update();
+        requestAnimationFrame(animateOcean);
+    }
+    
+    animateOcean();
+    
+    // Crear olas individuales
+    const container = document.querySelector('.ocean-container');
+    
+    for (let i = 0; i < 10; i++) {
+        const wave = document.createElement('div');
+        wave.className = 'wave';
+        wave.style.bottom = (20 + i * 5) + '%';
+        wave.style.left = '-50%';
+        wave.style.animationDelay = i * 0.8 + 's';
+        wave.style.opacity = 0.5 - i * 0.04;
+        container.appendChild(wave);
+    }
+    
+    // Crear gotas individuales
+    function createDrop() {
+        const drop = document.createElement('div');
+        drop.className = 'individual-drop';
+        drop.style.left = Math.random() * 100 + '%';
+        drop.style.top = '80%';
+        drop.style.setProperty('--arcX', (Math.random() - 0.5) * 200 + 'px');
+        drop.style.setProperty('--arcY', -Math.random() * 200 + 'px');
+        container.appendChild(drop);
+        
+        setTimeout(() => drop.remove(), 10000);
+    }
+    
+    setInterval(createDrop, 2000);
+    
+    // Crear partículas de espuma
+    for (let i = 0; i < 40; i++) {
+        const foam = document.createElement('div');
+        foam.className = 'foam-particle';
+        foam.style.left = Math.random() * 100 + '%';
+        foam.style.top = (50 + Math.random() * 30) + '%';
+        foam.style.setProperty('--floatX', (Math.random() - 0.5) * 100 + 'px');
+        foam.style.setProperty('--floatY', -Math.random() * 50 + 'px');
+        foam.style.setProperty('--endX', (Math.random() - 0.5) * 200 + 'px');
+        foam.style.setProperty('--endY', Math.random() * 100 + 'px');
+        foam.style.animationDelay = Math.random() * 6 + 's';
+        container.appendChild(foam);
+    }
+    
+    // Reflejo de luna en el agua
+    const moonReflection = document.createElement('div');
+    moonReflection.style.position = 'absolute';
+    moonReflection.style.width = '100px';
+    moonReflection.style.height = '300px';
+    moonReflection.style.left = '50%';
+    moonReflection.style.top = '40%';
+    moonReflection.style.transform = 'translateX(-50%)';
+    moonReflection.style.background = 'linear-gradient(to bottom, transparent, rgba(255,255,200,0.2), transparent)';
+    moonReflection.style.filter = 'blur(20px)';
+    moonReflection.style.animation = 'moonGlow 6s infinite';
+    container.appendChild(moonReflection);
+    
+    // Sabiduría oceánica cambiante
+    const wisdoms = [
+        "La ola cree que muere al regresar al mar<br>Pero solo está volviendo a casa<br>Nunca fue diferente del océano",
+        "Mil olas, un solo océano<br>Mil vidas, una sola conciencia<br>La separación es la ilusión",
+        "La gota contiene el océano<br>El océano está en cada gota<br>¿Dónde termina una y empieza el otro?",
+        "Emerges del océano como ola<br>Juegas un momento en la superficie<br>Y regresas siendo lo que siempre fuiste",
+        "No temas disolverse<br>Es recordar quién eres<br>El océano infinito del ser"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+        document.querySelector('.ocean-wisdom').innerHTML = wisdoms[wisdomIndex];
+    }, 8000);
+</script>
+```
+
+</body>
+</html>
