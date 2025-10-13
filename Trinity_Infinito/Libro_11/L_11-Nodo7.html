@@ -1,1 +1,214 @@
-desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>El Círculo Sin Principio - Trinity Infinito</title>
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(circle, #0a0a0a, #000);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.eternal-ring {
+position: absolute;
+width: 250px;
+height: 250px;
+border: 2px solid rgba(255,255,255,0.2);
+border-radius: 50%;
+animation: eternal-spin 20s linear infinite;
+}
+
+@keyframes eternal-spin {
+from { transform: rotate(0deg) scale(1); }
+50% { transform: rotate(180deg) scale(1.2); }
+to { transform: rotate(360deg) scale(1); }
+}
+
+.point {
+position: absolute;
+width: 8px;
+height: 8px;
+background: radial-gradient(circle, rgba(255,255,255,0.9), transparent);
+border-radius: 50%;
+animation: circle-path 10s linear infinite;
+}
+
+@keyframes circle-path {
+from { transform: rotate(0deg) translateX(125px) rotate(0deg); }
+to { transform: rotate(360deg) translateX(125px) rotate(-360deg); }
+}
+
+.mobius {
+position: absolute;
+width: 300px;
+height: 150px;
+border: 1px solid rgba(100,200,255,0.2);
+border-radius: 50%;
+animation: mobius-twist 15s linear infinite;
+}
+
+@keyframes mobius-twist {
+0% { transform: rotateX(0deg) rotateY(0deg); }
+50% { transform: rotateX(180deg) rotateY(90deg); }
+100% { transform: rotateX(360deg) rotateY(180deg); }
+}
+
+.infinite {
+position: absolute;
+font-size: 48px;
+color: rgba(255,255,255,0.1);
+animation: infinite-fade 12s infinite;
+}
+
+@keyframes infinite-fade {
+0%, 100% { opacity: 0.1; transform: scale(1); }
+50% { opacity: 0.3; transform: scale(1.5); }
+}
+
+.beginning {
+position: absolute;
+width: 4px;
+height: 4px;
+background: white;
+border-radius: 50%;
+opacity: 0;
+animation: no-beginning 8s infinite;
+}
+
+@keyframes no-beginning {
+0%, 100% { opacity: 0; }
+50% { opacity: 0.5; }
+}
+
+.text {
+position: absolute;
+bottom: 50px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 4px;
+font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="eternal-ring"></div>
+<div class="infinite">∞</div>
+<div class="text">TODO PUNTO ES PRINCIPIO Y FIN</div>
+<script>
+const b = document.body;
+let angle = 0;
+
+function c(cls, st) {
+const e = document.createElement(‘div’);
+e.className = cls;
+if(st) Object.assign(e.style, st);
+b.appendChild(e);
+setTimeout(() => e.remove(), 15000);
+}
+
+setInterval(() => {
+angle += 72;
+
+// Puntos en el círculo eterno
+c(‘point’, {
+left: ‘50%’,
+top: ‘50%’,
+animationDelay: Math.random() * 10 + ‘s’,
+animationDuration: 8 + Math.random() * 4 + ‘s’
+});
+
+// Anillos concéntricos
+if(Math.random() > 0.5) {
+c(‘eternal-ring’, {
+left: ‘50%’,
+top: ‘50%’,
+transform: ‘translate(-50%, -50%)’,
+width: 100 + Math.random() * 200 + ‘px’,
+height: 100 + Math.random() * 200 + ‘px’,
+animationDuration: 15 + Math.random() * 10 + ‘s’
+});
+}
+
+// Banda de Möbius
+if(Math.random() > 0.8) {
+c(‘mobius’, {
+left: ‘50%’,
+top: ‘50%’,
+transform: ‘translate(-50%, -50%)’
+});
+}
+
+// Puntos sin principio
+c(‘beginning’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+animationDelay: Math.random() * 8 + ‘s’
+});
+}, 2000);
+
+// Campo circular continuo
+function circularField() {
+const time = Date.now() * 0.001;
+const points = document.querySelectorAll(’.point’);
+
+points.forEach((p, i) => {
+const offset = (i / points.length) * Math.PI * 2;
+const x = Math.cos(time + offset) * 150 + window.innerWidth / 2;
+const y = Math.sin(time + offset) * 150 + window.innerHeight / 2;
+
+```
+if(Math.random() > 0.99) {
+  c('beginning', {
+    left: x + 'px',
+    top: y + 'px',
+    animation: 'no-beginning 2s ease-out forwards'
+  });
+}
+```
+
+});
+
+requestAnimationFrame(circularField);
+}
+
+circularField();
+
+b.addEventListener(‘click’, e => {
+// Crear círculo completo instantáneamente
+const numPoints = 12;
+for(let i = 0; i < numPoints; i++) {
+const angle = (i / numPoints) * Math.PI * 2;
+const radius = 100;
+const x = e.clientX + Math.cos(angle) * radius;
+const y = e.clientY + Math.sin(angle) * radius;
+
+```
+c('point', {
+  left: x + 'px',
+  top: y + 'px',
+  animation: 'none',
+  opacity: '0.8'
+});
+```
+
+}
+
+// Anillo central
+c(‘eternal-ring’, {
+left: e.clientX - 100 + ‘px’,
+top: e.clientY - 100 + ‘px’,
+width: ‘200px’,
+height: ‘200px’,
+animation: ‘eternal-spin 3s ease-out forwards’
+});
+});
+</script>
+
+</body>
+</html>
