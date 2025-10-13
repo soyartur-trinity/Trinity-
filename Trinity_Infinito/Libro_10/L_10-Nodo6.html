@@ -1,1 +1,455 @@
-desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Danza Sin Bailarín - Trinity Infinito</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+background: #000;
+overflow: hidden;
+font-family: ‘Arial’, sans-serif;
+}
+
+.dance-void {
+position: fixed;
+width: 100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+perspective: 1200px;
+}
+
+.movement-trace {
+position: absolute;
+width: 100px;
+height: 2px;
+background: linear-gradient(90deg,
+transparent,
+rgba(255,100,200,0.6),
+rgba(100,200,255,0.6),
+transparent
+);
+animation: dance-flow 8s infinite;
+transform-origin: center;
+}
+
+@keyframes dance-flow {
+0% {
+transform: rotate(0deg) translateX(0) scaleX(0);
+opacity: 0;
+}
+25% {
+transform: rotate(90deg) translateX(100px) scaleX(1);
+opacity: 0.8;
+}
+50% {
+transform: rotate(180deg) translateX(150px) scaleX(2);
+opacity: 0.5;
+}
+75% {
+transform: rotate(270deg) translateX(100px) scaleX(1);
+opacity: 0.8;
+}
+100% {
+transform: rotate(360deg) translateX(0) scaleX(0);
+opacity: 0;
+}
+}
+
+.phantom-figure {
+position: absolute;
+width: 200px;
+height: 400px;
+opacity: 0.1;
+animation: figure-sway 10s ease-in-out infinite;
+}
+
+.phantom-figure::before {
+content: ‘’;
+position: absolute;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+top: 0;
+left: 50%;
+transform: translateX(-50%);
+}
+
+.phantom-figure::after {
+content: ‘’;
+position: absolute;
+width: 2px;
+height: 350px;
+background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+top: 50px;
+left: 50%;
+transform: translateX(-50%);
+}
+
+@keyframes figure-sway {
+0%, 100% {
+transform: translateX(0) rotateZ(0deg);
+}
+25% {
+transform: translateX(-100px) rotateZ(-15deg);
+}
+50% {
+transform: translateX(0) rotateZ(0deg) scaleY(0.9);
+}
+75% {
+transform: translateX(100px) rotateZ(15deg);
+}
+}
+
+.rhythm-pulse {
+position: absolute;
+width: 300px;
+height: 300px;
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 50%;
+animation: pulse-expand 4s ease-out infinite;
+}
+
+@keyframes pulse-expand {
+0% {
+transform: scale(0);
+opacity: 0.5;
+}
+100% {
+transform: scale(3);
+opacity: 0;
+}
+}
+
+.gesture-arc {
+position: absolute;
+width: 200px;
+height: 200px;
+border: 2px solid transparent;
+border-top-color: rgba(255,255,255,0.3);
+border-radius: 50%;
+animation: arc-rotate 6s linear infinite;
+}
+
+@keyframes arc-rotate {
+from {
+transform: rotate(0deg);
+}
+to {
+transform: rotate(360deg);
+}
+}
+
+.step-echo {
+position: absolute;
+width: 30px;
+height: 30px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(255,255,255,0.5), transparent);
+animation: echo-fade 2s ease-out forwards;
+}
+
+@keyframes echo-fade {
+0% {
+transform: scale(1);
+opacity: 0.5;
+}
+100% {
+transform: scale(3);
+opacity: 0;
+}
+}
+
+.choreography-text {
+position: absolute;
+bottom: 50px;
+width: 100%;
+text-align: center;
+color: rgba(255,255,255,0.3);
+font-size: 14px;
+letter-spacing: 5px;
+animation: text-flow 7s ease-in-out infinite;
+}
+
+@keyframes text-flow {
+0%, 100% {
+opacity: 0.3;
+transform: translateY(0);
+}
+50% {
+opacity: 0.5;
+transform: translateY(-10px);
+}
+}
+
+.energy-spiral {
+position: absolute;
+width: 150px;
+height: 150px;
+animation: spiral-dance 15s linear infinite;
+}
+
+.energy-spiral::before {
+content: ‘’;
+position: absolute;
+width: 100%;
+height: 100%;
+border: 2px solid transparent;
+border-left-color: rgba(100,200,255,0.4);
+border-radius: 50%;
+animation: inner-spin 2s linear infinite;
+}
+
+@keyframes spiral-dance {
+0% {
+transform: translate(0, 0) rotate(0deg);
+}
+25% {
+transform: translate(100px, -100px) rotate(90deg);
+}
+50% {
+transform: translate(-100px, -100px) rotate(180deg);
+}
+75% {
+transform: translate(-100px, 100px) rotate(270deg);
+}
+100% {
+transform: translate(0, 0) rotate(360deg);
+}
+}
+
+@keyframes inner-spin {
+from {
+transform: rotate(0deg);
+}
+to {
+transform: rotate(360deg);
+}
+}
+
+.motion-field {
+position: absolute;
+width: 100%;
+height: 100%;
+opacity: 0.5;
+}
+</style>
+
+</head>
+<body>
+
+<div class="dance-void" id="danceVoid">
+  <div class="motion-field" id="motionField"></div>
+  <div class="phantom-figure"></div>
+  <div class="choreography-text">LA DANZA SE DANZA SOLA</div>
+</div>
+
+<script>
+const danceVoid = document.getElementById('danceVoid');
+const motionField = document.getElementById('motionField');
+
+// Trazos de movimiento autónomo
+function createMovementTrace() {
+  const trace = document.createElement('div');
+  trace.className = 'movement-trace';
+  
+  const angle = Math.random() * 360;
+  const distance = 50 + Math.random() * 150;
+  
+  trace.style.left = `calc(50% + ${Math.cos(angle * Math.PI / 180) * distance}px)`;
+  trace.style.top = `calc(50% + ${Math.sin(angle * Math.PI / 180) * distance}px)`;
+  trace.style.transform = `rotate(${angle}deg)`;
+  trace.style.animationDelay = Math.random() * 8 + 's';
+  trace.style.animationDuration = (6 + Math.random() * 4) + 's';
+  
+  motionField.appendChild(trace);
+  setTimeout(() => trace.remove(), 10000);
+}
+
+// Pulsos rítmicos
+function createRhythmPulse() {
+  const pulse = document.createElement('div');
+  pulse.className = 'rhythm-pulse';
+  pulse.style.left = '50%';
+  pulse.style.top = '50%';
+  pulse.style.transform = 'translate(-50%, -50%)';
+  pulse.style.animationDelay = Math.random() * 4 + 's';
+  
+  danceVoid.appendChild(pulse);
+  setTimeout(() => pulse.remove(), 4000);
+}
+
+// Arcos gestuales
+function createGestureArc() {
+  const arc = document.createElement('div');
+  arc.className = 'gesture-arc';
+  
+  const x = Math.random() * window.innerWidth;
+  const y = Math.random() * window.innerHeight;
+  
+  arc.style.left = x + 'px';
+  arc.style.top = y + 'px';
+  arc.style.width = (100 + Math.random() * 200) + 'px';
+  arc.style.height = arc.style.width;
+  arc.style.animationDuration = (4 + Math.random() * 4) + 's';
+  arc.style.animationDirection = Math.random() > 0.5 ? 'normal' : 'reverse';
+  
+  motionField.appendChild(arc);
+  setTimeout(() => arc.remove(), 8000);
+}
+
+// Ecos de pasos
+function createStepEcho(x, y) {
+  const echo = document.createElement('div');
+  echo.className = 'step-echo';
+  echo.style.left = x + 'px';
+  echo.style.top = y + 'px';
+  
+  danceVoid.appendChild(echo);
+  setTimeout(() => echo.remove(), 2000);
+}
+
+// Espirales de energía
+function createEnergySpiral() {
+  const spiral = document.createElement('div');
+  spiral.className = 'energy-spiral';
+  spiral.style.left = '50%';
+  spiral.style.top = '50%';
+  spiral.style.transform = 'translate(-50%, -50%)';
+  spiral.style.animationDelay = Math.random() * 15 + 's';
+  
+  motionField.appendChild(spiral);
+  setTimeout(() => spiral.remove(), 15000);
+}
+
+// Generación continua
+setInterval(createMovementTrace, 500);
+setInterval(createRhythmPulse, 2000);
+setInterval(createGestureArc, 1500);
+setInterval(createEnergySpiral, 5000);
+
+// Coreografía emergente
+let choreographySequence = [];
+let sequenceTime = 0;
+
+function updateChoreography() {
+  sequenceTime += 0.01;
+  
+  // Crear patrones de movimiento basados en ondas sinusoidales
+  const x = Math.sin(sequenceTime) * 200 + window.innerWidth / 2;
+  const y = Math.cos(sequenceTime * 0.7) * 200 + window.innerHeight / 2;
+  
+  // Dejar rastro de pasos cada cierto tiempo
+  if (Math.floor(sequenceTime * 100) % 50 === 0) {
+    createStepEcho(x, y);
+    
+    // Guardar posición en la secuencia
+    choreographySequence.push({ x, y, time: Date.now() });
+    if (choreographySequence.length > 20) {
+      choreographySequence.shift();
+    }
+  }
+  
+  // Crear conexiones entre pasos anteriores
+  if (choreographySequence.length > 1 && Math.random() > 0.98) {
+    const start = choreographySequence[choreographySequence.length - 2];
+    const end = choreographySequence[choreographySequence.length - 1];
+    
+    const line = document.createElement('div');
+    line.style.position = 'absolute';
+    line.style.width = '1px';
+    line.style.height = Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2)) + 'px';
+    line.style.background = 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent)';
+    line.style.left = start.x + 'px';
+    line.style.top = start.y + 'px';
+    
+    const angle = Math.atan2(end.y - start.y, end.x - start.x) * 180 / Math.PI;
+    line.style.transform = `rotate(${angle + 90}deg)`;
+    line.style.transformOrigin = 'top';
+    line.style.animation = 'echo-fade 2s ease-out forwards';
+    
+    motionField.appendChild(line);
+    setTimeout(() => line.remove(), 2000);
+  }
+  
+  requestAnimationFrame(updateChoreography);
+}
+
+updateChoreography();
+
+// Interacción genera movimientos
+document.addEventListener('click', (e) => {
+  // Crear explosión de movimientos
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 2;
+    const distance = 100;
+    
+    setTimeout(() => {
+      const trace = document.createElement('div');
+      trace.className = 'movement-trace';
+      trace.style.left = e.clientX + Math.cos(angle) * distance + 'px';
+      trace.style.top = e.clientY + Math.sin(angle) * distance + 'px';
+      trace.style.transform = `rotate(${angle * 180 / Math.PI}deg)`;
+      trace.style.animation = 'dance-flow 2s ease-out forwards';
+      
+      motionField.appendChild(trace);
+      setTimeout(() => trace.remove(), 2000);
+    }, i * 50);
+  }
+  
+  // Crear onda de impacto
+  createRhythmPulse();
+  createStepEcho(e.clientX, e.clientY);
+});
+
+// Movimiento perpetuo del bailarín fantasma
+const phantomFigure = document.querySelector('.phantom-figure');
+let figureAngle = 0;
+
+function movePhantomFigure() {
+  figureAngle += 0.01;
+  
+  const x = Math.sin(figureAngle) * 100;
+  const y = Math.sin(figureAngle * 2) * 50;
+  const rotation = Math.sin(figureAngle * 0.5) * 15;
+  
+  phantomFigure.style.transform = `translate(${x}px, ${y}px) rotateZ(${rotation}deg)`;
+  
+  // Ocasionalmente crear trazos desde la figura
+  if (Math.random() > 0.98) {
+    const rect = phantomFigure.getBoundingClientRect();
+    createStepEcho(rect.left + rect.width / 2, rect.top + rect.height);
+  }
+  
+  requestAnimationFrame(movePhantomFigure);
+}
+
+movePhantomFigure();
+
+// Campo gravitacional de la danza
+document.addEventListener('mousemove', (e) => {
+  if (Math.random() > 0.95) {
+    const trace = document.createElement('div');
+    trace.className = 'movement-trace';
+    trace.style.left = e.clientX + 'px';
+    trace.style.top = e.clientY + 'px';
+    trace.style.width = '50px';
+    trace.style.animation = 'dance-flow 1s ease-out forwards';
+    
+    motionField.appendChild(trace);
+    setTimeout(() => trace.remove(), 1000);
+  }
+});
+</script>
+
+</body>
+</html>
