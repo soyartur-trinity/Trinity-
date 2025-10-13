@@ -1,1 +1,184 @@
-desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>El Hijo Que Engendra al Padre - Trinity Infinito</title>
+<style>
+body {
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.child {
+position: absolute;
+width: 30px;
+height: 30px;
+background: radial-gradient(circle, rgba(100,200,255,0.8), transparent);
+border-radius: 50%;
+animation: child-creates 12s infinite;
+}
+
+@keyframes child-creates {
+0% { transform: scale(0.5); opacity: 1; }
+50% { transform: scale(1.5); opacity: 0.8; }
+100% { transform: scale(2); opacity: 0; }
+}
+
+.parent {
+position: absolute;
+width: 60px;
+height: 60px;
+border: 2px solid rgba(255,100,200,0.4);
+border-radius: 50%;
+animation: parent-emerges 12s infinite;
+animation-delay: 6s;
+}
+
+@keyframes parent-emerges {
+0% { transform: scale(0); opacity: 0; }
+50% { transform: scale(1); opacity: 0.6; }
+100% { transform: scale(0.5); opacity: 0; }
+}
+
+.lineage {
+position: absolute;
+width: 1px;
+height: 100px;
+background: linear-gradient(to top, rgba(255,255,255,0.5), transparent);
+animation: reverse-lineage 8s infinite;
+}
+
+@keyframes reverse-lineage {
+0% { transform: scaleY(0) translateY(50px); opacity: 0; }
+50% { transform: scaleY(1) translateY(0); opacity: 0.5; }
+100% { transform: scaleY(0) translateY(-50px); opacity: 0; }
+}
+
+.generation {
+position: absolute;
+width: 150px;
+height: 150px;
+border: 1px dashed rgba(255,255,255,0.1);
+border-radius: 50%;
+animation: gen-cycle 15s linear infinite;
+}
+
+@keyframes gen-cycle {
+from { transform: rotate(0deg); }
+to { transform: rotate(-360deg); }
+}
+
+.dna {
+position: absolute;
+width: 3px;
+height: 3px;
+background: white;
+border-radius: 50%;
+animation: dna-spiral 10s infinite;
+}
+
+@keyframes dna-spiral {
+0% { transform: rotate(0deg) translateX(50px) rotate(0deg); opacity: 0; }
+50% { transform: rotate(180deg) translateX(50px) rotate(-180deg); opacity: 0.8; }
+100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); opacity: 0; }
+}
+
+.text {
+position: absolute;
+bottom: 50px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 4px;
+font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="text">EL DESCENDIENTE CREA AL ANCESTRO</div>
+<script>
+const b = document.body;
+
+function c(cls, st) {
+const e = document.createElement(‘div’);
+e.className = cls;
+if(st) Object.assign(e.style, st);
+b.appendChild(e);
+setTimeout(() => e.remove(), 12000);
+}
+
+setInterval(() => {
+const x = Math.random() * window.innerWidth;
+const y = Math.random() * window.innerHeight;
+
+// Primero aparece el hijo
+c(‘child’, {
+left: x + ‘px’,
+top: y + ‘px’
+});
+
+// Después emerge el padre desde el hijo
+setTimeout(() => {
+c(‘parent’, {
+left: x - 15 + ‘px’,
+top: y - 15 + ‘px’
+});
+
+```
+// Línea de linaje invertida
+c('lineage', {
+  left: x + 'px',
+  top: y - 100 + 'px'
+});
+```
+
+}, 3000);
+
+// ADN helicoidal
+for(let i = 0; i < 5; i++) {
+c(‘dna’, {
+left: ‘50%’,
+top: ‘50%’,
+animationDelay: i * 0.5 + ‘s’
+});
+}
+
+if(Math.random() > 0.7) {
+c(‘generation’, {
+left: ‘50%’,
+top: ‘50%’,
+transform: ‘translate(-50%, -50%)’
+});
+}
+}, 4000);
+
+b.addEventListener(‘click’, e => {
+// Crear genealogía invertida
+for(let i = 0; i < 5; i++) {
+setTimeout(() => {
+const size = 20 + i * 15;
+const el = i === 0 ? ‘child’ : ‘parent’;
+
+```
+  c(el, {
+    left: e.clientX - size/2 + 'px',
+    top: e.clientY - i * 30 - size/2 + 'px',
+    width: size + 'px',
+    height: size + 'px',
+    animation: `${el === 'child' ? 'child-creates' : 'parent-emerges'} 3s ease-out forwards`,
+    animationDelay: i * 0.3 + 's'
+  });
+}, i * 200);
+```
+
+}
+});
+</script>
+
+</body>
+</html>
