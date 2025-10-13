@@ -1,1 +1,157 @@
-desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Profecía Autocumplida - Trinity Infinito</title>
+<style>
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #0a0015, #15000a);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Georgia, serif;
+}
+
+.oracle {
+position: absolute;
+color: rgba(255,255,255,0.5);
+font-size: 18px;
+text-align: center;
+font-style: italic;
+animation: prophecy 10s infinite;
+}
+
+@keyframes prophecy {
+0%, 100% { opacity: 0; transform: scale(0.8); filter: blur(5px); }
+50% { opacity: 0.6; transform: scale(1); filter: blur(0); }
+}
+
+.thread {
+position: absolute;
+width: 1px;
+height: 200px;
+background: linear-gradient(to bottom, transparent, rgba(200,150,255,0.5), transparent);
+animation: weave 8s linear infinite;
+}
+
+@keyframes weave {
+0% { transform: rotate(0deg) scaleY(0); opacity: 0; }
+50% { transform: rotate(180deg) scaleY(1); opacity: 0.5; }
+100% { transform: rotate(360deg) scaleY(0); opacity: 0; }
+}
+
+.echo {
+position: absolute;
+width: 150px;
+height: 150px;
+border: 2px solid rgba(255,255,255,0.1);
+border-radius: 50%;
+animation: backward 6s infinite;
+}
+
+@keyframes backward {
+0% { transform: scale(3); opacity: 0; }
+50% { transform: scale(1); opacity: 0.3; }
+100% { transform: scale(0); opacity: 0; }
+}
+
+.fulfill {
+position: absolute;
+width: 200px;
+height: 200px;
+border: 1px dashed rgba(255,255,255,0.2);
+border-radius: 50%;
+animation: fulfill 12s infinite;
+}
+
+@keyframes fulfill {
+0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.5; }
+50% { transform: scale(1.2) rotate(180deg); opacity: 0.8; }
+}
+
+.particle {
+position: absolute;
+width: 5px;
+height: 5px;
+background: white;
+border-radius: 50%;
+animation: predict 8s infinite;
+}
+
+@keyframes predict {
+0%, 100% { transform: translate(0, 0); opacity: 0; }
+50% { transform: translate(var(–x), var(–y)); opacity: 0.8; }
+}
+
+.text {
+position: absolute;
+bottom: 50px;
+color: rgba(255,255,255,0.3);
+letter-spacing: 4px;
+font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+<div class="fulfill"></div>
+<div class="oracle" id="o"></div>
+<div class="text">LO PREDICHO SE VUELVE INEVITABLE</div>
+<script>
+const b = document.body;
+const o = document.getElementById('o');
+const p = ["Lo que temes llegará", "El círculo se cierra", "Tu destino te busca", "El futuro ya fue", "El fin es el principio"];
+
+function c(cls, st) {
+const e = document.createElement(‘div’);
+e.className = cls;
+if(st) Object.assign(e.style, st);
+b.appendChild(e);
+setTimeout(() => e.remove(), 10000);
+}
+
+setInterval(() => {
+o.textContent = p[Math.floor(Math.random() * p.length)];
+
+c(‘thread’, {
+left: Math.random() * 100 + ‘%’,
+top: ‘0’,
+height: 200 + Math.random() * 100 + ‘px’
+});
+
+if(Math.random() > 0.5) {
+c(‘echo’, {
+left: ‘50%’,
+top: ‘50%’,
+transform: ‘translate(-50%, -50%)’
+});
+}
+
+c(‘particle’, {
+left: Math.random() * 100 + ‘%’,
+top: Math.random() * 100 + ‘%’,
+‘–x’: (Math.random() - 0.5) * 200 + ‘px’,
+‘–y’: (Math.random() - 0.5) * 200 + ‘px’
+});
+}, 2000);
+
+b.addEventListener(‘click’, e => {
+for(let i = 0; i < 10; i++) {
+setTimeout(() => {
+const a = (i / 10) * Math.PI * 2;
+c(‘particle’, {
+left: e.clientX + Math.cos(a) * 100 + ‘px’,
+top: e.clientY + Math.sin(a) * 100 + ‘px’,
+animation: ‘predict 2s ease-in forwards’
+});
+}, i * 50);
+}
+});
+</script>
+
+</body>
+</html>
