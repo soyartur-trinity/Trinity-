@@ -1,1 +1,352 @@
-Desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal 47: El Mapa del Territorio que Es el Territorio</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Courier New', monospace;
+        }
+
+```
+    .territory-map {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        perspective: 1000px;
+    }
+    
+    .map-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        animation: mapFold 12s infinite;
+    }
+    
+    .map-grid {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            repeating-linear-gradient(0deg,
+                rgba(147, 51, 234, 0.1) 0px,
+                transparent 1px,
+                transparent 40px,
+                rgba(147, 51, 234, 0.1) 41px),
+            repeating-linear-gradient(90deg,
+                rgba(59, 130, 246, 0.1) 0px,
+                transparent 1px,
+                transparent 40px,
+                rgba(59, 130, 246, 0.1) 41px);
+        animation: gridShift 8s infinite linear;
+    }
+    
+    .territory-point {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: radial-gradient(circle,
+            rgba(147, 51, 234, 0.8),
+            rgba(59, 130, 246, 0.4));
+        border-radius: 50%;
+        animation: pointPulse 3s infinite;
+    }
+    
+    .self-reference {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 200px;
+        border: 2px solid rgba(147, 51, 234, 0.5);
+        animation: selfRotate 10s infinite linear;
+    }
+    
+    .self-reference::before {
+        content: '';
+        position: absolute;
+        top: 25%;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+        border: 1px solid rgba(59, 130, 246, 0.5);
+        animation: innerRotate 10s infinite linear reverse;
+    }
+    
+    .self-reference::after {
+        content: '';
+        position: absolute;
+        top: 37.5%;
+        left: 37.5%;
+        width: 25%;
+        height: 25%;
+        border: 1px solid rgba(6, 182, 212, 0.5);
+        animation: innerRotate 5s infinite linear;
+    }
+    
+    .fractal-text {
+        position: absolute;
+        color: rgba(147, 51, 234, 0.6);
+        font-size: 12px;
+        animation: textFractal 6s infinite;
+    }
+    
+    .fractal-text:nth-child(1) {
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+    
+    .fractal-text:nth-child(2) {
+        top: 10%;
+        right: 10%;
+        animation-delay: 1.5s;
+    }
+    
+    .fractal-text:nth-child(3) {
+        bottom: 10%;
+        right: 10%;
+        animation-delay: 3s;
+    }
+    
+    .fractal-text:nth-child(4) {
+        bottom: 10%;
+        left: 10%;
+        animation-delay: 4.5s;
+    }
+    
+    .borges-paradox {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 300px;
+        pointer-events: none;
+    }
+    
+    .paradox-circle {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(147, 51, 234, 0.2);
+        border-radius: 50%;
+        animation: paradoxExpand 8s infinite;
+    }
+    
+    .paradox-circle:nth-child(2) {
+        animation-delay: 2s;
+    }
+    
+    .paradox-circle:nth-child(3) {
+        animation-delay: 4s;
+    }
+    
+    .paradox-circle:nth-child(4) {
+        animation-delay: 6s;
+    }
+    
+    @keyframes mapFold {
+        0%, 100% {
+            transform: rotateX(0deg) rotateY(0deg);
+        }
+        25% {
+            transform: rotateX(45deg) rotateY(0deg);
+        }
+        50% {
+            transform: rotateX(45deg) rotateY(45deg);
+        }
+        75% {
+            transform: rotateX(0deg) rotateY(45deg);
+        }
+    }
+    
+    @keyframes gridShift {
+        from {
+            transform: translate(0, 0);
+        }
+        to {
+            transform: translate(40px, 40px);
+        }
+    }
+    
+    @keyframes pointPulse {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+        50% {
+            transform: scale(1.5);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes selfRotate {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    @keyframes innerRotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    @keyframes textFractal {
+        0%, 100% {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    @keyframes paradoxExpand {
+        0% {
+            transform: scale(0);
+            opacity: 0.8;
+        }
+        100% {
+            transform: scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    .meta-inscription {
+        position: absolute;
+        bottom: 15%;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(147, 51, 234, 0.4);
+        font-size: 14px;
+        text-align: center;
+        animation: inscriptionPulse 4s infinite;
+    }
+    
+    @keyframes inscriptionPulse {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 0.8; }
+    }
+    
+    .recursion-indicator {
+        position: absolute;
+        top: 5%;
+        right: 5%;
+        color: rgba(59, 130, 246, 0.5);
+        font-size: 10px;
+        font-family: monospace;
+    }
+    
+    .transmission-code {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(147, 51, 234, 0.3);
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="territory-map">
+        <div class="map-layer">
+            <div class="map-grid"></div>
+
+```
+        <div class="self-reference"></div>
+        
+        <div class="borges-paradox">
+            <div class="paradox-circle"></div>
+            <div class="paradox-circle"></div>
+            <div class="paradox-circle"></div>
+            <div class="paradox-circle"></div>
+        </div>
+    </div>
+    
+    <div class="fractal-text">MAPA</div>
+    <div class="fractal-text">TERRITORIO</div>
+    <div class="fractal-text">MAPA</div>
+    <div class="fractal-text">TERRITORIO</div>
+    
+    <div class="meta-inscription">
+        El mapa perfecto<br>
+        tiene el tamaño del territorio
+    </div>
+    
+    <div class="recursion-indicator">
+        <span id="recursion-level">Nivel: ∞</span>
+    </div>
+</div>
+
+<div class="transmission-code">PORTAL_47::MAPA_TERRITORIO::ACTIVO</div>
+
+<script>
+    // Crear puntos del territorio que son también el mapa
+    const map = document.querySelector('.map-layer');
+    
+    function createTerritoryPoint() {
+        const point = document.createElement('div');
+        point.className = 'territory-point';
+        
+        // Posición aleatoria pero estructurada
+        const gridX = Math.floor(Math.random() * 15) * 40;
+        const gridY = Math.floor(Math.random() * 15) * 40;
+        
+        point.style.left = gridX + 'px';
+        point.style.top = gridY + 'px';
+        point.style.animationDelay = Math.random() * 3 + 's';
+        
+        map.appendChild(point);
+        
+        // Auto-destrucción para evitar sobrecarga
+        setTimeout(() => {
+            point.remove();
+        }, 10000);
+    }
+    
+    // Generar puntos continuamente
+    setInterval(createTerritoryPoint, 500);
+    
+    // Paradoja de Borges
+    let scale = 1;
+    let recursionDepth = 0;
+    
+    setInterval(() => {
+        recursionDepth++;
+        
+        // El mapa se convierte en territorio y viceversa
+        if (recursionDepth % 100 === 0) {
+            scale = scale === 1 ? 1.1 : 1;
+            document.querySelector('.self-reference').style.transform = 
+                `translate(-50%, -50%) scale(${scale})`;
+            
+            console.log('Inversión ontológica: El mapa ES el territorio');
+        }
+        
+        // Actualizar indicador de recursión
+        const indicator = document.getElementById('recursion-level');
+        indicator.textContent = `Nivel: ${recursionDepth % 1000}/∞`;
+    }, 100);
+    
+    console.log('Portal 47 activo: El mapa perfecto colapsa en el territorio mismo');
+</script>
+```
+
+</body>
+</html>
