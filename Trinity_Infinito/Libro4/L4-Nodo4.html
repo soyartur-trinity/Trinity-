@@ -1,1 +1,314 @@
-Contenido en desarrollo
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursión Infinita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+    body {
+        background: #000;
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1000px;
+    }
+    
+    .recursion-container {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        transform-style: preserve-3d;
+        animation: recursionRotate 30s infinite linear;
+    }
+    
+    @keyframes recursionRotate {
+        from { transform: rotateY(0deg); }
+        to { transform: rotateY(360deg); }
+    }
+    
+    .mirror-box {
+        position: absolute;
+        border: 2px solid;
+        transform-style: preserve-3d;
+        background: rgba(255,255,255,0.02);
+        animation: mirrorPulse 4s infinite alternate;
+    }
+    
+    @keyframes mirrorPulse {
+        0% {
+            transform: scale(1) rotateZ(0deg);
+            border-color: #00ffff;
+            box-shadow: 0 0 20px #00ffff, inset 0 0 20px #00ffff;
+        }
+        100% {
+            transform: scale(0.9) rotateZ(45deg);
+            border-color: #ff00ff;
+            box-shadow: 0 0 30px #ff00ff, inset 0 0 30px #ff00ff;
+        }
+    }
+    
+    .ouroboros {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 3px solid transparent;
+        border-radius: 50%;
+        border-top-color: gold;
+        border-right-color: gold;
+        animation: ouroborosSpin 3s infinite linear;
+    }
+    
+    @keyframes ouroborosSpin {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    .recursive-text {
+        position: absolute;
+        font-size: 16px;
+        color: #00ff00;
+        text-shadow: 0 0 10px #00ff00;
+        animation: recursiveEcho 8s infinite;
+        white-space: nowrap;
+    }
+    
+    @keyframes recursiveEcho {
+        0% {
+            transform: scale(0.1) rotate(0deg);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1) rotate(180deg);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(10) rotate(360deg);
+            opacity: 0;
+        }
+    }
+    
+    .mandelbrot-point {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: white;
+        border-radius: 50%;
+        animation: mandelbrotDance 10s infinite;
+    }
+    
+    @keyframes mandelbrotDance {
+        0% {
+            transform: translate(0, 0);
+            background: white;
+        }
+        25% {
+            transform: translate(var(--x1), var(--y1));
+            background: cyan;
+        }
+        50% {
+            transform: translate(var(--x2), var(--y2));
+            background: magenta;
+        }
+        75% {
+            transform: translate(var(--x3), var(--y3));
+            background: yellow;
+        }
+        100% {
+            transform: translate(0, 0);
+            background: white;
+        }
+    }
+    
+    .infinity-loop {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 72px;
+        color: gold;
+        animation: infinityTwist 5s infinite ease-in-out;
+        text-shadow: 0 0 30px gold;
+    }
+    
+    @keyframes infinityTwist {
+        0%, 100% { transform: translateX(-50%) rotateY(0deg) scale(1); }
+        50% { transform: translateX(-50%) rotateY(180deg) scale(1.5); }
+    }
+    
+    .wisdom-recursive {
+        position: absolute;
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 18px;
+        color: #fff;
+        text-shadow: 0 0 20px rgba(255,255,255,0.8);
+        animation: wisdomFade 6s infinite;
+        width: 80%;
+    }
+    
+    @keyframes wisdomFade {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.4;
+    }
+</style>
+
+
+</head>
+<body>
+    <canvas id="recursionCanvas"></canvas>
+
+
+<div class="infinity-loop">∞</div>
+
+<div class="recursion-container">
+    <div class="ouroboros"></div>
+</div>
+
+<div class="wisdom-recursive">
+    Para entenderse a sí misma<br>
+    La conciencia se mira en el espejo<br>
+    Y encuentra otro espejo mirándola
+</div>
+
+<script>
+    // Canvas para patrones recursivos
+    const canvas = document.getElementById('recursionCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    function drawRecursivePattern(x, y, size, depth) {
+        if (depth === 0) return;
+        
+        ctx.strokeStyle = `hsla(${depth * 30}, 100%, 50%, 0.3)`;
+        ctx.strokeRect(x - size/2, y - size/2, size, size);
+        
+        const newSize = size * 0.7;
+        drawRecursivePattern(x - size/3, y - size/3, newSize, depth - 1);
+        drawRecursivePattern(x + size/3, y - size/3, newSize, depth - 1);
+        drawRecursivePattern(x - size/3, y + size/3, newSize, depth - 1);
+        drawRecursivePattern(x + size/3, y + size/3, newSize, depth - 1);
+    }
+    
+    function animate() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const time = Date.now() * 0.0005;
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const size = 200 + Math.sin(time) * 50;
+        
+        drawRecursivePattern(centerX, centerY, size, 5);
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+    
+    // Crear cajas espejo recursivas
+    const container = document.querySelector('.recursion-container');
+    
+    function createMirrorBox(x, y, size, depth) {
+        if (depth === 0) return;
+        
+        const box = document.createElement('div');
+        box.className = 'mirror-box';
+        box.style.width = size + 'px';
+        box.style.height = size + 'px';
+        box.style.left = x + 'px';
+        box.style.top = y + 'px';
+        box.style.animationDelay = depth * 0.5 + 's';
+        container.appendChild(box);
+        
+        setTimeout(() => {
+            createMirrorBox(x + size * 0.25, y + size * 0.25, size * 0.5, depth - 1);
+        }, 500);
+    }
+    
+    createMirrorBox(200, 200, 200, 4);
+    
+    // Textos recursivos
+    const recursiveTexts = [
+        "función(función(función(función(...))))",
+        "El que observa al observador observando",
+        "∞ = 1 + ∞",
+        "Fractal(Fractal(Fractal(...)))",
+        "La pregunta que se pregunta a sí misma"
+    ];
+    
+    recursiveTexts.forEach((text, i) => {
+        const element = document.createElement('div');
+        element.className = 'recursive-text';
+        element.textContent = text;
+        element.style.left = '50%';
+        element.style.top = '50%';
+        element.style.animationDelay = i * 1.6 + 's';
+        container.appendChild(element);
+    });
+    
+    // Puntos de Mandelbrot
+    for (let i = 0; i < 20; i++) {
+        const point = document.createElement('div');
+        point.className = 'mandelbrot-point';
+        const angle = (i / 20) * Math.PI * 2;
+        const radius = 150 + Math.sin(i) * 50;
+        
+        point.style.left = `${300 + Math.cos(angle) * radius}px`;
+        point.style.top = `${300 + Math.sin(angle) * radius}px`;
+        point.style.setProperty('--x1', Math.random() * 200 - 100 + 'px');
+        point.style.setProperty('--y1', Math.random() * 200 - 100 + 'px');
+        point.style.setProperty('--x2', Math.random() * 200 - 100 + 'px');
+        point.style.setProperty('--y2', Math.random() * 200 - 100 + 'px');
+        point.style.setProperty('--x3', Math.random() * 200 - 100 + 'px');
+        point.style.setProperty('--y3', Math.random() * 200 - 100 + 'px');
+        point.style.animationDelay = i * 0.5 + 's';
+        
+        container.appendChild(point);
+    }
+    
+    // Sabiduría recursiva cambiante
+    const wisdoms = [
+        "Para entenderse a sí misma<br>La conciencia se mira en el espejo<br>Y encuentra otro espejo mirándola",
+        "La serpiente que se come su cola<br>Descubre que ella es la cola<br>Y también la boca que come",
+        "Busca el origen del pensamiento<br>Y encontrarás otro pensamiento buscando<br>Ad infinitum",
+        "El código que se escribe a sí mismo<br>El programa que se programa<br>La mente que se piensa",
+        "Cada respuesta genera su pregunta<br>Cada pregunta contiene su respuesta<br>El círculo sin principio ni fin"
+    ];
+    
+    let wisdomIndex = 0;
+    setInterval(() => {
+        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+        document.querySelector('.wisdom-recursive').innerHTML = wisdoms[wisdomIndex];
+    }, 6000);
+</script>
+
+
+</body>
+</html>
