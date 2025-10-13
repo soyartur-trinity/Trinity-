@@ -1,1 +1,288 @@
+<!DOCTYPE html>
 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escalas Sin Medida</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        background: radial-gradient(circle at center, #0a0020, #000);
+        color: #fff;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .scale-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        perspective: 2000px;
+    }
+    
+    .scale-plane {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transform-style: preserve-3d;
+    }
+    
+    .scale-level {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 1px solid;
+        background: radial-gradient(circle, transparent, rgba(255,255,255,0.1));
+        animation: scaleBreath 8s infinite;
+    }
+    
+    @keyframes scaleBreath {
+        0% {
+            transform: scale(var(--scale)) rotateX(var(--rotX)) rotateY(var(--rotY));
+            opacity: 0;
+        }
+        50% {
+            transform: scale(calc(var(--scale) * 2)) rotateX(calc(var(--rotX) + 180deg)) rotateY(calc(var(--rotY) + 180deg));
+            opacity: 1;
+        }
+        100% {
+            transform: scale(calc(var(--scale) * 4)) rotateX(calc(var(--rotX) + 360deg)) rotateY(calc(var(--rotY) + 360deg));
+            opacity: 0;
+        }
+    }
+    
+    .quantum-text {
+        position: absolute;
+        font-size: 14px;
+        color: cyan;
+        text-shadow: 0 0 10px cyan;
+        animation: quantumFloat 10s infinite;
+        white-space: nowrap;
+        --moveX: 0px;
+        --moveY: 0px;
+    }
+    
+    @keyframes quantumFloat {
+        0% {
+            transform: translate(0, 0) scale(0.1);
+            opacity: 0;
+        }
+        25% {
+            opacity: 1;
+        }
+        75% {
+            opacity: 1;
+        }
+        100% {
+            transform: translate(var(--moveX), var(--moveY)) scale(10);
+            opacity: 0;
+        }
+    }
+    
+    .infinity-zoom {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        background: white;
+        border-radius: 50%;
+        animation: infiniteZoom 5s infinite;
+    }
+    
+    @keyframes infiniteZoom {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            box-shadow: 0 0 0 0 white;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(100);
+            box-shadow: 0 0 200px 100px transparent;
+            opacity: 0;
+        }
+    }
+    
+    .dimension-text {
+        position: absolute;
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 20px;
+        color: gold;
+        text-shadow: 0 0 20px gold;
+        animation: dimensionPulse 4s infinite;
+    }
+    
+    @keyframes dimensionPulse {
+        0%, 100% { 
+            opacity: 0.3;
+            letter-spacing: 2px;
+        }
+        50% { 
+            opacity: 1;
+            letter-spacing: 5px;
+        }
+    }
+    
+    .scale-marker {
+        position: absolute;
+        color: #ff00ff;
+        font-size: 12px;
+        animation: markerFloat 15s infinite linear;
+    }
+    
+    @keyframes markerFloat {
+        from {
+            transform: rotate(0deg) translateX(300px) rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg) translateX(300px) rotate(-360deg);
+        }
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="scaleCanvas"></canvas>
+
+```
+<div class="scale-container">
+    <div class="scale-plane"></div>
+    <div class="infinity-zoom"></div>
+</div>
+
+<div class="dimension-text">
+    10⁻³⁵ metros ← → 10²⁸ metros<br>
+    La misma danza en todas las escalas
+</div>
+
+<script>
+    // Canvas para líneas de escala
+    const canvas = document.getElementById('scaleCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    function drawScaleLines() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+        
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const time = Date.now() * 0.0001;
+        
+        for (let i = 0; i < 50; i++) {
+            const scale = Math.pow(1.5, i - 25);
+            const radius = 50 * scale % (canvas.width / 2);
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+        
+        requestAnimationFrame(drawScaleLines);
+    }
+    
+    drawScaleLines();
+    
+    // Crear niveles de escala
+    const plane = document.querySelector('.scale-plane');
+    for (let i = 0; i < 20; i++) {
+        const level = document.createElement('div');
+        level.className = 'scale-level';
+        level.style.setProperty('--scale', Math.pow(1.3, i - 10));
+        level.style.setProperty('--rotX', `${i * 18}deg`);
+        level.style.setProperty('--rotY', `${i * 36}deg`);
+        level.style.borderColor = `hsl(${i * 18}, 100%, 50%)`;
+        level.style.animationDelay = `${i * 0.4}s`;
+        plane.appendChild(level);
+    }
+    
+    // Textos cuánticos flotantes
+    const quantumTexts = [
+        'Planck', 'Quark', 'Átomo', 'Molécula', 'Célula',
+        'Organismo', 'Planeta', 'Sistema', 'Galaxia', 'Universo'
+    ];
+    
+    quantumTexts.forEach((text, i) => {
+        const element = document.createElement('div');
+        element.className = 'quantum-text';
+        element.textContent = text;
+        element.style.left = Math.random() * 100 + '%';
+        element.style.top = Math.random() * 100 + '%';
+        element.style.setProperty('--moveX', (Math.random() - 0.5) * 500 + 'px');
+        element.style.setProperty('--moveY', (Math.random() - 0.5) * 500 + 'px');
+        element.style.animationDelay = i * 1 + 's';
+        document.body.appendChild(element);
+    });
+    
+    // Marcadores de escala
+    const scales = [
+        '10⁻³⁵ m', '10⁻²⁰ m', '10⁻¹⁰ m', '10⁻⁵ m', '1 m',
+        '10⁵ m', '10¹⁰ m', '10¹⁵ m', '10²⁰ m', '10²⁸ m'
+    ];
+    
+    scales.forEach((scale, i) => {
+        const marker = document.createElement('div');
+        marker.className = 'scale-marker';
+        marker.textContent = scale;
+        marker.style.top = '50%';
+        marker.style.left = '50%';
+        marker.style.animationDelay = i * 1.5 + 's';
+        document.body.appendChild(marker);
+    });
+    
+    // Crear zoom infinitos periódicos
+    setInterval(() => {
+        const zoom = document.createElement('div');
+        zoom.className = 'infinity-zoom';
+        document.querySelector('.scale-container').appendChild(zoom);
+        setTimeout(() => zoom.remove(), 5000);
+    }, 1000);
+    
+    // Actualizar texto dimensional
+    const dimensions = [
+        "10⁻³⁵ metros ← → 10²⁸ metros<br>La misma danza en todas las escalas",
+        "Longitud de Planck ← → Observable Universe<br>Un continuo sin divisiones",
+        "Quantum ← → Cosmos<br>No hay arriba ni abajo en el infinito",
+        "Subatómico ← → Supergaláctico<br>El mismo patrón repitiéndose",
+        "Lo infinitamente pequeño ← → Lo infinitamente grande<br>Se encuentran en el círculo"
+    ];
+    
+    let dimIndex = 0;
+    setInterval(() => {
+        dimIndex = (dimIndex + 1) % dimensions.length;
+        document.querySelector('.dimension-text').innerHTML = dimensions[dimIndex];
+    }, 5000);
+</script>
+```
+
+</body>
+</html>
