@@ -1,164 +1,562 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>El Sueño Que Se Sueña Solo - Trinity Infinito</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libro 10 - Nodo 7: El Sueño Que Se Sueña Solo</title>
 <style>
-body {
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+* {
   margin: 0;
-  background: radial-gradient(ellipse, #0a0a1a, #000);
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(ellipse at center, #05050f 0%, #000000 70%);
   overflow: hidden;
+  font-family: 'Crimson Text', 'Palatino', serif;
+  color: #fff;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
 
-.bubble {
-position: absolute;
-border-radius: 50%;
-background: radial-gradient(circle at 30% 30%, rgba(150,100,255,0.2), transparent);
-border: 1px solid rgba(255,255,255,0.05);
-animation: float 15s infinite;
+.dream-realm {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes float {
-0%, 100% { transform: translate(0, 0) scale(0); opacity: 0; }
-25% { transform: translate(var(–x1), var(–y1)) scale(1); opacity: 0.4; }
-50% { transform: translate(var(–x2), var(–y2)) scale(1.5); opacity: 0.6; }
-75% { transform: translate(var(–x1), var(–y1)) scale(1); opacity: 0.4; }
+.sleeping-void {
+  position: relative;
+  width: 650px;
+  height: 650px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(15,10,25,0.5), transparent);
+  border: 1px solid rgba(255,255,255,0.04);
 }
 
-.symbol {
-position: absolute;
-font-size: 24px;
-color: rgba(255,255,255,0.2);
-animation: manifest 10s infinite;
+.dream-bubble {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle at 30% 30%,
+    rgba(150,100,255,0.25),
+    rgba(100,150,255,0.15),
+    transparent
+  );
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+  animation: bubble-float 18s ease-in-out infinite;
+  filter: blur(3px);
+  opacity: 0;
 }
 
-@keyframes manifest {
-0%, 100% { transform: scale(0) rotate(0); opacity: 0; }
-50% { transform: scale(1) rotate(180deg); opacity: 0.3; }
+@keyframes bubble-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(var(--bx), var(--by)) scale(1.3);
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.3;
+  }
 }
 
-.rem {
-position: absolute;
-width: 100%;
-height: 2px;
-background: linear-gradient(90deg, transparent, rgba(200,150,255,0.3), transparent);
-animation: rem-flow 6s linear infinite;
+.dreamscape-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.05);
+  animation: layer-drift 25s linear infinite;
+  opacity: 0.2;
 }
 
-@keyframes rem-flow {
-0% { transform: translateX(-100%); opacity: 0; }
-50% { transform: translateX(0); opacity: 0.5; }
-100% { transform: translateX(100%); opacity: 0; }
+@keyframes layer-drift {
+  from {
+    transform: rotate(0deg) scale(0.9);
+  }
+  to {
+    transform: rotate(360deg) scale(1.1);
+  }
 }
 
-.lucid {
-position: absolute;
-width: 150px;
-height: 150px;
-border-radius: 50%;
-background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
-animation: pulse 8s infinite;
+.consciousness-wisp {
+  position: absolute;
+  width: 3px;
+  height: 60px;
+  background: linear-gradient(to bottom,
+    rgba(200,180,255,0.8),
+    rgba(150,100,255,0.6),
+    transparent
+  );
+  animation: wisp-drift 14s ease-in-out infinite;
+  filter: blur(1.5px);
+  opacity: 0;
 }
 
-@keyframes pulse {
-0%, 100% { transform: scale(0); opacity: 0; }
-50% { transform: scale(2); opacity: 0.3; }
+@keyframes wisp-drift {
+  0%, 100% {
+    transform: translateY(0) translateX(0) rotate(0deg) scaleY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(var(--wy)) translateX(var(--wx)) rotate(var(--wr)) scaleY(1);
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.4;
+  }
 }
 
-.veil {
-position: fixed;
-width: 100%;
-height: 100%;
-background: radial-gradient(ellipse, transparent 30%, rgba(0,0,20,0.3));
-animation: breathe 12s infinite;
+.dream-fragment {
+  position: absolute;
+  font-size: 1.1em;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.5);
+  opacity: 0;
+  animation: fragment-emerge 16s ease-in-out infinite;
+  text-shadow: 0 0 15px rgba(150,100,255,0.4);
+  font-style: italic;
 }
 
-@keyframes breathe {
-0%, 100% { opacity: 0.3; }
-50% { opacity: 0.6; }
+@keyframes fragment-emerge {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.8);
+  }
+  20%, 80% {
+    opacity: 0.6;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.text {
-position: absolute;
-bottom: 50px;
-color: rgba(255,255,255,0.3);
-letter-spacing: 5px;
-font-size: 14px;
+.sleeper-absence {
+  position: absolute;
+  width: 180px;
+  height: 240px;
+  background: radial-gradient(ellipse,
+    rgba(100,100,150,0.15),
+    rgba(150,100,200,0.1),
+    transparent
+  );
+  border-radius: 45% 55% 48% 52%;
+  animation: absence-breathe 20s ease-in-out infinite;
+  filter: blur(40px);
+  opacity: 0;
+}
+
+@keyframes absence-breathe {
+  0%, 100% {
+    transform: translate(0, 0) scale(0.8);
+    opacity: 0;
+    border-radius: 45% 55% 48% 52%;
+  }
+  25% {
+    opacity: 0.4;
+    border-radius: 48% 52% 45% 55%;
+  }
+  50% {
+    transform: translate(var(--ax), var(--ay)) scale(1.2);
+    opacity: 0.6;
+    border-radius: 52% 48% 50% 50%;
+  }
+  75% {
+    opacity: 0.3;
+    border-radius: 50% 50% 48% 52%;
+  }
+}
+
+.dream-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(255,255,255,0.6);
+  animation: particle-dream 12s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes particle-dream {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0);
+  }
+  15% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(var(--px), var(--py)) scale(1.2);
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.4;
+  }
+}
+
+.title {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2em;
+  letter-spacing: 0.5em;
+  opacity: 0.9;
+  text-shadow: 0 0 30px rgba(150,100,255,0.5);
+  font-weight: 600;
+  text-align: center;
+  z-index: 100;
+}
+
+.subtitle {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1em;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  font-style: italic;
+  z-index: 100;
+}
+
+.central-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.7em;
+  letter-spacing: 0.4em;
+  text-align: center;
+  opacity: 0;
+  animation: text-dream 15s ease-in-out infinite;
+  text-shadow: 0 0 25px rgba(255,255,255,0.5);
+  line-height: 2.3;
+  z-index: 10;
+}
+
+@keyframes text-dream {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.85);
+    filter: blur(3px);
+  }
+  20%, 80% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0px);
+  }
+}
+
+.contemplation {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.95em;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  text-align: center;
+  max-width: 750px;
+  line-height: 1.9;
+  padding: 0 40px;
+  font-style: italic;
+  z-index: 100;
+}
+
+.void-sleep {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(100,80,150,0.15), transparent);
+  border-radius: 50%;
+  animation: sleep-pulse 22s ease-in-out infinite;
+  filter: blur(80px);
+}
+
+@keyframes sleep-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0.5;
+  }
+}
+
+.dream-veil {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%,
+    transparent 30%,
+    rgba(10,10,20,0.3) 70%,
+    rgba(0,0,0,0.5) 100%
+  );
+  border-radius: 50%;
+  animation: veil-shimmer 18s ease-in-out infinite;
+}
+
+@keyframes veil-shimmer {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 </style>
-
 </head>
 <body>
-<div class="veil"></div>
-<div class="text">EL SUEÑO SE SUEÑA A SÍ MISMO</div>
+
+<div class="title">EL SUEÑO QUE SE SUEÑA SOLO</div>
+<div class="subtitle">Libro 10 - Nodo 7</div>
+
+<div class="dream-realm">
+  <div class="sleeping-void">
+    <!-- Sueño del vacío -->
+    <div class="void-sleep"></div>
+    
+    <!-- Velo onírico -->
+    <div class="dream-veil"></div>
+    
+    <!-- Capas de paisaje onírico -->
+    <div class="dreamscape-layer" style="animation-delay: 0s;"></div>
+    <div class="dreamscape-layer" style="animation-delay: 8.3s; animation-duration: 30s;"></div>
+    <div class="dreamscape-layer" style="animation-delay: 16.7s; animation-duration: 35s;"></div>
+    
+    <!-- Ausencia del soñador -->
+    <div class="sleeper-absence" style="top: 40%; left: 50%; transform: translate(-50%, -50%); --ax: 30px; --ay: -40px; animation-delay: 0s;"></div>
+    <div class="sleeper-absence" style="top: 55%; left: 45%; transform: translate(-50%, -50%); --ax: -25px; --ay: 35px; animation-delay: 6.7s;"></div>
+    
+    <!-- Burbujas de sueño -->
+    <div class="dream-bubble" style="top: 25%; left: 30%; --bx: 80px; --by: -100px; animation-delay: 0s;"></div>
+    <div class="dream-bubble" style="top: 65%; left: 65%; --bx: -70px; --by: 90px; animation-delay: 6s;"></div>
+    <div class="dream-bubble" style="top: 45%; left: 75%; --bx: 60px; --by: -80px; animation-delay: 12s;"></div>
+    
+    <!-- Fragmentos de sueño -->
+    <div class="dream-fragment" style="top: 22%; left: 50%; transform: translateX(-50%); animation-delay: 2s;">
+      imágenes
+    </div>
+    <div class="dream-fragment" style="top: 42%; left: 50%; transform: translateX(-50%); animation-delay: 8s;">
+      sin soñador
+    </div>
+    <div class="dream-fragment" style="top: 62%; left: 50%; transform: translateX(-50%); animation-delay: 14s;">
+      mundo onírico
+    </div>
+    
+    <!-- Texto central -->
+    <div class="central-text" style="animation-delay: 3s;">
+      No hay nadie<br>
+      durmiendo<br><br>
+      Solo sueño<br>
+      soñándose
+    </div>
+  </div>
+</div>
+
+<div class="contemplation">
+  El gran sueño cósmico sin soñador · La realidad entera como ensoñación<br>
+  Imágenes fluyendo sin un yo que las observe · Pura manifestación onírica
+</div>
+
 <script>
-const b = document.body;
-const s = ['∞', '◯', '△', '☽', '☉', '✦'];
+const dream = document.querySelector('.sleeping-void');
 
-function c(cls, st) {
-const e = document.createElement(‘div’);
-e.className = cls;
-if(st) Object.assign(e.style, st);
-b.appendChild(e);
-setTimeout(() => e.remove(), 15000);
+// Crear wisps de consciencia
+function createConsciousnessWisp() {
+  const wisp = document.createElement('div');
+  wisp.className = 'consciousness-wisp';
+  
+  const startY = 20 + Math.random() * 60;
+  const wy = 80 + Math.random() * 250;
+  const wx = (Math.random() - 0.5) * 180;
+  const wr = (Math.random() - 0.5) * 120;
+  
+  wisp.style.cssText = `
+    left: ${25 + Math.random() * 50}%;
+    top: ${startY}%;
+    --wy: ${wy}px;
+    --wx: ${wx}px;
+    --wr: ${wr}deg;
+    animation-delay: ${Math.random() * 7}s;
+  `;
+  
+  dream.appendChild(wisp);
+  setTimeout(() => wisp.remove(), 14000);
 }
 
-setInterval(() => {
-c(‘bubble’, {
-width: 50 + Math.random() * 100 + ‘px’,
-height: 50 + Math.random() * 100 + ‘px’,
-left: Math.random() * 100 + ‘%’,
-top: Math.random() * 100 + ‘%’,
-‘–x1’: (Math.random() - 0.5) * 200 + ‘px’,
-‘–y1’: (Math.random() - 0.5) * 200 + ‘px’,
-‘–x2’: (Math.random() - 0.5) * 200 + ‘px’,
-‘–y2’: (Math.random() - 0.5) * 200 + ‘px’
-});
-
-if(Math.random() > 0.5) {
-c(‘symbol’, {
-textContent: s[Math.floor(Math.random() * s.length)],
-left: Math.random() * 100 + ‘%’,
-top: Math.random() * 100 + ‘%’
-});
+// Crear partículas de sueño
+function createDreamParticles() {
+  for(let i = 0; i < 18; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'dream-particle';
+      
+      const angle = (i / 18) * Math.PI * 2;
+      const distance = 60 + Math.random() * 180;
+      const px = Math.cos(angle) * distance;
+      const py = Math.sin(angle) * distance;
+      
+      particle.style.cssText = `
+        left: 50%;
+        top: 50%;
+        --px: ${px}px;
+        --py: ${py}px;
+        animation-delay: ${Math.random() * 5}s;
+      `;
+      
+      dream.appendChild(particle);
+      setTimeout(() => particle.remove(), 12000);
+    }, i * 120);
+  }
 }
 
-if(Math.random() > 0.7) {
-c(‘rem’, {
-top: Math.random() * 100 + ‘%’
-});
+// Crear burbujas de sueño adicionales
+function createDreamBubble() {
+  const bubble = document.createElement('div');
+  bubble.className = 'dream-bubble';
+  
+  const bx = (Math.random() - 0.5) * 180;
+  const by = (Math.random() - 0.5) * 200;
+  
+  bubble.style.cssText = `
+    left: ${30 + Math.random() * 40}%;
+    top: ${25 + Math.random() * 50}%;
+    --bx: ${bx}px;
+    --by: ${by}px;
+    animation-delay: ${Math.random() * 8}s;
+    width: ${90 + Math.random() * 60}px;
+    height: ${90 + Math.random() * 60}px;
+  `;
+  
+  dream.appendChild(bubble);
+  setTimeout(() => bubble.remove(), 18000);
 }
 
-if(Math.random() > 0.9) {
-c(‘lucid’, {
-left: Math.random() * 100 + ‘%’,
-top: Math.random() * 100 + ‘%’
-});
-}
-}, 2000);
+// Generar elementos continuamente
+setInterval(createConsciousnessWisp, 3000);
+setInterval(createDreamParticles, 8000);
+setInterval(createDreamBubble, 5000);
 
-b.addEventListener(‘click’, e => {
-c(‘lucid’, {
-left: e.clientX - 75 + ‘px’,
-top: e.clientY - 75 + ‘px’,
-animation: ‘pulse 2s ease-out forwards’
+// Crear elementos iniciales
+for(let i = 0; i < 10; i++) {
+  setTimeout(createConsciousnessWisp, i * 1000);
+}
+createDreamParticles();
+for(let i = 0; i < 3; i++) {
+  setTimeout(createDreamBubble, i * 1800);
+}
+
+// Interactividad - Click crea ondas oníricas
+dream.addEventListener('click', (e) => {
+  const rect = dream.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  // Burbujas desde el punto
+  for(let i = 0; i < 6; i++) {
+    setTimeout(() => {
+      const bubble = document.createElement('div');
+      bubble.className = 'dream-bubble';
+      const angle = (i / 6) * Math.PI * 2;
+      const distance = 50 + Math.random() * 80;
+      bubble.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --bx: ${Math.cos(angle) * distance}px;
+        --by: ${Math.sin(angle) * distance}px;
+        animation: bubble-float 8s ease-out forwards;
+        width: ${80 + Math.random() * 40}px;
+        height: ${80 + Math.random() * 40}px;
+      `;
+      dream.appendChild(bubble);
+      setTimeout(() => bubble.remove(), 8000);
+    }, i * 250);
+  }
+  
+  // Explosión de partículas oníricas
+  for(let i = 0; i < 24; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'dream-particle';
+      const angle = (i / 24) * Math.PI * 2;
+      const distance = 40 + Math.random() * 120;
+      particle.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --px: ${Math.cos(angle) * distance}px;
+        --py: ${Math.sin(angle) * distance}px;
+        animation: particle-dream 6s ease-out forwards;
+      `;
+      dream.appendChild(particle);
+      setTimeout(() => particle.remove(), 6000);
+    }, i * 50);
+  }
+  
+  // Wisps emanando
+  for(let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const wisp = document.createElement('div');
+      wisp.className = 'consciousness-wisp';
+      const angle = (i / 8) * 360;
+      wisp.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --wy: 150px;
+        --wx: 0px;
+        --wr: ${angle}deg;
+        animation: wisp-drift 5s ease-out forwards;
+      `;
+      dream.appendChild(wisp);
+      setTimeout(() => wisp.remove(), 5000);
+    }, i * 120);
+  }
 });
 
-for(let i = 0; i < 5; i++) {
-setTimeout(() => {
-c(‘symbol’, {
-textContent: s[Math.floor(Math.random() * s.length)],
-left: e.clientX + (Math.random() - 0.5) * 100 + ‘px’,
-top: e.clientY + (Math.random() - 0.5) * 100 + ‘px’,
-animation: ‘manifest 2s ease-out forwards’
-});
-}, i * 100);
-}
+// Hover crea estelas oníricas sutiles
+let lastHover = 0;
+dream.addEventListener('mousemove', (e) => {
+  const now = Date.now();
+  if(now - lastHover < 300) return;
+  lastHover = now;
+  
+  const rect = dream.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  const particle = document.createElement('div');
+  particle.className = 'dream-particle';
+  particle.style.cssText = `
+    left: ${x}px;
+    top: ${y}px;
+    --px: ${(Math.random() - 0.5) * 60}px;
+    --py: ${(Math.random() - 0.5) * 60}px;
+    animation: particle-dream 4s ease-out forwards;
+  `;
+  dream.appendChild(particle);
+  setTimeout(() => particle.remove(), 4000);
 });
 </script>
 
