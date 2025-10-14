@@ -1,114 +1,538 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>El Artista Ausente - Trinity Infinito</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libro 10 - Nodo 3: El Acto Espontáneo</title>
 <style>
-body {
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+* {
   margin: 0;
-  background: linear-gradient(135deg, #0a0a0a, #1a0a1a);
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(ellipse at center, #0a0515 0%, #000000 70%);
   overflow: hidden;
+  font-family: 'Crimson Text', 'Palatino', serif;
+  color: #fff;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
 
-.brush {
-position: absolute;
-width: 200px;
-height: 2px;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-animation: paint 8s infinite;
+.spontaneity-field {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes paint {
-0% { transform: rotate(0deg) translateX(0) scale(0); opacity: 0; }
-50% { transform: rotate(180deg) translateX(100px) scale(2); opacity: 0.8; }
-100% { transform: rotate(360deg) translateX(0) scale(0); opacity: 0; }
+.moment-now {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(20,10,30,0.5), transparent);
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
-.frame {
-width: 400px;
-height: 400px;
-border: 2px solid rgba(255,255,255,0.1);
-animation: float 15s ease-in-out infinite;
+.impulse-burst {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle,
+    rgba(255,200,100,0.6),
+    rgba(255,100,200,0.4),
+    transparent
+  );
+  border-radius: 50%;
+  animation: burst-out 8s ease-out infinite;
+  filter: blur(10px);
+  opacity: 0;
 }
 
-@keyframes float {
-0%, 100% { transform: rotateY(0deg) rotateX(0deg); }
-50% { transform: rotateY(20deg) rotateX(10deg); }
+@keyframes burst-out {
+  0% {
+    transform: scale(0) translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(3) translate(var(--bx), var(--by));
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(6) translate(calc(var(--bx) * 1.5), calc(var(--by) * 1.5));
+    opacity: 0;
+  }
 }
 
-.splash {
-position: absolute;
-width: 80px;
-height: 80px;
-border-radius: 50%;
-background: radial-gradient(circle, rgba(255,100,200,0.3), transparent);
-filter: blur(20px);
-animation: appear 10s infinite;
+.action-wave {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  animation: wave-expand 10s ease-out infinite;
+  opacity: 0;
 }
 
-@keyframes appear {
-0%, 100% { transform: scale(0); opacity: 0; }
-50% { transform: scale(3); opacity: 0.6; }
+@keyframes wave-expand {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
 }
 
-.text {
-position: absolute;
-bottom: 50px;
-color: rgba(255,255,255,0.3);
-letter-spacing: 4px;
-font-size: 14px;
+.sudden-movement {
+  position: absolute;
+  width: 4px;
+  height: 100px;
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,0.9),
+    rgba(150,100,255,0.6),
+    transparent
+  );
+  animation: sudden-strike 6s ease-in-out infinite;
+  filter: blur(1px);
+  transform-origin: top center;
+}
+
+@keyframes sudden-strike {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scaleY(0);
+    opacity: 0;
+  }
+  5% {
+    transform: translateY(0) rotate(var(--angle)) scaleY(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(var(--distance)) rotate(var(--angle)) scaleY(0.8);
+    opacity: 0.7;
+  }
+  95% {
+    opacity: 0.3;
+  }
+}
+
+.flow-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255,255,255,0.8);
+  animation: particle-flow 12s linear infinite;
+}
+
+@keyframes particle-flow {
+  0% {
+    transform: translate(0, 0) scale(0);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(var(--fx), var(--fy)) scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(calc(var(--fx) * 1.8), calc(var(--fy) * 1.8)) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.spontaneous-shape {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 2px solid rgba(255,255,255,0.4);
+  animation: shape-morph 14s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes shape-morph {
+  0%, 100% {
+    border-radius: 50%;
+    transform: rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  15% {
+    border-radius: 30%;
+    opacity: 0.6;
+  }
+  25% {
+    border-radius: 10%;
+    transform: rotate(45deg) scale(1.5);
+    opacity: 0.8;
+  }
+  50% {
+    border-radius: 40%;
+    transform: rotate(180deg) scale(2);
+    opacity: 0.7;
+  }
+  75% {
+    border-radius: 5%;
+    transform: rotate(270deg) scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+.now-pulse {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  animation: now-breathe 8s ease-in-out infinite;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes now-breathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.7;
+  }
+}
+
+.title {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2em;
+  letter-spacing: 0.5em;
+  opacity: 0.9;
+  text-shadow: 0 0 30px rgba(150,100,255,0.5);
+  font-weight: 600;
+  text-align: center;
+}
+
+.subtitle {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1em;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.central-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.4em;
+  letter-spacing: 0.3em;
+  text-align: center;
+  opacity: 0;
+  animation: text-flash 10s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255,255,255,0.4);
+  line-height: 1.8;
+}
+
+@keyframes text-flash {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  20%, 80% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.contemplation {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.95em;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  text-align: center;
+  max-width: 700px;
+  line-height: 1.9;
+  padding: 0 40px;
+  font-style: italic;
+}
+
+.instant-flash {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.3), transparent);
+  border-radius: 50%;
+  animation: flash-burst 15s ease-out infinite;
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+@keyframes flash-burst {
+  0%, 100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  2% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  10% {
+    transform: scale(3);
+    opacity: 0;
+  }
 }
 </style>
-
 </head>
 <body>
-<div class="frame"></div>
-<div class="text">EL ARTE SE PINTA SOLO</div>
+
+<div class="title">EL ACTO ESPONTÁNEO</div>
+<div class="subtitle">Libro 10 - Nodo 3</div>
+
+<div class="spontaneity-field">
+  <div class="moment-now">
+    <!-- Pulsos del ahora -->
+    <div class="now-pulse" style="animation-delay: 0s;"></div>
+    <div class="now-pulse" style="animation-delay: 2.7s; width: 250px; height: 250px;"></div>
+    <div class="now-pulse" style="animation-delay: 5.3s; width: 150px; height: 150px;"></div>
+    
+    <!-- Flash instantáneo -->
+    <div class="instant-flash" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
+    <div class="instant-flash" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 7.5s;"></div>
+    
+    <!-- Texto central -->
+    <div class="central-text" style="animation-delay: 1s;">
+      Sin pensar<br>
+      Sin planear<br><br>
+      El acto<br>
+      ocurre
+    </div>
+    
+    <!-- Formas espontáneas -->
+    <div class="spontaneous-shape" style="top: 20%; left: 20%; animation-delay: 0s;"></div>
+    <div class="spontaneous-shape" style="top: 70%; left: 70%; animation-delay: 4.7s;"></div>
+    <div class="spontaneous-shape" style="top: 30%; left: 75%; animation-delay: 9.3s;"></div>
+  </div>
+</div>
+
+<div class="contemplation">
+  La acción perfecta no se piensa · Surge del momento como el relámpago<br>
+  Sin consultar al pasado ni negociar con el futuro
+</div>
+
 <script>
-const b = document.body;
-let n = 0;
+const momentNow = document.querySelector('.moment-now');
+const body = document.body;
 
-function create(cls, s) {
-const e = document.createElement(‘div’);
-e.className = cls;
-if(s) Object.assign(e.style, s);
-b.appendChild(e);
-setTimeout(() => e.remove(), 10000);
+// Crear explosiones de impulso
+function createImpulseBurst() {
+  const burst = document.createElement('div');
+  burst.className = 'impulse-burst';
+  
+  const angle = Math.random() * Math.PI * 2;
+  const distance = 50 + Math.random() * 150;
+  const bx = Math.cos(angle) * distance;
+  const by = Math.sin(angle) * distance;
+  
+  burst.style.cssText = `
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    --bx: ${bx}px;
+    --by: ${by}px;
+    animation-delay: ${Math.random() * 4}s;
+  `;
+  
+  momentNow.appendChild(burst);
+  setTimeout(() => burst.remove(), 8000);
 }
 
-setInterval(() => {
-n++;
-create(‘brush’, {
-left: 20 + Math.random() * 60 + ‘%’,
-top: 20 + Math.random() * 60 + ‘%’,
-transform: `rotate(${n * 45}deg)`,
-animationDelay: Math.random() * 8 + ‘s’
-});
-if(n % 3 === 0) {
-create(‘splash’, {
-left: Math.random() * 100 + ‘%’,
-top: Math.random() * 100 + ‘%’,
-animationDelay: Math.random() * 10 + ‘s’
-});
+// Crear ondas de acción
+function createActionWave() {
+  const wave = document.createElement('div');
+  wave.className = 'action-wave';
+  
+  wave.style.cssText = `
+    animation-delay: ${Math.random() * 3}s;
+  `;
+  
+  momentNow.appendChild(wave);
+  setTimeout(() => wave.remove(), 10000);
 }
-}, 2000);
 
-b.addEventListener(‘click’, e => {
+// Crear movimientos súbitos
+function createSuddenMovement() {
+  const movement = document.createElement('div');
+  movement.className = 'sudden-movement';
+  
+  const angle = Math.random() * 360;
+  const distance = 100 + Math.random() * 200;
+  
+  movement.style.cssText = `
+    left: 50%;
+    top: 50%;
+    --angle: ${angle}deg;
+    --distance: ${distance}px;
+    animation-delay: ${Math.random() * 2}s;
+  `;
+  
+  momentNow.appendChild(movement);
+  setTimeout(() => movement.remove(), 6000);
+}
+
+// Crear partículas de flujo
+function createFlowParticles() {
+  for(let i = 0; i < 10; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'flow-particle';
+      
+      const angle = (i / 10) * Math.PI * 2 + Math.random() * 0.5;
+      const distance = 100 + Math.random() * 200;
+      const fx = Math.cos(angle) * distance;
+      const fy = Math.sin(angle) * distance;
+      
+      particle.style.cssText = `
+        left: 50%;
+        top: 50%;
+        --fx: ${fx}px;
+        --fy: ${fy}px;
+        animation-delay: ${Math.random() * 4}s;
+      `;
+      
+      momentNow.appendChild(particle);
+      setTimeout(() => particle.remove(), 12000);
+    }, i * 100);
+  }
+}
+
+// Generar elementos continuamente
+setInterval(createImpulseBurst, 2000);
+setInterval(createActionWave, 3000);
+setInterval(createSuddenMovement, 1500);
+setInterval(createFlowParticles, 5000);
+
+// Crear elementos iniciales
 for(let i = 0; i < 5; i++) {
-setTimeout(() => {
-create(‘brush’, {
-left: e.clientX + ‘px’,
-top: e.clientY + ‘px’,
-transform: `rotate(${i * 72}deg)`,
-animation: ‘paint 2s ease-out forwards’
-});
-}, i * 100);
+  setTimeout(createImpulseBurst, i * 800);
+  setTimeout(createSuddenMovement, i * 600);
 }
+createFlowParticles();
+
+// Interactividad - Click crea explosión espontánea
+momentNow.addEventListener('click', (e) => {
+  const rect = momentNow.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  // Onda expansiva
+  for(let i = 0; i < 3; i++) {
+    setTimeout(() => {
+      const wave = document.createElement('div');
+      wave.className = 'action-wave';
+      wave.style.cssText = `
+        width: 50px;
+        height: 50px;
+        left: ${x}px;
+        top: ${y}px;
+        transform: translate(-50%, -50%);
+        animation: wave-expand 3s ease-out forwards;
+      `;
+      momentNow.appendChild(wave);
+      setTimeout(() => wave.remove(), 3000);
+    }, i * 300);
+  }
+  
+  // Explosión radial de movimientos
+  for(let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const movement = document.createElement('div');
+      movement.className = 'sudden-movement';
+      const angle = (i / 12) * 360;
+      movement.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --angle: ${angle}deg;
+        --distance: 150px;
+        animation: sudden-strike 2s ease-out forwards;
+      `;
+      momentNow.appendChild(movement);
+      setTimeout(() => movement.remove(), 2000);
+    }, i * 50);
+  }
+  
+  // Partículas explosivas
+  for(let i = 0; i < 20; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'flow-particle';
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 50 + Math.random() * 150;
+      const fx = Math.cos(angle) * distance;
+      const fy = Math.sin(angle) * distance;
+      
+      particle.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --fx: ${fx}px;
+        --fy: ${fy}px;
+        animation: particle-flow 4s ease-out forwards;
+      `;
+      momentNow.appendChild(particle);
+      setTimeout(() => particle.remove(), 4000);
+    }, i * 30);
+  }
+});
+
+// Movimiento genera trazos espontáneos
+let lastMove = 0;
+momentNow.addEventListener('mousemove', (e) => {
+  const now = Date.now();
+  if(now - lastMove < 200) return;
+  lastMove = now;
+  
+  const rect = momentNow.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  const burst = document.createElement('div');
+  burst.className = 'impulse-burst';
+  burst.style.cssText = `
+    left: ${x}px;
+    top: ${y}px;
+    --bx: ${(Math.random() - 0.5) * 80}px;
+    --by: ${(Math.random() - 0.5) * 80}px;
+    animation: burst-out 3s ease-out forwards;
+    width: 40px;
+    height: 40px;
+  `;
+  momentNow.appendChild(burst);
+  setTimeout(() => burst.remove(), 3000);
 });
 </script>
 
