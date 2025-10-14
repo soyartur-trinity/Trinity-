@@ -1,1 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libro 10 - Nodo 1: El Artista Ausente</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(ellipse at center, #0a0a1a 0%, #000000 70%);
+  overflow: hidden;
+  font-family: 'Crimson Text', 'Palatino', serif;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.creation-field {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvas-void {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: radial-gradient(circle at center, rgba(10,10,30,0.8), transparent);
+  box-shadow: 0 0 80px rgba(100,100,255,0.1);
+}
+
+.brushstroke {
+  position: absolute;
+  width: 2px;
+  height: 120px;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(255,255,255,0.8),
+    rgba(150,100,255,0.6),
+    transparent
+  );
+  transform-origin: top center;
+  animation: paint-itself 12s ease-in-out infinite;
+  filter: blur(0.5px);
+  opacity: 0;
+}
+
+@keyframes paint-itself {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  15% {
+    transform: translate(var(--x1), var(--y1)) rotate(var(--r1)) scale(1);
+    opacity: 0.8;
+  }
+  30% {
+    transform: translate(var(--x2), var(--y2)) rotate(var(--r2)) scale(1.2);
+    opacity: 0.6;
+  }
+  45% {
+    transform: translate(var(--x3), var(--y3)) rotate(var(--r3)) scale(0.9);
+    opacity: 0.7;
+  }
+  60% {
+    transform: translate(var(--x4), var(--y4)) rotate(var(--r4)) scale(1.1);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(var(--x5), var(--y5)) rotate(var(--r5)) scale(0.8);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(var(--x1), var(--y1)) rotate(var(--r1)) scale(0);
+    opacity: 0;
+  }
+}
+
+.color-birth {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    var(--color1),
+    var(--color2),
+    transparent
+  );
+  filter: blur(30px);
+  animation: color-emerge 20s ease-in-out infinite;
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+
+@keyframes color-emerge {
+  0%, 100% {
+    transform: translate(0, 0) scale(0);
+    opacity: 0;
+  }
+  25% {
+    transform: translate(var(--tx1), var(--ty1)) scale(1.5);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(var(--tx2), var(--ty2)) scale(2);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translate(var(--tx3), var(--ty3)) scale(1.2);
+    opacity: 0.3;
+  }
+}
+
+.phantom-hand {
+  position: absolute;
+  width: 40px;
+  height: 60px;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.2), transparent);
+  border-radius: 50% 50% 40% 40%;
+  animation: hand-movement 15s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  filter: blur(2px);
+  opacity: 0;
+}
+
+@keyframes hand-movement {
+  0%, 100% {
+    transform: translate(100px, 100px) rotate(-30deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(300px, 200px) rotate(45deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(400px, 350px) rotate(90deg);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translate(200px, 450px) rotate(-45deg);
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.2;
+  }
+}
+
+.essence-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,255,255,0.8);
+  animation: particle-dance 8s linear infinite;
+  opacity: 0;
+}
+
+@keyframes particle-dance {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(var(--px), var(--py));
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(calc(var(--px) * 2), calc(var(--py) * 2));
+    opacity: 0;
+  }
+}
+
+.emergence-text {
+  position: absolute;
+  font-size: 1.2em;
+  letter-spacing: 0.3em;
+  opacity: 0;
+  animation: text-breathe 16s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255,255,255,0.3);
+  text-align: center;
+  max-width: 500px;
+  line-height: 1.8;
+}
+
+@keyframes text-breathe {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  20%, 80% {
+    opacity: 0.7;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.title {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2em;
+  letter-spacing: 0.5em;
+  opacity: 0.9;
+  text-shadow: 0 0 30px rgba(150,100,255,0.5);
+  font-weight: 600;
+  text-align: center;
+}
+
+.subtitle {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1em;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.contemplation {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.95em;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  text-align: center;
+  max-width: 700px;
+  line-height: 1.9;
+  padding: 0 40px;
+  font-style: italic;
+}
+
+.void-pulse {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: 1px solid rgba(255,255,255,0.03);
+  border-radius: 50%;
+  animation: void-expand 25s ease-in-out infinite;
+}
+
+@keyframes void-expand {
+  0%, 100% {
+    transform: scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(2.5) rotate(180deg);
+    opacity: 0.2;
+  }
+}
+
+/* Efecto de interactividad */
+.creation-ripple {
+  position: absolute;
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: ripple-out 2s ease-out forwards;
+}
+
+@keyframes ripple-out {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  to {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+  }
+}
+
+.inspired-trace {
+  position: absolute;
+  width: 150px;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent,
+    rgba(150,100,255,0.6),
+    rgba(255,100,200,0.6),
+    transparent
+  );
+  filter: blur(1px);
+  animation: trace-fade 3s ease-out forwards;
+  transform-origin: center;
+}
+
+@keyframes trace-fade {
+  from {
+    opacity: 0.8;
+    transform: scale(1) rotate(var(--angle));
+  }
+  to {
+    opacity: 0;
+    transform: scale(2) rotate(var(--angle));
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="title">EL ARTISTA AUSENTE</div>
+<div class="subtitle">Libro 10 - Nodo 1</div>
+
+<div class="creation-field">
+  <div class="canvas-void" id="canvas">
+    <!-- Los pulsos del vacío -->
+    <div class="void-pulse" style="animation-delay: 0s;"></div>
+    <div class="void-pulse" style="animation-delay: 8s;"></div>
+    <div class="void-pulse" style="animation-delay: 16s;"></div>
+    
+    <!-- La mano fantasma -->
+    <div class="phantom-hand"></div>
+    
+    <!-- Texto contemplativo central -->
+    <div class="emergence-text" style="top: 45%; left: 50%; transform: translate(-50%, -50%); animation-delay: 2s;">
+      No hay nadie<br>
+      sosteniendo el pincel<br><br>
+      Solo el pincel<br>
+      pintándose a sí mismo
+    </div>
+  </div>
+</div>
+
+<div class="contemplation">
+  La creatividad no necesita creador · Es una fuerza que se manifiesta<br>
+  Como el río que fluye sin preguntarse quién lo empuja
+</div>
+
+<script>
+const canvas = document.getElementById('canvas');
+const body = document.body;
+
+// Crear pinceles automáticos
+function createBrushstroke() {
+  const brush = document.createElement('div');
+  brush.className = 'brushstroke';
+  
+  const x1 = (Math.random() - 0.5) * 300;
+  const y1 = (Math.random() - 0.5) * 300;
+  const x2 = (Math.random() - 0.5) * 300;
+  const y2 = (Math.random() - 0.5) * 300;
+  const x3 = (Math.random() - 0.5) * 300;
+  const y3 = (Math.random() - 0.5) * 300;
+  const x4 = (Math.random() - 0.5) * 300;
+  const y4 = (Math.random() - 0.5) * 300;
+  const x5 = (Math.random() - 0.5) * 300;
+  const y5 = (Math.random() - 0.5) * 300;
+  
+  const r1 = Math.random() * 360;
+  const r2 = Math.random() * 360;
+  const r3 = Math.random() * 360;
+  const r4 = Math.random() * 360;
+  const r5 = Math.random() * 360;
+  
+  brush.style.cssText = `
+    left: 50%;
+    top: 50%;
+    --x1: ${x1}px;
+    --y1: ${y1}px;
+    --x2: ${x2}px;
+    --y2: ${y2}px;
+    --x3: ${x3}px;
+    --y3: ${y3}px;
+    --x4: ${x4}px;
+    --y4: ${y4}px;
+    --x5: ${x5}px;
+    --y5: ${y5}px;
+    --r1: ${r1}deg;
+    --r2: ${r2}deg;
+    --r3: ${r3}deg;
+    --r4: ${r4}deg;
+    --r5: ${r5}deg;
+    animation-delay: ${Math.random() * 5}s;
+  `;
+  
+  canvas.appendChild(brush);
+  setTimeout(() => brush.remove(), 12000);
+}
+
+// Crear nacimiento de colores
+function createColorBirth() {
+  const color = document.createElement('div');
+  color.className = 'color-birth';
+  
+  const colors = [
+    ['rgba(150,100,255,0.3)', 'rgba(100,150,255,0.2)'],
+    ['rgba(255,100,200,0.3)', 'rgba(200,100,255,0.2)'],
+    ['rgba(100,200,255,0.3)', 'rgba(150,255,200,0.2)'],
+    ['rgba(255,200,100,0.3)', 'rgba(255,150,100,0.2)']
+  ];
+  
+  const colorPair = colors[Math.floor(Math.random() * colors.length)];
+  
+  const tx1 = (Math.random() - 0.5) * 400;
+  const ty1 = (Math.random() - 0.5) * 400;
+  const tx2 = (Math.random() - 0.5) * 400;
+  const ty2 = (Math.random() - 0.5) * 400;
+  const tx3 = (Math.random() - 0.5) * 400;
+  const ty3 = (Math.random() - 0.5) * 400;
+  
+  color.style.cssText = `
+    left: 50%;
+    top: 50%;
+    --color1: ${colorPair[0]};
+    --color2: ${colorPair[1]};
+    --tx1: ${tx1}px;
+    --ty1: ${ty1}px;
+    --tx2: ${tx2}px;
+    --ty2: ${ty2}px;
+    --tx3: ${tx3}px;
+    --ty3: ${ty3}px;
+    animation-delay: ${Math.random() * 8}s;
+  `;
+  
+  canvas.appendChild(color);
+  setTimeout(() => color.remove(), 20000);
+}
+
+// Crear partículas de esencia
+function createEssenceParticles() {
+  for(let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'essence-particle';
+      
+      const px = (Math.random() - 0.5) * 500;
+      const py = (Math.random() - 0.5) * 500;
+      
+      particle.style.cssText = `
+        left: ${50 + (Math.random() - 0.5) * 10}%;
+        top: ${50 + (Math.random() - 0.5) * 10}%;
+        --px: ${px}px;
+        --py: ${py}px;
+        animation-delay: ${Math.random() * 3}s;
+      `;
+      
+      canvas.appendChild(particle);
+      setTimeout(() => particle.remove(), 8000);
+    }, i * 200);
+  }
+}
+
+// Generar elementos continuamente
+setInterval(createBrushstroke, 2000);
+setInterval(createColorBirth, 4000);
+setInterval(createEssenceParticles, 6000);
+
+// Crear elementos iniciales
+for(let i = 0; i < 8; i++) {
+  setTimeout(createBrushstroke, i * 500);
+}
+for(let i = 0; i < 4; i++) {
+  setTimeout(createColorBirth, i * 1000);
+}
+
+// Interactividad - Click crea ondas de creación
+canvas.addEventListener('click', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  // Crear onda expansiva
+  const ripple = document.createElement('div');
+  ripple.className = 'creation-ripple';
+  ripple.style.cssText = `
+    left: ${x}px;
+    top: ${y}px;
+    margin-left: 0;
+    margin-top: 0;
+  `;
+  canvas.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 2000);
+  
+  // Crear trazos inspirados desde el punto
+  for(let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const trace = document.createElement('div');
+      trace.className = 'inspired-trace';
+      trace.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --angle: ${i * 45}deg;
+      `;
+      canvas.appendChild(trace);
+      setTimeout(() => trace.remove(), 3000);
+    }, i * 100);
+  }
+  
+  // Crear partículas desde el clic
+  for(let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'essence-particle';
+      
+      const angle = (i / 12) * Math.PI * 2;
+      const distance = 50 + Math.random() * 150;
+      const px = Math.cos(angle) * distance;
+      const py = Math.sin(angle) * distance;
+      
+      particle.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --px: ${px}px;
+        --py: ${py}px;
+      `;
+      
+      canvas.appendChild(particle);
+      setTimeout(() => particle.remove(), 8000);
+    }, i * 50);
+  }
+});
+
+// Movimiento sutil del mouse crea trazos
+let lastMove = 0;
+canvas.addEventListener('mousemove', (e) => {
+  const now = Date.now();
+  if(now - lastMove < 300) return;
+  lastMove = now;
+  
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  const brush = document.createElement('div');
+  brush.className = 'brushstroke';
+  brush.style.cssText = `
+    left: ${x}px;
+    top: ${y}px;
+    --x1: 0px;
+    --y1: 0px;
+    --x2: ${(Math.random() - 0.5) * 100}px;
+    --y2: ${(Math.random() - 0.5) * 100}px;
+    --x3: ${(Math.random() - 0.5) * 100}px;
+    --y3: ${(Math.random() - 0.5) * 100}px;
+    --x4: 0px;
+    --y4: 0px;
+    --x5: 0px;
+    --y5: 0px;
+    --r1: 0deg;
+    --r2: ${Math.random() * 180 - 90}deg;
+    --r3: ${Math.random() * 180 - 90}deg;
+    --r4: 0deg;
+    --r5: 0deg;
+    animation: paint-itself 3s ease-out forwards;
+  `;
+  
+  canvas.appendChild(brush);
+  setTimeout(() => brush.remove(), 3000);
+});
+</script>
+
+</body>
+</html>
