@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -10,347 +9,359 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-
-    body {
-        background: radial-gradient(circle at center, #1a001a, #000);
-        color: #fff;
-        font-family: 'Courier New', monospace;
-        overflow: hidden;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .intimacy-container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .absolute-closeness {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        background: white;
-        box-shadow: 0 0 100px 50px rgba(255,255,255,0.5),
-                    0 0 200px 100px rgba(255,0,255,0.3),
-                    0 0 300px 150px rgba(255,0,255,0.1);
-        animation: closenessPulse 5s infinite;
-    }
-    
-    @keyframes closenessPulse {
-        0%, 100% {
-            transform: scale(1);
-            opacity: 0.8;
+        body {
+            background: radial-gradient(circle at center, #1a001a, #000);
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        50% {
-            transform: scale(1.5);
-            opacity: 1;
-            box-shadow: 0 0 150px 75px rgba(255,255,255,0.7),
-                       0 0 300px 150px rgba(255,0,255,0.5),
-                       0 0 450px 225px rgba(255,0,255,0.2);
+        
+        .intimacy-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-    }
-    
-    .zero-distance {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: 1px solid rgba(255,0,255,0.3);
-        border-radius: 50%;
-        animation: zeroCollapse 8s infinite;
-    }
-    
-    @keyframes zeroCollapse {
-        0% {
-            width: 400px;
-            height: 400px;
-            opacity: 0.3;
+        
+        /* CORRECCIÓN PRINCIPAL: Punto central sin blanco */
+        .absolute-closeness {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            background: radial-gradient(
+                circle,
+                rgba(255, 220, 200, 0.9) 0%,
+                rgba(255, 180, 220, 0.7) 30%,
+                rgba(255, 100, 200, 0.5) 60%,
+                rgba(200, 0, 200, 0.3) 100%
+            );
+            box-shadow: 
+                0 0 60px 30px rgba(255, 200, 180, 0.4),
+                0 0 120px 60px rgba(255, 100, 200, 0.3),
+                0 0 180px 90px rgba(200, 0, 200, 0.15);
+            animation: closenessPulse 5s infinite ease-in-out;
         }
-        50% {
-            width: 0;
-            height: 0;
-            opacity: 1;
+        
+        @keyframes closenessPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+                box-shadow: 
+                    0 0 60px 30px rgba(255, 200, 180, 0.4),
+                    0 0 120px 60px rgba(255, 100, 200, 0.3),
+                    0 0 180px 90px rgba(200, 0, 200, 0.15);
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.9;
+                box-shadow: 
+                    0 0 90px 45px rgba(255, 200, 180, 0.6),
+                    0 0 180px 90px rgba(255, 100, 200, 0.4),
+                    0 0 270px 135px rgba(200, 0, 200, 0.2);
+            }
         }
-        100% {
-            width: 400px;
-            height: 400px;
-            opacity: 0.3;
+        
+        .zero-distance {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(255,0,255,0.3);
+            border-radius: 50%;
+            animation: zeroCollapse 8s infinite ease-in-out;
         }
-    }
-    
-    .intimacy-particle {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: rgba(255,0,255,0.8);
-        border-radius: 50%;
-        animation: intimacyMerge 6s infinite;
-    }
-    
-    @keyframes intimacyMerge {
-        0% {
-            transform: translate(var(--startX), var(--startY)) scale(1);
-            opacity: 0.5;
+        
+        @keyframes zeroCollapse {
+            0% {
+                width: 400px;
+                height: 400px;
+                opacity: 0.3;
+            }
+            50% {
+                width: 0;
+                height: 0;
+                opacity: 0.8;
+            }
+            100% {
+                width: 400px;
+                height: 400px;
+                opacity: 0.3;
+            }
         }
-        50% {
-            transform: translate(0, 0) scale(0);
-            opacity: 1;
+        
+        .intimacy-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255,80,200,0.7);
+            border-radius: 50%;
+            animation: intimacyMerge 6s infinite ease-in-out;
+            box-shadow: 0 0 5px rgba(255,80,200,0.4);
         }
-        100% {
-            transform: translate(var(--endX), var(--endY)) scale(1);
-            opacity: 0.5;
+        
+        @keyframes intimacyMerge {
+            0% {
+                transform: translate(var(--startX), var(--startY)) scale(1);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(var(--endX), var(--endY)) scale(1);
+                opacity: 0.4;
+            }
         }
-    }
-    
-    .knowing-field {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: repeating-conic-gradient(
-            from 0deg at center,
-            transparent 0deg,
-            rgba(255,0,255,0.05) 10deg,
-            transparent 20deg
-        );
-        animation: knowingRotate 60s infinite linear;
-    }
-    
-    @keyframes knowingRotate {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-    
-    .self-embrace {
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        background: conic-gradient(
-            from 0deg,
-            transparent,
-            rgba(255,0,255,0.2),
-            transparent,
-            rgba(255,0,255,0.2),
-            transparent
-        );
-        animation: selfSpin 10s infinite linear;
-    }
-    
-    @keyframes selfSpin {
-        from { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-        to { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
-    }
-    
-    .intimacy-wisdom {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        font-size: 18px;
-        color: rgba(255,150,255,0.9);
-        text-shadow: 0 0 20px rgba(255,0,255,0.8);
-        animation: wisdomGlow 7s infinite;
-        width: 85%;
-        z-index: 100;
-    }
-    
-    @keyframes wisdomGlow {
-        0%, 100% {
+        
+        .knowing-field {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-conic-gradient(
+                from 0deg at center,
+                transparent 0deg,
+                rgba(255,0,255,0.05) 10deg,
+                transparent 20deg
+            );
+            animation: knowingRotate 60s infinite linear;
+        }
+        
+        @keyframes knowingRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .self-embrace {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(255,0,255,0.15),
+                transparent,
+                rgba(255,0,255,0.15),
+                transparent
+            );
+            animation: selfSpin 10s infinite linear;
+        }
+        
+        @keyframes selfSpin {
+            from { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            to { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+        }
+        
+        .intimacy-wisdom {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 18px;
+            color: rgba(255,150,255,0.9);
+            text-shadow: 0 0 20px rgba(255,100,200,0.6);
+            animation: wisdomGlow 7s infinite ease-in-out;
+            width: 85%;
+            z-index: 100;
+        }
+        
+        @keyframes wisdomGlow {
+            0%, 100% {
+                opacity: 0.6;
+                transform: translateX(-50%) scale(0.98);
+            }
+            50% {
+                opacity: 0.9;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+        
+        .mystic-quote {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 20px;
+            color: rgba(255, 215, 150, 0.9);
+            text-shadow: 0 0 15px rgba(255, 200, 100, 0.6);
+            font-style: italic;
+            animation: quoteFade 10s infinite ease-in-out;
+        }
+        
+        @keyframes quoteFade {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.9; }
+        }
+        
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             opacity: 0.6;
-            transform: translateX(-50%) scale(0.98);
         }
-        50% {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
-        }
-    }
-    
-    .mystic-quote {
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        font-size: 20px;
-        color: gold;
-        text-shadow: 0 0 15px gold;
-        font-style: italic;
-        animation: quoteFade 10s infinite;
-    }
-    
-    @keyframes quoteFade {
-        0%, 100% { opacity: 0.3; }
-        50% { opacity: 1; }
-    }
-    
-    canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.6;
-    }
-</style>
-
-
+    </style>
 </head>
 <body>
     <canvas id="intimacyCanvas"></canvas>
 
+    <div class="mystic-quote">
+        "Más cerca que tu yugular"
+    </div>
 
-<div class="mystic-quote">
-    "Más cerca que tu yugular"
-</div>
+    <div class="intimacy-container">
+        <div class="knowing-field"></div>
+        <div class="self-embrace"></div>
+        <div class="absolute-closeness"></div>
+    </div>
 
-<div class="intimacy-container">
-    <div class="knowing-field"></div>
-    <div class="self-embrace"></div>
-    <div class="absolute-closeness"></div>
-</div>
+    <div class="intimacy-wisdom">
+        No estás EN el universo<br>
+        Eres el universo conociéndose<br>
+        La intimidad más absoluta: ser uno mismo
+    </div>
 
-<div class="intimacy-wisdom">
-    No estás EN el universo<br>
-    Eres el universo conociéndose<br>
-    La intimidad más absoluta: ser uno mismo
-</div>
-
-<script>
-    // Canvas para el campo de intimidad
-    const canvas = document.getElementById('intimacyCanvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    
-    // Red de intimidad absoluta
-    function drawIntimacyField() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    <script>
+        // Canvas para el campo de intimidad
+        const canvas = document.getElementById('intimacyCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         
-        const time = Date.now() * 0.001;
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
         
-        // Líneas convergentes hacia el centro (cero distancia)
-        for (let i = 0; i < 24; i++) {
-            const angle = (i / 24) * Math.PI * 2;
-            const startRadius = 300 + Math.sin(time + i * 0.5) * 50;
+        // Red de intimidad absoluta
+        function drawIntimacyField() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            const gradient = ctx.createLinearGradient(
-                centerX + Math.cos(angle) * startRadius,
-                centerY + Math.sin(angle) * startRadius,
-                centerX,
-                centerY
+            const time = Date.now() * 0.001;
+            
+            // Líneas convergentes hacia el centro (cero distancia)
+            for (let i = 0; i < 24; i++) {
+                const angle = (i / 24) * Math.PI * 2;
+                const startRadius = 300 + Math.sin(time + i * 0.5) * 50;
+                
+                const gradient = ctx.createLinearGradient(
+                    centerX + Math.cos(angle) * startRadius,
+                    centerY + Math.sin(angle) * startRadius,
+                    centerX,
+                    centerY
+                );
+                
+                gradient.addColorStop(0, 'rgba(255, 0, 255, 0)');
+                gradient.addColorStop(0.5, 'rgba(255, 80, 200, 0.15)');
+                gradient.addColorStop(1, 'rgba(255, 180, 200, 0.4)');
+                
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(centerX + Math.cos(angle) * startRadius, 
+                          centerY + Math.sin(angle) * startRadius);
+                ctx.lineTo(centerX, centerY);
+                ctx.stroke();
+            }
+            
+            // CORRECCIÓN: Punto de intimidad absoluta sin blanco puro
+            const glowSize = 10 + Math.sin(time * 2) * 5;
+            const glowGradient = ctx.createRadialGradient(
+                centerX, centerY, 0,
+                centerX, centerY, glowSize
             );
+            glowGradient.addColorStop(0, 'rgba(255, 200, 180, 0.9)');
+            glowGradient.addColorStop(0.3, 'rgba(255, 150, 200, 0.6)');
+            glowGradient.addColorStop(0.7, 'rgba(200, 100, 200, 0.3)');
+            glowGradient.addColorStop(1, 'rgba(200, 0, 200, 0)');
             
-            gradient.addColorStop(0, 'rgba(255, 0, 255, 0)');
-            gradient.addColorStop(0.5, 'rgba(255, 0, 255, 0.2)');
-            gradient.addColorStop(1, 'rgba(255, 255, 255, 0.5)');
+            ctx.fillStyle = glowGradient;
+            ctx.fillRect(centerX - glowSize, centerY - glowSize, 
+                        glowSize * 2, glowSize * 2);
             
-            ctx.strokeStyle = gradient;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(centerX + Math.cos(angle) * startRadius, 
-                      centerY + Math.sin(angle) * startRadius);
-            ctx.lineTo(centerX, centerY);
-            ctx.stroke();
+            requestAnimationFrame(drawIntimacyField);
         }
         
-        // Punto de intimidad absoluta
-        const glowSize = 10 + Math.sin(time * 2) * 5;
-        const glowGradient = ctx.createRadialGradient(
-            centerX, centerY, 0,
-            centerX, centerY, glowSize
-        );
-        glowGradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-        glowGradient.addColorStop(0.5, 'rgba(255, 0, 255, 0.5)');
-        glowGradient.addColorStop(1, 'rgba(255, 0, 255, 0)');
+        drawIntimacyField();
         
-        ctx.fillStyle = glowGradient;
-        ctx.fillRect(centerX - glowSize, centerY - glowSize, 
-                    glowSize * 2, glowSize * 2);
+        // Crear círculos de distancia cero
+        const container = document.querySelector('.intimacy-container');
         
-        requestAnimationFrame(drawIntimacyField);
-    }
-    
-    drawIntimacyField();
-    
-    // Crear círculos de distancia cero
-    const container = document.querySelector('.intimacy-container');
-    
-    for (let i = 0; i < 5; i++) {
-        const circle = document.createElement('div');
-        circle.className = 'zero-distance';
-        circle.style.animationDelay = i * 1.6 + 's';
-        circle.style.borderColor = `rgba(255, 0, 255, ${0.3 - i * 0.05})`;
-        container.appendChild(circle);
-    }
-    
-    // Crear partículas de intimidad
-    for (let i = 0; i < 40; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'intimacy-particle';
+        for (let i = 0; i < 5; i++) {
+            const circle = document.createElement('div');
+            circle.className = 'zero-distance';
+            circle.style.animationDelay = i * 1.6 + 's';
+            circle.style.borderColor = `rgba(255, 0, 255, ${0.3 - i * 0.05})`;
+            container.appendChild(circle);
+        }
         
-        const angle = Math.random() * Math.PI * 2;
-        const radius = Math.random() * 250 + 50;
+        // Crear partículas de intimidad
+        for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'intimacy-particle';
+            
+            const angle = Math.random() * Math.PI * 2;
+            const radius = Math.random() * 250 + 50;
+            
+            particle.style.left = '50%';
+            particle.style.top = '50%';
+            particle.style.setProperty('--startX', Math.cos(angle) * radius + 'px');
+            particle.style.setProperty('--startY', Math.sin(angle) * radius + 'px');
+            particle.style.setProperty('--endX', Math.cos(angle + Math.PI) * radius + 'px');
+            particle.style.setProperty('--endY', Math.sin(angle + Math.PI) * radius + 'px');
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            
+            container.appendChild(particle);
+        }
         
-        particle.style.left = '50%';
-        particle.style.top = '50%';
-        particle.style.setProperty('--startX', Math.cos(angle) * radius + 'px');
-        particle.style.setProperty('--startY', Math.sin(angle) * radius + 'px');
-        particle.style.setProperty('--endX', Math.cos(angle + Math.PI) * radius + 'px');
-        particle.style.setProperty('--endY', Math.sin(angle + Math.PI) * radius + 'px');
-        particle.style.animationDelay = Math.random() * 6 + 's';
+        // Citas místicas cambiantes
+        const quotes = [
+            '"Más cerca que tu yugular"',
+            '"El amado está más cerca que tú mismo"',
+            '"No hay distancia en el amor"',
+            '"Tú eres lo que buscas"',
+            '"El que busca es lo buscado"'
+        ];
         
-        container.appendChild(particle);
-    }
-    
-    // Citas místicas cambiantes
-    const quotes = [
-        '"Más cerca que tu yugular"',
-        '"El amado está más cerca que tú mismo"',
-        '"No hay distancia en el amor"',
-        '"Tú eres lo que buscas"',
-        '"El que busca es lo buscado"'
-    ];
-    
-    let quoteIndex = 0;
-    setInterval(() => {
-        quoteIndex = (quoteIndex + 1) % quotes.length;
-        document.querySelector('.mystic-quote').textContent = quotes[quoteIndex];
-    }, 10000);
-    
-    // Sabiduría de la intimidad absoluta
-    const wisdoms = [
-        "No estás EN el universo<br>Eres el universo conociéndose<br>La intimidad más absoluta: ser uno mismo",
-        "La distancia entre tú y Dios es cero<br>La distancia entre tú y el otro es cero<br>Solo la ilusión crea separación",
-        "Buscas fuera lo que está más adentro<br>Tan adentro que es todo<br>La intimidad del ser consigo mismo",
-        "No hay observador y observado<br>Solo el abrazo infinito<br>Del ser conociéndose a sí mismo",
-        "Más íntimo que íntimo<br>Más cerca que cerca<br>Eres aquello que buscas conocer"
-    ];
-    
-    let wisdomIndex = 0;
-    setInterval(() => {
-        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
-        document.querySelector('.intimacy-wisdom').innerHTML = wisdoms[wisdomIndex];
-    }, 7000);
-</script>
-
+        let quoteIndex = 0;
+        setInterval(() => {
+            quoteIndex = (quoteIndex + 1) % quotes.length;
+            document.querySelector('.mystic-quote').textContent = quotes[quoteIndex];
+        }, 10000);
+        
+        // Sabiduría de la intimidad absoluta
+        const wisdoms = [
+            "No estás EN el universo<br>Eres el universo conociéndose<br>La intimidad más absoluta: ser uno mismo",
+            "La distancia entre tú y Dios es cero<br>La distancia entre tú y el otro es cero<br>Solo la ilusión crea separación",
+            "Buscas fuera lo que está más adentro<br>Tan adentro que es todo<br>La intimidad del ser consigo mismo",
+            "No hay observador y observado<br>Solo el abrazo infinito<br>Del ser conociéndose a sí mismo",
+            "Más íntimo que íntimo<br>Más cerca que cerca<br>Eres aquello que buscas conocer"
+        ];
+        
+        let wisdomIndex = 0;
+        setInterval(() => {
+            wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+            document.querySelector('.intimacy-wisdom').innerHTML = wisdoms[wisdomIndex];
+        }, 7000);
+    </script>
 
 </body>
 </html>
