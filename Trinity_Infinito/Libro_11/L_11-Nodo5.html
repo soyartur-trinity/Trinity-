@@ -1,153 +1,427 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>La Respuesta Antes de la Pregunta - Trinity Infinito</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libro 11 - Nodo 5: El Karma Circular</title>
 <style>
-body {
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+* {
   margin: 0;
-  background: linear-gradient(45deg, #0a0a15, #15000a);
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(ellipse at center, #0a0510 0%, #000000 70%);
   overflow: hidden;
+  font-family: 'Crimson Text', 'Palatino', serif;
+  color: #fff;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  font-family: 'Courier New', monospace;
 }
 
-.answer {
-position: absolute;
-color: rgba(255,255,255,0.7);
-font-size: 20px;
-text-align: center;
-animation: answer-first 10s infinite;
+.karma-field {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes answer-first {
-0% { opacity: 0; transform: scale(0.5); }
-30% { opacity: 0.8; transform: scale(1); }
-60% { opacity: 0.4; transform: scale(0.9); }
-100% { opacity: 0; transform: scale(0.5); }
+.wheel-of-action {
+  position: relative;
+  width: 650px;
+  height: 650px;
 }
 
-.question {
-position: absolute;
-color: rgba(100,200,255,0.5);
-font-size: 16px;
-text-align: center;
-animation: question-later 10s infinite;
-animation-delay: 5s;
+.karma-wheel {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border: 3px solid rgba(200,150,100,0.4);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: wheel-turn 28s linear infinite;
+  box-shadow: inset 0 0 50px rgba(200,150,100,0.15),
+              0 0 50px rgba(200,150,100,0.15);
 }
 
-@keyframes question-later {
-0% { opacity: 0; transform: translateY(20px); }
-50% { opacity: 0.6; transform: translateY(0); }
-100% { opacity: 0; transform: translateY(-20px); }
+@keyframes wheel-turn {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-.oracle-line {
-position: absolute;
-width: 200px;
-height: 1px;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-animation: oracle-speak 8s infinite;
+.spoke {
+  position: absolute;
+  width: 2px;
+  height: 200px;
+  background: linear-gradient(to bottom,
+    rgba(200,150,100,0.6),
+    rgba(150,100,80,0.3)
+  );
+  top: 50%;
+  left: 50%;
+  transform-origin: top center;
+  filter: blur(0.5px);
 }
 
-@keyframes oracle-speak {
-0% { transform: scaleX(0) rotate(0deg); opacity: 0; }
-50% { transform: scaleX(1) rotate(180deg); opacity: 0.5; }
-100% { transform: scaleX(0) rotate(360deg); opacity: 0; }
+.action-seed {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle,
+    rgba(255,200,100,0.5),
+    rgba(200,150,100,0.3),
+    transparent
+  );
+  border-radius: 50%;
+  animation: seed-grow 10s ease-in-out infinite;
+  filter: blur(12px);
 }
 
-.paradox {
-position: absolute;
-width: 150px;
-height: 150px;
-border: 1px solid rgba(255,255,255,0.1);
-border-radius: 50%;
-animation: paradox-spin 15s linear infinite;
+@keyframes seed-grow {
+  0%, 100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.8;
+  }
 }
 
-@keyframes paradox-spin {
-from { transform: rotate(360deg); }
-to { transform: rotate(0deg); }
+.fruit-result {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle,
+    rgba(150,255,150,0.5),
+    rgba(100,200,100,0.3),
+    transparent
+  );
+  border-radius: 50%;
+  animation: fruit-ripen 10s ease-in-out infinite;
+  filter: blur(15px);
 }
 
-.text {
-position: absolute;
-bottom: 50px;
-color: rgba(255,255,255,0.3);
-letter-spacing: 4px;
-font-size: 14px;
+@keyframes fruit-ripen {
+  0%, 100% {
+    transform: scale(1.4);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(0.7);
+    opacity: 0.4;
+  }
+}
+
+.causal-flow {
+  position: absolute;
+  width: 180px;
+  height: 3px;
+  background: linear-gradient(90deg,
+    rgba(255,200,100,0.7),
+    rgba(150,255,150,0.6)
+  );
+  animation: flow-circle 13s ease-in-out infinite;
+  filter: blur(1px);
+  transform-origin: left center;
+}
+
+@keyframes flow-circle {
+  0%, 100% {
+    transform: rotate(0deg) scaleX(0);
+    opacity: 0;
+  }
+  50% {
+    transform: rotate(var(--angle)) scaleX(1);
+    opacity: 0.9;
+  }
+}
+
+.karmic-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(200,150,100,0.8);
+  animation: orbit-karma 15s linear infinite;
+}
+
+@keyframes orbit-karma {
+  from {
+    transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
+  }
+}
+
+.title {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.1em;
+  letter-spacing: 0.4em;
+  opacity: 0.9;
+  text-shadow: 0 0 30px rgba(200,150,100,0.5);
+  font-weight: 600;
+  text-align: center;
+  z-index: 100;
+}
+
+.subtitle {
+  position: fixed;
+  top: 115px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1em;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  font-style: italic;
+  z-index: 100;
+}
+
+.central-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5em;
+  letter-spacing: 0.35em;
+  text-align: center;
+  opacity: 0;
+  animation: text-spin 14s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255,255,255,0.4);
+  line-height: 2.2;
+  z-index: 10;
+}
+
+@keyframes text-spin {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-3deg);
+  }
+  20%, 80% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+.contemplation {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.95em;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  text-align: center;
+  max-width: 750px;
+  line-height: 1.9;
+  padding: 0 40px;
+  font-style: italic;
+  z-index: 100;
+}
+
+.wheel-glow {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(200,150,100,0.12), transparent);
+  border-radius: 50%;
+  animation: glow-wheel 19s ease-in-out infinite;
+  filter: blur(70px);
+}
+
+@keyframes glow-wheel {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.85) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+    opacity: 0.6;
+  }
 }
 </style>
-
 </head>
 <body>
-<div class="answer" id="a">42</div>
-<div class="question" id="q">¿?</div>
-<div class="text">LA SOLUCIÓN PRECEDE AL PROBLEMA</div>
+
+<div class="title">EL KARMA CIRCULAR</div>
+<div class="subtitle">Libro 11 - Nodo 5</div>
+
+<div class="karma-field">
+  <div class="wheel-of-action">
+    <!-- Resplandor de la rueda -->
+    <div class="wheel-glow"></div>
+    
+    <!-- Rueda kármica -->
+    <div class="karma-wheel"></div>
+    <div class="karma-wheel" style="width: 320px; height: 320px; animation-duration: 22s; animation-direction: reverse;"></div>
+    
+    <!-- Semillas de acción -->
+    <div class="action-seed" style="top: 18%; left: 50%; transform: translateX(-50%); animation-delay: 0s;"></div>
+    <div class="action-seed" style="top: 82%; left: 50%; transform: translateX(-50%); animation-delay: 3.3s;"></div>
+    
+    <!-- Frutos de resultado -->
+    <div class="fruit-result" style="top: 50%; left: 15%; transform: translateY(-50%); animation-delay: 0s;"></div>
+    <div class="fruit-result" style="top: 50%; right: 15%; transform: translateY(-50%); animation-delay: 3.3s;"></div>
+    
+    <!-- Texto central -->
+    <div class="central-text" style="animation-delay: 2.3s;">
+      La acción<br>
+      crea el resultado<br><br>
+      El resultado<br>
+      crea la acción<br><br>
+      Rueda<br>
+      sin principio
+    </div>
+  </div>
+</div>
+
+<div class="contemplation">
+  Cada acción planta semillas · Cada semilla da frutos · Cada fruto planta semillas<br>
+  La rueda del karma gira sin fin · Causa y efecto en danza eterna
+</div>
+
 <script>
-const b = document.body;
-const answers = ["Sí", "No", "42", "∞", "Ahora", "Nunca", "Todo", "Nada", "Aquí"];
-const questions = ["¿Por qué?", "¿Cuándo?", "¿Dónde?", "¿Cómo?", "¿Quién?", "¿?"];
+const wheel = document.querySelector('.wheel-of-action');
 
-function c(cls, st) {
-const e = document.createElement(‘div’);
-e.className = cls;
-if(st) Object.assign(e.style, st);
-b.appendChild(e);
-setTimeout(() => e.remove(), 10000);
+// Crear radios de la rueda
+function createWheelSpokes() {
+  for(let i = 0; i < 12; i++) {
+    const spoke = document.createElement('div');
+    spoke.className = 'spoke';
+    spoke.style.cssText = `
+      transform: translate(-50%, 0) rotate(${i * 30}deg);
+    `;
+    document.querySelector('.karma-wheel').appendChild(spoke);
+  }
 }
 
-setInterval(() => {
-// Primero la respuesta
-document.getElementById(‘a’).textContent = answers[Math.floor(Math.random() * answers.length)];
-
-// Luego la pregunta
-setTimeout(() => {
-document.getElementById(‘q’).textContent = questions[Math.floor(Math.random() * questions.length)];
-}, 3000);
-
-c(‘oracle-line’, {
-left: Math.random() * 100 + ‘%’,
-top: Math.random() * 100 + ‘%’,
-transform: `rotate(${Math.random() * 360}deg)`
-});
-
-if(Math.random() > 0.7) {
-c(‘paradox’, {
-left: ‘50%’,
-top: ‘50%’,
-transform: ‘translate(-50%, -50%)’
-});
+// Crear partículas kármicas en órbita
+function createKarmicOrbit() {
+  for(let i = 0; i < 16; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'karmic-particle';
+      
+      const radius = 150 + (i % 3) * 30;
+      
+      particle.style.cssText = `
+        left: 50%;
+        top: 50%;
+        --radius: ${radius}px;
+        animation-delay: ${i * -0.9375}s;
+      `;
+      
+      wheel.appendChild(particle);
+    }, i * 100);
+  }
 }
-}, 4000);
 
-b.addEventListener(‘click’, e => {
-// La respuesta aparece inmediatamente
-const ans = document.createElement(‘div’);
-ans.className = ‘answer’;
-ans.textContent = answers[Math.floor(Math.random() * answers.length)];
-ans.style.left = e.clientX + ‘px’;
-ans.style.top = e.clientY - 30 + ‘px’;
-ans.style.animation = ‘answer-first 3s ease-out forwards’;
-b.appendChild(ans);
+// Crear flujos causales
+function createCausalFlow() {
+  const flow = document.createElement('div');
+  flow.className = 'causal-flow';
+  
+  const angle = Math.random() * 360;
+  
+  flow.style.cssText = `
+    left: 50%;
+    top: 50%;
+    --angle: ${angle}deg;
+    animation-delay: ${Math.random() * 6}s;
+  `;
+  
+  wheel.appendChild(flow);
+  setTimeout(() => flow.remove(), 13000);
+}
 
-// La pregunta aparece después
-setTimeout(() => {
-const q = document.createElement(‘div’);
-q.className = ‘question’;
-q.textContent = questions[Math.floor(Math.random() * questions.length)];
-q.style.left = e.clientX + ‘px’;
-q.style.top = e.clientY + 30 + ‘px’;
-q.style.animation = ‘question-later 3s ease-out forwards’;
-b.appendChild(q);
-setTimeout(() => q.remove(), 3000);
-}, 1500);
+// Generar elementos
+createWheelSpokes();
+createKarmicOrbit();
 
-setTimeout(() => ans.remove(), 3000);
+setInterval(createCausalFlow, 2600);
+
+// Crear flujos iniciales
+for(let i = 0; i < 6; i++) {
+  setTimeout(createCausalFlow, i * 900);
+}
+
+// Interactividad - Click hace girar la rueda
+wheel.addEventListener('click', (e) => {
+  const rect = wheel.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  // Explosión de semillas
+  for(let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const seed = document.createElement('div');
+      seed.className = 'action-seed';
+      const angle = (i / 12) * Math.PI * 2;
+      const distance = 60 + Math.random() * 80;
+      seed.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        animation: seed-grow 4s ease-out forwards;
+        transform: translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px);
+      `;
+      wheel.appendChild(seed);
+      setTimeout(() => seed.remove(), 4000);
+    }, i * 80);
+  }
+  
+  // Brote de frutos
+  setTimeout(() => {
+    for(let i = 0; i < 8; i++) {
+      setTimeout(() => {
+        const fruit = document.createElement('div');
+        fruit.className = 'fruit-result';
+        const angle = (i / 8) * Math.PI * 2;
+        const distance = 80 + Math.random() * 100;
+        fruit.style.cssText = `
+          left: ${x}px;
+          top: ${y}px;
+          animation: fruit-ripen 5s ease-out forwards;
+          transform: translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px);
+        `;
+        wheel.appendChild(fruit);
+        setTimeout(() => fruit.remove(), 5000);
+      }, i * 100);
+    }
+  }, 1200);
+  
+  // Flujos radiales
+  for(let i = 0; i < 16; i++) {
+    setTimeout(() => {
+      const flow = document.createElement('div');
+      flow.className = 'causal-flow';
+      const angle = (i / 16) * 360;
+      flow.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --angle: ${angle}deg;
+        animation: flow-circle 6s ease-out forwards;
+      `;
+      wheel.appendChild(flow);
+      setTimeout(() => flow.remove(), 6000);
+    }, i * 70);
+  }
 });
 </script>
 
