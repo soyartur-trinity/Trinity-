@@ -1,155 +1,454 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>El Eco Antes del Sonido - Trinity Infinito</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libro 11 - Nodo 4: La Respuesta Precediendo la Pregunta</title>
 <style>
-body {
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+* {
   margin: 0;
-  background: radial-gradient(circle, #000a0a, #000);
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(ellipse at center, #0a0a12 0%, #000000 70%);
   overflow: hidden;
+  font-family: 'Crimson Text', 'Palatino', serif;
+  color: #fff;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
 
-.echo {
-position: absolute;
-width: 100px;
-height: 100px;
-border: 2px solid rgba(100,200,255,0.3);
-border-radius: 50%;
-animation: echo-first 8s infinite;
+.inquiry-field {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes echo-first {
-0% { transform: scale(3); opacity: 0; }
-30% { transform: scale(1.5); opacity: 0.5; }
-60% { transform: scale(1); opacity: 0.8; }
-100% { transform: scale(0.5); opacity: 0; }
+.dialogue-void {
+  position: relative;
+  width: 650px;
+  height: 650px;
 }
 
-.sound {
-position: absolute;
-width: 50px;
-height: 50px;
-background: radial-gradient(circle, rgba(255,255,255,0.8), transparent);
-border-radius: 50%;
-animation: sound-after 8s infinite;
-animation-delay: 3s;
+.answer-form {
+  position: absolute;
+  width: 140px;
+  height: 180px;
+  background: radial-gradient(ellipse,
+    rgba(100,200,150,0.3),
+    rgba(100,255,150,0.15),
+    transparent
+  );
+  border-radius: 50%;
+  animation: answer-present 13s ease-in-out infinite;
+  filter: blur(25px);
+  border: 1px solid rgba(100,200,150,0.2);
 }
 
-@keyframes sound-after {
-0% { transform: scale(0); opacity: 0; }
-50% { transform: scale(1); opacity: 1; }
-100% { transform: scale(2); opacity: 0; }
+@keyframes answer-present {
+  0%, 100% {
+    transform: scale(1.3) translate(0, 0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(0.7) translate(var(--ax), var(--ay));
+    opacity: 0.4;
+  }
 }
 
-.wave {
-position: absolute;
-width: 100%;
-height: 1px;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-animation: reverse-wave 6s linear infinite;
+.question-form {
+  position: absolute;
+  width: 120px;
+  height: 160px;
+  background: radial-gradient(ellipse,
+    rgba(255,150,200,0.2),
+    rgba(200,100,255,0.1),
+    transparent
+  );
+  border-radius: 50%;
+  animation: question-emerge 13s ease-in-out infinite;
+  filter: blur(20px);
+  border: 1px solid rgba(255,150,200,0.15);
 }
 
-@keyframes reverse-wave {
-0% { transform: translateX(100%); }
-100% { transform: translateX(-100%); }
+@keyframes question-emerge {
+  0%, 100% {
+    transform: scale(0.6) translate(0, 0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2) translate(var(--qx), var(--qy));
+    opacity: 0.8;
+  }
 }
 
-.resonance {
-position: absolute;
-width: 200px;
-height: 200px;
-border: 1px dashed rgba(255,255,255,0.1);
-border-radius: 50%;
-animation: resonate-back 10s infinite;
+.logic-arrow {
+  position: absolute;
+  width: 150px;
+  height: 3px;
+  background: linear-gradient(90deg,
+    rgba(100,200,150,0.7),
+    rgba(255,150,200,0.6),
+    transparent
+  );
+  animation: arrow-backward 11s ease-in-out infinite;
+  filter: blur(1px);
+  transform-origin: left center;
 }
 
-@keyframes resonate-back {
-0% { transform: scale(2) rotate(360deg); opacity: 0; }
-50% { transform: scale(1) rotate(180deg); opacity: 0.3; }
-100% { transform: scale(0) rotate(0deg); opacity: 0; }
+@keyframes arrow-backward {
+  0%, 100% {
+    transform: scaleX(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scaleX(-1) rotate(var(--angle));
+    opacity: 0.9;
+  }
 }
 
-.text {
-position: absolute;
-bottom: 50px;
-color: rgba(255,255,255,0.3);
-letter-spacing: 4px;
-font-size: 14px;
+.inquiry-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(100,200,150,0.7);
+  animation: particle-inquiry 9s ease-in-out infinite;
+}
+
+@keyframes particle-inquiry {
+  0% {
+    transform: translate(var(--ix1), var(--iy1));
+    opacity: 0;
+  }
+  50% {
+    transform: translate(var(--ix2), var(--iy2));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--ix1), var(--iy1));
+    opacity: 0;
+  }
+}
+
+.symbol-question {
+  position: absolute;
+  font-size: 3em;
+  color: rgba(255,150,200,0.4);
+  opacity: 0;
+  animation: symbol-fade 12s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255,150,200,0.5);
+}
+
+@keyframes symbol-fade {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2) rotate(15deg);
+  }
+}
+
+.symbol-answer {
+  position: absolute;
+  font-size: 3em;
+  color: rgba(100,200,150,0.5);
+  opacity: 0;
+  animation: symbol-glow 12s ease-in-out infinite;
+  text-shadow: 0 0 25px rgba(100,200,150,0.6);
+}
+
+@keyframes symbol-glow {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(1.5) rotate(0deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1) rotate(-15deg);
+  }
+}
+
+.title {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.8em;
+  letter-spacing: 0.35em;
+  opacity: 0.9;
+  text-shadow: 0 0 30px rgba(100,200,150,0.5);
+  font-weight: 600;
+  text-align: center;
+  z-index: 100;
+}
+
+.subtitle {
+  position: fixed;
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1em;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  font-style: italic;
+  z-index: 100;
+}
+
+.central-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5em;
+  letter-spacing: 0.35em;
+  text-align: center;
+  opacity: 0;
+  animation: text-reverse 14s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255,255,255,0.4);
+  line-height: 2.2;
+  z-index: 10;
+}
+
+@keyframes text-reverse {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+  20%, 80% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.contemplation {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.95em;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  text-align: center;
+  max-width: 750px;
+  line-height: 1.9;
+  padding: 0 40px;
+  font-style: italic;
+  z-index: 100;
+}
+
+.paradox-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(100,200,150,0.12), transparent);
+  border-radius: 50%;
+  animation: glow-logic 17s ease-in-out infinite;
+  filter: blur(75px);
+}
+
+@keyframes glow-logic {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.6;
+  }
 }
 </style>
-
 </head>
 <body>
-<div class="text">EL ECO PRECEDE AL GRITO</div>
+
+<div class="title">LA RESPUESTA PRECEDIENDO LA PREGUNTA</div>
+<div class="subtitle">Libro 11 - Nodo 4</div>
+
+<div class="inquiry-field">
+  <div class="dialogue-void">
+    <!-- Resplandor paradójico -->
+    <div class="paradox-glow"></div>
+    
+    <!-- Formas de respuesta y pregunta -->
+    <div class="answer-form" style="top: 30%; left: 35%; --ax: 50px; --ay: -40px; animation-delay: 0s;"></div>
+    <div class="question-form" style="top: 50%; left: 65%; --qx: -40px; --qy: 50px; animation-delay: 0s;"></div>
+    
+    <div class="answer-form" style="top: 70%; left: 55%; --ax: -45px; --ay: 35px; animation-delay: 4.3s;"></div>
+    <div class="question-form" style="top: 40%; left: 25%; --qx: 50px; --qy: -45px; animation-delay: 4.3s;"></div>
+    
+    <!-- Símbolos -->
+    <div class="symbol-answer" style="top: 20%; left: 25%; animation-delay: 0s;">!</div>
+    <div class="symbol-question" style="top: 30%; left: 70%; animation-delay: 2s;">?</div>
+    
+    <div class="symbol-answer" style="top: 75%; left: 65%; animation-delay: 6s;">!</div>
+    <div class="symbol-question" style="top: 60%; left: 20%; animation-delay: 8s;">?</div>
+    
+    <!-- Texto central -->
+    <div class="central-text" style="animation-delay: 2s;">
+      La solución<br>
+      invoca<br>
+      el problema<br><br>
+      La respuesta<br>
+      genera la pregunta
+    </div>
+  </div>
+</div>
+
+<div class="contemplation">
+  Primero el saber, luego la duda · La solución existe antes que el enigma<br>
+  Cada respuesta crea la pregunta que la necesita
+</div>
+
 <script>
-const b = document.body;
+const dialogue = document.querySelector('.dialogue-void');
 
-function c(cls, st) {
-const e = document.createElement(‘div’);
-e.className = cls;
-if(st) Object.assign(e.style, st);
-b.appendChild(e);
-setTimeout(() => e.remove(), 10000);
+// Crear flechas lógicas invertidas
+function createLogicArrow() {
+  const arrow = document.createElement('div');
+  arrow.className = 'logic-arrow';
+  
+  const angle = Math.random() * 360;
+  
+  arrow.style.cssText = `
+    left: ${25 + Math.random() * 50}%;
+    top: ${25 + Math.random() * 50}%;
+    --angle: ${angle}deg;
+    animation-delay: ${Math.random() * 5}s;
+  `;
+  
+  dialogue.appendChild(arrow);
+  setTimeout(() => arrow.remove(), 11000);
 }
 
-setInterval(() => {
-// Primero el eco
-c(‘echo’, {
-left: ‘50%’,
-top: ‘50%’,
-transform: ‘translate(-50%, -50%)’,
-width: 50 + Math.random() * 150 + ‘px’,
-height: 50 + Math.random() * 150 + ‘px’
-});
-
-// Después el sonido original
-setTimeout(() => {
-c(‘sound’, {
-left: ‘50%’,
-top: ‘50%’,
-transform: ‘translate(-50%, -50%)’
-});
-}, 2000);
-
-c(‘wave’, {
-top: Math.random() * 100 + ‘%’
-});
-
-if(Math.random() > 0.7) {
-c(‘resonance’, {
-left: Math.random() * 100 + ‘%’,
-top: Math.random() * 100 + ‘%’
-});
-}
-}, 3000);
-
-b.addEventListener(‘click’, e => {
-// El eco aparece instantáneamente
-for(let i = 3; i > 0; i–) {
-c(‘echo’, {
-left: e.clientX - 50 * i + ‘px’,
-top: e.clientY - 50 * i + ‘px’,
-width: 100 * i + ‘px’,
-height: 100 * i + ‘px’,
-animation: ‘echo-first 2s ease-out forwards’,
-animationDelay: (3 - i) * 0.2 + ‘s’
-});
+// Crear partículas de investigación
+function createInquiryParticles() {
+  for(let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'inquiry-particle';
+      
+      const angle1 = Math.random() * Math.PI * 2;
+      const angle2 = Math.random() * Math.PI * 2;
+      const radius1 = 120;
+      const radius2 = 200;
+      
+      const ix1 = Math.cos(angle1) * radius1;
+      const iy1 = Math.sin(angle1) * radius1;
+      const ix2 = Math.cos(angle2) * radius2;
+      const iy2 = Math.sin(angle2) * radius2;
+      
+      particle.style.cssText = `
+        left: 50%;
+        top: 50%;
+        --ix1: ${ix1}px;
+        --iy1: ${iy1}px;
+        --ix2: ${ix2}px;
+        --iy2: ${iy2}px;
+        animation-delay: ${Math.random() * 4}s;
+      `;
+      
+      dialogue.appendChild(particle);
+      setTimeout(() => particle.remove(), 9000);
+    }, i * 100);
+  }
 }
 
-// El sonido aparece al final
-setTimeout(() => {
-c(‘sound’, {
-left: e.clientX - 25 + ‘px’,
-top: e.clientY - 25 + ‘px’,
-animation: ‘sound-after 2s ease-out forwards’
-});
-}, 1000);
+// Generar elementos continuamente
+setInterval(createLogicArrow, 2200);
+setInterval(createInquiryParticles, 6500);
+
+// Crear elementos iniciales
+for(let i = 0; i < 6; i++) {
+  setTimeout(createLogicArrow, i * 800);
+}
+createInquiryParticles();
+
+// Interactividad - Click genera diálogo inverso
+dialogue.addEventListener('click', (e) => {
+  const rect = dialogue.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  // Crear símbolo de exclamación
+  const answer = document.createElement('div');
+  answer.className = 'symbol-answer';
+  answer.textContent = '!';
+  answer.style.cssText = `
+    left: ${x}px;
+    top: ${y}px;
+    animation: symbol-glow 3s ease-out forwards;
+    font-size: 4em;
+  `;
+  dialogue.appendChild(answer);
+  setTimeout(() => answer.remove(), 3000);
+  
+  // Seguido por interrogación
+  setTimeout(() => {
+    const question = document.createElement('div');
+    question.className = 'symbol-question';
+    question.textContent = '?';
+    question.style.cssText = `
+      left: ${x + 30}px;
+      top: ${y + 30}px;
+      animation: symbol-fade 3s ease-out forwards;
+      font-size: 3.5em;
+    `;
+    dialogue.appendChild(question);
+    setTimeout(() => question.remove(), 3000);
+  }, 800);
+  
+  // Flechas radiales invertidas
+  for(let i = 0; i < 10; i++) {
+    setTimeout(() => {
+      const arrow = document.createElement('div');
+      arrow.className = 'logic-arrow';
+      const angle = (i / 10) * 360;
+      arrow.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --angle: ${angle}deg;
+        animation: arrow-backward 5s ease-out forwards;
+      `;
+      dialogue.appendChild(arrow);
+      setTimeout(() => arrow.remove(), 5000);
+    }, i * 90);
+  }
+  
+  // Partículas convergentes
+  for(let i = 0; i < 16; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'inquiry-particle';
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 100 + Math.random() * 80;
+      particle.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --ix1: ${Math.cos(angle) * distance}px;
+        --iy1: ${Math.sin(angle) * distance}px;
+        --ix2: 0px;
+        --iy2: 0px;
+        animation: particle-inquiry 4s ease-out forwards;
+      `;
+      dialogue.appendChild(particle);
+      setTimeout(() => particle.remove(), 4000);
+    }, i * 50);
+  }
 });
 </script>
 
