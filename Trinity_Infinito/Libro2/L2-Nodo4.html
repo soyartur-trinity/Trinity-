@@ -31,16 +31,30 @@
             width: 0;
             height: 0;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,200,200,0.1), transparent);
-            animation: love-expand 10s infinite;
+            /* CORRECCIÓN: Gradiente más suave sin blanco */
+            background: radial-gradient(
+                circle, 
+                rgba(255, 180, 180, 0.08) 0%, 
+                rgba(255, 150, 150, 0.04) 30%,
+                transparent 70%
+            );
+            animation: love-expand 10s infinite ease-out;
             animation-delay: calc(var(--delay) * 2.5s);
+            /* CORRECCIÓN: Comenzar invisible */
+            opacity: 0;
         }
         
         @keyframes love-expand {
             0% {
                 width: 0;
                 height: 0;
-                opacity: 0.4;
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.15;
             }
             100% {
                 width: 200vw;
@@ -62,32 +76,42 @@
             font-size: 1.5em;
             margin: 20px 0;
             opacity: 0;
-            animation: appear-disappear 12s infinite;
+            animation: appear-disappear 12s infinite ease-in-out;
             animation-delay: calc(var(--phase) * 4s);
             letter-spacing: 0.3em;
+            color: rgba(255, 200, 200, 0.9);
         }
         
         @keyframes appear-disappear {
-            0%, 70%, 100% { opacity: 0; }
-            75%, 85% { opacity: 0.6; }
+            0%, 70%, 100% { 
+                opacity: 0;
+                transform: translateY(0);
+            }
+            75%, 85% { 
+                opacity: 0.6;
+                transform: translateY(-5px);
+            }
         }
         
         .love-itself {
             font-size: 3em;
             letter-spacing: 0.5em;
-            animation: love-pulse 6s infinite;
+            animation: love-pulse 6s infinite ease-in-out;
+            color: rgba(255, 200, 200, 0.8);
         }
         
         @keyframes love-pulse {
             0%, 100% { 
                 opacity: 0.3; 
                 transform: scale(0.95);
-                color: rgba(255,200,200,0.8);
+                color: rgba(255, 200, 200, 0.7);
+                text-shadow: 0 0 10px rgba(255, 200, 200, 0.2);
             }
             50% { 
                 opacity: 0.7; 
                 transform: scale(1.05);
-                color: rgba(255,255,255,1);
+                color: rgba(255, 220, 220, 0.95);
+                text-shadow: 0 0 20px rgba(255, 200, 200, 0.4);
             }
         }
         
@@ -100,6 +124,13 @@
             opacity: 0.25;
             letter-spacing: 0.2em;
             font-size: 0.9em;
+            color: rgba(255, 200, 200, 0.6);
+        }
+
+        /* Suavizar cualquier transición brusca */
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
     </style>
 </head>
