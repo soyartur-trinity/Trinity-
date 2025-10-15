@@ -1,142 +1,470 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>La Voz del Vacío - Trinity Infinito</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libro 12 - Nodo 5: El Lenguaje Del Cuerpo</title>
 <style>
-body {
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+* {
   margin: 0;
-  background: linear-gradient(180deg, #000, #0a0a0f);
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(ellipse at center, #0a0608 0%, #000000 70%);
   overflow: hidden;
+  font-family: 'Crimson Text', 'Palatino', serif;
+  color: #fff;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
 
-.void-voice {
-position: absolute;
-width: 150px;
-height: 150px;
-border-radius: 50%;
-background: radial-gradient(circle at center, transparent 40%, rgba(255,255,255,0.1) 60%, transparent);
-animation: voice-emanate 10s infinite;
+.body-field {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes voice-emanate {
-0%, 100% { transform: scale(0); opacity: 0; }
-50% { transform: scale(2); opacity: 0.3; }
+.somatic-space {
+  position: relative;
+  width: 650px;
+  height: 650px;
 }
 
-.silence-wave {
-position: absolute;
-width: 100%;
-height: 2px;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-animation: silent-speak 6s linear infinite;
+.body-form {
+  position: absolute;
+  width: 120px;
+  height: 200px;
+  background: radial-gradient(ellipse,
+    rgba(240,200,180,0.3),
+    rgba(220,180,160,0.15),
+    transparent
+  );
+  border-radius: 45% 55% 50% 50%;
+  animation: body-express 14s ease-in-out infinite;
+  filter: blur(22px);
+  border: 1px solid rgba(240,200,180,0.2);
 }
 
-@keyframes silent-speak {
-0% { transform: translateX(-100%) scaleY(0); opacity: 0; }
-50% { transform: translateX(0) scaleY(3); opacity: 0.3; }
-100% { transform: translateX(100%) scaleY(0); opacity: 0; }
+@keyframes body-express {
+  0%, 100% {
+    transform: scale(0.8) translate(0, 0) rotate(0deg);
+    opacity: 0.5;
+    border-radius: 45% 55% 50% 50%;
+  }
+  50% {
+    transform: scale(1.3) translate(var(--bx), var(--by)) rotate(var(--br));
+    opacity: 0.9;
+    border-radius: 50% 50% 45% 55%;
+  }
 }
 
-.echo-void {
-position: absolute;
-width: 80px;
-height: 80px;
-border: 1px solid rgba(255,255,255,0.15);
-border-radius: 50%;
-animation: void-echo 8s infinite;
+.posture-line {
+  position: absolute;
+  width: 180px;
+  height: 3px;
+  background: linear-gradient(90deg,
+    rgba(240,200,180,0.6),
+    rgba(220,180,160,0.4),
+    transparent
+  );
+  animation: line-posture 11s ease-in-out infinite;
+  filter: blur(1px);
+  transform-origin: left center;
 }
 
-@keyframes void-echo {
-0% { transform: scale(0.5); opacity: 0; }
-50% { transform: scale(1.5); opacity: 0.2; }
-100% { transform: scale(3); opacity: 0; }
+@keyframes line-posture {
+  0%, 100% {
+    transform: rotate(0deg) scaleX(0);
+    opacity: 0;
+  }
+  50% {
+    transform: rotate(var(--angle)) scaleX(1);
+    opacity: 0.8;
+  }
 }
 
-.whisper {
-position: absolute;
-color: rgba(255,255,255,0.2);
-font-size: 12px;
-font-style: italic;
-opacity: 0;
-animation: whisper-fade 12s infinite;
+.kinetic-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(240,200,180,0.7);
+  animation: particle-kinetic 9s ease-in-out infinite;
 }
 
-@keyframes whisper-fade {
-0%, 100% { opacity: 0; transform: translateY(20px); }
-50% { opacity: 0.3; transform: translateY(0); }
+@keyframes particle-kinetic {
+  0%, 100% {
+    transform: translate(0, 0) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(var(--kx), var(--ky)) scale(1.2);
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.5;
+  }
 }
 
-.text {
-position: absolute;
-bottom: 50px;
-color: rgba(255,255,255,0.3);
-letter-spacing: 4px;
-font-size: 14px;
+.movement-trace {
+  position: absolute;
+  width: 4px;
+  height: 100px;
+  background: linear-gradient(to bottom,
+    rgba(240,200,180,0.7),
+    rgba(220,180,160,0.5),
+    transparent
+  );
+  animation: trace-move 12s ease-in-out infinite;
+  filter: blur(1.5px);
+}
+
+@keyframes trace-move {
+  0%, 100% {
+    transform: translateY(0) translateX(0) rotate(0deg) scaleY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(var(--ty)) translateX(var(--tx)) rotate(var(--tr)) scaleY(1);
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.5;
+  }
+}
+
+.expression-wave {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: 2px solid rgba(240,200,180,0.2);
+  border-radius: 50%;
+  animation: wave-express 15s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes wave-express {
+  0%, 100% {
+    transform: scale(0.4) rotate(0deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+  50% {
+    transform: scale(2.2) rotate(180deg);
+    opacity: 0.7;
+    border-radius: 48% 52% 50% 50%;
+  }
+}
+
+.title {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2em;
+  letter-spacing: 0.4em;
+  opacity: 0.9;
+  text-shadow: 0 0 30px rgba(240,200,180,0.5);
+  font-weight: 600;
+  text-align: center;
+  z-index: 100;
+}
+
+.subtitle {
+  position: fixed;
+  top: 113px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1em;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  font-style: italic;
+  z-index: 100;
+}
+
+.central-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5em;
+  letter-spacing: 0.4em;
+  text-align: center;
+  opacity: 0;
+  animation: text-embody 14s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255,255,255,0.4);
+  line-height: 2.3;
+  z-index: 10;
+}
+
+@keyframes text-embody {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9) rotate(-2deg);
+  }
+  20%, 80% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+}
+
+.contemplation {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.95em;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  text-align: center;
+  max-width: 780px;
+  line-height: 1.9;
+  padding: 0 40px;
+  font-style: italic;
+  z-index: 100;
+}
+
+.somatic-glow {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(240,200,180,0.1), transparent);
+  border-radius: 50%;
+  animation: glow-somatic 18s ease-in-out infinite;
+  filter: blur(75px);
+}
+
+@keyframes glow-somatic {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0.6;
+  }
 }
 </style>
-
 </head>
 <body>
-<div class="whisper">...</div>
-<div class="text">EL VACÍO PRONUNCIA TODO</div>
+
+<div class="title">EL LENGUAJE DEL CUERPO</div>
+<div class="subtitle">Libro 12 - Nodo 5</div>
+
+<div class="body-field">
+  <div class="somatic-space">
+    <!-- Resplandor somático -->
+    <div class="somatic-glow"></div>
+    
+    <!-- Ondas de expresión -->
+    <div class="expression-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
+    <div class="expression-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 5s; width: 250px; height: 250px;"></div>
+    <div class="expression-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 10s; width: 350px; height: 350px;"></div>
+    
+    <!-- Formas corporales -->
+    <div class="body-form" style="top: 30%; left: 35%; --bx: 45px; --by: -40px; --br: 15deg; animation-delay: 0s;"></div>
+    <div class="body-form" style="top: 60%; left: 65%; --bx: -40px; --by: 45px; --br: -20deg; animation-delay: 4.7s;"></div>
+    <div class="body-form" style="top: 45%; left: 18%; --bx: 50px; --by: 35px; --br: 10deg; animation-delay: 9.3s;"></div>
+    
+    <!-- Texto central -->
+    <div class="central-text" style="animation-delay: 2.5s;">
+      Cada postura<br>
+      es un verbo<br><br>
+      Cada gesto<br>
+      una frase<br><br>
+      El cuerpo<br>
+      dice verdades
+    </div>
+  </div>
+</div>
+
+<div class="contemplation">
+  La gramática corporal · El alfabeto de posturas y movimientos<br>
+  Lo que el cuerpo sabe decir sin recurrir a las palabras
+</div>
+
 <script>
-const b = document.body;
+const somatic = document.querySelector('.somatic-space');
 
-function c(cls, st) {
-const e = document.createElement(‘div’);
-e.className = cls;
-if(st) Object.assign(e.style, st);
-b.appendChild(e);
-setTimeout(() => e.remove(), 12000);
+// Crear líneas de postura
+function createPostureLine() {
+  const line = document.createElement('div');
+  line.className = 'posture-line';
+  
+  const angle = Math.random() * 360;
+  
+  line.style.cssText = `
+    left: ${25 + Math.random() * 50}%;
+    top: ${25 + Math.random() * 50}%;
+    --angle: ${angle}deg;
+    animation-delay: ${Math.random() * 5}s;
+  `;
+  
+  somatic.appendChild(line);
+  setTimeout(() => line.remove(), 11000);
 }
 
-setInterval(() => {
-c(‘void-voice’, {
-left: ‘50%’,
-top: ‘50%’,
-transform: ‘translate(-50%, -50%)’,
-animationDelay: Math.random() * 10 + ‘s’
-});
-
-c(‘silence-wave’, {
-top: 30 + Math.random() * 40 + ‘%’
-});
-
-if(Math.random() > 0.5) {
-c(‘echo-void’, {
-left: ‘50%’,
-top: ‘50%’,
-transform: ‘translate(-50%, -50%)’
-});
+// Crear partículas cinéticas
+function createKineticParticles() {
+  for(let i = 0; i < 15; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'kinetic-particle';
+      
+      const angle = (i / 15) * Math.PI * 2;
+      const distance = 75 + Math.random() * 125;
+      const kx = Math.cos(angle) * distance;
+      const ky = Math.sin(angle) * distance;
+      
+      particle.style.cssText = `
+        left: 50%;
+        top: 50%;
+        --kx: ${kx}px;
+        --ky: ${ky}px;
+        animation-delay: ${Math.random() * 4}s;
+      `;
+      
+      somatic.appendChild(particle);
+      setTimeout(() => particle.remove(), 9000);
+    }, i * 85);
+  }
 }
 
-c(‘whisper’, {
-textContent: ‘…’,
-left: Math.random() * 100 + ‘%’,
-top: Math.random() * 100 + ‘%’
-});
-}, 2000);
-
-b.addEventListener(‘click’, e => {
-// El vacío habla
-for(let i = 0; i < 5; i++) {
-setTimeout(() => {
-c(‘void-voice’, {
-left: e.clientX - 75 + ‘px’,
-top: e.clientY - 75 + ‘px’,
-width: 150 + i * 30 + ‘px’,
-height: 150 + i * 30 + ‘px’,
-animation: ‘voice-emanate 2s ease-out forwards’,
-animationDelay: i * 0.2 + ‘s’
-});
-}, i * 100);
+// Crear trazos de movimiento
+function createMovementTrace() {
+  const trace = document.createElement('div');
+  trace.className = 'movement-trace';
+  
+  const ty = 70 + Math.random() * 140;
+  const tx = (Math.random() - 0.5) * 110;
+  const tr = (Math.random() - 0.5) * 90;
+  
+  trace.style.cssText = `
+    left: ${25 + Math.random() * 50}%;
+    top: ${20 + Math.random() * 60}%;
+    --ty: ${ty}px;
+    --tx: ${tx}px;
+    --tr: ${tr}deg;
+    animation-delay: ${Math.random() * 6}s;
+  `;
+  
+  somatic.appendChild(trace);
+  setTimeout(() => trace.remove(), 12000);
 }
+
+// Generar elementos continuamente
+setInterval(createPostureLine, 2400);
+setInterval(createKineticParticles, 6800);
+setInterval(createMovementTrace, 2700);
+
+// Crear elementos iniciales
+for(let i = 0; i < 7; i++) {
+  setTimeout(createPostureLine, i * 850);
+}
+createKineticParticles();
+for(let i = 0; i < 7; i++) {
+  setTimeout(createMovementTrace, i * 740);
+}
+
+// Interactividad - Click crea expresión corporal
+somatic.addEventListener('click', (e) => {
+  const rect = somatic.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  // Ondas de expresión
+  for(let i = 0; i < 6; i++) {
+    setTimeout(() => {
+      const wave = document.createElement('div');
+      wave.className = 'expression-wave';
+      const size = 90 + i * 55;
+      wave.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        animation: wave-express ${10 - i}s ease-out forwards;
+        animation-delay: 0s;
+      `;
+      somatic.appendChild(wave);
+      setTimeout(() => wave.remove(), (10 - i) * 1000);
+    }, i * 230);
+  }
+  
+  // Formas corporales
+  for(let i = 0; i < 6; i++) {
+    setTimeout(() => {
+      const body = document.createElement('div');
+      body.className = 'body-form';
+      const angle = (i / 6) * Math.PI * 2;
+      const distance = 60 + Math.random() * 75;
+      body.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --bx: ${Math.cos(angle) * distance}px;
+        --by: ${Math.sin(angle) * distance}px;
+        --br: ${(Math.random() - 0.5) * 50}deg;
+        animation: body-express 5s ease-out forwards;
+      `;
+      somatic.appendChild(body);
+      setTimeout(() => body.remove(), 5000);
+    }, i * 140);
+  }
+  
+  // Líneas de postura radiales
+  for(let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const line = document.createElement('div');
+      line.className = 'posture-line';
+      const angle = (i / 12) * 360;
+      line.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --angle: ${angle}deg;
+        animation: line-posture 5s ease-out forwards;
+      `;
+      somatic.appendChild(line);
+      setTimeout(() => line.remove(), 5000);
+    }, i * 75);
+  }
+  
+  // Partículas cinéticas
+  for(let i = 0; i < 20; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'kinetic-particle';
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 55 + Math.random() * 95;
+      particle.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --kx: ${Math.cos(angle) * distance}px;
+        --ky: ${Math.sin(angle) * distance}px;
+        animation: particle-kinetic 5s ease-out forwards;
+      `;
+      somatic.appendChild(particle);
+      setTimeout(() => particle.remove(), 5000);
+    }, i * 50);
+  }
 });
 </script>
 
