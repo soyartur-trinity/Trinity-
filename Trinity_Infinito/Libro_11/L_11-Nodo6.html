@@ -1,182 +1,450 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>El Hijo Que Engendra al Padre - Trinity Infinito</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libro 11 - Nodo 6: El Observador Creado por lo Observado</title>
 <style>
-body {
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+* {
   margin: 0;
-  background: #000;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(ellipse at center, #080a15 0%, #000000 70%);
   overflow: hidden;
+  font-family: 'Crimson Text', 'Palatino', serif;
+  color: #fff;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
 
-.child {
-position: absolute;
-width: 30px;
-height: 30px;
-background: radial-gradient(circle, rgba(100,200,255,0.8), transparent);
-border-radius: 50%;
-animation: child-creates 12s infinite;
+.observation-field {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes child-creates {
-0% { transform: scale(0.5); opacity: 1; }
-50% { transform: scale(1.5); opacity: 0.8; }
-100% { transform: scale(2); opacity: 0; }
+.witness-void {
+  position: relative;
+  width: 650px;
+  height: 650px;
 }
 
-.parent {
-position: absolute;
-width: 60px;
-height: 60px;
-border: 2px solid rgba(255,100,200,0.4);
-border-radius: 50%;
-animation: parent-emerges 12s infinite;
-animation-delay: 6s;
+.eye-form {
+  position: absolute;
+  width: 100px;
+  height: 60px;
+  background: radial-gradient(ellipse,
+    rgba(100,150,255,0.3),
+    rgba(150,200,255,0.15),
+    transparent
+  );
+  border-radius: 50%;
+  animation: eye-blink 12s ease-in-out infinite;
+  filter: blur(15px);
+  border: 1px solid rgba(100,150,255,0.2);
 }
 
-@keyframes parent-emerges {
-0% { transform: scale(0); opacity: 0; }
-50% { transform: scale(1); opacity: 0.6; }
-100% { transform: scale(0.5); opacity: 0; }
+@keyframes eye-blink {
+  0%, 100% {
+    transform: scale(0.7) translate(0, 0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.3) translate(var(--ex), var(--ey));
+    opacity: 0.9;
+  }
 }
 
-.lineage {
-position: absolute;
-width: 1px;
-height: 100px;
-background: linear-gradient(to top, rgba(255,255,255,0.5), transparent);
-animation: reverse-lineage 8s infinite;
+.object-form {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle,
+    rgba(255,150,100,0.4),
+    rgba(200,100,150,0.2),
+    transparent
+  );
+  border-radius: 50%;
+  animation: object-manifest 12s ease-in-out infinite;
+  filter: blur(20px);
+  border: 1px solid rgba(255,150,100,0.2);
 }
 
-@keyframes reverse-lineage {
-0% { transform: scaleY(0) translateY(50px); opacity: 0; }
-50% { transform: scaleY(1) translateY(0); opacity: 0.5; }
-100% { transform: scaleY(0) translateY(-50px); opacity: 0; }
+@keyframes object-manifest {
+  0%, 100% {
+    transform: scale(1.4) translate(0, 0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(0.6) translate(var(--ox), var(--oy));
+    opacity: 0.3;
+  }
 }
 
-.generation {
-position: absolute;
-width: 150px;
-height: 150px;
-border: 1px dashed rgba(255,255,255,0.1);
-border-radius: 50%;
-animation: gen-cycle 15s linear infinite;
+.gaze-beam {
+  position: absolute;
+  width: 200px;
+  height: 3px;
+  background: linear-gradient(90deg,
+    rgba(100,150,255,0.7),
+    rgba(255,150,100,0.6)
+  );
+  animation: gaze-reverse 11s ease-in-out infinite;
+  filter: blur(1px);
+  transform-origin: right center;
 }
 
-@keyframes gen-cycle {
-from { transform: rotate(0deg); }
-to { transform: rotate(-360deg); }
+@keyframes gaze-reverse {
+  0%, 100% {
+    transform: scaleX(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scaleX(-1) rotate(var(--angle));
+    opacity: 0.9;
+  }
 }
 
-.dna {
-position: absolute;
-width: 3px;
-height: 3px;
-background: white;
-border-radius: 50%;
-animation: dna-spiral 10s infinite;
+.perception-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(100,150,255,0.7);
+  animation: particle-perceive 9s ease-in-out infinite;
 }
 
-@keyframes dna-spiral {
-0% { transform: rotate(0deg) translateX(50px) rotate(0deg); opacity: 0; }
-50% { transform: rotate(180deg) translateX(50px) rotate(-180deg); opacity: 0.8; }
-100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); opacity: 0; }
+@keyframes particle-perceive {
+  0% {
+    transform: translate(var(--px1), var(--py1));
+    opacity: 0;
+  }
+  50% {
+    transform: translate(var(--px2), var(--py2));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--px1), var(--py1));
+    opacity: 0;
+  }
 }
 
-.text {
-position: absolute;
-bottom: 50px;
-color: rgba(255,255,255,0.3);
-letter-spacing: 4px;
-font-size: 14px;
+.reciprocal-loop {
+  position: absolute;
+  width: 350px;
+  height: 200px;
+  border: 2px solid rgba(150,150,255,0.2);
+  border-radius: 50%;
+  animation: loop-reciprocal 20s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes loop-reciprocal {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+    border-radius: 50%;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.3);
+    border-radius: 45% 55% 50% 50%;
+  }
+}
+
+.title {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.7em;
+  letter-spacing: 0.3em;
+  opacity: 0.9;
+  text-shadow: 0 0 30px rgba(100,150,255,0.5);
+  font-weight: 600;
+  text-align: center;
+  z-index: 100;
+}
+
+.subtitle {
+  position: fixed;
+  top: 108px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1em;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  font-style: italic;
+  z-index: 100;
+}
+
+.central-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.4em;
+  letter-spacing: 0.3em;
+  text-align: center;
+  opacity: 0;
+  animation: text-witness 14s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255,255,255,0.4);
+  line-height: 2.2;
+  z-index: 10;
+}
+
+@keyframes text-witness {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  20%, 80% {
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.contemplation {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.95em;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  text-align: center;
+  max-width: 780px;
+  line-height: 1.9;
+  padding: 0 40px;
+  font-style: italic;
+  z-index: 100;
+}
+
+.witness-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(100,150,255,0.12), transparent);
+  border-radius: 50%;
+  animation: glow-witness 17s ease-in-out infinite;
+  filter: blur(70px);
+}
+
+@keyframes glow-witness {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.6;
+  }
 }
 </style>
-
 </head>
 <body>
-<div class="text">EL DESCENDIENTE CREA AL ANCESTRO</div>
+
+<div class="title">EL OBSERVADOR CREADO POR LO OBSERVADO</div>
+<div class="subtitle">Libro 11 - Nodo 6</div>
+
+<div class="observation-field">
+  <div class="witness-void">
+    <!-- Resplandor del testigo -->
+    <div class="witness-glow"></div>
+    
+    <!-- Bucles recíprocos -->
+    <div class="reciprocal-loop" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
+    <div class="reciprocal-loop" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 6.7s; width: 280px; height: 160px;"></div>
+    
+    <!-- Ojos y objetos -->
+    <div class="eye-form" style="top: 35%; left: 30%; --ex: 40px; --ey: -30px; animation-delay: 0s;"></div>
+    <div class="object-form" style="top: 55%; left: 70%; --ox: -50px; --oy: 40px; animation-delay: 0s;"></div>
+    
+    <div class="eye-form" style="top: 70%; left: 60%; --ex: -35px; --ey: 25px; animation-delay: 4s;"></div>
+    <div class="object-form" style="top: 25%; left: 40%; --ox: 45px; --oy: -35px; animation-delay: 4s;"></div>
+    
+    <!-- Texto central -->
+    <div class="central-text" style="animation-delay: 2s;">
+      Lo visto<br>
+      crea<br>
+      al vidente<br><br>
+      El objeto<br>
+      genera<br>
+      al sujeto
+    </div>
+  </div>
+</div>
+
+<div class="contemplation">
+  No hay ojo antes de lo visible · La percepción nace de lo percibido<br>
+  El observador emerge del acto de observar · Sujeto y objeto co-surgiendo
+</div>
+
 <script>
-const b = document.body;
+const witness = document.querySelector('.witness-void');
 
-function c(cls, st) {
-const e = document.createElement(‘div’);
-e.className = cls;
-if(st) Object.assign(e.style, st);
-b.appendChild(e);
-setTimeout(() => e.remove(), 12000);
+// Crear rayos de mirada invertidos
+function createGazeBeam() {
+  const beam = document.createElement('div');
+  beam.className = 'gaze-beam';
+  
+  const angle = Math.random() * 360;
+  
+  beam.style.cssText = `
+    left: ${30 + Math.random() * 40}%;
+    top: ${30 + Math.random() * 40}%;
+    --angle: ${angle}deg;
+    animation-delay: ${Math.random() * 5}s;
+  `;
+  
+  witness.appendChild(beam);
+  setTimeout(() => beam.remove(), 11000);
 }
 
-setInterval(() => {
-const x = Math.random() * window.innerWidth;
-const y = Math.random() * window.innerHeight;
-
-// Primero aparece el hijo
-c(‘child’, {
-left: x + ‘px’,
-top: y + ‘px’
-});
-
-// Después emerge el padre desde el hijo
-setTimeout(() => {
-c(‘parent’, {
-left: x - 15 + ‘px’,
-top: y - 15 + ‘px’
-});
-
-```
-// Línea de linaje invertida
-c('lineage', {
-  left: x + 'px',
-  top: y - 100 + 'px'
-});
-```
-
-}, 3000);
-
-// ADN helicoidal
-for(let i = 0; i < 5; i++) {
-c(‘dna’, {
-left: ‘50%’,
-top: ‘50%’,
-animationDelay: i * 0.5 + ‘s’
-});
+// Crear partículas de percepción
+function createPerceptionParticles() {
+  for(let i = 0; i < 14; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'perception-particle';
+      
+      const angle1 = Math.random() * Math.PI * 2;
+      const angle2 = Math.random() * Math.PI * 2;
+      const radius1 = 100;
+      const radius2 = 180;
+      
+      const px1 = Math.cos(angle1) * radius1;
+      const py1 = Math.sin(angle1) * radius1;
+      const px2 = Math.cos(angle2) * radius2;
+      const py2 = Math.sin(angle2) * radius2;
+      
+      particle.style.cssText = `
+        left: 50%;
+        top: 50%;
+        --px1: ${px1}px;
+        --py1: ${py1}px;
+        --px2: ${px2}px;
+        --py2: ${py2}px;
+        animation-delay: ${Math.random() * 4}s;
+      `;
+      
+      witness.appendChild(particle);
+      setTimeout(() => particle.remove(), 9000);
+    }, i * 90);
+  }
 }
 
-if(Math.random() > 0.7) {
-c(‘generation’, {
-left: ‘50%’,
-top: ‘50%’,
-transform: ‘translate(-50%, -50%)’
-});
+// Generar elementos continuamente
+setInterval(createGazeBeam, 2300);
+setInterval(createPerceptionParticles, 6800);
+
+// Crear elementos iniciales
+for(let i = 0; i < 6; i++) {
+  setTimeout(createGazeBeam, i * 850);
 }
-}, 4000);
+createPerceptionParticles();
 
-b.addEventListener(‘click’, e => {
-// Crear genealogía invertida
-for(let i = 0; i < 5; i++) {
-setTimeout(() => {
-const size = 20 + i * 15;
-const el = i === 0 ? ‘child’ : ‘parent’;
-
-```
-  c(el, {
-    left: e.clientX - size/2 + 'px',
-    top: e.clientY - i * 30 - size/2 + 'px',
-    width: size + 'px',
-    height: size + 'px',
-    animation: `${el === 'child' ? 'child-creates' : 'parent-emerges'} 3s ease-out forwards`,
-    animationDelay: i * 0.3 + 's'
-  });
-}, i * 200);
-```
-
-}
+// Interactividad - Click crea bucle perceptivo
+witness.addEventListener('click', (e) => {
+  const rect = witness.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  // Crear ojo en el punto
+  const eye = document.createElement('div');
+  eye.className = 'eye-form';
+  eye.style.cssText = `
+    left: ${x}px;
+    top: ${y}px;
+    --ex: 0px;
+    --ey: 0px;
+    animation: eye-blink 3s ease-out forwards;
+  `;
+  witness.appendChild(eye);
+  setTimeout(() => eye.remove(), 3000);
+  
+  // Seguido por objeto
+  setTimeout(() => {
+    const object = document.createElement('div');
+    object.className = 'object-form';
+    object.style.cssText = `
+      left: ${x + 50}px;
+      top: ${y + 50}px;
+      --ox: 0px;
+      --oy: 0px;
+      animation: object-manifest 3s ease-out forwards;
+    `;
+    witness.appendChild(object);
+    setTimeout(() => object.remove(), 3000);
+  }, 800);
+  
+  // Rayos radiales
+  for(let i = 0; i < 12; i++) {
+    setTimeout(() => {
+      const beam = document.createElement('div');
+      beam.className = 'gaze-beam';
+      const angle = (i / 12) * 360;
+      beam.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --angle: ${angle}deg;
+        animation: gaze-reverse 5s ease-out forwards;
+      `;
+      witness.appendChild(beam);
+      setTimeout(() => beam.remove(), 5000);
+    }, i * 85);
+  }
+  
+  // Bucles recíprocos
+  for(let i = 0; i < 4; i++) {
+    setTimeout(() => {
+      const loop = document.createElement('div');
+      loop.className = 'reciprocal-loop';
+      const size = 120 + i * 60;
+      loop.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        width: ${size}px;
+        height: ${size * 0.6}px;
+        animation: loop-reciprocal ${8 - i}s ease-out forwards;
+      `;
+      witness.appendChild(loop);
+      setTimeout(() => loop.remove(), (8 - i) * 1000);
+    }, i * 250);
+  }
+  
+  // Partículas convergentes
+  for(let i = 0; i < 18; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'perception-particle';
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 90 + Math.random() * 80;
+      particle.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        --px1: ${Math.cos(angle) * distance}px;
+        --py1: ${Math.sin(angle) * distance}px;
+        --px2: 0px;
+        --py2: 0px;
+        animation: particle-perceive 4s ease-out forwards;
+      `;
+      witness.appendChild(particle);
+      setTimeout(() => particle.remove(), 4000);
+    }, i * 55);
+  }
 });
 </script>
 
