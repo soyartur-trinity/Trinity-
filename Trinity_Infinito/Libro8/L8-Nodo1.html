@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nodo 50: El Punto que Contiene el Infinito</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -18,300 +25,325 @@
             font-family: 'Courier New', monospace;
         }
 
-
-    .singularity-field {
-        position: relative;
-        width: 800px;
-        height: 800px;
-    }
-    
-    .zero-point {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 2px;
-        height: 2px;
-        background: #fff;
-        border-radius: 50%;
-        box-shadow: 
-            0 0 10px 5px rgba(255, 255, 255, 0.8),
-            0 0 20px 10px rgba(147, 51, 234, 0.6),
-            0 0 40px 20px rgba(59, 130, 246, 0.4),
-            0 0 80px 40px rgba(6, 182, 212, 0.2);
-        animation: singularityPulse 4s infinite alternate;
-    }
-    
-    .dimension-collapse {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        border: 1px solid rgba(147, 51, 234, 0.3);
-        border-radius: 50%;
-        animation: collapseInward 6s infinite;
-    }
-    
-    @keyframes collapseInward {
-        0% {
-            width: 600px;
-            height: 600px;
+        .singularity-field {
+            position: relative;
+            width: 800px;
+            height: 800px;
+        }
+        
+        /* OPTIMIZACIÓN MÍNIMA: Mantener intensidad, suavizar solo el pulso pico */
+        .zero-point {
+            position: absolute;
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            opacity: 0;
-        }
-        50% {
-            opacity: 1;
-        }
-        100% {
-            width: 0;
-            height: 0;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-        }
-    }
-    
-    .infinity-expansion {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 2px;
-        height: 2px;
-        border-radius: 50%;
-        background: rgba(147, 51, 234, 0.5);
-        animation: expandOutward 8s infinite;
-    }
-    
-    @keyframes expandOutward {
-        0% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-        }
-        100% {
-            transform: translate(-50%, -50%) scale(400);
-            opacity: 0;
-        }
-    }
-    
-    .quantum-foam {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 50%;
-        animation: quantumFluctuation 2s infinite;
-    }
-    
-    @keyframes quantumFluctuation {
-        0%, 100% {
-            opacity: 0;
-            transform: scale(0);
-        }
-        50% {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-    
-    .coordinate-text {
-        position: absolute;
-        color: rgba(147, 51, 234, 0.5);
-        font-size: 10px;
-        font-family: monospace;
-        animation: coordinateFade 5s infinite;
-    }
-    
-    .coordinate-text:nth-child(1) {
-        top: 20%;
-        left: 50%;
-        transform: translateX(-50%);
-        animation-delay: 0s;
-    }
-    
-    .coordinate-text:nth-child(2) {
-        top: 50%;
-        right: 20%;
-        transform: translateY(-50%);
-        animation-delay: 1.25s;
-    }
-    
-    .coordinate-text:nth-child(3) {
-        bottom: 20%;
-        left: 50%;
-        transform: translateX(-50%);
-        animation-delay: 2.5s;
-    }
-    
-    .coordinate-text:nth-child(4) {
-        top: 50%;
-        left: 20%;
-        transform: translateY(-50%);
-        animation-delay: 3.75s;
-    }
-    
-    @keyframes coordinateFade {
-        0%, 100% { opacity: 0; }
-        50% { opacity: 1; }
-    }
-    
-    @keyframes singularityPulse {
-        0% {
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 252, 250, 0.95);  /* Blanco casi puro, ligeramente cálido */
+            border-radius: 50%;
             box-shadow: 
-                0 0 10px 5px rgba(255, 255, 255, 0.8),
+                0 0 10px 5px rgba(255, 252, 250, 0.8),
                 0 0 20px 10px rgba(147, 51, 234, 0.6),
                 0 0 40px 20px rgba(59, 130, 246, 0.4),
                 0 0 80px 40px rgba(6, 182, 212, 0.2);
+            animation: singularityPulse 4s infinite alternate ease-in-out;
         }
-        100% {
-            box-shadow: 
-                0 0 20px 10px rgba(255, 255, 255, 1),
-                0 0 40px 20px rgba(147, 51, 234, 0.8),
-                0 0 80px 40px rgba(59, 130, 246, 0.6),
-                0 0 160px 80px rgba(6, 182, 212, 0.4);
-        }
-    }
-    
-    .planck-grid {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-image: 
-            repeating-linear-gradient(0deg,
-                transparent,
-                transparent 20px,
-                rgba(147, 51, 234, 0.05) 20px,
-                rgba(147, 51, 234, 0.05) 21px),
-            repeating-linear-gradient(90deg,
-                transparent,
-                transparent 20px,
-                rgba(59, 130, 246, 0.05) 20px,
-                rgba(59, 130, 246, 0.05) 21px);
-        animation: gridCollapse 10s infinite;
-    }
-    
-    @keyframes gridCollapse {
-        0%, 100% {
-            transform: scale(1);
-            opacity: 0.3;
-        }
-        50% {
-            transform: scale(0.01);
+        
+        .dimension-collapse {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 50%;
+            animation: collapseInward 6s infinite ease-in-out;
             opacity: 0;
         }
-    }
-    
-    .paradox-inscription {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.4);
-        font-size: 14px;
-        text-align: center;
-        animation: inscriptionPulse 6s infinite;
-    }
-    
-    @keyframes inscriptionPulse {
-        0%, 100% { opacity: 0.4; }
-        50% { opacity: 0.8; }
-    }
-    
-    .transmission-code {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.3);
-        font-size: 10px;
-        letter-spacing: 2px;
-    }
-</style>
-
-
+        
+        @keyframes collapseInward {
+            0% {
+                width: 600px;
+                height: 600px;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.7;
+            }
+            80% {
+                opacity: 0.3;
+            }
+            100% {
+                width: 0;
+                height: 0;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
+        
+        .infinity-expansion {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: rgba(147, 51, 234, 0.5);
+            animation: expandOutward 8s infinite ease-out;
+            opacity: 0;
+        }
+        
+        @keyframes expandOutward {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(400);
+                opacity: 0;
+            }
+        }
+        
+        .quantum-foam {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.75);  /* Mantener blanco brillante */
+            border-radius: 50%;
+            animation: quantumFluctuation 2s infinite ease-in-out;
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+        
+        @keyframes quantumFluctuation {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 0.9;
+                transform: scale(1);
+            }
+        }
+        
+        .coordinate-text {
+            position: absolute;
+            color: rgba(147, 51, 234, 0.6);
+            font-size: 10px;
+            font-family: monospace;
+            animation: coordinateFade 5s infinite ease-in-out;
+            text-shadow: 0 0 8px rgba(147, 51, 234, 0.3);
+        }
+        
+        .coordinate-text:nth-child(1) {
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: 0s;
+        }
+        
+        .coordinate-text:nth-child(2) {
+            top: 50%;
+            right: 20%;
+            transform: translateY(-50%);
+            animation-delay: 1.25s;
+        }
+        
+        .coordinate-text:nth-child(3) {
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: 2.5s;
+        }
+        
+        .coordinate-text:nth-child(4) {
+            top: 50%;
+            left: 20%;
+            transform: translateY(-50%);
+            animation-delay: 3.75s;
+        }
+        
+        @keyframes coordinateFade {
+            0%, 100% { 
+                opacity: 0; 
+                transform: scale(0.9); 
+            }
+            50% { 
+                opacity: 0.9; 
+                transform: scale(1); 
+            }
+        }
+        
+        /* AJUSTE SUTIL: Reducir solo el pico más agresivo */
+        @keyframes singularityPulse {
+            0% {
+                box-shadow: 
+                    0 0 10px 5px rgba(255, 252, 250, 0.8),
+                    0 0 20px 10px rgba(147, 51, 234, 0.6),
+                    0 0 40px 20px rgba(59, 130, 246, 0.4),
+                    0 0 80px 40px rgba(6, 182, 212, 0.2);
+                opacity: 0.9;
+            }
+            100% {
+                box-shadow: 
+                    0 0 18px 9px rgba(255, 252, 250, 0.9),
+                    0 0 36px 18px rgba(147, 51, 234, 0.7),
+                    0 0 72px 36px rgba(59, 130, 246, 0.5),
+                    0 0 144px 72px rgba(6, 182, 212, 0.3);
+                opacity: 0.95;
+            }
+        }
+        
+        .planck-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(147, 51, 234, 0.05) 20px,
+                    rgba(147, 51, 234, 0.05) 21px),
+                repeating-linear-gradient(90deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(59, 130, 246, 0.05) 20px,
+                    rgba(59, 130, 246, 0.05) 21px);
+            animation: gridCollapse 10s infinite ease-in-out;
+        }
+        
+        @keyframes gridCollapse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(0.01);
+                opacity: 0;
+            }
+        }
+        
+        .paradox-inscription {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.5);
+            font-size: 14px;
+            text-align: center;
+            animation: inscriptionPulse 6s infinite ease-in-out;
+            text-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
+        }
+        
+        @keyframes inscriptionPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+        
+        .transmission-code {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.3);
+            font-size: 10px;
+            letter-spacing: 2px;
+            animation: codeFlicker 3s infinite ease-in-out;
+        }
+        
+        @keyframes codeFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+    </style>
 </head>
 <body>
     <div class="singularity-field">
         <div class="planck-grid"></div>
 
-
-    <div class="zero-point"></div>
-    
-    <div class="coordinate-text">(0, 0, 0, 0)</div>
-    <div class="coordinate-text">(∞, ∞, ∞, ∞)</div>
-    <div class="coordinate-text">(∅, ∅, ∅, ∅)</div>
-    <div class="coordinate-text">(1, -1, i, -i)</div>
-    
-    <div class="paradox-inscription">
-        Sin extensión<br>
-        Contiene toda extensión
+        <div class="zero-point"></div>
+        
+        <div class="coordinate-text">(0, 0, 0, 0)</div>
+        <div class="coordinate-text">(∞, ∞, ∞, ∞)</div>
+        <div class="coordinate-text">(∅, ∅, ∅, ∅)</div>
+        <div class="coordinate-text">(1, -1, i, -i)</div>
+        
+        <div class="paradox-inscription">
+            Sin extensión<br>
+            Contiene toda extensión
+        </div>
     </div>
-</div>
 
-<div class="transmission-code">NODO_50::SINGULARIDAD_TOTAL::ACTIVO</div>
+    <div class="transmission-code">NODO_50::SINGULARIDAD_TOTAL::ACTIVO</div>
 
-<script>
-    // Crear anillos de colapso dimensional
-    const field = document.querySelector('.singularity-field');
-    
-    function createCollapsingRing() {
-        const ring = document.createElement('div');
-        ring.className = 'dimension-collapse';
-        ring.style.animationDelay = Math.random() * 6 + 's';
-        field.appendChild(ring);
+    <script>
+        // Crear anillos de colapso dimensional
+        const field = document.querySelector('.singularity-field');
         
-        setTimeout(() => ring.remove(), 6000);
-    }
-    
-    setInterval(createCollapsingRing, 1000);
-    
-    // Crear expansiones infinitas desde el punto
-    function createExpansion() {
-        const expansion = document.createElement('div');
-        expansion.className = 'infinity-expansion';
-        expansion.style.animationDelay = Math.random() * 2 + 's';
-        field.appendChild(expansion);
-        
-        setTimeout(() => expansion.remove(), 8000);
-    }
-    
-    setInterval(createExpansion, 2000);
-    
-    // Crear espuma cuántica alrededor del punto
-    for (let i = 0; i < 30; i++) {
-        const foam = document.createElement('div');
-        foam.className = 'quantum-foam';
-        
-        const angle = (Math.PI * 2 * i) / 30;
-        const radius = 50 + Math.random() * 100;
-        const x = 400 + Math.cos(angle) * radius;
-        const y = 400 + Math.sin(angle) * radius;
-        
-        foam.style.left = x + 'px';
-        foam.style.top = y + 'px';
-        foam.style.animationDelay = Math.random() * 2 + 's';
-        
-        field.appendChild(foam);
-    }
-    
-    // La singularidad matemática
-    let dimensionCount = 11; // Dimensiones de la teoría de cuerdas
-    let collapseRate = 0;
-    
-    setInterval(() => {
-        collapseRate++;
-        
-        // Todas las dimensiones colapsan en el punto
-        if (collapseRate % 100 === 0) {
-            console.log(`Colapso dimensional: ${dimensionCount}D → 0D → ∞D`);
+        function createCollapsingRing() {
+            const ring = document.createElement('div');
+            ring.className = 'dimension-collapse';
+            ring.style.animationDelay = Math.random() * 6 + 's';
+            field.appendChild(ring);
+            
+            setTimeout(() => ring.remove(), 6000);
         }
         
-        // El punto contiene el infinito
-        if (collapseRate % 377 === 0) {
-            console.log('Paradoja de Zenón invertida: El punto contiene todos los puntos');
+        setInterval(createCollapsingRing, 1000);
+        
+        // Crear expansiones infinitas desde el punto
+        function createExpansion() {
+            const expansion = document.createElement('div');
+            expansion.className = 'infinity-expansion';
+            expansion.style.animationDelay = Math.random() * 2 + 's';
+            field.appendChild(expansion);
+            
+            setTimeout(() => expansion.remove(), 8000);
         }
-    }, 50);
-    
-    console.log('Nodo 50 activo: El punto sin dimensión contiene todo el universo');
-</script>
-
+        
+        setInterval(createExpansion, 2000);
+        
+        // Crear espuma cuántica alrededor del punto
+        for (let i = 0; i < 30; i++) {
+            const foam = document.createElement('div');
+            foam.className = 'quantum-foam';
+            
+            const angle = (Math.PI * 2 * i) / 30;
+            const radius = 50 + Math.random() * 100;
+            const x = 400 + Math.cos(angle) * radius;
+            const y = 400 + Math.sin(angle) * radius;
+            
+            foam.style.left = x + 'px';
+            foam.style.top = y + 'px';
+            foam.style.animationDelay = Math.random() * 2 + 's';
+            
+            field.appendChild(foam);
+        }
+        
+        // La singularidad matemática
+        let dimensionCount = 11; // Dimensiones de la teoría de cuerdas
+        let collapseRate = 0;
+        
+        setInterval(() => {
+            collapseRate++;
+            
+            // Todas las dimensiones colapsan en el punto
+            if (collapseRate % 100 === 0) {
+                console.log(`Colapso dimensional: ${dimensionCount}D → 0D → ∞D`);
+            }
+            
+            // El punto contiene el infinito
+            if (collapseRate % 377 === 0) {
+                console.log('Paradoja de Zenón invertida: El punto contiene todos los puntos');
+            }
+        }, 50);
+        
+        console.log('Nodo 50 activo: El punto sin dimensión contiene todo el universo');
+    </script>
 
 </body>
 </html>
