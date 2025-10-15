@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal 45: El Sabio que Olvida Todo</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -18,281 +25,349 @@
             font-family: 'Helvetica Neue', sans-serif;
         }
 
-
-    .sage-container {
-        position: relative;
-        width: 600px;
-        height: 600px;
-    }
-    
-    .mind-sphere {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        background: radial-gradient(circle at center,
-            rgba(147, 51, 234, 0.1),
-            rgba(59, 130, 246, 0.05),
-            transparent 70%);
-        animation: mindPulse 6s infinite alternate;
-    }
-    
-    .knowledge-particle {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: rgba(147, 51, 234, 0.8);
-        border-radius: 50%;
-        animation: knowledgeFloat 10s infinite;
-    }
-    
-    @keyframes knowledgeFloat {
-        0% {
-            transform: translate(0, 0) scale(1);
+        .sage-container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+        }
+        
+        .mind-sphere {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center,
+                rgba(147, 51, 234, 0.08),
+                rgba(59, 130, 246, 0.04),
+                transparent 70%);
+            animation: mindPulse 6s infinite alternate ease-in-out;
+        }
+        
+        .knowledge-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(147, 51, 234, 0.7);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(147, 51, 234, 0.4);
+            animation: knowledgeFloat 10s infinite ease-out;
+        }
+        
+        @keyframes knowledgeFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(
+                    calc(var(--x) * 150px),
+                    calc(var(--y) * 150px)
+                ) scale(1.5);
+                opacity: 0.7;
+            }
+            80% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translate(
+                    calc(var(--x) * 300px),
+                    calc(var(--y) * 300px)
+                ) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        .wisdom-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #000;
+            border: 2px solid rgba(147, 51, 234, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: coreRotate 15s infinite linear;
+        }
+        
+        .void-symbol {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 50%;
+            animation: voidExpand 4s infinite alternate ease-in-out;
+        }
+        
+        .memory-trace {
+            position: absolute;
+            width: 100%;
+            height: 100%;
             opacity: 0;
+            animation: memoryFade 8s infinite ease-in-out;
         }
-        20% {
-            opacity: 1;
+        
+        .memory-trace::before {
+            content: attr(data-memory);
+            position: absolute;
+            color: rgba(147, 51, 234, 0.6);
+            font-size: 14px;
+            white-space: nowrap;
+            top: var(--top);
+            left: var(--left);
+            transform: translate(-50%, -50%);
+            text-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
         }
-        50% {
-            transform: translate(
-                calc(var(--x) * 150px),
-                calc(var(--y) * 150px)
-            ) scale(1.5);
-            opacity: 1;
+        
+        .memory-trace:nth-child(1) {
+            --top: 20%;
+            --left: 50%;
+            animation-delay: 0s;
         }
-        80% {
-            opacity: 0.3;
+        
+        .memory-trace:nth-child(2) {
+            --top: 50%;
+            --left: 80%;
+            animation-delay: 2s;
         }
-        100% {
-            transform: translate(
-                calc(var(--x) * 300px),
-                calc(var(--y) * 300px)
-            ) scale(0);
-            opacity: 0;
+        
+        .memory-trace:nth-child(3) {
+            --top: 80%;
+            --left: 50%;
+            animation-delay: 4s;
         }
-    }
-    
-    .wisdom-core {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: #000;
-        border: 2px solid rgba(147, 51, 234, 0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        animation: coreRotate 15s infinite linear;
-    }
-    
-    .void-symbol {
-        width: 40px;
-        height: 40px;
-        border: 1px solid rgba(59, 130, 246, 0.5);
-        border-radius: 50%;
-        animation: voidExpand 4s infinite alternate;
-    }
-    
-    .memory-trace {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        animation: memoryFade 8s infinite;
-    }
-    
-    .memory-trace::before {
-        content: attr(data-memory);
-        position: absolute;
-        color: rgba(147, 51, 234, 0.6);
-        font-size: 14px;
-        white-space: nowrap;
-        top: var(--top);
-        left: var(--left);
-        transform: translate(-50%, -50%);
-    }
-    
-    .memory-trace:nth-child(1) {
-        --top: 20%;
-        --left: 50%;
-        animation-delay: 0s;
-    }
-    
-    .memory-trace:nth-child(2) {
-        --top: 50%;
-        --left: 80%;
-        animation-delay: 2s;
-    }
-    
-    .memory-trace:nth-child(3) {
-        --top: 80%;
-        --left: 50%;
-        animation-delay: 4s;
-    }
-    
-    .memory-trace:nth-child(4) {
-        --top: 50%;
-        --left: 20%;
-        animation-delay: 6s;
-    }
-    
-    @keyframes memoryFade {
-        0% {
-            opacity: 0;
-            transform: scale(0.8);
+        
+        .memory-trace:nth-child(4) {
+            --top: 50%;
+            --left: 20%;
+            animation-delay: 6s;
         }
-        20% {
-            opacity: 1;
-            transform: scale(1);
+        
+        @keyframes memoryFade {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            20% {
+                opacity: 0.9;
+                transform: scale(1);
+            }
+            40% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            60% {
+                opacity: 0.4;
+                transform: scale(1.1);
+            }
+            80%, 100% {
+                opacity: 0;
+                transform: scale(1.2);
+            }
         }
-        40% {
-            opacity: 1;
-            transform: scale(1);
-        }
-        60% {
-            opacity: 0.5;
-            transform: scale(1.1);
-        }
-        80%, 100% {
-            opacity: 0;
-            transform: scale(1.2);
-        }
-    }
-    
-    .forgetting-wave {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        animation: waveExpand 5s infinite;
-    }
-    
-    .forgetting-wave:nth-child(2) {
-        animation-delay: 1s;
-    }
-    
-    .forgetting-wave:nth-child(3) {
-        animation-delay: 2s;
-    }
-    
-    @keyframes waveExpand {
-        0% {
+        
+        .forgetting-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 100px;
             height: 100px;
-            opacity: 0.8;
-        }
-        100% {
-            width: 500px;
-            height: 500px;
+            border-radius: 50%;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            animation: waveExpand 5s infinite ease-out;
             opacity: 0;
         }
-    }
-    
-    @keyframes mindPulse {
-        0% {
-            transform: translate(-50%, -50%) scale(1);
-            filter: blur(0px);
+        
+        .forgetting-wave:nth-child(2) {
+            animation-delay: 1s;
         }
-        50% {
-            transform: translate(-50%, -50%) scale(1.1);
-            filter: blur(2px);
+        
+        .forgetting-wave:nth-child(3) {
+            animation-delay: 2s;
         }
-        100% {
-            transform: translate(-50%, -50%) scale(0.95);
-            filter: blur(0px);
+        
+        @keyframes waveExpand {
+            0% {
+                width: 100px;
+                height: 100px;
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                width: 500px;
+                height: 500px;
+                opacity: 0;
+            }
         }
-    }
-    
-    @keyframes coreRotate {
-        from { transform: translate(-50%, -50%) rotate(0deg); }
-        to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-    
-    @keyframes voidExpand {
-        0% {
-            transform: scale(1);
-            opacity: 0.5;
+        
+        @keyframes mindPulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                filter: blur(0px);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                filter: blur(1.5px);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.95);
+                filter: blur(0px);
+            }
         }
-        100% {
-            transform: scale(1.5);
-            opacity: 0.2;
+        
+        @keyframes coreRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
-    }
-    
-    .enlightenment-text {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.4);
-        font-size: 16px;
-        text-align: center;
-        animation: textPulse 4s infinite;
-    }
-    
-    @keyframes textPulse {
-        0%, 100% { opacity: 0.4; }
-        50% { opacity: 0.8; }
-    }
-    
-    .transmission-code {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.3);
-        font-size: 10px;
-        letter-spacing: 2px;
-    }
-</style>
-
-
+        
+        @keyframes voidExpand {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0.2;
+            }
+        }
+        
+        .enlightenment-text {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.5);
+            font-size: 16px;
+            text-align: center;
+            animation: textPulse 4s infinite ease-in-out;
+            text-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
+        }
+        
+        @keyframes textPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+        
+        .transmission-code {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.3);
+            font-size: 10px;
+            letter-spacing: 2px;
+            animation: codeFlicker 3s infinite ease-in-out;
+        }
+        
+        @keyframes codeFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+    </style>
 </head>
 <body>
     <div class="sage-container">
         <div class="mind-sphere"></div>
 
-
-    <div class="wisdom-core">
-        <div class="void-symbol"></div>
-    </div>
-    
-    <div class="forgetting-wave"></div>
-    <div class="forgetting-wave"></div>
-    <div class="forgetting-wave"></div>
-    
-    <div class="memory-trace" data-memory="SABER"></div>
-    <div class="memory-trace" data-memory="OLVIDAR"></div>
-    <div class="memory-trace" data-memory="VACÍO"></div>
-    <div class="memory-trace" data-memory="PLENITUD"></div>
-    
-    <div class="enlightenment-text">
-        La sabiduría perfecta<br>
-        es el olvido completo
-    </div>
-</div>
-
-<div class="transmission-code">PORTAL_45::SABIO_AMNÉSICO::ACTIVO</div>
-
-<script>
-    // Crear partículas de conocimiento que se disuelven
-    const container = document.querySelector('.sage-container');
-    
-    function createKnowledgeParticle() {
-        const particle = document.createElement('div');
-        particle.className = 'knowledge-particle';
+        <div class="wisdom-core">
+            <div class="void-symbol"></div>
+        </div>
         
-        // Posición inicial cerca del centro
-        const angle
+        <div class="forgetting-wave"></div>
+        <div class="forgetting-wave"></div>
+        <div class="forgetting-wave"></div>
+        
+        <div class="memory-trace" data-memory="SABER"></div>
+        <div class="memory-trace" data-memory="OLVIDAR"></div>
+        <div class="memory-trace" data-memory="VACÍO"></div>
+        <div class="memory-trace" data-memory="PLENITUD"></div>
+        
+        <div class="enlightenment-text">
+            La sabiduría perfecta<br>
+            es el olvido completo
+        </div>
+    </div>
 
+    <div class="transmission-code">PORTAL_45::SABIO_AMNÉSICO::ACTIVO</div>
+
+    <script>
+        // Crear partículas de conocimiento que se disuelven
+        const container = document.querySelector('.sage-container');
+        
+        function createKnowledgeParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'knowledge-particle';
+            
+            // Posición inicial cerca del centro
+            const angle = Math.random() * Math.PI * 2;
+            const startRadius = 50 + Math.random() * 50;
+            
+            particle.style.left = '50%';
+            particle.style.top = '50%';
+            particle.style.setProperty('--x', Math.cos(angle).toFixed(2));
+            particle.style.setProperty('--y', Math.sin(angle).toFixed(2));
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            
+            container.appendChild(particle);
+            
+            // Remover después de la animación
+            setTimeout(() => particle.remove(), 10000);
+        }
+        
+        // Crear partículas continuamente
+        setInterval(createKnowledgeParticle, 300);
+        
+        // El ciclo del sabio: acumular conocimiento y olvidarlo
+        let knowledgeAccumulated = 0;
+        let wisdomLevel = 0;
+        
+        setInterval(() => {
+            knowledgeAccumulated += 0.1;
+            
+            // Paradoja: más conocimiento = más necesidad de olvido
+            if (knowledgeAccumulated > 10) {
+                wisdomLevel++;
+                knowledgeAccumulated = 0;
+                
+                console.log(`Nivel de sabiduría ${wisdomLevel}: Todo el conocimiento ha sido olvidado`);
+                
+                if (wisdomLevel % 5 === 0) {
+                    console.log('El sabio alcanza el vacío perfecto y comienza de nuevo');
+                }
+            }
+        }, 100);
+        
+        // Actualizar el texto de iluminación
+        const wisdomTexts = [
+            'La sabiduría perfecta<br>es el olvido completo',
+            'Quien sabe todo<br>no sabe nada',
+            'El vacío de la mente<br>contiene todo conocimiento',
+            'Olvidar es recordar<br>la verdad original',
+            'La ignorancia consciente<br>es sabiduría absoluta'
+        ];
+        
+        let textIndex = 0;
+        setInterval(() => {
+            textIndex = (textIndex + 1) % wisdomTexts.length;
+            document.querySelector('.enlightenment-text').innerHTML = wisdomTexts[textIndex];
+        }, 8000);
+        
+        console.log('Portal 45 activo: El sabio que olvida todo para saberlo todo');
+    </script>
+
+</body>
+</html>
