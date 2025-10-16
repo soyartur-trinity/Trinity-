@@ -16,8 +16,8 @@ Esta serie explora los fundamentos de la transformación humana desde:
 
 ## Los 13 Libros
 
-1. La Voz Interior ✅
-2. Psicología Cuántica
+1. Psicología Cuántica
+2. La Voz Interior
 3. El Dolor Como Portal
 4. Inteligencias Sin Nombre
 5. Los Vínculos Sagrados
