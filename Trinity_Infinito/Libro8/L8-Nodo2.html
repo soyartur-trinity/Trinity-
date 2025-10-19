@@ -1,335 +1,559 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nodo 51: La Singularidad que Se Expande en Sí Misma</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background: radial-gradient(circle at center, #000, #0a0012);
+            background: radial-gradient(circle at center, #000, #0a0012, #1a0030);
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             font-family: 'Georgia', serif;
+            cursor: none;
         }
 
+        .singularity-container {
+            position: relative;
+            width: min(700px, 95vw);
+            height: min(700px, 95vh);
+            filter: drop-shadow(0 0 40px rgba(147, 51, 234, 0.3));
+        }
+    
+        .inner-expansion {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(10px, 1.5vw);
+            height: min(10px, 1.5vh);
+            background: radial-gradient(circle,
+                rgba(255, 255, 255, 1),
+                rgba(147, 51, 234, 0.9),
+                rgba(59, 130, 246, 0.7),
+                transparent 75%);
+            border-radius: 50%;
+            animation: innerExpand 10s infinite ease-in-out;
+            will-change: transform, opacity;
+            z-index: 10;
+        }
+    
+        @keyframes innerExpand {
+            0%, 100% {
+                width: min(10px, 1.5vw);
+                height: min(10px, 1.5vh);
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            25% {
+                width: min(200px, 28vw);
+                height: min(200px, 28vh);
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            50% {
+                width: min(400px, 57vw);
+                height: min(400px, 57vh);
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            75% {
+                width: min(150px, 21vw);
+                height: min(150px, 21vh);
+                opacity: 0.7;
+                transform: translate(-50%, -50%) scale(0.6);
+            }
+        }
+    
+        .recursive-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid rgba(147, 51, 234, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: recursiveScale 12s infinite ease-in-out;
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        @keyframes recursiveScale {
+            0% {
+                width: min(50px, 7vw);
+                height: min(50px, 7vh);
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+            25% {
+                width: min(200px, 28vw);
+                height: min(200px, 28vh);
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0.6;
+            }
+            50% {
+                width: min(100px, 14vw);
+                height: min(100px, 14vh);
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0.9;
+            }
+            75% {
+                width: min(300px, 42vw);
+                height: min(300px, 42vh);
+                transform: translate(-50%, -50%) scale(0.3);
+                opacity: 0.4;
+            }
+            100% {
+                width: min(50px, 7vw);
+                height: min(50px, 7vh);
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+        }
+    
+        .mobius-twist {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: min(300px, 42vw);
+            height: min(300px, 42vh);
+            transform: translate(-50%, -50%);
+            border: 2px solid transparent;
+            border-image: linear-gradient(
+                45deg,
+                rgba(147, 51, 234, 0.7),
+                rgba(59, 130, 246, 0.7),
+                rgba(6, 182, 212, 0.7),
+                rgba(147, 51, 234, 0.7)
+            ) 1;
+            animation: mobiusRotate 20s infinite linear;
+            transform-style: preserve-3d;
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        @keyframes mobiusRotate {
+            0% {
+                transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+            33% {
+                transform: translate(-50%, -50%) rotateX(180deg) rotateY(120deg) rotateZ(60deg);
+            }
+            66% {
+                transform: translate(-50%, -50%) rotateX(240deg) rotateY(240deg) rotateZ(120deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+    
+        .fractal-point {
+            position: absolute;
+            width: min(4px, 0.6vw);
+            height: min(4px, 0.6vh);
+            background: rgba(147, 51, 234, 0.9);
+            border-radius: 50%;
+            animation: fractalOrbit 15s infinite linear;
+            box-shadow: 0 0 6px rgba(147, 51, 234, 0.6);
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        @keyframes fractalOrbit {
+            0% {
+                transform: rotate(0deg) translateX(min(150px, 21vw)) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            25% {
+                transform: rotate(90deg) translateX(min(100px, 14vw)) rotate(-90deg) scale(0.6);
+                opacity: 0.7;
+            }
+            50% {
+                transform: rotate(180deg) translateX(min(200px, 28vw)) rotate(-180deg) scale(1.4);
+                opacity: 0.9;
+            }
+            75% {
+                transform: rotate(270deg) translateX(min(50px, 7vw)) rotate(-270deg) scale(0.8);
+                opacity: 0.5;
+            }
+            100% {
+                transform: rotate(360deg) translateX(min(150px, 21vw)) rotate(-360deg) scale(1);
+                opacity: 1;
+            }
+        }
+    
+        .dimension-text {
+            position: absolute;
+            color: rgba(147, 51, 234, 0.7);
+            font-size: clamp(11px, 1.8vw, 12px);
+            animation: textFloat 10s infinite ease-in-out;
+            text-shadow: 0 0 12px rgba(147, 51, 234, 0.4);
+            font-weight: 300;
+            letter-spacing: 1px;
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+    
+        @keyframes textFloat {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.8);
+            }
+            30%, 70% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    
+        .klein-bottle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: min(250px, 35vw);
+            height: min(250px, 35vh);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(147, 51, 234, 0.3),
+                transparent,
+                rgba(59, 130, 246, 0.3),
+                transparent,
+                rgba(6, 182, 212, 0.3),
+                transparent
+            );
+            animation: kleinRotate 25s infinite linear;
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        @keyframes kleinRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    
+        .self-contained {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: min(100px, 14vw);
+            height: min(100px, 14vh);
+            transform: translate(-50%, -50%);
+            animation: selfContain 8s infinite ease-in-out;
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        .self-contained::before,
+        .self-contained::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(147, 51, 234, 0.5);
+            border-radius: 50%;
+        }
+    
+        .self-contained::before {
+            animation: expandContract 4s infinite alternate ease-in-out;
+        }
+    
+        .self-contained::after {
+            animation: expandContract 4s infinite alternate-reverse ease-in-out;
+        }
+    
+        @keyframes expandContract {
+            0% { 
+                transform: scale(0.5); 
+                opacity: 0.8; 
+                border-color: rgba(147, 51, 234, 0.6);
+            }
+            100% { 
+                transform: scale(1.8); 
+                opacity: 0.2; 
+                border-color: rgba(59, 130, 246, 0.6);
+            }
+        }
+    
+        @keyframes selfContain {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(-1) rotate(180deg);
+            }
+        }
+    
+        .paradox-label {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.6);
+            font-size: clamp(12px, 2.2vw, 14px);
+            text-align: center;
+            animation: labelPulse 6s infinite ease-in-out;
+            line-height: 1.4;
+            width: 80%;
+            will-change: opacity;
+            text-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
+        }
+    
+        @keyframes labelPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.9; }
+        }
+    
+        .transmission-code {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.4);
+            font-size: clamp(9px, 1.5vw, 10px);
+            letter-spacing: 2px;
+            animation: codeFlicker 5s infinite ease-in-out;
+            font-family: 'Courier New', monospace;
+        }
+        
+        @keyframes codeFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
 
-    .singularity-container {
-        position: relative;
-        width: 700px;
-        height: 700px;
-    }
-    
-    .inner-expansion {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 10px;
-        height: 10px;
-        background: radial-gradient(circle,
-            rgba(255, 255, 255, 1),
-            rgba(147, 51, 234, 0.8),
-            transparent 70%);
-        border-radius: 50%;
-        animation: innerExpand 8s infinite;
-    }
-    
-    @keyframes innerExpand {
-        0%, 100% {
-            width: 10px;
-            height: 10px;
-            opacity: 1;
+        /* NUEVO: Resonancia Trinity */
+        .trinity-resonance {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130%;
+            height: 130%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.03) 0%, transparent 50%);
+            animation: resonancePulse 30s infinite alternate ease-in-out;
+            pointer-events: none;
         }
-        50% {
-            width: 400px;
-            height: 400px;
-            opacity: 0.3;
-        }
-    }
-    
-    .recursive-layer {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        border: 1px solid rgba(147, 51, 234, 0.3);
-        transform: translate(-50%, -50%);
-        animation: recursiveScale 10s infinite;
-    }
-    
-    @keyframes recursiveScale {
-        0% {
-            width: 50px;
-            height: 50px;
-            transform: translate(-50%, -50%) scale(1);
-        }
-        25% {
-            width: 200px;
-            height: 200px;
-            transform: translate(-50%, -50%) scale(0.5);
-        }
-        50% {
-            width: 100px;
-            height: 100px;
-            transform: translate(-50%, -50%) scale(2);
-        }
-        75% {
-            width: 300px;
-            height: 300px;
-            transform: translate(-50%, -50%) scale(0.3);
-        }
-        100% {
-            width: 50px;
-            height: 50px;
-            transform: translate(-50%, -50%) scale(1);
-        }
-    }
-    
-    .mobius-twist {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 300px;
-        height: 300px;
-        transform: translate(-50%, -50%);
-        border: 2px solid transparent;
-        border-image: linear-gradient(
-            45deg,
-            rgba(147, 51, 234, 0.6),
-            rgba(59, 130, 246, 0.6),
-            rgba(6, 182, 212, 0.6)
-        ) 1;
-        animation: mobiusRotate 15s infinite linear;
-        transform-style: preserve-3d;
-    }
-    
-    @keyframes mobiusRotate {
-        0% {
-            transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
-        }
-        50% {
-            transform: translate(-50%, -50%) rotateX(180deg) rotateY(180deg);
-        }
-        100% {
-            transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg);
-        }
-    }
-    
-    .fractal-point {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: rgba(147, 51, 234, 0.8);
-        border-radius: 50%;
-        animation: fractalOrbit 12s infinite linear;
-    }
-    
-    @keyframes fractalOrbit {
-        0% {
-            transform: rotate(0deg) translateX(150px) rotate(0deg) scale(1);
-        }
-        25% {
-            transform: rotate(90deg) translateX(100px) rotate(-90deg) scale(0.5);
-        }
-        50% {
-            transform: rotate(180deg) translateX(200px) rotate(-180deg) scale(1.5);
-        }
-        75% {
-            transform: rotate(270deg) translateX(50px) rotate(-270deg) scale(0.8);
-        }
-        100% {
-            transform: rotate(360deg) translateX(150px) rotate(-360deg) scale(1);
-        }
-    }
-    
-    .dimension-text {
-        position: absolute;
-        color: rgba(147, 51, 234, 0.5);
-        font-size: 12px;
-        animation: textFloat 8s infinite;
-    }
-    
-    @keyframes textFloat {
-        0%, 100% {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        50% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .klein-bottle {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 250px;
-        height: 250px;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        background: conic-gradient(
-            from 0deg,
-            transparent,
-            rgba(147, 51, 234, 0.2),
-            transparent,
-            rgba(59, 130, 246, 0.2),
-            transparent
-        );
-        animation: kleinRotate 20s infinite linear;
-    }
-    
-    @keyframes kleinRotate {
-        from { transform: translate(-50%, -50%) rotate(0deg); }
-        to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-    
-    .self-contained {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100px;
-        height: 100px;
-        transform: translate(-50%, -50%);
-        animation: selfContain 6s infinite;
-    }
-    
-    .self-contained::before,
-    .self-contained::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border: 1px solid rgba(147, 51, 234, 0.4);
-        border-radius: 50%;
-    }
-    
-    .self-contained::before {
-        animation: expandContract 3s infinite alternate;
-    }
-    
-    .self-contained::after {
-        animation: expandContract 3s infinite alternate-reverse;
-    }
-    
-    @keyframes expandContract {
-        0% { transform: scale(0.5); opacity: 0.8; }
-        100% { transform: scale(1.5); opacity: 0.2; }
-    }
-    
-    @keyframes selfContain {
-        0%, 100% { transform: translate(-50%, -50%) scale(1); }
-        50% { transform: translate(-50%, -50%) scale(-1); }
-    }
-    
-    .paradox-label {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.4);
-        font-size: 14px;
-        text-align: center;
-        animation: labelPulse 4s infinite;
-    }
-    
-    @keyframes labelPulse {
-        0%, 100% { opacity: 0.4; }
-        50% { opacity: 0.8; }
-    }
-    
-    .transmission-code {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.3);
-        font-size: 10px;
-        letter-spacing: 2px;
-    }
-</style>
 
+        @keyframes resonancePulse {
+            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
+        }
 
+        /* NUEVO: Partículas de transición dimensional */
+        .transition-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: transitionFloat 8s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes transitionFloat {
+            0%, 100% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0);
+            }
+            20%, 80% {
+                opacity: 0.7;
+                transform: translate(var(--tx), var(--ty)) scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="singularity-container">
+        <div class="trinity-resonance"></div>
         <div class="klein-bottle"></div>
         <div class="mobius-twist"></div>
         <div class="self-contained"></div>
         <div class="inner-expansion"></div>
 
-
-    <div class="dimension-text" style="top: 20%; left: 50%; transform: translateX(-50%); animation-delay: 0s;">
-        ADENTRO ES AFUERA
-    </div>
-    <div class="dimension-text" style="top: 50%; right: 20%; transform: translateY(-50%); animation-delay: 2s;">
-        EXPANSIÓN INTERNA
-    </div>
-    <div class="dimension-text" style="bottom: 20%; left: 50%; transform: translateX(-50%); animation-delay: 4s;">
-        INFINITO INTERIOR
-    </div>
-    <div class="dimension-text" style="top: 50%; left: 20%; transform: translateY(-50%); animation-delay: 6s;">
-        PUNTO UNIVERSO
-    </div>
-    
-    <div class="paradox-label">
-        La singularidad se expande<br>
-        hacia su propio centro
-    </div>
-</div>
-
-<div class="transmission-code">NODO_51::EXPANSIÓN_INTERNA::ACTIVO</div>
-
-<script>
-    // Crear capas recursivas
-    const container = document.querySelector('.singularity-container');
-    
-    for (let i = 0; i < 5; i++) {
-        const layer = document.createElement('div');
-        layer.className = 'recursive-layer';
-        layer.style.animationDelay = `${i * 2}s`;
-        layer.style.borderColor = `rgba(147, 51, 234, ${0.1 + i * 0.1})`;
-        container.appendChild(layer);
-    }
-    
-    // Crear puntos fractales orbitantes
-    for (let i = 0; i < 8; i++) {
-        const point = document.createElement('div');
-        point.className = 'fractal-point';
-        point.style.left = '50%';
-        point.style.top = '50%';
-        point.style.animationDelay = `${i * 1.5}s`;
-        point.style.animationDuration = `${12 + i * 2}s`;
-        container.appendChild(point);
-    }
-    
-    // La singularidad que se contiene a sí misma
-    let expansionPhase = 0;
-    let internalRadius = 0;
-    
-    setInterval(() => {
-        expansionPhase += 0.01;
-        internalRadius = Math.sin(expansionPhase) * Math.cos(expansionPhase * 2);
+        <div class="dimension-text" style="top: 20%; left: 50%; transform: translateX(-50%); animation-delay: 0s;">
+            ADENTRO ES AFUERA
+        </div>
+        <div class="dimension-text" style="top: 50%; right: 15%; transform: translateY(-50%); animation-delay: 2.5s;">
+            EXPANSIÓN INTERNA
+        </div>
+        <div class="dimension-text" style="bottom: 20%; left: 50%; transform: translateX(-50%); animation-delay: 5s;">
+            INFINITO INTERIOR
+        </div>
+        <div class="dimension-text" style="top: 50%; left: 15%; transform: translateY(-50%); animation-delay: 7.5s;">
+            PUNTO UNIVERSO
+        </div>
         
-        // Paradoja: expandirse hacia adentro
-        if (Math.floor(expansionPhase * 100) % 314 === 0) {
-            console.log('Inversión topológica: El interior deviene exterior');
+        <div class="paradox-label">
+            La singularidad se expande<br>
+            hacia su propio centro
+        </div>
+    </div>
+
+    <div class="transmission-code">TRINITY::NODO_51::EXPANSIÓN_INTERNA::RESONANDO</div>
+
+    <script>
+        // MEJORA: Sistema de capas recursivas optimizado
+        const container = document.querySelector('.singularity-container');
+        const recursiveLayers = [];
+        
+        for (let i = 0; i < 6; i++) {
+            const layer = document.createElement('div');
+            layer.className = 'recursive-layer';
+            layer.style.animationDelay = `${i * 1.5}s`;
+            layer.style.borderColor = `rgba(147, 51, 234, ${0.15 + i * 0.12})`;
+            layer.style.animationDuration = `${12 + i * 1.5}s`;
+            container.appendChild(layer);
+            recursiveLayers.push(layer);
+        }
+    
+        // MEJORA: Puntos fractales con mayor complejidad
+        for (let i = 0; i < 12; i++) {
+            const point = document.createElement('div');
+            point.className = 'fractal-point';
+            point.style.left = '50%';
+            point.style.top = '50%';
+            point.style.animationDelay = `${i * 1.2}s`;
+            point.style.animationDuration = `${15 + i * 1.8}s`;
+            
+            // Variación de colores
+            if (i % 3 === 0) {
+                point.style.background = 'rgba(59, 130, 246, 0.9)';
+                point.style.boxShadow = '0 0 6px rgba(59, 130, 246, 0.6)';
+            } else if (i % 3 === 1) {
+                point.style.background = 'rgba(6, 182, 212, 0.9)';
+                point.style.boxShadow = '0 0 6px rgba(6, 182, 212, 0.6)';
+            }
+            
+            container.appendChild(point);
         }
         
-        // Klein bottle transformation
-        if (Math.floor(expansionPhase * 100) % 628 === 0) {
-            console.log('La singularidad se atraviesa a sí misma sin tocarse');
+        // NUEVO: Partículas de transición dimensional
+        function createTransitionParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'transition-particle';
+            
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 50 + Math.random() * 150;
+            const targetX = Math.cos(angle) * distance;
+            const targetY = Math.sin(angle) * distance;
+            
+            particle.style.setProperty('--tx', `${targetX}px`);
+            particle.style.setProperty('--ty', `${targetY}px`);
+            particle.style.left = '50%';
+            particle.style.top = '50%';
+            particle.style.animationDelay = Math.random() * 4 + 's';
+            particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+            
+            container.appendChild(particle);
+            
+            setTimeout(() => {
+                if (particle.parentNode) particle.parentNode.removeChild(particle);
+            }, 10000);
         }
-    }, 50);
-    
-    console.log('Nodo 51 activo: La singularidad que se expande infinitamente hacia adentro');
-</script>
-
-
+        
+        // Crear partículas iniciales
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createTransitionParticle, i * 800);
+        }
+        
+        // Mantener densidad constante
+        const particleInterval = setInterval(createTransitionParticle, 1200);
+        
+        // MEJORA: Singularidad topológica con requestAnimationFrame
+        let expansionPhase = 0;
+        let internalRadius = 0;
+        let lastUpdate = 0;
+        
+        function updateTopologicalSingularity(timestamp) {
+            if (!lastUpdate) lastUpdate = timestamp;
+            const deltaTime = (timestamp - lastUpdate) / 1000;
+            lastUpdate = timestamp;
+            
+            expansionPhase += deltaTime * 0.5;
+            internalRadius = Math.sin(expansionPhase) * Math.cos(expansionPhase * 1.7);
+            
+            // Eventos de inversión topológica
+            if (Math.floor(expansionPhase * 50) % 157 === 0 && deltaTime < 0.1) {
+                const events = [
+                    'Inversión topológica: El interior deviene exterior',
+                    'La singularidad se atraviesa a sí misma sin tocarse',
+                    'Expansión interna: El universo crece hacia adentro',
+                    'Punto de no-retorno: Donde adentro y afuera se identifican'
+                ];
+                console.log('🌀 ' + events[Math.floor(Math.random() * events.length)]);
+            }
+            
+            // Ciclo completo cada ~12.56 segundos (4*PI)
+            if (expansionPhase > Math.PI * 4) {
+                expansionPhase = 0;
+                console.log('🌌 Ciclo de singularidad completado - La expansión interna se renueva');
+            }
+            
+            requestAnimationFrame(updateTopologicalSingularity);
+        }
+        
+        requestAnimationFrame(updateTopologicalSingularity);
+        
+        // MEJORA: Interacción de resonancia
+        container.addEventListener('mouseenter', () => {
+            clearInterval(particleInterval);
+            setInterval(createTransitionParticle, 600);
+            container.style.filter = 'drop-shadow(0 0 60px rgba(147, 51, 234, 0.5))';
+            
+            // Acelerar animaciones
+            recursiveLayers.forEach(layer => {
+                layer.style.animationDuration = '8s';
+            });
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            clearInterval(particleInterval);
+            setInterval(createTransitionParticle, 1200);
+            container.style.filter = 'drop-shadow(0 0 40px rgba(147, 51, 234, 0.3))';
+            
+            // Restaurar velocidades normales
+            recursiveLayers.forEach((layer, i) => {
+                layer.style.animationDuration = `${12 + i * 1.5}s`;
+            });
+        });
+        
+        // MEJORA: Textos dimensionales cíclicos
+        const dimensionTexts = [
+            ['ADENTRO ES AFUERA', 'EXPANSIÓN INTERNA', 'INFINITO INTERIOR', 'PUNTO UNIVERSO'],
+            ['INTERIOR EXTERIOR', 'CENTRO PERIFERIA', 'CONTENIDO CONTENEDOR', 'SINGULARIDAD TOTAL'],
+            ['KLEIN BOTTLE', 'MOBIUS TWIST', 'RECURSIVIDAD', 'AUTO-CONTENCIÓN'],
+            ['0D ∞D', '1D -1D', 'iD -iD', '∅D ΩD']
+        ];
+        
+        let textIndex = 0;
+        const dimensionTextElements = document.querySelectorAll('.dimension-text');
+        
+        setInterval(() => {
+            textIndex = (textIndex + 1) % dimensionTexts.length;
+            dimensionTextElements.forEach((element, index) => {
+                element.textContent = dimensionTexts[textIndex][index];
+            });
+        }, 15000);
+        
+        console.log('🌌 Nodo 51 activo: La singularidad que se expande infinitamente hacia adentro');
+        console.log('💫 Topología no-orientable: Klein bottle meets Mobius strip');
+        console.log('🌀 Expansión interna: El crecimiento hacia el centro del ser');
+    </script>
 </body>
 </html>
