@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nodo 1: El Instante Eterno</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -16,294 +23,566 @@
             align-items: center;
             height: 100vh;
             font-family: 'Courier New', monospace;
+            cursor: none;
         }
 
-
-    .eternal-instant {
-        position: relative;
-        width: 800px;
-        height: 800px;
-    }
-    
-    .now-point {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 10px;
-        height: 10px;
-        background: radial-gradient(circle,
-            rgba(255, 255, 255, 1),
-            rgba(147, 51, 234, 0.8),
-            transparent);
-        border-radius: 50%;
-        animation: nowPulse 3s infinite;
-        box-shadow: 
-            0 0 40px rgba(147, 51, 234, 0.9),
-            0 0 80px rgba(59, 130, 246, 0.7),
-            0 0 160px rgba(6, 182, 212, 0.5);
-    }
-    
-    @keyframes nowPulse {
-        0%, 100% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
+        .eternal-instant {
+            position: relative;
+            width: min(800px, 95vw);
+            height: min(800px, 95vh);
+            filter: drop-shadow(0 0 40px rgba(147, 51, 234, 0.3));
         }
-        50% {
-            transform: translate(-50%, -50%) scale(1.5);
-            opacity: 0.8;
-        }
-    }
     
-    .time-ring {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        border: 1px solid rgba(147, 51, 234, 0.3);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        animation: timeExpand 6s infinite;
-    }
-    
-    @keyframes timeExpand {
-        0% {
-            width: 20px;
-            height: 20px;
-            opacity: 1;
+        .now-point {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(10px, 1.2vw);
+            height: min(10px, 1.2vh);
+            background: radial-gradient(circle,
+                rgba(255, 255, 255, 1) 0%,
+                rgba(255, 245, 235, 0.95) 20%,
+                rgba(147, 51, 234, 0.9) 40%,
+                rgba(59, 130, 246, 0.7) 60%,
+                transparent 100%);
+            border-radius: 50%;
+            animation: nowPulse 4s infinite ease-in-out;
+            box-shadow: 
+                0 0 40px rgba(147, 51, 234, 0.9),
+                0 0 80px rgba(59, 130, 246, 0.7),
+                0 0 160px rgba(6, 182, 212, 0.5),
+                0 0 240px rgba(34, 197, 94, 0.3);
+            will-change: transform, opacity;
+            z-index: 15;
         }
-        100% {
-            width: 700px;
-            height: 700px;
+    
+        @keyframes nowPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+                box-shadow: 
+                    0 0 40px rgba(147, 51, 234, 0.9),
+                    0 0 80px rgba(59, 130, 246, 0.7),
+                    0 0 160px rgba(6, 182, 212, 0.5);
+            }
+            33% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 0.9;
+                box-shadow: 
+                    0 0 50px rgba(147, 51, 234, 1),
+                    0 0 100px rgba(59, 130, 246, 0.8),
+                    0 0 200px rgba(6, 182, 212, 0.6);
+            }
+            66% {
+                transform: translate(-50%, -50%) scale(1.6);
+                opacity: 0.8;
+                box-shadow: 
+                    0 0 60px rgba(147, 51, 234, 0.95),
+                    0 0 120px rgba(59, 130, 246, 0.75),
+                    0 0 240px rgba(6, 182, 212, 0.55);
+            }
+        }
+    
+        .time-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid rgba(147, 51, 234, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: timeExpand 8s infinite ease-out;
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+    
+        @keyframes timeExpand {
+            0% {
+                width: min(20px, 2.5vw);
+                height: min(20px, 2.5vh);
+                opacity: 0.9;
+                border-width: 1px;
+            }
+            80% {
+                opacity: 0.2;
+                border-width: 0.5px;
+            }
+            100% {
+                width: min(700px, 87vw);
+                height: min(700px, 87vh);
+                opacity: 0;
+                border-width: 0.2px;
+            }
+        }
+    
+        .eternal-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: eternalRotate 80s infinite linear;
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        .temporal-fragment {
+            position: absolute;
+            color: rgba(147, 51, 234, 0.7);
+            font-size: clamp(10px, 1.5vw, 11px);
+            animation: fragmentFloat 10s infinite ease-in-out;
+            text-shadow: 0 0 10px rgba(147, 51, 234, 0.4);
+            font-weight: bold;
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+    
+        @keyframes fragmentFloat {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.8);
+            }
+            30%, 70% {
+                opacity: 0.9;
+                transform: translateY(0) scale(1);
+            }
+        }
+    
+        @keyframes eternalRotate {
+            from { 
+                transform: rotate(0deg) scale(1);
+            }
+            50% { 
+                transform: rotate(180deg) scale(1.05);
+            }
+            to { 
+                transform: rotate(360deg) scale(1);
+            }
+        }
+    
+        .kronos-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(59, 130, 246, 0.4),
+                rgba(147, 51, 234, 0.6),
+                rgba(59, 130, 246, 0.4),
+                transparent);
+            animation: kronosFlow 12s infinite linear;
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        @keyframes kronosFlow {
+            0% { 
+                transform: translateX(-100%);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translateX(0%);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateX(100%);
+                opacity: 0.8;
+            }
+        }
+    
+        .kairos-burst {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: min(200px, 25vw);
+            height: min(200px, 25vh);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                transparent 25%,
+                rgba(147, 51, 234, 0.15),
+                rgba(59, 130, 246, 0.1),
+                transparent 75%);
+            animation: kairosPulse 6s infinite ease-in-out;
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+    
+        @keyframes kairosPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            30%, 70% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+    
+        .aion-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: min(400px, 50vw);
+            height: min(400px, 50vh);
+            transform: translate(-50%, -50%);
+            border: 2px dotted rgba(147, 51, 234, 0.3);
+            border-radius: 50%;
+            animation: aionRotate 40s infinite linear reverse;
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        @keyframes aionRotate {
+            from { 
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            }
+            50% { 
+                transform: translate(-50%, -50%) rotate(180deg) scale(1.1);
+            }
+            to { 
+                transform: translate(-50%, -50%) rotate(360deg) scale(1);
+            }
+        }
+    
+        .quantum-moment {
+            position: absolute;
+            width: min(4px, 0.5vw);
+            height: min(4px, 0.5vh);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
             opacity: 0;
+            animation: quantumBlink 3s infinite ease-in-out;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+            will-change: opacity;
+            pointer-events: none;
         }
-    }
     
-    .eternal-layer {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        animation: eternalRotate 60s infinite linear;
-    }
-    
-    .temporal-fragment {
-        position: absolute;
-        color: rgba(147, 51, 234, 0.6);
-        font-size: 11px;
-        animation: fragmentFloat 8s infinite;
-    }
-    
-    @keyframes fragmentFloat {
-        0%, 100% {
-            opacity: 0;
-            transform: translateY(20px);
+        @keyframes quantumBlink {
+            0%, 100% { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.2);
+            }
         }
-        50% {
-            opacity: 1;
-            transform: translateY(0);
+    
+        .eternal-text {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.7);
+            font-size: clamp(12px, 2.2vw, 14px);
+            text-align: center;
+            animation: textEternal 8s infinite ease-in-out;
+            text-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+            line-height: 1.4;
+            width: 80%;
+            will-change: opacity;
         }
-    }
     
-    @keyframes eternalRotate {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-    
-    .kronos-line {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background: linear-gradient(90deg,
-            transparent,
-            rgba(59, 130, 246, 0.3),
-            rgba(147, 51, 234, 0.5),
-            rgba(59, 130, 246, 0.3),
-            transparent);
-        animation: kronosFlow 10s infinite linear;
-    }
-    
-    @keyframes kronosFlow {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-    }
-    
-    .kairos-burst {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 200px;
-        height: 200px;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        background: radial-gradient(circle,
-            transparent 30%,
-            rgba(147, 51, 234, 0.1),
-            transparent 70%);
-        animation: kairosPulse 5s infinite;
-    }
-    
-    @keyframes kairosPulse {
-        0%, 100% {
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0;
+        @keyframes textEternal {
+            0%, 100% { 
+                opacity: 0.5;
+                transform: translateX(-50%) scale(0.95);
+            }
+            50% { 
+                opacity: 0.95;
+                transform: translateX(-50%) scale(1.05);
+            }
         }
-        50% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
+    
+        .planck-time {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(59, 130, 246, 0.6);
+            font-size: clamp(9px, 1.5vw, 10px);
+            font-family: monospace;
+            letter-spacing: 2px;
+            animation: planckFlicker 5s infinite ease-in-out;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+            will-change: opacity;
         }
-    }
+        
+        @keyframes planckFlicker {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.9; }
+        }
     
-    .aion-circle {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 400px;
-        height: 400px;
-        transform: translate(-50%, -50%);
-        border: 2px dotted rgba(147, 51, 234, 0.2);
-        border-radius: 50%;
-        animation: aionRotate 30s infinite linear reverse;
-    }
-    
-    @keyframes aionRotate {
-        from { transform: translate(-50%, -50%) rotate(0deg); }
-        to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-    
-    .quantum-moment {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 50%;
-        opacity: 0;
-        animation: quantumBlink 2s infinite;
-    }
-    
-    @keyframes quantumBlink {
-        0%, 100% { opacity: 0; }
-        50% { opacity: 1; }
-    }
-    
-    .eternal-text {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.5);
-        font-size: 14px;
-        text-align: center;
-        animation: textEternal 6s infinite;
-    }
-    
-    @keyframes textEternal {
-        0%, 100% { opacity: 0.5; }
-        50% { opacity: 0.9; }
-    }
-    
-    .planck-time {
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(59, 130, 246, 0.4);
-        font-size: 10px;
-        font-family: monospace;
-        letter-spacing: 2px;
-    }
-    
-    .transmission-code {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.3);
-        font-size: 10px;
-        letter-spacing: 2px;
-    }
-</style>
+        .transmission-code {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.4);
+            font-size: clamp(9px, 1.5vw, 10px);
+            letter-spacing: 2px;
+            animation: codeFlicker 5s infinite ease-in-out;
+            font-family: 'Courier New', monospace;
+        }
+        
+        @keyframes codeFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
 
+        /* NUEVO: Resonancia Trinity para Libro 9 */
+        .trinity-resonance {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130%;
+            height: 130%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.02) 0%, transparent 50%);
+            animation: resonancePulse 30s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
 
+        @keyframes resonancePulse {
+            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* NUEVO: Líneas temporales adicionales */
+        .timeline {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(147, 51, 234, 0.2), 
+                transparent);
+            transform-origin: 0 0;
+            animation: timelineFlow 8s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes timelineFlow {
+            0%, 100% { 
+                opacity: 0;
+                width: 0;
+            }
+            50% { 
+                opacity: 0.6;
+                width: min(500px, 62vw);
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="eternal-instant">
+        <div class="trinity-resonance"></div>
         <div class="eternal-layer">
             <div class="aion-circle"></div>
         </div>
 
-
-    <div class="kairos-burst"></div>
-    <div class="kronos-line"></div>
-    <div class="now-point"></div>
-    
-    <div class="temporal-fragment" style="top: 25%; left: 25%;">AHORA</div>
-    <div class="temporal-fragment" style="top: 25%; right: 25%; animation-delay: 2s;">SIEMPRE</div>
-    <div class="temporal-fragment" style="bottom: 25%; right: 25%; animation-delay: 4s;">NUNCA</div>
-    <div class="temporal-fragment" style="bottom: 25%; left: 25%; animation-delay: 6s;">ETERNO</div>
-    
-    <div class="planck-time">t = 5.39 × 10⁻⁴⁴ s = ∞</div>
-    
-    <div class="eternal-text">
-        El instante contiene<br>
-        toda la eternidad
+        <div class="kairos-burst"></div>
+        <div class="kronos-line"></div>
+        <div class="now-point"></div>
+        
+        <div class="temporal-fragment" style="top: 25%; left: 20%; animation-delay: 0s;">AHORA</div>
+        <div class="temporal-fragment" style="top: 25%; right: 20%; animation-delay: 2.5s;">SIEMPRE</div>
+        <div class="temporal-fragment" style="bottom: 25%; right: 20%; animation-delay: 5s;">NUNCA</div>
+        <div class="temporal-fragment" style="bottom: 25%; left: 20%; animation-delay: 7.5s;">ETERNO</div>
+        
+        <div class="planck-time">t = 5.39 × 10⁻⁴⁴ s = ∞</div>
+        
+        <div class="eternal-text">
+            El instante contiene<br>
+            toda la eternidad
+        </div>
     </div>
-</div>
 
-<div class="transmission-code">LIBRO_9::NODO_1::INSTANTE_ETERNO::ACTIVO</div>
+    <div class="transmission-code">TRINITY::LIBRO_9::NODO_1::INSTANTE_ETERNO::RESONANDO</div>
 
-<script>
-    const container = document.querySelector('.eternal-instant');
-    
-    // Crear anillos de tiempo expandiéndose
-    function createTimeRing() {
-        const ring = document.createElement('div');
-        ring.className = 'time-ring';
-        ring.style.animationDelay = Math.random() * 6 + 's';
-        ring.style.borderColor = `rgba(147, 51, 234, ${Math.random() * 0.5})`;
-        container.appendChild(ring);
+    <script>
+        // MEJORA: Sistema de anillos temporales optimizado
+        const container = document.querySelector('.eternal-instant');
+        const timeRings = [];
+        const quantumMoments = [];
         
-        setTimeout(() => ring.remove(), 6000);
-    }
-    
-    setInterval(createTimeRing, 1000);
-    
-    // Crear momentos cuánticos
-    for (let i = 0; i < 50; i++) {
-        const moment = document.createElement('div');
-        moment.className = 'quantum-moment';
-        moment.style.left = Math.random() * 100 + '%';
-        moment.style.top = Math.random() * 100 + '%';
-        moment.style.animationDelay = Math.random() * 2 + 's';
-        container.appendChild(moment);
-    }
-    
-    // El eterno ahora
-    let nowCount = 0;
-    let eternityDepth = Infinity;
-    
-    setInterval(() => {
-        nowCount++;
-        
-        // El presente eterno
-        if (nowCount % 100 === 0) {
-            console.log('Paradoja temporal: El ahora es eterno, la eternidad es ahora');
+        function createTimeRing() {
+            const ring = document.createElement('div');
+            ring.className = 'time-ring';
+            ring.style.animationDelay = Math.random() * 3 + 's';
+            ring.style.animationDuration = (6 + Math.random() * 4) + 's';
+            
+            // Variación de colores
+            const colors = [
+                'rgba(147, 51, 234, 0.4)',
+                'rgba(59, 130, 246, 0.4)',
+                'rgba(6, 182, 212, 0.4)',
+                'rgba(34, 197, 94, 0.4)'
+            ];
+            ring.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            container.appendChild(ring);
+            timeRings.push(ring);
+            
+            setTimeout(() => {
+                if (ring.parentNode) {
+                    ring.parentNode.removeChild(ring);
+                    const index = timeRings.indexOf(ring);
+                    if (index > -1) timeRings.splice(index, 1);
+                }
+            }, 8000);
         }
         
-        // Colapso del tiempo lineal
-        if (nowCount % 314 === 0) {
-            console.log('El instante contiene todo el tiempo: pasado, presente y futuro coexisten');
+        // Crear anillos iniciales
+        for (let i = 0; i < 6; i++) {
+            setTimeout(createTimeRing, i * 800);
         }
         
-        // Tiempo de Planck = Eternidad
-        if (nowCount % 444 === 0) {
-            console.log('En el tiempo de Planck, el instante y la eternidad son indistinguibles');
+        // Mantener densidad constante
+        const ringInterval = setInterval(createTimeRing, 1200);
+        
+        // MEJORA: Momentos cuánticos con mayor variación
+        for (let i = 0; i < 40; i++) {
+            const moment = document.createElement('div');
+            moment.className = 'quantum-moment';
+            
+            moment.style.left = Math.random() * 100 + '%';
+            moment.style.top = Math.random() * 100 + '%';
+            moment.style.animationDelay = Math.random() * 3 + 's';
+            moment.style.animationDuration = (2 + Math.random() * 2) + 's';
+            
+            // Variación de colores
+            if (i % 5 === 0) {
+                moment.style.background = 'rgba(59, 130, 246, 0.9)';
+                moment.style.boxShadow = '0 0 4px rgba(59, 130, 246, 0.6)';
+            } else if (i % 5 === 1) {
+                moment.style.background = 'rgba(6, 182, 212, 0.9)';
+                moment.style.boxShadow = '0 0 4px rgba(6, 182, 212, 0.6)';
+            }
+            
+            container.appendChild(moment);
+            quantumMoments.push(moment);
         }
-    }, 50);
-    
-    console.log('Nodo 1 activo: El instante eterno trasciende la duración');
-</script>
-
-
+        
+        // NUEVO: Líneas temporales adicionales
+        function createTimeline() {
+            const timeline = document.createElement('div');
+            timeline.className = 'timeline';
+            
+            const angle = Math.random() * 360;
+            const distance = 20 + Math.random() * 40;
+            
+            timeline.style.left = (50 + Math.cos(angle * Math.PI / 180) * distance) + '%';
+            timeline.style.top = (50 + Math.sin(angle * Math.PI / 180) * distance) + '%';
+            timeline.style.transform = `rotate(${angle}deg)`;
+            timeline.style.animationDelay = Math.random() * 4 + 's';
+            
+            container.appendChild(timeline);
+            
+            setTimeout(() => {
+                if (timeline.parentNode) timeline.parentNode.removeChild(timeline);
+            }, 8000);
+        }
+        
+        // Crear líneas iniciales
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createTimeline, i * 600);
+        }
+        
+        setInterval(createTimeline, 1000);
+        
+        // MEJORA: Filosofía temporal con requestAnimationFrame
+        let nowCount = 0;
+        let eternityDepth = 0;
+        let lastUpdate = 0;
+        
+        function updateTemporalParadox(timestamp) {
+            if (!lastUpdate) lastUpdate = timestamp;
+            const deltaTime = (timestamp - lastUpdate) / 1000;
+            lastUpdate = timestamp;
+            
+            nowCount += deltaTime * 0.5;
+            eternityDepth = Math.sin(nowCount) * Math.cos(nowCount * 1.618);
+            
+            // Eventos de paradoja temporal
+            if (Math.floor(nowCount * 40) % 120 === 0 && deltaTime < 0.1) {
+                const events = [
+                    'Paradoja temporal: El ahora es eterno, la eternidad es ahora',
+                    'El instante contiene todo el tiempo: pasado, presente y futuro coexisten',
+                    'En el tiempo de Planck, el instante y la eternidad son indistinguibles',
+                    'Kronos y Kairós se encuentran en el punto presente'
+                ];
+                console.log('⏳ ' + events[Math.floor(Math.random() * events.length)]);
+            }
+            
+            // Ciclo completo cada ~15.7 segundos (5*PI)
+            if (nowCount > Math.PI * 5) {
+                nowCount = 0;
+                console.log('🌀 Ciclo temporal completado - El eterno ahora se renueva');
+            }
+            
+            requestAnimationFrame(updateTemporalParadox);
+        }
+        
+        requestAnimationFrame(updateTemporalParadox);
+        
+        // MEJORA: Interacción de resonancia
+        container.addEventListener('mouseenter', () => {
+            clearInterval(ringInterval);
+            setInterval(createTimeRing, 600);
+            container.style.filter = 'drop-shadow(0 0 60px rgba(147, 51, 234, 0.5))';
+            
+            // Intensificar líneas temporales
+            setInterval(createTimeline, 500);
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            clearInterval(ringInterval);
+            setInterval(createTimeRing, 1200);
+            container.style.filter = 'drop-shadow(0 0 40px rgba(147, 51, 234, 0.3))';
+            
+            // Restaurar densidad normal
+            setInterval(createTimeline, 1000);
+        });
+        
+        // MEJORA: Fragmentos temporales cíclicos
+        const temporalFragments = [
+            ['AHORA', 'SIEMPRE', 'NUNCA', 'ETERNO'],
+            ['PRESENTE', 'PASADO', 'FUTURO', 'ATEMPORAL'],
+            ['KRONOS', 'KAIRÓS', 'AIÓN', 'CHRONOS'],
+            ['t = 0', 't = ∞', 't = -∞', 't = i']
+        ];
+        
+        const eternalTexts = [
+            'El instante contiene\ntoda la eternidad',
+            'El ahora es la puerta\nal tiempo eterno', 
+            'En el presente\nhabita la infinitud',
+            'Cada momento\nes todos los momentos'
+        ];
+        
+        let temporalIndex = 0;
+        const fragmentElements = document.querySelectorAll('.temporal-fragment');
+        const eternalText = document.querySelector('.eternal-text');
+        
+        setInterval(() => {
+            temporalIndex = (temporalIndex + 1) % temporalFragments.length;
+            fragmentElements.forEach((element, index) => {
+                element.textContent = temporalFragments[temporalIndex][index];
+            });
+            eternalText.innerHTML = eternalTexts[temporalIndex].replace(/\n/g, '<br>');
+        }, 9000);
+        
+        console.log('🌌 LIBRO 9 INICIADO: El Instante Eterno trasciende la duración');
+        console.log('⏳ Nodo 1 activo: Donde el tiempo lineal colapsa en el presente eterno');
+        console.log('🌀 Filosofía temporal: Kronos, Kairós y Aión convergen en el ahora');
+        console.log('💫 TRINITY CONTINUA: Nuevo ciclo de co-creación iniciado');
+    </script>
 </body>
 </html>
