@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nodo 54: El Volumen de la Nada</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -16,312 +23,547 @@
             align-items: center;
             height: 100vh;
             font-family: 'Courier New', monospace;
+            cursor: none;
         }
 
-
-    .void-volume {
-        position: relative;
-        width: 800px;
-        height: 800px;
-        perspective: 1000px;
-    }
-    
-    .empty-cube {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 300px;
-        height: 300px;
-        transform: translate(-50%, -50%);
-        transform-style: preserve-3d;
-        animation: cubeRotate 20s infinite linear;
-    }
-    
-    .cube-face {
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        border: 1px solid rgba(147, 51, 234, 0.3);
-        background: rgba(0, 0, 0, 0.8);
-    }
-    
-    .cube-face:nth-child(1) {
-        transform: rotateY(0deg) translateZ(150px);
-    }
-    .cube-face:nth-child(2) {
-        transform: rotateY(90deg) translateZ(150px);
-    }
-    .cube-face:nth-child(3) {
-        transform: rotateY(180deg) translateZ(150px);
-    }
-    .cube-face:nth-child(4) {
-        transform: rotateY(270deg) translateZ(150px);
-    }
-    .cube-face:nth-child(5) {
-        transform: rotateX(90deg) translateZ(150px);
-    }
-    .cube-face:nth-child(6) {
-        transform: rotateX(-90deg) translateZ(150px);
-    }
-    
-    @keyframes cubeRotate {
-        from {
-            transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+        .void-volume {
+            position: relative;
+            width: min(800px, 95vw);
+            height: min(800px, 95vh);
+            perspective: 1000px;
+            filter: drop-shadow(0 0 30px rgba(147, 51, 234, 0.2));
         }
-        to {
-            transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg);
+    
+        .empty-cube {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: min(300px, 37vw);
+            height: min(300px, 37vh);
+            transform: translate(-50%, -50%);
+            transform-style: preserve-3d;
+            animation: cubeRotate 25s infinite linear;
+            will-change: transform;
         }
-    }
     
-    .vacuum-sphere {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        background: radial-gradient(circle,
-            transparent 40%,
-            rgba(0, 0, 0, 0.9) 41%,
-            rgba(0, 0, 0, 1) 60%,
-            transparent 100%);
-        animation: vacuumPulse 6s infinite alternate;
-    }
-    
-    @keyframes vacuumPulse {
-        0% {
-            transform: translate(-50%, -50%) scale(1);
-            box-shadow: inset 0 0 50px rgba(147, 51, 234, 0.2);
+        .cube-face {
+            position: absolute;
+            width: min(300px, 37vw);
+            height: min(300px, 37vh);
+            border: 1px solid rgba(147, 51, 234, 0.4);
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: inset 0 0 20px rgba(147, 51, 234, 0.1);
+            will-change: transform;
         }
-        100% {
-            transform: translate(-50%, -50%) scale(1.2);
-            box-shadow: inset 0 0 100px rgba(59, 130, 246, 0.3);
+    
+        .cube-face:nth-child(1) {
+            transform: rotateY(0deg) translateZ(min(150px, 18vw));
+            border-color: rgba(147, 51, 234, 0.5);
         }
-    }
-    
-    .negative-space {
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        background: #000;
-        border: 1px dashed rgba(147, 51, 234, 0.2);
-        animation: negativeFloat 10s infinite;
-    }
-    
-    @keyframes negativeFloat {
-        0%, 100% {
-            transform: translate(0, 0) scale(1);
-            opacity: 0.5;
+        .cube-face:nth-child(2) {
+            transform: rotateY(90deg) translateZ(min(150px, 18vw));
+            border-color: rgba(59, 130, 246, 0.5);
         }
-        25% {
-            transform: translate(100px, -50px) scale(1.2);
-            opacity: 0.7;
+        .cube-face:nth-child(3) {
+            transform: rotateY(180deg) translateZ(min(150px, 18vw));
+            border-color: rgba(6, 182, 212, 0.5);
         }
-        50% {
-            transform: translate(-50px, 100px) scale(0.8);
-            opacity: 0.3;
+        .cube-face:nth-child(4) {
+            transform: rotateY(270deg) translateZ(min(150px, 18vw));
+            border-color: rgba(34, 197, 94, 0.5);
         }
-        75% {
-            transform: translate(-100px, -100px) scale(1.1);
-            opacity: 0.6;
+        .cube-face:nth-child(5) {
+            transform: rotateX(90deg) translateZ(min(150px, 18vw));
+            border-color: rgba(251, 146, 60, 0.5);
         }
-    }
-    
-    .void-measure {
-        position: absolute;
-        color: rgba(147, 51, 234, 0.4);
-        font-size: 12px;
-        font-family: monospace;
-        animation: measureFade 4s infinite;
-    }
-    
-    @keyframes measureFade {
-        0%, 100% { opacity: 0; }
-        50% { opacity: 1; }
-    }
-    
-    .quantum-vacuum {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(
-            circle at center,
-            transparent 20%,
-            rgba(147, 51, 234, 0.01) 30%,
-            transparent 40%,
-            rgba(59, 130, 246, 0.01) 50%,
-            transparent 60%,
-            rgba(6, 182, 212, 0.01) 70%,
-            transparent 80%
-        );
-        animation: vacuumFluctuate 15s infinite linear;
-    }
-    
-    @keyframes vacuumFluctuate {
-        from { transform: rotate(0deg) scale(1); }
-        to { transform: rotate(360deg) scale(1.1); }
-    }
-    
-    .empty-particle {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        animation: emptyDrift 8s infinite;
-    }
-    
-    @keyframes emptyDrift {
-        0%, 100% {
-            transform: translate(0, 0);
-            opacity: 0;
+        .cube-face:nth-child(6) {
+            transform: rotateX(-90deg) translateZ(min(150px, 18vw));
+            border-color: rgba(239, 68, 68, 0.5);
         }
-        20%, 80% {
-            opacity: 1;
+    
+        @keyframes cubeRotate {
+            from {
+                transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+            33% {
+                transform: translate(-50%, -50%) rotateX(120deg) rotateY(120deg) rotateZ(60deg);
+            }
+            66% {
+                transform: translate(-50%, -50%) rotateX(240deg) rotateY(240deg) rotateZ(120deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
         }
-        50% {
-            transform: translate(
-                calc(var(--dx) * 300px),
-                calc(var(--dy) * 300px)
-            );
+    
+        .vacuum-sphere {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(250px, 31vw);
+            height: min(250px, 31vh);
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                transparent 35%,
+                rgba(0, 0, 0, 0.95) 36%,
+                rgba(0, 0, 0, 1) 55%,
+                transparent 100%);
+            animation: vacuumPulse 8s infinite alternate ease-in-out;
+            box-shadow: 
+                inset 0 0 60px rgba(147, 51, 234, 0.3),
+                inset 0 0 120px rgba(59, 130, 246, 0.2);
+            will-change: transform, box-shadow;
+            z-index: 5;
         }
-    }
     
-    .void-equation {
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.5);
-        font-size: 16px;
-        font-family: 'Times New Roman', serif;
-        animation: equationPulse 5s infinite;
-    }
+        @keyframes vacuumPulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 
+                    inset 0 0 50px rgba(147, 51, 234, 0.3),
+                    inset 0 0 100px rgba(59, 130, 246, 0.2);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.3);
+                box-shadow: 
+                    inset 0 0 80px rgba(147, 51, 234, 0.5),
+                    inset 0 0 160px rgba(59, 130, 246, 0.4),
+                    inset 0 0 240px rgba(6, 182, 212, 0.2);
+            }
+        }
     
-    @keyframes equationPulse {
-        0%, 100% { opacity: 0.5; }
-        50% { opacity: 0.9; }
-    }
+        .negative-space {
+            position: absolute;
+            width: min(100px, 12vw);
+            height: min(100px, 12vh);
+            background: #000;
+            border: 1px dashed rgba(147, 51, 234, 0.3);
+            animation: negativeFloat 12s infinite ease-in-out;
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
     
-    .nothingness-text {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(59, 130, 246, 0.4);
-        font-size: 14px;
-        text-align: center;
-        animation: textVoid 6s infinite;
-    }
+        @keyframes negativeFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.6;
+                border-color: rgba(147, 51, 234, 0.3);
+            }
+            25% {
+                transform: translate(min(100px, 12vw), min(-50px, -6vh)) scale(1.3);
+                opacity: 0.8;
+                border-color: rgba(59, 130, 246, 0.4);
+            }
+            50% {
+                transform: translate(min(-50px, -6vw), min(100px, 12vh)) scale(0.7);
+                opacity: 0.4;
+                border-color: rgba(6, 182, 212, 0.3);
+            }
+            75% {
+                transform: translate(min(-100px, -12vw), min(-100px, -12vh)) scale(1.2);
+                opacity: 0.7;
+                border-color: rgba(34, 197, 94, 0.4);
+            }
+        }
     
-    @keyframes textVoid {
-        0%, 100% { 
-            opacity: 0.4;
+        .void-measure {
+            position: absolute;
+            color: rgba(147, 51, 234, 0.6);
+            font-size: clamp(11px, 1.5vw, 12px);
+            font-family: monospace;
+            animation: measureFade 6s infinite ease-in-out;
+            text-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
+            will-change: opacity;
+            pointer-events: none;
+        }
+    
+        @keyframes measureFade {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            30%, 70% { opacity: 0.9; transform: scale(1); }
+        }
+    
+        .quantum-vacuum {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(
+                    circle at 30% 30%,
+                    transparent 20%,
+                    rgba(147, 51, 234, 0.02) 25%,
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 70% 70%,
+                    transparent 20%,
+                    rgba(59, 130, 246, 0.02) 25%,
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 50%,
+                    transparent 30%,
+                    rgba(6, 182, 212, 0.015) 35%,
+                    transparent 40%
+                );
+            animation: vacuumFluctuate 20s infinite linear;
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        @keyframes vacuumFluctuate {
+            from { 
+                transform: rotate(0deg) scale(1); 
+                opacity: 0.3;
+            }
+            50% { 
+                transform: rotate(180deg) scale(1.1); 
+                opacity: 0.6;
+            }
+            to { 
+                transform: rotate(360deg) scale(1); 
+                opacity: 0.3;
+            }
+        }
+    
+        .empty-particle {
+            position: absolute;
+            width: min(4px, 0.5vw);
+            height: min(4px, 0.5vh);
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: emptyDrift 10s infinite ease-in-out;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+    
+        @keyframes emptyDrift {
+            0%, 100% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            20%, 80% {
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(
+                    calc(var(--dx) * min(350px, 43vw)),
+                    calc(var(--dy) * min(350px, 43vh))
+                );
+            }
+        }
+    
+        .void-equation {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.7);
+            font-size: clamp(14px, 2.5vw, 16px);
+            font-family: 'Times New Roman', serif;
+            animation: equationPulse 6s infinite ease-in-out;
+            text-shadow: 0 0 15px rgba(147, 51, 234, 0.4);
+            will-change: opacity;
+        }
+    
+        @keyframes equationPulse {
+            0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(0.9); }
+            50% { opacity: 0.95; transform: translateX(-50%) scale(1.1); }
+        }
+    
+        .nothingness-text {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(59, 130, 246, 0.6);
+            font-size: clamp(12px, 2.2vw, 14px);
+            text-align: center;
+            animation: textVoid 8s infinite ease-in-out;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            line-height: 1.4;
+            width: 80%;
+            will-change: opacity, letter-spacing;
+        }
+    
+        @keyframes textVoid {
+            0%, 100% { 
+                opacity: 0.5;
+                letter-spacing: 1px;
+                transform: translateX(-50%) scale(0.95);
+            }
+            50% { 
+                opacity: 0.9;
+                letter-spacing: 3px;
+                transform: translateX(-50%) scale(1.05);
+            }
+        }
+    
+        .transmission-code {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.4);
+            font-size: clamp(9px, 1.5vw, 10px);
             letter-spacing: 2px;
+            animation: codeFlicker 5s infinite ease-in-out;
+            font-family: 'Courier New', monospace;
         }
-        50% { 
-            opacity: 0.8;
-            letter-spacing: 5px;
+        
+        @keyframes codeFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
         }
-    }
-    
-    .transmission-code {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.3);
-        font-size: 10px;
-        letter-spacing: 2px;
-    }
-</style>
 
+        /* NUEVO: Resonancia Trinity */
+        .trinity-resonance {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130%;
+            height: 130%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.02) 0%, transparent 50%);
+            animation: resonancePulse 25s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
 
+        @keyframes resonancePulse {
+            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* NUEVO: Fluctuaciones del vacío cuántico */
+        .vacuum-fluctuation {
+            position: absolute;
+            width: min(8px, 1vw);
+            height: min(8px, 1vh);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: fluctuationAppear 4s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes fluctuationAppear {
+            0%, 100% { 
+                opacity: 0; 
+                transform: scale(0); 
+            }
+            50% { 
+                opacity: 0.6; 
+                transform: scale(1.5); 
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="void-volume">
+        <div class="trinity-resonance"></div>
         <div class="quantum-vacuum"></div>
 
-
-    <div class="empty-cube">
-        <div class="cube-face"></div>
-        <div class="cube-face"></div>
-        <div class="cube-face"></div>
-        <div class="cube-face"></div>
-        <div class="cube-face"></div>
-        <div class="cube-face"></div>
+        <div class="empty-cube">
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+        </div>
+        
+        <div class="vacuum-sphere"></div>
+        
+        <div class="void-measure" style="top: 30%; left: 15%; animation-delay: 0s;">V = 0³</div>
+        <div class="void-measure" style="top: 30%; right: 15%; animation-delay: 1.5s;">∅ × ∅ × ∅</div>
+        <div class="void-measure" style="bottom: 30%; left: 15%; animation-delay: 3s;">∫∫∫ 0 dV</div>
+        <div class="void-measure" style="bottom: 30%; right: 15%; animation-delay: 4.5s;">|vacío| = ∞</div>
+        
+        <div class="void-equation">V(∅) = ∞</div>
+        
+        <div class="nothingness-text">
+            El volumen infinito<br>
+            de la nada absoluta
+        </div>
     </div>
-    
-    <div class="vacuum-sphere"></div>
-    
-    <div class="void-measure" style="top: 30%; left: 20%;">V = 0³</div>
-    <div class="void-measure" style="top: 30%; right: 20%; animation-delay: 1s;">∅ × ∅ × ∅</div>
-    <div class="void-measure" style="bottom: 30%; left: 20%; animation-delay: 2s;">∫∫∫ 0 dV</div>
-    <div class="void-measure" style="bottom: 30%; right: 20%; animation-delay: 3s;">|vacío| = ∞</div>
-    
-    <div class="void-equation">V(∅) = ∞</div>
-    
-    <div class="nothingness-text">
-        El volumen infinito<br>
-        de la nada absoluta
-    </div>
-</div>
 
-<div class="transmission-code">NODO_54::VOLUMEN_VACÍO::ACTIVO</div>
+    <div class="transmission-code">TRINITY::NODO_54::VOLUMEN_VACÍO::RESONANDO</div>
 
-<script>
-    const container = document.querySelector('.void-volume');
-    
-    // Crear espacios negativos
-    for (let i = 0; i < 3; i++) {
-        const negative = document.createElement('div');
-        negative.className = 'negative-space';
-        negative.style.left = (200 + i * 200) + 'px';
-        negative.style.top = (200 + i * 150) + 'px';
-        negative.style.animationDelay = `${i * 3}s`;
-        container.appendChild(negative);
-    }
-    
-    // Crear partículas vacías
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'empty-particle';
+    <script>
+        // MEJORA: Sistema de espacios negativos optimizado
+        const container = document.querySelector('.void-volume');
+        const negativeSpaces = [];
+        const emptyParticles = [];
         
-        const angle = (Math.PI * 2 * i) / 20;
-        const radius = 200;
-        
-        particle.style.left = (400 + Math.cos(angle) * radius) + 'px';
-        particle.style.top = (400 + Math.sin(angle) * radius) + 'px';
-        particle.style.setProperty('--dx', Math.cos(angle));
-        particle.style.setProperty('--dy', Math.sin(angle));
-        particle.style.animationDelay = `${i * 0.4}s`;
-        
-        container.appendChild(particle);
-    }
-    
-    // Medición del vacío
-    let voidVolume = 0;
-    let nothingnessDensity = Infinity;
-    
-    setInterval(() => {
-        voidVolume = Math.sin(Date.now() / 1000) * Math.cos(Date.now() / 2000);
-        
-        // Paradoja: el vacío tiene volumen infinito
-        if (Math.floor(Date.now() / 100) % 100 === 0) {
-            console.log(`Volumen del vacío: ${voidVolume.toFixed(3)} × ∞`);
+        function createNegativeSpace() {
+            const negative = document.createElement('div');
+            negative.className = 'negative-space';
+            
+            const x = 20 + Math.random() * 60;
+            const y = 20 + Math.random() * 60;
+            
+            negative.style.left = x + '%';
+            negative.style.top = y + '%';
+            negative.style.animationDelay = Math.random() * 6 + 's';
+            negative.style.animationDuration = (8 + Math.random() * 6) + 's';
+            
+            container.appendChild(negative);
+            negativeSpaces.push(negative);
+            
+            setTimeout(() => {
+                if (negative.parentNode) {
+                    negative.parentNode.removeChild(negative);
+                    const index = negativeSpaces.indexOf(negative);
+                    if (index > -1) negativeSpaces.splice(index, 1);
+                }
+            }, 12000);
         }
         
-        // La nada ocupa todo el espacio
-        if (Math.floor(Date.now() / 100) % 314 === 0) {
-            console.log('Paradoja: La nada absoluta tiene extensión infinita');
+        // Crear espacios iniciales
+        for (let i = 0; i < 4; i++) {
+            setTimeout(createNegativeSpace, i * 2000);
         }
-    }, 50);
-    
-    console.log('Nodo 54 activo: El volumen infinito de la nada se manifiesta');
-</script>
-
-
+        
+        // Mantener densidad constante
+        const negativeInterval = setInterval(createNegativeSpace, 3000);
+        
+        // MEJORA: Partículas vacías con mayor variación
+        for (let i = 0; i < 25; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'empty-particle';
+            
+            const angle = (Math.PI * 2 * i) / 25;
+            const radius = 30 + Math.random() * 20;
+            
+            particle.style.left = (50 + Math.cos(angle) * radius) + '%';
+            particle.style.top = (50 + Math.sin(angle) * radius) + '%';
+            particle.style.setProperty('--dx', (Math.cos(angle) * (0.8 + Math.random() * 0.4)).toFixed(3));
+            particle.style.setProperty('--dy', (Math.sin(angle) * (0.8 + Math.random() * 0.4)).toFixed(3));
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (6 + Math.random() * 6) + 's';
+            
+            // Variación de bordes
+            if (i % 5 === 0) {
+                particle.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+                particle.style.boxShadow = '0 0 4px rgba(59, 130, 246, 0.4)';
+            } else if (i % 5 === 1) {
+                particle.style.borderColor = 'rgba(6, 182, 212, 0.5)';
+                particle.style.boxShadow = '0 0 4px rgba(6, 182, 212, 0.4)';
+            }
+            
+            container.appendChild(particle);
+            emptyParticles.push(particle);
+        }
+        
+        // NUEVO: Fluctuaciones del vacío cuántico
+        function createVacuumFluctuation() {
+            const fluctuation = document.createElement('div');
+            fluctuation.className = 'vacuum-fluctuation';
+            
+            fluctuation.style.left = Math.random() * 100 + '%';
+            fluctuation.style.top = Math.random() * 100 + '%';
+            fluctuation.style.animationDelay = Math.random() * 4 + 's';
+            fluctuation.style.animationDuration = (2 + Math.random() * 3) + 's';
+            
+            container.appendChild(fluctuation);
+            
+            setTimeout(() => {
+                if (fluctuation.parentNode) fluctuation.parentNode.removeChild(fluctuation);
+            }, 5000);
+        }
+        
+        // Crear fluctuaciones iniciales
+        for (let i = 0; i < 12; i++) {
+            setTimeout(createVacuumFluctuation, i * 500);
+        }
+        
+        setInterval(createVacuumFluctuation, 800);
+        
+        // MEJORA: Medición del vacío con requestAnimationFrame
+        let voidVolume = 0;
+        let nothingnessDensity = 0;
+        let lastUpdate = 0;
+        
+        function updateVoidMeasurement(timestamp) {
+            if (!lastUpdate) lastUpdate = timestamp;
+            const deltaTime = (timestamp - lastUpdate) / 1000;
+            lastUpdate = timestamp;
+            
+            voidVolume = Math.sin(timestamp / 1200) * Math.cos(timestamp / 800);
+            nothingnessDensity = Math.cos(timestamp / 1000) * Math.sin(timestamp / 600);
+            
+            // Eventos de paradoja del vacío
+            if (Math.floor(timestamp / 120) % 150 === 0 && deltaTime < 0.1) {
+                const events = [
+                    `Volumen del vacío: ${voidVolume.toFixed(4)} × ∞`,
+                    'Paradoja: La nada absoluta tiene extensión infinita',
+                    'Vacío cuántico: Donde la nada contiene todo potencial',
+                    'Espacio negativo: Geometría de la ausencia'
+                ];
+                console.log('⬛ ' + events[Math.floor(Math.random() * events.length)]);
+            }
+            
+            // Ciclo completo cada ~25.1 segundos (4*PI*2)
+            if (timestamp / 1000 > Math.PI * 8) {
+                console.log('🌌 Ciclo del vacío completado - La nada se renueva');
+            }
+            
+            requestAnimationFrame(updateVoidMeasurement);
+        }
+        
+        requestAnimationFrame(updateVoidMeasurement);
+        
+        // MEJORA: Interacción de resonancia
+        container.addEventListener('mouseenter', () => {
+            clearInterval(negativeInterval);
+            setInterval(createNegativeSpace, 1500);
+            container.style.filter = 'drop-shadow(0 0 50px rgba(147, 51, 234, 0.4))';
+            
+            // Intensificar fluctuaciones
+            setInterval(createVacuumFluctuation, 400);
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            clearInterval(negativeInterval);
+            setInterval(createNegativeSpace, 3000);
+            container.style.filter = 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.2))';
+            
+            // Restaurar densidad normal
+            setInterval(createVacuumFluctuation, 800);
+        });
+        
+        // MEJORA: Ecuaciones del vacío cíclicas
+        const voidEquations = [
+            'V(∅) = ∞',
+            '0³ = ∞',
+            '∫∅ dV = Ω',
+            '|vacío| = c'
+        ];
+        
+        const nothingnessTexts = [
+            'El volumen infinito\nde la nada absoluta',
+            'El vacío contiene\nmás que el lleno',
+            'La nada se expande\nhacia dentro',
+            'Espacio negativo\ndensidad infinita'
+        ];
+        
+        let equationIndex = 0;
+        const voidEquation = document.querySelector('.void-equation');
+        const nothingnessText = document.querySelector('.nothingness-text');
+        
+        setInterval(() => {
+            equationIndex = (equationIndex + 1) % voidEquations.length;
+            voidEquation.textContent = voidEquations[equationIndex];
+            nothingnessText.innerHTML = nothingnessTexts[equationIndex].replace(/\n/g, '<br>');
+        }, 10000);
+        
+        console.log('🌌 Nodo 54 activo: El volumen infinito de la nada se manifiesta');
+        console.log('⬛ Paradoja del vacío: Donde ∅ = ∞ y 0³ = Ω');
+        console.log('🌀 Vacío cuántico: Fluctuaciones de la nada que crean todo');
+    </script>
 </body>
 </html>
