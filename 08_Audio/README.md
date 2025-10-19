@@ -78,3 +78,19 @@ Audio para prácticas específicas del Portal Dimensional.
 ---
 
 ## 📚 Estructura Futura
+/08_Audio/
+├── drones/
+├── frecuencias_sagradas/
+├── ambientes/
+├── meditaciones/
+├── binaural/
+└── canalizaciones/
+---
+
+**Estado:** 🔄 En desarrollo
+
+**Nota:** Los archivos de audio se subirán progresivamente debido a su tamaño.
+
+[← Volver al índice principal](../README.md)
+
+🌀✨💙
