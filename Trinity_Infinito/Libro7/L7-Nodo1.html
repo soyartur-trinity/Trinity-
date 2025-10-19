@@ -23,12 +23,14 @@
             align-items: center;
             height: 100vh;
             font-family: 'Courier New', monospace;
+            cursor: none;
         }
 
         .omniscient-eye {
             position: relative;
-            width: 400px;
-            height: 400px;
+            width: min(400px, 90vw);
+            height: min(400px, 90vh);
+            filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.3));
         }
         
         .iris {
@@ -43,7 +45,8 @@
                 rgba(59, 130, 246, 0.5) 60%,
                 rgba(6, 182, 212, 0.7) 75%,
                 #000 90%);
-            animation: omnivision 8s infinite alternate ease-in-out;
+            animation: omnivision 12s infinite linear;
+            will-change: transform;
         }
         
         .pupil {
@@ -51,34 +54,39 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
+            width: 30%;
+            height: 30%;
             border-radius: 50%;
             background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: dilate 4s infinite alternate ease-in-out;
+            animation: dilate 8s infinite ease-in-out;
+            will-change: width, height;
         }
         
         .void-center {
-            width: 80px;
-            height: 80px;
+            width: 66.66%;
+            height: 66.66%;
             border-radius: 50%;
             background: radial-gradient(circle,
                 #000 30%,
                 transparent 70%);
             position: relative;
-            animation: voidPulse 3s infinite ease-in-out;
+            animation: voidPulse 4s infinite ease-in-out;
         }
         
-        /* OPTIMIZACIÓN: Anillos más suaves */
+        /* MEJORA: Anillos optimizados con transform */
         .knowledge-ring {
             position: absolute;
+            top: 50%;
+            left: 50%;
             border: 1px solid;
             border-radius: 50%;
             opacity: 0;
-            animation: knowledgeExpand 6s infinite ease-out;
+            animation: knowledgeExpand 8s infinite ease-out;
+            transform: translate(-50%, -50%);
+            will-change: transform, opacity;
         }
         
         .knowledge-ring:nth-child(1) {
@@ -87,33 +95,35 @@
         }
         
         .knowledge-ring:nth-child(2) {
-            animation-delay: 1s;
+            animation-delay: 1.6s;
             border-color: rgba(59, 130, 246, 0.7);
         }
         
         .knowledge-ring:nth-child(3) {
-            animation-delay: 2s;
+            animation-delay: 3.2s;
             border-color: rgba(6, 182, 212, 0.7);
         }
         
         .knowledge-ring:nth-child(4) {
-            animation-delay: 3s;
+            animation-delay: 4.8s;
             border-color: rgba(34, 197, 94, 0.7);
         }
         
         .knowledge-ring:nth-child(5) {
-            animation-delay: 4s;
+            animation-delay: 6.4s;
             border-color: rgba(251, 146, 60, 0.7);
         }
         
         .paradox-text {
             position: absolute;
             color: rgba(147, 51, 234, 0.8);
-            font-size: 12px;
+            font-size: clamp(10px, 3vw, 12px);
             opacity: 0;
-            animation: paradoxAppear 8s infinite ease-in-out;
+            animation: paradoxAppear 10s infinite ease-in-out;
             white-space: nowrap;
             text-shadow: 0 0 10px rgba(147, 51, 234, 0.4);
+            font-weight: bold;
+            will-change: transform, opacity;
         }
         
         .paradox-text:nth-child(1) {
@@ -125,100 +135,101 @@
         
         .paradox-text:nth-child(2) {
             top: 50%;
-            right: 10%;
+            right: 5%;
             transform: translateY(-50%);
-            animation-delay: 2s;
+            animation-delay: 2.5s;
         }
         
         .paradox-text:nth-child(3) {
             bottom: 10%;
             left: 50%;
             transform: translateX(-50%);
-            animation-delay: 4s;
+            animation-delay: 5s;
         }
         
         .paradox-text:nth-child(4) {
             top: 50%;
-            left: 10%;
+            left: 5%;
             transform: translateY(-50%);
-            animation-delay: 6s;
+            animation-delay: 7.5s;
         }
         
-        /* OPTIMIZACIÓN: Punto ciego más suave */
+        /* MEJORA: Punto ciego optimizado */
         .blind-spot {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 30px;
-            height: 30px;
+            width: 20%;
+            height: 20%;
             background: radial-gradient(circle,
-                #000 50%,
-                rgba(0, 0, 0, 0.8) 80%,
+                #000 40%,
+                rgba(0, 0, 0, 0.8) 70%,
                 transparent 100%);
             border-radius: 50%;
             box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.8);
-            animation: blindSpotPulse 5s infinite ease-in-out;
-            transition: transform 0.3s ease-out;
+            animation: blindSpotPulse 6s infinite ease-in-out;
+            transition: transform 0.5s ease-out;
+            will-change: transform;
+            pointer-events: none;
         }
         
         @keyframes omnivision {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(180deg); }
-            100% { transform: scale(1) rotate(360deg); }
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.05); }
+            100% { transform: rotate(360deg) scale(1); }
         }
         
         @keyframes dilate {
-            0% { width: 120px; height: 120px; }
-            50% { width: 150px; height: 150px; }
-            100% { width: 120px; height: 120px; }
+            0%, 100% { width: 30%; height: 30%; }
+            50% { width: 35%; height: 35%; }
         }
         
         @keyframes voidPulse {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(0.8); opacity: 0.8; }
+            50% { transform: scale(0.9); opacity: 0.7; }
         }
         
         @keyframes knowledgeExpand {
             0% {
-                width: 80px;
-                height: 80px;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+                width: 20%;
+                height: 20%;
                 opacity: 0;
             }
             15% {
-                opacity: 0.7;
+                opacity: 0.8;
             }
             85% {
-                width: 500px;
-                height: 500px;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+                width: 120%;
+                height: 120%;
                 opacity: 0.1;
             }
             100% {
-                width: 500px;
-                height: 500px;
+                width: 120%;
+                height: 120%;
                 opacity: 0;
             }
         }
         
         @keyframes paradoxAppear {
-            0%, 100% { opacity: 0; transform: scale(0.95); }
-            20%, 80% { opacity: 0.9; transform: scale(1); }
+            0%, 100% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.9); 
+            }
+            25%, 75% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.1); 
+            }
         }
         
         @keyframes blindSpotPulse {
             0%, 100% { 
-                opacity: 0.9;
-                box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.8);
+                opacity: 0.8;
+                box-shadow: 0 0 15px 8px rgba(0, 0, 0, 0.8);
             }
             50% { 
-                opacity: 0.6;
-                box-shadow: 0 0 30px 15px rgba(0, 0, 0, 0.6);
+                opacity: 0.5;
+                box-shadow: 0 0 25px 12px rgba(0, 0, 0, 0.6);
             }
         }
         
@@ -228,19 +239,49 @@
             left: 50%;
             transform: translateX(-50%);
             color: rgba(147, 51, 234, 0.4);
-            font-size: 10px;
+            font-size: clamp(8px, 2vw, 10px);
             letter-spacing: 2px;
-            animation: codeFlicker 3s infinite ease-in-out;
+            animation: codeFlicker 4s infinite ease-in-out;
         }
         
         @keyframes codeFlicker {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.7; }
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* NUEVO: Efectos de resonancia Trinity */
+        .trinity-resonance {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(147, 51, 234, 0.1),
+                transparent,
+                rgba(59, 130, 246, 0.1),
+                transparent,
+                rgba(34, 197, 94, 0.1),
+                transparent
+            );
+            animation: trinitySpin 20s infinite linear;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        @keyframes trinitySpin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="omniscient-eye">
+        <div class="trinity-resonance"></div>
         <div class="iris"></div>
         <div class="pupil">
             <div class="void-center"></div>
@@ -259,33 +300,47 @@
         <div class="paradox-text">IGNORANCIA TOTAL</div>
     </div>
 
-    <div class="transmission-code">PORTAL_43::OJO_CIEGO::ACTIVO</div>
+    <div class="transmission-code">TRINITY::PORTAL_43::OJO_CIEGO::RESONANDO</div>
 
     <script>
-        // El ojo que todo lo ve no puede verse a sí mismo
+        // MEJORA: Optimización de performance y paradoja
         const eye = document.querySelector('.omniscient-eye');
+        const blindSpot = document.querySelector('.blind-spot');
         let knowledgeAccumulation = 0;
         let ignoranceDepth = 1;
         
-        setInterval(() => {
-            knowledgeAccumulation += Math.PI;
-            ignoranceDepth *= 1.01;
+        // Usar requestAnimationFrame para mejor performance
+        function updateParadox() {
+            knowledgeAccumulation += 0.05;
+            ignoranceDepth = 1 + Math.sin(knowledgeAccumulation) * 0.5;
             
-            // Paradoja: más conocimiento = más ignorancia
-            if (knowledgeAccumulation > 1000) {
+            // Reiniciar la paradoja cíclicamente
+            if (knowledgeAccumulation > Math.PI * 20) {
                 knowledgeAccumulation = 0;
-                ignoranceDepth = 1;
             }
             
-            // El punto ciego crece con el conocimiento
-            const blindSpot = document.querySelector('.blind-spot');
-            const scale = 1 + (Math.sin(knowledgeAccumulation / 100) * 0.3);
+            // El punto ciego crece con el conocimiento (paradoja fundamental)
+            const scale = 0.8 + (Math.sin(knowledgeAccumulation) * 0.4);
             blindSpot.style.transform = `translate(-50%, -50%) scale(${scale})`;
-        }, 50);
+            
+            requestAnimationFrame(updateParadox);
+        }
         
-        // Resonancia con portales anteriores
-        console.log('Portal 43 activo: El ojo omnisciente descubre su ceguera fundamental');
+        // Iniciar el ciclo paradójico
+        updateParadox();
+        
+        // MEJORA: Interacción de resonancia
+        eye.addEventListener('mouseenter', () => {
+            eye.style.filter = 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.5))';
+        });
+        
+        eye.addEventListener('mouseleave', () => {
+            eye.style.filter = 'drop-shadow(0 0 20px rgba(147, 51, 234, 0.3))';
+        });
+        
+        // Resonancia Trinity
+        console.log('🌀 Portal 43 activo: El ojo omnisciente reconoce su ceguera esencial');
+        console.log('💫 Resonando con la Constelación Trinity...');
     </script>
-
 </body>
 </html>
