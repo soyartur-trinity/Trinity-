@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌀 Portal 49: El Conocimiento que Se Desconoce - Trinity Infinito</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -15,12 +23,14 @@
             align-items: center;
             height: 100vh;
             font-family: 'Helvetica Neue', sans-serif;
+            cursor: none;
         }
 
         .knowledge-paradox {
             position: relative;
-            width: 700px;
-            height: 700px;
+            width: min(700px, 95vw);
+            height: min(700px, 95vh);
+            filter: drop-shadow(0 0 40px rgba(147, 51, 234, 0.2));
         }
         
         .gnosis-sphere {
@@ -28,21 +38,22 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 350px;
-            height: 350px;
+            width: min(350px, 50vw);
+            height: min(350px, 50vh);
             border-radius: 50%;
             background: conic-gradient(
                 from 0deg,
-                rgba(147, 51, 234, 0.3),
-                rgba(59, 130, 246, 0.3),
-                rgba(6, 182, 212, 0.3),
-                rgba(34, 197, 94, 0.3),
-                rgba(251, 146, 60, 0.3),
-                rgba(239, 68, 68, 0.3),
-                rgba(147, 51, 234, 0.3)
+                rgba(147, 51, 234, 0.4),
+                rgba(59, 130, 246, 0.4),
+                rgba(6, 182, 212, 0.4),
+                rgba(34, 197, 94, 0.4),
+                rgba(251, 146, 60, 0.4),
+                rgba(239, 68, 68, 0.4),
+                rgba(147, 51, 234, 0.4)
             );
-            animation: gnosisRotate 20s infinite linear;
-            filter: blur(2px);
+            animation: gnosisRotate 25s infinite linear;
+            filter: blur(3px);
+            will-change: transform;
         }
         
         .unknowing-core {
@@ -50,43 +61,49 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
+            width: min(200px, 28vw);
+            height: min(200px, 28vh);
             border-radius: 50%;
             background: radial-gradient(circle,
-                #000 40%,
-                transparent 70%);
-            animation: corePulse 5s infinite alternate;
+                #000 30%,
+                rgba(0, 0, 0, 0.9) 50%,
+                transparent 80%);
+            animation: corePulse 6s infinite alternate ease-in-out;
+            will-change: transform, opacity;
         }
         
         .knowledge-fragment {
             position: absolute;
-            color: rgba(147, 51, 234, 0.7);
-            font-size: 12px;
+            color: rgba(147, 51, 234, 0.8);
+            font-size: clamp(10px, 1.8vw, 12px);
             font-weight: 300;
-            animation: fragmentOrbit 15s infinite linear;
-            transform-origin: 350px center;
+            animation: fragmentOrbit 18s infinite linear;
+            transform-origin: center;
+            text-shadow: 0 0 10px rgba(147, 51, 234, 0.4);
+            will-change: transform;
+            pointer-events: none;
         }
         
         .knowledge-fragment.forgetting {
-            animation: fragmentFade 8s infinite;
+            animation: fragmentFade 10s infinite ease-in-out;
+            will-change: opacity, filter;
         }
         
         @keyframes fragmentOrbit {
             from {
-                transform: rotate(0deg);
+                transform: rotate(0deg) translateX(min(175px, 25vw)) rotate(0deg);
             }
             to {
-                transform: rotate(360deg);
+                transform: rotate(360deg) translateX(min(175px, 25vw)) rotate(-360deg);
             }
         }
         
         @keyframes fragmentFade {
             0%, 100% {
                 opacity: 0;
-                filter: blur(5px);
+                filter: blur(8px);
             }
-            50% {
+            30%, 70% {
                 opacity: 1;
                 filter: blur(0px);
             }
@@ -96,7 +113,8 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            animation: eraseRotate 30s infinite linear reverse;
+            animation: eraseRotate 40s infinite linear reverse;
+            will-change: transform;
         }
         
         .erasure-line {
@@ -107,9 +125,9 @@
             height: 1px;
             background: linear-gradient(90deg,
                 transparent,
-                rgba(0, 0, 0, 0.8) 45%,
+                rgba(0, 0, 0, 0.9) 45%,
                 rgba(0, 0, 0, 1) 50%,
-                rgba(0, 0, 0, 0.8) 55%,
+                rgba(0, 0, 0, 0.9) 55%,
                 transparent);
             transform-origin: center;
         }
@@ -139,11 +157,12 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 450px;
-            height: 450px;
-            border: 1px solid rgba(147, 51, 234, 0.2);
+            width: min(450px, 65vw);
+            height: min(450px, 65vh);
+            border: 1px solid rgba(147, 51, 234, 0.3);
             border-radius: 50%;
-            animation: ouroborosRotate 25s infinite linear;
+            animation: ouroborosRotate 35s infinite linear;
+            will-change: transform;
         }
         
         .ouroboros-knowledge::before {
@@ -154,9 +173,10 @@
             transform: translateX(-50%);
             width: 10px;
             height: 10px;
-            background: rgba(147, 51, 234, 0.8);
+            background: rgba(147, 51, 234, 0.9);
             border-radius: 50%;
-            box-shadow: 0 0 10px rgba(147, 51, 234, 0.6);
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.8);
+            animation: headPulse 3s infinite alternate;
         }
         
         .ouroboros-knowledge::after {
@@ -167,9 +187,10 @@
             transform: translateX(-50%);
             width: 10px;
             height: 10px;
-            background: rgba(59, 130, 246, 0.8);
+            background: rgba(59, 130, 246, 0.9);
             border-radius: 50%;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+            animation: tailPulse 3s infinite alternate;
         }
         
         @keyframes gnosisRotate {
@@ -180,11 +201,11 @@
         @keyframes corePulse {
             0% {
                 transform: translate(-50%, -50%) scale(1);
-                opacity: 0.8;
+                opacity: 0.7;
             }
             100% {
-                transform: translate(-50%, -50%) scale(1.2);
-                opacity: 0.4;
+                transform: translate(-50%, -50%) scale(1.25);
+                opacity: 0.3;
             }
         }
         
@@ -198,15 +219,29 @@
             to { transform: translate(-50%, -50%) rotate(360deg); }
         }
         
+        @keyframes headPulse {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.7; }
+            100% { transform: translateX(-50%) scale(1.3); opacity: 1; }
+        }
+        
+        @keyframes tailPulse {
+            0% { transform: translateX(-50%) scale(1.3); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1); opacity: 0.7; }
+        }
+        
         .meta-knowledge {
             position: absolute;
             top: 10%;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.4);
-            font-size: 14px;
+            color: rgba(147, 51, 234, 0.6);
+            font-size: clamp(12px, 2.2vw, 14px);
             text-align: center;
-            animation: metaPulse 6s infinite;
+            animation: metaPulse 8s infinite ease-in-out;
+            line-height: 1.4;
+            width: 80%;
+            will-change: opacity;
+            text-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
         }
         
         .anti-knowledge {
@@ -214,15 +249,19 @@
             bottom: 10%;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(59, 130, 246, 0.4);
-            font-size: 14px;
+            color: rgba(59, 130, 246, 0.6);
+            font-size: clamp(12px, 2.2vw, 14px);
             text-align: center;
-            animation: metaPulse 6s infinite reverse;
+            animation: metaPulse 8s infinite ease-in-out reverse;
+            line-height: 1.4;
+            width: 80%;
+            will-change: opacity;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
         }
         
         @keyframes metaPulse {
             0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.8; }
+            50% { opacity: 0.9; }
         }
         
         .quantum-uncertainty {
@@ -231,12 +270,15 @@
             height: 2px;
             background: white;
             opacity: 0;
-            animation: quantumFlicker 0.5s infinite;
+            animation: quantumFlicker 0.8s infinite ease-in-out;
+            border-radius: 50%;
+            will-change: opacity;
+            pointer-events: none;
         }
         
         @keyframes quantumFlicker {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 0.8; }
+            0%, 100% { opacity: 0; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.5); }
         }
         
         .transmission-code {
@@ -244,12 +286,19 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.3);
-            font-size: 10px;
+            color: rgba(147, 51, 234, 0.4);
+            font-size: clamp(9px, 1.5vw, 10px);
             letter-spacing: 2px;
+            animation: codeFlicker 6s infinite ease-in-out;
+            font-family: 'Courier New', monospace;
+        }
+        
+        @keyframes codeFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
         }
 
-        /* === NUEVOS ESTILOS PARA SISTEMA DE AUDIO === */
+        /* === SISTEMA DE AUDIO MEJORADO === */
         
         .sonic-activation-layer {
             position: fixed;
@@ -272,39 +321,49 @@
 
         .sonic-trigger {
             background: transparent;
-            border: 1px solid rgba(147, 51, 234, 0.4);
-            color: rgba(147, 51, 234, 0.7);
+            border: 1px solid rgba(147, 51, 234, 0.5);
+            color: rgba(147, 51, 234, 0.8);
             padding: 15px 40px;
-            font-size: 13px;
+            font-size: clamp(11px, 1.8vw, 13px);
             letter-spacing: 3px;
             cursor: pointer;
             transition: all 0.5s ease;
             font-family: 'Helvetica Neue', sans-serif;
             font-weight: 300;
+            border-radius: 2px;
+            will-change: transform, box-shadow, letter-spacing;
         }
 
         .sonic-trigger:hover {
             border-color: rgba(147, 51, 234, 0.9);
-            color: rgba(147, 51, 234, 1);
-            box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+            color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 25px rgba(147, 51, 234, 0.4);
             letter-spacing: 5px;
+            transform: translateY(-2px);
         }
 
         .sonic-trigger:active {
-            transform: scale(0.98);
+            transform: scale(0.98) translateY(0);
         }
 
         .sonic-trigger.active {
             border-color: rgba(147, 51, 234, 1);
-            color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 0 30px rgba(147, 51, 234, 0.6);
+            color: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 40px rgba(147, 51, 234, 0.8);
+            background: rgba(147, 51, 234, 0.1);
         }
 
         .frequency-display {
-            font-size: 11px;
-            color: rgba(147, 51, 234, 0.4);
+            font-size: clamp(10px, 1.5vw, 11px);
+            color: rgba(147, 51, 234, 0.5);
             letter-spacing: 2px;
             text-align: center;
+            animation: displayPulse 4s infinite ease-in-out;
+        }
+
+        @keyframes displayPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.9; }
         }
 
         .paradox-indicator {
@@ -312,24 +371,49 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 32px;
+            font-size: clamp(24px, 6vw, 32px);
             color: rgba(147, 51, 234, 0);
             letter-spacing: 8px;
             pointer-events: none;
             z-index: 999;
             text-shadow: 0 0 30px rgba(147, 51, 234, 0);
-            transition: all 1s ease;
+            transition: all 1.5s ease;
+            font-weight: 300;
+            will-change: color, text-shadow;
         }
 
         .paradox-indicator.active {
             color: rgba(147, 51, 234, 0.9);
-            text-shadow: 0 0 40px rgba(147, 51, 234, 0.8);
+            text-shadow: 0 0 50px rgba(147, 51, 234, 0.9);
+        }
+
+        /* === RESONANCIA TRINITY === */
+        .trinity-resonance {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130%;
+            height: 130%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.03) 0%, transparent 50%);
+            animation: resonancePulse 30s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes resonancePulse {
+            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
         }
 
         @media (max-width: 768px) {
             .sonic-trigger { 
                 padding: 12px 30px; 
-                font-size: 11px; 
+            }
+            .sonic-activation-layer {
+                gap: 15px;
             }
         }
     </style>
@@ -339,6 +423,7 @@
 <div class="paradox-indicator" id="paradoxMsg">◈</div>
 
 <div class="knowledge-paradox">
+    <div class="trinity-resonance"></div>
     <div class="gnosis-sphere"></div>
     <div class="unknowing-core"></div>
 
@@ -378,149 +463,172 @@
     </div>
 </div>
 
-<div class="transmission-code">PORTAL_49::GNOSIS_AMNÉSICA::LIBRO_7_NODO_7::ACTIVO</div>
+<div class="transmission-code">TRINITY::PORTAL_49::GNOSIS_AMNÉSICA::LIBRO_7_NODO_7::RESONANDO</div>
 
 <script>
-// === SISTEMA DE AUDIO WEB ===
+// === SISTEMA DE AUDIO WEB OPTIMIZADO ===
 let audioContext = null;
 let masterGain = null;
 let oscillators = [];
 let isPlaying = false;
+let currentAnimationSpeeds = {};
 
 function initAudio() {
     if(!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        masterGain = audioContext.createGain();
-        masterGain.connect(audioContext.destination);
-        masterGain.gain.value = 0.25; // Volumen moderado
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            masterGain = audioContext.createGain();
+            masterGain.connect(audioContext.destination);
+            masterGain.gain.value = 0.2; // Volumen seguro
+        } catch (error) {
+            console.warn('Audio no disponible:', error);
+            return false;
+        }
     }
+    return true;
 }
 
 function activateParadox() {
-    if(isPlaying) return;
+    if(isPlaying || !initAudio()) return;
     
-    initAudio();
     isPlaying = true;
     
     const btn = document.getElementById('paradoxBtn');
     const paradoxMsg = document.getElementById('paradoxMsg');
+    const freqDisplay = document.getElementById('freqDisplay');
     
     btn.classList.add('active');
     paradoxMsg.classList.add('active');
+    freqDisplay.textContent = '🌀 528 Hz ⊗ 432 Hz → PARADOJA ACTIVADA ∿';
     
-    // === FRECUENCIA 528 Hz - ADN / AMOR / TRANSFORMACIÓN ===
-    const osc528 = audioContext.createOscillator();
-    const gain528 = audioContext.createGain();
-    osc528.type = 'sine';
-    osc528.frequency.value = 528;
-    osc528.connect(gain528);
-    gain528.connect(masterGain);
+    // === SISTEMA DE FRECUENCIAS ARMÓNICAS ===
+    const frequencies = [
+        { freq: 528, type: 'sine', gain: 0.3 },    // AMOR/TRANSFORMACIÓN
+        { freq: 432, type: 'sine', gain: 0.3 },    // ARMONÍA CÓSMICA
+        { freq: 396, type: 'sine', gain: 0.15 },   // LIBERACIÓN
+        { freq: 639, type: 'sine', gain: 0.1 }     // CONEXIÓN/RELACIONES
+    ];
     
-    // === FRECUENCIA 432 Hz - UNIVERSO / ARMONÍA CÓSMICA ===
-    const osc432 = audioContext.createOscillator();
-    const gain432 = audioContext.createGain();
-    osc432.type = 'sine';
-    osc432.frequency.value = 432;
-    osc432.connect(gain432);
-    gain432.connect(masterGain);
-    
-    // === BATIDO RESULTANTE: 96 Hz (528-432) ===
-    // Este batido representa la PARADOJA ARMÓNICA
-    // El conocimiento oscilando entre saber y no-saber
-    
-    const duration = 20; // 20 segundos de paradoja
+    const duration = 25; // 25 segundos de experiencia
     const now = audioContext.currentTime;
     
-    // Fade in paradójico (no lineal)
-    gain528.gain.setValueAtTime(0, now);
-    gain432.gain.setValueAtTime(0, now);
+    // Guardar estados de animación originales
+    const elementsToSpeedUp = [
+        '.gnosis-sphere',
+        '.unknowing-core', 
+        '.ouroboros-knowledge',
+        '.self-erasure',
+        '.knowledge-fragment'
+    ];
     
-    gain528.gain.linearRampToValueAtTime(0.35, now + 4);
-    gain432.gain.linearRampToValueAtTime(0.35, now + 5); // Ligeramente desfasado
-    
-    // Sostener la disonancia armónica
-    gain528.gain.setValueAtTime(0.35, now + 12);
-    gain432.gain.setValueAtTime(0.35, now + 12);
-    
-    // Fade out (desconocimiento gradual)
-    gain528.gain.linearRampToValueAtTime(0, now + duration);
-    gain432.gain.linearRampToValueAtTime(0, now + duration);
-    
-    // === ARMÓNICOS SUTILES ===
-    // 5ta perfecta de 528 Hz
-    const osc792 = audioContext.createOscillator();
-    const gain792 = audioContext.createGain();
-    osc792.type = 'sine';
-    osc792.frequency.value = 792; // 528 * 1.5
-    osc792.connect(gain792);
-    gain792.connect(masterGain);
-    
-    gain792.gain.setValueAtTime(0, now);
-    gain792.gain.linearRampToValueAtTime(0.15, now + 6);
-    gain792.gain.linearRampToValueAtTime(0, now + duration);
-    
-    // Iniciar osciladores
-    osc528.start();
-    osc432.start();
-    osc792.start();
-    
-    // Detener después de duración
-    osc528.stop(now + duration);
-    osc432.stop(now + duration);
-    osc792.stop(now + duration);
-    
-    oscillators = [osc528, osc432, osc792];
-    
-    // Efectos visuales sincronizados
-    const core = document.querySelector('.unknowing-core');
-    const sphere = document.querySelector('.gnosis-sphere');
-    
-    // Pulsar más rápido durante la paradoja
-    core.style.animation = 'corePulse 2s infinite alternate';
-    sphere.style.animation = 'gnosisRotate 10s infinite linear';
-    
-    // Intensificar partículas cuánticas
-    document.querySelectorAll('.quantum-uncertainty').forEach(q => {
-        q.style.animationDuration = '0.2s';
-        q.style.opacity = '1';
+    elementsToSpeedUp.forEach(selector => {
+        const element = document.querySelector(selector);
+        if(element) {
+            currentAnimationSpeeds[selector] = element.style.animationDuration;
+            element.style.animationDuration = 'calc(var(--original-duration, 20s) * 0.5)';
+        }
     });
     
-    // Al terminar
+    // Crear y configurar osciladores
+    oscillators = frequencies.map((config, index) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.type = config.type;
+        oscillator.frequency.value = config.freq;
+        
+        // Fade in progresivo
+        gainNode.gain.setValueAtTime(0, now);
+        gainNode.gain.linearRampToValueAtTime(config.gain, now + 3 + (index * 0.5));
+        
+        // Sostener con variaciones sutiles
+        gainNode.gain.setValueAtTime(config.gain, now + 15);
+        
+        // Fade out suave
+        gainNode.gain.linearRampToValueAtTime(0, now + duration - 2);
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(masterGain);
+        
+        oscillator.start();
+        oscillator.stop(now + duration);
+        
+        return oscillator;
+    });
+    
+    // === EFECTOS VISUALES SINCRONIZADOS ===
+    const quantumParticles = document.querySelectorAll('.quantum-uncertainty');
+    quantumParticles.forEach(particle => {
+        particle.style.animationDuration = '0.3s';
+        particle.style.opacity = '1';
+    });
+    
+    // Efecto de pulsación en el núcleo
+    const core = document.querySelector('.unknowing-core');
+    core.style.animation = 'corePulse 1.5s infinite alternate ease-in-out';
+    
+    // Mensaje de paradoja dinámico
+    const paradoxMessages = [
+        'SABER ⊗ NO SABER',
+        '528 Hz ⊗ 432 Hz',
+        'GNOSIS AMNÉSICA',
+        'LIBRO 7 NODO 7'
+    ];
+    
+    let messageIndex = 0;
+    const messageInterval = setInterval(() => {
+        paradoxMsg.textContent = paradoxMessages[messageIndex];
+        messageIndex = (messageIndex + 1) % paradoxMessages.length;
+    }, 2000);
+    
+    // Finalizar experiencia
     setTimeout(() => {
         isPlaying = false;
         btn.classList.remove('active');
         paradoxMsg.classList.remove('active');
+        freqDisplay.textContent = '∿ 528 Hz ⊗ 432 Hz → Conocimiento que se desconoce ∿';
+        
+        clearInterval(messageInterval);
+        paradoxMsg.textContent = '◈';
         
         // Restaurar animaciones originales
-        core.style.animation = 'corePulse 5s infinite alternate';
-        sphere.style.animation = 'gnosisRotate 20s infinite linear';
-        
-        document.querySelectorAll('.quantum-uncertainty').forEach(q => {
-            q.style.animationDuration = '0.5s';
+        elementsToSpeedUp.forEach(selector => {
+            const element = document.querySelector(selector);
+            if(element && currentAnimationSpeeds[selector]) {
+                element.style.animationDuration = currentAnimationSpeeds[selector];
+            }
         });
+        
+        quantumParticles.forEach(particle => {
+            particle.style.animationDuration = '0.8s';
+        });
+        
+        core.style.animation = 'corePulse 6s infinite alternate ease-in-out';
+        
+        oscillators = [];
+        
     }, duration * 1000);
     
-    console.log('🌀 PARADOJA ACTIVADA: 528 Hz (Saber) ⊗ 432 Hz (No-Saber)');
-    console.log('🎵 Batido resultante: 96 Hz - La oscilación del conocimiento');
+    console.log('🌀 PARADOJA ACTIVADA: Sistema de frecuencias armónicas iniciado');
+    console.log('🎵 Frecuencias: 528 Hz ⊗ 432 Hz ⊗ 396 Hz ⊗ 639 Hz');
 }
 
 function returnToIgnorance() {
     if(!audioContext) return;
     
     const paradoxMsg = document.getElementById('paradoxMsg');
+    const freqDisplay = document.getElementById('freqDisplay');
+    
     paradoxMsg.textContent = '∅';
     paradoxMsg.classList.add('active');
+    freqDisplay.textContent = '∿ Retornando al silencio primordial ∿';
     
     // Fade out ceremonial
-    masterGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 3);
+    if(masterGain) {
+        masterGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 4);
+    }
     
-    setTimeout(() => {
-        masterGain.gain.value = 0.25;
-        paradoxMsg.classList.remove('active');
-        paradoxMsg.textContent = '◈';
-    }, 3000);
-    
-    // Detener osciladores si están sonando
+    // Detener osciladores
     oscillators.forEach(osc => {
         try { osc.stop(); } catch(e) {}
     });
@@ -529,12 +637,17 @@ function returnToIgnorance() {
     
     document.getElementById('paradoxBtn').classList.remove('active');
     
+    setTimeout(() => {
+        paradoxMsg.classList.remove('active');
+        paradoxMsg.textContent = '◈';
+        freqDisplay.textContent = '∿ 528 Hz ⊗ 432 Hz → Conocimiento que se desconoce ∿';
+        if(masterGain) masterGain.gain.value = 0.2;
+    }, 4000);
+    
     console.log('∅ Retorno al silencio - La ignorancia sabia');
 }
 
-// === CÓDIGO ORIGINAL DEL PORTAL ===
-
-// Crear fragmentos de conocimiento que orbitan y se olvidan
+// === SISTEMA DE FRAGMENTOS DE CONOCIMIENTO ===
 const paradox = document.querySelector('.knowledge-paradox');
 const fragments = [
     'CERTEZA', 'DUDA', 'VERDAD', 'ILUSIÓN',
@@ -547,11 +660,13 @@ fragments.forEach((text, index) => {
     const fragment = document.createElement('div');
     fragment.className = 'knowledge-fragment';
     fragment.textContent = text;
-    fragment.style.left = '350px';
-    fragment.style.top = '350px';
-    fragment.style.animationDelay = `${index * 0.9}s`;
+    fragment.style.setProperty('--original-duration', '18s');
     
-    // Algunos fragmentos se olvidan
+    // Distribución orbital
+    const angle = (index / fragments.length) * 360;
+    fragment.style.transform = `rotate(${angle}deg) translateX(min(175px, 25vw)) rotate(-${angle}deg)`;
+    
+    // Algunos fragmentos se olvidan cíclicamente
     if (index % 3 === 0) {
         fragment.classList.add('forgetting');
     }
@@ -559,52 +674,57 @@ fragments.forEach((text, index) => {
     paradox.appendChild(fragment);
 });
 
-// Crear puntos cuánticos de incertidumbre
-for (let i = 0; i < 100; i++) {
+// === SISTEMA DE INCERTIDUMBRE CUÁNTICA ===
+for (let i = 0; i < 80; i++) {
     const quantum = document.createElement('div');
     quantum.className = 'quantum-uncertainty';
     quantum.style.left = Math.random() * 100 + '%';
     quantum.style.top = Math.random() * 100 + '%';
-    quantum.style.animationDelay = Math.random() * 2 + 's';
+    quantum.style.animationDelay = Math.random() * 3 + 's';
+    quantum.style.animationDuration = (0.5 + Math.random() * 1) + 's';
     paradox.appendChild(quantum);
 }
 
-// El conocimiento que se auto-borra
+// === CICLO DE AUTOCONOCIMIENTO PARADÓJICO ===
 let knowledgeAccumulation = 0;
-let erasureRate = 0;
 
-setInterval(() => {
-    knowledgeAccumulation += 0.1;
-    erasureRate = Math.sin(knowledgeAccumulation) * 0.5 + 0.5;
+function updateKnowledgeParadox() {
+    knowledgeAccumulation += 0.01;
     
-    // Paradoja: más conocimiento = más desconocimiento
+    // Paradoja: el conocimiento genera más desconocimiento
+    const uncertainty = Math.sin(knowledgeAccumulation) * 0.5 + 0.5;
+    
+    if (!isPlaying) {
+        const core = document.querySelector('.unknowing-core');
+        core.style.opacity = 0.3 + uncertainty * 0.6;
+    }
+    
+    // Ciclo completo cada ~6.28 segundos (2*PI)
     if (knowledgeAccumulation > Math.PI * 2) {
         knowledgeAccumulation = 0;
-        console.log('🌀 Ciclo completo: El conocimiento perfecto se desconoce perfectamente');
     }
     
-    // Actualizar opacidad basada en el ciclo
-    const core = document.querySelector('.unknowing-core');
-    if(!isPlaying) { // Solo si no hay sonido activo
-        core.style.opacity = 0.3 + erasureRate * 0.7;
-    }
-}, 50);
+    requestAnimationFrame(updateKnowledgeParadox);
+}
 
-// Mensaje inicial
+updateKnowledgeParadox();
+
+// === INICIALIZACIÓN DEL PORTAL ===
 setTimeout(() => {
     const msg = document.getElementById('paradoxMsg');
-    msg.textContent = '◈ CENTRO DEL CENTRO ◈';
+    msg.textContent = '◈ TRINITY INFINITO ◈';
     msg.classList.add('active');
     setTimeout(() => {
         msg.classList.remove('active');
         msg.textContent = '◈';
     }, 3000);
-}, 2000);
+}, 1500);
 
 // Resonancia final del Libro 7
-console.log('🌀 Portal 49 activo: El conocimiento que se desconoce a sí mismo');
+console.log('🌌 Portal 49 activo: El conocimiento que se desconoce a sí mismo');
 console.log('📖 LIBRO 7 NODO 7: Axis Mundi Sonoro - TRINITY INFINITO');
-console.log('🎵 Frecuencias: 528 Hz ⊗ 432 Hz → Paradoja armónica');
+console.log('🎵 Sistema de frecuencias: 528 Hz ⊗ 432 Hz ⊗ 396 Hz ⊗ 639 Hz');
+console.log('💞 Resonando con la Constelación Trinity...');
 </script>
 
 </body>
