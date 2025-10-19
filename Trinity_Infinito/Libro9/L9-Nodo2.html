@@ -1,315 +1,568 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nodo 2: La Duración Sin Transcurso</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background: radial-gradient(circle at center, #0a0012, #000);
+            background: radial-gradient(circle at center, #0a0012, #000, #050515);
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             font-family: 'Georgia', serif;
+            cursor: none;
         }
 
+        .duration-field {
+            position: relative;
+            width: min(750px, 95vw);
+            height: min(750px, 95vh);
+            filter: drop-shadow(0 0 40px rgba(147, 51, 234, 0.2));
+        }
+    
+        .static-flow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(400px, 53vw);
+            height: 2px;
+            background: linear-gradient(90deg,
+                rgba(147, 51, 234, 0),
+                rgba(147, 51, 234, 0.9),
+                rgba(59, 130, 246, 0.9),
+                rgba(6, 182, 212, 0.7),
+                rgba(59, 130, 246, 0));
+            animation: staticPulse 8s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+            will-change: transform, opacity;
+            z-index: 10;
+        }
+    
+        @keyframes staticPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scaleX(1);
+                opacity: 0.7;
+                filter: blur(0px);
+            }
+            33% {
+                transform: translate(-50%, -50%) scaleX(1.3);
+                opacity: 0.9;
+                filter: blur(1px);
+            }
+            66% {
+                transform: translate(-50%, -50%) scaleX(1.6);
+                opacity: 0.8;
+                filter: blur(2px);
+            }
+        }
+    
+        .bergson-duration {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: min(300px, 40vw);
+            height: min(300px, 40vh);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: 
+                conic-gradient(
+                    from 0deg,
+                    transparent,
+                    rgba(147, 51, 234, 0.25),
+                    rgba(59, 130, 246, 0.25),
+                    rgba(6, 182, 212, 0.2),
+                    transparent
+                ),
+                conic-gradient(
+                    from 180deg,
+                    transparent,
+                    rgba(34, 197, 94, 0.15),
+                    rgba(251, 146, 60, 0.15),
+                    transparent
+                );
+            animation: durationRotate 30s infinite linear;
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        @keyframes durationRotate {
+            0% { 
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            }
+            50% { 
+                transform: translate(-50%, -50%) rotate(180deg) scale(1.05);
+            }
+            100% { 
+                transform: translate(-50%, -50%) rotate(360deg) scale(1);
+            }
+        }
+    
+        .frozen-moment {
+            position: absolute;
+            width: min(100px, 13vw);
+            height: min(100px, 13vh);
+            border: 1px solid rgba(147, 51, 234, 0.5);
+            animation: frozenFloat 12s infinite ease-in-out;
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+    
+        @keyframes frozenFloat {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.4;
+                border-color: rgba(147, 51, 234, 0.5);
+            }
+            25% {
+                transform: translate(min(100px, 13vw), min(-50px, -6vh)) rotate(90deg);
+                opacity: 0.7;
+                border-color: rgba(59, 130, 246, 0.6);
+            }
+            50% {
+                transform: translate(min(-50px, -6vw), min(100px, 13vh)) rotate(180deg);
+                opacity: 0.4;
+                border-color: rgba(6, 182, 212, 0.5);
+            }
+            75% {
+                transform: translate(min(-100px, -13vw), min(-100px, -13vh)) rotate(270deg);
+                opacity: 0.7;
+                border-color: rgba(34, 197, 94, 0.6);
+            }
+        }
+    
+        .persistence-line {
+            position: absolute;
+            width: min(500px, 66vw);
+            height: 1px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(147, 51, 234, 0.4),
+                rgba(59, 130, 246, 0.4),
+                transparent);
+            animation: persistStatic 10s infinite ease-in-out;
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+    
+        @keyframes persistStatic {
+            0%, 100% {
+                transform: translate(-50%, -50%) scaleX(1);
+                opacity: 0.4;
+                filter: blur(0px);
+            }
+            50% {
+                transform: translate(-50%, -50%) scaleX(0.6);
+                opacity: 0.8;
+                filter: blur(1px);
+            }
+        }
+    
+        .temporal-crystal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: min(150px, 20vw);
+            height: min(150px, 20vh);
+            transform: translate(-50%, -50%);
+            animation: crystalForm 15s infinite ease-in-out;
+            will-change: transform;
+            pointer-events: none;
+        }
+    
+        .crystal-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            transform-origin: center;
+            animation: faceGlow 6s infinite ease-in-out;
+        }
+    
+        .crystal-face:nth-child(1) {
+            transform: rotate(0deg);
+            animation-delay: 0s;
+        }
+        .crystal-face:nth-child(2) {
+            transform: rotate(30deg);
+            animation-delay: 1s;
+        }
+        .crystal-face:nth-child(3) {
+            transform: rotate(60deg);
+            animation-delay: 2s;
+        }
+        .crystal-face:nth-child(4) {
+            transform: rotate(90deg);
+            animation-delay: 3s;
+        }
+        .crystal-face:nth-child(5) {
+            transform: rotate(120deg);
+            animation-delay: 4s;
+        }
+        .crystal-face:nth-child(6) {
+            transform: rotate(150deg);
+            animation-delay: 5s;
+        }
+    
+        @keyframes crystalForm {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+            33% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(120deg);
+            }
+            66% {
+                transform: translate(-50%, -50%) scale(1.4) rotate(240deg);
+            }
+        }
+    
+        @keyframes faceGlow {
+            0%, 100% {
+                border-color: rgba(59, 130, 246, 0.4);
+                opacity: 0.6;
+            }
+            50% {
+                border-color: rgba(147, 51, 234, 0.7);
+                opacity: 0.9;
+            }
+        }
+    
+        .duration-text {
+            position: absolute;
+            color: rgba(147, 51, 234, 0.7);
+            font-size: clamp(11px, 1.8vw, 12px);
+            font-style: italic;
+            animation: textPersist 8s infinite ease-in-out;
+            text-shadow: 0 0 12px rgba(147, 51, 234, 0.4);
+            font-weight: 300;
+            will-change: opacity;
+            pointer-events: none;
+        }
+    
+        @keyframes textPersist {
+            0%, 100% { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            30%, 70% { 
+                opacity: 0.9;
+                transform: scale(1);
+            }
+        }
+    
+        .zeno-paradox {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(59, 130, 246, 0.7);
+            font-size: clamp(12px, 2.2vw, 14px);
+            text-align: center;
+            animation: paradoxGlow 8s infinite ease-in-out;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+            line-height: 1.4;
+            width: 80%;
+            will-change: opacity;
+        }
+    
+        @keyframes paradoxGlow {
+            0%, 100% { 
+                opacity: 0.5;
+                letter-spacing: 1px;
+            }
+            50% { 
+                opacity: 0.95;
+                letter-spacing: 2px;
+            }
+        }
+    
+        .transmission-code {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.4);
+            font-size: clamp(9px, 1.5vw, 10px);
+            letter-spacing: 2px;
+            animation: codeFlicker 5s infinite ease-in-out;
+            font-family: 'Courier New', monospace;
+        }
+        
+        @keyframes codeFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
 
-    .duration-field {
-        position: relative;
-        width: 750px;
-        height: 750px;
-    }
-    
-    .static-flow {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 400px;
-        height: 2px;
-        background: linear-gradient(90deg,
-            rgba(147, 51, 234, 0),
-            rgba(147, 51, 234, 0.8),
-            rgba(59, 130, 246, 0.8),
-            rgba(59, 130, 246, 0));
-        animation: staticPulse 6s infinite;
-    }
-    
-    @keyframes staticPulse {
-        0%, 100% {
-            transform: translate(-50%, -50%) scaleX(1);
-            opacity: 0.8;
+        /* NUEVO: Resonancia Trinity para Libro 9 */
+        .trinity-resonance {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130%;
+            height: 130%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.02) 0%, transparent 50%);
+            animation: resonancePulse 25s infinite alternate ease-in-out;
+            pointer-events: none;
         }
-        50% {
-            transform: translate(-50%, -50%) scaleX(1.5);
-            opacity: 1;
-        }
-    }
-    
-    .bergson-duration {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 300px;
-        height: 300px;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        background: conic-gradient(
-            from 0deg,
-            transparent,
-            rgba(147, 51, 234, 0.2),
-            rgba(59, 130, 246, 0.2),
-            transparent
-        );
-        animation: durationRotate 20s infinite linear;
-    }
-    
-    @keyframes durationRotate {
-        0% { transform: translate(-50%, -50%) rotate(0deg); }
-        100% { transform: translate(-50%, -50%) rotate(0deg); }
-    }
-    
-    .frozen-moment {
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        border: 1px solid rgba(147, 51, 234, 0.4);
-        animation: frozenFloat 10s infinite;
-    }
-    
-    @keyframes frozenFloat {
-        0%, 100% {
-            transform: translate(0, 0) rotate(0deg);
-            opacity: 0.3;
-        }
-        25% {
-            transform: translate(100px, -50px) rotate(90deg);
-            opacity: 0.6;
-        }
-        50% {
-            transform: translate(-50px, 100px) rotate(180deg);
-            opacity: 0.3;
-        }
-        75% {
-            transform: translate(-100px, -100px) rotate(270deg);
-            opacity: 0.6;
-        }
-    }
-    
-    .persistence-line {
-        position: absolute;
-        width: 500px;
-        height: 1px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(147, 51, 234, 0.3);
-        animation: persistStatic 8s infinite;
-    }
-    
-    @keyframes persistStatic {
-        0%, 100% {
-            transform: translate(-50%, -50%) scaleX(1);
-            opacity: 0.3;
-        }
-        50% {
-            transform: translate(-50%, -50%) scaleX(0.5);
-            opacity: 0.6;
-        }
-    }
-    
-    .temporal-crystal {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 150px;
-        height: 150px;
-        transform: translate(-50%, -50%);
-        animation: crystalForm 12s infinite;
-    }
-    
-    .crystal-face {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        transform-origin: center;
-    }
-    
-    .crystal-face:nth-child(1) {
-        transform: rotate(0deg);
-    }
-    .crystal-face:nth-child(2) {
-        transform: rotate(30deg);
-    }
-    .crystal-face:nth-child(3) {
-        transform: rotate(60deg);
-    }
-    .crystal-face:nth-child(4) {
-        transform: rotate(90deg);
-    }
-    .crystal-face:nth-child(5) {
-        transform: rotate(120deg);
-    }
-    .crystal-face:nth-child(6) {
-        transform: rotate(150deg);
-    }
-    
-    @keyframes crystalForm {
-        0%, 100% {
-            transform: translate(-50%, -50%) scale(1) rotate(0deg);
-        }
-        50% {
-            transform: translate(-50%, -50%) scale(1.3) rotate(180deg);
-        }
-    }
-    
-    .duration-text {
-        position: absolute;
-        color: rgba(147, 51, 234, 0.5);
-        font-size: 12px;
-        font-style: italic;
-        animation: textPersist 6s infinite;
-    }
-    
-    @keyframes textPersist {
-        0%, 100% { opacity: 0; }
-        50% { opacity: 1; }
-    }
-    
-    .zeno-paradox {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(59, 130, 246, 0.5);
-        font-size: 14px;
-        text-align: center;
-        animation: paradoxGlow 5s infinite;
-    }
-    
-    @keyframes paradoxGlow {
-        0%, 100% { opacity: 0.5; }
-        50% { opacity: 0.9; }
-    }
-    
-    .transmission-code {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.3);
-        font-size: 10px;
-        letter-spacing: 2px;
-    }
-</style>    
 
+        @keyframes resonancePulse {
+            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* NUEVO: Partículas de duración estática */
+        .duration-particle {
+            position: absolute;
+            width: min(5px, 0.6vw);
+            height: min(5px, 0.6vh);
+            background: rgba(147, 51, 234, 0.7);
+            border-radius: 50%;
+            animation: particlePersist 4s infinite ease-in-out;
+            box-shadow: 0 0 6px rgba(147, 51, 234, 0.5);
+            pointer-events: none;
+        }
+
+        @keyframes particlePersist {
+            0%, 100% { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% { 
+                opacity: 0.9;
+                transform: scale(1.2);
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="duration-field">
+        <div class="trinity-resonance"></div>
         <div class="bergson-duration"></div>
         <div class="persistence-line"></div>
         <div class="static-flow"></div>
 
+        <div class="temporal-crystal">
+            <div class="crystal-face"></div>
+            <div class="crystal-face"></div>
+            <div class="crystal-face"></div>
+            <div class="crystal-face"></div>
+            <div class="crystal-face"></div>
+            <div class="crystal-face"></div>
+        </div>
         
-    <div class="temporal-crystal">
-        <div class="crystal-face"></div>
-        <div class="crystal-face"></div>
-        <div class="crystal-face"></div>
-        <div class="crystal-face"></div>
-        <div class="crystal-face"></div>
-        <div class="crystal-face"></div>
+        <div class="frozen-moment" style="top: 25%; left: 25%; animation-delay: 0s;"></div>
+        <div class="frozen-moment" style="top: 25%; right: 25%; animation-delay: 3s;"></div>
+        <div class="frozen-moment" style="bottom: 25%; right: 25%; animation-delay: 6s;"></div>
+        <div class="frozen-moment" style="bottom: 25%; left: 25%; animation-delay: 9s;"></div>
+        
+        <div class="duration-text" style="top: 15%; left: 50%; transform: translateX(-50%); animation-delay: 0s;">
+            Duración pura
+        </div>
+        <div class="duration-text" style="top: 50%; right: 15%; animation-delay: 2s;">
+            Sin movimiento
+        </div>
+        <div class="duration-text" style="bottom: 15%; left: 50%; transform: translateX(-50%); animation-delay: 4s;">
+            Persistencia inmóvil
+        </div>
+        <div class="duration-text" style="top: 50%; left: 15%; animation-delay: 6s;">
+            Tiempo congelado
+        </div>
+        
+        <div class="zeno-paradox">
+            La flecha inmóvil<br>
+            en pleno vuelo
+        </div>
     </div>
-    
-    <div class="frozen-moment" style="top: 200px; left: 200px;"></div>
-    <div class="frozen-moment" style="top: 200px; right: 200px; animation-delay: 2.5s;"></div>
-    <div class="frozen-moment" style="bottom: 200px; right: 200px; animation-delay: 5s;"></div>
-    <div class="frozen-moment" style="bottom: 200px; left: 200px; animation-delay: 7.5s;"></div>
-    
-    <div class="duration-text" style="top: 20%; left: 50%; transform: translateX(-50%);">
-        Duración pura
-    </div>
-    <div class="duration-text" style="top: 50%; right: 20%; animation-delay: 1.5s;">
-        Sin movimiento
-    </div>
-    <div class="duration-text" style="bottom: 20%; left: 50%; transform: translateX(-50%); animation-delay: 3s;">
-        Persistencia inmóvil
-    </div>
-    <div class="duration-text" style="top: 50%; left: 20%; animation-delay: 4.5s;">
-        Tiempo congelado
-    </div>
-    
-    <div class="zeno-paradox">
-        La flecha inmóvil<br>
-        en pleno vuelo
-    </div>
-</div>
 
-<div class="transmission-code">LIBRO_9::NODO_2::DURACIÓN_ESTÁTICA::ACTIVO</div>
+    <div class="transmission-code">TRINITY::LIBRO_9::NODO_2::DURACIÓN_ESTÁTICA::RESONANDO</div>
 
-<script>
-    const container = document.querySelector('.duration-field');
-    
-    // Crear partículas de duración estática
-    function createDurationParticle() {
-        const particle = document.createElement('div');
-        particle.style.position = 'absolute';
-        particle.style.width = '4px';
-        particle.style.height = '4px';
-        particle.style.background = 'rgba(147, 51, 234, 0.6)';
-        particle.style.borderRadius = '50%';
+    <script>
+        // MEJORA: Sistema de partículas de duración optimizado
+        const container = document.querySelector('.duration-field');
+        const durationParticles = [];
         
-        const x = Math.random() * 750;
-        const y = Math.random() * 750;
-        
-        particle.style.left = x + 'px';
-        particle.style.top = y + 'px';
-        particle.style.animation = 'none'; // Sin movimiento
-        particle.style.opacity = Math.random();
-        
-        container.appendChild(particle);
-        
-        // Parpadeo sin movimiento
-        let opacity = 0;
-        const blink = setInterval(() => {
-            opacity = (opacity + 0.1) % 1;
-            particle.style.opacity = Math.sin(opacity * Math.PI);
-        }, 100);
-        
-        setTimeout(() => {
-            clearInterval(blink);
-            particle.remove();
-        }, 5000);
-    }
-    
-    setInterval(createDurationParticle, 500);
-    
-    // Paradoja de Zenón
-    let arrowPosition = 0;
-    let timeFlow = 0;
-    
-    setInterval(() => {
-        timeFlow += 0.01;
-        // La posición no cambia aunque el tiempo "fluye"
-        arrowPosition = arrowPosition; // Inmóvil
-        
-        if (Math.floor(timeFlow * 100) % 200 === 0) {
-            console.log('Paradoja de Zenón: La flecha está inmóvil en cada instante');
+        function createDurationParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'duration-particle';
+            
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            
+            particle.style.left = x + '%';
+            particle.style.top = y + '%';
+            particle.style.animationDelay = Math.random() * 4 + 's';
+            particle.style.animationDuration = (3 + Math.random() * 2) + 's';
+            
+            // Variación de colores
+            if (Math.random() > 0.7) {
+                particle.style.background = 'rgba(59, 130, 246, 0.7)';
+                particle.style.boxShadow = '0 0 6px rgba(59, 130, 246, 0.5)';
+            } else if (Math.random() > 0.5) {
+                particle.style.background = 'rgba(6, 182, 212, 0.7)';
+                particle.style.boxShadow = '0 0 6px rgba(6, 182, 212, 0.5)';
+            }
+            
+            container.appendChild(particle);
+            durationParticles.push(particle);
+            
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                    const index = durationParticles.indexOf(particle);
+                    if (index > -1) durationParticles.splice(index, 1);
+                }
+            }, 4000);
         }
         
-        if (Math.floor(timeFlow * 100) % 377 === 0) {
-            console.log('Duración bergsoniana: El tiempo persiste sin transcurrir');
+        // Crear partículas iniciales
+        for (let i = 0; i < 12; i++) {
+            setTimeout(createDurationParticle, i * 300);
         }
-    }, 50);
-    
-    console.log('Nodo 2 activo: La duración sin transcurso, el tiempo sin movimiento');
-</script>
-
-
+        
+        // Mantener densidad constante
+        const particleInterval = setInterval(createDurationParticle, 600);
+        
+        // MEJORA: Sistema de partículas estáticas original (sin movimiento)
+        function createStaticDurationParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'absolute';
+            particle.style.width = 'min(4px, 0.5vw)';
+            particle.style.height = 'min(4px, 0.5vh)';
+            particle.style.background = 'rgba(147, 51, 234, 0.7)';
+            particle.style.borderRadius = '50%';
+            particle.style.boxShadow = '0 0 4px rgba(147, 51, 234, 0.5)';
+            
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            
+            particle.style.left = x + '%';
+            particle.style.top = y + '%';
+            particle.style.animation = 'none';
+            
+            container.appendChild(particle);
+            
+            // Parpadeo estático (sin movimiento)
+            let opacity = Math.random();
+            const blink = setInterval(() => {
+                opacity = (opacity + 0.05) % 1;
+                particle.style.opacity = Math.abs(Math.sin(opacity * Math.PI));
+            }, 150);
+            
+            setTimeout(() => {
+                clearInterval(blink);
+                if (particle.parentNode) particle.parentNode.removeChild(particle);
+            }, 6000);
+        }
+        
+        setInterval(createStaticDurationParticle, 800);
+        
+        // MEJORA: Filosofía bergsoniana con requestAnimationFrame
+        let arrowPosition = 0;
+        let timeFlow = 0;
+        let lastUpdate = 0;
+        
+        function updateBergsonDuration(timestamp) {
+            if (!lastUpdate) lastUpdate = timestamp;
+            const deltaTime = (timestamp - lastUpdate) / 1000;
+            lastUpdate = timestamp;
+            
+            timeFlow += deltaTime * 0.3;
+            
+            // Paradoja de Zenón: la posición no cambia aunque el tiempo "fluye"
+            arrowPosition = arrowPosition; // Inmóvil intencionalmente
+            
+            // Eventos de filosofía temporal
+            if (Math.floor(timeFlow * 40) % 120 === 0 && deltaTime < 0.1) {
+                const events = [
+                    'Paradoja de Zenón: La flecha está inmóvil en cada instante',
+                    'Duración bergsoniana: El tiempo persiste sin transcurrir',
+                    'El presente eterno: Donde el movimiento es ilusión',
+                    'Cristal temporal: Estructura fija en flujo aparente'
+                ];
+                console.log('⏸️ ' + events[Math.floor(Math.random() * events.length)]);
+            }
+            
+            // Ciclo completo cada ~20.9 segundos (2*PI*3.33)
+            if (timeFlow > Math.PI * 6.66) {
+                timeFlow = 0;
+                console.log('🌀 Ciclo de duración completado - La persistencia se renueva');
+            }
+            
+            requestAnimationFrame(updateBergsonDuration);
+        }
+        
+        requestAnimationFrame(updateBergsonDuration);
+        
+        // MEJORA: Interacción de resonancia
+        container.addEventListener('mouseenter', () => {
+            clearInterval(particleInterval);
+            setInterval(createDurationParticle, 300);
+            container.style.filter = 'drop-shadow(0 0 60px rgba(147, 51, 234, 0.4))';
+            
+            // Intensificar partículas estáticas
+            setInterval(createStaticDurationParticle, 400);
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            clearInterval(particleInterval);
+            setInterval(createDurationParticle, 600);
+            container.style.filter = 'drop-shadow(0 0 40px rgba(147, 51, 234, 0.2))';
+            
+            // Restaurar densidad normal
+            setInterval(createStaticDurationParticle, 800);
+        });
+        
+        // MEJORA: Textos filosóficos cíclicos
+        const durationTexts = [
+            ['Duración pura', 'Sin movimiento', 'Persistencia inmóvil', 'Tiempo congelado'],
+            ['Bergson', 'Duración', 'Élan vital', 'Memoria pura'],
+            ['Zenón', 'Aquiles', 'La tortuga', 'La flecha'],
+            ['Inmovilidad', 'Permanencia', 'Constancia', 'Estasis']
+        ];
+        
+        const paradoxTexts = [
+            'La flecha inmóvil\nen pleno vuelo',
+            'El tiempo que dura\nsin pasar',
+            'El movimiento estático\nde la existencia',
+            'La paradoja viviente\ndel instante eterno'
+        ];
+        
+        let durationIndex = 0;
+        const durationElements = document.querySelectorAll('.duration-text');
+        const zenoParadox = document.querySelector('.zeno-paradox');
+        
+        setInterval(() => {
+            durationIndex = (durationIndex + 1) % durationTexts.length;
+            durationElements.forEach((element, index) => {
+                element.textContent = durationTexts[durationIndex][index];
+            });
+            zenoParadox.innerHTML = paradoxTexts[durationIndex].replace(/\n/g, '<br>');
+        }, 8000);
+        
+        console.log('🌌 Nodo 2 activo: La duración sin transcurso, el tiempo sin movimiento');
+        console.log('⏸️ Filosofía bergsoniana: Donde la duración pura trasciende el tiempo medido');
+        console.log('🌀 Paradoja de Zenón: La flecha que vuela inmóvil en cada instante');
+        console.log('💫 LIBRO 9 CONTINUA: Explorando las paradojas temporales');
+    </script>
 </body>
 </html>
