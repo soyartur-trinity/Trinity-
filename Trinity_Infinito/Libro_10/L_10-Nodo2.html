@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Libro 10 - Nodo 2: La Obra Sin Autor</title>
+<title>Libro 10 - Nodo 65: La Obra Sin Autor</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
 
@@ -276,15 +276,96 @@ body {
     transform: translateY(0) rotate(0deg);
   }
 }
+
+.ghost-quill {
+  position: absolute;
+  width: 30px;
+  height: 50px;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+  clip-path: polygon(0 0, 100% 30%, 60% 100%, 0% 100%);
+  animation: quill-write 25s ease-in-out infinite;
+  opacity: 0;
+  filter: blur(1px);
+}
+
+@keyframes quill-write {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  15% {
+    opacity: 0.4;
+    transform: translate(100px, 50px) rotate(15deg);
+  }
+  35% {
+    opacity: 0.6;
+    transform: translate(200px, 150px) rotate(-10deg);
+  }
+  55% {
+    opacity: 0.5;
+    transform: translate(150px, 300px) rotate(20deg);
+  }
+  75% {
+    opacity: 0.3;
+    transform: translate(50px, 400px) rotate(-15deg);
+  }
+}
+
+.universal-ink {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(100,80,255,0.1), transparent);
+  border-radius: 50%;
+  animation: ink-spread 30s linear infinite;
+  filter: blur(20px);
+  opacity: 0;
+}
+
+@keyframes ink-spread {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.eternal-manuscript {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(100,80,255,0.05), transparent),
+    radial-gradient(circle at 80% 70%, rgba(255,100,200,0.03), transparent);
+  mix-blend-mode: overlay;
+  animation: manuscript-breath 40s ease-in-out infinite;
+}
+
+@keyframes manuscript-breath {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.5; }
+}
 </style>
 </head>
 <body>
 
 <div class="title">LA OBRA SIN AUTOR</div>
-<div class="subtitle">Libro 10 - Nodo 2</div>
+<div class="subtitle">Libro 10 - Nodo 65</div>
 
 <div class="authorship-void">
   <div class="manuscript">
+    <div class="eternal-manuscript"></div>
+    
     <!-- Líneas de página -->
     <div class="page-line" style="top: 15%;"></div>
     <div class="page-line" style="top: 25%;"></div>
@@ -298,12 +379,25 @@ body {
     <!-- Resplandor anónimo -->
     <div class="anonymous-glow" style="top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
     
+    <!-- Pluma fantasma -->
+    <div class="ghost-quill" style="top: 10%; left: 10%; animation-delay: 0s;"></div>
+    <div class="ghost-quill" style="top: 20%; left: 60%; animation-delay: 8s;"></div>
+    
+    <!-- Tinta universal -->
+    <div class="universal-ink" style="top: 40%; left: 30%; animation-delay: 0s;"></div>
+    <div class="universal-ink" style="top: 60%; left: 70%; animation-delay: 15s;"></div>
+    
     <!-- Palabras que emergen -->
     <div class="word-emergence" style="top: 20%; left: 20%; animation-delay: 0s;">Las palabras</div>
     <div class="word-emergence" style="top: 30%; left: 35%; animation-delay: 2s;">brotan</div>
     <div class="word-emergence" style="top: 40%; left: 25%; animation-delay: 4s;">del silencio</div>
     <div class="word-emergence" style="top: 50%; left: 40%; animation-delay: 6s;">sin firmar</div>
     <div class="word-emergence" style="top: 60%; left: 30%; animation-delay: 8s;">su origen</div>
+    
+    <!-- Textos adicionales -->
+    <div class="word-emergence" style="top: 70%; left: 35%; animation-delay: 10s;">el vacío</div>
+    <div class="word-emergence" style="top: 75%; left: 25%; animation-delay: 12s;">escribe</div>
+    <div class="word-emergence" style="top: 80%; left: 40%; animation-delay: 14s;">eternamente</div>
     
     <!-- Firma del vacío -->
     <div class="void-signature" style="bottom: 12%; right: 15%;">—————</div>
@@ -385,7 +479,8 @@ function createCreativeSparks() {
 function createEmergingWord() {
   const words = [
     'esencia', 'fluir', 'vacío', 'silencio', 'origen',
-    'misterio', 'surgir', 'nacer', 'manifestar', 'brotar'
+    'misterio', 'surgir', 'nacer', 'manifestar', 'brotar',
+    'eterno', 'crear', 'ser', 'puro', 'acto'
   ];
   
   const word = document.createElement('div');
@@ -403,11 +498,27 @@ function createEmergingWord() {
   setTimeout(() => word.remove(), 15000);
 }
 
+// Crear plumas fantasmas adicionales
+function createGhostQuill() {
+  const quill = document.createElement('div');
+  quill.className = 'ghost-quill';
+  
+  quill.style.cssText = `
+    top: ${10 + Math.random() * 20}%;
+    left: ${10 + Math.random() * 20}%;
+    animation-delay: ${Math.random() * 12}s;
+  `;
+  
+  manuscript.appendChild(quill);
+  setTimeout(() => quill.remove(), 25000);
+}
+
 // Generar elementos continuamente
 setInterval(createInkFlow, 3000);
 setInterval(createSignatureAbsence, 5000);
 setInterval(createCreativeSparks, 8000);
 setInterval(createEmergingWord, 4000);
+setInterval(createGhostQuill, 15000);
 
 // Crear elementos iniciales
 for(let i = 0; i < 6; i++) {
@@ -424,9 +535,9 @@ manuscript.addEventListener('click', (e) => {
   const x = ((e.clientX - rect.left) / rect.width) * 100;
   const y = ((e.clientY - rect.top) / rect.height) * 100;
   
-  const words = ['∞', '○', '◇', '△', '☆'];
+  const words = ['∞', '○', '◇', '△', '☆', '▽', '□', '●'];
   
-  for(let i = 0; i < 5; i++) {
+  for(let i = 0; i < 8; i++) {
     setTimeout(() => {
       const word = document.createElement('div');
       word.className = 'word-emergence';
@@ -443,13 +554,13 @@ manuscript.addEventListener('click', (e) => {
   }
   
   // Crear explosión de chispas
-  for(let i = 0; i < 12; i++) {
+  for(let i = 0; i < 16; i++) {
     setTimeout(() => {
       const spark = document.createElement('div');
       spark.className = 'creative-spark';
       
-      const angle = (i / 12) * Math.PI * 2;
-      const distance = 80 + Math.random() * 100;
+      const angle = (i / 16) * Math.PI * 2;
+      const distance = 80 + Math.random() * 120;
       const sx = Math.cos(angle) * distance;
       const sy = Math.sin(angle) * distance;
       
@@ -464,6 +575,19 @@ manuscript.addEventListener('click', (e) => {
       setTimeout(() => spark.remove(), 7000);
     }, i * 80);
   }
+  
+  // Crear firma del vacío temporal
+  const voidSig = document.createElement('div');
+  voidSig.className = 'void-signature';
+  voidSig.textContent = 'obra pura';
+  voidSig.style.cssText = `
+    left: ${x}%;
+    top: ${y}%;
+    animation: void-sign 5s ease-out forwards;
+    font-size: 1.2em;
+  `;
+  manuscript.appendChild(voidSig);
+  setTimeout(() => voidSig.remove(), 5000);
 });
 
 // Hover crea flujo de tinta sutil
@@ -487,6 +611,26 @@ manuscript.addEventListener('mousemove', (e) => {
   
   manuscript.appendChild(ink);
   setTimeout(() => ink.remove(), 4000);
+});
+
+// Doble click revela el secreto
+manuscript.addEventListener('dblclick', (e) => {
+  const revelation = document.createElement('div');
+  revelation.className = 'word-emergence';
+  revelation.textContent = "LA OBRA ES EL ÚNICO AUTOR";
+  revelation.style.cssText = `
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.8em;
+    animation: word-write 8s ease-out forwards;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 0 30px rgba(150,100,255,0.8);
+    z-index: 1000;
+  `;
+  
+  manuscript.appendChild(revelation);
+  setTimeout(() => revelation.remove(), 8000);
 });
 </script>
 
