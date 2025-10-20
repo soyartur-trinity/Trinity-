@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Libro 10 - Nodo 7: El Sueño Que Se Sueña Solo</title>
+<title>Libro 10 - Nodo 70: El Sueño Que Se Sueña Solo</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
 
@@ -326,17 +326,99 @@ body {
     opacity: 0.7;
   }
 }
+
+.dream-text {
+  position: absolute;
+  font-size: 1em;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.25em;
+  opacity: 0;
+  animation: dream-words 18s ease-in-out infinite;
+  text-shadow: 0 0 12px rgba(150,100,255,0.4);
+  transform-origin: center;
+}
+
+@keyframes dream-words {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.8) rotate(var(--rotation));
+  }
+  25%, 75% {
+    opacity: 0.6;
+    transform: translateY(0) scale(1) rotate(var(--rotation));
+  }
+}
+
+.eternal-dream {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(100,80,255,0.08), transparent),
+    radial-gradient(circle at 70% 60%, rgba(255,100,200,0.06), transparent);
+  mix-blend-mode: overlay;
+  animation: dream-breathe 25s ease-in-out infinite;
+}
+
+@keyframes dream-breathe {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+.lucid-moment {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent);
+  border-radius: 50%;
+  animation: lucid-spark 30s linear infinite;
+  filter: blur(20px);
+  opacity: 0;
+}
+
+@keyframes lucid-spark {
+  0% {
+    transform: translate(var(--l1x), var(--l1y)) scale(0);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(var(--l2x), var(--l2y)) scale(1.3);
+    opacity: 0.5;
+  }
+  40% {
+    transform: translate(var(--l3x), var(--l3y)) scale(0.8);
+    opacity: 0.3;
+  }
+  60% {
+    transform: translate(var(--l4x), var(--l4y)) scale(1.6);
+    opacity: 0.6;
+  }
+  80% {
+    transform: translate(var(--l5x), var(--l5y)) scale(0.7);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate(var(--l6x), var(--l6y)) scale(0);
+    opacity: 0;
+  }
+}
 </style>
 </head>
 <body>
 
 <div class="title">EL SUEÑO QUE SE SUEÑA SOLO</div>
-<div class="subtitle">Libro 10 - Nodo 7</div>
+<div class="subtitle">Libro 10 - Nodo 70</div>
 
 <div class="dream-realm">
   <div class="sleeping-void">
+    <div class="eternal-dream"></div>
+    
     <!-- Sueño del vacío -->
     <div class="void-sleep"></div>
+    
+    <!-- Momentos lúcidos -->
+    <div class="lucid-moment" style="--l1x: -200px; --l1y: -150px; --l2x: -100px; --l2y: -200px; --l3x: 50px; --l3y: -180px; --l4x: 150px; --l4y: -100px; --l5x: 120px; --l5y: 80px; --l6x: -80px; --l6y: 150px; animation-delay: 0s;"></div>
+    <div class="lucid-moment" style="--l1x: 150px; --l1y: -120px; --l2x: 200px; --l2y: -50px; --l3x: 180px; --l3y: 100px; --l4x: 50px; --l4y: 180px; --l5x: -100px; --l5y: 150px; --l6x: -150px; --l6y: 50px; animation-delay: 12s;"></div>
     
     <!-- Velo onírico -->
     <div class="dream-veil"></div>
@@ -354,6 +436,12 @@ body {
     <div class="dream-bubble" style="top: 25%; left: 30%; --bx: 80px; --by: -100px; animation-delay: 0s;"></div>
     <div class="dream-bubble" style="top: 65%; left: 65%; --bx: -70px; --by: 90px; animation-delay: 6s;"></div>
     <div class="dream-bubble" style="top: 45%; left: 75%; --bx: 60px; --by: -80px; animation-delay: 12s;"></div>
+    
+    <!-- Textos de sueño -->
+    <div class="dream-text" style="top: 25%; left: 20%; --rotation: -5deg; animation-delay: 3s;">ensoñación</div>
+    <div class="dream-text" style="top: 35%; left: 75%; --rotation: 3deg; animation-delay: 7s;">lucidez</div>
+    <div class="dream-text" style="top: 65%; left: 15%; --rotation: -2deg; animation-delay: 11s;">sueño</div>
+    <div class="dream-text" style="top: 75%; left: 70%; --rotation: 4deg; animation-delay: 15s;">vacío</div>
     
     <!-- Fragmentos de sueño -->
     <div class="dream-fragment" style="top: 22%; left: 50%; transform: translateX(-50%); animation-delay: 2s;">
@@ -455,10 +543,29 @@ function createDreamBubble() {
   setTimeout(() => bubble.remove(), 18000);
 }
 
+// Crear textos de sueño dinámicos
+function createDreamText() {
+  const texts = ['sueño', 'ensoñación', 'lucidez', 'vacío', 'imagen', 'símbolo', 'arquetipo', 'mito'];
+  const text = document.createElement('div');
+  text.className = 'dream-text';
+  text.textContent = texts[Math.floor(Math.random() * texts.length)];
+  
+  text.style.cssText = `
+    top: ${20 + Math.random() * 60}%;
+    left: ${15 + Math.random() * 70}%;
+    --rotation: ${Math.random() * 10 - 5}deg;
+    animation: dream-words ${16 + Math.random() * 10}s ease-in-out infinite;
+  `;
+  
+  dream.appendChild(text);
+  setTimeout(() => text.remove(), 26000);
+}
+
 // Generar elementos continuamente
 setInterval(createConsciousnessWisp, 3000);
 setInterval(createDreamParticles, 8000);
 setInterval(createDreamBubble, 5000);
+setInterval(createDreamText, 6000);
 
 // Crear elementos iniciales
 for(let i = 0; i < 10; i++) {
@@ -533,6 +640,22 @@ dream.addEventListener('click', (e) => {
       setTimeout(() => wisp.remove(), 5000);
     }, i * 120);
   }
+  
+  // Revelación onírica
+  const revelation = document.createElement('div');
+  revelation.className = 'central-text';
+  revelation.textContent = "EL SUEÑO\nES PURO";
+  revelation.style.cssText = `
+    left: ${x}px;
+    top: ${y}px;
+    transform: translate(-50%, -50%);
+    animation: text-dream 6s ease-out forwards;
+    font-size: 1.9em;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 0 30px rgba(150,100,255,0.8);
+  `;
+  dream.appendChild(revelation);
+  setTimeout(() => revelation.remove(), 6000);
 });
 
 // Hover crea estelas oníricas sutiles
@@ -557,6 +680,64 @@ dream.addEventListener('mousemove', (e) => {
   `;
   dream.appendChild(particle);
   setTimeout(() => particle.remove(), 4000);
+});
+
+// Doble click - Sueño lúcido máximo
+dream.addEventListener('dblclick', (e) => {
+  const revelation = document.createElement('div');
+  revelation.className = 'central-text';
+  revelation.textContent = "TODO\nES SUEÑO";
+  revelation.style.cssText = `
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: text-dream 12s ease-out forwards;
+    font-size: 2.4em;
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0 0 40px rgba(255,100,200,0.9);
+    z-index: 1000;
+  `;
+  
+  dream.appendChild(revelation);
+  setTimeout(() => revelation.remove(), 12000);
+  
+  // Explosión onírica máxima
+  for(let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const bubble = document.createElement('div');
+      bubble.className = 'dream-bubble';
+      bubble.style.cssText = `
+        left: 50%;
+        top: 50%;
+        --bx: ${(Math.random() - 0.5) * 200}px;
+        --by: ${(Math.random() - 0.5) * 200}px;
+        animation: bubble-float ${15 + i * 2}s ease-out forwards;
+        width: ${120 + Math.random() * 80}px;
+        height: ${120 + Math.random() * 80}px;
+      `;
+      dream.appendChild(bubble);
+      setTimeout(() => bubble.remove(), (15 + i * 2) * 1000);
+    }, i * 600);
+  }
+  
+  // Lluvia de partículas oníricas
+  for(let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const particle = document.createElement('div');
+      particle.className = 'dream-particle';
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 80 + Math.random() * 200;
+      particle.style.cssText = `
+        left: 50%;
+        top: 50%;
+        --px: ${Math.cos(angle) * distance}px;
+        --py: ${Math.sin(angle) * distance}px;
+        animation: particle-dream 20s ease-out forwards;
+      `;
+      dream.appendChild(particle);
+      setTimeout(() => particle.remove(), 20000);
+    }, i * 80);
+  }
 });
 </script>
 
