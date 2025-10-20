@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nodo 78: El Sonido del Silencio Absoluto | Libro 12</title>
+<title>Nodo 78: El Sonido del Silencio Absoluto</title>
 <style>
 * {
   margin: 0;
@@ -17,35 +17,6 @@ body {
   font-family: 'Courier New', monospace;
   color: rgba(255,255,255,0.9);
   height: 100vh;
-}
-
-.portal-header {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 1rem 2rem;
-  border-radius: 20px;
-  border: 1px solid rgba(100, 150, 200, 0.3);
-  backdrop-filter: blur(10px);
-  z-index: 100;
-  max-width: 90%;
-}
-
-.node-title {
-  font-size: 1.5rem;
-  margin-bottom: 0.3rem;
-  background: linear-gradient(45deg, #8ec5fc, #e0c3fc);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.node-subtitle {
-  font-size: 0.9rem;
-  opacity: 0.7;
 }
 
 .silence-field {
@@ -176,23 +147,34 @@ body {
 
 .silence-text {
   position: absolute;
-  bottom: 60px;
-  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255,255,255,0.1);
+  font-size: 16px;
+  letter-spacing: 8px;
   text-align: center;
-  color: rgba(255,255,255,0.2);
-  font-size: 14px;
-  letter-spacing: 3px;
-  animation: text-breathe 8s ease-in-out infinite;
+  animation: text-cosmic-breath 12s ease-in-out infinite;
+  pointer-events: none;
+  line-height: 1.8;
 }
 
-@keyframes text-breathe {
+@keyframes text-cosmic-breath {
   0%, 100% {
-    opacity: 0.1;
-    transform: scale(0.95);
+    opacity: 0.05;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  25% {
+    opacity: 0.15;
+    transform: translate(-50%, -50%) scale(1.02);
   }
   50% {
-    opacity: 0.3;
-    transform: scale(1.05);
+    opacity: 0.25;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  75% {
+    opacity: 0.15;
+    transform: translate(-50%, -50%) scale(1.02);
   }
 }
 
@@ -223,15 +205,10 @@ body {
 </head>
 <body>
 
-<div class="portal-header">
-  <h1 class="node-title">NODO 78: EL SONIDO DEL SILENCIO ABSOLUTO</h1>
-  <p class="node-subtitle">Libro 12 - La Palabra Antes del Verbo</p>
-</div>
-
 <div class="silence-field" id="silenceField">
   <div class="void-center"></div>
   <div class="absence-field"></div>
-  <div class="silence-text">EL SILENCIO QUE CONTIENE TODA POSIBILIDAD SONORA</div>
+  <div class="silence-text">EL SILENCIO<br>QUE CONTIENE<br>TODA POSIBILIDAD</div>
 </div>
 
 <script>
@@ -372,15 +349,22 @@ field.addEventListener('click', (e) => {
   }
 });
 
-// Efecto de respiración cósmica
-let breathPhase = 0;
+// Respiración cósmica sincronizada
+let cosmicBreath = 0;
 function updateCosmicBreath() {
-  breathPhase += 0.01;
+  cosmicBreath += 0.005;
+  const breath = Math.sin(cosmicBreath);
   
-  // Modificar opacidad de elementos basado en la respiración
-  const breath = Math.sin(breathPhase) * 0.3 + 0.4;
+  // Sincronizar elementos con la respiración
+  const waves = document.querySelectorAll('.silence-wave');
+  waves.forEach(wave => {
+    wave.style.opacity = (0.3 + breath * 0.2).toString();
+  });
   
-  // Puedes agregar más efectos de respiración aquí
+  const points = document.querySelectorAll('.potential-point');
+  points.forEach(point => {
+    point.style.opacity = (0.4 + breath * 0.3).toString();
+  });
   
   requestAnimationFrame(updateCosmicBreath);
 }
