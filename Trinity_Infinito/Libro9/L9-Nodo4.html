@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="temporal-state" content="asymptotic_past">
+    <meta name="quantum-paradox" content="zeno_approach">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23063d9e' opacity='0.6'/></svg>">
     <title>Nodo 4: El Pasado que No Ha Llegado</title>
     <style>
         body {
@@ -16,226 +18,375 @@
             align-items: center;
             height: 100vh;
             font-family: 'Times New Roman', serif;
+            cursor: crosshair;
         }
 
+        .unreached-past {
+            position: relative;
+            width: 800px;
+            height: 800px;
+        }
+        
+        .memory-horizon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center,
+                transparent 30%,
+                rgba(147, 51, 234, 0.05) 40%,
+                rgba(59, 130, 246, 0.1) 60%,
+                rgba(6, 182, 212, 0.05) 80%,
+                transparent 100%);
+            animation: horizonPulse 8s infinite alternate;
+        }
+        
+        @keyframes horizonPulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                filter: blur(0px);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.2);
+                filter: blur(3px);
+            }
+        }
+        
+        .approaching-past {
+            position: absolute;
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg,
+                rgba(147, 51, 234, 0.8),
+                transparent);
+            animation: pastApproach 6s infinite;
+            cursor: pointer;
+        }
+        
+        .approaching-past:hover {
+            background: linear-gradient(90deg,
+                rgba(147, 51, 234, 1),
+                rgba(59, 130, 246, 0.8));
+            height: 2px;
+        }
+        
+        @keyframes pastApproach {
+            0% {
+                transform: translateX(300px);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            99% {
+                transform: translateX(-50px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(300px);
+                opacity: 0;
+            }
+        }
+        
+        .temporal-asymptote {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            border: 1px dashed rgba(147, 51, 234, 0.3);
+            border-radius: 50%;
+            animation: asymptoteRotate 15s infinite linear;
+        }
+        
+        @keyframes asymptoteRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .unreachable-memory {
+            position: absolute;
+            color: rgba(147, 51, 234, 0.5);
+            font-size: 12px;
+            font-style: italic;
+            opacity: 0;
+            animation: memoryFade 7s infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .unreachable-memory:hover {
+            color: rgba(147, 51, 234, 0.9);
+            text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+            font-size: 14px;
+        }
+        
+        @keyframes memoryFade {
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .zeno-line {
+            position: absolute;
+            top: 50%;
+            width: 400px;
+            height: 1px;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(147, 51, 234, 0.4) 0,
+                rgba(147, 51, 234, 0.4) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            animation: zenoParadox 10s infinite;
+        }
+        
+        @keyframes zenoParadox {
+            0% {
+                left: 100%;
+            }
+            90% {
+                left: 50px;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        .eternal-approach {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            transform: translate(-50%, -50%);
+        }
+        
+        .approach-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            animation: approachShrink 5s infinite;
+        }
+        
+        @keyframes approachShrink {
+            0% {
+                transform: scale(2);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            90% {
+                transform: scale(0.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        .temporal-void {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle,
+                #000 40%,
+                transparent 60%);
+            animation: voidPulse 4s infinite;
+            cursor: pointer;
+        }
+        
+        .temporal-void:hover {
+            background: radial-gradient(circle,
+                rgba(147, 51, 234, 0.1) 40%,
+                transparent 60%);
+            animation: voidPulse 1s infinite;
+        }
+        
+        @keyframes voidPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+            }
+        }
+        
+        .paradox-inscription {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(59, 130, 246, 0.5);
+            font-size: 14px;
+            text-align: center;
+            animation: inscriptionGlow 6s infinite;
+            cursor: pointer;
+        }
+        
+        .paradox-inscription:hover {
+            color: rgba(59, 130, 246, 0.9);
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        @keyframes inscriptionGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.9; }
+        }
+        
+        .transmission-code {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(147, 51, 234, 0.3);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-align: center;
+        }
 
-    .unreached-past {
-        position: relative;
-        width: 800px;
-        height: 800px;
-    }
-    
-    .memory-horizon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 450px;
-        height: 450px;
-        border-radius: 50%;
-        background: radial-gradient(circle at center,
-            transparent 30%,
-            rgba(147, 51, 234, 0.05) 40%,
-            rgba(59, 130, 246, 0.1) 60%,
-            rgba(6, 182, 212, 0.05) 80%,
-            transparent 100%);
-        animation: horizonPulse 8s infinite alternate;
-    }
-    
-    @keyframes horizonPulse {
-        0% {
-            transform: translate(-50%, -50%) scale(1);
-            filter: blur(0px);
+        /* NUEVOS ELEMENTOS CUÁNTICOS */
+        .quantum-approach-field {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                conic-gradient(from 0deg at 50% 50%,
+                    transparent 0deg,
+                    rgba(59, 130, 246, 0.05) 90deg,
+                    transparent 180deg,
+                    rgba(147, 51, 234, 0.05) 270deg,
+                    transparent 360deg);
+            animation: fieldRotate 20s infinite linear;
+            pointer-events: none;
         }
-        100% {
-            transform: translate(-50%, -50%) scale(1.2);
-            filter: blur(3px);
+        
+        @keyframes fieldRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-    }
-    
-    .approaching-past {
-        position: absolute;
-        width: 100px;
-        height: 1px;
-        background: linear-gradient(90deg,
-            rgba(147, 51, 234, 0.8),
-            transparent);
-        animation: pastApproach 6s infinite;
-    }
-    
-    @keyframes pastApproach {
-        0% {
-            transform: translateX(300px);
-            opacity: 0;
+        
+        .asymptotic-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(6, 182, 212, 0.7);
+            border-radius: 50%;
+            animation: asymptoticOrbit 8s infinite linear;
+            pointer-events: none;
         }
-        50% {
-            opacity: 1;
+        
+        @keyframes asymptoticOrbit {
+            0% {
+                transform: rotate(0deg) translateX(200px) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg) translateX(200px) rotate(-360deg);
+                opacity: 0;
+            }
         }
-        99% {
-            transform: translateX(-50px);
-            opacity: 1;
+        
+        .zeno-point {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(147, 51, 234, 0.8);
+            border-radius: 50%;
+            animation: zenoDance 3s infinite alternate;
+            cursor: pointer;
         }
-        100% {
-            transform: translateX(300px);
-            opacity: 0;
+        
+        @keyframes zenoDance {
+            0% {
+                transform: translateX(0) scale(1);
+            }
+            100% {
+                transform: translateX(100px) scale(0.5);
+            }
         }
-    }
-    
-    .temporal-asymptote {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 300px;
-        height: 300px;
-        transform: translate(-50%, -50%);
-        border: 1px dashed rgba(147, 51, 234, 0.3);
-        border-radius: 50%;
-        animation: asymptoteRotate 15s infinite linear;
-    }
-    
-    @keyframes asymptoteRotate {
-        from { transform: translate(-50%, -50%) rotate(0deg); }
-        to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-    
-    .unreachable-memory {
-        position: absolute;
-        color: rgba(147, 51, 234, 0.5);
-        font-size: 12px;
-        font-style: italic;
-        opacity: 0;
-        animation: memoryFade 7s infinite;
-    }
-    
-    @keyframes memoryFade {
-        0%, 100% {
-            opacity: 0;
-            transform: translateX(50px);
+        
+        .paradox-control {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: rgba(59, 130, 246, 0.6);
+            font-size: 12px;
         }
-        50% {
-            opacity: 1;
-            transform: translateX(0);
+        
+        .control-text {
+            margin-bottom: 5px;
+            animation: controlPulse 5s infinite;
         }
-    }
-    
-    .zeno-line {
-        position: absolute;
-        top: 50%;
-        width: 400px;
-        height: 1px;
-        background: repeating-linear-gradient(
-            90deg,
-            rgba(147, 51, 234, 0.4) 0,
-            rgba(147, 51, 234, 0.4) 10px,
-            transparent 10px,
-            transparent 20px
-        );
-        animation: zenoParadox 10s infinite;
-    }
-    
-    @keyframes zenoParadox {
-        0% {
-            left: 100%;
+        
+        .approach-trigger {
+            color: rgba(147, 51, 234, 0.7);
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        90% {
-            left: 50px;
+        
+        .approach-trigger:hover {
+            color: rgba(147, 51, 234, 1);
+            text-shadow: 0 0 8px rgba(147, 51, 234, 0.5);
         }
-        100% {
-            left: 100%;
+        
+        @keyframes controlPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
-    }
-    
-    .eternal-approach {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 200px;
-        height: 200px;
-        transform: translate(-50%, -50%);
-    }
-    
-    .approach-ring {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        border-radius: 50%;
-        animation: approachShrink 5s infinite;
-    }
-    
-    @keyframes approachShrink {
-        0% {
-            transform: scale(2);
-            opacity: 0;
+        
+        .memory-fragment {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(147, 51, 234, 0.6);
+            border-radius: 50%;
+            animation: fragmentFloat 4s infinite;
+            pointer-events: none;
         }
-        50% {
-            opacity: 1;
+        
+        @keyframes fragmentFloat {
+            0%, 100% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
         }
-        90% {
-            transform: scale(0.1);
-            opacity: 1;
-        }
-        100% {
-            transform: scale(2);
-            opacity: 0;
-        }
-    }
-    
-    .temporal-void {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 50px;
-        height: 50px;
-        transform: translate(-50%, -50%);
-        background: radial-gradient(circle,
-            #000 40%,
-            transparent 60%);
-        animation: voidPulse 4s infinite;
-    }
-    
-    @keyframes voidPulse {
-        0%, 100% {
-            transform: translate(-50%, -50%) scale(1);
-        }
-        50% {
-            transform: translate(-50%, -50%) scale(1.5);
-        }
-    }
-    
-    .paradox-inscription {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(59, 130, 246, 0.5);
-        font-size: 14px;
-        text-align: center;
-        animation: inscriptionGlow 6s infinite;
-    }
-    
-    @keyframes inscriptionGlow {
-        0%, 100% { opacity: 0.5; }
-        50% { opacity: 0.9; }
-    }
-    
-    .transmission-code {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(147, 51, 234, 0.3);
-        font-size: 10px;
-        letter-spacing: 2px;
-    }
-</style>
-
-
+    </style>
 </head>
 <body>
     <div class="unreached-past">
+        <div class="quantum-approach-field"></div>
         <div class="memory-horizon"></div>
         <div class="temporal-asymptote"></div>
+        
         <div class="eternal-approach">
             <div class="approach-ring"></div>
             <div class="approach-ring" style="animation-delay: 1s;"></div>
@@ -243,103 +394,318 @@
             <div class="approach-ring" style="animation-delay: 3s;"></div>
             <div class="approach-ring" style="animation-delay: 4s;"></div>
         </div>
+        
         <div class="temporal-void"></div>
-
-
-    <div class="zeno-line"></div>
-    
-    <div class="approaching-past" style="top: 30%;"></div>
-    <div class="approaching-past" style="top: 40%; animation-delay: 1.5s;"></div>
-    <div class="approaching-past" style="top: 60%; animation-delay: 3s;"></div>
-    <div class="approaching-past" style="top: 70%; animation-delay: 4.5s;"></div>
-    
-    <div class="unreachable-memory" style="top: 25%; left: 25%;">
-        Memoria futura
-    </div>
-    <div class="unreachable-memory" style="top: 25%; right: 25%; animation-delay: 1.75s;">
-        Ayer venidero
-    </div>
-    <div class="unreachable-memory" style="bottom: 25%; right: 25%; animation-delay: 3.5s;">
-        Origen inalcanzable
-    </div>
-    <div class="unreachable-memory" style="bottom: 25%; left: 25%; animation-delay: 5.25s;">
-        Pasado asintótico
-    </div>
-    
-    <div class="paradox-inscription">
-        El pasado que siempre se acerca<br>
-        pero nunca llega
-    </div>
-</div>
-
-<div class="transmission-code">LIBRO_9::NODO_4::PASADO_ASINTÓTICO::ACTIVO</div>
-
-<script>
-    const container = document.querySelector('.unreached-past');
-    
-    // Crear fragmentos del pasado aproximándose
-    function createPastFragment() {
-        const fragment = document.createElement('div');
-        fragment.style.position = 'absolute';
-        fragment.style.width = '3px';
-        fragment.style.height = '3px';
-        fragment.style.background = 'rgba(147, 51, 234, 0.7)';
-        fragment.style.borderRadius = '50%';
+        <div class="zeno-line"></div>
         
-        const angle = Math.random() * Math.PI * 2;
-        const startRadius = 350;
+        <div class="zeno-point" style="top: 45%; left: 45%;"></div>
+        <div class="zeno-point" style="top: 55%; right: 45%; animation-delay: 1.5s;"></div>
         
-        fragment.style.left = (400 + Math.cos(angle) * startRadius) + 'px';
-        fragment.style.top = (400 + Math.sin(angle) * startRadius) + 'px';
+        <div class="approaching-past" style="top: 30%;"></div>
+        <div class="approaching-past" style="top: 40%; animation-delay: 1.5s;"></div>
+        <div class="approaching-past" style="top: 60%; animation-delay: 3s;"></div>
+        <div class="approaching-past" style="top: 70%; animation-delay: 4.5s;"></div>
         
-        container.appendChild(fragment);
+        <div class="unreachable-memory" style="top: 25%; left: 25%;">
+            Memoria futura
+        </div>
+        <div class="unreachable-memory" style="top: 25%; right: 25%; animation-delay: 1.75s;">
+            Ayer venidero
+        </div>
+        <div class="unreachable-memory" style="bottom: 25%; right: 25%; animation-delay: 3.5s;">
+            Origen inalcanzable
+        </div>
+        <div class="unreachable-memory" style="bottom: 25%; left: 25%; animation-delay: 5.25s;">
+            Pasado asintótico
+        </div>
         
-        // Aproximación asintótica
-        let radius = startRadius;
-        const approach = setInterval(() => {
-            radius *= 0.95; // Nunca llega a cero
-            if (radius < 10) {
-                radius = startRadius; // Reinicio
+        <div class="paradox-control">
+            <div class="control-text">PARADOJA ZENÓNICA ACTIVA</div>
+            <div class="approach-trigger">ACELERAR APROXIMACIÓN</div>
+        </div>
+        
+        <div class="paradox-inscription">
+            El pasado que siempre se acerca<br>
+            pero nunca llega
+        </div>
+    </div>
+
+    <div class="transmission-code">
+        LIBRO_9::NODO_4::PASADO_ASINTÓTICO::ACTIVO<br>
+        PARADOJA_ZENÓNICA::APROXIMACIÓN_ETERNAL
+    </div>
+
+    <script>
+        class AsymptoticPast {
+            constructor() {
+                this.container = document.querySelector('.unreached-past');
+                this.pastDistance = Infinity;
+                this.approachRate = 0;
+                this.zenoPoints = [];
+                this.init();
             }
+
+            init() {
+                this.createQuantumParticles();
+                this.setupInteractions();
+                this.startAsymptoticApproach();
+                this.createMemoryFragments();
+            }
+
+            createQuantumParticles() {
+                // Crear partículas en órbitas asintóticas
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => this.createAsymptoticParticle(), i * 300);
+                }
+            }
+
+            createAsymptoticParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'asymptotic-particle';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                particle.style.left = '50%';
+                particle.style.top = '50%';
+                this.container.appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                    this.createAsymptoticParticle(); // Crear nueva partícula
+                }, 8000);
+            }
+
+            createMemoryFragments() {
+                // Fragmentos de memoria flotantes
+                setInterval(() => {
+                    const fragment = document.createElement('div');
+                    fragment.className = 'memory-fragment';
+                    fragment.style.left = Math.random() * 100 + '%';
+                    fragment.style.top = Math.random() * 100 + '%';
+                    fragment.style.animationDelay = Math.random() * 4 + 's';
+                    this.container.appendChild(fragment);
+
+                    setTimeout(() => fragment.remove(), 4000);
+                }, 800);
+            }
+
+            setupInteractions() {
+                // Interacción con líneas de aproximación
+                document.querySelectorAll('.approaching-past').forEach(line => {
+                    line.addEventListener('click', (e) => {
+                        this.createApproachRipple(e.clientX, e.clientY);
+                        this.logParadoxEvent('Línea temporal interceptada');
+                    });
+                });
+
+                // Interacción con memorias inalcanzables
+                document.querySelectorAll('.unreachable-memory').forEach(memory => {
+                    memory.addEventListener('click', () => {
+                        this.triggerMemoryEcho(memory.textContent);
+                    });
+                });
+
+                // Interacción con el vacío temporal
+                document.querySelector('.temporal-void').addEventListener('click', () => {
+                    this.collapseApproach();
+                });
+
+                // Interacción con el trigger de aproximación
+                document.querySelector('.approach-trigger').addEventListener('click', () => {
+                    this.accelerateApproach();
+                });
+
+                // Interacción con la inscripción de paradoja
+                document.querySelector('.paradox-inscription').addEventListener('click', () => {
+                    this.revealZenonParadox();
+                });
+
+                // Efecto de observación con el mouse
+                document.addEventListener('mousemove', (e) => {
+                    this.handleObserverEffect(e);
+                });
+            }
+
+            createApproachRipple(x, y) {
+                const ripple = document.createElement('div');
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: 2px;
+                    height: 2px;
+                    background: rgba(59, 130, 246, 0.8);
+                    border-radius: 50%;
+                    left: ${x}px;
+                    top: ${y}px;
+                    pointer-events: none;
+                    animation: approachShrink 2s forwards;
+                `;
+                document.body.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 2000);
+            }
+
+            handleObserverEffect(e) {
+                // Efecto sutil de observación en el campo de aproximación
+                if (this.approachRate % 20 === 0) {
+                    const x = (e.clientX / window.innerWidth) * 100;
+                    const y = (e.clientY / window.innerHeight) * 100;
+                    
+                    const observerTrace = document.createElement('div');
+                    observerTrace.style.cssText = `
+                        position: absolute;
+                        width: 1px;
+                        height: 1px;
+                        background: rgba(6, 182, 212, 0.2);
+                        border-radius: 50%;
+                        left: ${x}%;
+                        top: ${y}%;
+                        pointer-events: none;
+                    `;
+                    this.container.appendChild(observerTrace);
+                    
+                    setTimeout(() => observerTrace.remove(), 2000);
+                }
+            }
+
+            triggerMemoryEcho(memoryText) {
+                // Crear eco de la memoria clickeada
+                const echo = document.createElement('div');
+                echo.textContent = memoryText;
+                echo.style.cssText = `
+                    position: absolute;
+                    color: rgba(147, 51, 234, 0.8);
+                    font-size: 14px;
+                    font-style: italic;
+                    pointer-events: none;
+                    animation: memoryFade 3s forwards;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                `;
+                this.container.appendChild(echo);
+
+                setTimeout(() => echo.remove(), 3000);
+                this.logParadoxEvent(`Eco de memoria: ${memoryText}`);
+            }
+
+            collapseApproach() {
+                // Efecto dramático de colapso de aproximación
+                document.querySelectorAll('.approach-ring').forEach(ring => {
+                    ring.style.animation = 'none';
+                    ring.offsetHeight; // Trigger reflow
+                    ring.style.animation = 'approachShrink 1s infinite';
+                });
+
+                this.logParadoxEvent('Vacío temporal activado - Colapso de aproximación');
+            }
+
+            accelerateApproach() {
+                // Acelerar temporalmente la aproximación
+                const rings = document.querySelectorAll('.approach-ring');
+                rings.forEach(ring => {
+                    ring.style.animationDuration = '1s';
+                });
+
+                setTimeout(() => {
+                    rings.forEach(ring => {
+                        ring.style.animationDuration = '5s';
+                    });
+                }, 3000);
+
+                this.logParadoxEvent('Aproximación acelerada por observación consciente');
+            }
+
+            revealZenonParadox() {
+                const inscription = document.querySelector('.paradox-inscription');
+                const originalText = inscription.innerHTML;
+                
+                inscription.innerHTML = 'El pasado está siempre a mitad de camino<br>pero el camino se divide infinitamente';
+                inscription.style.color = 'rgba(147, 51, 234, 0.9)';
+                
+                setTimeout(() => {
+                    inscription.innerHTML = originalText;
+                    inscription.style.color = 'rgba(59, 130, 246, 0.5)';
+                }, 3000);
+
+                this.logParadoxEvent('Paradoja de Zenón revelada: División infinita del espacio-tiempo');
+            }
+
+            startAsymptoticApproach() {
+                // Crear fragmentos del pasado aproximándose
+                setInterval(() => this.createPastFragment(), 300);
+                
+                // Bucle de paradoja principal
+                setInterval(() => {
+                    this.approachRate++;
+                    this.pastDistance = this.pastDistance / 2; // Siempre a mitad de camino
+                    
+                    if (this.approachRate % 100 === 0) {
+                        this.logParadoxEvent(`Distancia al pasado: ${this.pastDistance.toExponential(2)} - Nunca alcanzable`);
+                    }
+                    
+                    if (this.approachRate % 314 === 0) {
+                        this.logParadoxEvent('Paradoja: El pasado se aproxima eternamente sin llegar jamás');
+                    }
+                    
+                    if (this.pastDistance < 1e-10) {
+                        this.pastDistance = Infinity; // Reset
+                        this.logParadoxEvent('El pasado reinicia su aproximación infinita');
+                    }
+                }, 50);
+            }
+
+            createPastFragment() {
+                const fragment = document.createElement('div');
+                fragment.style.position = 'absolute';
+                fragment.style.width = '3px';
+                fragment.style.height = '3px';
+                fragment.style.background = 'rgba(147, 51, 234, 0.7)';
+                fragment.style.borderRadius = '50%';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const startRadius = 350;
+                
+                fragment.style.left = (400 + Math.cos(angle) * startRadius) + 'px';
+                fragment.style.top = (400 + Math.sin(angle) * startRadius) + 'px';
+                
+                this.container.appendChild(fragment);
+                
+                // Aproximación asintótica
+                let radius = startRadius;
+                const approach = setInterval(() => {
+                    radius *= 0.95; // Nunca llega a cero
+                    if (radius < 10) {
+                        radius = startRadius; // Reinicio
+                    }
+                    
+                    fragment.style.left = (400 + Math.cos(angle) * radius) + 'px';
+                    fragment.style.top = (400 + Math.sin(angle) * radius) + 'px';
+                    fragment.style.opacity = 1 - (radius / startRadius);
+                }, 50);
+                
+                setTimeout(() => {
+                    clearInterval(approach);
+                    fragment.remove();
+                }, 8000);
+            }
+
+            logParadoxEvent(message) {
+                console.log(`[AsymptoticPast] ${message}`);
+            }
+        }
+
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            new AsymptoticPast();
+            console.log('Nodo 4 activo: El pasado que no ha llegado permanece en eterna aproximación');
+        });
+
+        // Efecto de carga inicial
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 1.5s ease';
             
-            fragment.style.left = (400 + Math.cos(angle) * radius) + 'px';
-            fragment.style.top = (400 + Math.sin(angle) * radius) + 'px';
-            fragment.style.opacity = 1 - (radius / startRadius);
-        }, 50);
-        
-        setTimeout(() => {
-            clearInterval(approach);
-            fragment.remove();
-        }, 8000);
-    }
-    
-    setInterval(createPastFragment, 300);
-    
-    // Paradoja del pasado inalcanzable
-    let pastDistance = Infinity;
-    let approachRate = 0;
-    
-    setInterval(() => {
-        approachRate++;
-        pastDistance = pastDistance / 2; // Siempre a mitad de camino
-        
-        if (approachRate % 100 === 0) {
-            console.log(`Distancia al pasado: ${pastDistance.toExponential(2)} - Nunca alcanzable`);
-        }
-        
-        if (approachRate % 314 === 0) {
-            console.log('Paradoja: El pasado se aproxima eternamente sin llegar jamás');
-        }
-        
-        if (pastDistance < 1e-10) {
-            pastDistance = Infinity; // Reset
-            console.log('El pasado reinicia su aproximación infinita');
-        }
-    }, 50);
-    
-    console.log('Nodo 4 activo: El pasado que no ha llegado permanece en eterna aproximación');
-</script>
-
-
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
 </body>
 </html>
