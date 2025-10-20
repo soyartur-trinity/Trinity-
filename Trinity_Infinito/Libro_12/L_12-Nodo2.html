@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nodo 79: Vibración Sin Medio | Libro 12</title>
+<title>Nodo 79: Vibración Sin Medio</title>
 <style>
 * {
   margin: 0;
@@ -17,35 +17,6 @@ body {
   font-family: 'Courier New', monospace;
   color: rgba(255,255,255,0.9);
   height: 100vh;
-}
-
-.portal-header {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 1rem 2rem;
-  border-radius: 20px;
-  border: 1px solid rgba(252, 195, 224, 0.3);
-  backdrop-filter: blur(10px);
-  z-index: 100;
-  max-width: 90%;
-}
-
-.node-title {
-  font-size: 1.5rem;
-  margin-bottom: 0.3rem;
-  background: linear-gradient(45deg, #fcc3e0, #c3fcf4);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.node-subtitle {
-  font-size: 0.9rem;
-  opacity: 0.7;
 }
 
 .vibration-field {
@@ -186,27 +157,38 @@ body {
 
 .vibration-text {
   position: absolute;
-  bottom: 60px;
-  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255,255,255,0.1);
+  font-size: 16px;
+  letter-spacing: 8px;
   text-align: center;
-  color: rgba(255,255,255,0.2);
-  font-size: 14px;
-  letter-spacing: 3px;
-  animation: text-vibrate 5s ease-in-out infinite;
+  animation: text-vibration-breath 10s ease-in-out infinite;
+  pointer-events: none;
+  line-height: 1.8;
 }
 
-@keyframes text-vibrate {
+@keyframes text-vibration-breath {
   0%, 100% {
-    opacity: 0.2;
-    transform: translateX(0);
+    opacity: 0.08;
+    transform: translate(-50%, -50%) scale(0.98);
+    letter-spacing: 6px;
   }
   25% {
-    opacity: 0.3;
-    transform: translateX(1px);
+    opacity: 0.18;
+    transform: translate(-50%, -50%) scale(1.03);
+    letter-spacing: 9px;
+  }
+  50% {
+    opacity: 0.25;
+    transform: translate(-50%, -50%) scale(1.06);
+    letter-spacing: 11px;
   }
   75% {
-    opacity: 0.3;
-    transform: translateX(-1px);
+    opacity: 0.18;
+    transform: translate(-50%, -50%) scale(1.03);
+    letter-spacing: 9px;
   }
 }
 
@@ -232,15 +214,10 @@ body {
 </head>
 <body>
 
-<div class="portal-header">
-  <h1 class="node-title">NODO 79: VIBRACIÓN SIN MEDIO</h1>
-  <p class="node-subtitle">Libro 12 - La Palabra Antes del Verbo</p>
-</div>
-
 <div class="vibration-field" id="vibrationField">
   <div class="ether-grid"></div>
   <div class="resonance-field"></div>
-  <div class="vibration-text">LA OSCILACIÓN PURA ANTES DE LA MATERIALIDAD</div>
+  <div class="vibration-text">LA OSCILACIÓN PURA<br>ANTES DE<br>LA MATERIALIDAD</div>
 </div>
 
 <script>
@@ -386,17 +363,27 @@ field.addEventListener('click', (e) => {
   }
 });
 
-// Sistema de vibración armónica
-let vibrationPhase = 0;
-function updateVibrationSystem() {
-  vibrationPhase += 0.02;
+// Sistema de respiración vibratoria
+let vibrationBreath = 0;
+function updateVibrationBreath() {
+  vibrationBreath += 0.008;
+  const breath = Math.sin(vibrationBreath);
   
-  // Puedes agregar efectos de vibración coordinada aquí
+  // Sincronizar elementos con la respiración vibratoria
+  const frequencies = document.querySelectorAll('.pure-frequency');
+  frequencies.forEach(freq => {
+    freq.style.opacity = (0.3 + breath * 0.4).toString();
+  });
   
-  requestAnimationFrame(updateVibrationSystem);
+  const nodes = document.querySelectorAll('.wave-node');
+  nodes.forEach(node => {
+    node.style.opacity = (0.5 + breath * 0.3).toString();
+  });
+  
+  requestAnimationFrame(updateVibrationBreath);
 }
 
-updateVibrationSystem();
+updateVibrationBreath();
 </script>
 </body>
 </html>
