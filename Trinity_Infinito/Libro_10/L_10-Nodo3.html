@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Libro 10 - Nodo 3: El Acto Espontáneo</title>
+<title>Libro 10 - Nodo 66: El Acto Espontáneo</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
 
@@ -307,15 +307,84 @@ body {
     opacity: 0;
   }
 }
+
+.spontaneous-text {
+  position: absolute;
+  font-size: 1em;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.2em;
+  opacity: 0;
+  animation: spontaneous-appear 8s ease-in-out infinite;
+  text-shadow: 0 0 15px rgba(150,100,255,0.4);
+}
+
+@keyframes spontaneous-appear {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(20px) rotate(var(--rotation));
+  }
+  20%, 80% {
+    opacity: 0.8;
+    transform: translateY(0) rotate(var(--rotation));
+  }
+}
+
+.quantum-leap {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(100,200,255,0.2), transparent);
+  border-radius: 50%;
+  animation: quantum-jump 25s ease-in-out infinite;
+  filter: blur(30px);
+  opacity: 0;
+}
+
+@keyframes quantum-jump {
+  0%, 100% {
+    transform: translate(var(--q1x), var(--q1y)) scale(0);
+    opacity: 0;
+  }
+  25% {
+    transform: translate(var(--q2x), var(--q2y)) scale(1.5);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(var(--q3x), var(--q3y)) scale(0.8);
+    opacity: 0.3;
+  }
+  75% {
+    transform: translate(var(--q4x), var(--q4y)) scale(2);
+    opacity: 0.4;
+  }
+}
+
+.pure-act {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(255,100,200,0.1), transparent),
+    radial-gradient(circle at 70% 60%, rgba(100,200,255,0.08), transparent);
+  mix-blend-mode: overlay;
+  animation: act-pulse 20s ease-in-out infinite;
+}
+
+@keyframes act-pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.5; }
+}
 </style>
 </head>
 <body>
 
 <div class="title">EL ACTO ESPONTÁNEO</div>
-<div class="subtitle">Libro 10 - Nodo 3</div>
+<div class="subtitle">Libro 10 - Nodo 66</div>
 
 <div class="spontaneity-field">
   <div class="moment-now">
+    <div class="pure-act"></div>
+    
     <!-- Pulsos del ahora -->
     <div class="now-pulse" style="animation-delay: 0s;"></div>
     <div class="now-pulse" style="animation-delay: 2.7s; width: 250px; height: 250px;"></div>
@@ -325,6 +394,10 @@ body {
     <div class="instant-flash" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
     <div class="instant-flash" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 7.5s;"></div>
     
+    <!-- Saltos cuánticos -->
+    <div class="quantum-leap" style="--q1x: -200px; --q1y: -150px; --q2x: 100px; --q2y: -200px; --q3x: 200px; --q3y: 100px; --q4x: -100px; --q4y: 200px; animation-delay: 0s;"></div>
+    <div class="quantum-leap" style="--q1x: 150px; --q1y: -100px; --q2x: -200px; --q2y: 150px; --q3x: -150px; --q3y: -200px; --q4x: 200px; --q4y: -150px; animation-delay: 8s;"></div>
+    
     <!-- Texto central -->
     <div class="central-text" style="animation-delay: 1s;">
       Sin pensar<br>
@@ -333,10 +406,17 @@ body {
       ocurre
     </div>
     
+    <!-- Textos espontáneos -->
+    <div class="spontaneous-text" style="top: 25%; left: 15%; --rotation: -5deg; animation-delay: 2s;">puro</div>
+    <div class="spontaneous-text" style="top: 35%; left: 75%; --rotation: 3deg; animation-delay: 4s;">instantáneo</div>
+    <div class="spontaneous-text" style="top: 65%; left: 20%; --rotation: -2deg; animation-delay: 6s;">libre</div>
+    <div class="spontaneous-text" style="top: 75%; left: 70%; --rotation: 4deg; animation-delay: 8s;">natural</div>
+    
     <!-- Formas espontáneas -->
     <div class="spontaneous-shape" style="top: 20%; left: 20%; animation-delay: 0s;"></div>
     <div class="spontaneous-shape" style="top: 70%; left: 70%; animation-delay: 4.7s;"></div>
     <div class="spontaneous-shape" style="top: 30%; left: 75%; animation-delay: 9.3s;"></div>
+    <div class="spontaneous-shape" style="top: 60%; left: 25%; animation-delay: 12s;"></div>
   </div>
 </div>
 
@@ -431,11 +511,30 @@ function createFlowParticles() {
   }
 }
 
+// Crear textos espontáneos dinámicos
+function createSpontaneousText() {
+  const texts = ['ahora', 'fluir', 'ser', 'actuar', 'presente', 'libre', 'puro', 'directo'];
+  const text = document.createElement('div');
+  text.className = 'spontaneous-text';
+  text.textContent = texts[Math.floor(Math.random() * texts.length)];
+  
+  text.style.cssText = `
+    top: ${20 + Math.random() * 60}%;
+    left: ${15 + Math.random() * 70}%;
+    --rotation: ${Math.random() * 10 - 5}deg;
+    animation: spontaneous-appear ${6 + Math.random() * 4}s ease-in-out infinite;
+  `;
+  
+  momentNow.appendChild(text);
+  setTimeout(() => text.remove(), 10000);
+}
+
 // Generar elementos continuamente
 setInterval(createImpulseBurst, 2000);
 setInterval(createActionWave, 3000);
 setInterval(createSuddenMovement, 1500);
 setInterval(createFlowParticles, 5000);
+setInterval(createSpontaneousText, 4000);
 
 // Crear elementos iniciales
 for(let i = 0; i < 5; i++) {
@@ -507,6 +606,22 @@ momentNow.addEventListener('click', (e) => {
       setTimeout(() => particle.remove(), 4000);
     }, i * 30);
   }
+  
+  // Texto revelador
+  const revelation = document.createElement('div');
+  revelation.className = 'central-text';
+  revelation.textContent = "EL ACTO\nES PURA\nEXPRESIÓN";
+  revelation.style.cssText = `
+    left: ${x}px;
+    top: ${y}px;
+    transform: translate(-50%, -50%);
+    animation: text-flash 5s ease-out forwards;
+    font-size: 1.6em;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 0 30px rgba(150,100,255,0.8);
+  `;
+  momentNow.appendChild(revelation);
+  setTimeout(() => revelation.remove(), 5000);
 });
 
 // Movimiento genera trazos espontáneos
@@ -533,6 +648,42 @@ momentNow.addEventListener('mousemove', (e) => {
   `;
   momentNow.appendChild(burst);
   setTimeout(() => burst.remove(), 3000);
+});
+
+// Doble click - Revelación máxima
+momentNow.addEventListener('dblclick', (e) => {
+  const revelation = document.createElement('div');
+  revelation.className = 'central-text';
+  revelation.textContent = "LA ESPONTANEIDAD\nES LA FIRMA\nDEL UNIVERSO";
+  revelation.style.cssText = `
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: text-flash 8s ease-out forwards;
+    font-size: 2em;
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0 0 40px rgba(255,100,200,0.9);
+    z-index: 1000;
+  `;
+  
+  momentNow.appendChild(revelation);
+  setTimeout(() => revelation.remove(), 8000);
+  
+  // Explosión cósmica
+  for(let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      const flash = document.createElement('div');
+      flash.className = 'instant-flash';
+      flash.style.cssText = `
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        animation: flash-burst 4s ease-out forwards;
+      `;
+      momentNow.appendChild(flash);
+      setTimeout(() => flash.remove(), 4000);
+    }, i * 500);
+  }
 });
 </script>
 
