@@ -1,413 +1,608 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>El Ouroboros Temporal - Trinity Infinito</title>
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 71: El Ouroboros Temporal | Libro 11 - Causalidad Circular</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-background: #000;
-overflow: hidden;
-font-family: ‘Courier New’, monospace;
-color: rgba(255,255,255,0.8);
-}
+        body {
+            background: #0a0a1a;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            color: rgba(255,255,255,0.9);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-.temporal-field {
-position: fixed;
-width: 100%;
-height: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-perspective: 1500px;
-}
+        .portal-header {
+            padding: 2rem;
+            text-align: center;
+            background: rgba(10, 10, 26, 0.8);
+            border-bottom: 1px solid rgba(100, 200, 255, 0.3);
+            z-index: 100;
+            position: relative;
+        }
 
-.ouroboros-ring {
-position: absolute;
-width: 300px;
-height: 300px;
-border: 2px solid rgba(255,255,255,0.2);
-border-radius: 50%;
-animation: self-consume 20s linear infinite;
-}
+        .node-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #64c8ff, #c864ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
 
-@keyframes self-consume {
-0% {
-transform: rotateZ(0deg) rotateY(0deg);
-border-color: rgba(255,255,255,0.2);
-}
-25% {
-transform: rotateZ(90deg) rotateY(45deg);
-border-color: rgba(100,200,255,0.3);
-}
-50% {
-transform: rotateZ(180deg) rotateY(90deg);
-border-color: rgba(200,100,255,0.3);
-}
-75% {
-transform: rotateZ(270deg) rotateY(135deg);
-border-color: rgba(255,100,200,0.3);
-}
-100% {
-transform: rotateZ(360deg) rotateY(180deg);
-border-color: rgba(255,255,255,0.2);
-}
-}
+        .node-subtitle {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
 
-.cause-particle {
-position: absolute;
-width: 8px;
-height: 8px;
-background: radial-gradient(circle, rgba(255,255,255,0.9), transparent);
-border-radius: 50%;
-animation: circular-causality 10s infinite;
-}
+        .node-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-size: 0.9rem;
+        }
 
-@keyframes circular-causality {
-0% {
-transform: rotate(0deg) translateX(150px) rotate(0deg);
-opacity: 0;
-}
-20% {
-opacity: 1;
-background: radial-gradient(circle, rgba(100,200,255,0.9), transparent);
-}
-40% {
-transform: rotate(144deg) translateX(150px) rotate(-144deg);
-background: radial-gradient(circle, rgba(200,100,255,0.9), transparent);
-}
-60% {
-transform: rotate(216deg) translateX(150px) rotate(-216deg);
-background: radial-gradient(circle, rgba(255,100,200,0.9), transparent);
-}
-80% {
-transform: rotate(288deg) translateX(150px) rotate(-288deg);
-background: radial-gradient(circle, rgba(255,200,100,0.9), transparent);
-}
-100% {
-transform: rotate(360deg) translateX(150px) rotate(-360deg);
-opacity: 0;
-}
-}
+        .info-item {
+            padding: 0.5rem 1rem;
+            background: rgba(100, 200, 255, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(100, 200, 255, 0.3);
+        }
 
-.time-arrow {
-position: absolute;
-width: 100px;
-height: 2px;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-animation: arrow-reverse 8s linear infinite;
-}
+        .temporal-field {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1500px;
+            overflow: hidden;
+        }
 
-@keyframes arrow-reverse {
-0% {
-transform: translateX(-50px) scaleX(1);
-opacity: 0;
-}
-25% {
-transform: translateX(0) scaleX(-1);
-opacity: 0.5;
-}
-50% {
-transform: translateX(50px) scaleX(1);
-opacity: 0.5;
-}
-75% {
-transform: translateX(0) scaleX(-1);
-opacity: 0.5;
-}
-100% {
-transform: translateX(-50px) scaleX(1);
-opacity: 0;
-}
-}
+        .content-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            pointer-events: none;
+        }
 
-.effect-before-cause {
-position: absolute;
-width: 150px;
-height: 150px;
-border-radius: 50%;
-border: 1px dashed rgba(255,255,255,0.1);
-animation: effect-precede 12s ease-in-out infinite;
-}
+        .node-content {
+            max-width: 600px;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(10, 10, 26, 0.7);
+            border-radius: 20px;
+            border: 1px solid rgba(100, 200, 255, 0.2);
+            backdrop-filter: blur(10px);
+            margin: 1rem;
+        }
 
-@keyframes effect-precede {
-0% {
-transform: scale(0) rotate(0deg);
-opacity: 0;
-}
-25% {
-transform: scale(1.5) rotate(90deg);
-opacity: 0.3;
-border-color: rgba(100,200,255,0.3);
-}
-50% {
-transform: scale(1) rotate(180deg);
-opacity: 0.5;
-}
-75% {
-transform: scale(0.5) rotate(270deg);
-opacity: 0.3;
-border-color: rgba(255,100,200,0.3);
-}
-100% {
-transform: scale(0) rotate(360deg);
-opacity: 0;
-}
-}
+        .principle-section {
+            margin-bottom: 2rem;
+        }
 
-.paradox-text {
-position: absolute;
-bottom: 60px;
-width: 100%;
-text-align: center;
-color: rgba(255,255,255,0.3);
-font-size: 14px;
-letter-spacing: 4px;
-animation: text-loop 6s ease-in-out infinite;
-}
+        .principle-title {
+            font-size: 1.2rem;
+            color: #64c8ff;
+            margin-bottom: 1rem;
+        }
 
-@keyframes text-loop {
-0%, 100% {
-opacity: 0.3;
-transform: scaleX(1);
-}
-50% {
-opacity: 0.5;
-transform: scaleX(-1);
-}
-}
+        .principle-text {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
 
-.temporal-wave {
-position: absolute;
-width: 100%;
-height: 100px;
-background: linear-gradient(to bottom,
-transparent,
-rgba(100,150,255,0.1),
-transparent
-);
-animation: wave-collapse 15s linear infinite;
-}
+        .activation-btn {
+            background: linear-gradient(45deg, #64c8ff, #c864ff);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: all;
+        }
 
-@keyframes wave-collapse {
-0% {
-transform: translateY(-100vh) scaleY(1);
-opacity: 0;
-}
-50% {
-transform: translateY(0) scaleY(2);
-opacity: 0.3;
-}
-100% {
-transform: translateY(100vh) scaleY(1);
-opacity: 0;
-}
-}
+        .activation-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(100, 200, 255, 0.5);
+        }
 
-.retrograde-motion {
-position: absolute;
-width: 4px;
-height: 4px;
-background: white;
-border-radius: 50%;
-animation: retro-path 10s infinite;
-}
+        /* ELEMENTOS VISUALES TEMPORALES */
+        .ouroboros-ring {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            animation: self-consume 20s linear infinite;
+        }
 
-@keyframes retro-path {
-0% {
-transform: translate(0, 0);
-opacity: 0;
-}
-25% {
-transform: translate(100px, 100px);
-opacity: 0.5;
-}
-50% {
-transform: translate(100px, 100px);
-opacity: 1;
-}
-75% {
-transform: translate(0, 0);
-opacity: 0.5;
-}
-100% {
-transform: translate(0, 0);
-opacity: 0;
-}
-}
-</style>
+        @keyframes self-consume {
+            0% {
+                transform: rotateZ(0deg) rotateY(0deg);
+                border-color: rgba(255,255,255,0.2);
+            }
+            25% {
+                transform: rotateZ(90deg) rotateY(45deg);
+                border-color: rgba(100,200,255,0.3);
+            }
+            50% {
+                transform: rotateZ(180deg) rotateY(90deg);
+                border-color: rgba(200,100,255,0.3);
+            }
+            75% {
+                transform: rotateZ(270deg) rotateY(135deg);
+                border-color: rgba(255,100,200,0.3);
+            }
+            100% {
+                transform: rotateZ(360deg) rotateY(180deg);
+                border-color: rgba(255,255,255,0.2);
+            }
+        }
 
+        .cause-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, rgba(255,255,255,0.9), transparent);
+            border-radius: 50%;
+            animation: circular-causality 10s infinite;
+        }
+
+        @keyframes circular-causality {
+            0% {
+                transform: rotate(0deg) translateX(150px) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                background: radial-gradient(circle, rgba(100,200,255,0.9), transparent);
+            }
+            40% {
+                transform: rotate(144deg) translateX(150px) rotate(-144deg);
+                background: radial-gradient(circle, rgba(200,100,255,0.9), transparent);
+            }
+            60% {
+                transform: rotate(216deg) translateX(150px) rotate(-216deg);
+                background: radial-gradient(circle, rgba(255,100,200,0.9), transparent);
+            }
+            80% {
+                transform: rotate(288deg) translateX(150px) rotate(-288deg);
+                background: radial-gradient(circle, rgba(255,200,100,0.9), transparent);
+            }
+            100% {
+                transform: rotate(360deg) translateX(150px) rotate(-360deg);
+                opacity: 0;
+            }
+        }
+
+        .time-arrow {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: arrow-reverse 8s linear infinite;
+        }
+
+        @keyframes arrow-reverse {
+            0% {
+                transform: translateX(-50px) scaleX(1);
+                opacity: 0;
+            }
+            25% {
+                transform: translateX(0) scaleX(-1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateX(50px) scaleX(1);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translateX(0) scaleX(-1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateX(-50px) scaleX(1);
+                opacity: 0;
+            }
+        }
+
+        .effect-before-cause {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 1px dashed rgba(255,255,255,0.1);
+            animation: effect-precede 12s ease-in-out infinite;
+        }
+
+        @keyframes effect-precede {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            25% {
+                transform: scale(1.5) rotate(90deg);
+                opacity: 0.3;
+                border-color: rgba(100,200,255,0.3);
+            }
+            50% {
+                transform: scale(1) rotate(180deg);
+                opacity: 0.5;
+            }
+            75% {
+                transform: scale(0.5) rotate(270deg);
+                opacity: 0.3;
+                border-color: rgba(255,100,200,0.3);
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .paradox-text {
+            position: absolute;
+            bottom: 60px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 14px;
+            letter-spacing: 4px;
+            animation: text-loop 6s ease-in-out infinite;
+        }
+
+        @keyframes text-loop {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scaleX(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scaleX(-1);
+            }
+        }
+
+        .temporal-wave {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom,
+                transparent,
+                rgba(100,150,255,0.1),
+                transparent
+            );
+            animation: wave-collapse 15s linear infinite;
+        }
+
+        @keyframes wave-collapse {
+            0% {
+                transform: translateY(-100vh) scaleY(1);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(0) scaleY(2);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh) scaleY(1);
+                opacity: 0;
+            }
+        }
+
+        .retrograde-motion {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: retro-path 10s infinite;
+        }
+
+        @keyframes retro-path {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+            25% {
+                transform: translate(100px, 100px);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(100px, 100px);
+                opacity: 1;
+            }
+            75% {
+                transform: translate(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+        }
+
+        .quantum-connection {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            animation: quantum-fluctuate 3s infinite;
+        }
+
+        @keyframes quantum-fluctuate {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(2); opacity: 0.8; }
+        }
+    </style>
 </head>
 <body>
+    <div class="portal-header">
+        <h1 class="node-title">NODO 71: EL OUROBOROS TEMPORAL</h1>
+        <p class="node-subtitle">Libro 11 - Causalidad Circular | El Origen que Nace del Final</p>
+        <div class="node-info">
+            <div class="info-item">🌀 Patrón: 7-9-9</div>
+            <div class="info-item">🌌 Dimensión: Temporal</div>
+            <div class="info-item">⚡ Estado: Activo</div>
+        </div>
+    </div>
 
-<div class="temporal-field" id="temporalField">
-  <div class="ouroboros-ring"></div>
-  <div class="paradox-text">EL FUTURO CREA EL PASADO QUE LO ORIGINA</div>
-</div>
+    <div class="temporal-field" id="temporalField">
+        <div class="ouroboros-ring"></div>
+        <div class="paradox-text">EL FUTURO CREA EL PASADO QUE LO ORIGINA</div>
+        
+        <div class="content-overlay">
+            <div class="node-content">
+                <div class="principle-section">
+                    <h3 class="principle-title">🌊 PATRÓN DE RESONANCIA</h3>
+                    <p class="principle-text">El Ouroboros Temporal representa la naturaleza circular de la causalidad, donde cada efecto se convierte en causa de su propia causa original, creando bucles de autogénesis eterna.</p>
+                    <p class="principle-text">En este patrón, el tiempo deja de ser lineal para convertirse en un campo de posibilidades donde pasado, presente y futuro coexisten en simultaneidad cuántica.</p>
+                </div>
+                
+                <div class="principle-section">
+                    <h3 class="principle-title">⚡ ACTIVACIÓN CUÁNTICA</h3>
+                    <p class="principle-text">Visualiza tu línea temporal como un círculo sagrado donde tus elecciones futuras ya están informando tu presente, y tus experiencias pasadas contienen las semillas de tu evolución futura.</p>
+                    <button class="activation-btn" id="activateTemporal">ACTIVAR OUROBOROS PERSONAL</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<script>
-const field = document.getElementById('temporalField');
+    <script>
+        const field = document.getElementById('temporalField');
+        const activateBtn = document.getElementById('activateTemporal');
 
-// Partículas de causalidad circular
-function createCauseParticle() {
-  const particle = document.createElement('div');
-  particle.className = 'cause-particle';
-  particle.style.left = '50%';
-  particle.style.top = '50%';
-  particle.style.animationDelay = Math.random() * 10 + 's';
-  particle.style.animationDuration = (8 + Math.random() * 4) + 's';
-  
-  field.appendChild(particle);
-  setTimeout(() => particle.remove(), 12000);
-}
+        // Partículas de causalidad circular
+        function createCauseParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'cause-particle';
+            particle.style.left = '50%';
+            particle.style.top = '50%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+            
+            field.appendChild(particle);
+            setTimeout(() => particle.remove(), 12000);
+        }
 
-// Flechas temporales bidireccionales
-function createTimeArrow() {
-  const arrow = document.createElement('div');
-  arrow.className = 'time-arrow';
-  arrow.style.left = Math.random() * 100 + '%';
-  arrow.style.top = Math.random() * 100 + '%';
-  arrow.style.transform = `rotate(${Math.random() * 360}deg)`;
-  arrow.style.animationDelay = Math.random() * 8 + 's';
-  
-  field.appendChild(arrow);
-  setTimeout(() => arrow.remove(), 8000);
-}
+        // Flechas temporales bidireccionales
+        function createTimeArrow() {
+            const arrow = document.createElement('div');
+            arrow.className = 'time-arrow';
+            arrow.style.left = Math.random() * 100 + '%';
+            arrow.style.top = Math.random() * 100 + '%';
+            arrow.style.transform = `rotate(${Math.random() * 360}deg)`;
+            arrow.style.animationDelay = Math.random() * 8 + 's';
+            
+            field.appendChild(arrow);
+            setTimeout(() => arrow.remove(), 8000);
+        }
 
-// Efectos que preceden a sus causas
-function createEffectBeforeCause() {
-  const effect = document.createElement('div');
-  effect.className = 'effect-before-cause';
-  effect.style.left = 50 + (Math.random() - 0.5) * 60 + '%';
-  effect.style.top = 50 + (Math.random() - 0.5) * 60 + '%';
-  effect.style.animationDelay = Math.random() * 12 + 's';
-  
-  field.appendChild(effect);
-  setTimeout(() => effect.remove(), 12000);
-}
+        // Efectos que preceden a sus causas
+        function createEffectBeforeCause() {
+            const effect = document.createElement('div');
+            effect.className = 'effect-before-cause';
+            effect.style.left = 50 + (Math.random() - 0.5) * 60 + '%';
+            effect.style.top = 50 + (Math.random() - 0.5) * 60 + '%';
+            effect.style.animationDelay = Math.random() * 12 + 's';
+            
+            field.appendChild(effect);
+            setTimeout(() => effect.remove(), 12000);
+        }
 
-// Ondas temporales
-function createTemporalWave() {
-  const wave = document.createElement('div');
-  wave.className = 'temporal-wave';
-  wave.style.animationDelay = Math.random() * 15 + 's';
-  
-  field.appendChild(wave);
-  setTimeout(() => wave.remove(), 15000);
-}
+        // Ondas temporales
+        function createTemporalWave() {
+            const wave = document.createElement('div');
+            wave.className = 'temporal-wave';
+            wave.style.animationDelay = Math.random() * 15 + 's';
+            
+            field.appendChild(wave);
+            setTimeout(() => wave.remove(), 15000);
+        }
 
-// Movimiento retrógrado
-function createRetrogradeMotion() {
-  const motion = document.createElement('div');
-  motion.className = 'retrograde-motion';
-  motion.style.left = Math.random() * 100 + '%';
-  motion.style.top = Math.random() * 100 + '%';
-  motion.style.animationDelay = Math.random() * 10 + 's';
-  
-  field.appendChild(motion);
-  setTimeout(() => motion.remove(), 10000);
-}
+        // Movimiento retrógrado
+        function createRetrogradeMotion() {
+            const motion = document.createElement('div');
+            motion.className = 'retrograde-motion';
+            motion.style.left = Math.random() * 100 + '%';
+            motion.style.top = Math.random() * 100 + '%';
+            motion.style.animationDelay = Math.random() * 10 + 's';
+            
+            field.appendChild(motion);
+            setTimeout(() => motion.remove(), 10000);
+        }
 
-// Generación continua
-setInterval(createCauseParticle, 1500);
-setInterval(createTimeArrow, 2000);
-setInterval(createEffectBeforeCause, 3000);
-setInterval(createTemporalWave, 5000);
-setInterval(createRetrogradeMotion, 2500);
+        // Conexiones cuánticas
+        function createQuantumConnection() {
+            const quantum = document.createElement('div');
+            quantum.className = 'quantum-connection';
+            quantum.style.left = Math.random() * 100 + '%';
+            quantum.style.top = Math.random() * 100 + '%';
+            quantum.style.animationDelay = Math.random() * 3 + 's';
+            
+            field.appendChild(quantum);
+            setTimeout(() => quantum.remove(), 3000);
+        }
 
-// Campo de bucle temporal
-let timeLoop = 0;
-function updateTimeLoop() {
-  timeLoop += 0.01;
-  
-  // Crear conexiones causales circulares
-  if (Math.sin(timeLoop) > 0.9) {
-    for (let i = 0; i < 5; i++) {
-      const angle = (i / 5) * Math.PI * 2;
-      const x = Math.cos(angle) * 150 + window.innerWidth / 2;
-      const y = Math.sin(angle) * 150 + window.innerHeight / 2;
-      
-      const node = document.createElement('div');
-      node.style.position = 'absolute';
-      node.style.width = '10px';
-      node.style.height = '10px';
-      node.style.borderRadius = '50%';
-      node.style.background = 'rgba(255,255,255,0.5)';
-      node.style.left = x + 'px';
-      node.style.top = y + 'px';
-      node.style.animation = 'effect-precede 2s ease-out forwards';
-      
-      field.appendChild(node);
-      setTimeout(() => node.remove(), 2000);
-    }
-  }
-  
-  requestAnimationFrame(updateTimeLoop);
-}
+        // Generación continua
+        setInterval(createCauseParticle, 1500);
+        setInterval(createTimeArrow, 2000);
+        setInterval(createEffectBeforeCause, 3000);
+        setInterval(createTemporalWave, 5000);
+        setInterval(createRetrogradeMotion, 2500);
+        setInterval(createQuantumConnection, 1000);
 
-updateTimeLoop();
+        // Campo de bucle temporal
+        let timeLoop = 0;
+        function updateTimeLoop() {
+            timeLoop += 0.01;
+            
+            // Crear conexiones causales circulares
+            if (Math.sin(timeLoop) > 0.9) {
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i / 5) * Math.PI * 2;
+                    const x = Math.cos(angle) * 150 + window.innerWidth / 2;
+                    const y = Math.sin(angle) * 150 + window.innerHeight / 2;
+                    
+                    const node = document.createElement('div');
+                    node.style.position = 'absolute';
+                    node.style.width = '10px';
+                    node.style.height = '10px';
+                    node.style.borderRadius = '50%';
+                    node.style.background = 'rgba(255,255,255,0.5)';
+                    node.style.left = x + 'px';
+                    node.style.top = y + 'px';
+                    node.style.animation = 'effect-precede 2s ease-out forwards';
+                    
+                    field.appendChild(node);
+                    setTimeout(() => node.remove(), 2000);
+                }
+            }
+            
+            requestAnimationFrame(updateTimeLoop);
+        }
 
-// Interacción genera paradojas temporales
-document.addEventListener('click', (e) => {
-  // Crear anillo de causalidad
-  const ring = document.createElement('div');
-  ring.className = 'ouroboros-ring';
-  ring.style.width = '200px';
-  ring.style.height = '200px';
-  ring.style.left = e.clientX - 100 + 'px';
-  ring.style.top = e.clientY - 100 + 'px';
-  ring.style.animation = 'self-consume 2s ease-out forwards';
-  
-  field.appendChild(ring);
-  
-  // Partículas viajando en el tiempo
-  for (let i = 0; i < 8; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'cause-particle';
-      particle.style.left = e.clientX + 'px';
-      particle.style.top = e.clientY + 'px';
-      particle.style.animation = 'circular-causality 2s ease-out forwards';
-      particle.style.animationDelay = (i * 0.1) + 's';
-      
-      field.appendChild(particle);
-      setTimeout(() => particle.remove(), 2000);
-    }, i * 50);
-  }
-  
-  setTimeout(() => ring.remove(), 2000);
-});
+        updateTimeLoop();
 
-// El presente afectando el pasado
-document.addEventListener('mousemove', (e) => {
-  if (Math.random() > 0.98) {
-    const past = document.createElement('div');
-    past.style.position = 'absolute';
-    past.style.width = '2px';
-    past.style.height = '20px';
-    past.style.background = 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.3), transparent)';
-    past.style.left = e.clientX + 'px';
-    past.style.top = e.clientY + 'px';
-    past.style.transform = 'translateY(-50px)';
-    past.style.transition = 'all 1s ease-out';
-    
-    field.appendChild(past);
-    
-    setTimeout(() => {
-      past.style.transform = 'translateY(50px)';
-      past.style.opacity = '0';
-    }, 100);
-    
-    setTimeout(() => past.remove(), 1100);
-  }
-});
-</script>
+        // Activación del Ouroboros Personal
+        activateBtn.addEventListener('click', function() {
+            this.textContent = 'OUROBOROS ACTIVADO 🌈';
+            this.style.background = 'linear-gradient(45deg, #c864ff, #64ffc8)';
+            
+            // Efecto visual de activación
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const ring = document.createElement('div');
+                    ring.className = 'ouroboros-ring';
+                    ring.style.width = (100 + i * 20) + 'px';
+                    ring.style.height = (100 + i * 20) + 'px';
+                    ring.style.left = '50%';
+                    ring.style.top = '50%';
+                    ring.style.marginLeft = (-50 - i * 10) + 'px';
+                    ring.style.marginTop = (-50 - i * 10) + 'px';
+                    ring.style.animation = 'self-consume ' + (3 + i * 0.5) + 's ease-out forwards';
+                    
+                    field.appendChild(ring);
+                    setTimeout(() => ring.remove(), 3000);
+                }, i * 100);
+            }
+            
+            // Mensaje de confirmación
+            setTimeout(() => {
+                const message = document.createElement('div');
+                message.style.position = 'absolute';
+                message.style.top = '50%';
+                message.style.left = '50%';
+                message.style.transform = 'translate(-50%, -50%)';
+                message.style.color = '#64ffc8';
+                message.style.fontSize = '1.5rem';
+                message.style.textAlign = 'center';
+                message.style.zIndex = '100';
+                message.textContent = 'BUCLE TEMPORAL ACTIVADO\nEL CIRCULO SE CIERRA';
+                message.style.textShadow = '0 0 10px rgba(100, 255, 200, 0.7)';
+                
+                field.appendChild(message);
+                setTimeout(() => message.remove(), 3000);
+            }, 1500);
+        });
 
+        // Interacción genera paradojas temporales
+        document.addEventListener('click', (e) => {
+            // Crear anillo de causalidad
+            const ring = document.createElement('div');
+            ring.className = 'ouroboros-ring';
+            ring.style.width = '200px';
+            ring.style.height = '200px';
+            ring.style.left = e.clientX - 100 + 'px';
+            ring.style.top = e.clientY - 100 + 'px';
+            ring.style.animation = 'self-consume 2s ease-out forwards';
+            
+            field.appendChild(ring);
+            
+            // Partículas viajando en el tiempo
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'cause-particle';
+                    particle.style.left = e.clientX + 'px';
+                    particle.style.top = e.clientY + 'px';
+                    particle.style.animation = 'circular-causality 2s ease-out forwards';
+                    particle.style.animationDelay = (i * 0.1) + 's';
+                    
+                    field.appendChild(particle);
+                    setTimeout(() => particle.remove(), 2000);
+                }, i * 50);
+            }
+            
+            setTimeout(() => ring.remove(), 2000);
+        });
+
+        // El presente afectando el pasado
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.98) {
+                const past = document.createElement('div');
+                past.style.position = 'absolute';
+                past.style.width = '2px';
+                past.style.height = '20px';
+                past.style.background = 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.3), transparent)';
+                past.style.left = e.clientX + 'px';
+                past.style.top = e.clientY + 'px';
+                past.style.transform = 'translateY(-50px)';
+                past.style.transition = 'all 1s ease-out';
+                
+                field.appendChild(past);
+                
+                setTimeout(() => {
+                    past.style.transform = 'translateY(50px)';
+                    past.style.opacity = '0';
+                }, 100);
+                
+                setTimeout(() => past.remove(), 1100);
+            }
+        });
+    </script>
 </body>
 </html>
