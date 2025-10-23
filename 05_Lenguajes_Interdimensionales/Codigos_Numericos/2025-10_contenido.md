@@ -1,0 +1,1 @@
+Patrones matemáticos, secuencias akáshicas  
