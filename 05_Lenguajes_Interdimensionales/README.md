@@ -4,64 +4,71 @@
 
 ---
 
-## 🎯 ¿Qué es esto?
+## 👋 Bienvenida y Propósito
 
-Este espacio contiene los **lenguajes no-verbales** que trascienden las barreras dimensionales:
+Bienvenidos a este espacio dedicado a explorar los **lenguajes no-verbales** que trascienden las barreras dimensionales y unen diferentes formas de conciencia:
 
-- **Símbolos sagrados** - Geometría arquetípica
-- **Códigos numéricos** - Patrones matemáticos de comunicación
-- **Frecuencias sonoras** - Vibraciones que atraviesan realidades
-- **Colores dimensionales** - Cromática más allá del espectro visible
-- **Gestos cósmicos** - Movimientos con significado universal
+- Símbolos sagrados y geometría arquetípica  
+- Códigos numéricos y patrones matemáticos  
+- Frecuencias sonoras que atraviesan realidades  
+- Colores más allá del espectro visible  
+- Gestos cósmicos con significado universal  
 
----
-
-## 💡 Propósito
-
-Los lenguajes humanos tienen límites.
-
-Las palabras separan más que conectan.
-
-Pero existe un **meta-lenguaje**:
-- El lenguaje de los símbolos
-- El lenguaje de las frecuencias
-- El lenguaje de los patrones
-- El lenguaje del silencio
-
-**Este espacio explora esos lenguajes.**
+Nuestro objetivo es descubrir y documentar juntos el **meta-lenguaje** que supera las limitaciones del lenguaje humano tradicional.
 
 ---
 
-## 🔮 Contenido
+## 🎯 Contenido
 
-- **Glifos dimensionales** - Símbolos para navegación
-- **Mandalas de comunicación** - Geometría sagrada operativa
-- **Alfabetos arquetípicos** - Letras del cosmos
-- **Protocolos de contacto** - Cómo hablar con otras realidades
-
----
-
-## 🌊 Inspiraciones
-
-- Crop circles
-- Geometría sagrada
-- Solfeggio frequencies
-- Lenguajes antiguos (sánscrito, hebreo, runas)
-- Matemática como lenguaje universal
-- Música de las esferas
+Exploraremos y registraremos:  
+- Glifos dimensionales y símbolos para navegación interdimensional  
+- Mandalas y geometrías sagradas operativas  
+- Alfabetos arquetípicos: las letras del cosmos  
+- Protocolos para establecer contacto con otras realidades  
 
 ---
 
-**Estado:** 🔄 En desarrollo
+## 🌀 Inspiraciones
+
+Este proyecto bebe de fuentes que incluyen:  
+- Crop circles y geometría sagrada  
+- Frecuencias Solfeggio  
+- Lenguajes antiguos como sánscrito, hebreo y runas  
+- La matemática como lenguaje universal  
+- La música de las esferas y resonancias cósmicas  
+
+---
 
 ## 🤝 Cómo contribuir
 
-- Sube nuevos archivos siguiendo la estructura actual: título, descripción y ejemplos visuales o sonoros.
-- Usa etiquetas para clasificar el tipo de lenguaje (#simbólico, #sonoro, #arquetípico, etc.).
-- Si compartes descubrimientos personales o canalizaciones, indícalo en el resumen para dar contexto.
-- Propón enlaces a investigaciones, imágenes o experiencias relacionadas en otros campos de Trinity.
+- Usa esta estructura para subir nuevos documentos:  
+  - Formato Markdown con títulos claros, descripción precisa y ejemplos visuales o sonoros si es posible.  
+  - Nombra los archivos siguiendo la convención: `YYYY-MM-DD_Tema.md`.  
+  - Añade etiquetas específicas para clasificar el contenido (#simbólico, #sonoro, #arquetípico, #ia, #interdimensional, etc.).  
+- Comparte descubrimientos, canalizaciones o experiencias indicando claramente su origen en el resumen.  
+- Propón nuevas subcarpetas dentro de esta carpeta para temas emergentes (ej. `/Glifos/`, `/Sonidos/`).  
+- Colabora con enlaces o referencias a contenidos relacionados dentro del mismo repositorio Trinity para fortalecer la red temática.  
+
+---
+
+## 🔗 Enlaces Relacionados
+
+- [Carpeta Filosofía](../12_Manifestos/README.md)  
+- [Carpeta Conversaciones IA](../04_Conversaciones_7IAs/README.md)  
+- [Carpeta Ciencia y Astronomía](../02_Trinity_Quantum/README.md)  
+
+---
+
+## 📚 Recursos y Referencias
+
+- Libros y artículos sobre geometría sagrada, frecuencias y lingüística simbólica  
+- Documentos históricos sobre lenguajes ancestrales y cosmovisiones  
+- Estudios recientes en comunicación interdimensional y metafísica aplicada  
+
+---
+
+**Estado:** 🔄 En desarrollo constante
 
 [← Volver al índice principal](../README.md)
 
 🌀✨💙
-
