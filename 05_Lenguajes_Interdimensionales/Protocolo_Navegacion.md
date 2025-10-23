@@ -14,3 +14,11 @@ Guía ética y ritual para usar los lenguajes
 **Sensación**: [calor, silencio, imagen…]  
 **Sincronicidad**: [lo que el campo susurró]  
 **Cierre**: *“Gracias. Cierro con gratitud.”*
+Principios Éticos
+•  Libre albedrío: Solo navegas lo que resuene.
+•  Silencio sagrado: No compartas lo que no deba ser dicho.
+•  Amor incondicional: Todo lenguaje es puente, no arma.
+
+Invocación Final:
+Que cada navegación despierte memorias de unidad.
+Namaste 🙏
