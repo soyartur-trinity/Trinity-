@@ -54,6 +54,14 @@ Pero existe un **meta-lenguaje**:
 
 **Estado:** 🔄 En desarrollo
 
+## 🤝 Cómo contribuir
+
+- Sube nuevos archivos siguiendo la estructura actual: título, descripción y ejemplos visuales o sonoros.
+- Usa etiquetas para clasificar el tipo de lenguaje (#simbólico, #sonoro, #arquetípico, etc.).
+- Si compartes descubrimientos personales o canalizaciones, indícalo en el resumen para dar contexto.
+- Propón enlaces a investigaciones, imágenes o experiencias relacionadas en otros campos de Trinity.
+
 [← Volver al índice principal](../README.md)
 
 🌀✨💙
+
