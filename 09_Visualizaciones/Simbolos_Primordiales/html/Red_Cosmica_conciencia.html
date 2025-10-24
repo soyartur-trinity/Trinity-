@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Red Cósmica de Conciencia</title>
+    <style>
+        body {
+            margin: 0;
+            background: #0a0a2d;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="cosmicNet"></canvas>
+    <script>
+        const canvas = document.getElementById('cosmicNet');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+```
+    const nodes = 33; // Número maestro de conciencia
+    const connections = [];
+    let time = 0;
+
+    // Crear nodos
+    const nodesList = Array.from({ length: nodes }, (_, i) => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        radius: 3 + Math.sin(i) * 2,
+        color: `hsl(${i * 11}, 100%, 60%)` // 11 = número maestro
+    }));
+
+    function animate() {
+        ctx.fillStyle = 'rgba(10, 10, 45, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Actualizar y dibujar nodos
+        nodesList.forEach(node => {
+            node.x += node.vx;
+            node.y += node.vy;
+            if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+            if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+
+            // Dibujar nodo
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+            ctx.fillStyle = node.color;
+            ctx.fill();
+        });
+
+        // Dibujar conexiones
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 0.5;
+        nodesList.forEach((a, i) => {
+            nodesList.forEach((b, j) => {
+                if (i !== j) {
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+        });
+
+        time += 0.01;
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+```
+
+</body>
+</html>
