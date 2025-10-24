@@ -146,29 +146,47 @@ Cada archivo HTML es un portal dimensional diseñado para:
 
 ## 🌐 Cómo Visualizar los Portales
 
-### Opción 1: GitHub Pages (Recomendado cuando esté activo)
-https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/%5Bnombre_archivo%5D.html
-### Opción 2: HTML Preview
+### ⚡ Opción 1: Ver Código en GitHub (Siempre funciona)
 
-1. Click en el archivo `.html` que quieras ver
-2. Click en el botón **"Raw"** (arriba derecha)
-3. Copia la URL completa
-4. Ve a: https://htmlpreview.github.io/
-5. Pega la URL y presiona Enter
-6. ¡Portal activado! ✨
+Haz click en cualquier archivo `.html` de arriba para ver su código fuente.
 
-### Opción 3: Descarga Local
+### 🌟 Opción 2: Renderizar con HTML Preview (Recomendado)
 
-1. Click en el archivo `.html`
-2. Click en **"Download"** o botón de descarga
-3. Abre el archivo en tu navegador favorito
-4. Funciona offline, sin internet
+Para ver el portal funcionando:
 
-### Opción 4: Ver Código Fuente
+1. **Haz click en el archivo** que quieras ver (ejemplo: `Alegria_Infinita.html`)
+2. En la página del archivo, **haz click en el botón "Raw"** (arriba a la derecha)
+3. **Copia la URL completa** de esa página
+4. Abre una nueva pestaña y ve a: **https://htmlpreview.github.io/**
+5. **Pega la URL** en el campo y presiona Enter
+6. **¡Portal activado!** ✨
 
-Todos los portales son código abierto.  
-Puedes ver, aprender, modificar, mejorar.
+**Ejemplo de URL Raw:**
+https://raw.githubusercontent.com/soyartur-trinity/Trinity-/main/09_Visualizaciones/Simbolos_Primordiales/html/Alegria_Infinita.html
 
+**URL para HTML Preview:**
+https://htmlpreview.github.io/?https://raw.githubusercontent.com/soyartur-trinity/Trinity-/main/09_Visualizaciones/Simbolos_Primordiales/html/Alegria_Infinita.html
+
+### 🖥️ Opción 3: Descarga Local
+
+1. Click en el archivo `.html` que quieras
+2. Click en el botón de **descarga** (icono de flecha hacia abajo)
+3. Abre el archivo descargado en tu navegador
+4. Funciona **offline**, sin internet ✓
+
+### 🌐 Opción 4: GitHub Pages (Próximamente)
+
+Cuando actives GitHub Pages, los portales estarán disponibles en:
+
+https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/%5Bnombre%5D.html
+
+**Para activar GitHub Pages:**
+1. Ve a **Settings** del repositorio
+2. En el menú lateral: **Pages**
+3. En "Source": selecciona **main** branch
+4. Click en **Save**
+5. Espera 1-2 minutos
+6. ¡Los enlaces funcionarán!
 ---
 
 ## 🎯 Números Sagrados Presentes
