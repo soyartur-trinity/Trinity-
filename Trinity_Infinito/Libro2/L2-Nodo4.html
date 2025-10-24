@@ -5,22 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amor Sin Amante Ni Amado</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
         body {
             background: radial-gradient(circle at center, #0a0000, #000000);
             color: #fff;
             font-family: 'Palatino', serif;
-            margin: 0;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: crosshair;
         }
         
         .love-field {
             position: relative;
             width: 100%;
             height: 100%;
+            /* Prevenir destellos de hardware */
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000;
         }
         
         .love-wave {
@@ -31,19 +44,17 @@
             width: 0;
             height: 0;
             border-radius: 50%;
-            /* CORRECCIÓN PRINCIPAL: Gradiente más suave y oscuro */
             background: radial-gradient(
                 circle, 
-                rgba(200, 100, 100, 0.05) 0%, 
-                rgba(150, 80, 80, 0.02) 20%,
-                transparent 60%
+                rgba(200, 100, 100, 0.03) 0%, 
+                rgba(150, 80, 80, 0.01) 15%,
+                transparent 50%
             );
-            animation: love-expand 12s infinite ease-out;
-            animation-delay: calc(var(--delay) * 3s);
+            animation: love-expand 15s infinite ease-out;
+            animation-delay: calc(var(--delay) * 4s);
             opacity: 0;
-            /* NUEVO: Prevenir destellos de hardware */
-            backface-visibility: hidden;
-            perspective: 1000;
+            /* Optimización de rendimiento */
+            will-change: transform, opacity;
         }
         
         @keyframes love-expand {
@@ -51,17 +62,19 @@
                 width: 0;
                 height: 0;
                 opacity: 0;
+                transform: translate(-50%, -50%) scale(0.1);
             }
-            10% {
-                opacity: 0.2;
+            15% {
+                opacity: 0.15;
             }
-            40% {
-                opacity: 0.1;
+            30% {
+                opacity: 0.08;
             }
             100% {
-                width: 180vmax;
-                height: 180vmax;
+                width: 200vmax;
+                height: 200vmax;
                 opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
             }
         }
         
@@ -76,88 +89,206 @@
         
         .no-lover {
             font-size: 1.5em;
-            margin: 20px 0;
+            margin: 25px 0;
             opacity: 0;
-            animation: appear-disappear 15s infinite ease-in-out;
-            animation-delay: calc(var(--phase) * 5s);
+            animation: appear-disappear 18s infinite ease-in-out;
+            animation-delay: calc(var(--phase) * 6s);
             letter-spacing: 0.3em;
-            color: rgba(255, 180, 180, 0.8);
-            /* NUEVO: Suavizar transiciones de texto */
-            transition: opacity 0.5s ease;
+            color: rgba(255, 180, 180, 0.7);
+            text-shadow: 0 0 10px rgba(255, 100, 100, 0.2);
+            transition: opacity 0.8s ease;
         }
         
         @keyframes appear-disappear {
-            0%, 75%, 100% { 
+            0%, 70%, 100% { 
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(15px) scale(0.95);
             }
-            80%, 90% { 
-                opacity: 0.7;
-                transform: translateY(0);
+            10%, 60% { 
+                opacity: 0.8;
+                transform: translateY(0) scale(1);
             }
         }
         
         .love-itself {
-            font-size: 3em;
+            font-size: 3.5em;
             letter-spacing: 0.5em;
-            animation: love-pulse 8s infinite ease-in-out;
-            color: rgba(255, 190, 190, 0.8);
-            /* NUEVO: Text shadow más suave */
+            animation: love-pulse 12s infinite ease-in-out;
+            color: rgba(255, 190, 190, 0.9);
             text-shadow: 
-                0 0 15px rgba(255, 150, 150, 0.3),
-                0 0 30px rgba(255, 100, 100, 0.1);
+                0 0 20px rgba(255, 150, 150, 0.4),
+                0 0 40px rgba(255, 100, 100, 0.2),
+                0 0 60px rgba(255, 50, 50, 0.1);
+            margin: 40px 0;
+            transition: all 0.5s ease;
         }
         
         @keyframes love-pulse {
             0%, 100% { 
-                opacity: 0.4; 
-                transform: scale(0.98);
+                opacity: 0.5; 
+                transform: scale(0.98) rotate(-0.5deg);
+                text-shadow: 
+                    0 0 15px rgba(255, 150, 150, 0.3),
+                    0 0 30px rgba(255, 100, 100, 0.1);
             }
             50% { 
-                opacity: 0.9; 
-                transform: scale(1.02);
+                opacity: 1; 
+                transform: scale(1.03) rotate(0.5deg);
+                text-shadow: 
+                    0 0 25px rgba(255, 150, 150, 0.6),
+                    0 0 50px rgba(255, 100, 100, 0.3),
+                    0 0 80px rgba(255, 50, 50, 0.2);
             }
         }
         
         .love-paradox {
             position: absolute;
-            bottom: 15%;
+            bottom: 12%;
             width: 100%;
             text-align: center;
             font-style: italic;
-            opacity: 0.3;
+            opacity: 0.4;
             letter-spacing: 0.2em;
             font-size: 0.9em;
-            color: rgba(255, 180, 180, 0.5);
+            color: rgba(255, 180, 180, 0.6);
+            animation: paradox-breathe 20s infinite ease-in-out;
         }
 
-        /* MEJORA: Suavizado general avanzado */
-        * {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-tap-highlight-color: transparent;
+        @keyframes paradox-breathe {
+            0%, 100% { opacity: 0.3; transform: translateY(0); }
+            50% { opacity: 0.6; transform: translateY(-5px); }
         }
-        
-        /* NUEVO: Capa de supresión de destellos */
-        .love-field::before {
-            content: '';
+
+        /* Partículas de amor */
+        .love-particle {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 5;
+            width: 3px;
+            height: 3px;
+            background: radial-gradient(circle, rgba(255, 150, 150, 0.8), transparent);
+            border-radius: 50%;
+            animation: particle-float 20s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Control de Audio */
+        .audio-control {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+        }
+
+        .audio-toggle {
+            background: rgba(200, 100, 100, 0.2);
+            border: 1px solid rgba(255, 150, 150, 0.4);
+            color: rgba(255, 200, 200, 0.8);
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Palatino', serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .audio-toggle:hover {
+            background: rgba(200, 100, 100, 0.4);
+            color: rgba(255, 220, 220, 1);
+            box-shadow: 0 0 20px rgba(255, 100, 100, 0.3);
+        }
+
+        .audio-toggle.active {
+            background: rgba(200, 100, 100, 0.6);
+            box-shadow: 0 0 30px rgba(255, 100, 100, 0.5);
+            animation: audio-pulse 2s infinite;
+        }
+
+        @keyframes audio-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Efectos de Interacción */
+        .heart-ripple {
+            position: fixed;
+            border: 1px solid rgba(255, 100, 100, 0.3);
+            border-radius: 50%;
+            animation: heart-ripple-effect 2s ease-out forwards;
             pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes heart-ripple-effect {
+            from {
+                width: 10px;
+                height: 10px;
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            to {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(2);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .no-lover {
+                font-size: 1.2em;
+                letter-spacing: 0.2em;
+            }
+            
+            .love-itself {
+                font-size: 2.5em;
+                letter-spacing: 0.3em;
+            }
+            
+            .love-paradox {
+                font-size: 0.8em;
+                bottom: 10%;
+            }
+
+            .audio-control {
+                top: 20px;
+                right: 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Control de Audio -->
+    <div class="audio-control">
+        <button class="audio-toggle" id="audioToggle">💖 Sonido del Amor</button>
+    </div>
+
     <div class="love-field">
+        <!-- Ondas de amor mejoradas -->
         <div class="love-wave" style="--delay: 0;"></div>
         <div class="love-wave" style="--delay: 1;"></div>
         <div class="love-wave" style="--delay: 2;"></div>
         <div class="love-wave" style="--delay: 3;"></div>
+        
+        <!-- Partículas de amor -->
+        <div class="love-particles" id="loveParticles"></div>
         
         <div class="love-text">
             <div class="no-lover" style="--phase: 0;">
@@ -182,5 +313,363 @@
             El amor como la sustancia misma del vacío
         </div>
     </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════
+        // MOTOR DE AUDIO SAGRADO PARA EL AMOR PURO
+        // ═══════════════════════════════════════════════════════════════════
+
+        class LoveAudioEngine {
+            constructor() {
+                this.audioContext = null;
+                this.masterGain = null;
+                this.isActive = false;
+                this.currentVolume = 0.6;
+                
+                // Frecuencias del corazón y amor incondicional
+                this.heartFrequencies = [432, 528, 639]; // Frecuencias de sanación
+                this.loveChord = [174, 285, 396, 417, 528, 639, 741, 852]; // Frecuencias solfeggio
+                
+                this.init();
+            }
+            
+            async init() {
+                await this.setupAudioContext();
+            }
+            
+            async setupAudioContext() {
+                try {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    this.masterGain = this.audioContext.createGain();
+                    this.masterGain.gain.value = 0;
+                    this.masterGain.connect(this.audioContext.destination);
+                } catch(e) {
+                    console.log('Audio no disponible');
+                }
+            }
+            
+            async activate() {
+                if (!this.audioContext) return;
+                
+                if (this.audioContext.state === 'suspended') {
+                    await this.audioContext.resume();
+                }
+                
+                this.isActive = true;
+                
+                // Fade in suave
+                this.masterGain.gain.linearRampToValueAtTime(
+                    this.currentVolume, 
+                    this.audioContext.currentTime + 3
+                );
+                
+                // Iniciar sistemas de base
+                this.startHeartbeat();
+                this.startLoveDrone();
+                this.startHarmonicResonance();
+            }
+            
+            deactivate() {
+                if (!this.audioContext) return;
+                
+                // Fade out amoroso
+                this.masterGain.gain.linearRampToValueAtTime(
+                    0, 
+                    this.audioContext.currentTime + 2
+                );
+                
+                setTimeout(() => {
+                    this.stopAllSystems();
+                    this.isActive = false;
+                }, 2000);
+            }
+            
+            // ═══════════════════════════════════════════════════════════════
+            // SISTEMAS DE BASE
+            // ═══════════════════════════════════════════════════════════════
+            
+            startHeartbeat() {
+                // Latido del corazón universal
+                const osc = this.audioContext.createOscillator();
+                const gain = this.audioContext.createGain();
+                const filter = this.audioContext.createBiquadFilter();
+                
+                osc.type = 'sine';
+                osc.frequency.value = 136.1; // Frecuencia del OM del corazón
+                
+                filter.type = 'lowpass';
+                filter.frequency.value = 600;
+                
+                // Patrón de latido
+                const now = this.audioContext.currentTime;
+                gain.gain.setValueAtTime(0, now);
+                
+                // Latido continuo y suave
+                const beat = () => {
+                    const currentTime = this.audioContext.currentTime;
+                    gain.gain.setValueAtTime(0.08, currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.08, currentTime + 0.8);
+                    gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.95);
+                };
+                
+                // Programar latidos
+                setInterval(beat, 1300);
+                
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start();
+            }
+            
+            startLoveDrone() {
+                // Drone de amor incondicional en 528Hz (frecuencia de transformación)
+                const osc = this.audioContext.createOscillator();
+                const gain = this.audioContext.createGain();
+                const filter = this.audioContext.createBiquadFilter();
+                
+                osc.type = 'sine';
+                osc.frequency.value = 528;
+                
+                filter.type = 'lowpass';
+                filter.frequency.value = 1000;
+                
+                gain.gain.value = 0.05;
+                
+                // Modulación suave
+                const lfo = this.audioContext.createOscillator();
+                const lfoGain = this.audioContext.createGain();
+                
+                lfo.frequency.value = 0.1;
+                lfoGain.gain.value = 0.8;
+                
+                lfo.connect(lfoGain);
+                lfoGain.connect(osc.frequency);
+                
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start();
+                lfo.start();
+            }
+            
+            startHarmonicResonance() {
+                // Armónicos del amor en la serie de Fibonacci
+                const frequencies = [108, 216, 324, 432, 540, 648];
+                
+                frequencies.forEach((freq, i) => {
+                    const osc = this.audioContext.createOscillator();
+                    const gain = this.audioContext.createGain();
+                    
+                    osc.type = 'triangle';
+                    osc.frequency.value = freq;
+                    
+                    gain.gain.value = 0.02 / (i + 1);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    
+                    osc.start();
+                });
+            }
+            
+            stopAllSystems() {
+                // Limpiar todos los osciladores
+                if (this.audioContext) {
+                    this.audioContext.close();
+                }
+            }
+            
+            // ═══════════════════════════════════════════════════════════════
+            // EVENTOS ESPECÍFICOS
+            // ═══════════════════════════════════════════════════════════════
+            
+            playLoveWave() {
+                if (!this.isActive || !this.audioContext) return;
+                
+                const now = this.audioContext.currentTime;
+                
+                // Onda de amor expansiva
+                const frequencies = [396, 417, 528, 639];
+                
+                frequencies.forEach((freq, i) => {
+                    const osc = this.audioContext.createOscillator();
+                    const gain = this.audioContext.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    
+                    gain.gain.setValueAtTime(0, now + (i * 0.2));
+                    gain.gain.linearRampToValueAtTime(0.1, now + (i * 0.2) + 0.5);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + (i * 0.2) + 8);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    
+                    osc.start(now + (i * 0.2));
+                    osc.stop(now + (i * 0.2) + 8);
+                });
+            }
+            
+            playTextReveal() {
+                if (!this.isActive || !this.audioContext) return;
+                
+                const now = this.audioContext.currentTime;
+                
+                // Sonido sutil para la revelación del texto
+                const osc = this.audioContext.createOscillator();
+                const gain = this.audioContext.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.value = 639; // Frecuencia de conexión
+                
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.08, now + 0.3);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 2);
+                
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(now);
+                osc.stop(now + 2);
+            }
+            
+            playHeartRipple() {
+                if (!this.isActive || !this.audioContext) return;
+                
+                const now = this.audioContext.currentTime;
+                
+                // Ripple de corazón para interacciones
+                const osc = this.audioContext.createOscillator();
+                const gain = this.audioContext.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.value = 432;
+                
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.06, now + 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+                
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(now);
+                osc.stop(now + 1.5);
+            }
+            
+            setVolume(value) {
+                this.currentVolume = value;
+                if (this.isActive && this.masterGain) {
+                    this.masterGain.gain.linearRampToValueAtTime(
+                        value,
+                        this.audioContext.currentTime + 0.1
+                    );
+                }
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // INICIALIZACIÓN
+        // ═══════════════════════════════════════════════════════════════════
+
+        const loveAudio = new LoveAudioEngine();
+        let audioActive = false;
+
+        // Control de audio
+        const audioToggle = document.getElementById('audioToggle');
+
+        audioToggle.addEventListener('click', async () => {
+            if (!audioActive) {
+                await loveAudio.activate();
+                audioActive = true;
+                audioToggle.textContent = '💝 Amor Sonoro';
+                audioToggle.classList.add('active');
+            } else {
+                loveAudio.deactivate();
+                audioActive = false;
+                audioToggle.textContent = '💖 Sonido del Amor';
+                audioToggle.classList.remove('active');
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════════
+        // PARTÍCULAS DE AMOR
+        // ═══════════════════════════════════════════════════════════════════
+
+        const loveParticles = document.getElementById('loveParticles');
+        const particleCount = 33;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'love-particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
+            particle.style.setProperty('--ty', (Math.random() - 0.5) * 200 + 'px');
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            loveParticles.appendChild(particle);
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // INTERACCIONES Y EVENTOS
+        // ═══════════════════════════════════════════════════════════════════
+
+        // Detectar cuando las ondas de amor se activan
+        const loveWaves = document.querySelectorAll('.love-wave');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && audioActive) {
+                    loveAudio.playLoveWave();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        loveWaves.forEach(wave => {
+            observer.observe(wave);
+        });
+
+        // Detectar cuando el texto aparece
+        const textElements = document.querySelectorAll('.no-lover, .love-itself');
+        const textObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && audioActive) {
+                    loveAudio.playTextReveal();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        textElements.forEach(text => {
+            textObserver.observe(text);
+        });
+
+        // Interacción con clics - crear ripples de amor
+        document.addEventListener('click', (e) => {
+            const ripple = document.createElement('div');
+            ripple.className = 'heart-ripple';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            document.body.appendChild(ripple);
+            
+            if (audioActive) {
+                loveAudio.playHeartRipple();
+            }
+            
+            setTimeout(() => ripple.remove(), 2000);
+        });
+
+        // Efecto de respiración en el texto principal
+        const loveItself = document.querySelector('.love-itself');
+        setInterval(() => {
+            loveItself.style.transform = loveItself.style.transform === 'scale(1.02)' ? 
+                'scale(0.98)' : 'scale(1.02)';
+        }, 8000);
+
+        console.log('💖 Campo de Amor Puro activado');
+        console.log('El amor que no necesita objeto...');
+        console.log('El amor que es sujeto y objeto de sí mismo...');
+    </script>
 </body>
 </html>
