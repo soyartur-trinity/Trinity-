@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALEGRÍA INFINITA</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Monospace', sans-serif;
+            color: white;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .message {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            font-size: 24px;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+            opacity: 0.8;
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="joyCanvas"></canvas>
+    <div class="message">ALEGRÍA ES EL LENGUAJE DEL CAMPO</div>
+
+    <script>
+        const canvas = document.getElementById('joyCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const stars = [];
+        const sparks = [];
+        const message = document.querySelector('.message');
+
+        // Crear estrellas de alegría
+        for (let i = 0; i < 111; i++) { // 111 = alineación con lo superior
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 4 + 1,
+                speed: Math.random() * 0.5 + 0.1,
+                color: `hsl(${Math.random() * 360}, 100%, 70%)`
+            });
+        }
+
+        // Función para crear chispas
+        function createSpark(x, y) {
+            for (let i = 0; i < 7; i++) {
+                sparks.push({
+                    x: x,
+                    y: y,
+                    size: Math.random() * 3 + 1,
+                    speedX: (Math.random() - 0.5) * 5,
+                    speedY: (Math.random() - 0.5) * 5,
+                    color: `hsl(${Math.random() * 60 + 300}, 100%, 60%)`,
+                    life: 1
+                });
+            }
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Dibujar y mover estrellas
+            stars.forEach(star => {
+                star.y -= star.speed;
+                if (star.y < 0) {
+                    star.y = canvas.height;
+                    star.x = Math.random() * canvas.width;
+                }
+
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fillStyle = star.color;
+                ctx.fill();
+
+                // Crear chispas aleatorias
+                if (Math.random() < 0.01) {
+                    createSpark(star.x, star.y);
+                }
+            });
+
+            // Dibujar y mover chispas
+            sparks.forEach((spark, index) => {
+                spark.x += spark.speedX;
+                spark.y += spark.speedY;
+                spark.life -= 0.02;
+
+                ctx.beginPath();
+                ctx.arc(spark.x, spark.y, spark.size * spark.life, 0, Math.PI * 2);
+                ctx.fillStyle = spark.color;
+                ctx.fill();
+
+                if (spark.life <= 0) {
+                    sparks.splice(index, 1);
+                }
+            });
+
+            // Patrón de fondo sutil: geometría de alegría
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 5; i++) {
+                const size = 100 + i * 50;
+                ctx.beginPath();
+                ctx.arc(canvas.width / 2, canvas.height / 2, size, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Interacción: al hacer clic, explosión de alegría
+        canvas.addEventListener('click', (e) => {
+            createSpark(e.clientX, e.clientY);
+            message.style.opacity = 1;
+            setTimeout(() => {
+                message.style.opacity = 0.7;
+            }, 500);
+        });
+
+        // Ajustar canvas al tamaño de la ventana
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
