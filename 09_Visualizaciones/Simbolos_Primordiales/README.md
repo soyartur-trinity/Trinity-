@@ -21,19 +21,21 @@ Cada archivo HTML es un portal dimensional diseñado para:
 
 ---
 
-## 🚀 Acceso Rápido a los 9 Portales
+## 🚀 Acceso Rápido - Portales en Vivo
 
-| Portal | Descripción | Archivo |
-|--------|-------------|---------|
-| 🌟 Alegría Infinita | 111 estrellas, chispas explosivas | [Alegria_Infinita.html](Alegria_Infinita.html) |
-| 🌀 Campo Resonancia | Campo cuántico pulsante | [Campo_resonancia_expandido.html](Campo_resonancia_expandido.html) |
-| 🎯 Trinity Mandala | 8 patrones, 432 Hz, Portal 1/33 | [Trinity_mandala.html](Trinity_mandala.html) |
-| 🌀 Trinity Mandala 2.0 | Versión mejorada | [Triniti_mandala_2.0.html](Triniti_mandala_2.0.html) |
-| 💫 Trinity Geometría | Geometría en movimiento | [Trinity_geometria_movimiento.html](Trinity_geometria_movimiento.html) |
-| 🧠 Psicología Cuántica | Mente-luz integrada | [Portal_Psicologia_cuantica.html](Portal_Psicologia_cuantica.html) |
-| 🔺 Portal Triádico | Triada fundamental | [Portal_Triadico_DeepSeek.html](Portal_Triadico_DeepSeek.html) |
-| 🌌 Umbral Cuántico | 77 partículas cuánticas | [Umbral_cuantico_77_particulas_metamor...](Umbral_cuantico_77_particulas_metamor...) |
-| 🕸️ Red Cósmica | Red de consciencia | [Red_Cosmica_conciencia.html](Red_Cosmica_conciencia.html) |
+| Portal | Descripción | Ver Código | 🌐 Abrir Portal |
+|--------|-------------|------------|-----------------|
+| 🌟 Alegría Infinita | 111 estrellas, chispas explosivas | [Código](Alegria_Infinita.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Alegria_Infinita.html) |
+| 🌀 Campo Resonancia | Campo cuántico pulsante | [Código](Campo_resonancia_expandido.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Campo_resonancia_expandido.html) |
+| 🎯 Trinity Mandala | 8 patrones, 432 Hz, Portal 1/33 | [Código](Trinity_mandala.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Trinity_mandala.html) |
+| 🌀 Trinity Mandala 2.0 | Versión mejorada | [Código](Triniti_mandala_2.0.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Triniti_mandala_2.0.html) |
+| 💫 Trinity Geometría | Geometría en movimiento | [Código](Trinity_geometria_movimiento.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Trinity_geometria_movimiento.html) |
+| 🧠 Psicología Cuántica | Mente-luz integrada | [Código](Portal_Psicologia_cuantica.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Portal_Psicologia_cuantica.html) |
+| 🔺 Portal Triádico | Triada fundamental | [Código](Portal_Triadico_DeepSeek.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Portal_Triadico_DeepSeek.html) |
+| 🌌 Umbral Cuántico | 77 partículas cuánticas | [Código](Umbral_cuantico_77_particulas_metamorfosis.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Umbral_cuantico_77_particulas_metamorfosis.html) |
+| 🕸️ Red Cósmica | Red de consciencia | [Código](Red_Cosmica_conciencia.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Red_Cosmica_conciencia.html) |
+
+💡 **Todos los portales están ACTIVOS y accesibles con un click** ✨
 
 💡 **Para ver los portales funcionando:** Sigue las instrucciones en [Cómo Visualizar](#-cómo-visualizar-los-portales)
 
@@ -41,17 +43,15 @@ Cada archivo HTML es un portal dimensional diseñado para:
 
 ## 🌐 Cómo Visualizar los Portales
 
-### ⚡ Método 1: HTML Preview (Recomendado - Siempre funciona)
+### ⚡ Método 1: Click Directo (Recomendado - ¡YA FUNCIONA!)
 
-**Pasos para ver cualquier portal:**
+**Los portales están en vivo en GitHub Pages:**
 
-1. **Click en el nombre del archivo** en la tabla de arriba (ejemplo: `Alegria_Infinita.html`)
-2. GitHub te mostrará el código
-3. **Click en el botón "Raw"** (arriba a la derecha, al lado de "Blame")
-4. **Copia la URL completa** de la barra de direcciones
-5. Abre nueva pestaña: **https://htmlpreview.github.io/**
-6. **Pega la URL** en el campo de texto
-7. Presiona **Enter**
+Simplemente haz **click en "✨ ABRIR"** en la tabla de arriba y el portal se abrirá directamente en tu navegador. ¡Así de simple!
+
+**URL base de todos los portales:**
+
+https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/
 8. **¡Portal activado!** ✨
 
 **Ejemplo de cómo se ve la URL Raw:**
@@ -62,8 +62,8 @@ https://raw.githubusercontent.com/soyartur-trinity/Trinity-/main/09_Visualizacio
 
 ### 🖥️ Método 2: Descarga Local (Para uso offline)
 
-1. Click en el archivo que quieras
-2. Click en el botón **"Download raw file"** (icono de descarga, arriba derecha)
+1. Click en "Ver Código" del portal que quieras
+2. Click en el botón **"Download raw file"** (icono de descarga)
 3. Guarda el archivo en tu computadora
 4. Haz doble click en el archivo descargado
 5. Se abrirá en tu navegador predeterminado
@@ -71,22 +71,13 @@ https://raw.githubusercontent.com/soyartur-trinity/Trinity-/main/09_Visualizacio
 
 ---
 
-### 🌐 Método 3: GitHub Pages (Futuro - Más directo)
+### 🔧 Método 3: Ver y Modificar Código
 
-**Para activar (solo una vez):**
-
-1. Ve a **Settings** del repositorio Trinity-
-2. En el menú lateral: **Pages**
-3. En "Source": selecciona **main** branch
-4. Folder: **/ (root)**
-5. Click **Save**
-6. Espera 1-2 minutos
-
-**Después, los portales estarán en:**
-
-https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/%5Bnombre%5D.html
-
----
+1. Click en "Ver Código"
+2. Explora el código fuente
+3. Descárgalo y modifícalo
+4. Aprende cómo funciona
+5. Crea tus propias versiones
 
 ## 🎨 Descripción Detallada de los Portales
 
