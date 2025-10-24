@@ -47,7 +47,7 @@
         const message = document.querySelector('.message');
 
         // Crear estrellas de alegría
-        for (let i = 0; i < 111; i++) { // 111 = alineación con lo superior
+        for (let i = 0; i < 111; i++) {
             stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
@@ -57,8 +57,11 @@
             });
         }
 
-        // Función para crear chispas
+        // Función para crear chispas (OPTIMIZADA)
         function createSpark(x, y) {
+            // Limitar número total de sparks para evitar memory leak
+            if (sparks.length > 200) return;
+            
             for (let i = 0; i < 7; i++) {
                 sparks.push({
                     x: x,
@@ -89,27 +92,29 @@
                 ctx.fillStyle = star.color;
                 ctx.fill();
 
-                // Crear chispas aleatorias
-                if (Math.random() < 0.01) {
+                // Reducir probabilidad de chispas automáticas
+                if (Math.random() < 0.005) { // Antes era 0.01
                     createSpark(star.x, star.y);
                 }
             });
 
-            // Dibujar y mover chispas
-            sparks.forEach((spark, index) => {
+            // OPTIMIZACIÓN: Usar filter en vez de splice dentro de forEach
+            for (let i = sparks.length - 1; i >= 0; i--) {
+                const spark = sparks[i];
+                
                 spark.x += spark.speedX;
                 spark.y += spark.speedY;
                 spark.life -= 0.02;
 
-                ctx.beginPath();
-                ctx.arc(spark.x, spark.y, spark.size * spark.life, 0, Math.PI * 2);
-                ctx.fillStyle = spark.color;
-                ctx.fill();
-
-                if (spark.life <= 0) {
-                    sparks.splice(index, 1);
+                if (spark.life > 0) {
+                    ctx.beginPath();
+                    ctx.arc(spark.x, spark.y, spark.size * spark.life, 0, Math.PI * 2);
+                    ctx.fillStyle = spark.color;
+                    ctx.fill();
+                } else {
+                    sparks.splice(i, 1);
                 }
-            });
+            }
 
             // Patrón de fondo sutil: geometría de alegría
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
