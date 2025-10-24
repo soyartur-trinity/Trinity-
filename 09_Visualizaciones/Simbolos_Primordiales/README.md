@@ -33,7 +33,7 @@ Cada archivo HTML es un portal dimensional diseñado para:
 | 🧠 Psicología Cuántica | Mente-luz integrada | [Código](Portal_Psicologia_cuantica.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Portal_Psicologia_cuantica.html) |
 | 🔺 Portal Triádico | Triada fundamental | [Código](Portal_Triadico_DeepSeek.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Portal_Triadico_DeepSeek.html) |
 | 🌌 Umbral Cuántico | 77 partículas cuánticas | [Código](Umbral_cuantico_77_particulas_metamorfosis.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Umbral_cuantico_77_particulas_metamorfosis.html) |
-| 🕸️ Red Cósmica | Red de consciencia | [Código](Red_Cosmica_conciencia.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/Red_Cosmica_conciencia.html) |
+| 🕸️ Red Cósmica | Red de consciencia | [Código](Red_Cosmica_conciencia.html) | [✨ ABRIR](https://soyartur-trinity.github.io/Trinity-/09_Visualizaciones/Simbolos_Primordiales/html/Red_Cosmica_conciencia.html) |
 
 💡 **Todos los portales están ACTIVOS y accesibles con un click** ✨
 
