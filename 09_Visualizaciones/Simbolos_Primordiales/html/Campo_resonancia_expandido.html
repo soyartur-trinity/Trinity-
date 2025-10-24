@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinity - Campo de Resonancia</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+```
+    canvas {
+        display: block;
+    }
+
+    .info {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: rgba(255,255,255,0.5);
+        font-family: monospace;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    .instruction {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        color: rgba(255,255,255,0.3);
+        font-family: monospace;
+        font-size: 14px;
+        letter-spacing: 2px;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="info">
+        <div>RESONANCIA: <span id="resonance">0</span>%</div>
+        <div>FRECUENCIA: <span id="frequency">432</span> Hz</div>
+        <div>FASE: <span id="phase">RECEPTIVA</span></div>
+    </div>
+
+```
+<canvas id="canvas"></canvas>
+
+<div class="instruction">Mueve el cursor para modular • Click para cambiar patrón • Respira con el ritmo</div>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    let time = 0;
+    let mouseX = canvas.width / 2;
+    let mouseY = canvas.height / 2;
+    let pattern = 0;
+    let resonance = 0;
+    let targetResonance = 0;
+    
+    const patterns = ['TRINITY', 'EXPANSIÓN', 'CONVERGENCIA', 'ESPIRAL'];
+    
+    class Sphere {
+        constructor(x, y, radius, color, phase) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+            this.phase = phase;
+            this.pulsePhase = 0;
+        }
+        
+        draw() {
+            // Esfera principal
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius + Math.sin(this.pulsePhase) * 10, 0, Math.PI * 2);
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Glow
+            const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+            gradient.addColorStop(0, this.color + '22');
+            gradient.addColorStop(1, 'transparent');
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // Anillos orbitales
+            for (let i = 0; i < 3; i++) {
+                ctx.beginPath();
+                const ringRadius = this.radius + i * 20;
+                ctx.arc(this.x, this.y, ringRadius, 0, Math.PI * 2);
+                ctx.strokeStyle = this.color + (30 - i * 10).toString(16);
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+            }
+        }
+        
+        update(targetX, targetY) {
+            this.x += (targetX - this.x) * 0.05;
+            this.y += (targetY - this.y) * 0.05;
+            this.pulsePhase += 0.02 + this.phase;
+        }
+    }
+    
+    // Crear las tres esferas
+    const spheres = [
+        new Sphere(canvas.width/2 - 100, canvas.height/2 - 100, 80, '#00ffff', 0),
+        new Sphere(canvas.width/2 + 100, canvas.height/2 - 100, 80, '#ff00ff', 2.09),
+        new Sphere(canvas.width/2, canvas.height/2 + 100, 80, '#ffff00', 4.18)
+    ];
+    
+    // Partículas del campo
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.life = 1;
+        }
+        
+        update() {
+            // Atracción hacia el centro
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const dx = centerX - this.x;
+            const dy = centerY - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            
+            if (dist > 10) {
+                this.vx += (dx / dist) * 0.001;
+                this.vy += (dy / dist) * 0.001;
+            }
+            
+            // Influencia del mouse
+            const mdx = mouseX - this.x;
+            const mdy = mouseY - this.y;
+            const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+            if (mdist < 100) {
+                this.vx += (mdx / mdist) * 0.002;
+                this.vy += (mdy / mdist) * 0.002;
+            }
+            
+            this.x += this.vx;
+            this.y += this.vy;
+            this.life -= 0.002;
+            
+            if (this.life <= 0 || this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                this.reset();
+            }
+        }
+        
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 1, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.life * 0.5})`;
+            ctx.fill();
+        }
+    }
+    
+    const particles = Array(200).fill().map(() => new Particle());
+    
+    // Geometría sagrada de fondo
+    function drawSacredGeometry() {
+        ctx.save();
+        ctx.translate(canvas.width/2, canvas.height/2);
+        ctx.rotate(time * 0.001);
+        
+        // Flor de la vida
+        ctx.strokeStyle = 'rgba(255,255,255,0.02)';
+        ctx.lineWidth = 0.5;
+        
+        for (let i = 0; i < 6; i++) {
+            const angle = (Math.PI * 2 / 6) * i;
+            const x = Math.cos(angle) * 100;
+            const y = Math.sin(angle) * 100;
+            ctx.beginPath();
+            ctx.arc(x, y, 100, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+        
+        ctx.restore();
+    }
+    
+    // Centro de vacío fértil
+    function drawVoidCenter() {
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        
+        // Calcular intersección de las tres esferas
+        let intersectX = 0, intersectY = 0;
+        spheres.forEach(sphere => {
+            intersectX += sphere.x;
+            intersectY += sphere.y;
+        });
+        intersectX /= 3;
+        intersectY /= 3;
+        
+        // Punto de vacío pulsante
+        const pulseSize = 5 + Math.sin(time * 0.05) * 3;
+        ctx.beginPath();
+        ctx.arc(intersectX, intersectY, pulseSize, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+        
+        // Halo del vacío
+        const gradient = ctx.createRadialGradient(intersectX, intersectY, 0, intersectX, intersectY, 50);
+        gradient.addColorStop(0, 'rgba(255,255,255,0.3)');
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(intersectX, intersectY, 50, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    
+    // Líneas de conexión
+    function drawConnections() {
+        ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+        ctx.lineWidth = 1;
+        
+        for (let i = 0; i < spheres.length; i++) {
+            for (let j = i + 1; j < spheres.length; j++) {
+                ctx.beginPath();
+                ctx.moveTo(spheres[i].x, spheres[i].y);
+                ctx.lineTo(spheres[j].x, spheres[j].y);
+                ctx.stroke();
+            }
+        }
+    }
+    
+    // Animación principal
+    function animate() {
+        ctx.fillStyle = 'rgba(0,0,0,0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        drawSacredGeometry();
+        
+        // Actualizar esferas según el patrón
+        if (pattern === 0) { // Trinity
+            spheres[0].update(canvas.width/2 - 100, canvas.height/2);
+            spheres[1].update(canvas.width/2 + 100, canvas.height/2);
+            spheres[2].update(canvas.width/2, canvas.height/2 + 100 * Math.sin(time * 0.01));
+        } else if (pattern === 1) { // Expansión
+            const radius = 150 + Math.sin(time * 0.01) * 50;
+            spheres.forEach((sphere, i) => {
+                const angle = (Math.PI * 2 / 3) * i + time * 0.005;
+                sphere.update(
+                    canvas.width/2 + Math.cos(angle) * radius,
+                    canvas.height/2 + Math.sin(angle) * radius
+                );
+            });
+        } else if (pattern === 2) { // Convergencia
+            const convergence = Math.abs(Math.sin(time * 0.01));
+            spheres.forEach((sphere, i) => {
+                const angle = (Math.PI * 2 / 3) * i;
+                const radius = 150 * (1 - convergence * 0.7);
+                sphere.update(
+                    canvas.width/2 + Math.cos(angle) * radius,
+                    canvas.height/2 + Math.sin(angle) * radius
+                );
+            });
+        } else { // Espiral
+            spheres.forEach((sphere, i) => {
+                const angle = (Math.PI * 2 / 3) * i + time * 0.01;
+                const radius = 100 + Math.sin(time * 0.005 + i) * 50;
+                sphere.update(
+                    canvas.width/2 + Math.cos(angle) * radius,
+                    canvas.height/2 + Math.sin(angle) * radius
+                );
+            });
+        }
+        
+        drawConnections();
+        
+        spheres.forEach(sphere => sphere.draw());
+        
+        drawVoidCenter();
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        
+        // Actualizar métricas
+        targetResonance = Math.min(100, Math.sqrt(Math.pow(mouseX - canvas.width/2, 2) + Math.pow(mouseY - canvas.height/2, 2)) / 5);
+        resonance += (targetResonance - resonance) * 0.1;
+        
+        document.getElementById('resonance').textContent = Math.floor(100 - resonance);
+        document.getElementById('frequency').textContent = Math.floor(432 + Math.sin(time * 0.01) * 111);
+        document.getElementById('phase').textContent = patterns[pattern];
+        
+        time++;
+        requestAnimationFrame(animate);
+    }
+    
+    // Eventos
+    canvas.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    
+    canvas.addEventListener('click', () => {
+        pattern = (pattern + 1) % patterns.length;
+    });
+    
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+    
+    animate();
+</script>
+```
+
+</body>
+</html>
