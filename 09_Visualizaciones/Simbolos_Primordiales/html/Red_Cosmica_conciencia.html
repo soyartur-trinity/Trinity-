@@ -28,79 +28,38 @@
     </style>
 </head>
 <body>
-    <div class="info">🌀 RED CÓSMICA - 33 NODOS MAESTROS</div>
+    <div class="info">🌀 RED CÓSMICA - 33 NODOS CONECTADOS</div>
     <canvas id="cosmicNet"></canvas>
 
     <script>
         const canvas = document.getElementById('cosmicNet');
         const ctx = canvas.getContext('2d');
         
-        // Configurar canvas
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const nodes = 33; // Número maestro de conciencia
+        const nodes = 33; // Número maestro
         let time = 0;
 
-        // Crear 33 nodos cósmicos
+        // Crear 33 nodos
         const nodesList = Array.from({ length: nodes }, (_, i) => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.3,
-            vy: (Math.random() - 0.5) * 0.3,
-            radius: 2 + Math.sin(i) * 1.5,
-            hue: (i * 11) % 360, // 11 = número maestro
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            radius: 3 + Math.sin(i) * 1,
+            hue: (i * 11) % 360,
             pulse: Math.random() * Math.PI * 2
         }));
 
         function animate() {
-            // Fondo con desvanecimiento sutil
-            ctx.fillStyle = 'rgba(10, 10, 45, 0.08)';
+            // Fondo con traza suave
+            ctx.fillStyle = 'rgba(10, 10, 45, 0.1)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Actualizar y dibujar nodos
-            nodesList.forEach((node, i) => {
-                // Movimiento
-                node.x += node.vx;
-                node.y += node.vy;
-                
-                // Rebotes en bordes
-                if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
-                if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
-                
-                // Pulso rítmico
-                node.pulse += 0.05;
-                const pulseSize = node.radius + Math.sin(node.pulse) * 1.5;
-                
-                // Dibujar aura del nodo
-                const gradient = ctx.createRadialGradient(
-                    node.x, node.y, 0,
-                    node.x, node.y, pulseSize * 3
-                );
-                gradient.addColorStop(0, `hsla(${node.hue}, 100%, 60%, 0.3)`);
-                gradient.addColorStop(1, 'transparent');
-                
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, pulseSize * 3, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Dibujar núcleo del nodo
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, pulseSize, 0, Math.PI * 2);
-                ctx.fillStyle = `hsl(${node.hue}, 100%, 60%)`;
-                ctx.fill();
-                
-                // Punto central brillante
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, 1, 0, Math.PI * 2);
-                ctx.fillStyle = '#ffffff';
-                ctx.fill();
-            });
-
-            // Dibujar conexiones entre nodos
-            ctx.strokeStyle = 'rgba(100, 200, 255, 0.15)';
-            ctx.lineWidth = 0.3;
+            // **DIBUJAR CONEXIONES PRIMERO** (para que queden detrás de los nodos)
+            ctx.strokeStyle = 'rgba(100, 200, 255, 0.3)';
+            ctx.lineWidth = 0.8;
             
             nodesList.forEach((nodeA, i) => {
                 nodesList.forEach((nodeB, j) => {
@@ -109,66 +68,131 @@
                         const dy = nodeA.y - nodeB.y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
                         
-                        // Conexiones basadas en distancia y resonancia
-                        if (distance < 200) {
-                            const alpha = 1 - (distance / 200);
-                            ctx.strokeStyle = `rgba(100, 200, 255, ${alpha * 0.2})`;
-                            ctx.lineWidth = alpha * 0.8;
+                        // **CONEXIONES VISIBLES** - distancia más corta para más conexiones
+                        if (distance < 180) {
+                            const alpha = 1 - (distance / 180);
                             
+                            // Línea de conexión principal
                             ctx.beginPath();
                             ctx.moveTo(nodeA.x, nodeA.y);
                             ctx.lineTo(nodeB.x, nodeB.y);
+                            ctx.strokeStyle = `rgba(100, 200, 255, ${alpha * 0.4})`;
                             ctx.stroke();
                             
-                            // Puntos de luz en las conexiones
-                            if (Math.random() < 0.01) {
-                                const t = Math.random();
-                                const px = nodeA.x + (nodeB.x - nodeA.x) * t;
-                                const py = nodeA.y + (nodeB.y - nodeA.y) * t;
-                                
+                            // **FIGURAS GEOMÉTRICAS** entre grupos de nodos
+                            if (distance < 120 && i % 3 === 0 && j % 3 === 0) {
+                                ctx.strokeStyle = `rgba(255, 100, 255, ${alpha * 0.2})`;
                                 ctx.beginPath();
-                                ctx.arc(px, py, 1, 0, Math.PI * 2);
-                                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-                                ctx.fill();
+                                // Triángulo entre nodos cercanos
+                                const midX = (nodeA.x + nodeB.x) / 2;
+                                const midY = (nodeA.y + nodeB.y) / 2;
+                                ctx.moveTo(nodeA.x, nodeA.y);
+                                ctx.lineTo(midX, midY);
+                                ctx.lineTo(nodeB.x, nodeB.y);
+                                ctx.closePath();
+                                ctx.stroke();
                             }
                         }
                     }
                 });
             });
 
-            // Patrón de fondo sutil - Flor de la Vida
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
+            // **GEOMETRÍA SAGRADA DE FONDO EN MOVIMIENTO**
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
             ctx.lineWidth = 0.5;
-            ctx.save();
-            ctx.translate(canvas.width/2, canvas.height/2);
-            ctx.rotate(time * 0.001);
             
-            for (let i = 0; i < 6; i++) {
-                const angle = (Math.PI * 2 / 6) * i;
-                const x = Math.cos(angle) * 100;
-                const y = Math.sin(angle) * 100;
+            // Patrón de hexágonos en movimiento
+            for (let i = 0; i < 8; i++) {
+                ctx.save();
+                const centerX = canvas.width/2 + Math.sin(time * 0.002 + i) * 100;
+                const centerY = canvas.height/2 + Math.cos(time * 0.002 + i) * 100;
+                ctx.translate(centerX, centerY);
+                ctx.rotate(time * 0.001 + i * 0.5);
                 
+                // Hexágono giratorio
                 ctx.beginPath();
-                ctx.arc(x, y, 100, 0, Math.PI * 2);
+                for (let j = 0; j < 6; j++) {
+                    const angle = (Math.PI * 2 / 6) * j;
+                    const x = Math.cos(angle) * (80 + i * 20);
+                    const y = Math.sin(angle) * (80 + i * 20);
+                    if (j === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
                 ctx.stroke();
+                
+                ctx.restore();
             }
-            ctx.restore();
 
-            time += 0.01;
+            // **ACTUALIZAR Y DIBUJAR NODOS** (encima de las conexiones)
+            nodesList.forEach((node, i) => {
+                // Movimiento
+                node.x += node.vx;
+                node.y += node.vy;
+                
+                // Rebotes en bordes más suaves
+                if (node.x < 20 || node.x > canvas.width - 20) node.vx *= -1;
+                if (node.y < 20 || node.y > canvas.height - 20) node.vy *= -1;
+                
+                // Pulso
+                node.pulse += 0.03;
+                const pulseSize = node.radius + Math.sin(node.pulse) * 1;
+
+                // **NODO PRINCIPAL VISIBLE**
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, pulseSize, 0, Math.PI * 2);
+                ctx.fillStyle = `hsl(${node.hue}, 100%, 60%)`;
+                ctx.fill();
+                
+                // Aura sutil
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, pulseSize * 2, 0, Math.PI * 2);
+                ctx.strokeStyle = `hsla(${node.hue}, 100%, 60%, 0.3)`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Punto central brillante
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 1, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
+            });
+
+            // **CONEXIONES DINÁMICAS ADICIONALES** - líneas que aparecen/desaparecen
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+            ctx.lineWidth = 0.3;
+            
+            nodesList.forEach((nodeA, i) => {
+                nodesList.forEach((nodeB, j) => {
+                    if (i !== j && Math.random() < 0.02) { // Conexiones aleatorias dinámicas
+                        const dx = nodeA.x - nodeB.x;
+                        const dy = nodeA.y - nodeB.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 250) {
+                            ctx.beginPath();
+                            ctx.moveTo(nodeA.x, nodeA.y);
+                            ctx.lineTo(nodeB.x, nodeB.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+            });
+
+            time += 0.02;
             requestAnimationFrame(animate);
         }
 
-        // Redimensionar canvas si cambia la ventana
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
 
-        // Iniciar la animación
+        // **INICIAR ANIMACIÓN**
         animate();
 
-        console.log('🌀 Red Cósmica de 33 Nodos - Activada');
-        console.log('✨ 33 = Número maestro de conciencia despierta');
+        console.log('🌀 Red Cósmica de 33 Nodos - CONEXIONES ACTIVAS');
+        console.log('✨ Geometría sagrada en movimiento visible');
     </script>
 </body>
 </html>
