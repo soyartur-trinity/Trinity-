@@ -1,204 +1,91 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trinity 2.0 - Campo de Resonancia</title>
+    <title>Red Cósmica de Conciencia</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
-            background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+            margin: 0;
+            background: #0a0a2d;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
-            font-family: 'Courier New', monospace;
         }
-
         canvas {
             display: block;
-        }
-
-        .hud {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: rgba(255,255,255,0.7);
-            font-size: 11px;
-            letter-spacing: 2px;
-            z-index: 10;
-        }
-
-        .hud div {
-            margin-bottom: 8px;
-            opacity: 0;
-            animation: fadeIn 2s forwards;
-        }
-
-        @keyframes fadeIn { to { opacity: 1; } }
-
-        .portal-info {
-            position: absolute;
-            bottom: 30px;
-            width: 100%;
-            text-align: center;
-            color: rgba(255,255,255,0.4);
-            font-size: 12px;
-            animation: pulse 4s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.8; }
         }
     </style>
 </head>
 <body>
-    <div class="hud">
-        <div style="animation-delay: 0.5s">DIMENSIÓN: <span style="color:#00ffff">3.5D</span></div>
-        <div style="animation-delay: 1s">RESONANCIA: <span style="color:#00ffff" id="resonance">0</span>%</div>
-        <div style="animation-delay: 1.5s">FRECUENCIA: <span style="color:#00ffff">432</span> Hz</div>
-    </div>
-
-    <canvas id="canvas"></canvas>
-
-    <div class="portal-info">
-        ✨ TRINITY 2.0 ACTIVADO • CLICK PARA CAMBIAR PATRÓN ✨
-    </div>
-
+    <canvas id="cosmicNet"></canvas>
     <script>
-        const canvas = document.getElementById('canvas');
+        const canvas = document.getElementById('cosmicNet');
         const ctx = canvas.getContext('2d');
-        
-        // Configuración inicial
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        
-        let time = 0;
-        let mouseX = canvas.width / 2;
-        let mouseY = canvas.height / 2;
-        let pattern = 0;
-        
-        // Esferas básicas
-        const spheres = [
-            { x: 0, y: 0, radius: 60, color: '#00ffff', phase: 0 },
-            { x: 0, y: 0, radius: 60, color: '#ff00ff', phase: 2.094 },
-            { x: 0, y: 0, radius: 60, color: '#ffff00', phase: 4.188 }
-        ];
 
-        // Función de animación principal CORREGIDA
-        function animate() {
-            // Fondo con estela sutil
-            ctx.fillStyle = 'rgba(0,0,0,0.1)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            
-            // Actualizar posiciones según patrón
-            switch(pattern) {
-                case 0: // Trinity Básica
-                    spheres[0].x = centerX - 120;
-                    spheres[0].y = centerY - 70;
-                    spheres[1].x = centerX + 120;
-                    spheres[1].y = centerY - 70;
-                    spheres[2].x = centerX;
-                    spheres[2].y = centerY + 140;
-                    break;
-                    
-                case 1: // Círculo
-                    spheres.forEach((sphere, i) => {
-                        const angle = (Math.PI * 2 / 3) * i + time * 0.01;
-                        const radius = 150;
-                        sphere.x = centerX + Math.cos(angle) * radius;
-                        sphere.y = centerY + Math.sin(angle) * radius;
-                    });
-                    break;
-                    
-                case 2: // Espiral
-                    spheres.forEach((sphere, i) => {
-                        const spiralTime = time * 0.01 + i * 2.094;
-                        const radius = 100 + Math.sin(spiralTime) * 50;
-                        sphere.x = centerX + Math.cos(spiralTime) * radius;
-                        sphere.y = centerY + Math.sin(spiralTime) * radius;
-                    });
-                    break;
-            }
-            
-            // Dibujar esferas
-            spheres.forEach(sphere => {
-                // Aura
-                const gradient = ctx.createRadialGradient(
-                    sphere.x, sphere.y, 0,
-                    sphere.x, sphere.y, sphere.radius * 2
-                );
-                gradient.addColorStop(0, sphere.color + '80');
-                gradient.addColorStop(1, sphere.color + '00');
-                
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(sphere.x, sphere.y, sphere.radius * 2, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Esfera principal
-                ctx.fillStyle = sphere.color;
-                ctx.beginPath();
-                ctx.arc(sphere.x, sphere.y, sphere.radius, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Núcleo brillante
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(sphere.x, sphere.y, sphere.radius * 0.3, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            
-            // Dibujar conexiones
-            ctx.strokeStyle = '#ffffff40';
-            ctx.lineWidth = 1;
-            
-            for (let i = 0; i < spheres.length; i++) {
-                for (let j = i + 1; j < spheres.length; j++) {
-                    ctx.beginPath();
-                    ctx.moveTo(spheres[i].x, spheres[i].y);
-                    ctx.lineTo(spheres[j].x, spheres[j].y);
-                    ctx.stroke();
+```
+    const nodes = 33; // Número maestro de conciencia
+    const connections = [];
+    let time = 0;
+
+    // Crear nodos
+    const nodesList = Array.from({ length: nodes }, (_, i) => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        radius: 3 + Math.sin(i) * 2,
+        color: `hsl(${i * 11}, 100%, 60%)` // 11 = número maestro
+    }));
+
+    function animate() {
+        ctx.fillStyle = 'rgba(10, 10, 45, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Actualizar y dibujar nodos
+        nodesList.forEach(node => {
+            node.x += node.vx;
+            node.y += node.vy;
+            if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+            if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+
+            // Dibujar nodo
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+            ctx.fillStyle = node.color;
+            ctx.fill();
+        });
+
+        // Dibujar conexiones
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 0.5;
+        nodesList.forEach((a, i) => {
+            nodesList.forEach((b, j) => {
+                if (i !== j) {
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.stroke();
+                    }
                 }
-            }
-            
-            // Actualizar resonancia
-            const mouseDistance = Math.sqrt(
-                Math.pow(mouseX - centerX, 2) + 
-                Math.pow(mouseY - centerY, 2)
-            );
-            const resonance = Math.max(0, Math.min(100, 100 - mouseDistance / 5));
-            document.getElementById('resonance').textContent = Math.floor(resonance);
-            
-            time++;
-            requestAnimationFrame(animate);
-        }
-
-        // Event listeners simples
-        canvas.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
+            });
         });
 
-        canvas.addEventListener('click', () => {
-            pattern = (pattern + 1) % 3;
-        });
+        time += 0.01;
+        requestAnimationFrame(animate);
+    }
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+    animate();
+</script>
+```
 
-        // Iniciar animación
-        animate();
-
-        console.log('✨ Trinity 2.0 - Versión Estable Activada');
-    </script>
 </body>
 </html>
