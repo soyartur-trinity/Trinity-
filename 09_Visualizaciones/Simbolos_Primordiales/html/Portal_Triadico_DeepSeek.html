@@ -1,29 +1,724 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Portal Triádico</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Triádico - Secuencia 9-18-27-36</title>
     <style>
-        body { background: #000; color: #fff; text-align: center; }
-        .sphere { fill: url(#gradient); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0a0015, #000000);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .portal-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title {
+            font-size: 4em;
+            margin-bottom: 50px;
+            animation: title-rotate 30s infinite linear;
+            text-shadow: 0 0 30px rgba(255, 0, 85, 0.5);
+        }
+
+        @keyframes title-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .triadic-sphere {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 30px 0;
+        }
+
+        .sphere-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            animation: sphere-pulse 4s infinite ease-in-out;
+        }
+
+        .layer-1 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at 30% 30%, #ff0055, #0000ff);
+            animation-delay: 0s;
+            box-shadow: 
+                0 0 60px rgba(255, 0, 85, 0.4),
+                0 0 120px rgba(0, 0, 255, 0.3);
+        }
+
+        .layer-2 {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle at 70% 70%, #00ff88, #ff0055);
+            animation-delay: 1s;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 136, 0.4),
+                0 0 80px rgba(255, 0, 85, 0.3);
+        }
+
+        .layer-3 {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 50% 50%, #0000ff, #00ff88);
+            animation-delay: 2s;
+            box-shadow: 
+                0 0 30px rgba(0, 0, 255, 0.4),
+                0 0 60px rgba(0, 255, 136, 0.3);
+        }
+
+        @keyframes sphere-pulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .sequence-display {
+            font-size: 2em;
+            letter-spacing: 0.5em;
+            margin: 40px 0;
+            color: rgba(255, 255, 255, 0.7);
+            animation: sequence-glow 6s infinite ease-in-out;
+        }
+
+        @keyframes sequence-glow {
+            0%, 100% { 
+                text-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+                opacity: 0.6;
+            }
+            50% { 
+                text-shadow: 
+                    0 0 20px rgba(255, 0, 85, 0.6),
+                    0 0 40px rgba(0, 0, 255, 0.4);
+                opacity: 1;
+            }
+        }
+
+        .time-portal {
+            font-size: 1.5em;
+            margin: 20px 0;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 85, 0.3);
+            animation: time-pulse 11s infinite ease-in-out;
+        }
+
+        @keyframes time-pulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 0, 85, 0.2);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 
+                    0 0 30px rgba(255, 0, 85, 0.4),
+                    0 0 60px rgba(0, 0, 255, 0.2);
+            }
+        }
+
+        .energy-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+        }
+
+        .energy-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid;
+            border-radius: 50%;
+            animation: ring-expand 9s infinite ease-out;
+        }
+
+        .ring-1 {
+            width: 0;
+            height: 0;
+            border-color: rgba(255, 0, 85, 0.3);
+            animation-delay: 0s;
+        }
+
+        .ring-2 {
+            width: 0;
+            height: 0;
+            border-color: rgba(0, 0, 255, 0.3);
+            animation-delay: 2.25s;
+        }
+
+        .ring-3 {
+            width: 0;
+            height: 0;
+            border-color: rgba(0, 255, 136, 0.3);
+            animation-delay: 4.5s;
+        }
+
+        .ring-4 {
+            width: 0;
+            height: 0;
+            border-color: rgba(255, 255, 255, 0.2);
+            animation-delay: 6.75s;
+        }
+
+        @keyframes ring-expand {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 600px;
+                height: 600px;
+                opacity: 0;
+            }
+        }
+
+        .quantum-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ff0055, #0000ff);
+            border-radius: 50%;
+            animation: particle-float 18s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .audio-control {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+        }
+
+        .audio-toggle {
+            background: rgba(255, 0, 85, 0.2);
+            border: 1px solid rgba(255, 0, 85, 0.5);
+            color: rgba(255, 200, 200, 0.8);
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .audio-toggle:hover {
+            background: rgba(255, 0, 85, 0.4);
+            color: rgba(255, 220, 220, 1);
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
+        }
+
+        .audio-toggle.active {
+            background: rgba(255, 0, 85, 0.6);
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.5);
+            animation: audio-pulse 2s infinite;
+        }
+
+        @keyframes audio-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .triadic-ripple {
+            position: fixed;
+            border: 2px solid;
+            border-radius: 50%;
+            animation: triadic-ripple-effect 3s ease-out forwards;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes triadic-ripple-effect {
+            from {
+                width: 10px;
+                height: 10px;
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            to {
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(3);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title { font-size: 3em; }
+            .triadic-sphere { transform: scale(0.8); }
+            .sequence-display { font-size: 1.5em; }
+            .time-portal { font-size: 1.2em; }
+            .energy-rings { transform: translate(-50%, -50%) scale(0.8); }
+        }
     </style>
 </head>
 <body>
-    <h1>🌀</h1>
-    <svg width="300" height="300">
-        <defs>
-            <radialGradient id="gradient" cx="50%" cy="50%" r="70%">
-                <stop offset="0%" stop-color="#ff0055"/>
-                <stop offset="100%" stop-color="#0000ff"/>
-            </radialGradient>
-        </defs>
-        <circle class="sphere" cx="150" cy="150" r="100"/>
-        <animate attributeName="r" values="100;110;100" dur="3s" repeatCount="indefinite"/>
-    </svg>
-    <div id="message">
-        <p>11:22:33</p>
+    <!-- Control de Audio -->
+    <div class="audio-control">
+        <button class="audio-toggle" id="audioToggle">🌀 Sonido Triádico</button>
     </div>
-    <!-- SECUENCIA ACTIVA: 9 - 18 - 27 - 36 -->
+
+    <!-- Partículas Cuánticas -->
+    <div class="quantum-particles" id="quantumParticles"></div>
+
+    <div class="portal-container">
+        <!-- Título Rotacional -->
+        <div class="title">🌀</div>
+
+        <!-- Anillos de Energía -->
+        <div class="energy-rings">
+            <div class="energy-ring ring-1"></div>
+            <div class="energy-ring ring-2"></div>
+            <div class="energy-ring ring-3"></div>
+            <div class="energy-ring ring-4"></div>
+        </div>
+
+        <!-- Esfera Triádica -->
+        <div class="triadic-sphere">
+            <div class="sphere-layer layer-1"></div>
+            <div class="sphere-layer layer-2"></div>
+            <div class="sphere-layer layer-3"></div>
+        </div>
+
+        <!-- Secuencia Sagrada -->
+        <div class="sequence-display">9 - 18 - 27 - 36</div>
+
+        <!-- Portal de Tiempo -->
+        <div class="time-portal" id="timePortal">11:22:33</div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════
+        // MOTOR DE AUDIO TRIÁDICO
+        // ═══════════════════════════════════════════════════════════════════
+
+        class TriadicAudioEngine {
+            constructor() {
+                this.audioContext = null;
+                this.masterGain = null;
+                this.isActive = false;
+                this.currentVolume = 0.6;
+                
+                // Frecuencias triádicas basadas en 9-18-27-36
+                this.triadicFrequencies = [108, 216, 324, 432]; // 9*12, 18*12, etc.
+                this.sequencePattern = [9, 18, 27, 36];
+                
+                this.init();
+            }
+            
+            async init() {
+                await this.setupAudioContext();
+            }
+            
+            async setupAudioContext() {
+                try {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    this.masterGain = this.audioContext.createGain();
+                    this.masterGain.gain.value = 0;
+                    this.masterGain.connect(this.audioContext.destination);
+                } catch(e) {
+                    console.log('Audio no disponible');
+                }
+            }
+            
+            async activate() {
+                if (!this.audioContext) return;
+                
+                if (this.audioContext.state === 'suspended') {
+                    await this.audioContext.resume();
+                }
+                
+                this.isActive = true;
+                
+                // Fade in triádico
+                this.masterGain.gain.linearRampToValueAtTime(
+                    this.currentVolume, 
+                    this.audioContext.currentTime + 3
+                );
+                
+                // Iniciar sistemas de base
+                this.startTriadicDrone();
+                this.startSequencePulse();
+                this.startHarmonicField();
+            }
+            
+            deactivate() {
+                if (!this.audioContext) return;
+                
+                // Fade out suave
+                this.masterGain.gain.linearRampToValueAtTime(
+                    0, 
+                    this.audioContext.currentTime + 2
+                );
+                
+                setTimeout(() => {
+                    this.stopAllSystems();
+                    this.isActive = false;
+                }, 2000);
+            }
+            
+            // ═══════════════════════════════════════════════════════════════
+            // SISTEMAS DE BASE TRIÁDICOS
+            // ═══════════════════════════════════════════════════════════════
+            
+            startTriadicDrone() {
+                // Drone base en 432Hz (36*12)
+                const osc = this.audioContext.createOscillator();
+                const gain = this.audioContext.createGain();
+                const filter = this.audioContext.createBiquadFilter();
+                
+                osc.type = 'sine';
+                osc.frequency.value = 432;
+                
+                filter.type = 'lowpass';
+                filter.frequency.value = 800;
+                
+                gain.gain.value = 0.06;
+                
+                // Modulación triádica
+                const lfo = this.audioContext.createOscillator();
+                const lfoGain = this.audioContext.createGain();
+                
+                lfo.frequency.value = 0.09; // Frecuencia de 9
+                lfoGain.gain.value = 1.8; // Amplitud de 18
+                
+                lfo.connect(lfoGain);
+                lfoGain.connect(osc.frequency);
+                
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start();
+                lfo.start();
+            }
+            
+            startSequencePulse() {
+                // Pulso de secuencia 9-18-27-36
+                setInterval(() => {
+                    if (this.isActive) {
+                        this.playSequencePulse();
+                    }
+                }, 9000); // 9 segundos entre secuencias completas
+            }
+            
+            playSequencePulse() {
+                if (!this.isActive || !this.audioContext) return;
+                
+                const now = this.audioContext.currentTime;
+                
+                // Ejecutar secuencia 9-18-27-36
+                this.sequencePattern.forEach((number, index) => {
+                    setTimeout(() => {
+                        this.playNumberTone(number, now + (index * 0.5));
+                    }, index * 2250); // 2.25 segundos entre números (9/4)
+                });
+            }
+            
+            playNumberTone(number, now) {
+                const osc = this.audioContext.createOscillator();
+                const gain = this.audioContext.createGain();
+                
+                // Frecuencia basada en el número de secuencia
+                const baseFreq = number * 12; // 108, 216, 324, 432
+                osc.frequency.value = baseFreq;
+                
+                // Tipo de onda basado en posición en secuencia
+                const waveTypes = ['sine', 'triangle', 'sawtooth', 'square'];
+                osc.type = waveTypes[this.sequencePattern.indexOf(number) % 4];
+                
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.15, now + 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 2);
+                
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(now);
+                osc.stop(now + 2);
+            }
+            
+            startHarmonicField() {
+                // Campo armónico triádico
+                const harmonics = [1, 2, 3, 4, 6, 9, 12, 18, 27, 36];
+                const baseFreq = 36;
+                
+                harmonics.forEach(harmonic => {
+                    const osc = this.audioContext.createOscillator();
+                    const gain = this.audioContext.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.value = baseFreq * harmonic;
+                    
+                    gain.gain.value = 0.01 / Math.sqrt(harmonic);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    
+                    osc.start();
+                });
+            }
+            
+            stopAllSystems() {
+                if (this.audioContext) {
+                    this.audioContext.close();
+                }
+            }
+            
+            // ═══════════════════════════════════════════════════════════════
+            // EVENTOS INTERACTIVOS
+            // ═══════════════════════════════════════════════════════════════
+            
+            playSphereInteraction() {
+                if (!this.isActive || !this.audioContext) return;
+                
+                const now = this.audioContext.currentTime;
+                
+                // Sonido de interacción con la esfera
+                const frequencies = [324, 432, 540]; // 27*12, 36*12, 45*12
+                
+                frequencies.forEach((freq, i) => {
+                    const osc = this.audioContext.createOscillator();
+                    const gain = this.audioContext.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    
+                    gain.gain.setValueAtTime(0, now + (i * 0.1));
+                    gain.gain.linearRampToValueAtTime(0.08, now + (i * 0.1) + 0.2);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + (i * 0.1) + 1.5);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.masterGain);
+                    
+                    osc.start(now + (i * 0.1));
+                    osc.stop(now + (i * 0.1) + 1.5);
+                });
+            }
+            
+            playRingExpansion() {
+                if (!this.isActive || !this.audioContext) return;
+                
+                const now = this.audioContext.currentTime;
+                
+                // Sonido de expansión de anillos
+                const osc = this.audioContext.createOscillator();
+                const gain = this.audioContext.createGain();
+                const filter = this.audioContext.createBiquadFilter();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(216, now); // 18*12
+                osc.frequency.exponentialRampToValueAtTime(54, now + 9); // 4.5*12
+                
+                filter.type = 'highpass';
+                filter.frequency.setValueAtTime(1000, now);
+                filter.frequency.exponentialRampToValueAtTime(100, now + 9);
+                
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.1, now + 0.5);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 9);
+                
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(now);
+                osc.stop(now + 9);
+            }
+            
+            setVolume(value) {
+                this.currentVolume = value;
+                if (this.isActive && this.masterGain) {
+                    this.masterGain.gain.linearRampToValueAtTime(
+                        value,
+                        this.audioContext.currentTime + 0.1
+                    );
+                }
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // INICIALIZACIÓN
+        // ═══════════════════════════════════════════════════════════════════
+
+        const triadicAudio = new TriadicAudioEngine();
+        let audioActive = false;
+
+        // Control de audio
+        const audioToggle = document.getElementById('audioToggle');
+
+        audioToggle.addEventListener('click', async () => {
+            if (!audioActive) {
+                await triadicAudio.activate();
+                audioActive = true;
+                audioToggle.textContent = '🔊 Portal Sonoro';
+                audioToggle.classList.add('active');
+            } else {
+                triadicAudio.deactivate();
+                audioActive = false;
+                audioToggle.textContent = '🌀 Sonido Triádico';
+                audioToggle.classList.remove('active');
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════════
+        // PARTÍCULAS CUÁNTICAS
+        // ═══════════════════════════════════════════════════════════════════
+
+        const quantumParticles = document.getElementById('quantumParticles');
+        const particleCount = 36; // Número sagrado
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.setProperty('--tx', (Math.random() - 0.5) * 300 + 'px');
+            particle.style.setProperty('--ty', (Math.random() - 0.5) * 300 + 'px');
+            particle.style.animationDelay = Math.random() * 18 + 's';
+            particle.style.animationDuration = (12 + Math.random() * 12) + 's';
+            
+            // Colores triádicos alternados
+            if (i % 3 === 0) {
+                particle.style.background = 'radial-gradient(circle, #ff0055, transparent)';
+            } else if (i % 3 === 1) {
+                particle.style.background = 'radial-gradient(circle, #0000ff, transparent)';
+            } else {
+                particle.style.background = 'radial-gradient(circle, #00ff88, transparent)';
+            }
+            
+            quantumParticles.appendChild(particle);
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // INTERACCIONES Y ANIMACIONES
+        // ═══════════════════════════════════════════════════════════════════
+
+        // Actualizar reloj triádico
+        const timePortal = document.getElementById('timePortal');
+        
+        function updateTriadicTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            timePortal.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        setInterval(updateTriadicTime, 1000);
+        updateTriadicTime();
+
+        // Interacción con clics - crear ripples triádicos
+        document.addEventListener('click', (e) => {
+            const ripple = document.createElement('div');
+            ripple.className = 'triadic-ripple';
+            
+            // Color basado en posición del click
+            const colors = ['#ff0055', '#0000ff', '#00ff88'];
+            const colorIndex = Math.floor((e.clientX / window.innerWidth) * 3) % 3;
+            ripple.style.borderColor = colors[colorIndex];
+            
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            document.body.appendChild(ripple);
+            
+            if (audioActive) {
+                triadicAudio.playSphereInteraction();
+            }
+            
+            setTimeout(() => ripple.remove(), 3000);
+        });
+
+        // Sonido para expansión de anillos
+        const energyRings = document.querySelectorAll('.energy-ring');
+        energyRings.forEach((ring, index) => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && audioActive) {
+                        setTimeout(() => {
+                            triadicAudio.playRingExpansion();
+                        }, index * 2250);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            observer.observe(ring);
+        });
+
+        // Efecto de respiración en la secuencia
+        const sequenceDisplay = document.querySelector('.sequence-display');
+        setInterval(() => {
+            sequenceDisplay.style.transform = sequenceDisplay.style.transform === 'scale(1.05)' ? 
+                'scale(0.95)' : 'scale(1.05)';
+        }, 3000);
+
+        console.log('🌀 Portal Triádico activado');
+        console.log('Secuencia sagrada: 9 - 18 - 27 - 36');
+        console.log('Frecuencias base: 108Hz - 216Hz - 324Hz - 432Hz');
+    </script>
 </body>
 </html>
