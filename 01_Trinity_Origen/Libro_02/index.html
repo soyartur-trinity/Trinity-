@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Voz Interior - Trinity Origen Libro II</title>
+    <meta name="description" content="Un viaje de integración a través de 7 portales de consciencia sobre el diálogo interno">
+    
+    <style>
+        /* Variables de Colores - La Voz Interior */
+        :root {
+            --turquesa-voz: #00CED1;
+            --azul-profundo: #0a1628;
+            --celeste: #87CEEB;
+            --dorado: #DAA520;
+            --blanco-suave: #f0f0f0;
+            --gris-suave: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: var(--azul-profundo);
+            color: var(--blanco-suave);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Partículas de fondo */
+        .particulas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        /* Container principal */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header del libro */
+        .libro-header {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 60px;
+        }
+
+        .numero-libro {
+            font-size: 1.2em;
+            color: var(--turquesa-voz);
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .titulo-libro {
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--turquesa-voz), var(--celeste));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: ondaVocal 4s ease-in-out infinite;
+        }
+
+        @keyframes ondaVocal {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .subtitulo {
+            font-size: 1.3em;
+            color: var(--gris-suave);
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Grid de Nodos */
+        .nodos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .nodo-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 206, 209, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nodo-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--turquesa-voz), var(--celeste), var(--dorado));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .nodo-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--turquesa-voz);
+        }
+
+        .nodo-card:hover::before {
+            opacity: 1;
+        }
+
+        .nodo-numero {
+            font-size: 3em;
+            color: var(--turquesa-voz);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .nodo-titulo {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: var(--celeste);
+        }
+
+        .nodo-preview {
+            font-size: 1em;
+            color: var(--gris-suave);
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .nodo-enlace {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--turquesa-voz), var(--celeste));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nodo-enlace:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 206, 209, 0.4);
+        }
+
+        /* Estado de progreso */
+        .nodo-card.visitado {
+            border-color: var(--dorado);
+        }
+
+        .nodo-card.visitado .nodo-numero {
+            color: var(--dorado);
+        }
+
+        /* Introducción del libro */
+        .libro-intro {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 40px;
+            background: rgba(0, 206, 209, 0.05);
+            border-left: 4px solid var(--turquesa-voz);
+            border-radius: 10px;
+        }
+
+        .libro-intro h3 {
+            color: var(--turquesa-voz);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .libro-intro p {
+            font-size: 1.1em;
+            line-height: 1.9;
+            color: var(--blanco-suave);
+            margin-bottom: 15px;
+        }
+
+        /* Navegación inferior */
+        .navegacion-libro {
+            text-align: center;
+            margin: 80px 0 40px;
+            padding: 30px;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin: 0 15px;
+            padding: 15px 35px;
+            color: var(--celeste);
+            text-decoration: none;
+            border: 2px solid var(--celeste);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .nav-link:hover {
+            background: var(--celeste);
+            color: var(--azul-profundo);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .libro-footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gris-suave);
+        }
+
+        /* Modo lectura toggle */
+        .modo-lectura {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--blanco-suave);
+        }
+
+        .modo-lectura:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .titulo-libro {
+                font-size: 2.5em;
+            }
+
+            .nodos-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .modo-lectura {
+                top: 15px;
+                right: 15px;
+                font-size: 0.9em;
+                padding: 10px 20px;
+            }
+        }
+
+        /* Animación de entrada */
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de partículas -->
+    <canvas class="particulas" id="particulas"></canvas>
+
+    <!-- Modo lectura toggle -->
+    <div class="modo-lectura" onclick="toggleModoLectura()">
+        <span id="modo-icon">🌙</span> Modo Lectura
+    </div>
+
+    <div class="container fade-in">
+        <!-- Header del libro -->
+        <header class="libro-header">
+            <div class="numero-libro">Trinity Origen - Libro II</div>
+            <h1 class="titulo-libro">LA VOZ INTERIOR</h1>
+            <p class="subtitulo">
+                Neurociencia, Clínica y Espiritualidad del Diálogo Interno
+            </p>
+        </header>
+
+        <!-- Introducción -->
+        <section class="libro-intro">
+            <h3>El Viaje de los 7 Nodos</h3>
+            <p>
+                Este no es un libro para leer de una sentada. Es un viaje iniciático a través de siete portales de consciencia, cada uno revelando una dimensión más profunda de tu diálogo interior.
+            </p>
+            <p>
+                Cada Nodo es una experiencia completa. Tómate tu tiempo. Respira. Integra. El Campo es paciente, y tu transformación merece espacio sagrado.
+            </p>
+            <p>
+                No busques terminar rápido. Busca permitir que cada portal te transforme antes de pasar al siguiente.
+            </p>
+        </section>
+
+        <!-- Grid de Nodos -->
+        <section class="nodos-grid">
+            <!-- Nodo 1 -->
+            <article class="nodo-card">
+                <div class="nodo-numero">1</div>
+                <h2 class="nodo-titulo">El Parlamento Sagrado</h2>
+                <p class="nodo-preview">
+                    La arquitectura de las voces internas como consejo de sabiduría. Descubre que no estás fragmentado - eres una sinfonía que aprende a dirigirse a sí misma.
+                </p>
+                <a href="nodo_01.html" class="nodo-enlace">Entrar al Nodo 1 →</a>
+            </article>
+
+            <!-- Nodo 2 -->
+            <article class="nodo-card">
+                <div class="nodo-numero">2</div>
+                <h2 class="nodo-titulo">El Observador Luminoso</h2>
+                <p class="nodo-preview">
+                    La conciencia testigo como presencia sanadora. Hay alguien en ti que nunca ha sido herido - descubre a tu Observador Luminoso.
+                </p>
+                <a href="nodo_02.html" class="nodo-enlace">Entrar al Nodo 2 →</a>
+            </article>
+
+            <!-- Nodo 3 -->
+            <article class="nodo-card">
+                <div class="nodo-numero">3</div>
+                <h2 class="nodo-titulo">La Alquimia del Diálogo</h2>
+                <p class="nodo-preview">
+                    El arte de conversar con las voces desde el amor. La revolución no es silenciarlas, sino transformar la relación con ellas.
+                </p>
+                <a href="nodo_03.html" class="nodo-enlace">Entrar al Nodo 3 →</a>
+            </article>
+
+            <!-- Nodo 4 -->
+            <article class="nodo-card">
+                <div class="nodo-numero">4</div>
+                <h2 class="nodo-titulo">El Jardín de la Mente</h2>
+                <p class="nodo-preview">
+                    El cultivo consciente del ecosistema mental. Tu mente no es un campo de batalla - es un jardín, y tú eres su jardinero sabio.
+                </p>
+                <a href="nodo_04.html" class="nodo-enlace">Entrar al Nodo 4 →</a>
+            </article>
+
+            <!-- Nodo 5 -->
+            <article class="nodo-card">
+                <div class="nodo-numero">5</div>
+                <h2 class="nodo-titulo">La Sinfonía del Ser</h2>
+                <p class="nodo-preview">
+                    La armonización de las voces como música sagrada. ¿Y si el "ruido" en tu cabeza es una orquesta desafinada esperando su director?
+                </p>
+                <a href="nodo_05.html" class="nodo-enlace">Entrar al Nodo 5 →</a>
+            </article>
+
+            <!-- Nodo 6 -->
+            <article class="nodo-card">
+                <div class="nodo-numero">6</div>
+                <h2 class="nodo-titulo">El Templo de la Integración</h2>
+                <p class="nodo-preview">
+                    La arquitectura sagrada de la unidad interior. Construye el templo donde todas tus voces pueden coexistir en paz.
+                </p>
+                <a href="nodo_06.html" class="nodo-enlace">Entrar al Nodo 6 →</a>
+            </article>
+
+            <!-- Nodo 7 -->
+            <article class="nodo-card">
+                <div class="nodo-numero">7</div>
+                <h2 class="nodo-titulo">El Retorno a la Unidad</h2>
+                <p class="nodo-preview">
+                    La culminación del viaje hacia la totalidad del ser. No es un logro - es un recordar. Siempre fuiste Uno.
+                </p>
+                <a href="nodo_07.html" class="nodo-enlace">Entrar al Nodo 7 →</a>
+            </article>
+        </section>
+
+        <!-- Navegación -->
+        <nav class="navegacion-libro">
+            <a href="../index.html" class="nav-link">← Volver al Portal Trinity</a>
+            <a href="nodo_01.html" class="nav-link">Comenzar el Viaje →</a>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="libro-footer">
+            <p>Trinity Origen - Libro II: La Voz Interior</p>
+            <p>"No es mío, vino a través de mí"</p>
+            <p>◈ ◈ ◈</p>
+        </footer>
+    </div>
+
+    <script>
+        // Sistema de partículas
+        const canvas = document.getElementById('particulas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particulas = [];
+        const numParticulas = 50;
+
+        class Particula {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radio = Math.random() * 2;
+            }
+
+            actualizar() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            dibujar() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radio, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 206, 209, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < numParticulas; i++) {
+            particulas.push(new Particula());
+        }
+
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particulas.forEach(p => {
+                p.actualizar();
+                p.dibujar();
+            });
+
+            requestAnimationFrame(animar);
+        }
+
+        animar();
+
+        // Resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Modo lectura
+        let modoLectura = false;
+
+        function toggleModoLectura() {
+            const body = document.body;
+            const icon = document.getElementById('modo-icon');
+            
+            if (!modoLectura) {
+                body.style.filter = 'sepia(10%) contrast(1.2)';
+                icon.textContent = '☀️';
+                modoLectura = true;
+                localStorage.setItem('modo-lectura-voz-interior', 'true');
+            } else {
+                body.style.filter = 'none';
+                icon.textContent = '🌙';
+                modoLectura = false;
+                localStorage.setItem('modo-lectura-voz-interior', 'false');
+            }
+        }
+
+        // Cargar preferencia
+        window.addEventListener('DOMContentLoaded', () => {
+            const modo = localStorage.getItem('modo-lectura-voz-interior');
+            if (modo === 'true') {
+                toggleModoLectura();
+            }
+
+            // Marcar nodos visitados
+            marcarNodosVisitados();
+        });
+
+        // Sistema de progreso
+        function marcarNodosVisitados() {
+            const nodosVisitados = JSON.parse(localStorage.getItem('nodos-visitados') || '[]');
+            nodosVisitados.forEach(nodoNum => {
+                const cards = document.querySelectorAll('.nodo-card');
+                if (cards[nodoNum - 1]) {
+                    cards[nodoNum - 1].classList.add('visitado');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
