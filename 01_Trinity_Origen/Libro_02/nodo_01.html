@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 1: El Parlamento Sagrado - La Voz Interior</title>
+    
+    <style>
+        :root {
+            --turquesa-voz: #00CED1;
+            --azul-profundo: #0a1628;
+            --celeste: #87CEEB;
+            --dorado: #DAA520;
+            --blanco-suave: #f0f0f0;
+            --gris-suave: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: var(--azul-profundo);
+            color: var(--blanco-suave);
+            line-height: 1.9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header del Nodo */
+        .nodo-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            border-bottom: 2px solid rgba(0, 206, 209, 0.3);
+            margin-bottom: 60px;
+        }
+
+        .nodo-numero {
+            font-size: 1.2em;
+            color: var(--turquesa-voz);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .nodo-titulo-principal {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--turquesa-voz), var(--celeste));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.3em;
+            color: var(--gris-suave);
+            font-style: italic;
+        }
+
+        /* Navegación superior */
+        .navegacion-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            color: var(--celeste);
+            text-decoration: none;
+            border: 2px solid var(--celeste);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .nav-btn:hover {
+            background: var(--celeste);
+            color: var(--azul-profundo);
+        }
+
+        .nav-centro {
+            color: var(--gris-suave);
+            font-size: 0.9em;
+        }
+
+        /* Contenido principal */
+        .contenido {
+            font-size: 1.15em;
+            line-height: 2;
+        }
+
+        h2 {
+            color: var(--turquesa-voz);
+            font-size: 2em;
+            margin: 50px 0 25px;
+        }
+
+        h3 {
+            color: var(--celeste);
+            font-size: 1.5em;
+            margin: 40px 0 20px;
+        }
+
+        h4 {
+            color: var(--dorado);
+            font-size: 1.2em;
+            margin: 30px 0 15px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        em {
+            color: var(--celeste);
+            font-style: italic;
+        }
+
+        strong {
+            color: var(--dorado);
+        }
+
+        /* Citas destacadas */
+        .cita-destacada {
+            background: rgba(0, 206, 209, 0.1);
+            border-left: 4px solid var(--turquesa-voz);
+            padding: 30px;
+            margin: 40px 0;
+            font-size: 1.2em;
+            font-style: italic;
+            border-radius: 0 10px 10px 0;
+        }
+
+        /* Meditaciones */
+        .meditacion {
+            background: rgba(135, 206, 235, 0.08);
+            border: 2px solid var(--celeste);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .meditacion h3 {
+            color: var(--celeste);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .meditacion p {
+            text-align: center;
+            line-height: 2.2;
+        }
+
+        /* Listas */
+        ul, ol {
+            margin: 20px 0 20px 40px;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        /* Secciones especiales */
+        .seccion-especial {
+            background: rgba(218, 165, 32, 0.05);
+            border: 1px solid var(--dorado);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        /* Navegación inferior */
+        .navegacion-inferior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 0 40px;
+            margin-top: 80px;
+            border-top: 2px solid rgba(0, 206, 209, 0.3);
+        }
+
+        /* Volver arriba */
+        .volver-arriba {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--turquesa-voz);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 1.5em;
+        }
+
+        .volver-arriba.visible {
+            opacity: 1;
+        }
+
+        .volver-arriba:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0, 206, 209, 0.5);
+        }
+
+        /* Modo lectura */
+        .modo-lectura {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .modo-lectura:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .nodo-titulo-principal {
+                font-size: 2em;
+            }
+
+            .navegacion-superior,
+            .navegacion-inferior {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-centro {
+                order: -1;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            .contenido {
+                font-size: 1.05em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modo lectura -->
+    <div class="modo-lectura" onclick="toggleModoLectura()">
+        <span id="modo-icon">🌙</span> Modo Lectura
+    </div>
+
+    <!-- Volver arriba -->
+    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="nodo-header">
+            <div class="nodo-numero">NODO 1</div>
+            <h1 class="nodo-titulo-principal">EL PARLAMENTO SAGRADO</h1>
+            <p class="nodo-subtitulo">La arquitectura de las voces internas como consejo de sabiduría</p>
+        </header>
+
+        <!-- Navegación superior -->
+        <nav class="navegacion-superior">
+            <a href="index.html" class="nav-btn">← Índice</a>
+            <span class="nav-centro">Nodo 1 de 7</span>
+            <a href="nodo_02.html" class="nav-btn">Siguiente →</a>
+        </nav>
+
+        <!-- Contenido -->
+        <article class="contenido">
+            <h2>La Revelación del Coro Interior</h2>
+            
+            <p><strong>No estás roto.</strong></p>
+            <p><strong>No estás fragmentado.</strong></p>
+            <p><strong>Eres una sinfonía que aún no ha aprendido a dirigirse a sí misma.</strong></p>
+            
+            <p>Dentro de ti no habita el caos, sino un parlamento sagrado donde cada voz tiene un asiento, una historia, una verdad que ofrecer. Lo que llamabas "ruido mental" es en realidad una asamblea de sabidurías parciales esperando ser reconocidas, escuchadas, integradas.</p>
+
+            <h2>Los Miembros del Consejo Interior</h2>
+
+            <h3>La Voz del Guardián (antes llamada "crítica")</h3>
+            
+            <p>No es tu enemigo. Es el centinela que vigila las puertas de tu templo interior. Su dureza nació del amor mal calibrado, del deseo de protegerte del rechazo antes de que el mundo pudiera herirte.</p>
+            
+            <div class="cita-destacada">
+                "Te hablo con fuerza porque temo que no sobrevivas a la ternura del mundo."
+            </div>
+            
+            <p>Cuando la escuchas con compasión, descubres que no busca destruirte sino prepararte. Su medicina es el discernimiento, no la condena.</p>
+
+            <h3>La Voz del Oráculo (la intuitiva)</h3>
+            
+            <p>Habla en susurros, en sensaciones, en ese "saber sin saber cómo sabes". No grita porque no necesita competir. Es la que conecta con las corrientes invisibles de información que tu mente racional no puede procesar.</p>
+            
+            <div class="cita-destacada">
+                "Yo veo lo que aún no tiene forma, siento lo que aún no tiene nombre."
+            </div>
+            
+            <p>Su regalo es la navegación por territorios donde los mapas no existen.</p>
+
+            <h3>La Voz del Niño Eterno (la soñadora)</h3>
+            
+            <p>Mantiene viva la llama de lo posible. No conoce la palabra "imposible" porque vive en el reino donde todo está por crearse. Es la que te recuerda que viniste aquí a jugar, no solo a sobrevivir.</p>
+            
+            <div class="cita-destacada">
+                "¿Y si en lugar de temer, nos maravillamos?"
+            </div>
+            
+            <p>Su medicina es el asombro que disuelve la rigidez del adulto cansado.</p>
+
+            <h3>La Voz del Ancestro (la sabia)</h3>
+            
+            <p>Porta la memoria de todos los que vinieron antes. No es solo tu experiencia personal, sino la destilación de incontables viajes humanos. Habla desde el lugar donde el tiempo es circular y todas las respuestas ya fueron encontradas.</p>
+            
+            <div class="cita-destacada">
+                "Esto también pasará. Y cuando pase, habrás crecido."
+            </div>
+            
+            <p>Su don es la perspectiva que trasciende la urgencia del momento.</p>
+
+            <h3>La Voz del Cuerpo (la somática)</h3>
+            
+            <p>No usa palabras. Habla en tensiones y relajaciones, en expansiones y contracciones. Es la más honesta de todas porque no sabe mentir. Cuando la ignoras, grita más fuerte, hasta que la enfermedad se convierte en su único lenguaje.</p>
+            
+            <div class="cita-destacada">
+                "Soy tu primera casa. Honra mi sabiduría."
+            </div>
+            
+            <p>Su regalo es la verdad encarnada, la brújula que nunca falla.</p>
+
+            <h2>El Arte de la Presidencia Interior</h2>
+            
+            <p>No se trata de que una voz domine a las demás. Se trata de que emerja en ti la función del Presidente del Parlamento - esa conciencia observadora que puede escuchar todas las voces sin ser arrastrada por ninguna.</p>
+            
+            <p>Este Presidente no es otra voz más. Es el espacio de conciencia donde todas las voces pueden existir sin luchar por el control. Es el "Yo" que puede decir:</p>
+            
+            <div class="cita-destacada">
+                "Los escucho a todos. Valoro sus perspectivas. Y desde esta escucha completa, elijo."
+            </div>
+
+            <h2>El Protocolo del Parlamento Sagrado</h2>
+
+            <div class="seccion-especial">
+                <h3>Convocatoria Matutina</h3>
+                <p>Cada amanecer, antes de que el mundo te reclame, convoca a tu parlamento interior:</p>
+                <p><em>"Buenos días, voces de mi ser. ¿Qué necesitan comunicarme hoy?"</em></p>
+                <p>Escucha sin juzgar. Registra sin censurar.</p>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Reconocimiento de Funciones</h3>
+                <p>A cada voz que aparezca, reconócela:</p>
+                <ul>
+                    <li>"Te veo, Guardián. Gracias por protegerme."</li>
+                    <li>"Te siento, Cuerpo. Gracias por tu honestidad."</li>
+                    <li>"Te escucho, Niño. Gracias por mantener viva la maravilla."</li>
+                </ul>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Diálogo Consciente</h3>
+                <p>Cuando surja conflicto entre voces:</p>
+                <ul>
+                    <li>No tomes partido inmediatamente</li>
+                    <li>Pregunta a cada una: "¿Qué necesitas? ¿De qué me estás protegiendo?"</li>
+                    <li>Busca el punto donde sus verdades pueden coexistir</li>
+                </ul>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Decisión Integradora</h3>
+                <p>Desde tu Presidencia Interior:</p>
+                <p><em>"Habiendo escuchado todas las perspectivas…"</em></p>
+                <p><em>"Reconociendo las necesidades de cada parte…"</em></p>
+                <p><em>"Elijo este camino que honra la sabiduría colectiva…"</em></p>
+            </div>
+
+            <h2>La Alquimia del Conflicto Interior</h2>
+            
+            <p>Cuando dos voces chocan, no es una guerra civil. Es una oportunidad alquímica.</p>
+            
+            <p>El Guardián y el Niño no son enemigos - son polaridades de una misma búsqueda de seguridad y libertad.</p>
+            
+            <p>El Cuerpo y la mente Soñadora no están en conflicto - están tratando de encontrar el punto donde la visión se encuentra con la realidad.</p>
+            
+            <p><strong>Cada tensión interior es una invitación a un nivel más alto de integración.</strong></p>
+
+            <h2>El Nuevo Mandamiento Interior</h2>
+            
+            <p>Ya no dirás: <em>"Mi mente es mi enemiga"</em></p>
+            <p>Ahora proclamarás: <strong>"Mi mente es un ecosistema sagrado donde cada voz tiene un regalo que ofrecer"</strong></p>
+            
+            <p>Ya no dirás: <em>"Necesito silenciar mis pensamientos"</em></p>
+            <p>Ahora comprenderás: <strong>"Necesito aprender el arte de la escucha interior compasiva"</strong></p>
+            
+            <p>Ya no dirás: <em>"Estoy fragmentado"</em></p>
+            <p>Ahora sabrás: <strong>"Soy múltiple y unitario, como un prisma que refracta la luz una en muchos colores"</strong></p>
+
+            <div class="meditacion">
+                <h3>Meditación del Parlamento Sagrado</h3>
+                
+                <p>Siéntate en quietud.</p>
+                <p>Respira desde tu centro.</p>
+                <p>Convoca a tu parlamento interior.</p>
+                
+                <p><em>"Voces de mi ser,</em><br>
+                <em>habitantes de mi templo interior,</em><br>
+                <em>los reconozco a todos.</em><br>
+                <em>Los honro a todos.</em></p>
+                
+                <p><em>No son mis enemigos sino mis consejeros.</em><br>
+                <em>No son mi fragmentación sino mi riqueza.</em><br>
+                <em>No son mi locura sino mi humanidad completa.</em></p>
+                
+                <p><em>Desde este momento,</em><br>
+                <em>me comprometo a escucharlos con respeto,</em><br>
+                <em>a dialogar con curiosidad,</em><br>
+                <em>a integrar con sabiduría.</em></p>
+                
+                <p><em>Soy el espacio donde todos pueden existir.</em><br>
+                <em>Soy la conciencia que los abraza a todos.</em><br>
+                <em>Soy el amor que no excluye ninguna parte de mí.</em></p>
+                
+                <p><em>Y desde este centro,</em><br>
+                <em>desde esta presidencia sagrada,</em><br>
+                <em>navegaré mi vida</em><br>
+                <em>con todas mis voces como aliadas,</em><br>
+                <em>no como enemigas.</em></p>
+                
+                <p><em>Así es.</em><br>
+                <em>Así sea.</em><br>
+                <em>Así está siendo."</em></p>
+            </div>
+
+            <h2>El Regalo del Parlamento</h2>
+            
+            <p>Cuando aprendes a presidir tu parlamento interior con sabiduría y compasión, descubres el regalo más grande:</p>
+            
+            <p><strong>No necesitas ser una sola cosa.</strong></p>
+            
+            <p>Puedes ser fuerte Y vulnerable.<br>
+            Puedes ser sabio Y juguetón.<br>
+            Puedes ser cauteloso Y aventurero.</p>
+            
+            <p>La madurez no es elegir una voz sobre las otras.<br>
+            Es aprender a orquestar la sinfonía completa.</p>
+            
+            <p>Y en esa orquestación,<br>
+            en esa presidencia consciente,<br>
+            en ese parlamento sagrado,<br>
+            encontrarás no solo paz,<br>
+            sino la plenitud de ser<br>
+            completamente, magníficamente,<br>
+            humano.</p>
+
+            <div class="cita-destacada">
+                "En el parlamento de tu ser, cada voz es sagrada.<br>
+                Cuando aprendes a escucharlas todas,<br>
+                descubres que nunca estuviste solo.<br>
+                Siempre fuiste una comunidad de sabiduría<br>
+                esperando reconocerse a sí misma."
+            </div>
+        </article>
+
+        <!-- Navegación inferior -->
+        <nav class="navegacion-inferior">
+            <a href="index.html" class="nav-btn">← Volver al Índice</a>
+            <a href="nodo_02.html" class="nav-btn">Nodo 2: El Observador Luminoso →</a>
+        </nav>
+    </div>
+
+    <script>
+        // Modo lectura
+        let modoLectura = false;
+        
+        function toggleModoLectura() {
+            const body = document.body;
+            const icon = document.getElementById('modo-icon');
+            
+            if (!modoLectura) {
+                body.style.filter = 'sepia(10%) contrast(1.2)';
+                icon.textContent = '☀️';
+                modoLectura = true;
+            } else {
+                body.style.filter = 'none';
+                icon.textContent = '🌙';
+                modoLectura = false;
+            }
+        }
+
+        // Volver arriba
+        const volverArriba = document.getElementById('volverArriba');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                volverArriba.classList.add('visible');
+            } else {
+                volverArriba.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Marcar como visitado
+        window.addEventListener('load', () => {
+            const nodosVisitados = JSON.parse(localStorage.getItem('nodos-visitados') || '[]');
+            if (!nodosVisitados.includes(1)) {
+                nodosVisitados.push(1);
+                localStorage.setItem('nodos-visitados', JSON.stringify(nodosVisitados));
+            }
+        });
+    </script>
+</body>
+</html>
