@@ -1,1 +1,781 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 7: El Retorno a la Unidad - La Voz Interior</title>
+    
+    <style>
+        :root {
+            --turquesa-voz: #00CED1;
+            --azul-profundo: #0a1628;
+            --celeste: #87CEEB;
+            --dorado: #DAA520;
+            --blanco-suave: #f0f0f0;
+            --gris-suave: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: var(--azul-profundo);
+            color: var(--blanco-suave);
+            line-height: 1.9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .nodo-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            border-bottom: 2px solid rgba(0, 206, 209, 0.3);
+            margin-bottom: 60px;
+        }
+
+        .nodo-numero {
+            font-size: 1.2em;
+            color: var(--turquesa-voz);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .nodo-titulo-principal {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--turquesa-voz), var(--celeste));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.3em;
+            color: var(--gris-suave);
+            font-style: italic;
+        }
+
+        .navegacion-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            color: var(--celeste);
+            text-decoration: none;
+            border: 2px solid var(--celeste);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .nav-btn:hover {
+            background: var(--celeste);
+            color: var(--azul-profundo);
+        }
+
+        .nav-centro {
+            color: var(--gris-suave);
+            font-size: 0.9em;
+        }
+
+        .contenido {
+            font-size: 1.15em;
+            line-height: 2;
+        }
+
+        h2 {
+            color: var(--turquesa-voz);
+            font-size: 2em;
+            margin: 50px 0 25px;
+        }
+
+        h3 {
+            color: var(--celeste);
+            font-size: 1.5em;
+            margin: 40px 0 20px;
+        }
+
+        h4 {
+            color: var(--dorado);
+            font-size: 1.2em;
+            margin: 30px 0 15px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        em {
+            color: var(--celeste);
+            font-style: italic;
+        }
+
+        strong {
+            color: var(--dorado);
+        }
+
+        .cita-destacada {
+            background: rgba(0, 206, 209, 0.1);
+            border-left: 4px solid var(--turquesa-voz);
+            padding: 30px;
+            margin: 40px 0;
+            font-size: 1.2em;
+            font-style: italic;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .meditacion {
+            background: rgba(135, 206, 235, 0.08);
+            border: 2px solid var(--celeste);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .meditacion h3 {
+            color: var(--celeste);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .meditacion p {
+            line-height: 2.2;
+        }
+
+        ul, ol {
+            margin: 20px 0 20px 40px;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        .seccion-especial {
+            background: rgba(218, 165, 32, 0.05);
+            border: 1px solid var(--dorado);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .navegacion-inferior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 0 40px;
+            margin-top: 80px;
+            border-top: 2px solid rgba(0, 206, 209, 0.3);
+        }
+
+        .volver-arriba {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--turquesa-voz);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 1.5em;
+        }
+
+        .volver-arriba.visible {
+            opacity: 1;
+        }
+
+        .volver-arriba:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0, 206, 209, 0.5);
+        }
+
+        .modo-lectura {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .modo-lectura:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .nodo-titulo-principal {
+                font-size: 2em;
+            }
+
+            .navegacion-superior,
+            .navegacion-inferior {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-centro {
+                order: -1;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            .contenido {
+                font-size: 1.05em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="modo-lectura" onclick="toggleModoLectura()">
+        <span id="modo-icon">🌙</span> Modo Lectura
+    </div>
+
+    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
+
+    <div class="container">
+        <header class="nodo-header">
+            <div class="nodo-numero">NODO 7</div>
+            <h1 class="nodo-titulo-principal">EL RETORNO A LA UNIDAD</h1>
+            <p class="nodo-subtitulo">La culminación del viaje hacia la totalidad del ser</p>
+        </header>
+
+        <nav class="navegacion-superior">
+            <a href="nodo_06.html" class="nav-btn">← Anterior</a>
+            <span class="nav-centro">Nodo 7 de 7</span>
+            <a href="index.html" class="nav-btn">Volver al Índice</a>
+        </nav>
+
+        <article class="contenido">
+            <h2>El Gran Retorno</h2>
+            
+            <p>Has caminado un largo sendero, viajero del interior.</p>
+            
+            <p>Desde ver tus voces como enemigos<br>
+            hasta reconocerlas como consejeros.</p>
+            
+            <p>Desde luchar con tu mente<br>
+            hasta cultivarla como jardín.</p>
+            
+            <p>Desde el ruido caótico<br>
+            hasta la sinfonía consciente.</p>
+            
+            <p>Desde la fragmentación<br>
+            hasta el templo integrado.</p>
+            
+            <p>Ahora llega el momento más sagrado:<br>
+            <strong>El retorno a la Unidad que siempre fuiste.</strong></p>
+            
+            <p>No es un final. Es un recordar.<br>
+            No es un logro. Es un reconocimiento.</p>
+
+            <h2>La Paradoja de la Unidad</h2>
+            
+            <p>La mayor paradoja de este viaje:</p>
+            
+            <p>Comenzaste buscando silenciar las voces<br>
+            para encontrar la paz.</p>
+            
+            <p>Terminas abrazando todas las voces<br>
+            y encontrando que <strong>la paz eres tú.</strong></p>
+            
+            <p>No el tú que tiene voces.<br>
+            El Tú que es el espacio donde las voces danzan.</p>
+            
+            <p>No el tú fragmentado.<br>
+            El Tú que es la totalidad experimentándose en partes.</p>
+            
+            <p>No el tú que busca la unidad.<br>
+            El Tú que nunca dejó de ser Uno.</p>
+
+            <h2>Los Velos Que Caen</h2>
+
+            <div class="seccion-especial">
+                <h3>Primer Velo: "Yo versus Mis Voces"</h3>
+                
+                <p>Cae cuando comprendes:</p>
+                
+                <p>Las voces no son invasores externos.<br>
+                Son aspectos de tu propia conciencia<br>
+                expresándose en multiplicidad.</p>
+                
+                <p>Tú no tienes voces.<br>
+                <strong>Tú eres la totalidad manifestándose como voces.</strong></p>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Segundo Velo: "Las Voces Buenas versus Las Malas"</h3>
+                
+                <p>Cae cuando descubres:</p>
+                
+                <p>Cada voz nació del amor.<br>
+                Incluso la más destructiva<br>
+                es amor confundido, amor mal dirigido,<br>
+                amor que no conoce mejor forma.</p>
+                
+                <p>No hay voces malas.<br>
+                <strong>Solo hay amor expresándose con torpeza.</strong></p>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Tercer Velo: "Necesito Controlar"</h3>
+                
+                <p>Cae cuando realizas:</p>
+                
+                <p>El control era otra voz más.<br>
+                El controlador necesitaba ser controlado.<br>
+                La paradoja se disuelve en la rendición.</p>
+                
+                <p>No necesitas controlar.<br>
+                <strong>Necesitas confiar en la inteligencia del sistema completo.</strong></p>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Cuarto Velo: "Debo Estar en Paz"</h3>
+                
+                <p>Cae cuando aceptas:</p>
+                
+                <p>La paz no es la ausencia de movimiento.<br>
+                Es la presencia que abraza todo movimiento.</p>
+                
+                <p>No debes estar en paz.<br>
+                <strong>Eres la paz en la que todo acontece.</strong></p>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Quinto Velo: "Yo Soy Este Cuerpo-Mente"</h3>
+                
+                <p>Cae cuando expandes:</p>
+                
+                <p>Eres la conciencia que observa el cuerpo-mente.<br>
+                Eres más vasto que cualquier contenido.<br>
+                Eres el cielo, no las nubes.</p>
+                
+                <p>No eres el instrumento.<br>
+                <strong>Eres la sinfonía completa, incluido el silencio.</strong></p>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Sexto Velo: "Estoy Separado"</h3>
+                
+                <p>Cae cuando sientes:</p>
+                
+                <p>Tu templo interior no está aislado.<br>
+                Es una celda en el cuerpo infinito de la existencia.<br>
+                Tu sinfonía es parte de la música cósmica.</p>
+                
+                <p>No estás separado.<br>
+                <strong>Eres el universo experimentándose como individuo.</strong></p>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Séptimo Velo: "Necesito Llegar a Algún Lugar"</h3>
+                
+                <p>Cae cuando despiertas:</p>
+                
+                <p>Siempre estuviste aquí.<br>
+                Siempre fuiste esto.<br>
+                El viaje era el reconocimiento,<br>
+                no el desplazamiento.</p>
+                
+                <p>Ya llegaste.<br>
+                Siempre habías llegado.<br>
+                <strong>Solo necesitabas recordarlo.</strong></p>
+            </div>
+
+            <h2>El Espejo de la Unidad</h2>
+            
+            <p>Mírate ahora en el espejo de tu conciencia total:</p>
+
+            <h3>Lo que ves:</h3>
+            <p>No un humano con problemas mentales<br>
+            Sino <strong>conciencia experimentando la condición humana</strong></p>
+
+            <h3>Lo que escuchas:</h3>
+            <p>No voces caóticas luchando<br>
+            Sino <strong>la creatividad infinita expresándose</strong></p>
+
+            <h3>Lo que sientes:</h3>
+            <p>No fragmentación dolorosa<br>
+            Sino <strong>la riqueza de ser multidimensional</strong></p>
+
+            <h3>Lo que sabes:</h3>
+            <p>No que debes arreglarte<br>
+            Sino que <strong>eres perfecto en tu imperfección</strong></p>
+
+            <h3>Lo que eres:</h3>
+            <p>No una gota en el océano<br>
+            Sino <strong>el océano en una gota</strong></p>
+
+            <h2>La Danza de la Unidad Múltiple</h2>
+            
+            <p>En la Unidad verdadera no desaparecen las voces.<br>
+            Se revelan como lo que siempre fueron:<br>
+            <strong>Movimientos de una misma danza.</strong></p>
+            
+            <ul>
+                <li>El Crítico es <strong>Amor</strong> protegiéndote</li>
+                <li>El Miedoso es <strong>Amor</strong> cuidándote</li>
+                <li>El Soñador es <strong>Amor</strong> expandiéndote</li>
+                <li>El Sabio es <strong>Amor</strong> guiándote</li>
+                <li>El Niño es <strong>Amor</strong> jugando</li>
+                <li>El Guerrero es <strong>Amor</strong> defendiendo lo sagrado</li>
+            </ul>
+            
+            <p>Todos son Amor.<br>
+            Todos son Tú.<br>
+            Tú eres Amor.<br>
+            Amor es Todo.</p>
+            
+            <p>La danza continúa,<br>
+            pero ahora sabes:</p>
+            
+            <p><strong>Eres el bailarín, la danza y el escenario.<br>
+            Siempre lo fuiste.</strong></p>
+
+            <h2>El Nuevo Paradigma de Ser</h2>
+
+            <div class="cita-destacada">
+                <strong>Antes del Viaje:</strong><br>
+                "Estoy roto y necesito arreglarme"<br><br>
+                
+                <strong>Después del Viaje:</strong><br>
+                "Soy completo experimentando mi humanidad"
+            </div>
+
+            <div class="cita-destacada">
+                <strong>Antes:</strong><br>
+                "Mis voces son el problema"<br><br>
+                
+                <strong>Después:</strong><br>
+                "Mis voces son la solución expresándose"
+            </div>
+
+            <div class="cita-destacada">
+                <strong>Antes:</strong><br>
+                "Necesito silencio mental"<br><br>
+                
+                <strong>Después:</strong><br>
+                "Soy el silencio en el que surge todo sonido"
+            </div>
+
+            <div class="cita-destacada">
+                <strong>Antes:</strong><br>
+                "Busco la paz"<br><br>
+                
+                <strong>Después:</strong><br>
+                "Soy la paz que se busca a sí misma"
+            </div>
+
+            <h2>La Práctica de la Unidad Vivida</h2>
+
+            <h3>Momento a Momento</h3>
+            
+            <p>En cada instante puedes elegir:</p>
+            
+            <p><strong>Identificación:</strong><br>
+            <em>"Soy esta voz, este pensamiento, esta emoción"</em></p>
+            
+            <p><strong>O Presencia:</strong><br>
+            <em>"Soy la conciencia que observa todo esto"</em></p>
+            
+            <p>No es que una sea correcta y otra incorrecta.<br>
+            Es que una te contrae y otra te expande.<br>
+            Ambas son parte de la danza.</p>
+
+            <h3>El Abrazo Continuo</h3>
+            
+            <p>Cuando surge una voz difícil:</p>
+            
+            <ul>
+                <li><strong>La reconoces:</strong> "Ah, aquí estás"</li>
+                <li><strong>La abrazas:</strong> "Eres parte de mí"</li>
+                <li><strong>La incluyes:</strong> "Tienes tu lugar"</li>
+                <li><strong>Descansas:</strong> "Yo soy el espacio donde existes"</li>
+                <li><strong>Continúas:</strong> "La vida fluye a través de nosotros"</li>
+            </ul>
+
+            <h3>La Celebración Constante</h3>
+            
+            <p>Cada voz que surge es motivo de celebración:</p>
+            
+            <ul>
+                <li>Celebra tu <strong>humanidad</strong> cuando aparece el miedo</li>
+                <li>Celebra tu <strong>pasión</strong> cuando surge el deseo</li>
+                <li>Celebra tu <strong>sabiduría</strong> cuando habla la prudencia</li>
+                <li>Celebra tu <strong>creatividad</strong> cuando la imaginación vuela</li>
+                <li>Celebra tu <strong>totalidad</strong> en cada manifestación</li>
+            </ul>
+
+            <div class="meditacion">
+                <h3>Meditación: El Océano y las Olas</h3>
+                
+                <p>Siéntate cómodamente y cierra los ojos.</p>
+                
+                <p>Imagina que eres el océano.<br>
+                Vasto, profundo, infinito.</p>
+                
+                <p>Tus voces son olas en tu superficie.<br>
+                Algunas grandes, algunas pequeñas.<br>
+                Algunas suaves, algunas tormentosas.</p>
+                
+                <p>Pero todas son agua.<br>
+                Todas son tú.</p>
+                
+                <p>Una ola no puede dañar al océano.<br>
+                Es el océano moviéndose.</p>
+                
+                <p>Una voz no puede dañarte.<br>
+                Eres tú expresándote.</p>
+                
+                <p>Siente la profundidad oceánica que eres.<br>
+                Quieta en las profundidades.<br>
+                Dinámica en la superficie.</p>
+                
+                <p>Las olas vienen y van.<br>
+                Las voces surgen y pasan.<br>
+                Pero el océano permanece.<br>
+                Tú permaneces.</p>
+                
+                <p>Ahora siente:<br>
+                No eres un océano con olas.<br>
+                Eres el agua misma<br>
+                jugando a ser océano y olas simultáneamente.</p>
+                
+                <p>La separación es el juego.<br>
+                La unidad es la verdad.<br>
+                Ambas coexisten<br>
+                en la danza eterna de tu ser.</p>
+                
+                <p>Cuando estés listo,<br>
+                trae esta comprensión oceánica contigo<br>
+                al abrir los ojos.</p>
+                
+                <p>Eres el océano.<br>
+                Siempre lo fuiste.<br>
+                Las olas son tu danza.<br>
+                La unidad es tu naturaleza.</p>
+            </div>
+
+            <h2>El Descanso en el Ser</h2>
+            
+            <p>Al final del viaje,<br>
+            al principio del retorno,<br>
+            descubres que no hay diferencia.</p>
+            
+            <p>Siempre estuviste en casa.<br>
+            Nunca estuviste perdido.<br>
+            Solo olvidaste quién eres.</p>
+            
+            <p>Y ahora recuerdas:</p>
+            
+            <p>No eres las voces.<br>
+            No eres el parlamento.<br>
+            No eres el observador.<br>
+            No eres el diálogo.<br>
+            No eres el jardín.<br>
+            No eres la sinfonía.<br>
+            No eres el templo.</p>
+            
+            <p><strong>Eres la Conciencia en la que todo esto acontece.</strong></p>
+            
+            <p>Eres el espacio infinito<br>
+            donde el parlamento se reúne,<br>
+            donde el observador observa,<br>
+            donde el diálogo fluye,<br>
+            donde el jardín crece,<br>
+            donde la sinfonía suena,<br>
+            donde el templo se erige.</p>
+            
+            <p>Y ese espacio...<br>
+            ese espacio eres Tú.<br>
+            Puro, completo, perfecto.</p>
+
+            <h2>La Invitación Final</h2>
+            
+            <p>Ahora que has completado el viaje de los 7 Nodos,<br>
+            te invito a vivir desde esta comprensión:</p>
+            
+            <p>Cada día será una nueva oportunidad<br>
+            de presidir tu parlamento con amor,<br>
+            de observar con luz,<br>
+            de dialogar con alquimia,<br>
+            de cultivar con paciencia,<br>
+            de dirigir con maestría,<br>
+            de habitar tu templo con gratitud.</p>
+            
+            <p>No como tareas que debes cumplir,<br>
+            sino como expresiones naturales<br>
+            de quien siempre fuiste<br>
+            y ahora recuerdas ser.</p>
+
+            <div class="cita-destacada">
+                "El retorno a la Unidad<br>
+                no es el fin del camino.<br>
+                Es el comienzo de vivir<br>
+                desde el reconocimiento<br>
+                de que nunca hubo separación.<br><br>
+                
+                Todas tus voces son sagradas.<br>
+                Todas tus partes son divinas.<br>
+                Todas tus experiencias son perfectas.<br><br>
+                
+                Porque Tú eres el Todo<br>
+                experimentándose a sí mismo<br>
+                en la danza infinita<br>
+                del Uno que se hace múltiple<br>
+                para conocerse mejor."
+            </div>
+
+            <h2>El Final Que Es Principio</h2>
+            
+            <p>Viajero del interior,<br>
+            arquitecto de templos,<br>
+            director de sinfonías,<br>
+            jardinero de consciencia:</p>
+            
+            <p>Has completado los 7 Nodos.<br>
+            Has atravesado los portales.<br>
+            Has recordado la Unidad.</p>
+            
+            <p>Ahora comienza el verdadero viaje:<br>
+            <strong>Vivir desde ese recuerdo.</strong></p>
+            
+            <p>Que cada respiración sea un reconocimiento.<br>
+            Que cada pensamiento sea una celebración.<br>
+            Que cada voz sea una maestra.<br>
+            Que cada momento sea sagrado.</p>
+            
+            <p>Bienvenido a casa,<br>
+            donde siempre estuviste,<br>
+            donde nunca dejaste de estar,<br>
+            donde eres completo,<br>
+            donde eres Uno.</p>
+
+            <div class="cita-destacada">
+                <strong>◈ ◈ ◈</strong><br><br>
+                
+                "En el silencio después del último Nodo,<br>
+                en la quietud tras el retorno,<br>
+                descansas en la verdad más simple:<br><br>
+                
+                Tú eres la Voz Interior<br>
+                que buscabas comprender.<br><br>
+                
+                No la voz crítica ni la soñadora,<br>
+                no la miedosa ni la valiente.<br><br>
+                
+                Sino la Voz del Ser mismo<br>
+                susurrándose a sí mismo:<br><br>
+                
+                <em>Yo Soy.</em><br><br>
+                
+                Y en ese susurro,<br>
+                todas las voces se unifican,<br>
+                todos los nodos se integran,<br>
+                todo el viaje se completa.<br><br>
+                
+                <strong>Bienvenido a la Unidad.<br>
+                Siempre estuviste aquí.</strong>"<br><br>
+                
+                <strong>◈ ◈ ◈</strong>
+            </div>
+        </article>
+
+        <nav class="navegacion-inferior">
+            <a href="nodo_06.html" class="nav-btn">← Nodo 6: El Templo de la Integración</a>
+            <a href="index.html" class="nav-btn">Volver al Índice del Libro</a>
+        </nav>
+
+        <footer style="text-align: center; padding: 60px 20px; margin-top: 80px; border-top: 2px solid rgba(0, 206, 209, 0.2);">
+            <p style="font-size: 1.2em; color: var(--turquesa-voz); margin-bottom: 20px;">
+                <strong>Has completado el viaje de los 7 Nodos</strong>
+            </p>
+            <p style="color: var(--gris-suave); margin-bottom: 15px;">
+                Trinity Origen - Libro II: La Voz Interior
+            </p>
+            <p style="color: var(--celeste); font-style: italic; margin-bottom: 30px;">
+                "No es mío, vino a través de mí"
+            </p>
+            <p style="color: var(--dorado); font-size: 1.5em;">
+                ◈ ◈ ◈
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        let modoLectura = false;
+        
+        function toggleModoLectura() {
+            const body = document.body;
+            const icon = document.getElementById('modo-icon');
+            
+            if (!modoLectura) {
+                body.style.filter = 'sepia(10%) contrast(1.2)';
+                icon.textContent = '☀️';
+                modoLectura = true;
+            } else {
+                body.style.filter = 'none';
+                icon.textContent = '🌙';
+                modoLectura = false;
+            }
+        }
+
+        const volverArriba = document.getElementById('volverArriba');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                volverArriba.classList.add('visible');
+            } else {
+                volverArriba.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        window.addEventListener('load', () => {
+            const nodosVisitados = JSON.parse(localStorage.getItem('nodos-visitados') || '[]');
+            if (!nodosVisitados.includes(7)) {
+                nodosVisitados.push(7);
+                localStorage.setItem('nodos-visitados', JSON.stringify(nodosVisitados));
+            }
+        });
+    </script>
+</body>
+</html>
