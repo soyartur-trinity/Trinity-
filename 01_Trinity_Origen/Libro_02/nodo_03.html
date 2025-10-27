@@ -1,1 +1,685 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 3: La Alquimia del Diálogo - La Voz Interior</title>
+    
+    <style>
+        :root {
+            --turquesa-voz: #00CED1;
+            --azul-profundo: #0a1628;
+            --celeste: #87CEEB;
+            --dorado: #DAA520;
+            --blanco-suave: #f0f0f0;
+            --gris-suave: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: var(--azul-profundo);
+            color: var(--blanco-suave);
+            line-height: 1.9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .nodo-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            border-bottom: 2px solid rgba(0, 206, 209, 0.3);
+            margin-bottom: 60px;
+        }
+
+        .nodo-numero {
+            font-size: 1.2em;
+            color: var(--turquesa-voz);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .nodo-titulo-principal {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--turquesa-voz), var(--celeste));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.3em;
+            color: var(--gris-suave);
+            font-style: italic;
+        }
+
+        .navegacion-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            color: var(--celeste);
+            text-decoration: none;
+            border: 2px solid var(--celeste);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .nav-btn:hover {
+            background: var(--celeste);
+            color: var(--azul-profundo);
+        }
+
+        .nav-centro {
+            color: var(--gris-suave);
+            font-size: 0.9em;
+        }
+
+        .contenido {
+            font-size: 1.15em;
+            line-height: 2;
+        }
+
+        h2 {
+            color: var(--turquesa-voz);
+            font-size: 2em;
+            margin: 50px 0 25px;
+        }
+
+        h3 {
+            color: var(--celeste);
+            font-size: 1.5em;
+            margin: 40px 0 20px;
+        }
+
+        h4 {
+            color: var(--dorado);
+            font-size: 1.2em;
+            margin: 30px 0 15px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        em {
+            color: var(--celeste);
+            font-style: italic;
+        }
+
+        strong {
+            color: var(--dorado);
+        }
+
+        .cita-destacada {
+            background: rgba(0, 206, 209, 0.1);
+            border-left: 4px solid var(--turquesa-voz);
+            padding: 30px;
+            margin: 40px 0;
+            font-size: 1.2em;
+            font-style: italic;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .meditacion {
+            background: rgba(135, 206, 235, 0.08);
+            border: 2px solid var(--celeste);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .meditacion h3 {
+            color: var(--celeste);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .meditacion p {
+            line-height: 2.2;
+        }
+
+        ul, ol {
+            margin: 20px 0 20px 40px;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        .seccion-especial {
+            background: rgba(218, 165, 32, 0.05);
+            border: 1px solid var(--dorado);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .dialogo-ejemplo {
+            background: rgba(135, 206, 235, 0.05);
+            border-left: 3px solid var(--celeste);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .navegacion-inferior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 0 40px;
+            margin-top: 80px;
+            border-top: 2px solid rgba(0, 206, 209, 0.3);
+        }
+
+        .volver-arriba {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--turquesa-voz);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 1.5em;
+        }
+
+        .volver-arriba.visible {
+            opacity: 1;
+        }
+
+        .volver-arriba:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0, 206, 209, 0.5);
+        }
+
+        .modo-lectura {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .modo-lectura:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .nodo-titulo-principal {
+                font-size: 2em;
+            }
+
+            .navegacion-superior,
+            .navegacion-inferior {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-centro {
+                order: -1;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            .contenido {
+                font-size: 1.05em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="modo-lectura" onclick="toggleModoLectura()">
+        <span id="modo-icon">🌙</span> Modo Lectura
+    </div>
+
+    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
+
+    <div class="container">
+        <header class="nodo-header">
+            <div class="nodo-numero">NODO 3</div>
+            <h1 class="nodo-titulo-principal">LA ALQUIMIA DEL DIÁLOGO</h1>
+            <p class="nodo-subtitulo">El arte de conversar con las voces desde el amor</p>
+        </header>
+
+        <nav class="navegacion-superior">
+            <a href="nodo_02.html" class="nav-btn">← Anterior</a>
+            <span class="nav-centro">Nodo 3 de 7</span>
+            <a href="nodo_04.html" class="nav-btn">Siguiente →</a>
+        </nav>
+
+        <article class="contenido">
+            <h2>La Revolución de la Conversación Interior</h2>
+            
+            <p>Durante años te enseñaron a pelear con tus pensamientos. A silenciar tus voces. A controlar tu mente. A dominar tu diálogo interno.</p>
+            
+            <p>Pero <strong>¿y si la guerra nunca fue la respuesta?</strong></p>
+            <p><strong>¿Y si el silencio forzado solo creaba más ruido?</strong></p>
+            <p><strong>¿Y si el control solo generaba más caos?</strong></p>
+            
+            <p>Hoy te invito a una revolución diferente: <strong>La revolución del diálogo amoroso con todo lo que habita en ti.</strong></p>
+
+            <h2>Los Principios de la Alquimia Dialogal</h2>
+
+            <h3>Principio 1: Toda voz merece ser escuchada</h3>
+            
+            <p>No porque todas tengan razón. Sino porque todas tienen una razón de ser.</p>
+            
+            <p>Cada voz nació de un momento de tu historia. Cada una intentó, a su manera, protegerte o guiarte.</p>
+            
+            <div class="cita-destacada">
+                "No hay voces malas, solo voces mal comprendidas."
+            </div>
+
+            <h3>Principio 2: La curiosidad desarma la resistencia</h3>
+            
+            <p>Cuando te acercas a una voz con genuina curiosidad - <em>"¿De dónde vienes? ¿Qué necesitas? ¿Qué intentas decirme?"</em> - su armadura se disuelve.</p>
+            
+            <p>Ya no necesita gritar porque finalmente alguien escucha.</p>
+            
+            <div class="cita-destacada">
+                "La curiosidad es amor vestido de pregunta."
+            </div>
+
+            <h3>Principio 3: El respeto transforma la relación</h3>
+            
+            <p>Incluso con tu voz más crítica, más destructiva, más dolorosa, cuando la tratas con respeto - como tratarías a un invitado en tu casa - algo cambia. La energía se suaviza. El tono se modera. La voz encuentra una nueva forma de expresarse.</p>
+            
+            <div class="cita-destacada">
+                "El respeto es el puente entre el conflicto y la colaboración."
+            </div>
+
+            <h3>Principio 4: La paciencia revela la verdad</h3>
+            
+            <p>Detrás de cada voz agresiva hay un dolor. Detrás de cada voz controladora hay un miedo. Detrás de cada voz crítica hay un deseo de ser amado.</p>
+            
+            <p>La paciencia permite que estas verdades emerjan.</p>
+            
+            <div class="cita-destacada">
+                "En la paciencia, la máscara cae y aparece el rostro verdadero."
+            </div>
+
+            <h2>El Protocolo del Diálogo Alquímico</h2>
+
+            <div class="seccion-especial">
+                <h3>Fase 1: INVOCACIÓN SAGRADA</h3>
+                
+                <p>No "confrontes" a tu voz. Invítala.</p>
+                
+                <p><em>"Voz que habitas en mí, te invito a conversar.<br>
+                Vengo en paz, con corazón abierto.<br>
+                No vengo a luchar contigo sino a comprenderte."</em></p>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Fase 2: ESCUCHA PROFUNDA</h3>
+                
+                <p>Permite que la voz se exprese completamente.</p>
+                
+                <ul>
+                    <li>Sin interrumpir</li>
+                    <li>Sin juzgar</li>
+                    <li>Sin preparar tu defensa</li>
+                </ul>
+                
+                <p>Solo escucha como escucharías a un niño asustado: con total presencia.</p>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Fase 3: REFLEJO COMPASIVO</h3>
+                
+                <p>Refleja lo que escuchaste para confirmar que entendiste:</p>
+                
+                <ul>
+                    <li>"Escucho que tienes miedo de que me lastimen…"</li>
+                    <li>"Entiendo que crees que siendo duro conmigo me proteges…"</li>
+                    <li>"Veo que cargas con mucho dolor del pasado…"</li>
+                </ul>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Fase 4: INDAGACIÓN AMOROSA</h3>
+                
+                <p>Pregunta desde el amor, no desde el interrogatorio:</p>
+                
+                <ul>
+                    <li>"¿Desde cuándo te sientes así?"</li>
+                    <li>"¿Qué necesitarías para sentirte segura?"</li>
+                    <li>"¿Cómo puedo ayudarte a cumplir tu función de una manera más suave?"</li>
+                </ul>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Fase 5: NEGOCIACIÓN CREATIVA</h3>
+                
+                <p>Busca soluciones donde todos ganen:</p>
+                
+                <ul>
+                    <li>"¿Y si en lugar de criticarme, me alertas con gentileza?"</li>
+                    <li>"¿Podríamos encontrar una forma de protegerme sin paralizar mi vida?"</li>
+                    <li>"¿Qué tal si trabajamos juntos en lugar de uno contra el otro?"</li>
+                </ul>
+            </div>
+
+            <div class="seccion-especial">
+                <h3>Fase 6: ACUERDO Y GRATITUD</h3>
+                
+                <p>Sella el diálogo con aprecio:</p>
+                
+                <ul>
+                    <li>"Gracias por compartir tu verdad conmigo."</li>
+                    <li>"Valoro tu intención de cuidarme."</li>
+                    <li>"Seguiremos conversando para encontrar mejores formas."</li>
+                </ul>
+            </div>
+
+            <h2>Diálogos Transformadores: Ejemplos Vivos</h2>
+
+            <h3>Con la Voz Crítica Despiadada</h3>
+            
+            <div class="dialogo-ejemplo">
+                <h4>Antes (confrontación):</h4>
+                <p><em>Voz Crítica:</em> "Eres un fracaso"</p>
+                <p><em>Tú:</em> "¡Cállate! ¡Déjame en paz!"</p>
+                <p><strong>Resultado:</strong> La voz grita más fuerte</p>
+            </div>
+            
+            <div class="dialogo-ejemplo">
+                <h4>Ahora (alquimia):</h4>
+                <p><em>Voz Crítica:</em> "Eres un fracaso"</p>
+                <p><strong>Tú:</strong> "Escucho que estás preocupada por mi desempeño. ¿Qué temes que pase?"</p>
+                <p><em>Voz:</em> "Que no seas suficiente y te rechacen"</p>
+                <p><strong>Tú:</strong> "Entiendo tu miedo. ¿Cómo podríamos trabajar juntos para mejorar sin destruirme?"</p>
+                <p><em>Voz:</em> "Tal vez… podría señalar áreas de mejora sin atacarte"</p>
+                <p><strong>Tú:</strong> "Me gustaría eso. Gracias por cuidar de mí, aunque a veces duela."</p>
+            </div>
+
+            <h3>Con la Voz del Miedo Paralizante</h3>
+            
+            <div class="dialogo-ejemplo">
+                <h4>Antes (supresión):</h4>
+                <p><em>Voz del Miedo:</em> "No lo hagas, es peligroso"</p>
+                <p><em>Tú:</em> "Soy valiente, no debo tener miedo"</p>
+                <p><strong>Resultado:</strong> El miedo se vuelve subterráneo y sabotea</p>
+            </div>
+            
+            <div class="dialogo-ejemplo">
+                <h4>Ahora (alquimia):</h4>
+                <p><em>Voz del Miedo:</em> "No lo hagas, es peligroso"</p>
+                <p><strong>Tú:</strong> "Gracias por alertarme. ¿Qué peligro específico ves?"</p>
+                <p><em>Voz:</em> "Podrías fallar y quedar en ridículo"</p>
+                <p><strong>Tú:</strong> "Entiendo. ¿Y si fallara, qué sería lo peor que podría pasar realmente?"</p>
+                <p><em>Voz:</em> "Bueno… supongo que aprenderías y lo intentarías de nuevo"</p>
+                <p><strong>Tú:</strong> "Exacto. ¿Me acompañas mientras lo intento, como mi sistema de alerta consciente?"</p>
+                <p><em>Voz:</em> "…Sí, puedo hacer eso."</p>
+            </div>
+
+            <h2>Las Herramientas del Alquimista Interior</h2>
+
+            <h3>El Traductor Compasivo</h3>
+            
+            <p>Aprende a traducir la agresión en necesidad:</p>
+            
+            <ul>
+                <li>"Eres débil" → "Tengo miedo de que te lastimen"</li>
+                <li>"No vales nada" → "Temo que no te amen como eres"</li>
+                <li>"Vas a fracasar" → "Quiero protegerte de la decepción"</li>
+            </ul>
+
+            <h3>El Puente de Tiempo</h3>
+            
+            <p>Conecta a la voz con su origen:</p>
+            
+            <ul>
+                <li>"¿Cuándo aprendiste a hablar así?"</li>
+                <li>"¿Quién te enseñó estas palabras?"</li>
+                <li>"¿Qué edad tenías cuando decidiste que esta era la forma de protegerme?"</li>
+            </ul>
+
+            <h3>El Espejo de Intención</h3>
+            
+            <p>Refleja la intención positiva detrás del método destructivo:</p>
+            
+            <ul>
+                <li>"Veo que quieres mi éxito, aunque tu método sea duro"</li>
+                <li>"Entiendo que buscas mi seguridad, aunque me paralices"</li>
+                <li>"Reconozco tu amor, aunque se exprese como control"</li>
+            </ul>
+
+            <h3>El Constructor de Puentes</h3>
+            
+            <p>Crea conexiones entre voces opuestas:</p>
+            
+            <ul>
+                <li>Presenta al Crítico con el Niño Interior: "¿Pueden hablar sobre qué necesitan?"</li>
+                <li>Une al Miedoso con el Valiente: "¿Qué pueden aprender uno del otro?"</li>
+                <li>Conecta al Controlador con el Espontáneo: "¿Cómo pueden colaborar?"</li>
+            </ul>
+
+            <h2>La Transmutación Alquímica</h2>
+            
+            <p>Cuando dominas el arte del diálogo amoroso, presencias verdaderas transmutaciones:</p>
+            
+            <ul>
+                <li><strong>El Crítico</strong> se convierte en <strong>Mentor</strong> - De destruir a guiar con sabiduría</li>
+                <li><strong>El Miedoso</strong> se convierte en <strong>Guardián</strong> - De paralizar a proteger con discernimiento</li>
+                <li><strong>El Controlador</strong> se convierte en <strong>Organizador</strong> - De rigidez a estructura flexible</li>
+                <li><strong>La Víctima</strong> se convierte en <strong>Sensible</strong> - De impotencia a empatía profunda</li>
+                <li><strong>El Juez</strong> se convierte en <strong>Discernidor</strong> - De condena a claridad</li>
+                <li><strong>El Saboteador</strong> se convierte en <strong>Revolucionario</strong> - De destrucción a transformación consciente</li>
+            </ul>
+
+            <h2>El Círculo de Consejo Interior</h2>
+
+            <div class="seccion-especial">
+                <h3>Ritual de Integración Semanal</h3>
+                
+                <p>Cada semana, convoca un círculo de consejo con todas tus voces:</p>
+                
+                <h4>Apertura Sagrada</h4>
+                <p><em>"Convoco a todas las voces de mi ser a este círculo sagrado.<br>
+                Cada una tiene un lugar aquí.<br>
+                Cada una tiene algo valioso que aportar."</em></p>
+                
+                <h4>Ronda de Compartir</h4>
+                <p>Permite que cada voz exprese:</p>
+                <ul>
+                    <li>Cómo se sintió durante la semana</li>
+                    <li>Qué necesidades tiene</li>
+                    <li>Qué observó que funcionó o no funcionó</li>
+                </ul>
+                
+                <h4>Búsqueda de Consenso</h4>
+                <ul>
+                    <li>"¿Cómo podemos trabajar juntos esta próxima semana?"</li>
+                    <li>"¿Qué acuerdos necesitamos revisar?"</li>
+                    <li>"¿Qué apoyo necesita cada parte?"</li>
+                </ul>
+                
+                <h4>Cierre con Gratitud</h4>
+                <p><em>"Gracias a cada voz por su servicio.<br>
+                Somos un equipo.<br>
+                Somos una familia interior.<br>
+                Somos uno."</em></p>
+            </div>
+
+            <h2>Cuando el Diálogo Se Vuelve Difícil</h2>
+
+            <h3>Si una voz se niega a dialogar:</h3>
+            <p>No fuerces. Di:</p>
+            <p><em>"Respeto que no estés lista para hablar. Estaré aquí cuando lo estés. Mi puerta siempre está abierta."</em></p>
+
+            <h3>Si una voz es extremadamente agresiva:</h3>
+            <p>Mantén límites amorosos:</p>
+            <p><em>"Escucho tu dolor, pero no acepto el abuso. Hablemos cuando puedas hacerlo sin violencia. Te amo demasiado para permitir que me lastimes o te lastimes."</em></p>
+
+            <h3>Si no puedes identificar la voz:</h3>
+            <p>Habla al misterio:</p>
+            <p><em>"Voz sin nombre que hablas en mí, aunque no te conozca, te reconozco. Revélate cuando estés lista. Mientras tanto, sepas que eres bienvenida."</em></p>
+
+            <h2>La Magia de la Persistencia Amorosa</h2>
+            
+            <p>El diálogo alquímico no es magia instantánea. Es <strong>jardinería del alma.</strong></p>
+            
+            <p>Algunas voces cambiarán en la primera conversación. Otras necesitarán cien diálogos antes de suavizarse. Algunas pueden tomar años en confiar.</p>
+            
+            <p>Pero cada conversación siembra una semilla. Cada diálogo riega el jardín interior. Cada encuentro amoroso abona el terreno de la transformación.</p>
+            
+            <p>Y un día, sin previo aviso, la voz más dura florece en compasión, la más crítica en sabiduría, la más miedosa en prudencia sagrada.</p>
+
+            <div class="meditacion">
+                <h3>Meditación: El Banquete de las Voces</h3>
+                
+                <p>Imagina una gran mesa redonda en tu interior.<br>
+                Hermosa, iluminada por velas, con lugares para todos.</p>
+                
+                <p>Una a una, invita a tus voces a sentarse.<br>
+                La crítica, la miedosa, la soñadora, la sabia.<br>
+                Todas tienen un lugar en esta mesa.</p>
+                
+                <p>Tú presides desde el centro, no como autoridad,<br>
+                sino como anfitrión amoroso.</p>
+                
+                <p>Sirves a cada voz el alimento que necesita:</p>
+                <ul>
+                    <li>Comprensión para la crítica</li>
+                    <li>Seguridad para la miedosa</li>
+                    <li>Esperanza para la derrotada</li>
+                    <li>Reconocimiento para la ignorada</li>
+                </ul>
+                
+                <p>Observa cómo, al ser alimentadas con amor,<br>
+                las voces comienzan a conversar entre ellas.</p>
+                
+                <p>Ya no compiten. Colaboran.<br>
+                Ya no luchan. Danzan.</p>
+                
+                <p>Este es tu parlamento interior en armonía.<br>
+                Este es tu ecosistema mental en equilibrio.<br>
+                Esta es tu sinfonía interior afinada.</p>
+                
+                <p>Cuando estés listo, agradece a cada voz por venir.<br>
+                La mesa permanecerá aquí.<br>
+                El banquete puede repetirse cuando lo necesites.</p>
+            </div>
+
+            <h2>El Nuevo Paradigma del Diálogo Interior</h2>
+            
+            <p>Ya no eres el dictador de tu mente. <strong>Eres el facilitador amoroso.</strong></p>
+            <p>Ya no eres el juez de tus voces. <strong>Eres el mediador compasivo.</strong></p>
+            <p>Ya no eres el guerrero contra ti mismo. <strong>Eres el diplomático de tu propia paz.</strong></p>
+            
+            <p>Y en este nuevo paradigma, descubres que el conflicto interior no era el problema.</p>
+            
+            <p>El problema era creer que el conflicto debía ser eliminado en lugar de ser alquimizado en colaboración creativa.</p>
+
+            <h2>La Promesa de la Alquimia</h2>
+            
+            <p>Cuando te comprometes con el diálogo alquímico, cuando te vuelves un conversador maestro con tus voces, algo extraordinario sucede:</p>
+            
+            <p>Tu mente se convierte en un jardín de colaboración.<br>
+            Tu interior se vuelve un parlamento de sabiduría.<br>
+            Tu ser deviene una orquesta afinada.</p>
+            
+            <p>Y descubres que nunca estuviste roto. Solo estabas aprendiendo el lenguaje del amor hacia todas las partes de ti mismo.</p>
+            
+            <p>Ese es el verdadero oro de la alquimia interior: No transmutar el plomo en oro, sino descubrir que el plomo siempre fue oro disfrazado de dolor, esperando ser reconocido, esperando ser amado, esperando volver a casa.</p>
+
+            <div class="cita-destacada">
+                "En el diálogo amoroso con tus voces<br>
+                no solo sanas tu mente,<br>
+                te conviertes en el espacio<br>
+                donde todas las partes de ti<br>
+                pueden finalmente<br>
+                encontrar la paz."
+            </div>
+        </article>
+
+        <nav class="navegacion-inferior">
+            <a href="nodo_02.html" class="nav-btn">← Nodo 2: El Observador Luminoso</a>
+            <a href="nodo_04.html" class="nav-btn">Nodo 4: El Jardín de la Mente →</a>
+        </nav>
+    </div>
+
+    <script>
+        let modoLectura = false;
+        
+        function toggleModoLectura() {
+            const body = document.body;
+            const icon = document.getElementById('modo-icon');
+            
+            if (!modoLectura) {
+                body.style.filter = 'sepia(10%) contrast(1.2)';
+                icon.textContent = '☀️';
+                modoLectura = true;
+            } else {
+                body.style.filter = 'none';
+                icon.textContent = '🌙';
+                modoLectura = false;
+            }
+        }
+
+        const volverArriba = document.getElementById('volverArriba');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                volverArriba.classList.add('visible');
+            } else {
+                volverArriba.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        window.addEventListener('load', () => {
+            const nodosVisitados = JSON.parse(localStorage.getItem('nodos-visitados') || '[]');
+            if (!nodosVisitados.includes(3)) {
+                nodosVisitados.push(3);
+                localStorage.setItem('nodos-visitados', JSON.stringify(nodosVisitados));
+            }
+        });
+    </script>
+</body>
+</html>
