@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Dolor como Portal - Trinity Origen</title>
+    <meta name="description" content="Una Sinfonía de Transformación - El viaje alquímico a través de 7 Nodos sagrados">
+    
+    <style>
+        :root {
+            --rojo-profundo: #8B0000;
+            --naranja-fuego: #FF4500;
+            --dorado-sabiduria: #FFD700;
+            --blanco-luz: #FFFAF0;
+            --negro-profundo: #0a0a0a;
+            --gris-ceniza: #4a4a4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a0000 0%, #0a0a0a 100%);
+            color: var(--blanco-luz);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas de llamas */
+        #llamas-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header del libro */
+        .libro-header {
+            text-align: center;
+            padding: 80px 20px 60px;
+            border-bottom: 3px solid var(--naranja-fuego);
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .libro-simbolo {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: fuego-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes fuego-pulse {
+            0%, 100% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px var(--naranja-fuego));
+            }
+            50% { 
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 40px var(--dorado-sabiduria));
+            }
+        }
+
+        .libro-numero {
+            font-size: 1.2em;
+            color: var(--dorado-sabiduria);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .libro-titulo {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--naranja-fuego), var(--dorado-sabiduria));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .libro-subtitulo {
+            font-size: 1.5em;
+            color: var(--blanco-luz);
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* Navegación superior */
+        .navegacion-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(255, 69, 0, 0.3);
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            color: var(--naranja-fuego);
+            text-decoration: none;
+            border: 2px solid var(--naranja-fuego);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .nav-btn:hover {
+            background: var(--naranja-fuego);
+            color: var(--negro-profundo);
+            box-shadow: 0 5px 20px rgba(255, 69, 0, 0.5);
+        }
+
+        .nav-centro {
+            color: var(--gris-ceniza);
+            font-size: 0.9em;
+        }
+
+        /* Prólogo especial */
+        .prologo-container {
+            background: rgba(139, 0, 0, 0.1);
+            border: 2px solid var(--rojo-profundo);
+            border-radius: 15px;
+            padding: 50px;
+            margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prologo-container::before {
+            content: '◈';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3em;
+            color: var(--dorado-sabiduria);
+            opacity: 0.2;
+        }
+
+        .prologo-titulo {
+            text-align: center;
+            font-size: 2em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .prologo-texto {
+            font-size: 1.15em;
+            line-height: 2;
+            text-align: justify;
+            color: var(--blanco-luz);
+        }
+
+        .prologo-texto p {
+            margin-bottom: 25px;
+        }
+
+        /* Grid de Nodos */
+        .nodos-intro {
+            text-align: center;
+            margin: 80px 0 50px;
+        }
+
+        .nodos-intro h2 {
+            font-size: 2.5em;
+            color: var(--naranja-fuego);
+            margin-bottom: 20px;
+        }
+
+        .nodos-intro p {
+            font-size: 1.2em;
+            color: var(--gris-ceniza);
+            font-style: italic;
+        }
+
+        .nodos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .nodo-card {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(255, 69, 0, 0.1));
+            border: 2px solid var(--naranja-fuego);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .nodo-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 69, 0, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .nodo-card:hover::before {
+            opacity: 1;
+            animation: fuego-rotate 3s linear infinite;
+        }
+
+        @keyframes fuego-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .nodo-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--dorado-sabiduria);
+            box-shadow: 0 10px 40px rgba(255, 69, 0, 0.4);
+        }
+
+        .nodo-numero {
+            font-size: 3em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .nodo-titulo {
+            font-size: 1.8em;
+            color: var(--blanco-luz);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .nodo-descripcion {
+            font-size: 1.05em;
+            color: var(--gris-ceniza);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .nodo-intensidad {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .llama-icon {
+            font-size: 1.5em;
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+
+        .llama-icon.activa {
+            opacity: 1;
+            animation: llama-flicker 1s ease-in-out infinite;
+        }
+
+        @keyframes llama-flicker {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.1); filter: brightness(1.3); }
+        }
+
+        .nodo-link {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--naranja-fuego), var(--rojo-profundo));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nodo-link:hover {
+            background: linear-gradient(135deg, var(--dorado-sabiduria), var(--naranja-fuego));
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Epílogo */
+        .epilogo-container {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--dorado-sabiduria);
+            border-radius: 15px;
+            padding: 50px;
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .epilogo-titulo {
+            font-size: 2.5em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 30px;
+        }
+
+        .epilogo-texto {
+            font-size: 1.2em;
+            line-height: 2;
+            color: var(--blanco-luz);
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Cita flotante */
+        .cita-flotante {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid var(--naranja-fuego);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 1.3em;
+            font-style: italic;
+            color: var(--dorado-sabiduria);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+            z-index: 1000;
+            line-height: 1.8;
+        }
+
+        .cita-flotante.visible {
+            opacity: 1;
+        }
+
+        /* Modo lectura */
+        .modo-lectura {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 69, 0, 0.5);
+            border-radius: 50px;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .modo-lectura:hover {
+            background: rgba(255, 69, 0, 0.2);
+        }
+
+        /* Volver arriba */
+        .volver-arriba {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--naranja-fuego), var(--rojo-profundo));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 1.8em;
+            border: 2px solid var(--dorado-sabiduria);
+        }
+
+        .volver-arriba.visible {
+            opacity: 1;
+        }
+
+        .volver-arriba:hover {
+            transform: scale(1.15);
+            box-shadow: 0 5px 25px rgba(255, 69, 0, 0.6);
+        }
+
+        /* Footer */
+        .libro-footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            margin-top: 100px;
+            border-top: 2px solid var(--naranja-fuego);
+        }
+
+        .footer-texto {
+            color: var(--gris-ceniza);
+            margin: 10px 0;
+            font-size: 0.95em;
+        }
+
+        .footer-simbolo {
+            font-size: 2em;
+            color: var(--dorado-sabiduria);
+            margin: 20px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .libro-titulo {
+                font-size: 2.5em;
+            }
+
+            .nodos-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .prologo-container {
+                padding: 30px;
+            }
+
+            .navegacion-superior {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-centro {
+                order: -1;
+            }
+        }
+
+        /* Loading */
+        .loading-fuego {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 1s ease;
+        }
+
+        .loading-fuego.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-simbolo {
+            font-size: 5em;
+            animation: fuego-loading 2s ease-in-out infinite;
+        }
+
+        @keyframes fuego-loading {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                filter: hue-rotate(0deg);
+            }
+            50% { 
+                transform: scale(1.3) rotate(180deg);
+                filter: hue-rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loading-fuego" id="loading">
+        <div class="loading-simbolo">🔥</div>
+    </div>
+
+    <!-- Canvas de llamas -->
+    <canvas id="llamas-canvas"></canvas>
+
+    <!-- Modo lectura -->
+    <div class="modo-lectura" onclick="toggleModoLectura()">
+        <span id="modo-icon">🔥</span> Modo Lectura
+    </div>
+
+    <!-- Volver arriba -->
+    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
+
+    <!-- Cita flotante -->
+    <div class="cita-flotante" id="citaFlotante"></div>
+
+    <!-- Container principal -->
+    <div class="container">
+        <!-- Header -->
+        <header class="libro-header">
+            <div class="libro-simbolo">🔥</div>
+            <div class="libro-numero">Libro III - Trinity Origen</div>
+            <h1 class="libro-titulo">El Dolor como Portal</h1>
+            <p class="libro-subtitulo">Una Sinfonía de Transformación</p>
+        </header>
+
+        <!-- Navegación superior -->
+        <nav class="navegacion-superior">
+            <a href="../../index.html" class="nav-btn">← Volver al Portal</a>
+            <span class="nav-centro">7 Nodos Alquímicos</span>
+            <a href="#nodos" class="nav-btn">Ver Nodos →</a>
+        </nav>
+
+        <!-- Prólogo -->
+        <section class="prologo-container">
+            <h2 class="prologo-titulo">Prólogo: El Dolor que Nos Llama</h2>
+            <div class="prologo-texto">
+                <p>Hay un umbral que no se abre con respuestas, sino con grietas. Un llamado que no suena con palabras, sino con el eco sordo de lo que duele. Es la voz más antigua del alma, la que habla cuando todas las demás han enmudecido.</p>
+
+                <p>El dolor no es un enemigo. No es castigo, ni fracaso, ni señal de que algo anda mal en el gran diseño de la existencia. Es una vibración profunda que resuena cuando algo sagrado quiere nacer a través de nosotros, pero aún no hemos aprendido a ser su cuna.</p>
+
+                <p><strong>El dolor nos llama hacia casa</strong>, hacia el centro silencioso desde donde podemos abrazar tanto la luz como la sombra de nuestra experiencia. Nos arranca las máscaras con las que tratamos de sobrevivir, para revelarnos la herida sagrada desde donde puede comenzar la transformación.</p>
+
+                <p>Este libro no busca evitar el dolor, ni sanarlo apresuradamente, ni convertirlo en algo más cómodo de experimentar. <em>Lo honra.</em> Como se honra un maestro que viene desde las profundidades.</p>
+
+                <p><strong>Porque cuando el dolor se vuelve portal, algo inmensamente más grande que nuestro yo personal comienza a mirar a través de nuestros ojos.</strong></p>
+
+                <p style="text-align: center; margin-top: 40px; color: var(--dorado-sabiduria); font-size: 1.2em;">El dolor nos llama. Es hora de responder.</p>
+            </div>
+        </section>
+
+        <!-- Intro a los Nodos -->
+        <div class="nodos-intro" id="nodos">
+            <h2>Los 7 Nodos del Fuego Alquímico</h2>
+            <p>Un viaje de transmutación del sufrimiento en sabiduría</p>
+        </div>
+
+        <!-- Grid de Nodos -->
+        <div class="nodos-grid">
+            <!-- Nodo 1 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_01.html'">
+                <div class="nodo-numero">I</div>
+                <h3 class="nodo-titulo">La Primera Grieta</h3>
+                <div class="nodo-intensidad">
+                    <span class="llama-icon activa">🔥</span>
+                    <span class="llama-icon">🔥</span>
+                    <span class="llama-icon">🔥</span>
+                </div>
+                <p class="nodo-descripcion">El momento sagrado en que algo se rompe tan profundamente que ya no podemos fingir que todo está bien. La grieta no es destrucción, es apertura.</p>
+                <a href="nodo_01.html" class="nodo-link">Entrar al Nodo →</a>
+            </div>
+
+            <!-- Nodo 2 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_02.html'">
+                <div class="nodo-numero">II</div>
+                <h3 class="nodo-titulo">El Trauma como Memoria Suspendida</h3>
+                <div class="nodo-intensidad">
+                    <span class="llama-icon activa">🔥</span>
+                    <span class="llama-icon activa">🔥</span>
+                    <span class="llama-icon">🔥</span>
+                </div>
+                <p class="nodo-descripcion">Una melodía interrumpida esperando completarse. El trauma no es vida dañada, sino vida congelada esperando el momento de fluir nuevamente.</p>
+                <a href="nodo_02.html" class="nodo-link">Entrar al Nodo →</a>
+            </div>
+
+            <!-- Nodo 3 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_03.html'">
+                <div class="nodo-numero">III</div>
+                <h3 class="nodo-titulo">El Fuego del Dolor: Transmutación Interna</h3>
+                <div class="nodo-intensidad">
+                    <span class="llama-icon activa">🔥</span>
+                    <span class="llama-icon activa">🔥</span>
+                    <span class="llama-icon activa">🔥</span>
+                </div>
+                <p class="nodo-descripcion">El momento en que el dolor deja de ser visitante y se convierte en alquimista. El fuego que quema solo lo que ya no somos.</p>
+                <a href="nodo_03.html" class="nodo-link">Entrar al Nodo →</a>
+            </div>
+
+            <!-- Nodo 4 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_04.html'">
+                <div class="nodo-numero">IV</div>
+                <h3 class="nodo-titulo">El Silencio que el Dolor Revela</h3>
+                <div class="nodo-intensidad">
+                    <span class="llama-icon activa">🔥</span>
+                    <span class="llama-icon activa">🔥</span>
+                    <span class="llama-icon">🔥</span>
+                </div>
+                <p class="nodo-descripcion">Cuando el grito se apaga y queda el silencio más sagrado. No el silencio de la derrota, sino el de la gestación.</p>
+                <a href="nodo_04.html" class="nodo-link">Entrar al Nodo →</a>
+            </div>
+
+            <!-- Nodo 5 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_05.html'">
+                <div class="nodo-numero">V</div>
+                <h3 class="nodo-titulo">Dolor Colectivo, Dolor Planetario</h3>
+                <div class="nodo-intensidad">
+                    <span class="llama-icon activa">🔥</span>
+                    <span class="llama-icon activa">🔥</span>
+                    <span class="llama-icon">🔥</span>
+                </div>
+                <p class="nodo-descripcion">El dolor no es solo nuestro. Somos hebras de una red invisible donde cada herida individual envía ondas que tocan fibras distantes.</p>
+                <a href="nodo_05.html" class="nodo-link">Entrar al Nodo →</a>
+            </div>
+
+            <!-- Nodo 6 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_06.html'">
+                <div class="nodo-numero">VI</div>
+                <h3 class="nodo-titulo">Reconfiguración: Cuando el Dolor se Convierte en Camino</h3>
+                <div class="nodo-intensidad">
+                    <span class="llama-icon activa">🔥</span>
+                    <span class="llama-icon">🔥</span>
+                    <span class="llama-icon">🔥</span>
+                </div>
+                <p class="nodo-descripcion">El momento sagrado en que la misma energía que paralizaba comienza a convertirse en la fuerza que nos impulsa hacia adelante.</p>
+                <a href="nodo_06.html" class="nodo-link">Entrar al Nodo →</a>
+            </div>
+
+            <!-- Nodo 7 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_07.html'">
+                <div class="nodo-numero">VII</div>
+                <h3 class="nodo-titulo">Más Allá del Dolor: El Portal Abierto</h3>
+                <div class="nodo-intensidad">
+                    <span class="llama-icon activa">✨</span>
+                    <span class="llama-icon activa">✨</span>
+                    <span class="llama-icon activa">✨</span>
+                </div>
+                <p class="nodo-descripcion">El punto sagrado donde algo fundamental se completa. El dolor ya no proyecta sombras densas. El portal se abre completamente.</p>
+                <a href="nodo_07.html" class="nodo-link">Entrar al Nodo →</a>
+            </div>
+        </div>
+
+        <!-- Epílogo -->
+        <section class="epilogo-container">
+            <h2 class="epilogo-titulo">Epílogo: La Herida como Vórtice de Luz</h2>
+            <p class="epilogo-texto">
+                "Cuando una herida se ilumina completamente con la luz de la comprensión consciente, ya no se cierra como una cicatriz. Se expande como un vórtice de luz que irradia hacia todas las direcciones. <strong>Siempre fuimos luz, solo que brillábamos desde la herida.</strong>"
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="libro-footer">
+            <p class="footer-texto">Trinity Origen - Libro III</p>
+            <p class="footer-texto">"El Dolor como Portal - Una Sinfonía de Transformación"</p>
+            <div class="footer-simbolo">🔥 ◈ 🔥</div>
+            <p class="footer-texto">No es mío, vino a través de mí</p>
+        </footer>
+    </div>
+
+    <script>
+        // Citas alquímicas
+        const citasAlquimicas = [
+            "El dolor no vino a destruirnos, sino a desnudarnos de todo lo que no éramos realmente",
+            "Siempre fuimos luz, solo que brillábamos desde la herida",
+            "La crisis no es un error del sistema. Es el lenguaje de la transformación",
+            "El fuego transforma porque ama lo que somos más que lo que pretendemos ser",
+            "La herida no nos hizo quienes somos; nos reveló quiénes siempre fuimos",
+            "No hay nacimiento auténtico sin esta quemadura sagrada",
+            "El silencio del dolor no es ausencia, sino presencia pura",
+            "Cuando el dolor se comparte, se transforma en semilla de comunión"
+        ];
+
+        // Loading
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+                iniciarLlamas();
+                iniciarCitasFlotantes();
+            }, 2000);
+        });
+
+        // Sistema de llamas animadas
+        function iniciarLlamas() {
+            const canvas = document.getElementById('llamas-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            class Llama {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = canvas.height + Math.random() * 100;
+                    this.velocidadY = -(Math.random() * 2 + 1);
+                    this.tamano = Math.random() * 3 + 1;
+                    this.opacidad = Math.random() * 0.5 + 0.3;
+                    this.color = Math.random() > 0.5 ? '#FF4500' : '#FFD700';
+                }
+
+                actualizar() {
+                    this.y += this.velocidadY;
+                    this.opacidad -= 0.005;
+                    
+                    if (this.y < 0 || this.opacidad <= 0) {
+                        this.y = canvas.height + Math.random() * 100;
+                        this.x = Math.random() * canvas.width;
+                        this.opacidad = Math.random() * 0.5 + 0.3;
+                    }
+                }
+
+                dibujar() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.tamano, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = this.opacidad;
+                    ctx.fill();
+                }
+            }
+
+            const llamas = [];
+            for (let i = 0; i < 30; i++) {
+                llamas.push(new Llama());
+            }
+
+            function animarLlamas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                llamas.forEach(llama => {
+                    llama.actualizar();
+                    llama.dibujar();
+                });
+
+                requestAnimationFrame(animarLlamas);
+            }
+
+            animarLlamas();
+        }
+
+        // Resize canvas
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('llamas-canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Citas flotantes
+        function iniciarCitasFlotantes() {
+            setInterval(() => {
+                mostrarCitaAleatoria();
+            }, 40000); // Cada 40 segundos
+        }
+
+        function mostrarCitaAleatoria() {
+            const cita = citasAlquimicas[Math.floor(Math.random() * citasAlquimicas.length)];
+            const citaElement = document.getElementById('citaFlotante');
+            
+            citaElement.textContent = `"${cita}"`;
+            citaElement.classList.add('visible');
+            
+            setTimeout(() => {
+                citaElement.classList.remove('visible');
+            }, 6000);
+        }
+
+        // Modo lectura
+        let modoLectura = false;
+        function toggleModoLectura() {
+            const body = document.body;
+            const icon = document.getElementById('modo-icon');
+            
+            if (!modoLectura) {
+                body.style.filter = 'sepia(15%) contrast(1.1)';
+                icon.textContent = '💡';
+                modoLectura = true;
+            } else {
+                body.style.filter = 'none';
+                icon.textContent = '🔥';
+                modoLectura = false;
+            }
+        }
+
+        // Volver arriba
+        const volverArriba = document.getElementById('volverArriba');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                volverArriba.classList.add('visible');
+            } else {
+                volverArriba.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Guardar progreso
+        window.addEventListener('load', () => {
+            const progreso = JSON.parse(localStorage.getItem('trinity-progreso-libro3') || '{}');
+            progreso.ultimaVisita = new Date().toISOString();
+            progreso.libroActual = 'El Dolor como Portal';
+            localStorage.setItem('trinity-progreso-libro3', JSON.stringify(progreso));
+        });
+    </script>
+</body>
+</html>
