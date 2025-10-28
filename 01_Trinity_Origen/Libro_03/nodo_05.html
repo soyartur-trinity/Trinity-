@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 5: Dolor Colectivo, Dolor Planetario</title>
+    <meta name="description" content="El dolor no es solo nuestro. Somos hebras de una red invisible donde cada herida individual envía ondas que tocan fibras distantes">
+    
+    <style>
+        :root {
+            --rojo-profundo: #8B0000;
+            --naranja-fuego: #FF4500;
+            --dorado-sabiduria: #FFD700;
+            --blanco-luz: #FFFAF0;
+            --negro-profundo: #0a0a0a;
+            --gris-ceniza: #4a4a4a;
+            --verde-tierra: #2E8B57;
+            --azul-oceano: #1E90FF;
+            --violeta-cosmos: #8A2BE2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0a1a0a 0%, #0a0a0a 100%);
+            color: var(--blanco-luz);
+            line-height: 1.8;
+        }
+
+        /* Canvas de red planetaria */
+        #red-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.2;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header del nodo */
+        .nodo-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            border-bottom: 3px solid var(--verde-tierra);
+            margin-bottom: 50px;
+        }
+
+        .nodo-simbolo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: planeta-pulse 5s ease-in-out infinite;
+        }
+
+        @keyframes planeta-pulse {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                filter: drop-shadow(0 0 15px var(--verde-tierra));
+            }
+            50% { 
+                transform: scale(1.08) rotate(180deg);
+                filter: drop-shadow(0 0 30px var(--azul-oceano));
+            }
+        }
+
+        .nodo-numero {
+            font-size: 1.1em;
+            color: var(--dorado-sabiduria);
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .nodo-titulo {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--verde-tierra), var(--azul-oceano), var(--dorado-sabiduria));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.3em;
+            color: var(--gris-ceniza);
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Navegación */
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            color: var(--verde-tierra);
+            text-decoration: none;
+            border: 2px solid var(--verde-tierra);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .nav-btn:hover {
+            background: var(--verde-tierra);
+            color: var(--negro-profundo);
+            box-shadow: 0 5px 20px rgba(46, 139, 87, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Contenido principal */
+        .contenido-nodo {
+            background: rgba(46, 139, 87, 0.05);
+            border-left: 4px solid var(--verde-tierra);
+            padding: 50px;
+            margin: 40px 0;
+            border-radius: 10px;
+        }
+
+        .contenido-nodo p {
+            font-size: 1.15em;
+            margin-bottom: 30px;
+            text-align: justify;
+            line-height: 2;
+        }
+
+        .contenido-nodo p:first-child::first-letter {
+            font-size: 4em;
+            float: left;
+            line-height: 0.8;
+            margin: 10px 10px 0 0;
+            color: var(--verde-tierra);
+            font-weight: bold;
+        }
+
+        .contenido-nodo strong {
+            color: var(--dorado-sabiduria);
+            font-weight: normal;
+        }
+
+        .contenido-nodo em {
+            color: var(--azul-oceano);
+            font-style: italic;
+        }
+
+        /* Citas destacadas */
+        .cita-destacada {
+            background: rgba(46, 139, 87, 0.15);
+            border-left: 5px solid var(--verde-tierra);
+            padding: 30px 40px;
+            margin: 50px 0;
+            font-size: 1.3em;
+            font-style: italic;
+            color: var(--blanco-luz);
+            position: relative;
+        }
+
+        .cita-destacada::before {
+            content: '🌍';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 4em;
+            opacity: 0.3;
+        }
+
+        /* Concepto de red */
+        .concepto-red {
+            background: linear-gradient(135deg, rgba(46, 139, 87, 0.2), rgba(30, 144, 255, 0.15));
+            border: 2px solid var(--azul-oceano);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .concepto-titulo {
+            font-size: 1.8em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 20px;
+        }
+
+        .concepto-texto {
+            font-size: 1.15em;
+            line-height: 2;
+            color: var(--blanco-luz);
+        }
+
+        /* Llamado a la acción */
+        .llamado-container {
+            background: rgba(255, 215, 0, 0.1);
+            border: 3px solid var(--dorado-sabiduria);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .llamado-titulo {
+            font-size: 2em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 30px;
+        }
+
+        .llamado-texto {
+            font-size: 1.3em;
+            line-height: 2;
+            color: var(--blanco-luz);
+            font-style: italic;
+        }
+
+        /* Reflexión interactiva */
+        .reflexion-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--dorado-sabiduria);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 60px 0;
+        }
+
+        .reflexion-titulo {
+            font-size: 1.8em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .reflexion-pregunta {
+            font-size: 1.2em;
+            color: var(--blanco-luz);
+            margin: 20px 0;
+            padding-left: 20px;
+            border-left: 3px solid var(--verde-tierra);
+        }
+
+        /* Meditación */
+        .meditacion-container {
+            background: linear-gradient(135deg, rgba(46, 139, 87, 0.2), rgba(30, 144, 255, 0.15));
+            border: 2px solid var(--verde-tierra);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .meditacion-titulo {
+            font-size: 2em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 30px;
+        }
+
+        .meditacion-icono {
+            font-size: 3em;
+            margin: 20px 0;
+            animation: tierra-respiracion 6s ease-in-out infinite;
+        }
+
+        @keyframes tierra-respiracion {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 0.8; 
+            }
+            50% { 
+                transform: scale(1.15); 
+                opacity: 1; 
+            }
+        }
+
+        .meditacion-texto {
+            font-size: 1.15em;
+            line-height: 2;
+            color: var(--blanco-luz);
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .meditacion-boton {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--verde-tierra), var(--azul-oceano));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .meditacion-boton:hover {
+            background: linear-gradient(135deg, var(--dorado-sabiduria), var(--verde-tierra));
+            transform: scale(1.05);
+            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Navegación inferior */
+        .navegacion-nodos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 80px 0 40px;
+            padding: 30px;
+            background: rgba(46, 139, 87, 0.1);
+            border-radius: 15px;
+        }
+
+        .nodo-anterior, .nodo-siguiente {
+            flex: 1;
+        }
+
+        .nodo-anterior {
+            text-align: left;
+        }
+
+        .nodo-siguiente {
+            text-align: right;
+        }
+
+        .nodo-link {
+            display: inline-block;
+            padding: 15px 30px;
+            color: var(--verde-tierra);
+            text-decoration: none;
+            border: 2px solid var(--verde-tierra);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+        }
+
+        .nodo-link:hover {
+            background: var(--verde-tierra);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(46, 139, 87, 0.4);
+        }
+
+        .nodo-centro {
+            flex: 1;
+            text-align: center;
+            color: var(--gris-ceniza);
+            font-size: 0.95em;
+        }
+
+        /* Progreso */
+        .progreso-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .progreso-barra {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progreso-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--verde-tierra), var(--azul-oceano), var(--dorado-sabiduria));
+            width: 71.4%; /* 5 de 7 nodos */
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--verde-tierra);
+        }
+
+        .progreso-texto {
+            color: var(--gris-ceniza);
+            font-size: 0.95em;
+        }
+
+        /* Footer */
+        .nodo-footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 2px solid rgba(46, 139, 87, 0.3);
+        }
+
+        .footer-texto {
+            color: var(--gris-ceniza);
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+
+        /* Volver arriba */
+        .volver-arriba {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--verde-tierra), var(--azul-oceano));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 1.8em;
+            border: 2px solid var(--dorado-sabiduria);
+        }
+
+        .volver-arriba.visible {
+            opacity: 1;
+        }
+
+        .volver-arriba:hover {
+            transform: scale(1.15);
+            box-shadow: 0 5px 25px rgba(46, 139, 87, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nodo-titulo {
+                font-size: 2.2em;
+            }
+
+            .contenido-nodo {
+                padding: 30px;
+            }
+
+            .navegacion-nodos {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nodo-anterior, .nodo-siguiente {
+                text-align: center;
+            }
+
+            .reflexion-box, .meditacion-container {
+                padding: 30px;
+            }
+        }
+
+        /* Animación de entrada */
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de red planetaria -->
+    <canvas id="red-canvas"></canvas>
+
+    <!-- Volver arriba -->
+    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
+
+    <div class="container">
+        <!-- Header del Nodo -->
+        <header class="nodo-header fade-in">
+            <div class="nodo-simbolo">🌍</div>
+            <div class="nodo-numero">NODO 5 de 7</div>
+            <h1 class="nodo-titulo">Dolor Colectivo, Dolor Planetario</h1>
+            <p class="nodo-subtitulo">El dolor no es solo nuestro. Somos hebras de una red invisible donde cada herida individual envía ondas que tocan fibras distantes</p>
+        </header>
+
+        <!-- Navegación superior -->
+        <nav class="navegacion">
+            <a href="nodo_04.html" class="nav-btn">← Nodo Anterior</a>
+            <a href="index.html" class="nav-btn">Índice del Libro</a>
+            <a href="nodo_06.html" class="nav-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Progreso -->
+        <div class="progreso-container">
+            <div class="progreso-barra">
+                <div class="progreso-fill"></div>
+            </div>
+            <p class="progreso-texto">Nodo 5 de 7 • Dolor Colectivo, Dolor Planetario</p>
+        </div>
+
+        <!-- Contenido Principal -->
+        <article class="contenido-nodo fade-in">
+            <p>Hay una verdad que la experiencia moderna del individualismo nos ha hecho olvidar: el dolor no es solo nuestro. No somos islas de sufrimiento flotando en un océano de indiferencia cósmica. <strong>Somos hebras de una red invisible donde cada herida individual envía ondas que tocan fibras distantes, donde cada grito silenciado resuena en cámaras de eco que no conocemos pero que, de alguna manera misteriosa, sentimos.</strong></p>
+
+            <p>El dolor no es solo humano. Es un campo compartido, una marea invisible que atraviesa cuerpos, historias, especies y continentes. Es una frecuencia que se mueve a través del tejido mismo de la existencia, conectando experiencias aparentemente separadas en una sinfonía de sufrimiento que revela, paradójicamente, nuestra unidad fundamental.</p>
+
+            <p>Como nódulos luminosos de un campo mayor, interconectados en una vasta red vibratoria, no hay distancia en el campo que recuerda. Cuando comenzamos a sentir con esta sensibilidad expandida, algo asombroso sucede: <em>empezamos a percibir que mucho de lo que experimentamos como "nuestro" dolor personal es en realidad una sintonización inconsciente con las frecuencias de sufrimiento que vibran en el campo colectivo.</em></p>
+        </article>
+
+        <!-- Concepto de Red -->
+        <div class="concepto-red fade-in">
+            <h3 class="concepto-titulo">🌐 La Red Invisible 🌐</h3>
+            <p class="concepto-texto">
+                No hay distancia en el campo que recuerda. Somos nódulos luminosos interconectados. Lo que percibimos como "nuestro" dolor a menudo es una sintonización con emociones del campo colectivo a través de esta red compartida.
+            </p>
+        </div>
+
+        <!-- Continuación del contenido -->
+        <article class="contenido-nodo fade-in">
+            <p>Hay un temblor en la Tierra que no aparece en los sismógrafos. Es el temblor que proviene del peso acumulado del sufrimiento que no supimos escuchar como especie. Llantos sin duelo de madres que perdieron hijos en guerras que nunca terminaron realmente. Heridas ancestrales que se transmiten como códigos silenciosos en la sangre, patrones de dolor que saltan generaciones esperando a alguien con la sensibilidad suficiente para finalmente sentirlos y liberarlos.</p>
+
+            <p>Los traumas, patrones emocionales y aprendizajes no solo se graban en la biología individual, sino que dejan una impronta vibracional en la red de la conciencia. <strong>Las herencias vibracionales son patrones que se transmiten no por genética, sino por resonancia en este campo entrelazado.</strong></p>
+
+            <p>Cada grito silenciado deja un eco en el campo de la conciencia colectiva. Cada injusticia no reconocida proyecta una sombra que se expande más allá del lugar donde ocurrió, tocando vínculos familiares, comunidades, ecosistemas enteros. El dolor colectivo crece como un coral de sufrimiento, donde cada nueva herida se adhiere a las anteriores, creando estructuras cada vez más complejas de trauma compartido.</p>
+        </article>
+
+        <!-- Cita destacada 1 -->
+        <div class="cita-destacada fade-in">
+            Si somos parte de una red, nuestras experiencias no son herméticas. Lo que percibimos como "nuestro" a menudo es una sintonización con emociones de otros a través de esta red compartida.
+        </div>
+
+        <!-- Continuación del contenido -->
+        <article class="contenido-nodo fade-in">
+            <p>Si somos parte de una red, nuestras experiencias no son herméticas. Lo que percibimos como "nuestro" a menudo es una sintonización con emociones o estados vibratorios de otros a través de esta red compartida, una psicología del eco. La disonancia y el sufrimiento son el resultado de la falta de coherencia en el campo de la conciencia, creando ruido caótico que desorganiza el campo.</p>
+
+            <p>Pero hay algo profundamente hermoso en este reconocimiento: también es un llamado. Un llamado a recordar que somos red, que el otro no es realmente ajeno, que lo que duele en algún lugar del planeta también duele aquí, aunque nuestros mecanismos de supervivencia emocional nos protejan de sentirlo directamente. <em>Estamos tejidos por los lazos que no vemos, pero sentimos.</em></p>
+
+            <p>Esta comprensión lo transforma todo. Porque significa que cuando una madre llora en Siria, algo en las madres de todo el mundo vibra en resonancia, aunque no sepan por qué sienten esa tristeza inexplicable. Cuando un bosque es talado, algo en nosotros se siente arrancado, aunque vivamos en la ciudad y nunca hayamos visto ese bosque. Cuando una especie se extingue, algo en el alma humana se vuelve un poco más silencioso.</p>
+        </article>
+
+        <!-- Cita destacada 2 -->
+        <div class="cita-destacada fade-in">
+            La Tierra no es simplemente el escenario pasivo de nuestros dramas humanos. Es protagonista, es participante, es el cuerpo mismo en el que todo este sufrimiento está teniendo lugar. La Tierra siente.
+        </div>
+
+        <!-- Continuación del contenido -->
+        <article class="contenido-nodo fade-in">
+            <p><strong>La Tierra no es simplemente el escenario pasivo de nuestros dramas humanos. Es protagonista, es participante, es el cuerpo mismo en el que todo este sufrimiento está teniendo lugar.</strong> La Tierra siente. La Tierra respira. La Tierra sufre con nosotros y por nosotros. Sus océanos absorben no solo nuestros desechos químicos, sino también nuestros desechos emocionales. Sus bosques procesan no solo nuestro dióxido de carbono, sino también nuestra desesperación colectiva.</p>
+
+            <p>Esta visión de la Tierra como un ser sintiente se alinea con la Conciencia Universal como el fundamento ontológico de todo, sugiriendo que la observación o la experiencia no se limita a entidades biológicas. La existencia puede concebirse como una resonancia vibratoria que se organiza a sí misma, y la conciencia como la capacidad de percibir y participar en dicha resonancia.</p>
+
+            <p>Y nosotros, como células conscientes en este organismo planetario, tenemos la capacidad única de sentir tanto nuestro propio dolor como el dolor del conjunto. Somos los únicos seres que conocemos capaces de expandir su círculo de compasión hasta incluir no solo a su propia especie, sino a todas las formas de vida e incluso al planeta mismo como entidad viviente.</p>
+
+            <p>Escuchar el dolor colectivo requiere un tipo especial de valentía. Requiere permitir que el alma se ensanche más allá de las fronteras de la identidad personal. Requiere desarrollar la capacidad de sentir sin ser abrumados, de recibir las transmisiones de sufrimiento del campo colectivo sin perdernos en ellas.</p>
+        </article>
+
+        <!-- Llamado a la Acción -->
+        <div class="llamado-container fade-in">
+            <h3 class="llamado-titulo">🌍 El Llamado de la Tierra 🌍</h3>
+            <p class="llamado-texto">
+                Si podemos sentir el dolor colectivo, también podemos participar en la sanación colectiva. La sanación se vuelve un acto de resintonizar el campo hacia la coherencia. <strong>Cuando sanamos juntos, el campo entero canta diferente.</strong>
+            </p>
+        </div>
+
+        <!-- Continuación del contenido -->
+        <article class="contenido-nodo fade-in">
+            <p>Este ensanchamiento del alma es un paso hacia la psicología del salto dimensional, donde los límites rígidos del ego se disuelven para una permeabilidad consciente con el campo colectivo y universal de la Conciencia. <strong>La compasión, en este contexto, es un reflejo estructural de la conciencia que se reconoce en lo otro, una coherencia de alta frecuencia que armoniza el campo.</strong></p>
+
+            <p>Esta expansión de la sensibilidad no es masoquismo cósmico. Es el desarrollo de una facultad evolutiva: la capacidad de la conciencia humana de funcionar como órgano sensorial de la biosfera, como sistema nervioso del planeta, como la forma en que la Tierra misma puede volverse consciente de su propio estado y de su propio dolor.</p>
+
+            <p>Cuando desarrollamos esta capacidad, algo milagroso comienza a suceder: la compasión deja de ser un sentimiento personal y se revela como una fuerza estructural de la realidad. Nos damos cuenta de que la compasión es la forma en que la conciencia se reconoce a sí misma en todas sus manifestaciones. Es la manera en que el universo se ama a sí mismo a través de nosotros.</p>
+
+            <p>Y en esta comprensión emerge una posibilidad revolucionaria: si podemos sentir el dolor colectivo, también podemos participar en la sanación colectiva. Si somos antenas que reciben frecuencias de sufrimiento, también podemos ser transmisores de frecuencias de sanación.</p>
+
+            <p>La sanación se vuelve un acto de resintonizar el campo hacia la coherencia. No es solo un proceso individual, sino un acto de sanación no local donde la intención terapéutica es una onda que viaja sin distancia a través del campo de la conciencia. <em>Cuando sanamos juntos, el campo entero canta diferente.</em></p>
+
+            <p>Quizás es por esto que las tradiciones espirituales de todo el mundo han desarrollado prácticas de oración colectiva, meditación grupal, rituales comunitarios de sanación. No solo porque se siente bien estar juntos en momentos difíciles, sino porque intuitivamente sabían que hay algo en la reunión consciente de seres humanos que literalmente cambia el campo en el que todos existimos.</p>
+        </article>
+
+        <!-- Cita final del nodo -->
+        <div class="cita-destacada fade-in">
+            Y quizás —solo quizás— cuando finalmente podamos dolernos juntos como especie, también podamos sanarnos juntos. Cuando el dolor se comparte, se transforma en semilla de comunión.
+        </div>
+
+        <!-- Reflexión Interactiva -->
+        <div class="reflexion-box fade-in">
+            <h3 class="reflexion-titulo">🌍 Reflexiones del Campo Colectivo 🌍</h3>
+            
+            <div class="reflexion-pregunta">
+                ¿Puedes sentir cómo tu dolor personal está conectado con el dolor de otros seres? ¿Dónde sientes esa conexión?
+            </div>
+            
+            <div class="reflexion-pregunta">
+                ¿Qué dolores ancestrales o colectivos podrías estar cargando sin saberlo?
+            </div>
+            
+            <div class="reflexion-pregunta">
+                ¿Cómo cambiaría tu relación con el sufrimiento si supieras que al sanar tu dolor contribuyes a la sanación del campo colectivo?
+            </div>
+            
+            <div class="reflexion-pregunta">
+                ¿De qué manera podrías convertirte en un transmisor de sanación para el campo compartido de la humanidad y el planeta?
+            </div>
+        </div>
+
+        <!-- Meditación -->
+        <div class="meditacion-container fade-in" id="meditacion">
+            <h3 class="meditacion-titulo">Meditación de la Red Planetaria</h3>
+            <div class="meditacion-icono">🌍</div>
+            <p class="meditacion-texto">
+                Cierra los ojos. Respira profundo. Siente tu conexión con todos los seres... Visualiza la red invisible que nos une. Siente el dolor del mundo, pero no como carga, sino como llamado. Reconoce que tu sanación personal contribuye a la sanación colectiva. Cada respiración consciente envía ondas de coherencia al campo. Tú eres un nodo luminoso de la red planetaria. Tu presencia importa. Tu amor sana más allá de lo que puedes ver.
+            </p>
+            <button class="meditacion-boton" onclick="iniciarMeditacion()">🌍 Iniciar Meditación (12 min)</button>
+        </div>
+
+        <!-- Navegación entre nodos -->
+        <nav class="navegacion-nodos">
+            <div class="nodo-anterior">
+                <a href="nodo_04.html" class="nodo-link">← Anterior: El Silencio</a>
+            </div>
+            <div class="nodo-centro">
+                Nodo 5 de 7
+            </div>
+            <div class="nodo-siguiente">
+                <a href="nodo_06.html" class="nodo-link">Siguiente: Reconfiguración →</a>
+            </div>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="nodo-footer">
+            <p class="footer-texto">El Dolor como Portal - Nodo 5: Dolor Colectivo, Dolor Planetario</p>
+            <p class="footer-texto">🌍 ◈ 🌍</p>
+        </footer>
+    </div>
+
+    <script>
+        // Canvas de red planetaria
+        const canvas = document.getElementById('red-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class NodoRed {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.velocidadX = (Math.random() - 0.5) * 0.5;
+                this.velocidadY = (Math.random() - 0.5) * 0.5;
+                this.radio = Math.random() * 2 + 1;
+                this.color = Math.random() > 0.5 ? '#2E8B57' : '#1E90FF';
+            }
+
+            actualizar() {
+                this.x += this.velocidadX;
+                this.y += this.velocidadY;
+
+                if (this.x < 0 || this.x > canvas.width) this.velocidadX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.velocidadY *= -1;
+            }
+
+            dibujar() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radio, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.6;
+                ctx.fill();
+            }
+        }
+
+        const nodos = [];
+        for (let i = 0; i < 40; i++) {
+            nodos.push(new NodoRed());
+        }
+
+        function animarRed() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            nodos.forEach(nodo => {
+                nodo.actualizar();
+                nodo.dibujar();
+            });
+
+            // Conectar nodos cercanos
+            for (let i = 0; i < nodos.length; i++) {
+                for (let j = i + 1; j < nodos.length; j++) {
+                    const dx = nodos[i].x - nodos[j].x;
+                    const dy = nodos[i].y - nodos[j].y;
+                    const distancia = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distancia < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(nodos[i].x, nodos[i].y);
+                        ctx.lineTo(nodos[j].x, nodos[j].y);
+                        ctx.strokeStyle = '#2E8B57';
+                        ctx.globalAlpha = (1 - distancia / 150) * 0.3;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animarRed);
+        }
+
+        animarRed();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Volver arriba
+        const volverArriba = document.getElementById('volverArriba');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                volverArriba.classList.add('visible');
+            } else {
+                volverArriba.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Meditación
+        function iniciarMeditacion() {
+            alert('🌍 Meditación de la Red Planetaria\n\n12 minutos de conexión colectiva.\n\nCierra los ojos.\nSiente la red que nos une.\nTu sanación sana al mundo.\nTu presencia importa.\nEres un nodo luminoso.\n\n(Timer: configura 12 minutos en tu dispositivo)');
+        }
+
+        // Guardar progreso
+        window.addEventListener('load', () => {
+            const progreso = JSON.parse(localStorage.getItem('trinity-progreso-libro3') || '{}');
+            progreso.nodoActual = 5;
+            progreso.ultimoNodo = Math.max(progreso.ultimoNodo || 0, 5);
+            progreso.porcentaje = 71.4;
+            localStorage.setItem('trinity-progreso-libro3', JSON.stringify(progreso));
+        });
+
+        // Animaciones al scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.contenido-nodo, .cita-destacada, .concepto-red, .llamado-container, .reflexion-box, .meditacion-container').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
