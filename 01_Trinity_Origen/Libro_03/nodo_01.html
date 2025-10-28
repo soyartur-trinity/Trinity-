@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 1: La Primera Grieta - El Dolor como Portal</title>
+    <meta name="description" content="El momento sagrado en que algo se rompe tan profundamente que ya no podemos fingir">
+    
+    <style>
+        :root {
+            --rojo-profundo: #8B0000;
+            --naranja-fuego: #FF4500;
+            --dorado-sabiduria: #FFD700;
+            --blanco-luz: #FFFAF0;
+            --negro-profundo: #0a0a0a;
+            --gris-ceniza: #4a4a4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a0000 0%, #0a0a0a 100%);
+            color: var(--blanco-luz);
+            line-height: 1.8;
+        }
+
+        /* Canvas de grietas */
+        #grietas-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.2;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header del nodo */
+        .nodo-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            border-bottom: 3px solid var(--naranja-fuego);
+            margin-bottom: 50px;
+        }
+
+        .nodo-simbolo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: grieta-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes grieta-pulse {
+            0%, 100% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 15px var(--naranja-fuego));
+            }
+            50% { 
+                transform: scale(1.08);
+                filter: drop-shadow(0 0 30px var(--rojo-profundo));
+            }
+        }
+
+        .nodo-numero {
+            font-size: 1.1em;
+            color: var(--dorado-sabiduria);
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .nodo-titulo {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--naranja-fuego), var(--dorado-sabiduria));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.3em;
+            color: var(--gris-ceniza);
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Navegación */
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            color: var(--naranja-fuego);
+            text-decoration: none;
+            border: 2px solid var(--naranja-fuego);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .nav-btn:hover {
+            background: var(--naranja-fuego);
+            color: var(--negro-profundo);
+            box-shadow: 0 5px 20px rgba(255, 69, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Contenido principal */
+        .contenido-nodo {
+            background: rgba(139, 0, 0, 0.05);
+            border-left: 4px solid var(--naranja-fuego);
+            padding: 50px;
+            margin: 40px 0;
+            border-radius: 10px;
+        }
+
+        .contenido-nodo p {
+            font-size: 1.15em;
+            margin-bottom: 30px;
+            text-align: justify;
+            line-height: 2;
+        }
+
+        .contenido-nodo p:first-child::first-letter {
+            font-size: 4em;
+            float: left;
+            line-height: 0.8;
+            margin: 10px 10px 0 0;
+            color: var(--dorado-sabiduria);
+            font-weight: bold;
+        }
+
+        .contenido-nodo strong {
+            color: var(--dorado-sabiduria);
+            font-weight: normal;
+        }
+
+        .contenido-nodo em {
+            color: var(--naranja-fuego);
+            font-style: italic;
+        }
+
+        /* Citas destacadas */
+        .cita-destacada {
+            background: rgba(255, 69, 0, 0.1);
+            border-left: 5px solid var(--dorado-sabiduria);
+            padding: 30px 40px;
+            margin: 50px 0;
+            font-size: 1.3em;
+            font-style: italic;
+            color: var(--blanco-luz);
+            position: relative;
+        }
+
+        .cita-destacada::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 5em;
+            color: var(--naranja-fuego);
+            opacity: 0.3;
+        }
+
+        /* Reflexión interactiva */
+        .reflexion-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--dorado-sabiduria);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 60px 0;
+        }
+
+        .reflexion-titulo {
+            font-size: 1.8em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .reflexion-pregunta {
+            font-size: 1.2em;
+            color: var(--blanco-luz);
+            margin: 20px 0;
+            padding-left: 20px;
+            border-left: 3px solid var(--naranja-fuego);
+        }
+
+        /* Meditación */
+        .meditacion-container {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(255, 69, 0, 0.1));
+            border: 2px solid var(--naranja-fuego);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .meditacion-titulo {
+            font-size: 2em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 30px;
+        }
+
+        .meditacion-icono {
+            font-size: 3em;
+            margin: 20px 0;
+            animation: respiracion 4s ease-in-out infinite;
+        }
+
+        @keyframes respiracion {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .meditacion-texto {
+            font-size: 1.15em;
+            line-height: 2;
+            color: var(--blanco-luz);
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .meditacion-boton {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--naranja-fuego), var(--rojo-profundo));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .meditacion-boton:hover {
+            background: linear-gradient(135deg, var(--dorado-sabiduria), var(--naranja-fuego));
+            transform: scale(1.05);
+            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Navegación inferior */
+        .navegacion-nodos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 80px 0 40px;
+            padding: 30px;
+            background: rgba(255, 69, 0, 0.05);
+            border-radius: 15px;
+        }
+
+        .nodo-anterior, .nodo-siguiente {
+            flex: 1;
+            text-align: center;
+        }
+
+        .nodo-anterior {
+            text-align: left;
+        }
+
+        .nodo-siguiente {
+            text-align: right;
+        }
+
+        .nodo-link {
+            display: inline-block;
+            padding: 15px 30px;
+            color: var(--naranja-fuego);
+            text-decoration: none;
+            border: 2px solid var(--naranja-fuego);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+        }
+
+        .nodo-link:hover {
+            background: var(--naranja-fuego);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(255, 69, 0, 0.4);
+        }
+
+        .nodo-link.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .nodo-centro {
+            flex: 1;
+            text-align: center;
+            color: var(--gris-ceniza);
+            font-size: 0.95em;
+        }
+
+        /* Progreso */
+        .progreso-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .progreso-barra {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progreso-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--naranja-fuego), var(--dorado-sabiduria));
+            width: 14.28%; /* 1 de 7 nodos */
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--naranja-fuego);
+        }
+
+        .progreso-texto {
+            color: var(--gris-ceniza);
+            font-size: 0.95em;
+        }
+
+        /* Footer */
+        .nodo-footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 2px solid rgba(255, 69, 0, 0.3);
+        }
+
+        .footer-texto {
+            color: var(--gris-ceniza);
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+
+        /* Volver arriba */
+        .volver-arriba {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--naranja-fuego), var(--rojo-profundo));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 1.8em;
+            border: 2px solid var(--dorado-sabiduria);
+        }
+
+        .volver-arriba.visible {
+            opacity: 1;
+        }
+
+        .volver-arriba:hover {
+            transform: scale(1.15);
+            box-shadow: 0 5px 25px rgba(255, 69, 0, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nodo-titulo {
+                font-size: 2.2em;
+            }
+
+            .contenido-nodo {
+                padding: 30px;
+            }
+
+            .navegacion-nodos {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nodo-anterior, .nodo-siguiente {
+                text-align: center;
+            }
+
+            .reflexion-box, .meditacion-container {
+                padding: 30px;
+            }
+        }
+
+        /* Animación de entrada */
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de grietas -->
+    <canvas id="grietas-canvas"></canvas>
+
+    <!-- Volver arriba -->
+    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
+
+    <div class="container">
+        <!-- Header del Nodo -->
+        <header class="nodo-header fade-in">
+            <div class="nodo-simbolo">⚡</div>
+            <div class="nodo-numero">NODO 1 de 7</div>
+            <h1 class="nodo-titulo">La Primera Grieta</h1>
+            <p class="nodo-subtitulo">El momento sagrado en que algo se rompe tan profundamente que ya no podemos fingir</p>
+        </header>
+
+        <!-- Navegación superior -->
+        <nav class="navegacion">
+            <a href="index.html" class="nav-btn">← Índice del Libro</a>
+            <a href="#meditacion" class="nav-btn">Ir a Meditación ↓</a>
+            <a href="nodo_02.html" class="nav-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Progreso -->
+        <div class="progreso-container">
+            <div class="progreso-barra">
+                <div class="progreso-fill"></div>
+            </div>
+            <p class="progreso-texto">Nodo 1 de 7 • La Primera Grieta</p>
+        </div>
+
+        <!-- Contenido Principal -->
+        <article class="contenido-nodo fade-in">
+            <p>Existe un momento sagrado en toda vida humana que raramente reconocemos cuando sucede: el instante en que algo se rompe tan profundamente en nosotros que ya no podemos fingir que todo está bien. Es la primera grieta. Y es, paradójicamente, el primer regalo.</p>
+
+            <p>Toda historia de despertar genuino comienza con una fractura. No con un logro luminoso, ni con una epifanía celestial, sino con ese momento exacto en que algo en nosotros ya no puede seguir sosteniendo la mentira de que somos quienes creíamos ser. <strong>La grieta no llega como castigo. Llega como liberación.</strong></p>
+
+            <p>Esta ruptura primordial es la forma en que la Conciencia Universal se las arregla para despertar a sí misma dentro de nosotros. Es su manera de decirnos: <em>"Has crecido demasiado para el recipiente que te contiene. Es hora de romperse para nacer de nuevo."</em> La fractura no es una deficiencia, sino un punto de fricción que indica que una nueva forma busca emerger.</p>
+
+            <p>A veces es la pérdida súbita que derrumba el mundo que habíamos construido con tanto cuidado. A veces la traición que revela la fragilidad de nuestras certezas más íntimas. A veces simplemente el cansancio acumulado de años de sostener una forma que ya no vibra con el alma, como quien carga una máscara que se ha vuelto demasiado pesada.</p>
+        </article>
+
+        <!-- Cita destacada 1 -->
+        <div class="cita-destacada fade-in">
+            La grieta es sagrada precisamente porque desestructura. Porque rompe el molde rígido en que fuimos contenidos y deja entrar el misterio.
+        </div>
+
+        <!-- Continuación del contenido -->
+        <article class="contenido-nodo fade-in">
+            <p>Pero la primera grieta no siempre anuncia su llegada con ruido. Las más profundas suelen manifestarse como susurros: un desgano sutil que se instala como niebla en el corazón, una extrañeza silenciosa ante lo cotidiano, un vacío que no se llena con las satisfacciones habituales. Es la voz del alma diciéndonos en su lengua secreta: <strong>"Esto no es todo lo que eres. Hay algo más esperando."</strong></p>
+
+            <p>Esta vibración profunda, este malestar sagrado, es la inteligencia primordial de la existencia señalándonos que algo en nosotros quiere nacer pero aún no sabe cómo. No es la ausencia de bienestar. Es la presencia activa del llamado. Es la vida misma empujándonos hacia una expansión que nuestra mente pequeña no puede aún imaginar.</p>
+
+            <p>La grieta es sagrada precisamente porque desestructura. Porque rompe el molde rígido en que fuimos contenidos y deja entrar el misterio. Permite que el viento de lo desconocido entre a airear habitaciones del alma que habían permanecido cerradas durante años. Es un colapso intencional del universo personal que habíamos construido, para que pueda emerger algo inmensamente más vasto.</p>
+        </article>
+
+        <!-- Cita destacada 2 -->
+        <div class="cita-destacada fade-in">
+            Los que se detienen... descubren algo revolucionario: que no están rotos. Que nunca estuvieron rotos. Que lo que parecía una ruptura era en realidad una apertura.
+        </div>
+
+        <!-- Continuación del contenido -->
+        <article class="contenido-nodo fade-in">
+            <p>Aquí reside la diferencia fundamental entre quienes se transforman y quienes permanecen atrapados en ciclos de sufrimiento: la relación que establecen con esta primera ruptura.</p>
+
+            <p>Hay quienes corren desesperadamente a sellarla. La tapan con ruido constante, con ocupaciones frenéticas, con sustancias que adormecen, con relaciones que distraen, con explicaciones que tranquilizan. Construyen diques cada vez más altos para contener el océano que quiere inundar su pequeña isla de certezas.</p>
+
+            <p>Pero los que se detienen… Los que encuentran el coraje de acercarse a esa fisura sin armadura, descubren algo revolucionario: que no están rotos. Que nunca estuvieron rotos. Que lo que parecía una ruptura era en realidad una apertura. Que lo que sentían como fracaso era el universo llamándolos hacia casa.</p>
+
+            <p>Este acto de mirar hacia adentro de la grieta requiere lo que podríamos llamar una <em>"presencia iniciática"</em> - esa capacidad rara de permanecer abiertos en el corazón mismo de lo que nos desafía. Es la diferencia entre ser víctimas del dolor y convertirnos en discípulos conscientes de su enseñanza.</p>
+
+            <p>Cuando desarrollamos esta presencia, comenzamos a escuchar lo que la grieta realmente nos está comunicando: no que algo anda mal, sino que algo enormemente correcto está tratando de emerger. Que somos melodías suspendidas esperando volver a sonar, pero esta vez en una octava más alta, con una armonía más profunda.</p>
+
+            <p><strong>La grieta se convierte entonces en portal.</strong> En el punto sagrado donde lo limitado se abre a lo ilimitado. Donde las paredes del yo personal se vuelven permeables y comienza a filtrarse la luz de lo que realmente somos. Es el umbral donde la conciencia puede finalmente escucharse a sí misma sin las interferencias del ruido mental.</p>
+
+            <p>Porque solo a través de la grieta la luz verdadera comienza a filtrarse. Solo cuando aceptamos la invitación al colapso voluntario de nuestras defensas, el misterio puede entrar a hacer su trabajo de alquimia interior.</p>
+
+            <p>El dolor, entonces, revela su naturaleza sagrada: no es el final de nuestra historia. Es el umbral hacia capítulos que ni siquiera sabíamos que estaban escritos en el libro de nuestra vida. Es la maestra primordial que nos enseña que a veces hay que morir en vida para poder nacer realmente.</p>
+        </article>
+
+        <!-- Cita final del nodo -->
+        <div class="cita-destacada fade-in">
+            Y el dolor, entonces, no es el final. Es el umbral.
+        </div>
+
+        <!-- Reflexión Interactiva -->
+        <div class="reflexion-box fade-in">
+            <h3 class="reflexion-titulo">🔥 Reflexiones para la Grieta 🔥</h3>
+            
+            <div class="reflexion-pregunta">
+                ¿Cuál fue tu primera grieta? ¿Ese momento en que algo se rompió tan profundamente que ya no pudiste fingir?
+            </div>
+            
+            <div class="reflexion-pregunta">
+                ¿Cómo respondiste a esa ruptura? ¿Corriste a sellarla o te detuviste a mirar dentro de ella?
+            </div>
+            
+            <div class="reflexion-pregunta">
+                ¿Qué ha querido nacer a través de tus grietas que aún no has permitido emerger?
+            </div>
+            
+            <div class="reflexion-pregunta">
+                Si la grieta fuera realmente un portal, ¿hacia dónde crees que está tratando de llevarte?
+            </div>
+        </div>
+
+        <!-- Meditación -->
+        <div class="meditacion-container fade-in" id="meditacion">
+            <h3 class="meditacion-titulo">Meditación de la Grieta Sagrada</h3>
+            <div class="meditacion-icono">⚡</div>
+            <p class="meditacion-texto">
+                Cierra los ojos. Respira profundo. Lleva tu atención a esa primera grieta en tu vida... ese momento donde algo se rompió. No trates de arreglarlo. Solo obsérvalo con amor. Pregúntale: "¿Qué quieres mostrarme?" Y escucha en el silencio. La grieta no es tu enemiga. Es tu maestra. Es el portal.
+            </p>
+            <button class="meditacion-boton" onclick="iniciarMeditacion()">🔥 Iniciar Meditación (5 min)</button>
+        </div>
+
+        <!-- Navegación entre nodos -->
+        <nav class="navegacion-nodos">
+            <div class="nodo-anterior">
+                <a href="index.html" class="nodo-link">← Volver al Índice</a>
+            </div>
+            <div class="nodo-centro">
+                Nodo 1 de 7
+            </div>
+            <div class="nodo-siguiente">
+                <a href="nodo_02.html" class="nodo-link">Siguiente: El Trauma →</a>
+            </div>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="nodo-footer">
+            <p class="footer-texto">El Dolor como Portal - Nodo 1: La Primera Grieta</p>
+            <p class="footer-texto">🔥 ◈ 🔥</p>
+        </footer>
+    </div>
+
+    <script>
+        // Canvas de grietas
+        const canvas = document.getElementById('grietas-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function dibujarGrietas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.strokeStyle = '#FF4500';
+                ctx.lineWidth = 2;
+                ctx.globalAlpha = 0.3;
+                
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height;
+                
+                ctx.moveTo(x, y);
+                
+                for (let j = 0; j < 10; j++) {
+                    x += (Math.random() - 0.5) * 100;
+                    y += (Math.random() - 0.5) * 100;
+                    ctx.lineTo(x, y);
+                }
+                
+                ctx.stroke();
+            }
+        }
+
+        dibujarGrietas();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            dibujarGrietas();
+        });
+
+        // Volver arriba
+        const volverArriba = document.getElementById('volverArriba');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                volverArriba.classList.add('visible');
+            } else {
+                volverArriba.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Meditación
+        function iniciarMeditacion() {
+            alert('🔥 Meditación de la Grieta Sagrada\n\n5 minutos de silencio consciente.\n\nCierra los ojos.\nRespira profundo.\nObserva tu primera grieta con amor.\nEscucha lo que quiere revelarte.\n\n(Timer: configura 5 minutos en tu dispositivo)');
+        }
+
+        // Guardar progreso
+        window.addEventListener('load', () => {
+            const progreso = JSON.parse(localStorage.getItem('trinity-progreso-libro3') || '{}');
+            progreso.nodoActual = 1;
+            progreso.ultimoNodo = Math.max(progreso.ultimoNodo || 0, 1);
+            progreso.porcentaje = 14.28;
+            localStorage.setItem('trinity-progreso-libro3', JSON.stringify(progreso));
+        });
+
+        // Animaciones al scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.contenido-nodo, .cita-destacada, .reflexion-box, .meditacion-container').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
