@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 2: El Trauma como Memoria Suspendida - El Dolor como Portal</title>
+    <meta name="description" content="Una melodía interrumpida esperando completarse. El trauma es vida congelada esperando el momento de fluir nuevamente">
+    
+    <style>
+        :root {
+            --rojo-profundo: #8B0000;
+            --naranja-fuego: #FF4500;
+            --dorado-sabiduria: #FFD700;
+            --blanco-luz: #FFFAF0;
+            --negro-profundo: #0a0a0a;
+            --gris-ceniza: #4a4a4a;
+            --violeta-profundo: #4B0082;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a0000 0%, #0a0a0a 100%);
+            color: var(--blanco-luz);
+            line-height: 1.8;
+        }
+
+        /* Canvas de ondas suspendidas */
+        #ondas-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.25;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header del nodo */
+        .nodo-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            border-bottom: 3px solid var(--naranja-fuego);
+            margin-bottom: 50px;
+        }
+
+        .nodo-simbolo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: onda-suspendida 5s ease-in-out infinite;
+        }
+
+        @keyframes onda-suspendida {
+            0%, 100% { 
+                transform: translateY(0) scale(1);
+                filter: drop-shadow(0 0 15px var(--violeta-profundo));
+            }
+            50% { 
+                transform: translateY(-10px) scale(1.05);
+                filter: drop-shadow(0 0 30px var(--naranja-fuego));
+            }
+        }
+
+        .nodo-numero {
+            font-size: 1.1em;
+            color: var(--dorado-sabiduria);
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .nodo-titulo {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--violeta-profundo), var(--naranja-fuego), var(--dorado-sabiduria));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.3em;
+            color: var(--gris-ceniza);
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Navegación */
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            color: var(--naranja-fuego);
+            text-decoration: none;
+            border: 2px solid var(--naranja-fuego);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .nav-btn:hover {
+            background: var(--naranja-fuego);
+            color: var(--negro-profundo);
+            box-shadow: 0 5px 20px rgba(255, 69, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Contenido principal */
+        .contenido-nodo {
+            background: rgba(139, 0, 0, 0.05);
+            border-left: 4px solid var(--violeta-profundo);
+            padding: 50px;
+            margin: 40px 0;
+            border-radius: 10px;
+        }
+
+        .contenido-nodo p {
+            font-size: 1.15em;
+            margin-bottom: 30px;
+            text-align: justify;
+            line-height: 2;
+        }
+
+        .contenido-nodo p:first-child::first-letter {
+            font-size: 4em;
+            float: left;
+            line-height: 0.8;
+            margin: 10px 10px 0 0;
+            color: var(--dorado-sabiduria);
+            font-weight: bold;
+        }
+
+        .contenido-nodo strong {
+            color: var(--dorado-sabiduria);
+            font-weight: normal;
+        }
+
+        .contenido-nodo em {
+            color: var(--naranja-fuego);
+            font-style: italic;
+        }
+
+        /* Citas destacadas */
+        .cita-destacada {
+            background: rgba(75, 0, 130, 0.15);
+            border-left: 5px solid var(--violeta-profundo);
+            padding: 30px 40px;
+            margin: 50px 0;
+            font-size: 1.3em;
+            font-style: italic;
+            color: var(--blanco-luz);
+            position: relative;
+        }
+
+        .cita-destacada::before {
+            content: '♪';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 5em;
+            color: var(--violeta-profundo);
+            opacity: 0.3;
+        }
+
+        /* Concepto clave */
+        .concepto-clave {
+            background: linear-gradient(135deg, rgba(75, 0, 130, 0.2), rgba(139, 0, 0, 0.1));
+            border: 2px solid var(--violeta-profundo);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 60px 0;
+        }
+
+        .concepto-titulo {
+            font-size: 1.8em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .concepto-texto {
+            font-size: 1.15em;
+            line-height: 2;
+            color: var(--blanco-luz);
+            text-align: center;
+        }
+
+        /* Reflexión interactiva */
+        .reflexion-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--dorado-sabiduria);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 60px 0;
+        }
+
+        .reflexion-titulo {
+            font-size: 1.8em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .reflexion-pregunta {
+            font-size: 1.2em;
+            color: var(--blanco-luz);
+            margin: 20px 0;
+            padding-left: 20px;
+            border-left: 3px solid var(--violeta-profundo);
+        }
+
+        /* Meditación */
+        .meditacion-container {
+            background: linear-gradient(135deg, rgba(75, 0, 130, 0.2), rgba(255, 69, 0, 0.1));
+            border: 2px solid var(--violeta-profundo);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .meditacion-titulo {
+            font-size: 2em;
+            color: var(--dorado-sabiduria);
+            margin-bottom: 30px;
+        }
+
+        .meditacion-icono {
+            font-size: 3em;
+            margin: 20px 0;
+            animation: melodia-suspendida 4s ease-in-out infinite;
+        }
+
+        @keyframes melodia-suspendida {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 0.7; 
+            }
+            50% { 
+                transform: scale(1.15) rotate(5deg); 
+                opacity: 1; 
+            }
+        }
+
+        .meditacion-texto {
+            font-size: 1.15em;
+            line-height: 2;
+            color: var(--blanco-luz);
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .meditacion-boton {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--violeta-profundo), var(--naranja-fuego));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .meditacion-boton:hover {
+            background: linear-gradient(135deg, var(--dorado-sabiduria), var(--violeta-profundo));
+            transform: scale(1.05);
+            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Navegación inferior */
+        .navegacion-nodos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 80px 0 40px;
+            padding: 30px;
+            background: rgba(75, 0, 130, 0.1);
+            border-radius: 15px;
+        }
+
+        .nodo-anterior, .nodo-siguiente {
+            flex: 1;
+            text-align: center;
+        }
+
+        .nodo-anterior {
+            text-align: left;
+        }
+
+        .nodo-siguiente {
+            text-align: right;
+        }
+
+        .nodo-link {
+            display: inline-block;
+            padding: 15px 30px;
+            color: var(--naranja-fuego);
+            text-decoration: none;
+            border: 2px solid var(--naranja-fuego);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+        }
+
+        .nodo-link:hover {
+            background: var(--naranja-fuego);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(255, 69, 0, 0.4);
+        }
+
+        .nodo-centro {
+            flex: 1;
+            text-align: center;
+            color: var(--gris-ceniza);
+            font-size: 0.95em;
+        }
+
+        /* Progreso */
+        .progreso-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .progreso-barra {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progreso-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--violeta-profundo), var(--naranja-fuego), var(--dorado-sabiduria));
+            width: 28.56%; /* 2 de 7 nodos */
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--violeta-profundo);
+        }
+
+        .progreso-texto {
+            color: var(--gris-ceniza);
+            font-size: 0.95em;
+        }
+
+        /* Footer */
+        .nodo-footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 2px solid rgba(75, 0, 130, 0.3);
+        }
+
+        .footer-texto {
+            color: var(--gris-ceniza);
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+
+        /* Volver arriba */
+        .volver-arriba {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--violeta-profundo), var(--naranja-fuego));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 1.8em;
+            border: 2px solid var(--dorado-sabiduria);
+        }
+
+        .volver-arriba.visible {
+            opacity: 1;
+        }
+
+        .volver-arriba:hover {
+            transform: scale(1.15);
+            box-shadow: 0 5px 25px rgba(75, 0, 130, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nodo-titulo {
+                font-size: 2.2em;
+            }
+
+            .contenido-nodo {
+                padding: 30px;
+            }
+
+            .navegacion-nodos {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nodo-anterior, .nodo-siguiente {
+                text-align: center;
+            }
+
+            .reflexion-box, .meditacion-container {
+                padding: 30px;
+            }
+        }
+
+        /* Animación de entrada */
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de ondas suspendidas -->
+    <canvas id="ondas-canvas"></canvas>
+
+    <!-- Volver arriba -->
+    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
+
+    <div class="container">
+        <!-- Header del Nodo -->
+        <header class="nodo-header fade-in">
+            <div class="nodo-simbolo">♪</div>
+            <div class="nodo-numero">NODO 2 de 7</div>
+            <h1 class="nodo-titulo">El Trauma como Memoria Suspendida</h1>
+            <p class="nodo-subtitulo">Una melodía interrumpida esperando completarse. El trauma es vida congelada esperando el momento de fluir nuevamente</p>
+        </header>
+
+        <!-- Navegación superior -->
+        <nav class="navegacion">
+            <a href="nodo_01.html" class="nav-btn">← Nodo Anterior</a>
+            <a href="index.html" class="nav-btn">Índice del Libro</a>
+            <a href="nodo_03.html" class="nav-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Progreso -->
+        <div class="progreso-container">
+            <div class="progreso-barra">
+                <div class="progreso-fill"></div>
+            </div>
+            <p class="progreso-texto">Nodo 2 de 7 • El Trauma como Memoria Suspendida</p>
+        </div>
+
+        <!-- Contenido Principal -->
+        <article class="contenido-nodo fade-in">
+            <p>En las profundidades del alma humana existe un archivo secreto donde se guardan las experiencias que no pudieron ser vividas completamente. No por falta de valor, sino por falta de tiempo, de seguridad, de compañía adecuada para atravesar lo que se presentaba como demasiado grande para el recipiente que éramos en ese momento.</p>
+
+            <p>Hay dolores que no gritan, que se deslizan como sombras por los pasillos del cuerpo, habitándolo sin permiso, sin nombre, sin fecha de caducidad. Dolores que se ocultan no por cobardía, sino porque el alma aún no ha encontrado el lenguaje sagrado para narrarlos, para darles el lugar que merecen en la historia consciente de quiénes somos. <strong>Son cantos que no pudieron ser pronunciados, expresiones reprimidas que buscan ser liberadas.</strong></p>
+
+            <p>El trauma no es simplemente una herida que cicatriza mal. Es mucho más sutil y más profundo: es una melodía interrumpida, una nota sostenida en el tiempo sin poder resolverse, como si la música de la vida hubiera quedado atrapada en un acorde suspendido que jamás encuentra su caída natural. <em>Es una forma cristalizada del amor que no pudo fluir en su momento, una onda no resuelta que quedó inmovilizada en el campo de la conciencia.</em></p>
+        </article>
+
+        <!-- Concepto Clave -->
+        <div class="concepto-clave fade-in">
+            <h3 class="concepto-titulo">🎵 La Onda Suspendida 🎵</h3>
+            <p class="concepto-texto">
+                El trauma no es realmente el evento que sucedió, sino la <strong>energía vital que quedó congelada en ese instante</strong>, esperando el momento adecuado para completar su movimiento natural. Es vida interrumpida, no vida dañada.
+            </p>
+        </div>
+
+        <!-- Continuación del contenido -->
+        <article class="contenido-nodo fade-in">
+            <p>Esta comprensión lo cambia todo. Porque significa que lo que llamamos trauma no es realmente el evento que sucedió, sino la energía vital que quedó congelada en ese instante, esperando el momento adecuado para completar su movimiento natural. Es vida interrumpida, no vida dañada.</p>
+
+            <p>El trauma habita el cuerpo como un huésped silencioso. Se enrosca en la respiración, creando zonas de constricción donde el aliento no puede llegar. Condiciona la forma en que miramos el mundo, tocamos a otros, confiamos en la vida. No porque quiera castigarnos, sino porque anhela desesperadamente ser escuchado, como un niño que nunca fue consolado y que sigue llamando desde las habitaciones cerradas del corazón.</p>
+
+            <p><strong>El cuerpo no olvida. Pero más importante aún: el campo de conciencia tampoco olvida.</strong> Cada experiencia no integrada permanece como una "onda detenida" en el océano de nuestra conciencia, creando patrones repetitivos de reacción que no comprendemos pero que sentimos como inevitables.</p>
+        </article>
+
+        <!-- Cita destacada 1 -->
+        <div class="cita-destacada fade-in">
+            El trauma es una pausa prolongada del alma. Una escena congelada en el teatro interno que se repite como eco invisible en cada gesto, en cada decisión, en cada encuentro íntimo.
+        </div>
+
+        <!-- Continuación del contenido -->
+        <article class="contenido-nodo fade-in">
+            <p>Las defensas psicológicas, los bucles mentales obsesivos, los síntomas corporales recurrentes - todo esto no son patologías, sino señales de una energía vital que busca liberarse de su detención. El trauma es una pausa prolongada del alma. Una escena congelada en el teatro interno que se repite como eco invisible en cada gesto, en cada decisión, en cada encuentro íntimo.</p>
+
+            <p>Es un colapso fijo del campo subjetivo, una cristalización de la conciencia que nos mantiene atrapados en un rango limitado de posibilidades, como si viviéramos toda la vida con una sola tecla del piano.</p>
+
+            <p>Pero aquí reside la revelación más hermosa: <em>esa memoria suspendida no está muerta. Está esperando.</em> Esperando la calidez de una presencia que no juzgue, la ternura de un reconocimiento que no trate de cambiar nada, el silencio lo suficientemente amplio y amoroso como para dejarla desplegarse sin prisa.</p>
+
+            <p>Esta espera no es pasiva. Es una forma activa de esperanza. Es la confianza primordial del alma en que algún día encontrará el contexto adecuado, la relación sanadora, el momento de gracia donde podrá finalmente exhalar lo que ha estado conteniendo durante años, décadas, tal vez generaciones.</p>
+        </article>
+
+        <!-- Cita destacada 2 -->
+        <div class="cita-destacada fade-in">
+            El vacío, el silencio, se revela aquí como la matriz regenerativa por excelencia, el útero cuántico donde la forma puede disolverse y rehacerse.
+        </div>
+
+        <!-- Continuación del contenido -->
+        <article class="contenido-nodo fade-in">
+            <p>El vacío, el silencio, se revela aquí como la matriz regenerativa por excelencia, el útero cuántico donde la forma puede disolverse y rehacerse. La sanación no acontece por acumulación, sino por sustracción: removiendo las interferencias que impiden el flujo natural de la vida a través de nosotros.</p>
+
+            <p><strong>Escuchar el trauma no es revivirlo. Es liberarlo.</strong> Es ofrecerle el regalo más preciado: la posibilidad de completar su historia. Cuando nos acercamos a estas memorias suspendidas con la presencia adecuada - sin tratar de arreglarlas, sin juzgarlas, sin apurarlas - algo milagroso sucede: el tiempo mismo se vuelve fluido otra vez.</p>
+
+            <p>El acorde suspendido finalmente encuentra su resolución. La melodía interrumpida puede completar su frase musical. Lo que estaba congelado comienza a moverse, lo que estaba separado comienza a integrarse, lo que estaba mudo comienza a encontrar su voz.</p>
+
+            <p>Esta es la diferencia fundamental entre sanar y simplemente manejar síntomas. Manejar síntomas es como ponerle silenciador a una alarma que suena. Sanar es escuchar el mensaje de la alarma y responder a lo que realmente está pidiendo atención.</p>
+
+            <p>Devolverle movimiento al trauma es permitir que la vida fluya otra vez a través de los canales que habían quedado obstruidos. Es reconocer que debajo de cada síntoma hay una inteligencia que busca expresarse, debajo de cada repetición compulsiva hay una creatividad que busca liberarse, debajo de cada miedo crónico hay un amor que busca encontrar su forma de manifestarse.</p>
+
+            <p>El trauma, entonces, se revela no como nuestro enemigo, sino como nuestro maestro más perseverante. Nos mantiene en contacto con aquellas partes de nosotros que aún esperan ser incluidas en la totalidad de quiénes somos. Nos recuerda, con una fidelidad inquebrantable, que hay aspectos de nuestra experiencia que aún no han sido completamente vividos, digeridos, integrados.</p>
+        </article>
+
+        <!-- Cita final del nodo -->
+        <div class="cita-destacada fade-in">
+            El trauma, como memoria suspendida, nos llama a devolverle movimiento. El universo no se colapsa por ser observado. Se colapsa porque quiere ser tocado por el amor de una mirada.
+        </div>
+
+        <!-- Reflexión Interactiva -->
+        <div class="reflexion-box fade-in">
+            <h3 class="reflexion-titulo">♪ Reflexiones para la Memoria Suspendida ♪</h3>
+            
+            <div class="reflexion-pregunta">
+                ¿Qué melodía quedó interrumpida en tu vida? ¿Qué experiencia aún espera ser completada?
+            </div>
+            
+            <div class="reflexion-pregunta">
+                ¿Dónde sientes en tu cuerpo esas "zonas congeladas" donde la vida no fluye libremente?
+            </div>
+            
+            <div class="reflexion-pregunta">
+                ¿Qué patrones repetitivos en tu vida podrían ser señales de una energía vital buscando liberarse?
+            </div>
+            
+            <div class="reflexion-pregunta">
+                Si pudieras hablarle a esa memoria suspendida con amor, ¿qué le dirías?
+            </div>
+        </div>
+
+        <!-- Meditación -->
+        <div class="meditacion-container fade-in" id="meditacion">
+            <h3 class="meditacion-titulo">Meditación de la Melodía Interrumpida</h3>
+            <div class="meditacion-icono">♪</div>
+            <p class="meditacion-texto">
+                Cierra los ojos. Respira profundo. Lleva tu atención a esa melodía suspendida en tu vida... esa experiencia que quedó congelada. No trates de completarla. Solo escúchala con presencia amorosa. Pregúntale: "¿Qué necesitas para volver a fluir?" Y permite que el silencio sea el útero donde la respuesta puede nacer. La memoria no necesita ser arreglada. Solo necesita ser escuchada.
+            </p>
+            <button class="meditacion-boton" onclick="iniciarMeditacion()">♪ Iniciar Meditación (7 min)</button>
+        </div>
+
+        <!-- Navegación entre nodos -->
+        <nav class="navegacion-nodos">
+            <div class="nodo-anterior">
+                <a href="nodo_01.html" class="nodo-link">← Anterior: La Grieta</a>
+            </div>
+            <div class="nodo-centro">
+                Nodo 2 de 7
+            </div>
+            <div class="nodo-siguiente">
+                <a href="nodo_03.html" class="nodo-link">Siguiente: El Fuego →</a>
+            </div>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="nodo-footer">
+            <p class="footer-texto">El Dolor como Portal - Nodo 2: El Trauma como Memoria Suspendida</p>
+            <p class="footer-texto">♪ ◈ ♪</p>
+        </footer>
+    </div>
+
+    <script>
+        // Canvas de ondas suspendidas
+        const canvas = document.getElementById('ondas-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class OndaSuspendida {
+            constructor() {
+                this.y = Math.random() * canvas.height;
+                this.amplitud = Math.random() * 50 + 30;
+                this.frecuencia = Math.random() * 0.02 + 0.01;
+                this.fase = Math.random() * Math.PI * 2;
+                this.velocidad = Math.random() * 0.02 + 0.01;
+                this.color = Math.random() > 0.5 ? '#4B0082' : '#FF4500';
+                this.opacidad = Math.random() * 0.4 + 0.2;
+            }
+
+            dibujar() {
+                ctx.beginPath();
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 2;
+                ctx.globalAlpha = this.opacidad;
+
+                for (let x = 0; x < canvas.width; x += 5) {
+                    const y = this.y + Math.sin(x * this.frecuencia + this.fase) * this.amplitud;
+                    if (x === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+
+                ctx.stroke();
+                this.fase += this.velocidad;
+            }
+        }
+
+        const ondas = [];
+        for (let i = 0; i < 6; i++) {
+            ondas.push(new OndaSuspendida());
+        }
+
+        function animarOndas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ondas.forEach(onda => {
+                onda.dibujar();
+            });
+
+            requestAnimationFrame(animarOndas);
+        }
+
+        animarOndas();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Volver arriba
+        const volverArriba = document.getElementById('volverArriba');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                volverArriba.classList.add('visible');
+            } else {
+                volverArriba.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Meditación
+        function iniciarMeditacion() {
+            alert('♪ Meditación de la Melodía Interrumpida\n\n7 minutos de presencia amorosa.\n\nCierra los ojos.\nRespira profundo.\nEscucha tu melodía suspendida.\nNo la arregles. Solo escúchala.\nPermite que encuentre su resolución natural.\n\n(Timer: configura 7 minutos en tu dispositivo)');
+        }
+
+        // Guardar progreso
+        window.addEventListener('load', () => {
+            const progreso = JSON.parse(localStorage.getItem('trinity-progreso-libro3') || '{}');
+            progreso.nodoActual = 2;
+            progreso.ultimoNodo = Math.max(progreso.ultimoNodo || 0, 2);
+            progreso.porcentaje = 28.56;
+            localStorage.setItem('trinity-progreso-libro3', JSON.stringify(progreso));
+        });
+
+        // Animaciones al scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.contenido-nodo, .cita-destacada, .concepto-clave, .reflexion-box, .meditacion-container').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
