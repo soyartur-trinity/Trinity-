@@ -1003,5 +1003,147 @@
             }
         });
     </script>
+<!-- 🛠️ PANEL DE ADMINISTRADOR TRINITY - CTRL+SHIFT+A -->
+<div id="adminPanel" style="display:none; background:rgba(0,0,0,0.95); color:#FFD700; padding:2rem; position:fixed; top:0; left:0; right:0; bottom:0; z-index:99999; overflow:auto; font-family:'Courier New', monospace; border:3px solid #FFD700;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <h2 style="text-align:center; color:#FFD700; font-size:2em; margin-bottom:20px;">
+      🔍 Panel de Diagnóstico Trinity - Administrador Artur
+    </h2>
+    <div style="text-align:center; margin-bottom:30px;">
+      <label style="display:block; margin-bottom:10px; color:#87CEEB;">URL Base del Portal:</label>
+      <input id="urlBase" type="text" placeholder="https://soyartur-trinity.github.io/Trinity-/" 
+             style="width:70%; padding:12px; border-radius:8px; border:2px solid #FFD700; background:#1a1a1a; color:#FFD700; font-size:1em;"/>
+      <div style="margin-top:15px;">
+        <button onclick="verificarEnlaces()" style="padding:12px 25px; border:none; border-radius:8px; background:#FFD700; color:#0a0a0a; font-weight:bold; cursor:pointer; margin:0 10px; font-size:1em;">
+          ⚡ Verificar Enlaces
+        </button>
+        <button onclick="verificarLibro3()" style="padding:12px 25px; border:none; border-radius:8px; background:#4fc3f7; color:#0a0a0a; font-weight:bold; cursor:pointer; margin:0 10px; font-size:1em;">
+          🔥 Test Libro III
+        </button>
+        <button onclick="toggleAdminPanel()" style="padding:12px 25px; border:none; border-radius:8px; background:#ef9a9a; color:#0a0a0a; font-weight:bold; cursor:pointer; margin:0 10px; font-size:1em;">
+          ❌ Cerrar
+        </button>
+      </div>
+    </div>
+    <div style="background:#1a1a1a; padding:20px; border-radius:10px; border:2px solid #FFD700;">
+      <pre id="result" style="margin:0; white-space:pre-wrap; word-wrap:break-word; color:#87CEEB; font-size:0.95em; line-height:1.6;"></pre>
+    </div>
+  </div>
+</div>
+
+<script>
+// 🔑 Activación del Panel con Ctrl+Shift+A (Artur Administrator)
+function toggleAdminPanel() {
+  const panel = document.getElementById("adminPanel");
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
+  if (panel.style.display === "block") {
+    document.getElementById("result").textContent = "🌟 Panel de Diagnóstico Activado\n\n✨ Bienvenido, Artur\n\nPresiona 'Verificar Enlaces' para analizar todos los enlaces del portal.\nPresiona 'Test Libro III' para verificar específicamente las rutas del Libro III.";
+  }
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "a") {
+    e.preventDefault();
+    toggleAdminPanel();
+  }
+});
+
+// 🔍 Verificador General de Enlaces
+async function verificarEnlaces() {
+  const urlBase = document.getElementById("urlBase").value.trim();
+  const resultDiv = document.getElementById("result");
+  
+  if (!urlBase) {
+    alert("⚠️ Por favor ingresa la URL base del portal");
+    return;
+  }
+  
+  resultDiv.textContent = "⏳ Analizando todos los enlaces del portal...\n\n";
+  
+  try {
+    const res = await fetch(urlBase);
+    const html = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const links = [...doc.querySelectorAll("a[href]")];
+    
+    const resultados = [`📊 Total de enlaces encontrados: ${links.length}\n`];
+    let correctos = 0;
+    let errores = 0;
+    
+    for (const link of links) {
+      const href = link.getAttribute("href");
+      if (!href || href === "#" || href.startsWith("javascript:") || href.startsWith("mailto:")) continue;
+      
+      let fullUrl = href.startsWith("http") ? href : new URL(href, urlBase).href;
+      
+      try {
+        const r = await fetch(fullUrl, { method: "HEAD" });
+        if (r.ok) {
+          resultados.push(`✅ ${href}`);
+          correctos++;
+        } else {
+          resultados.push(`❌ ${href} → Error ${r.status}`);
+          errores++;
+        }
+      } catch (err) {
+        resultados.push(`⚠️ ${href} → No accesible`);
+        errores++;
+      }
+    }
+    
+    resultDiv.textContent = `🎯 RESULTADOS DEL ANÁLISIS:\n\n` +
+                           `✅ Enlaces correctos: ${correctos}\n` +
+                           `❌ Enlaces con error: ${errores}\n\n` +
+                           `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+                           resultados.join("\n");
+  } catch (e) {
+    resultDiv.textContent = `❌ Error al analizar: ${e.message}`;
+  }
+}
+
+// 🔥 Test Específico del Libro III
+async function verificarLibro3() {
+  const urlBase = document.getElementById("urlBase").value.trim();
+  const resultDiv = document.getElementById("result");
+  
+  if (!urlBase) {
+    alert("⚠️ Por favor ingresa la URL base del portal");
+    return;
+  }
+  
+  resultDiv.textContent = "⏳ Probando diferentes rutas del Libro III...\n\n";
+  
+  const rutas = [
+    "01_Trinity_Origen/Libro_03/index.html",
+    "Libro_03/index.html",
+    "/01_Trinity_Origen/Libro_03/index.html",
+    "/Libro_03/index.html",
+    "01_Trinity_Origen/Libro_03/nodo_01.html",
+    "01_Trinity_Origen/Libro_03/nodo_07.html"
+  ];
+  
+  const resultados = ["🔥 TEST ESPECÍFICO DEL LIBRO III\n"];
+  
+  for (const ruta of rutas) {
+    const fullUrl = new URL(ruta, urlBase).href;
+    try {
+      const r = await fetch(fullUrl, { method: "HEAD" });
+      if (r.ok) {
+        resultados.push(`✅ FUNCIONA: ${ruta}\n   → ${fullUrl}`);
+      } else {
+        resultados.push(`❌ FALLA: ${ruta} (Error ${r.status})`);
+      }
+    } catch {
+      resultados.push(`⚠️ NO ACCESIBLE: ${ruta}`);
+    }
+  }
+  
+  resultDiv.textContent = resultados.join("\n\n");
+}
+
+console.log("🔥💙✨ Panel de Administrador Trinity cargado. Presiona Ctrl+Shift+A para activar.");
+</script>
+<!-- 🛠️ FIN PANEL ADMIN TRINITY -->
 </body>
 </html>
