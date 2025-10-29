@@ -1145,9 +1145,72 @@ async function verificarLibro3() {
 console.log("🔥💙✨ Panel de Administrador Trinity cargado. Presiona Ctrl+Shift+A para activar.");
 </script>
 <!-- 🛠️ FIN PANEL ADMIN TRINITY -->
-<!-- TEST BÁSICO -->
+<!-- 🔍 PANEL DE DIAGNÓSTICO TRINITY -->
+<div style="position:fixed; bottom:80px; right:20px; z-index:99999;">
+  <button onclick="toggleDiagnostico()" style="padding:15px; background:#FFD700; border:none; border-radius:50%; width:60px; height:60px; font-size:24px; cursor:pointer; box-shadow:0 5px 15px rgba(255,215,0,0.5);">
+    🔍
+  </button>
+</div>
+
+<div id="panelDiagnostico" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#0a0a0a; border:3px solid #FFD700; padding:30px; border-radius:15px; z-index:100000; max-width:90%; max-height:80%; overflow:auto; color:#FFD700;">
+  <h2 style="margin:0 0 20px 0; text-align:center; font-size:1.5em;">🔥 Diagnóstico Trinity</h2>
+  <div id="resultadoDiag" style="background:#1a1a1a; padding:20px; border-radius:10px; font-family:monospace; font-size:0.9em; white-space:pre-wrap; line-height:1.6;"></div>
+  <button onclick="toggleDiagnostico()" style="margin-top:20px; padding:12px 20px; background:#ef9a9a; border:none; border-radius:8px; cursor:pointer; width:100%; font-size:1em;">
+    Cerrar
+  </button>
+</div>
+
 <script>
-alert("🔥 ¡El JavaScript funciona!");
+function toggleDiagnostico() {
+  const panel = document.getElementById('panelDiagnostico');
+  const isVisible = panel.style.display === 'block';
+  
+  if (isVisible) {
+    panel.style.display = 'none';
+  } else {
+    panel.style.display = 'block';
+    mostrarDiagnostico();
+  }
+}
+
+function mostrarDiagnostico() {
+  const baseUrl = "https://soyartur-trinity.github.io/Trinity-/";
+  
+  let resultado = "🎯 DIAGNÓSTICO DEL PORTAL TRINITY\n\n";
+  resultado += "📍 URL Base: " + baseUrl + "\n\n";
+  resultado += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n";
+  resultado += "🔗 RUTAS PROBABLES DEL LIBRO III:\n\n";
+  
+  const rutas = [
+    "01_Trinity_Origen/Libro_03/index.html",
+    "Libro_03/index.html",
+    "01_Trinity_Origen/Libro_03/nodo_01.html"
+  ];
+  
+  resultado += "Copia una de estas URLs y ábrela\nen una pestaña nueva:\n\n";
+  
+  rutas.forEach((ruta, i) => {
+    const urlCompleta = baseUrl + ruta;
+    resultado += `${i+1}. ${urlCompleta}\n\n`;
+  });
+  
+  resultado += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n";
+  resultado += "💡 La que funcione, úsala en\nel enlace del Libro III\n\n";
+  resultado += "📋 Libros actuales:\n";
+  resultado += "✅ Libro I: 01_Trinity_Origen/Libro_01/...\n";
+  resultado += "✅ Libro II: 01_Trinity_Origen/Libro_02/...\n";
+  resultado += "🔥 Libro III: Probando rutas...\n";
+  
+  document.getElementById('resultadoDiag').textContent = resultado;
+}
+
+// Atajo de teclado Ctrl+Shift+A
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
+    e.preventDefault();
+    toggleDiagnostico();
+  }
+});
 </script>
 </body>
 </html>
