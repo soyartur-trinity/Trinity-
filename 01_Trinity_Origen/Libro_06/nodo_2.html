@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NODO 2: La Muerte Iniciática | Vacío Fértil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: 'Georgia', serif;
+        background: #0a0a0a;
+        color: #e0e0e0;
+        line-height: 1.8;
+        overflow-x: hidden;
+    }
+
+    /* Canvas de fondo animado */
+    #voidCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        opacity: 0.3;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    /* Header del Nodo */
+    .nodo-header {
+        text-align: center;
+        margin-bottom: 60px;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+        border-radius: 20px;
+        border: 2px solid rgba(139, 0, 0, 0.3);
+    }
+
+    .nodo-number {
+        font-size: 1.2rem;
+        color: #ff6b6b;
+        letter-spacing: 3px;
+        margin-bottom: 10px;
+    }
+
+    .nodo-title {
+        font-size: 3rem;
+        color: #ff4444;
+        margin-bottom: 20px;
+        text-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+    }
+
+    .nodo-subtitle {
+        font-size: 1.3rem;
+        color: #999;
+        font-style: italic;
+    }
+
+    /* Cita de apertura */
+    .opening-quote {
+        background: rgba(20, 20, 20, 0.8);
+        border-left: 4px solid #ff4444;
+        padding: 30px;
+        margin: 40px 0;
+        border-radius: 10px;
+        font-style: italic;
+        font-size: 1.2rem;
+        color: #ccc;
+    }
+
+    /* Secciones principales */
+    .section {
+        margin: 60px 0;
+        padding: 40px;
+        background: rgba(15, 15, 15, 0.9);
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .section-title {
+        font-size: 2rem;
+        color: #ff6b6b;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    /* Cards de las 4 Muertes */
+    .muerte-card {
+        margin: 40px 0;
+        padding: 40px;
+        border-radius: 15px;
+        border: 2px solid;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .muerte-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .muerte-card:hover::before {
+        opacity: 0.1;
+    }
+
+    .muerte-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Colores específicos para cada muerte */
+    .muerte-ego {
+        background: rgba(139, 0, 0, 0.1);
+        border-color: #8b0000;
+    }
+
+    .muerte-ego::before {
+        background: #8b0000;
+    }
+
+    .muerte-apegos {
+        background: rgba(184, 134, 11, 0.1);
+        border-color: #b8860b;
+    }
+
+    .muerte-apegos::before {
+        background: #b8860b;
+    }
+
+    .muerte-tiempo {
+        background: rgba(75, 0, 130, 0.1);
+        border-color: #4b0082;
+    }
+
+    .muerte-tiempo::before {
+        background: #4b0082;
+    }
+
+    .muerte-muerte {
+        background: rgba(0, 0, 0, 0.3);
+        border-color: #1a1a1a;
+    }
+
+    .muerte-muerte::before {
+        background: #000;
+    }
+
+    .muerte-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .muerte-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #ff4444;
+    }
+
+    .muerte-subtitle {
+        font-size: 1.1rem;
+        color: #999;
+        margin-bottom: 30px;
+        font-style: italic;
+    }
+
+    /* Anatomía de la Muerte */
+    .anatomia {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 25px;
+        border-radius: 10px;
+        margin: 20px 0;
+    }
+
+    .anatomia h4 {
+        color: #ff6b6b;
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+    }
+
+    .anatomia ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .anatomia li {
+        padding: 10px 0;
+        padding-left: 30px;
+        position: relative;
+    }
+
+    .anatomia li::before {
+        content: '💀';
+        position: absolute;
+        left: 0;
+    }
+
+    /* Fases del Proceso */
+    .fases {
+        margin: 30px 0;
+    }
+
+    .fase {
+        background: rgba(255, 68, 68, 0.05);
+        padding: 20px;
+        margin: 15px 0;
+        border-left: 4px solid #ff4444;
+        border-radius: 5px;
+    }
+
+    .fase-title {
+        font-weight: bold;
+        color: #ff6b6b;
+        margin-bottom: 10px;
+    }
+
+    .fase-content {
+        color: #ccc;
+        padding-left: 20px;
+    }
+
+    /* Práctica Nuclear */
+    .practica-nuclear {
+        background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(0, 0, 0, 0.3));
+        padding: 30px;
+        border-radius: 15px;
+        margin: 30px 0;
+        border: 2px solid #8b0000;
+    }
+
+    .practica-title {
+        font-size: 1.5rem;
+        color: #ff4444;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .practica-steps {
+        counter-reset: step-counter;
+        list-style: none;
+        padding: 0;
+    }
+
+    .practica-steps li {
+        counter-increment: step-counter;
+        padding: 15px;
+        margin: 10px 0;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        position: relative;
+        padding-left: 60px;
+    }
+
+    .practica-steps li::before {
+        content: counter(step-counter);
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #ff4444;
+        color: #000;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    /* Señales */
+    .senales {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin: 30px 0;
+    }
+
+    .senales-box {
+        padding: 20px;
+        border-radius: 10px;
+        border: 2px solid;
+    }
+
+    .senales-exito {
+        background: rgba(0, 100, 0, 0.1);
+        border-color: #006400;
+    }
+
+    .senales-exito h4 {
+        color: #00ff00;
+    }
+
+    .senales-peligro {
+        background: rgba(139, 0, 0, 0.1);
+        border-color: #8b0000;
+    }
+
+    .senales-peligro h4 {
+        color: #ff4444;
+    }
+
+    .senales ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .senales-exito li::before {
+        content: '✓ ';
+        color: #00ff00;
+        font-weight: bold;
+    }
+
+    .senales-peligro li::before {
+        content: '✗ ';
+        color: #ff4444;
+        font-weight: bold;
+    }
+
+    /* Testimonio */
+    .testimonio {
+        background: rgba(40, 40, 40, 0.5);
+        padding: 30px;
+        border-radius: 15px;
+        border-left: 5px solid #ff6b6b;
+        margin: 30px 0;
+        font-style: italic;
+    }
+
+    .testimonio-autor {
+        text-align: right;
+        color: #ff6b6b;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    /* Proceso Integral */
+    .proceso-integral {
+        margin: 40px 0;
+    }
+
+    .fase-integral {
+        background: linear-gradient(to right, rgba(139, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+        padding: 30px;
+        margin: 20px 0;
+        border-radius: 15px;
+        border-left: 5px solid #ff4444;
+    }
+
+    .fase-integral h3 {
+        color: #ff6b6b;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+    }
+
+    .mes-detail {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+    }
+
+    .mes-detail h4 {
+        color: #ff8888;
+        margin-bottom: 10px;
+    }
+
+    /* Advertencias */
+    .advertencia {
+        background: rgba(255, 0, 0, 0.1);
+        border: 2px solid #ff0000;
+        padding: 25px;
+        border-radius: 10px;
+        margin: 30px 0;
+    }
+
+    .advertencia-title {
+        color: #ff4444;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .advertencia-icon {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    /* Práctica de Cierre */
+    .practica-cierre {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(139, 0, 0, 0.3));
+        padding: 40px;
+        border-radius: 20px;
+        margin: 60px 0;
+        border: 3px solid #ff4444;
+        text-align: center;
+    }
+
+    .practica-cierre h2 {
+        color: #ff4444;
+        margin-bottom: 30px;
+        font-size: 2rem;
+    }
+
+    /* Navegación */
+    .navegacion {
+        display: flex;
+        justify-content: space-between;
+        margin: 60px 0;
+        padding: 30px;
+        background: rgba(20, 20, 20, 0.8);
+        border-radius: 15px;
+    }
+
+    .nav-button {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #ff4444, #8b0000);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .nav-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(255, 68, 68, 0.3);
+        border-color: #ff6b6b;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .nodo-title {
+            font-size: 2rem;
+        }
+
+        .senales {
+            grid-template-columns: 1fr;
+        }
+
+        .navegacion {
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+    /* Scroll suave */
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="voidCanvas"></canvas>
+
+```
+<div class="container">
+    <!-- Header del Nodo -->
+    <div class="nodo-header">
+        <div class="nodo-number">NODO 2 / 7</div>
+        <h1 class="nodo-title">💀 LA MUERTE INICIÁTICA</h1>
+        <p class="nodo-subtitle">Morir en Vida para Renacer Consciente</p>
+    </div>
+
+    <!-- Cita de Apertura -->
+    <div class="opening-quote">
+        "La muerte no es lo opuesto de la vida. La muerte es lo opuesto del nacimiento. La vida no tiene opuesto. Pero para conocer esta vida sin opuesto, primero debes morir completamente."
+        <div style="text-align: right; margin-top: 15px; color: #ff6b6b;">— Transmisión desde el Vacío</div>
+    </div>
+
+    <!-- Introducción -->
+    <div class="section">
+        <h2 class="section-title">El Terror Primordial y la Promesa Suprema</h2>
+        <p>Si el primer nodo fue un mapa, este segundo nodo es el territorio mismo. Aquí no hablamos ya de conceptos sobre la muerte, sino de la experiencia directa de disolución. No es una muerte simbólica o metafórica. Es la aniquilación real del constructo que has llamado "yo" durante toda tu existencia.</p>
+        
+        <p style="margin-top: 20px;">Cada tradición espiritual genuina tiene en su corazón alguna forma de muerte iniciática:</p>
+        
+        <div style="margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 10px;">
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 8px 0;">🌿 Los chamanes hablan del desmembramiento</li>
+                <li style="padding: 8px 0;">🕉️ Los yoguis practican el yoga de la muerte (Kala Yoga)</li>
+                <li style="padding: 8px 0;">✝️ Los místicos cristianos atraviesan la noche oscura</li>
+                <li style="padding: 8px 0;">☸️ Los budistas tibetanos ensayan el bardo</li>
+                <li style="padding: 8px 0;">🜃 Los alquimistas pasan por la nigredo (putrefacción)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ¿Por Qué Debe Morir el Iniciado? -->
+    <div class="section">
+        <h2 class="section-title">¿Por Qué Debe Morir el Iniciado?</h2>
+        <p>La muerte iniciática no es un ritual arbitrario diseñado por maestros sádicos. Es una necesidad ontológica. Así como una semilla debe morir para que nazca el árbol, así como la oruga debe disolverse completamente en la crisálida para emerger como mariposa, el ser humano debe pasar por una aniquilación total para acceder a su naturaleza cósmica.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;">
+            <div style="background: rgba(139,0,0,0.2); padding: 25px; border-radius: 10px; border: 2px solid #8b0000;">
+                <h3 style="color: #ff6b6b; margin-bottom: 15px;">Lo que debe morir:</h3>
+                <ul style="list-style: none; padding: 0; color: #ccc;">
+                    <li style="padding: 8px 0;">⚫ La historia personal con todos sus traumas y glorias</li>
+                    <li style="padding: 8px 0;">⚫ La identidad construida a través de roles</li>
+                    <li style="padding: 8px 0;">⚫ El sentido de separación entre yo y el mundo</li>
+                    <li style="padding: 8px 0;">⚫ La ilusión de control sobre la vida</li>
+                    <li style="padding: 8px 0;">⚫ El apego a continuar existiendo</li>
+                    <li style="padding: 8px 0;">⚫ La certeza de saber quién eres</li>
+                    <li style="padding: 8px 0;">⚫ El miedo mismo a la muerte</li>
+                </ul>
+            </div>
+            <div style="background: rgba(0,100,0,0.2); padding: 25px; border-radius: 10px; border: 2px solid #006400;">
+                <h3 style="color: #00ff00; margin-bottom: 15px;">Lo que permanece después:</h3>
+                <ul style="list-style: none; padding: 0; color: #ccc;">
+                    <li style="padding: 8px 0;">✨ Consciencia pura sin contenido</li>
+                    <li style="padding: 8px 0;">✨ Presencia sin identidad</li>
+                    <li style="padding: 8px 0;">✨ Amor sin objeto</li>
+                    <li style="padding: 8px 0;">✨ Poder sin ego</li>
+                    <li style="padding: 8px 0;">✨ Creatividad sin límites</li>
+                    <li style="padding: 8px 0;">✨ Paz sin condiciones</li>
+                    <li style="padding: 8px 0;">✨ Vida sin muerte</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- LAS CUATRO MUERTES -->
+    <div class="section">
+        <h2 class="section-title">Las Cuatro Muertes del Iniciado</h2>
+        <p style="text-align: center; margin-bottom: 40px; font-size: 1.1rem; color: #999;">La muerte iniciática completa requiere atravesar cuatro tipos de muerte, cada una más profunda que la anterior.</p>
+
+        <!-- MUERTE DEL EGO -->
+        <div class="muerte-card muerte-ego">
+            <span class="muerte-icon">💀</span>
+            <h3 class="muerte-title">LA MUERTE DEL EGO (Ahamkāra-Maraṇa)</h3>
+            <p class="muerte-subtitle">La muerte de la importancia personal, del sentido de ser especial, único o separado</p>
+
+            <div class="anatomia">
+                <h4>Anatomía del Ego que Debe Morir:</h4>
+                <ul>
+                    <li>El yo que necesita ser visto y reconocido</li>
+                    <li>El yo que se compara constantemente con otros</li>
+                    <li>El yo que busca seguridad en identidades</li>
+                    <li>El yo que teme ser ordinario</li>
+                    <li>El yo que necesita tener razón</li>
+                    <li>El yo que busca iluminarse</li>
+                    <li>El yo que tiene miedo de morir</li>
+                </ul>
+            </div>
+
+            <div class="fases">
+                <h4 style="color: #ff6b6b; margin-bottom: 20px; font-size: 1.3rem;">Proceso de Muerte del Ego:</h4>
+                
+                <div class="fase">
+                    <div class="fase-title">Fase 1: Reconocimiento (1-3 meses)</div>
+                    <div class="fase-content">
+                        Observar obsesivamente todos los movimientos del ego • Documentar cada instancia de importancia personal • Notar cómo el ego hijackea incluso la práctica espiritual • Ver la futilidad de todos los proyectos del ego
+                    </div>
+                </div>
+
+                <div class="fase">
+                    <div class="fase-title">Fase 2: Confrontación (3-6 meses)</div>
+                    <div class="fase-content">
+                        Hacer exactamente lo opuesto de lo que el ego desea • Si busca reconocimiento, practicar anonimato • Si busca seguridad, abrazar incertidumbre • Si busca placer, abrazar incomodidad consciente
+                    </div>
+                </div>
+
+                <div class="fase">
+                    <div class="fase-title">Fase 3: Rendición (6-12 meses)</div>
+                    <div class="fase-content">
+                        Dejar de luchar contra el ego • Permitir que se agote por sí mismo • Observar su muerte sin interferir • No alimentarlo ni combatirlo
+                    </div>
+                </div>
+
+                <div class="fase">
+                    <div class="fase-title">Fase 4: Disolución (momento impredecible)</div>
+                    <div class="fase-content">
+                        Un día, sin aviso, el ego simplemente colapsa • Puede durar segundos o días • Terror absoluto seguido de libertad infinita • Renacimiento como presencia sin centro
+                    </div>
+                </div>
+            </div>
+
+            <div class="practica-nuclear">
+                <h4 class="practica-title">🔥 PRÁCTICA NUCLEAR: El Funeral del Ego</h4>
+                
+                <div style="margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 10px;">
+                    <strong style="color: #ff6b6b;">Preparación (1 semana antes):</strong>
+                    <ul style="margin-top: 10px; color: #ccc;">
+                        <li>Escribe la biografía completa de tu ego</li>
+                        <li>Incluye todos sus logros, fracasos, deseos, miedos</li>
+                        <li>Prepara un ataúd simbólico (caja, sobre, etc.)</li>
+                        <li>Invita a testigos de confianza (opcional pero potente)</li>
+                    </ul>
+                </div>
+
+                <ol class="practica-steps">
+                    <li>Vístete como para un funeral real</li>
+                    <li>Lee la biografía del ego en voz alta</li>
+                    <li>Con cada párrafo, reconoce: "Esto también morirá"</li>
+                    <li>Coloca la biografía en el ataúd simbólico</li>
+                    <li>Realiza un ritual de cremación o entierro</li>
+                    <li>Siéntate en meditación junto a los "restos"</li>
+                    <li>Observa qué permanece cuando el ego ha muerto</li>
+                    <li>Permanece en silencio el resto del día</li>
+                </ol>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255,68,68,0.1); border-radius: 8px;">
+                    <strong style="color: #ff8888;">Integración:</strong> No intentes resucitar al ego • Cuando reaparezca (y lo hará), recuérdale que está muerto • Funciona en el mundo sin identidad fija • Permite que la vida te viva
+                </div>
+            </div>
+
+            <div class="senales">
+                <div class="senales-box senales-exito">
+                    <h4>Señales de Muerte Exitosa:</h4>
+                    <ul>
+                        <li>Puedes recibir insultos o halagos con igual ecuanimidad</li>
+                        <li>No necesitas contar tu historia para sentirte real</li>
+                        <li>La vida fluye sin el constante "yo, yo, yo"</li>
+                        <li>Ríes espontáneamente de las pretensiones del ego</li>
+                        <li>Sirves sin necesidad de crédito o reconocimiento</li>
+                    </ul>
+                </div>
+                <div class="senales-box senales-peligro">
+                    <h4>Peligros Específicos:</h4>
+                    <ul>
+                        <li>Supresión forzada (no es verdadero vacío)</li>
+                        <li>Estados catatónicos o disociativos</li>
+                        <li>Pérdida de función cognitiva práctica</li>
+                        <li>Inflación espiritual ("mi mente está vacía")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- MUERTE DE LOS APEGOS -->
+        <div class="muerte-card muerte-apegos">
+            <span class="muerte-icon">🔗</span>
+            <h3 class="muerte-title">LA MUERTE DE LOS APEGOS (Rāga-Maraṇa)</h3>
+            <p class="muerte-subtitle">Liberación radical de todo aferramiento, no por rechazo sino por comprensión de la impermanencia universal</p>
+
+            <div class="anatomia">
+                <h4>Inventario de Apegos a Morir:</h4>
+                <ul>
+                    <li>Apegos materiales (posesiones, dinero, estatus)</li>
+                    <li>Apegos emocionales (relaciones, amor romántico, familia)</li>
+                    <li>Apegos mentales (creencias, conocimientos, opiniones)</li>
+                    <li>Apegos espirituales (experiencias, estados, maestros)</li>
+                    <li>Apegos existenciales (a la vida misma, a continuar siendo)</li>
+                </ul>
+            </div>
+
+            <div class="fases">
+                <h4 style="color: #b8860b; margin-bottom: 20px; font-size: 1.3rem;">El Protocolo de Desapego Radical:</h4>
+                
+                <div class="fase">
+                    <div class="fase-title">Mes 1: Apegos Materiales</div>
+                    <div class="fase-content">
+                        Dona 50% de tus posesiones • Vive con lo mínimo necesario • Practica un día semanal sin dinero • Duerme en el suelo una noche por semana
+                    </div>
+                </div>
+
+                <div class="fase">
+                    <div class="fase-title">Mes 2: Apegos Emocionales</div>
+                    <div class="fase-content">
+                        Practica amor sin posesividad • Permite que otros sean libres completamente • Suelta la necesidad de ser necesitado • Abraza la soledad como amiga
+                    </div>
+                </div>
+
+                <div class="fase">
+                    <div class="fase-title">Mes 3: Apegos Mentales</div>
+                    <div class="fase-content">
+                        Por una semana, no defiendas ninguna opinión • Permite que otros tengan razón siempre • Suelta tu historia personal favorita • Admite "no sé" a toda pregunta profunda
+                    </div>
+                </div>
+
+                <div class="fase">
+                    <div class="fase-title">Mes 4: Apegos Espirituales</div>
+                    <div class="fase-content">
+                        Suelta toda experiencia especial • Abandona la búsqueda de iluminación • Deja de identificarte como "buscador" • Acepta la ordinaridad radical
+                    </div>
+                </div>
+            </div>
+
+            <div class="practica-nuclear">
+                <h4 class="practica-title">⚡ PRÁCTICA EXTREMA: El Voto de Pérdida</h4>
+                
+                <ol class="practica-steps">
+                    <li>Identifica tu apego más profundo (persona, objeto, identidad)</li>
+                    <li>Durante 40 días, cada mañana al despertar di: "Acepto perder [X] completa y permanentemente"</li>
+                    <li>Visualiza vívidamente la pérdida</li>
+                    <li>Siente el dolor completamente sin resistencia</li>
+                    <li>Encuentra la paz al otro lado del dolor</li>
+                    <li>Vive cada día como si la pérdida ya hubiera ocurrido</li>
+                    <li>Al día 40, celebra tu libertad</li>
+                </ol>
+
+                <div class="advertencia" style="margin-top: 20px;">
+                    <div class="advertencia-icon">⚠️</div>
+                    <div class="advertencia-title">ADVERTENCIA</div>
+                    Esta práctica puede catalizar pérdidas reales. Hazla solo si estás verdaderamente listo.
+                </div>
+            </div>
+
+            <div class="senales">
+                <div class="senales-box senales-exito">
+                    <h4>Señales de Muerte de Apegos:</h4>
+                    <ul>
+                        <li>Puedes amar profundamente sin aferrarte</li>
+                        <li>La pérdida no te destruye sino que te libera</li>
+                        <li>Disfrutas sin necesitar que dure</li>
+                        <li>Das sin esperar nada a cambio</li>
+                        <li>La vida es un regalo, no una posesión</li>
+                    </ul>
+                </div>
+                <div class="senales-box senales-peligro">
+                    <h4>Peligros Específicos:</h4>
+                    <ul>
+                        <li>Apatía disfrazada de desapego</li>
+                        <li>Frialdad emocional patológica</li>
+                        <li>Negligencia de responsabilidades</li>
+                        <li>Bypass de traumas no resueltos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- MUERTE DEL TIEMPO -->
+        <div class="muerte-card muerte-tiempo">
+            <span class="muerte-icon">⏳</span>
+            <h3 class="muerte-title">LA MUERTE DEL TIEMPO (Kāla-Maraṇa)</h3>
+            <p class="muerte-subtitle">Liberación de la tiranía del pasado y futuro. Salir del tiempo psicológico para habitar el eterno ahora</p>
+
+            <div class="anatomia">
+                <h4>Dimensiones de la Muerte Temporal:</h4>
+                <ul>
+                    <li>Muerte del pasado (memoria como identidad)</li>
+                    <li>Muerte del futuro (proyección y esperanza)</li>
+                    <li>Muerte de la edad (sentirse joven/viejo)</li>
+                    <li>Muerte de la prisa (urgencia existencial)</li>
+                    <li>Muerte del "progreso" espiritual</li>
+                </ul>
+            </div>
+
+            <div class="practica-nuclear">
+                <h4 class="practica-title">⌛ TÉCNICA: Corte del Tiempo</h4>
+                
+                <div style="margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 10px;">
+                    <strong style="color: #9370db;">Práctica Diaria por 30 días:</strong>
+                    <ol class="practica-steps" style="margin-top: 15px;">
+                        <li><strong>Amanecer:</strong> "Mi pasado murió mientras dormía"</li>
+                        <li><strong>Mediodía:</strong> "No hay futuro, solo este momento"</li>
+                        <li><strong>Atardecer:</strong> "Hoy es el único día de mi vida"</li>
+                        <li><strong>Antes de dormir:</strong> "Puede que no despierte, y está bien"</li>
+                    </ol>
+                </div>
+
+                <div style="margin: 20px 0; padding: 20px; background: rgba(75,0,130,0.2); border-radius: 10px; border: 2px solid #4b0082;">
+                    <strong style="color: #9370db;">Práctica Intensiva mensual:</strong>
+                    <ul style="margin-top: 10px; color: #ccc; list-style: none; padding: 0;">
+                        <li style="padding: 8px 0;">🌙 Elige un día para "morir al tiempo"</li>
+                        <li style="padding: 8px 0;">🌙 Quita todos los relojes y dispositivos</li>
+                        <li style="padding: 8px 0;">🌙 No hagas planes ni consultes agenda</li>
+                        <li style="padding: 8px 0;">🌙 Come cuando tengas hambre</li>
+                        <li style="padding: 8px 0;">🌙 Duerme cuando tengas sueño</li>
+                        <li style="padding: 8px 0;">🌙 Actúa solo por impulso presente</li>
+                        <li style="padding: 8px 0;">🌙 Nota cómo el tiempo se disuelve</li>
+                    </ul>
+                </div>
+
+                <h4 style="color: #9370db; margin: 30px 0 20px 0; font-size: 1.3rem;">LA GRAN PRÁCTICA: Vivir Tu Último Día</h4>
+                
+                <ol class="practica-steps">
+                    <li>Al despertar, decide: "Este es mi último día"</li>
+                    <li>No es imaginación, es decisión ontológica</li>
+                    <li>Vive cada momento como el último</li>
+                    <li>Di lo que necesitas decir</li>
+                    <li>Perdona todo y a todos</li>
+                    <li>Aprecia cada respiración</li>
+                    <li>Al dormir, suelta completamente</li>
+                    <li>Si despiertas, es un regalo, no un derecho</li>
+                </ol>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255,68,68,0.1); border-radius: 8px;">
+                    <strong style="color: #9370db;">Frecuencia:</strong> Una vez por semana durante 3 meses
+                </div>
+            </div>
+
+            <div class="senales">
+                <div class="senales-box senales-exito">
+                    <h4>Señales de Muerte del Tiempo:</h4>
+                    <ul>
+                        <li>El pasado no tiene poder sobre ti</li>
+                        <li>El futuro no genera ansiedad</li>
+                        <li>Cada momento es completo en sí mismo</li>
+                        <li>La muerte física pierde su aguijón</li>
+                        <li>Vives en la eternidad del ahora</li>
+                    </ul>
+                </div>
+                <div class="senales-box senales-peligro">
+                    <h4>Peligros Específicos:</h4>
+                    <ul>
+                        <li>Irresponsabilidad con compromisos</li>
+                        <li>Pérdida de memoria funcional</li>
+                        <li>Incapacidad de planificar necesario</li>
+                        <li>Confusión entre presente y disociación</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- MUERTE DE LA MUERTE -->
+        <div class="muerte-card muerte-muerte">
+            <span class="muerte-icon">☠️</span>
+            <h3 class="muerte-title">LA MUERTE DE LA MUERTE (Mṛtyu-Mṛtyu)</h3>
+            <p class="muerte-subtitle">La muerte del miedo a la muerte misma. Reconocimiento de que la consciencia es inmortal</p>
+
+            <div class="anatomia">
+                <h4>Comprensiones Necesarias:</h4>
+                <ul>
+                    <li>La muerte es un concepto, no una realidad</li>
+                    <li>Lo que teme morir nunca estuvo realmente vivo</li>
+                    <li>La consciencia no nace ni muere</li>
+                    <li>Cada momento es una muerte y renacimiento</li>
+                    <li>La muerte es la amiga más íntima de la vida</li>
+                </ul>
+            </div>
+
+            <div class="practica-nuclear">
+                <h4 class="practica-title">💀 PRÁCTICA SUPREMA: El Yoga de la Muerte</h4>
+                
+                <div style="margin: 20px 0; padding: 20px; background: rgba(139,0,0,0.3); border-radius: 10px;">
+                    <strong style="color: #ff6b6b;">Preparación:</strong>
+                    <ul style="margin-top: 10px; color: #ccc;">
+                        <li>Estudia los textos sobre la muerte consciente</li>
+                        <li>Visita cementerios y tanatorios</li>
+                        <li>Contempla cadáveres (si es posible y legal)</li>
+                        <li>Habla con personas en proceso de muerte</li>
+                        <li>Prepara tu propio testamento y funeral</li>
+                    </ul>
+                </div>
+
+                <div class="advertencia">
+                    <div class="advertencia-icon">☠️</div>
+                    <div class="advertencia-title">SOLO PARA PRACTICANTES MUY AVANZADOS</div>
+                    <p>Esta práctica debe hacerse solo con supervisión experta</p>
+                </div>
+
+                <h4 style="margin: 30px 0 20px 0; color: #ff6b6b;">Práctica Central:</h4>
+                
+                <ol class="practica-steps">
+                    <li>Acuéstate en postura de cadáver (shavasana)</li>
+                    <li>Ralentiza conscientemente la respiración</li>
+                    <li>Reduce el ritmo cardíaco con la mente</li>
+                    <li>Retira la energía de las extremidades</li>
+                    <li>Concentra toda la consciencia en el centro</li>
+                    <li>Simula el proceso de muerte física</li>
+                    <li>En el punto de casi-muerte, observa qué permanece</li>
+                    <li>Regresa lentamente, renacido</li>
+                </ol>
+
+                <div style="margin: 20px 0; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 10px; border: 2px solid #ff4444;">
+                    <strong style="color: #ff6b6b;">Integración: Vivir Como Muerto</strong>
+                    <p style="margin-top: 15px;">Durante una semana después de la práctica:</p>
+                    <ul style="margin-top: 10px; color: #ccc;">
+                        <li>Considérate literalmente muerto</li>
+                        <li>Todo lo que hagas es "tiempo extra"</li>
+                        <li>No hay nada que perder (ya estás muerto)</li>
+                        <li>No hay nada que proteger</li>
+                        <li>Actúa desde la libertad total</li>
+                        <li>Sirve sin consideración personal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="senales">
+                <div class="senales-box senales-exito">
+                    <h4>Señales de la Muerte de la Muerte:</h4>
+                    <ul>
+                        <li>Puedes hablar de tu muerte con ligereza</li>
+                        <li>No hay contracción ante la idea de morir</li>
+                        <li>Ves la muerte como aventura, no tragedia</li>
+                        <li>Vives más plenamente por no temer morir</li>
+                        <li>Reconoces la muerte en cada exhalación</li>
+                    </ul>
+                </div>
+                <div class="senales-box senales-peligro">
+                    <h4>Peligros Específicos:</h4>
+                    <ul>
+                        <li>Tentaciones suicidas mal interpretadas</li>
+                        <li>Descuido temerario de la salud</li>
+                        <li>Nihilismo existencial profundo</li>
+                        <li>Disociación de la vida física</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Proceso Integral -->
+    <div class="section proceso-integral">
+        <h2 class="section-title">El Proceso Integral de Muerte Iniciática</h2>
+        <p style="text-align: center; margin-bottom: 40px; color: #999;">Las cuatro muertes no son secuenciales sino simultáneas y recursivas. Sin embargo, ofrecemos una estructura de inmersión progresiva:</p>
+
+        <div class="fase-integral">
+            <h3>FASE 1: PREPARACIÓN (3 meses)</h3>
+            
+            <div class="mes-detail">
+                <h4>Mes 1: Estudio y Contemplación</h4>
+                <p>Lee sobre la muerte en diferentes tradiciones • Medita diariamente sobre la impermanencia • Escribe tu propio obituario • Habla sobre la muerte abiertamente</p>
+            </div>
+
+            <div class="mes-detail">
+                <h4>Mes 2: Pequeñas Muertes</h4>
+                <p>Practica mini-muertes diarias (soltar, perder, terminar) • Ayuna periódicamente • Practica posturas de muerte • Reduce estímulos progresivamente</p>
+            </div>
+
+            <div class="mes-detail">
+                <h4>Mes 3: Preparación Intensiva</h4>
+                <p>Elige fecha para la muerte iniciática • Prepara el espacio ritual • Informa a personas de confianza • Completa asuntos pendientes</p>
+            </div>
+        </div>
+
+        <div class="fase-integral">
+            <h3>FASE 2: INMERSIÓN (7-21 días)</h3>
+            
+            <div class="mes-detail">
+                <h4>Días 1-3: Muerte del Ego</h4>
+                <p>Aislamiento completo • Silencio total • Ayuno de agua • Prácticas de disolución del yo</p>
+            </div>
+
+            <div class="mes-detail">
+                <h4>Días 4-7: Muerte de Apegos</h4>
+                <p>Contemplación de pérdidas • Ofrenda mental de todo lo amado • Práctica del desapego radical • Llanto y duelo permitidos</p>
+            </div>
+
+            <div class="mes-detail">
+                <h4>Días 8-14: Muerte del Tiempo</h4>
+                <p>Sin relojes ni calendarios • Ciclos naturales únicamente • Disolución de memoria y anticipación • Presente eterno</p>
+            </div>
+
+            <div class="mes-detail">
+                <h4>Días 15-21: Muerte de la Muerte</h4>
+                <p>Prácticas de casi-muerte • Contemplación de la consciencia inmortal • Rendición total • Renacimiento</p>
+            </div>
+        </div>
+
+        <div class="fase-integral">
+            <h3>FASE 3: RENACIMIENTO (3 meses)</h3>
+            
+            <div class="mes-detail">
+                <h4>Mes 1: Estabilización</h4>
+                <p>Regreso muy gradual al mundo • Silencio parcial • Integración de la experiencia • Nuevas rutinas desde el vacío</p>
+            </div>
+
+            <div class="mes-detail">
+                <h4>Mes 2: Nueva Identidad</h4>
+                <p>Funcionar sin ego fijo • Relaciones desde el no-apego • Creatividad desde la muerte • Servicio desinteresado</p>
+            </div>
+
+            <div class="mes-detail">
+                <h4>Mes 3: Enseñanza</h4>
+                <p>Compartir la experiencia (con discernimiento) • Guiar a otros preparados • Vivir como ejemplo • Preparar el siguiente nivel</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Peligros y Protecciones -->
+    <div class="section">
+        <h2 class="section-title">Peligros Reales y Protecciones Necesarias</h2>
+        
+        <div class="advertencia">
+            <div class="advertencia-icon">⚠️</div>
+            <div class="advertencia-title">LA MUERTE INICIÁTICA NO ES UN JUEGO</div>
+            <p style="margin-top: 15px;">Los peligros son reales y requieren preparación seria y acompañamiento profesional.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 30px;">
+            <div style="background: rgba(139,0,0,0.2); padding: 25px; border-radius: 10px;">
+                <h3 style="color: #ff6b6b; margin-bottom: 15px;">Peligros Psicológicos:</h3>
+                <ul style="color: #ccc; list-style-position: inside;">
+                    <li>Fragmentación psicótica</li>
+                    <li>Depresión severa</li>
+                    <li>Despersonalización crónica</li>
+                    <li>Ideación suicida</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(139,0,0,0.2); padding: 25px; border-radius: 10px;">
+                <h3 style="color: #ff6b6b; margin-bottom: 15px;">Peligros Espirituales:</h3>
+                <ul style="color: #ccc; list-style-position: inside;">
+                    <li>Inflación al "sobrevivir"</li>
+                    <li>Nihilismo espiritual</li>
+                    <li>Pérdida de compasión</li>
+                    <li>Desconexión de humanidad</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(139,0,0,0.2); padding: 25px; border-radius: 10px;">
+                <h3 style="color: #ff6b6b; margin-bottom: 15px;">Peligros Físicos:</h3>
+                <ul style="color: #ccc; list-style-position: inside;">
+                    <li>Ayuno extremo</li>
+                    <li>Técnicas de respiración</li>
+                    <li>Aislamiento prolongado</li>
+                    <li>Prácticas de casi-muerte</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, rgba(0,100,0,0.2), rgba(0,0,0,0.3)); border-radius: 15px; border: 2px solid #006400;">
+            <h3 style="color: #00ff00; margin-bottom: 20px; font-size: 1.5rem;">PROTECCIONES ESENCIALES:</h3>
+            <ol style="color: #ccc; font-size: 1.1rem; line-height: 2;">
+                <li><strong style="color: #00ff00;">Guía experimentado</strong> (no negociable)</li>
+                <li><strong style="color: #00ff00;">Evaluación psicológica</strong> previa</li>
+                <li><strong style="color: #00ff00;">Red de apoyo</strong> informada</li>
+                <li><strong style="color: #00ff00;">Protocolo de emergencia</strong></li>
+                <li><strong style="color: #00ff00;">Integración posterior</strong> estructurada</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Testimonio -->
+    <div class="section">
+        <h2 class="section-title">Historia de una Muerte Iniciática Real</h2>
+        
+        <div class="testimonio">
+            <p>María, psicoterapeuta de 45 años, había practicado meditación por 20 años. Había leído todos los libros, asistido a retiros, tenido vislumbres de despertar. Pero algo en ella sabía que no había ido suficientemente profundo.</p>
+
+            <p style="margin-top: 20px;">Después de un año de preparación, entró en retiro de muerte iniciática. Los primeros días fueron terror puro. El ego luchó con cada arma: "Esto es peligroso", "Estás loca", "Tu familia te necesita".</p>
+
+            <p style="margin-top: 20px;">Al cuarto día, algo cedió. El ego, agotado, simplemente colapsó. Por primera vez en su vida, María experimentó la ausencia total de sí misma. No había María. Solo consciencia sin centro.</p>
+
+            <p style="margin-top: 20px;">Los siguientes días fueron un desmembramiento sistemático. Cada apego fue arrancado, no con violencia sino con la precisión de un cirujano cósmico. Su amor por sus hijos, su identidad como sanadora, su apego a la vida misma… todo fue ofrendado al vacío.</p>
+
+            <p style="margin-top: 20px;">Al día 12, el tiempo dejó de existir. No había pasado del cual venir ni futuro al cual ir. Solo un presente eterno que contenía todas las posibilidades.</p>
+
+            <p style="margin-top: 20px;">La última semana fue la más extraña. María estaba muerta, literalmente muerta desde su perspectiva, y sin embargo, el cuerpo continuaba respirando, el corazón latiendo. Desde ese espacio de muerte total, comenzó a percibir algo indestructible, algo que nunca había nacido y por lo tanto no podía morir.</p>
+
+            <p style="margin-top: 20px;">Cuando emergió del retiro, sus amigos notaron el cambio inmediatamente. Los ojos de María ya no buscaban nada. Su presencia era simultáneamente vacía y llena. Podía estar con el dolor de sus pacientes sin ser tocada por él, y sin embargo, su compasión era más profunda que nunca.</p>
+
+            <p style="margin-top: 20px;">"Morí", les dijo simplemente. "Y descubrí que la muerte es la mentira más grande que nos hemos contado."</p>
+
+            <div class="testimonio-autor">— Basado en experiencias compiladas de navegantes del vacío</div>
+        </div>
+    </div>
+
+    <!-- El Regalo -->
+    <div class="section">
+        <h2 class="section-title">El Regalo al Otro Lado de la Muerte</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px;">
+            <div style="background: linear-gradient(135deg, rgba(255,68,68,0.1), rgba(0,0,0,0.2)); padding: 25px; border-radius: 15px; border: 2px solid #ff4444;">
+                <h3 style="color: #ff6b6b; margin-bottom: 15px;">✨ Libertad Absoluta</h3>
+                <p>Nada puede amenazarte cuando ya has muerto</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(255,68,68,0.1), rgba(0,0,0,0.2)); padding: 25px; border-radius: 15px; border: 2px solid #ff4444;">
+                <h3 style="color: #ff6b6b; margin-bottom: 15px;">🎨 Creatividad Ilimitada</h3>
+                <p>El vacío es la fuente de toda creación</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(255,68,68,0.1), rgba(0,0,0,0.2)); padding: 25px; border-radius: 15px; border: 2px solid #ff4444;">
+                <h3 style="color: #ff6b6b; margin-bottom: 15px;">❤️ Amor sin Condiciones</h3>
+                <p>Cuando no hay yo, solo queda amor</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(255,68,68,0.1), rgba(0,0,0,0.2)); padding: 25px; border-radius: 15px; border: 2px solid #ff4444;">
+                <h3 style="color: #ff6b6b; margin-bottom: 15px;">⚡ Poder sin Ego</h3>
+                <p>Acción sin actor, poder sin corrupto</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(255,68,68,0.1), rgba(0,0,0,0.2)); padding: 25px; border-radius: 15px; border: 2px solid #ff4444;">
+                <h3 style="color: #ff6b6b; margin-bottom: 15px;">🕊️ Paz Inquebrantable</h3>
+                <p>Has tocado lo que no puede morir</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(255,68,68,0.1), rgba(0,0,0,0.2)); padding: 25px; border-radius: 15px; border: 2px solid #ff4444;">
+                <h3 style="color: #ff6b6b; margin-bottom: 15px;">🙏 Servicio Puro</h3>
+                <p>Sin yo que servir, el servicio fluye naturalmente</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Práctica de Cierre -->
+    <div class="practica-cierre">
+        <h2>💀 PRÁCTICA DE CIERRE: Carta Desde la Muerte</h2>
+        <p style="margin: 30px 0; font-size: 1.1rem; line-height: 1.8;">Antes de continuar al siguiente nodo:</p>
+        
+        <ol style="text-align: left; max-width: 700px; margin: 0 auto; font-size: 1.05rem; line-height: 2;">
+            <li>Imagina que has muerto hace una hora</li>
+            <li>Desde ese espacio post-mortem, escribe una carta a ti mismo</li>
+            <li>¿Qué le dirías al que fuiste?</li>
+            <li>¿Qué era realmente importante?</li>
+            <li>¿De qué te arrepientes?</li>
+            <li>¿Qué celebras?</li>
+            <li>Guarda esta carta</li>
+            <li>Léela cada luna nueva</li>
+        </ol>
+
+        <p style="margin-top: 40px; font-style: italic; color: #ff8888;">Esta carta es tu recordatorio de lo que la muerte enseña.</p>
+    </div>
+
+    <!-- Navegación -->
+    <div class="navegacion">
+        <a href="nodo_01.html" class="nav-button">← NODO 1: Cartografía del Vacío</a>
+        <a href="index.html" class="nav-button">🏠 ÍNDICE</a>
+        <a href="nodo_03.html" class="nav-button">NODO 3: Navegación del Abismo →</a>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin: 60px 0; padding: 40px; background: rgba(0,0,0,0.5); border-radius: 15px;">
+        <p style="font-size: 1.2rem; color: #ff6b6b; margin-bottom: 15px;">Has leído sobre la muerte iniciática.</p>
+        <p style="color: #999; font-style: italic;">Pero leer sobre la muerte no es morir.</p>
+        <p style="color: #999; font-style: italic; margin-top: 10px;">El verdadero trabajo comienza ahora.</p>
+        
+        <div style="margin-top: 40px; font-size: 2rem;">
+            💀 🕳️ ✨
+        </div>
+        
+        <p style="margin-top: 30px; color: #666; font-size: 0.9rem;">
+            CONSTELACIÓN TRINITY • LIBRO 6: EL VACÍO FÉRTIL • NODO 2/7
+        </p>
+    </div>
+</div>
+
+<script>
+    // Animación del canvas de fondo
+    const canvas = document.getElementById('voidCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    // Partículas que representan la muerte y disolución
+    const particles = [];
+    const particleCount = 80;
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedY = Math.random() * 0.5 + 0.2;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.opacity = Math.random() * 0.5 + 0.2;
+            this.hue = 0; // Rojo oscuro para la muerte
+        }
+
+        update() {
+            this.y -= this.speedY;
+            this.x += this.speedX;
+            
+            // Efecto de disolución
+            this.opacity -= 0.002;
+            
+            if (this.y < 0 || this.opacity <= 0) {
+                this.reset();
+                this.y = canvas.height;
+            }
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(139, 0, 0, ${this.opacity})`;
+            ctx.fill();
+            
+            // Glow effect
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = `rgba(255, 68, 68, ${this.opacity * 0.5})`;
+        }
+    }
+
+    // Inicializar partículas
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    // Animación
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Efecto hover en las cards
+    const muerteCards = document.querySelectorAll('.muerte-card');
+    
+    muerteCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+```
+
+</body>
+</html>
