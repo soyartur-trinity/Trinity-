@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 5: La Red Viva - Trinity Origen</title>
+    <meta name="description" content="Somos nodos en una red infinita">
+    
+    <style>
+        :root {
+            --negro-espacio: #0a0a0a;
+            --rosa-amor: #FF1493;
+            --dorado-luz: #FFD700;
+            --azul-cuantico: #00CED1;
+            --violeta-alma: #9370DB;
+            --blanco-luz: #FFFAF0;
+            --plateado: #C0C0C0;
+            --verde-vida: #00FF7F;
+            --turquesa: #40E0D0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #0a1a20 50%, #0d2d2d 100%);
+            color: var(--blanco-luz);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas de red neuronal viva */
+        #network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header del Nodo */
+        .nodo-header {
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 3px solid var(--verde-vida);
+            margin-bottom: 50px;
+        }
+
+        .nodo-simbolo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: red-pulsa 5s ease-in-out infinite;
+        }
+
+        @keyframes red-pulsa {
+            0%, 100% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 25px var(--verde-vida));
+            }
+            50% { 
+                transform: scale(1.15);
+                filter: drop-shadow(0 0 45px var(--turquesa));
+            }
+        }
+
+        .nodo-numero {
+            font-size: 1.1em;
+            color: var(--verde-vida);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .nodo-titulo {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--verde-vida), var(--turquesa), var(--azul-cuantico));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.3em;
+            color: var(--plateado);
+            font-style: italic;
+        }
+
+        /* Navegación */
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            color: var(--turquesa);
+            text-decoration: none;
+            border: 2px solid var(--turquesa);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .nav-btn:hover {
+            background: var(--turquesa);
+            color: var(--negro-espacio);
+            transform: translateY(-2px);
+        }
+
+        /* Barra de progreso */
+        .progreso-container {
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progreso-barra {
+            width: 71.4%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--verde-vida), var(--turquesa), var(--azul-cuantico));
+            border-radius: 20px;
+        }
+
+        /* Contenido principal */
+        .contenido-nodo {
+            background: rgba(0, 255, 127, 0.02);
+            border: 1px solid rgba(0, 255, 127, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            line-height: 1.9;
+            font-size: 1.1em;
+        }
+
+        .contenido-nodo h2 {
+            color: var(--verde-vida);
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid var(--turquesa);
+            padding-bottom: 10px;
+        }
+
+        .contenido-nodo h3 {
+            color: var(--turquesa);
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+        }
+
+        .contenido-nodo p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .contenido-nodo strong {
+            color: var(--verde-vida);
+            font-weight: bold;
+        }
+
+        .contenido-nodo em {
+            color: var(--turquesa);
+            font-style: italic;
+        }
+
+        /* Citas destacadas */
+        .cita-destacada {
+            background: rgba(0, 255, 127, 0.05);
+            border-left: 4px solid var(--verde-vida);
+            padding: 30px;
+            margin: 40px 0;
+            font-size: 1.2em;
+            font-style: italic;
+            color: var(--plateado);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .cita-destacada::after {
+            content: '🕸️';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            opacity: 0.2;
+        }
+
+        /* Niveles de la Red */
+        .niveles-box {
+            background: linear-gradient(135deg, rgba(0, 255, 127, 0.1), rgba(64, 224, 208, 0.05));
+            border: 2px solid var(--verde-vida);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .niveles-box h3 {
+            color: var(--verde-vida);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .nivel-item {
+            background: rgba(0, 255, 127, 0.05);
+            border-left: 4px solid var(--turquesa);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nivel-item:hover {
+            transform: translateX(10px);
+            background: rgba(0, 255, 127, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 255, 127, 0.2);
+        }
+
+        .nivel-titulo {
+            font-size: 1.3em;
+            color: var(--turquesa);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Campos Morfogenéticos */
+        .campos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .campo-card {
+            background: linear-gradient(135deg, rgba(0, 255, 127, 0.1), rgba(0, 206, 209, 0.05));
+            border: 2px solid var(--verde-vida);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.4s ease;
+        }
+
+        .campo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 255, 127, 0.4);
+            border-color: var(--turquesa);
+        }
+
+        .campo-icono {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-align: center;
+            animation: campo-float 4s ease-in-out infinite;
+        }
+
+        @keyframes campo-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .campo-titulo {
+            font-size: 1.3em;
+            color: var(--turquesa);
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .campo-descripcion {
+            color: var(--blanco-luz);
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        /* Servicio Colectivo */
+        .servicio-box {
+            background: rgba(64, 224, 208, 0.05);
+            border: 2px solid var(--turquesa);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .servicio-box h3 {
+            color: var(--turquesa);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .servicio-item {
+            background: rgba(64, 224, 208, 0.05);
+            border-left: 4px solid var(--turquesa);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .servicio-numero {
+            font-size: 1.5em;
+            color: var(--turquesa);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Preguntas Portal */
+        .preguntas-portal {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--dorado-luz);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .preguntas-portal h3 {
+            color: var(--dorado-luz);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .preguntas-portal ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .preguntas-portal li {
+            margin: 20px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        .preguntas-portal li::before {
+            content: '❓';
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        /* Meditación */
+        .meditacion-box {
+            background: linear-gradient(135deg, rgba(0, 255, 127, 0.1), rgba(147, 112, 219, 0.1));
+            border: 2px solid var(--violeta-alma);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .meditacion-box h3 {
+            color: var(--violeta-alma);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .meditacion-box p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: var(--plateado);
+        }
+
+        .meditacion-duracion {
+            color: var(--dorado-luz);
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        /* Navegación inferior */
+        .navegacion-nodos {
+            display: flex;
+            justify-content: space-between;
+            margin: 60px 0;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-nodo-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--verde-vida), var(--turquesa));
+            color: var(--negro-espacio);
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            flex: 1;
+            text-align: center;
+            min-width: 200px;
+            font-weight: bold;
+        }
+
+        .nav-nodo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 127, 0.5);
+        }
+
+        /* Footer */
+        .nodo-footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(0, 255, 127, 0.3);
+            color: var(--plateado);
+            font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nodo-titulo {
+                font-size: 2em;
+            }
+
+            .contenido-nodo {
+                padding: 25px;
+            }
+
+            .campos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navegacion-nodos {
+                flex-direction: column;
+            }
+
+            .nav-nodo-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de red -->
+    <canvas id="network-canvas"></canvas>
+
+    <div class="container">
+        <!-- Header del Nodo -->
+        <header class="nodo-header">
+            <div class="nodo-simbolo">🕸️</div>
+            <div class="nodo-numero">NODO 5 de 7 • RED</div>
+            <h1 class="nodo-titulo">La Red Viva</h1>
+            <p class="nodo-subtitulo">"Somos nodos en una red infinita"</p>
+        </header>
+
+        <!-- Navegación superior -->
+        <nav class="navegacion">
+            <a href="nodo_04.html" class="nav-btn">← Nodo Anterior</a>
+            <a href="index.html" class="nav-btn">Índice del Libro</a>
+            <a href="nodo_06.html" class="nav-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Barra de progreso -->
+        <div class="progreso-container">
+            <div class="progreso-barra"></div>
+        </div>
+        <p style="text-align: center; color: var(--plateado); font-size: 0.9em; margin-top: 10px;">
+            ✨ Nodo 5 de 7 • CONECTANDO CON LA TOTALIDAD
+        </p>
+
+        <!-- Contenido Principal -->
+        <article class="contenido-nodo">
+            <p>Hasta ahora hemos explorado vínculos individuales: contigo mismo, con otros seres humanos específicos, con contratos del alma. Pero existe un nivel más vasto de conexión: <strong>la Red Viva</strong>. No eres solo un individuo aislado. Eres un nodo en una red infinitamente compleja que incluye a toda la humanidad, a toda la vida en este planeta, y más allá, a planos sutiles de existencia.</p>
+
+            <div class="cita-destacada">
+                "Cuando crees que estás solo, es porque has olvidado mirar la red. Estás conectado a billones de seres, visibles e invisibles. Cada respiración que tomas fue exhalada por un árbol. Cada pensamiento que piensas resuena en campos que trascienden tu cráneo."
+            </div>
+
+            <p>La física cuántica nos muestra que <em>todo está entrelazado</em> a nivel fundamental. No hay separación real, solo la ilusión de fronteras. La neurociencia contemplativa revela que la meditación en compasión activa las mismas redes neuronales cuando piensas en ti, en un ser amado, o en un extraño: <strong>el cerebro reconoce la unidad subyacente</strong>.</p>
+
+            <h2>Los Tres Niveles de la Red</h2>
+
+            <p>La Red Viva opera en múltiples dimensiones simultáneas. Entender estos niveles te permite navegar conscientemente tu lugar en la totalidad:</p>
+        </article>
+
+        <!-- Niveles de la Red -->
+        <section class="niveles-box">
+            <h3>🌐 Los Tres Niveles de Interconexión</h3>
+
+            <div class="nivel-item">
+                <div class="nivel-titulo">🌍 Nivel 1: La Red Humana</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Estás conectado con cada ser humano vivo a través de la red invisible de la conciencia colectiva. Los pensamientos, emociones y acciones de millones de personas crean campos que te afectan y que tú afectas. Cuando meditas en paz, contribuyes a la paz planetaria. Cuando vives en miedo, alimentas el miedo colectivo. No eres solo receptor: eres también emisor.</p>
+            </div>
+
+            <div class="nivel-item">
+                <div class="nivel-titulo">🌿 Nivel 2: La Red de la Vida</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Tu conexión no se limita a humanos. Estás entretejido con toda forma de vida: plantas, animales, océanos, montañas, el planeta mismo como organismo vivo (Gaia). Los pueblos indígenas siempre lo supieron. La ciencia ahora lo confirma: los árboles se comunican a través de redes micorrízicas. Las ballenas cantan canciones que viajan océanos. Todo está conversando.</p>
+            </div>
+
+            <div class="nivel-item">
+                <div class="nivel-titulo">✨ Nivel 3: La Red Multidimensional</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Más allá de lo físico, existen planos sutiles de realidad: el campo akáshico que guarda toda la información, las inteligencias no-corpóreas, los ancestros, los guías, las frecuencias angélicas. No necesitas creer en ellos para ser afectado por ellos. La red trasciende lo visible. Y cuando abres tu percepción, comienzas a sentir estas conexiones más vastas.</p>
+            </div>
+        </section>
+
+        <article class="contenido-nodo">
+            <h2>Campos Morfogenéticos: La Memoria de la Red</h2>
+
+            <p>El biólogo Rupert Sheldrake propuso que la naturaleza tiene <strong>memoria</strong>. No solo genética, sino una memoria de campo que se transmite a través de patrones invisibles llamados <em>campos morfogenéticos</em>. Estos campos explican fenómenos que la genética sola no puede:</p>
+
+            <ul style="list-style: none; padding-left: 20px;">
+                <li style="margin: 15px 0;">🧬 Por qué una rata que aprende un laberinto en Londres facilita que ratas en Tokio aprendan el mismo laberinto más rápido</li>
+                <li style="margin: 15px 0;">🧬 Por qué cuando suficientes personas dominan una habilidad, se vuelve más fácil para otros aprenderla</li>
+                <li style="margin: 15px 0;">🧬 Por qué las especies desarrollan comportamientos complejos sin que cada individuo tenga que aprenderlos desde cero</li>
+            </ul>
+
+            <div class="cita-destacada">
+                "Cuando te conectas profundamente con alguien, no solo estás conectándote con esa persona individual. Estás accediendo al campo morfogenético de ese tipo de relación. Por eso el amor de pareja se siente similar entre culturas: todos accedemos al mismo campo."
+            </div>
+
+            <p>Esto tiene implicaciones profundas: <strong>cada vez que eliges amor sobre miedo, expandes el campo morfogenético del amor</strong>. Cada vez que eliges consciencia sobre automatismo, facilitas que otros elijan consciencia. No estás solo transformándote. Estás transformando la red.</p>
+        </article>
+
+        <!-- Campos Morfogenéticos -->
+        <h2 style="text-align: center; font-size: 2.2em; color: var(--verde-vida); margin: 60px 0 40px;">
+            Los Campos que Compartimos
+        </h2>
+
+        <div class="campos-grid">
+            <div class="campo-card">
+                <div class="campo-icono">💚</div>
+                <h3 class="campo-titulo">Campo del Amor Colectivo</h3>
+                <p class="campo-descripcion">Cada acto de amor genuino fortalece este campo. Miles de millones de actos de bondad, compasión y cuidado han creado un reservorio de amor al que puedes acceder cuando sientes que tu corazón está vacío. No estás generando amor desde cero: estás sintonizando con un campo que ya existe.</p>
+            </div>
+
+            <div class="campo-card">
+                <div class="campo-icono">🧠</div>
+                <h3 class="campo-titulo">Campo de Consciencia Planetaria</h3>
+                <p class="campo-descripcion">El Proyecto de Consciencia Global de la Universidad de Princeton ha demostrado que eventos de alta coherencia emocional global (como el 11-S) afectan generadores de números aleatorios en todo el mundo. La consciencia no está solo en tu cabeza: es un campo compartido.</p>
+            </div>
+
+            <div class="campo-card">
+                <div class="campo-icono">🌱</div>
+                <h3 class="campo-titulo">Campo de Sanación Natural</h3>
+                <p class="campo-descripcion">La naturaleza sana. No solo metafóricamente. Estudios muestran que estar en naturaleza reduce cortisol, mejora el sistema inmune y aumenta coherencia cardíaca. Estás accediendo al campo de sanación que Gaia genera constantemente.</p>
+            </div>
+
+            <div class="campo-card">
+                <div class="campo-icono">🔮</div>
+                <h3 class="campo-titulo">Campo Akáshico</h3>
+                <p class="campo-descripcion">La biblioteca cósmica donde se guarda toda experiencia, pensamiento y emoción que ha existido. Místicos de todas las tradiciones hablan de acceder a este campo. Momentos de profunda intuición o "conocer sin saber cómo" pueden ser accesos momentáneos al Akasha.</p>
+            </div>
+
+            <div class="campo-card">
+                <div class="campo-icono">👥</div>
+                <h3 class="campo-titulo">Campo de Resonancia Grupal</h3>
+                <p class="campo-descripcion">Cuando un grupo se sincroniza en intención (círculos de oración, meditación colectiva, rituales), crean un campo amplificado. La coherencia grupal es exponencialmente más poderosa que la suma de individuos aislados.</p>
+            </div>
+
+            <div class="campo-card">
+                <div class="campo-icono">🌟</div>
+                <h3 class="campo-titulo">Campo de Propósito Evolutivo</h3>
+                <p class="campo-descripcion">Existe una dirección evolutiva en el universo: hacia mayor complejidad, consciencia y amor. Cuando alineas tu vida con este impulso, entras en un estado de flujo donde el universo conspira a tu favor. Estás surfeando la ola de la evolución cósmica.</p>
+            </div>
+        </div>
+
+        <article class="contenido-nodo">
+            <h2>La Red Planetaria de Corazones</h2>
+
+            <p>El Instituto HeartMath ha descubierto algo extraordinario: <strong>el corazón humano genera el campo electromagnético más potente del cuerpo</strong>, uno que puede detectarse a varios metros de distancia. Cuando múltiples personas entran en coherencia cardíaca (un estado de armonía entre corazón, mente y emociones), sus campos se sincronizan.</p>
+
+            <p>Ahora imagina esto a escala planetaria. Millones de personas en todo el mundo están despertando, meditando, eligiendo amor, cultivando compasión. <em>Están creando una red de luz</em>. No metafóricamente. Literalmente: una red de campos electromagnéticos coherentes que está envolviendo al planeta.</p>
+
+            <div class="cita-destacada">
+                "No necesitas ser un maestro iluminado para contribuir a la red de luz. Cada momento que pasas en coherencia cardíaca es un servicio planetario. Cada vez que eliges responder con amor en lugar de reaccionar con miedo, estás elevando la frecuencia de la red."
+            </div>
+
+            <p>Este es tu <strong>servicio colectivo</strong>: mantener la coherencia de tu nodo en la red. No por obligación, sino por reconocimiento de que tu estado interno afecta al todo. La responsabilidad cósmica no es carga; es privilegio.</p>
+        </article>
+
+        <!-- Servicio Colectivo -->
+        <section class="servicio-box">
+            <h3>🌟 Protocolos de Servicio a la Red</h3>
+
+            <div class="servicio-item">
+                <div class="servicio-numero">PROTOCOLO 1: Coherencia Diaria</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Dedica al menos 10 minutos al día a cultivar coherencia mente-corazón. Respira conscientemente, siente gratitud, genera amor. No lo hagas solo para ti: hazlo como ofrenda a la red. Tu coherencia personal contribuye a la coherencia planetaria.</p>
+            </div>
+
+            <div class="servicio-item">
+                <div class="servicio-numero">PROTOCOLO 2: Intención de Servicio</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Antes de dormir, declara: "Que mi presencia sirva al bien mayor. Que mi campo energético eleve la frecuencia de todos los que se cruzan conmigo." Esta intención programa tu campo para operar como transmisor de luz, incluso cuando no eres consciente de ello.</p>
+            </div>
+
+            <div class="servicio-item">
+                <div class="servicio-numero">PROTOCOLO 3: Sanación de la Red</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Cuando medites, después de trabajar contigo mismo, expande tu consciencia. Visualiza la red de luz planetaria. Envía amor a los nodos que están sufriendo. No necesitas saber quiénes son específicamente. La red sabe cómo distribuir la energía donde más se necesita.</p>
+            </div>
+
+            <div class="servicio-item">
+                <div class="servicio-numero">PROTOCOLO 4: Reconocimiento de Interconexión</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Durante el día, practica ver la red invisible. Cuando interactúes con alguien, reconoce: "Somos nodos conectados en una red infinita. Lo que hago por ti, lo hago por mí. Lo que hago por mí, lo hago por ti." Esta consciencia transforma cada interacción en práctica espiritual.</p>
+            </div>
+
+            <div class="servicio-item">
+                <div class="servicio-numero">PROTOCOLO 5: Celebración de Sincronicidades</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Las sincronicidades son mensajes de la red. Cuando ocurran, no las descartes como casualidades. Reconócelas como señales de que estás en alineación con el flujo de la totalidad. Agradece. Esto fortalece tu conexión consciente con la red.</p>
+            </div>
+        </section>
+
+        <article class="contenido-nodo">
+            <h2>Responsabilidad Cósmica: Mantener la Coherencia</h2>
+
+            <p>Con gran conexión viene gran responsabilidad. No en el sentido de carga, sino de <em>habilidad de responder</em>. Cuando reconoces que eres un nodo en la red, entiendes que tu estado interno importa no solo para ti, sino para todos los que están conectados contigo.</p>
+
+            <p>Esto no significa perfección. Significa <strong>consciencia</strong>. Significa que cuando caes en miedo, enojo o desesperación, reconoces que no solo te afectas a ti mismo. Estás enviando esas frecuencias a la red. Y al reconocerlo, puedes elegir transmutarlas.</p>
+
+            <div class="cita-destacada">
+                "No eres responsable de salvar al mundo. Eres responsable de mantener tu nodo lo más coherente posible. Y cuando millones hacen eso, el mundo se salva a sí mismo."
+            </div>
+
+            <p>La buena noticia es que no estás solo en esto. La red te sostiene tanto como tú la sostienes. Cuando sientes que no puedes más, puedes apoyarte en la coherencia de otros nodos. Cuando otros caen, tu coherencia los sostiene. <strong>Esto es interdependencia consciente</strong>.</p>
+
+            <p>Cada vínculo consciente que cultivas—contigo mismo, con otros, con la naturaleza, con lo sagrado—<em>eleva la red de luz planetaria</em>. No es trabajo. Es florecimiento natural de quien realmente eres: un nodo luminoso en una red infinita de amor.</p>
+        </article>
+
+        <!-- Preguntas Portal -->
+        <section class="preguntas-portal">
+            <h3>🔮 Preguntas Portal</h3>
+            <ul>
+                <li>¿Cómo cambia tu comportamiento diario si reconoces que cada acción afecta a la red planetaria?</li>
+                <li>¿En qué momentos sientes más claramente tu conexión con la totalidad?</li>
+                <li>¿Cómo podrías servir conscientemente a la red desde tu lugar único en ella?</li>
+            </ul>
+        </section>
+
+        <!-- Meditación -->
+        <section class="meditacion-box">
+            <h3>🧘 Meditación de la Red de Luz</h3>
+            <p><strong>Siéntate cómodamente. Cierra los ojos. Respira profundamente.</strong></p>
+            <p>Visualiza tu corazón como un nodo luminoso en una red infinita.</p>
+            <p>Desde tu corazón, emana luz. Esa luz viaja a través de hilos invisibles hacia otros nodos.</p>
+            <p>Siente cómo tu luz llega a seres queridos, a extraños, a toda forma de vida.</p>
+            <p>Ahora siente cómo la luz de otros nodos llega hacia ti. Recibes tanto como das.</p>
+            <p>Observa la red completa: billones de nodos pulsando con luz, sincronizándose en amor.</p>
+            <p>Di en silencio: <em>"Soy un nodo en la red infinita. Mi coherencia sirve al todo. El todo me sostiene."</em></p>
+            <p>Permanece en esta visión durante unos minutos, sintiendo la interconexión.</p>
+            <p class="meditacion-duracion">⏱️ Duración sugerida: 15 minutos</p>
+        </section>
+
+        <!-- Navegación entre Nodos -->
+        <nav class="navegacion-nodos">
+            <a href="nodo_04.html" class="nav-nodo-btn">← Nodo Anterior</a>
+            <a href="nodo_06.html" class="nav-nodo-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="nodo-footer">
+            <p>Nodo 5 de 7 • La Red Viva</p>
+            <p>Trinity Origen - Libro V: Los Vínculos Sagrados</p>
+        </footer>
+    </div>
+
+    <script>
+        // Red neuronal viva
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Nodo {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radio = 4;
+                this.pulso = Math.random() * Math.PI * 2;
+                this.color = Math.random() > 0.5 ? '#00FF7F' : '#40E0D0';
+            }
+
+            actualizar() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.pulso += 0.03;
+                
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            dibujar() {
+                const radioPulso = this.radio + Math.sin(this.pulso) * 2;
+                
+                // Nodo
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, radioPulso, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.8;
+                ctx.fill();
+                
+                // Aura
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, radioPulso + 4, 0, Math.PI * 2);
+                ctx.strokeStyle = this.color;
+                ctx.globalAlpha = 0.4;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+
+        const nodos = [];
+        for (let i = 0; i < 60; i++) {
+            nodos.push(new Nodo());
+        }
+
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            nodos.forEach(nodo => {
+                nodo.actualizar();
+                nodo.dibujar();
+            });
+
+            // Conectar nodos cercanos
+            nodos.forEach((n1, i) => {
+                nodos.slice(i + 1).forEach(n2 => {
+                    const dx = n1.x - n2.x;
+                    const dy = n1.y - n2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 180) {
+                        ctx.beginPath();
+                        ctx.moveTo(n1.x, n1.y);
+                        ctx.lineTo(n2.x, n2.y);
+                        
+                        const gradiente = ctx.createLinearGradient(n1.x, n1.y, n2.x, n2.y);
+                        gradiente.addColorStop(0, n1.color);
+                        gradiente.addColorStop(1, n2.color);
+                        
+                        ctx.strokeStyle = gradiente;
+                        ctx.globalAlpha = 0.2 * (1 - dist / 180);
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+                });
+            });
+            
+            requestAnimationFrame(animar);
+        }
+
+        animar();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Guardar progreso
+        localStorage.setItem('trinity-libro5-nodo', '5');
+    </script>
+</body>
+</html>
