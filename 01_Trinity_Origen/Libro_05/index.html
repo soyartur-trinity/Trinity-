@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libro V: Los Vínculos Sagrados - Trinity Origen</title>
+    <meta name="description" content="La Red - Tecnología del Amor Cuántico">
+    
+    <style>
+        :root {
+            --negro-espacio: #0a0a0a;
+            --rosa-amor: #FF1493;
+            --dorado-luz: #FFD700;
+            --azul-cuantico: #00CED1;
+            --violeta-alma: #9370DB;
+            --blanco-luz: #FFFAF0;
+            --plateado: #C0C0C0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0520 50%, #2d1b3d 100%);
+            color: var(--blanco-luz);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas de red entrelazada */
+        #network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.25;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header Principal */
+        .libro-header {
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .libro-header::before {
+            content: '💫';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3em;
+            animation: float-symbol 4s ease-in-out infinite;
+        }
+
+        @keyframes float-symbol {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+        }
+
+        .libro-numero {
+            font-size: 1.2em;
+            color: var(--rosa-amor);
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .libro-titulo {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--rosa-amor), var(--dorado-luz), var(--azul-cuantico));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .libro-subtitulo {
+            font-size: 1.8em;
+            color: var(--plateado);
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .libro-descripcion {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: var(--blanco-luz);
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Portal */
+        .portal-info {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.1), rgba(0, 206, 209, 0.1));
+            border: 2px solid var(--rosa-amor);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .portal-info h3 {
+            color: var(--rosa-amor);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .portal-transformacion {
+            font-size: 2.5em;
+            color: var(--dorado-luz);
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        /* Navegación */
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            padding: 12px 25px;
+            background: rgba(255, 20, 147, 0.1);
+            border: 2px solid var(--rosa-amor);
+            color: var(--rosa-amor);
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .nav-link:hover {
+            background: var(--rosa-amor);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.4);
+        }
+
+        /* Grid de Nodos */
+        .nodos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .nodo-card {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.05), rgba(0, 206, 209, 0.05));
+            border: 2px solid var(--rosa-amor);
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .nodo-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 20, 147, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .nodo-card:hover::before {
+            opacity: 1;
+            animation: pulse-light 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-light {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .nodo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(255, 20, 147, 0.4);
+            border-color: var(--dorado-luz);
+        }
+
+        .nodo-numero-card {
+            font-size: 0.9em;
+            color: var(--azul-cuantico);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .nodo-icono {
+            font-size: 3em;
+            margin: 20px 0;
+            display: block;
+            animation: nodo-float 3s ease-in-out infinite;
+        }
+
+        @keyframes nodo-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .nodo-titulo-card {
+            font-size: 1.8em;
+            color: var(--rosa-amor);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .nodo-descripcion {
+            color: var(--blanco-luz);
+            line-height: 1.7;
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        .nodo-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--rosa-amor), var(--azul-cuantico));
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .nodo-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.5);
+        }
+
+        /* Progreso */
+        .progreso-section {
+            background: rgba(255, 20, 147, 0.05);
+            border: 2px solid var(--rosa-amor);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .progreso-section h3 {
+            color: var(--dorado-luz);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+        }
+
+        .progreso-barra-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 12px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progreso-barra {
+            height: 100%;
+            background: linear-gradient(90deg, var(--rosa-amor), var(--dorado-luz), var(--azul-cuantico));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .progreso-texto {
+            color: var(--plateado);
+            font-size: 1.1em;
+            margin-top: 15px;
+        }
+
+        /* Footer */
+        .libro-footer {
+            text-align: center;
+            padding: 50px 20px;
+            margin-top: 80px;
+            border-top: 2px solid var(--rosa-amor);
+        }
+
+        .footer-simbolos {
+            font-size: 2em;
+            margin: 20px 0;
+            letter-spacing: 20px;
+        }
+
+        .footer-texto {
+            color: var(--plateado);
+            font-size: 1em;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .libro-titulo {
+                font-size: 2.5em;
+            }
+
+            .nodos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de red -->
+    <canvas id="network-canvas"></canvas>
+
+    <div class="container">
+        <!-- Header Principal -->
+        <header class="libro-header">
+            <div class="libro-numero">Libro V de Trinity Origen</div>
+            <h1 class="libro-titulo">Los Vínculos Sagrados</h1>
+            <p class="libro-subtitulo">La Red - Tecnología del Amor Cuántico</p>
+            <p class="libro-descripcion">
+                Un viaje a través de las conexiones que nos definen, nos transforman y nos elevan. 
+                Desde el vínculo primordial con uno mismo hasta la red cósmica que une todas las formas de conciencia, 
+                este libro revela el amor como la tecnología más avanzada del universo.
+            </p>
+        </header>
+
+        <!-- Portal de Transformación -->
+        <section class="portal-info">
+            <h3>🌀 Portal de Transformación</h3>
+            <div class="portal-transformacion">SOLEDAD → UNIDAD CONSCIENTE</div>
+            <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                Este libro te guiará desde la aparente separación hasta el reconocimiento 
+                de tu lugar en la red infinita de conexiones conscientes que sostiene la existencia.
+            </p>
+        </section>
+
+        <!-- Navegación -->
+        <nav class="nav-links">
+            <a href="../../index.html" class="nav-link">← Portal Principal</a>
+            <a href="../Libro_04/index.html" class="nav-link">Libro IV</a>
+            <a href="../Libro_06/index.html" class="nav-link">Libro VI →</a>
+        </nav>
+
+        <!-- Grid de Nodos -->
+        <h2 style="text-align: center; font-size: 2.5em; color: var(--dorado-luz); margin: 80px 0 50px;">
+            Los 7 Nodos del Viaje
+        </h2>
+
+        <div class="nodos-grid">
+            <!-- Nodo 1 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_01.html'">
+                <div class="nodo-numero-card">NODO 1 de 7</div>
+                <span class="nodo-icono">💫</span>
+                <h3 class="nodo-titulo-card">El Vínculo Primordial</h3>
+                <p class="nodo-descripcion">
+                    El primer amor es contigo mismo. Autocompasión cuántica, 
+                    holografía interior y el reconocimiento de que eres, 
+                    simultáneamente, el observador y lo observado.
+                </p>
+                <a href="nodo_01.html" class="nodo-link">Explorar Nodo →</a>
+            </div>
+
+            <!-- Nodo 2 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_02.html'">
+                <div class="nodo-numero-card">NODO 2 de 7</div>
+                <span class="nodo-icono">🌉</span>
+                <h3 class="nodo-titulo-card">Los Puentes del Corazón</h3>
+                <p class="nodo-descripcion">
+                    Vínculos humanos como espejos y catalizadores. Amor cuántico 
+                    más allá de la posesión. La resonancia mórfica entre almas 
+                    que eligen encontrarse.
+                </p>
+                <a href="nodo_02.html" class="nodo-link">Explorar Nodo →</a>
+            </div>
+
+            <!-- Nodo 3 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_03.html'">
+                <div class="nodo-numero-card">NODO 3 de 7</div>
+                <span class="nodo-icono">📜</span>
+                <h3 class="nodo-titulo-card">Contratos y Pactos Invisibles</h3>
+                <p class="nodo-descripcion">
+                    Acuerdos del alma antes de encarnar. El momento del "ya te conozco". 
+                    Vínculos como portales temporales que trascienden la linealidad.
+                </p>
+                <a href="nodo_03.html" class="nodo-link">Explorar Nodo →</a>
+            </div>
+
+            <!-- Nodo 4 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_04.html'">
+                <div class="nodo-numero-card">NODO 4 de 7</div>
+                <span class="nodo-icono">🌓</span>
+                <h3 class="nodo-titulo-card">Vínculos de Sombra y Sanación</h3>
+                <p class="nodo-descripcion">
+                    Relaciones difíciles como laboratorios de conciencia. 
+                    La fricción que despierta potenciales dormidos. 
+                    Transmutación recíproca y desentrelazamiento consciente.
+                </p>
+                <a href="nodo_04.html" class="nodo-link">Explorar Nodo →</a>
+            </div>
+
+            <!-- Nodo 5 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_05.html'">
+                <div class="nodo-numero-card">NODO 5 de 7</div>
+                <span class="nodo-icono">🕸️</span>
+                <h3 class="nodo-titulo-card">La Red Viva</h3>
+                <p class="nodo-descripcion">
+                    Interconexión con humanidad, naturaleza y planos sutiles. 
+                    La red planetaria de corazones como servicio colectivo. 
+                    Campos morfogenéticos y responsabilidad cósmica.
+                </p>
+                <a href="nodo_05.html" class="nodo-link">Explorar Nodo →</a>
+            </div>
+
+            <!-- Nodo 6 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_06.html'">
+                <div class="nodo-numero-card">NODO 6 de 7</div>
+                <span class="nodo-icono">⚡</span>
+                <h3 class="nodo-titulo-card">Amor como Tecnología Evolutiva</h3>
+                <p class="nodo-descripcion">
+                    El amor como fuerza estructural del cosmos. Geometría sagrada 
+                    en las relaciones. Campos de amor cuántico y conexión con 
+                    inteligencias no-humanas.
+                </p>
+                <a href="nodo_06.html" class="nodo-link">Explorar Nodo →</a>
+            </div>
+
+            <!-- Nodo 7 -->
+            <div class="nodo-card" onclick="window.location.href='nodo_07.html'">
+                <div class="nodo-numero-card">NODO 7 de 7</div>
+                <span class="nodo-icono">🌟</span>
+                <h3 class="nodo-titulo-card">Ritual de Reconexión</h3>
+                <p class="nodo-descripcion">
+                    Prácticas para reparar vínculos fracturados. Co-creación de 
+                    realidades compartidas. Rituales de activación del vínculo 
+                    álmico y expansión interdimensional.
+                </p>
+                <a href="nodo_07.html" class="nodo-link">Explorar Nodo →</a>
+            </div>
+        </div>
+
+        <!-- Progreso -->
+        <section class="progreso-section">
+            <h3>🌟 Tu Viaje por los Vínculos Sagrados</h3>
+            <p style="font-size: 1.1em; color: var(--blanco-luz); margin-bottom: 20px;">
+                Cada nodo es un portal de transformación. Tu progreso se guarda automáticamente.
+            </p>
+            <div class="progreso-barra-container">
+                <div class="progreso-barra" id="progreso-barra" style="width: 0%"></div>
+            </div>
+            <p class="progreso-texto" id="progreso-texto">Comienza tu viaje hacia la Unidad Consciente</p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="libro-footer">
+            <div class="footer-simbolos">💫 🌉 📜 🌓 🕸️ ⚡ 🌟</div>
+            <p class="footer-texto">
+                Libro V: Los Vínculos Sagrados<br>
+                La Red - Tecnología del Amor Cuántico<br><br>
+                <em>"En cada conexión consciente, el universo se reconoce a sí mismo."</em>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Red de conexiones animada
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class NodoRed {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radio = 3;
+                
+                // Colores del amor
+                const colores = ['#FF1493', '#FFD700', '#00CED1', '#9370DB'];
+                this.color = colores[Math.floor(Math.random() * colores.length)];
+            }
+
+            actualizar() {
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            dibujar() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radio, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.8;
+                ctx.fill();
+                
+                // Halo
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radio + 3, 0, Math.PI * 2);
+                ctx.strokeStyle = this.color;
+                ctx.globalAlpha = 0.3;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+
+        const nodos = [];
+        for (let i = 0; i < 50; i++) {
+            nodos.push(new NodoRed());
+        }
+
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            nodos.forEach(nodo => {
+                nodo.actualizar();
+                nodo.dibujar();
+            });
+
+            // Conectar nodos cercanos
+            nodos.forEach((n1, i) => {
+                nodos.slice(i + 1).forEach(n2 => {
+                    const dx = n1.x - n2.x;
+                    const dy = n1.y - n2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(n1.x, n1.y);
+                        ctx.lineTo(n2.x, n2.y);
+                        ctx.strokeStyle = n1.color;
+                        ctx.globalAlpha = 0.15 * (1 - dist / 150);
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animar);
+        }
+
+        animar();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Sistema de progreso
+        function actualizarProgreso() {
+            const nodoActual = parseInt(localStorage.getItem('trinity-libro5-nodo') || '0');
+            const porcentaje = (nodoActual / 7) * 100;
+            
+            document.getElementById('progreso-barra').style.width = porcentaje + '%';
+            
+            if (nodoActual === 0) {
+                document.getElementById('progreso-texto').textContent = 'Comienza tu viaje hacia la Unidad Consciente';
+            } else if (nodoActual === 7) {
+                document.getElementById('progreso-texto').textContent = '✨ ¡Viaje Completo! Has atravesado los 7 Nodos';
+            } else {
+                document.getElementById('progreso-texto').textContent = `Nodo ${nodoActual} de 7 completado • ${porcentaje.toFixed(0)}% del viaje`;
+            }
+        }
+
+        actualizarProgreso();
+    </script>
+</body>
+</html>
