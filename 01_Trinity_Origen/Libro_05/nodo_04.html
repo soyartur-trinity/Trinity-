@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 4: Vínculos de Sombra y Sanación - Trinity Origen</title>
+    <meta name="description" content="La fricción que despierta">
+    
+    <style>
+        :root {
+            --negro-espacio: #0a0a0a;
+            --rosa-amor: #FF1493;
+            --dorado-luz: #FFD700;
+            --azul-cuantico: #00CED1;
+            --violeta-alma: #9370DB;
+            --blanco-luz: #FFFAF0;
+            --plateado: #C0C0C0;
+            --gris-sombra: #4A4A4A;
+            --purpura-profundo: #6A0DAD;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0520 50%, #2d1b3d 100%);
+            color: var(--blanco-luz);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas de sombras danzantes */
+        #shadow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.25;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header del Nodo */
+        .nodo-header {
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 3px solid var(--gris-sombra);
+            margin-bottom: 50px;
+        }
+
+        .nodo-simbolo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: luna-fase 8s ease-in-out infinite;
+        }
+
+        @keyframes luna-fase {
+            0%, 100% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px var(--gris-sombra));
+            }
+            25% { 
+                transform: scale(0.9);
+                filter: drop-shadow(0 0 30px var(--purpura-profundo));
+            }
+            50% { 
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 40px var(--dorado-luz));
+            }
+            75% { 
+                transform: scale(0.95);
+                filter: drop-shadow(0 0 25px var(--violeta-alma));
+            }
+        }
+
+        .nodo-numero {
+            font-size: 1.1em;
+            color: var(--gris-sombra);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .nodo-titulo {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--gris-sombra), var(--violeta-alma), var(--dorado-luz));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.3em;
+            color: var(--plateado);
+            font-style: italic;
+        }
+
+        /* Navegación */
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            color: var(--violeta-alma);
+            text-decoration: none;
+            border: 2px solid var(--violeta-alma);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .nav-btn:hover {
+            background: var(--violeta-alma);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Barra de progreso */
+        .progreso-container {
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progreso-barra {
+            width: 57.12%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--gris-sombra), var(--violeta-alma), var(--dorado-luz));
+            border-radius: 20px;
+        }
+
+        /* Contenido principal */
+        .contenido-nodo {
+            background: rgba(74, 74, 74, 0.03);
+            border: 1px solid rgba(106, 13, 173, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            line-height: 1.9;
+            font-size: 1.1em;
+        }
+
+        .contenido-nodo h2 {
+            color: var(--violeta-alma);
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid var(--gris-sombra);
+            padding-bottom: 10px;
+        }
+
+        .contenido-nodo h3 {
+            color: var(--dorado-luz);
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+        }
+
+        .contenido-nodo p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .contenido-nodo strong {
+            color: var(--violeta-alma);
+            font-weight: bold;
+        }
+
+        .contenido-nodo em {
+            color: var(--dorado-luz);
+            font-style: italic;
+        }
+
+        /* Citas destacadas */
+        .cita-destacada {
+            background: rgba(106, 13, 173, 0.05);
+            border-left: 4px solid var(--violeta-alma);
+            padding: 30px;
+            margin: 40px 0;
+            font-size: 1.2em;
+            font-style: italic;
+            color: var(--plateado);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .cita-destacada::after {
+            content: '🌓';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            opacity: 0.2;
+        }
+
+        /* Laboratorio Box */
+        .laboratorio-box {
+            background: linear-gradient(135deg, rgba(106, 13, 173, 0.1), rgba(74, 74, 74, 0.05));
+            border: 2px solid var(--purpura-profundo);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .laboratorio-box h3 {
+            color: var(--purpura-profundo);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .laboratorio-item {
+            background: rgba(106, 13, 173, 0.05);
+            border-left: 4px solid var(--violeta-alma);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .laboratorio-item:hover {
+            transform: translateX(10px);
+            background: rgba(106, 13, 173, 0.1);
+        }
+
+        .laboratorio-titulo {
+            font-size: 1.3em;
+            color: var(--violeta-alma);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Tipos de Sombras */
+        .sombras-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .sombra-card {
+            background: linear-gradient(135deg, rgba(74, 74, 74, 0.2), rgba(106, 13, 173, 0.1));
+            border: 2px solid var(--gris-sombra);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.4s ease;
+        }
+
+        .sombra-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(106, 13, 173, 0.4);
+            border-color: var(--violeta-alma);
+        }
+
+        .sombra-icono {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .sombra-titulo {
+            font-size: 1.3em;
+            color: var(--violeta-alma);
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .sombra-descripcion {
+            color: var(--blanco-luz);
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        /* Transmutación Box */
+        .transmutacion-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--dorado-luz);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .transmutacion-box h3 {
+            color: var(--dorado-luz);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .transmutacion-step {
+            background: rgba(255, 215, 0, 0.05);
+            border-left: 4px solid var(--dorado-luz);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .transmutacion-numero {
+            font-size: 1.5em;
+            color: var(--dorado-luz);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Preguntas Portal */
+        .preguntas-portal {
+            background: rgba(147, 112, 219, 0.05);
+            border: 2px solid var(--violeta-alma);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .preguntas-portal h3 {
+            color: var(--violeta-alma);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .preguntas-portal ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .preguntas-portal li {
+            margin: 20px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        .preguntas-portal li::before {
+            content: '❓';
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        /* Meditación */
+        .meditacion-box {
+            background: linear-gradient(135deg, rgba(106, 13, 173, 0.1), rgba(147, 112, 219, 0.1));
+            border: 2px solid var(--violeta-alma);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .meditacion-box h3 {
+            color: var(--violeta-alma);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .meditacion-box p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: var(--plateado);
+        }
+
+        .meditacion-duracion {
+            color: var(--dorado-luz);
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        /* Navegación inferior */
+        .navegacion-nodos {
+            display: flex;
+            justify-content: space-between;
+            margin: 60px 0;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-nodo-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--violeta-alma), var(--purpura-profundo));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            flex: 1;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .nav-nodo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(106, 13, 173, 0.5);
+        }
+
+        /* Footer */
+        .nodo-footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(106, 13, 173, 0.3);
+            color: var(--plateado);
+            font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nodo-titulo {
+                font-size: 2em;
+            }
+
+            .contenido-nodo {
+                padding: 25px;
+            }
+
+            .sombras-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navegacion-nodos {
+                flex-direction: column;
+            }
+
+            .nav-nodo-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de sombras -->
+    <canvas id="shadow-canvas"></canvas>
+
+    <div class="container">
+        <!-- Header del Nodo -->
+        <header class="nodo-header">
+            <div class="nodo-simbolo">🌓</div>
+            <div class="nodo-numero">NODO 4 de 7 • SOMBRA</div>
+            <h1 class="nodo-titulo">Vínculos de Sombra y Sanación</h1>
+            <p class="nodo-subtitulo">"La fricción que despierta"</p>
+        </header>
+
+        <!-- Navegación superior -->
+        <nav class="navegacion">
+            <a href="nodo_03.html" class="nav-btn">← Nodo Anterior</a>
+            <a href="index.html" class="nav-btn">Índice del Libro</a>
+            <a href="nodo_05.html" class="nav-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Barra de progreso -->
+        <div class="progreso-container">
+            <div class="progreso-barra"></div>
+        </div>
+        <p style="text-align: center; color: var(--plateado); font-size: 0.9em; margin-top: 10px;">
+            ✨ Nodo 4 de 7 • INTEGRANDO LA SOMBRA
+        </p>
+
+        <!-- Contenido Principal -->
+        <article class="contenido-nodo">
+            <p>No todas las relaciones son cómodas. Algunas llegan específicamente para <strong>incomodarte</strong>, para sacudirte, para mostrarte lo que prefieres no ver. Estas son las relaciones más valiosas, aunque sean las más dolorosas. Son los <em>vínculos de sombra</em>: espejos que reflejan no tu luz, sino aquello que has relegado a la oscuridad de tu inconsciente.</p>
+
+            <div class="cita-destacada">
+                "Las personas que más te irritan son tus mejores maestros. Lo que no toleras en ellos es, muchas veces, lo que no has integrado en ti. La sombra ajena es un portal hacia tu propia sombra."
+            </div>
+
+            <p>Carl Jung llamó <strong>sombra</strong> a todas aquellas partes de nosotros que hemos reprimido, negado o rechazado porque no encajaban con la imagen que queremos proyectar. No toda la sombra es "mala": también incluye potenciales dormidos, talentos no desarrollados, poder no reclamado. Pero para acceder a esos tesoros, primero debemos atravesar la incomodidad del encuentro.</p>
+
+            <h2>Relaciones Difíciles como Laboratorios de Conciencia</h2>
+
+            <p>Imagina que cada relación desafiante es un <strong>laboratorio diseñado específicamente para tu evolución</strong>. En ese laboratorio, los reactivos son las personalidades que chocan, las heridas que se activan, los patrones que se repiten. Y el experimento consiste en observar qué surge cuando estos elementos se combinan.</p>
+
+            <p>Las relaciones difíciles no son errores. Son <em>asignaciones del alma</em>. Vienen a enseñarte:</p>
+
+            <ul style="list-style: none; padding-left: 20px;">
+                <li style="margin: 15px 0;">🌑 A sostener tu centro cuando todo te empuja a reaccionar</li>
+                <li style="margin: 15px 0;">🌑 A ver en el otro el reflejo de tu propia fragmentación</li>
+                <li style="margin: 15px 0;">🌑 A elegir la respuesta consciente sobre la reacción automática</li>
+                <li style="margin: 15px 0;">🌑 A establecer límites sin cerrar tu corazón</li>
+                <li style="margin: 15px 0;">🌑 A amar incluso cuando duele</li>
+            </ul>
+
+            <div class="cita-destacada">
+                "La fricción no es el enemigo. Es el catalizador. Sin fricción, el diamante permanece como carbón. Sin relaciones que te desafíen, tus potenciales quedan dormidos."
+            </div>
+
+            <h2>La Proyección: Ver en el Otro lo que Niegas en Ti</h2>
+
+            <p>Uno de los mecanismos más comunes en los vínculos de sombra es la <strong>proyección</strong>. Proyectamos cuando atribuimos a otros cualidades, emociones o intenciones que en realidad son nuestras pero que no reconocemos como tales.</p>
+
+            <p>Ejemplos de proyección:</p>
+            <ul style="list-style: none; padding-left: 20px;">
+                <li style="margin: 15px 0;">💭 Te irrita la arrogancia de alguien → Tienes poder no reclamado que temes expresar</li>
+                <li style="margin: 15px 0;">💭 Te molesta la vulnerabilidad de alguien → Estás reprimiendo tu propia fragilidad</li>
+                <li style="margin: 15px 0;">💭 Te enfurece la irresponsabilidad de otro → Cargas con demasiada responsabilidad que no es tuya</li>
+                <li style="margin: 15px 0;">💭 Te fascina el carisma de alguien → Tienes carisma dormido esperando ser activado</li>
+            </ul>
+
+            <p>La neurociencia ha demostrado que cuando juzgamos intensamente a alguien, <em>las mismas áreas cerebrales se activan que cuando pensamos en nosotros mismos</em>. El cerebro sabe algo que la mente consciente niega: ese "otro" es un espejo.</p>
+        </article>
+
+        <!-- Tipos de Sombras Relacionales -->
+        <h2 style="text-align: center; font-size: 2.2em; color: var(--violeta-alma); margin: 60px 0 40px;">
+            Las Sombras que Aparecen en los Vínculos
+        </h2>
+
+        <div class="sombras-grid">
+            <div class="sombra-card">
+                <div class="sombra-icono">😤</div>
+                <h3 class="sombra-titulo">Sombra de la Ira</h3>
+                <p class="sombra-descripcion">Cuando alguien detona tu furia desproporcionada, está tocando heridas antiguas no sanadas. La ira es información: te muestra dónde hay límites que no has establecido, necesidades que no has expresado, o poder que no has reclamado.</p>
+            </div>
+
+            <div class="sombra-card">
+                <div class="sombra-icono">💔</div>
+                <h3 class="sombra-titulo">Sombra del Abandono</h3>
+                <p class="sombra-descripcion">Relaciones que despiertan miedo intenso a ser dejado. No es sobre el otro; es sobre la herida primordial de separación. Estas relaciones te invitan a sanar el abandono interno: las partes de ti que has dejado atrás.</p>
+            </div>
+
+            <div class="sombra-card">
+                <div class="sombra-icono">😨</div>
+                <h3 class="sombra-titulo">Sombra del Control</h3>
+                <p class="sombra-descripcion">Cuando alguien amenaza tu necesidad de controlar, revela tu miedo subyacente al caos o a la vulnerabilidad. El control es la armadura del corazón herido. Estas relaciones te piden soltar y confiar.</p>
+            </div>
+
+            <div class="sombra-card">
+                <div class="sombra-icono">👁️</div>
+                <h3 class="sombra-titulo">Sombra del Juicio</h3>
+                <p class="sombra-descripcion">Cuando juzgas duramente a alguien, estás viendo en ellos lo que más temes ser tú mismo. El juicio es la voz del crítico interno proyectado hacia afuera. Estas personas te enseñan autocompasión.</p>
+            </div>
+
+            <div class="sombra-card">
+                <div class="sombra-icono">🎭</div>
+                <h3 class="sombra-titulo">Sombra de la Máscara</h3>
+                <p class="sombra-descripcion">Relaciones donde sientes que debes actuar un papel para ser aceptado. Revelan las partes de ti que has escondido para encajar. Son invitaciones a reclamar tu autenticidad.</p>
+            </div>
+
+            <div class="sombra-card">
+                <div class="sombra-icono">⚔️</div>
+                <h3 class="sombra-titulo">Sombra del Poder</h3>
+                <p class="sombra-descripcion">Cuando alguien ejerce poder sobre ti o tú sobre ellos de forma disfuncional. Estas dinámicas muestran heridas de impotencia o necesidad de dominio. Te enseñan a acceder a tu poder auténtico sin necesidad de controlar al otro.</p>
+            </div>
+        </div>
+
+        <!-- Laboratorio de Conciencia -->
+        <section class="laboratorio-box">
+            <h3>🔬 El Laboratorio de la Relación Difícil</h3>
+
+            <div class="laboratorio-item">
+                <div class="laboratorio-titulo">1. Observación sin Juicio</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">El primer paso es notar qué se activa en ti cuando estás con esa persona. No para juzgarte, sino para conocerte. ¿Qué emoción surge? ¿Qué sensación en el cuerpo? ¿Qué pensamiento automático? Esta observación es el inicio de la conciencia.</p>
+            </div>
+
+            <div class="laboratorio-item">
+                <div class="laboratorio-titulo">2. Indagación Profunda</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Pregúntate: "¿Qué en mí está siendo tocado? ¿Esta reacción es proporcional a lo que acaba de pasar, o hay algo más antiguo siendo activado?" La mayoría de nuestras reacciones intensas vienen de heridas del pasado, no del presente.</p>
+            </div>
+
+            <div class="laboratorio-item">
+                <div class="laboratorio-titulo">3. Retirada de la Proyección</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Practica decir: "Lo que veo en ti que me molesta, ¿dónde vive eso en mí?" No para auto-culparte, sino para recuperar tu poder. Mientras proyectas, eres víctima. Cuando integras, eres creador consciente.</p>
+            </div>
+
+            <div class="laboratorio-item">
+                <div class="laboratorio-titulo">4. Establecimiento de Límites Conscientes</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Integrar la sombra no significa tolerar el abuso. A veces la lección es aprender a decir NO, a proteger tu espacio sagrado, a retirarte de dinámicas tóxicas. Los límites son actos de amor propio.</p>
+            </div>
+
+            <div class="laboratorio-item">
+                <div class="laboratorio-titulo">5. Gratitud por el Espejo</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Cuando puedes agradecer (aunque sea años después) a quien te mostró tu sombra, has completado la transmutación. Ya no eres víctima de esa persona. Eres aprendiz consciente en el laboratorio del alma.</p>
+            </div>
+        </section>
+
+        <article class="contenido-nodo">
+            <h2>Desentrelazamiento Consciente</h2>
+
+            <p>No todos los vínculos están destinados a durar para siempre. Algunos vienen solo para una lección específica, y cuando la lección se completa, el vínculo pide ser liberado. El <strong>desentrelazamiento consciente</strong> es el arte de terminar relaciones desde el amor y la gratitud, no desde el resentimiento.</p>
+
+            <div class="cita-destacada">
+                "Soltar no es fracaso. Es madurez espiritual. Reconocer que cumpliste un ciclo con alguien y permitir que ambos sigan su camino es un acto de amor mayor que aferrarse por miedo."
+            </div>
+
+            <p>Pasos para el desentrelazamiento consciente:</p>
+        </article>
+
+        <!-- Transmutación Box -->
+        <section class="transmutacion-box">
+            <h3>⚗️ Protocolo de Transmutación Recíproca</h3>
+
+            <div class="transmutacion-step">
+                <div class="transmutacion-numero">PASO 1: Reconocimiento</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Reconoce honestamente lo que esta relación te enseñó. Incluso las relaciones más dolorosas son maestras. Escribe o declara en voz alta: "Gracias por mostrarme [la lección aprendida]."</p>
+            </div>
+
+            <div class="transmutacion-step">
+                <div class="transmutacion-numero">PASO 2: Liberación Energética</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Visualiza los cordones energéticos que te unen a esa persona. No los cortes con violencia, sino imagina que se disuelven en luz dorada. Envía bendiciones a través de esos cordones antes de liberarlos.</p>
+            </div>
+
+            <div class="transmutacion-step">
+                <div class="transmutacion-numero">PASO 3: Perdón Radical</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Perdona no porque el otro lo merezca, sino porque tú mereces paz. Perdonar es soltar la historia de victimización. Es decir: "Ya no necesito que esto haya sido diferente para estar bien."</p>
+            </div>
+
+            <div class="transmutacion-step">
+                <div class="transmutacion-numero">PASO 4: Integración de la Lección</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Pregúntate: "¿Qué parte de mí se fortaleció gracias a esta experiencia?" Convierte el dolor en sabiduría. La transmutación es alquimia: transformar plomo en oro.</p>
+            </div>
+
+            <div class="transmutacion-step">
+                <div class="transmutacion-numero">PASO 5: Apertura a lo Nuevo</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Una vez que sueltas lo viejo, creas espacio para lo nuevo. Declara: "Estoy disponible para vínculos que honren mi crecimiento y mi paz." El universo escucha.</p>
+            </div>
+        </section>
+
+        <article class="contenido-nodo">
+            <h2>Sanar Uno es Sanar la Red</h2>
+
+            <p>Algo profundo sucede cuando sanas un vínculo: <strong>sanas todos los vínculos similares en tu campo</strong>. Es como si tu alma operara en un nivel holográfico donde cada sanación particular irradia hacia la totalidad.</p>
+
+            <p>Cuando sanas tu relación con tu padre, sanas tu relación con la autoridad, con lo masculino, con tu propio poder. Cuando sanas tu relación con tu madre, sanas tu relación con lo nutritivo, con lo femenino, con tu capacidad de recibir. Cuando sanas tu relación con un ex-amante, sanas tu relación con el amor, con la intimidad, con la vulnerabilidad.</p>
+
+            <div class="cita-destacada">
+                "No hay sanación pequeña. Cada vínculo que transformas eleva la frecuencia de toda tu red relacional. Y tu red está conectada a redes más grandes. Sanar es un acto de servicio colectivo."
+            </div>
+
+            <p>Los vínculos de sombra no son castigos. Son <em>regalos envueltos en papel áspero</em>. Vienen a mostrarte lo que necesitas integrar para ser completo. Y cuando los recibes con esa actitud—no como enemigos sino como mensajeros—todo cambia.</p>
+        </article>
+
+        <!-- Preguntas Portal -->
+        <section class="preguntas-portal">
+            <h3>🔮 Preguntas Portal</h3>
+            <ul>
+                <li>¿Quién en tu vida actual está funcionando como espejo de tu sombra? ¿Qué te muestra?</li>
+                <li>¿Qué patrón relacional doloroso se ha repetido en tu vida y qué podría estar intentando enseñarte?</li>
+                <li>¿Hay algún vínculo del que necesites desentrelazarte con amor y gratitud?</li>
+            </ul>
+        </section>
+
+        <!-- Meditación -->
+        <section class="meditacion-box">
+            <h3>🧘 Meditación de Integración de la Sombra</h3>
+            <p><strong>Siéntate en silencio. Respira profundamente.</strong></p>
+            <p>Trae a tu mente a alguien que te desafía, que te irrita, que activa tu sombra.</p>
+            <p>En lugar de rechazar esa presencia, invítala a estar frente a ti en tu espacio interior.</p>
+            <p>Observa qué surge en ti. No lo juzgues. Solo obsérvalo.</p>
+            <p>Ahora pregunta: <em>"¿Qué parte de mí estás reflejando? ¿Qué vine a aprender de ti?"</em></p>
+            <p>Escucha en silencio. Pueden venir palabras, imágenes, sensaciones.</p>
+            <p>Cuando sientas que has recibido el mensaje, di: <em>"Gracias por este espejo. Te libero. Me libero."</em></p>
+            <p>Visualiza luz dorada envolviendo a ambos, sanando el vínculo.</p>
+            <p class="meditacion-duracion">⏱️ Duración sugerida: 15-20 minutos</p>
+        </section>
+
+        <!-- Navegación entre Nodos -->
+        <nav class="navegacion-nodos">
+            <a href="nodo_03.html" class="nav-nodo-btn">← Nodo Anterior</a>
+            <a href="nodo_05.html" class="nav-nodo-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="nodo-footer">
+            <p>Nodo 4 de 7 • Vínculos de Sombra y Sanación</p>
+            <p>Trinity Origen - Libro V: Los Vínculos Sagrados</p>
+        </footer>
+    </div>
+
+    <script>
+        // Sombras danzantes
+        const canvas = document.getElementById('shadow-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Sombra {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.tamano = Math.random() * 60 + 30;
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
+                this.opacidad = Math.random() * 0.3 + 0.1;
+                this.fase = Math.random() * Math.PI * 2;
+            }
+
+            actualizar() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.fase += 0.02;
+                
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            dibujar() {
+                const tamanoActual = this.tamano + Math.sin(this.fase) * 10;
+                
+                const gradiente = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, tamanoActual
+                );
+                gradiente.addColorStop(0, `rgba(106, 13, 173, ${this.opacidad})`);
+                gradiente.addColorStop(0.5, `rgba(74, 74, 74, ${this.opacidad * 0.5})`);
+                gradiente.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, tamanoActual, 0, Math.PI * 2);
+                ctx.fillStyle = gradiente;
+                ctx.fill();
+            }
+        }
+
+        const sombras = [];
+        for (let i = 0; i < 12; i++) {
+            sombras.push(new Sombra());
+        }
+
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            sombras.forEach(sombra => {
+                sombra.actualizar();
+                sombra.dibujar();
+            });
+            
+            requestAnimationFrame(animar);
+        }
+
+        animar();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Guardar progreso
+        localStorage.setItem('trinity-libro5-nodo', '4');
+    </script>
+</body>
+</html>
