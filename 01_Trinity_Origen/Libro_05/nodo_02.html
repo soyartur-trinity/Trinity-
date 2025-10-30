@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 2: Los Puentes del Corazón - Trinity Origen</title>
+    <meta name="description" content="Cuando dos almas eligen encontrarse">
+    
+    <style>
+        :root {
+            --negro-espacio: #0a0a0a;
+            --rosa-amor: #FF1493;
+            --dorado-luz: #FFD700;
+            --azul-cuantico: #00CED1;
+            --violeta-alma: #9370DB;
+            --blanco-luz: #FFFAF0;
+            --plateado: #C0C0C0;
+            --coral: #FF7F50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0520 50%, #2d1b3d 100%);
+            color: var(--blanco-luz);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas de puentes conectando */
+        #bridges-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.2;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header del Nodo */
+        .nodo-header {
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 3px solid var(--coral);
+            margin-bottom: 50px;
+        }
+
+        .nodo-simbolo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: puente-conecta 5s ease-in-out infinite;
+        }
+
+        @keyframes puente-conecta {
+            0%, 100% { 
+                transform: scale(1) translateX(0);
+                filter: drop-shadow(0 0 20px var(--coral));
+            }
+            25% { 
+                transform: scale(1.1) translateX(-10px);
+                filter: drop-shadow(0 0 30px var(--rosa-amor));
+            }
+            75% { 
+                transform: scale(1.1) translateX(10px);
+                filter: drop-shadow(0 0 30px var(--azul-cuantico));
+            }
+        }
+
+        .nodo-numero {
+            font-size: 1.1em;
+            color: var(--coral);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .nodo-titulo {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--coral), var(--rosa-amor), var(--azul-cuantico));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.3em;
+            color: var(--plateado);
+            font-style: italic;
+        }
+
+        /* Navegación */
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            color: var(--coral);
+            text-decoration: none;
+            border: 2px solid var(--coral);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .nav-btn:hover {
+            background: var(--coral);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Barra de progreso */
+        .progreso-container {
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progreso-barra {
+            width: 28.56%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--rosa-amor), var(--coral), var(--azul-cuantico));
+            border-radius: 20px;
+        }
+
+        /* Contenido principal */
+        .contenido-nodo {
+            background: rgba(255, 127, 80, 0.03);
+            border: 1px solid rgba(255, 127, 80, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            line-height: 1.9;
+            font-size: 1.1em;
+        }
+
+        .contenido-nodo h2 {
+            color: var(--coral);
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid var(--rosa-amor);
+            padding-bottom: 10px;
+        }
+
+        .contenido-nodo h3 {
+            color: var(--rosa-amor);
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+        }
+
+        .contenido-nodo p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .contenido-nodo strong {
+            color: var(--coral);
+            font-weight: bold;
+        }
+
+        .contenido-nodo em {
+            color: var(--rosa-amor);
+            font-style: italic;
+        }
+
+        /* Citas destacadas */
+        .cita-destacada {
+            background: rgba(255, 127, 80, 0.05);
+            border-left: 4px solid var(--coral);
+            padding: 30px;
+            margin: 40px 0;
+            font-size: 1.2em;
+            font-style: italic;
+            color: var(--plateado);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .cita-destacada::after {
+            content: '🌉';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            opacity: 0.2;
+        }
+
+        /* Tipos de Vínculos */
+        .vinculos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .vinculo-card {
+            background: linear-gradient(135deg, rgba(255, 127, 80, 0.1), rgba(255, 20, 147, 0.05));
+            border: 2px solid var(--coral);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .vinculo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 127, 80, 0.4);
+            border-color: var(--rosa-amor);
+        }
+
+        .vinculo-icono {
+            font-size: 3em;
+            margin-bottom: 15px;
+            animation: vinculo-float 3s ease-in-out infinite;
+        }
+
+        @keyframes vinculo-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .vinculo-titulo {
+            font-size: 1.3em;
+            color: var(--coral);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .vinculo-descripcion {
+            color: var(--blanco-luz);
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        /* Resonancia Box */
+        .resonancia-box {
+            background: rgba(0, 206, 209, 0.05);
+            border: 2px solid var(--azul-cuantico);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .resonancia-box h3 {
+            color: var(--azul-cuantico);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .resonancia-item {
+            background: rgba(0, 206, 209, 0.05);
+            border-left: 4px solid var(--azul-cuantico);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .resonancia-titulo {
+            font-size: 1.3em;
+            color: var(--azul-cuantico);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Preguntas Portal */
+        .preguntas-portal {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--dorado-luz);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .preguntas-portal h3 {
+            color: var(--dorado-luz);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .preguntas-portal ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .preguntas-portal li {
+            margin: 20px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        .preguntas-portal li::before {
+            content: '❓';
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        /* Meditación */
+        .meditacion-box {
+            background: linear-gradient(135deg, rgba(255, 127, 80, 0.1), rgba(147, 112, 219, 0.1));
+            border: 2px solid var(--violeta-alma);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .meditacion-box h3 {
+            color: var(--violeta-alma);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .meditacion-box p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: var(--plateado);
+        }
+
+        .meditacion-duracion {
+            color: var(--dorado-luz);
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        /* Navegación inferior */
+        .navegacion-nodos {
+            display: flex;
+            justify-content: space-between;
+            margin: 60px 0;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-nodo-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--coral), var(--rosa-amor));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            flex: 1;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .nav-nodo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 127, 80, 0.5);
+        }
+
+        /* Footer */
+        .nodo-footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 127, 80, 0.3);
+            color: var(--plateado);
+            font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nodo-titulo {
+                font-size: 2em;
+            }
+
+            .contenido-nodo {
+                padding: 25px;
+            }
+
+            .vinculos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navegacion-nodos {
+                flex-direction: column;
+            }
+
+            .nav-nodo-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de puentes -->
+    <canvas id="bridges-canvas"></canvas>
+
+    <div class="container">
+        <!-- Header del Nodo -->
+        <header class="nodo-header">
+            <div class="nodo-simbolo">🌉</div>
+            <div class="nodo-numero">NODO 2 de 7 • PUENTES</div>
+            <h1 class="nodo-titulo">Los Puentes del Corazón</h1>
+            <p class="nodo-subtitulo">"Cuando dos almas eligen encontrarse"</p>
+        </header>
+
+        <!-- Navegación superior -->
+        <nav class="navegacion">
+            <a href="nodo_01.html" class="nav-btn">← Nodo Anterior</a>
+            <a href="index.html" class="nav-btn">Índice del Libro</a>
+            <a href="nodo_03.html" class="nav-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Barra de progreso -->
+        <div class="progreso-container">
+            <div class="progreso-barra"></div>
+        </div>
+        <p style="text-align: center; color: var(--plateado); font-size: 0.9em; margin-top: 10px;">
+            ✨ Nodo 2 de 7 • CONSTRUYENDO PUENTES
+        </p>
+
+        <!-- Contenido Principal -->
+        <article class="contenido-nodo">
+            <p>Después de encontrarte contigo mismo, el universo te invita al siguiente movimiento: <strong>encontrarte con el otro</strong>. No desde la carencia, sino desde la plenitud. No buscando completarte, sino compartiendo tu completitud. Los vínculos humanos son puentes entre dos mundos interiores, arquitecturas invisibles que permiten que dos conciencias se toquen sin perder su individualidad.</p>
+
+            <div class="cita-destacada">
+                "El amor maduro no es la fusión de dos medias naranjas. Es el encuentro de dos seres completos que eligen crear juntos un tercer espacio: el espacio del nosotros que no anula el yo ni el tú."
+            </div>
+
+            <p>La física cuántica nos habla del <em>entrelazamiento</em>: dos partículas que, una vez conectadas, permanecen vinculadas sin importar la distancia que las separe. Cuando una cambia de estado, la otra responde instantáneamente. Los vínculos humanos funcionan de manera similar. Una vez que dos almas se reconocen profundamente, <strong>algo en ellas queda entrelazado para siempre</strong>.</p>
+
+            <h2>El Espejo y el Catalizador</h2>
+
+            <p>Cada persona que entra en tu vida cumple al menos una de estas dos funciones sagradas: <em>espejo o catalizador</em>.</p>
+
+            <p><strong>El espejo</strong> te muestra lo que aún no has visto de ti mismo. Te refleja tus patrones, tus heridas no sanadas, tus potenciales dormidos. A veces el reflejo es incómodo porque revela lo que preferirías ignorar. Pero esa incomodidad es oro puro para el autoconocimiento.</p>
+
+            <p><strong>El catalizador</strong> acelera tu evolución. Su presencia provoca reacciones químicas en tu alma. Te empuja fuera de tu zona de confort. Te obliga a crecer, a expandirte, a transformarte. Los catalizadores no siempre son cómodos, pero siempre son necesarios.</p>
+
+            <div class="cita-destacada">
+                "Las personas que más te irritan son tus mejores maestros. Las que más amas son tus espejos más claros. Y las que te transforman son aquellas que llegaron a sacudir la estructura misma de quien creías ser."
+            </div>
+
+            <h2>Amor Cuántico: Más Allá de la Posesión</h2>
+
+            <p>El amor tradicional está construido sobre la idea de <strong>posesión</strong>: "eres mío", "te pertenezco", "somos uno". Pero el amor cuántico opera desde un paradigma diferente: <em>somos dos campos de conciencia que eligen resonar juntos, sin que ninguno pierda su frecuencia única</em>.</p>
+
+            <p>En el amor cuántico:</p>
+            <ul style="list-style: none; padding-left: 20px;">
+                <li style="margin: 15px 0;">💫 No hay dueños, hay co-creadores</li>
+                <li style="margin: 15px 0;">💫 No hay dependencia, hay interdependencia consciente</li>
+                <li style="margin: 15px 0;">💫 No hay fusión, hay entrelazamiento que respeta la individualidad</li>
+                <li style="margin: 15px 0;">💫 No hay miedo a la pérdida, hay gratitud por cada momento compartido</li>
+            </ul>
+
+            <p>Este tipo de amor no busca llenar vacíos. Busca expandir plenitudes. No necesita del otro para ser feliz, pero elige al otro para amplificar la felicidad que ya existe.</p>
+
+            <h2>La Resonancia Mórfica entre Almas</h2>
+
+            <p>El biólogo Rupert Sheldrake propuso la teoría de los <strong>campos morfogenéticos</strong>: patrones invisibles de información que conectan a los seres vivos más allá del espacio y el tiempo. Cuando dos personas establecen un vínculo profundo, crean un campo morfogenético compartido.</p>
+
+            <p>Por eso puedes pensar en alguien y esa persona te llama. Por eso sientes cuando algo le sucede a quien amas, incluso a kilómetros de distancia. Por eso hay palabras que no necesitan decirse porque ya fueron comprendidas en el campo sutil que compartes.</p>
+
+            <div class="cita-destacada">
+                "Los vínculos más profundos no se explican con palabras. Se sienten como reconocimientos. Como si tu alma dijera: 'Ah, eres tú. Te estaba esperando sin saber que te esperaba.'"
+            </div>
+        </article>
+
+        <!-- Tipos de Vínculos -->
+        <h2 style="text-align: center; font-size: 2.2em; color: var(--coral); margin: 60px 0 40px;">
+            Los Puentes del Corazón Humano
+        </h2>
+
+        <div class="vinculos-grid">
+            <div class="vinculo-card">
+                <div class="vinculo-icono">❤️</div>
+                <h3 class="vinculo-titulo">Vínculo Romántico</h3>
+                <p class="vinculo-descripcion">El más celebrado en nuestra cultura. Cuando se vive desde el amor cuántico, se convierte en un laboratorio de crecimiento mutuo, donde la pasión no es fuego que consume sino llama que ilumina.</p>
+            </div>
+
+            <div class="vinculo-card">
+                <div class="vinculo-icono">🤝</div>
+                <h3 class="vinculo-titulo">Vínculo de Amistad</h3>
+                <p class="vinculo-descripcion">El amor elegido, sin las expectativas del romance. Los amigos del alma son aquellos que ven tu luz incluso cuando tú mismo la has olvidado. Son espejos que reflejan tu mejor versión.</p>
+            </div>
+
+            <div class="vinculo-card">
+                <div class="vinculo-icono">👨‍👩‍👧‍👦</div>
+                <h3 class="vinculo-titulo">Vínculo Familiar</h3>
+                <p class="vinculo-descripcion">El más antiguo y a veces el más complejo. La familia es donde aprendemos las primeras lecciones sobre dar y recibir amor. Sanar estos vínculos es sanar capas profundas del ser.</p>
+            </div>
+
+            <div class="vinculo-card">
+                <div class="vinculo-icono">🌟</div>
+                <h3 class="vinculo-titulo">Vínculo Maestro-Aprendiz</h3>
+                <p class="vinculo-descripcion">Cuando alguien te enseña no solo conocimientos sino formas de ser. Estos vínculos trascienden la lógica: a veces tu maestro es menor que tú, o llega disfrazado de adversidad.</p>
+            </div>
+
+            <div class="vinculo-card">
+                <div class="vinculo-icono">✨</div>
+                <h3 class="vinculo-titulo">Vínculo de Alma Gemela</h3>
+                <p class="vinculo-descripcion">No necesariamente romántico. Es aquel con quien sientes que has estado conectado más allá del tiempo. El reconocimiento es instantáneo y profundo. Pueden pasar años sin verse y al reencontrarse, el tiempo se disuelve.</p>
+            </div>
+
+            <div class="vinculo-card">
+                <div class="vinculo-icono">⚡</div>
+                <h3 class="vinculo-titulo">Vínculo Kármico</h3>
+                <p class="vinculo-descripcion">Intenso, magnético, a veces tormentoso. Llega a resolver asuntos pendientes de otras existencias. No siempre es cómodo, pero siempre es transformador. Su propósito es evolución acelerada.</p>
+            </div>
+        </div>
+
+        <!-- Resonancia Mórfica -->
+        <section class="resonancia-box">
+            <h3>🌀 Protocolos para Cultivar Conexiones Conscientes</h3>
+
+            <div class="resonancia-item">
+                <div class="resonancia-titulo">1. Coherencia Mente-Corazón</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Antes de encontrarte con alguien importante, toma tres respiraciones profundas llevando tu atención al corazón. Esto sincroniza tu campo electromagnético y te permite conectar desde un espacio más auténtico. El Instituto HeartMath ha demostrado que la coherencia cardíaca mejora significativamente la calidad de nuestras interacciones.</p>
+            </div>
+
+            <div class="resonancia-item">
+                <div class="resonancia-titulo">2. Escucha Generativa</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Escuchar no es esperar tu turno para hablar. Es crear un espacio sagrado donde el otro puede ser visto y escuchado en su totalidad. Cuando escuchas generativamente, no solo oyes palabras: percibes el campo emocional, la vibración del alma, lo que se dice sin palabras.</p>
+            </div>
+
+            <div class="resonancia-item">
+                <div class="resonancia-titulo">3. Transparencia Vulnerable</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">La verdadera intimidad nace de la vulnerabilidad. No de mostrarte perfecto, sino de permitirte ser visto en tu humanidad completa. Cuando te atreves a ser vulnerable, das permiso al otro para hacer lo mismo. Y en ese encuentro de vulnerabilidades, nace la conexión real.</p>
+            </div>
+
+            <div class="resonancia-item">
+                <div class="resonancia-titulo">4. Celebración de la Diferencia</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">El otro no está aquí para ser tu clon. Está aquí para mostrarte perspectivas que nunca habrías encontrado solo. Las diferencias no son amenazas a la conexión: son invitaciones a expandir tu comprensión del mundo.</p>
+            </div>
+        </section>
+
+        <article class="contenido-nodo">
+            <div class="cita-destacada">
+                "Un puente no niega las dos orillas. Las honra. Las conecta sin obligarlas a ser una sola. Así son los vínculos sagrados: respetan la individualidad mientras tejen la conexión."
+            </div>
+
+            <p>Cada vez que te relacionas conscientemente con otro ser humano, estás participando en algo sagrado. No es solo una interacción social. Es un encuentro de dos universos, cada uno conteniendo infinitas posibilidades. Y en ese encuentro, ambos se transforman.</p>
+        </article>
+
+        <!-- Preguntas Portal -->
+        <section class="preguntas-portal">
+            <h3>🔮 Preguntas Portal</h3>
+            <ul>
+                <li>¿Cuál es el vínculo más significativo de tu vida y qué te ha enseñado sobre ti mismo?</li>
+                <li>¿Estás creando tus relaciones desde la carencia o desde la plenitud?</li>
+                <li>¿A quién necesitas ver con nuevos ojos, reconociendo el maestro que ha sido para ti?</li>
+            </ul>
+        </section>
+
+        <!-- Meditación -->
+        <section class="meditacion-box">
+            <h3>🧘 Meditación del Campo Compartido</h3>
+            <p><strong>Siéntate cómodamente y cierra los ojos.</strong></p>
+            <p>Trae a tu mente a alguien con quien tienes un vínculo significativo.</p>
+            <p>Visualiza tu corazón como un sol que emite luz. Ahora visualiza el corazón de esa persona como otro sol.</p>
+            <p>Observa cómo entre ambos soles se forma un campo de luz compartido. Un espacio que no le pertenece a ninguno de los dos, pero que ambos co-crean.</p>
+            <p>Siente cómo en ese campo no hay posesión, solo presencia. No hay necesidad, solo elección. No hay miedo, solo amor.</p>
+            <p>Envía gratitud a ese campo compartido. Agradece todo lo que ese vínculo te ha enseñado.</p>
+            <p>Di en silencio: <em>"Te honro en tu camino. Me honro en el mío. Y celebro este puente que hemos construido."</em></p>
+            <p class="meditacion-duracion">⏱️ Duración sugerida: 12 minutos</p>
+        </section>
+
+        <!-- Navegación entre Nodos -->
+        <nav class="navegacion-nodos">
+            <a href="nodo_01.html" class="nav-nodo-btn">← Nodo Anterior</a>
+            <a href="nodo_03.html" class="nav-nodo-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="nodo-footer">
+            <p>Nodo 2 de 7 • Los Puentes del Corazón</p>
+            <p>Trinity Origen - Libro V: Los Vínculos Sagrados</p>
+        </footer>
+    </div>
+
+    <script>
+        // Puentes conectando almas
+        const canvas = document.getElementById('bridges-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Alma {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radio = 8;
+                this.color = ['#FF7F50', '#FF1493', '#00CED1'][Math.floor(Math.random() * 3)];
+                this.pulso = 0;
+            }
+
+            dibujar() {
+                this.pulso += 0.05;
+                const radioActual = this.radio + Math.sin(this.pulso) * 2;
+                
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, radioActual, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.8;
+                ctx.fill();
+                
+                // Aura
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, radioActual + 5, 0, Math.PI * 2);
+                ctx.strokeStyle = this.color;
+                ctx.globalAlpha = 0.3;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+        }
+
+        const almas = [];
+        // Crear pares de almas
+        for (let i = 0; i < 6; i++) {
+            const x1 = Math.random() * (canvas.width * 0.3) + canvas.width * 0.1;
+            const y = Math.random() * canvas.height;
+            const x2 = Math.random() * (canvas.width * 0.3) + canvas.width * 0.6;
+            
+            almas.push(new Alma(x1, y));
+            almas.push(new Alma(x2, y));
+        }
+
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Dibujar puentes entre pares
+            for (let i = 0; i < almas.length; i += 2) {
+                const alma1 = almas[i];
+                const alma2 = almas[i + 1];
+                
+                // Puente curvo
+                ctx.beginPath();
+                ctx.moveTo(alma1.x, alma1.y);
+                const cpX = (alma1.x + alma2.x) / 2;
+                const cpY = (alma1.y + alma2.y) / 2 - 50;
+                ctx.quadraticCurveTo(cpX, cpY, alma2.x, alma2.y);
+                ctx.strokeStyle = alma1.color;
+                ctx.globalAlpha = 0.2;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                alma1.dibujar();
+                alma2.dibujar();
+            }
+            
+            requestAnimationFrame(animar);
+        }
+
+        animar();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Guardar progreso
+        localStorage.setItem('trinity-libro5-nodo', '2');
+    </script>
+</body>
+</html>
