@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libro VI: El Vacío Fértil - Trinity Origen</title>
+    <meta name="description" content="El Misterio - Abrazo de lo Desconocido">
+    
+    <style>
+        :root {
+            --vacio-profundo: #0a0a0a;
+            --luz-del-vacio: #1a1a2e;
+            --umbral: #16213e;
+            --despertar: #0f3460;
+            --claridad: #533483;
+            --blanco-luz: #e8e8e8;
+            --advertencia: #ff6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, var(--vacio-profundo) 0%, var(--luz-del-vacio) 50%, var(--umbral) 100%);
+            color: var(--blanco-luz);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Canvas de red entrelazada del vacío */
+        #vacio-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header Principal */
+        .libro-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .libro-header::before {
+            content: '🕳️';
+            font-size: 4em;
+            display: block;
+            margin-bottom: 20px;
+            animation: float-symbol 6s ease-in-out infinite;
+        }
+
+        @keyframes float-symbol {
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.7; }
+            50% { transform: translateY(-20px) scale(1.1); opacity: 1; }
+        }
+
+        .libro-numero {
+            font-size: 1.2em;
+            letter-spacing: 8px;
+            color: var(--claridad);
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .libro-titulo {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--blanco-luz), var(--claridad));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .libro-subtitulo {
+            font-size: 1.5em;
+            color: var(--claridad);
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+
+        /* Advertencia Sagrada */
+        .advertencia-sagrada {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--advertencia);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advertencia-sagrada::before {
+            content: '⚠️';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3em;
+            opacity: 0.2;
+        }
+
+        .advertencia-sagrada h2 {
+            color: var(--advertencia);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .advertencia-sagrada p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .advertencia-sagrada ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 20px;
+        }
+
+        .advertencia-sagrada li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .advertencia-sagrada li::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            color: var(--advertencia);
+        }
+
+        /* Test de Preparación */
+        .test-preparacion {
+            background: rgba(83, 52, 131, 0.15);
+            border: 2px solid var(--claridad);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+
+        .test-preparacion h2 {
+            color: var(--claridad);
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .pregunta-test {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .pregunta-test:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(5px);
+        }
+
+        .pregunta-test label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .pregunta-test input[type="checkbox"] {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .resultado-test {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.1em;
+            display: none;
+        }
+
+        .resultado-test.listo {
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4CAF50;
+            color: #81C784;
+        }
+
+        .resultado-test.no-listo {
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid var(--advertencia);
+            color: var(--advertencia);
+        }
+
+        /* Introducción */
+        .introduccion {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--claridad);
+            padding: 40px;
+            margin-bottom: 60px;
+            border-radius: 10px;
+        }
+
+        .introduccion h2 {
+            color: var(--claridad);
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        .introduccion p {
+            line-height: 1.9;
+            margin-bottom: 20px;
+            font-size: 1.15em;
+            text-align: justify;
+        }
+
+        .introduccion .cita {
+            font-style: italic;
+            color: var(--claridad);
+            padding-left: 30px;
+            border-left: 3px solid var(--claridad);
+            margin: 30px 0;
+            font-size: 1.2em;
+        }
+
+        /* Los 7 Nodos */
+        .nodos-container {
+            margin-top: 80px;
+        }
+
+        .nodos-titulo {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: var(--claridad);
+        }
+
+        .nodo-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.6), rgba(22, 33, 62, 0.4));
+            border: 1px solid rgba(83, 52, 131, 0.3);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nodo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(83, 52, 131, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nodo-card:hover::before {
+            left: 100%;
+        }
+
+        .nodo-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--claridad);
+            box-shadow: 0 10px 40px rgba(83, 52, 131, 0.3);
+        }
+
+        .nodo-numero {
+            display: inline-block;
+            background: var(--claridad);
+            color: var(--vacio-profundo);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .nodo-titulo {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: var(--blanco-luz);
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.2em;
+            color: var(--claridad);
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .nodo-descripcion {
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: rgba(232, 232, 232, 0.85);
+        }
+
+        .nodo-link {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--despertar), var(--claridad));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nodo-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(83, 52, 131, 0.5);
+        }
+
+        .nodo-link.bloqueado {
+            background: linear-gradient(135deg, #555, #777);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* Invocación Final */
+        .invocacion-final {
+            background: rgba(83, 52, 131, 0.15);
+            border: 2px solid var(--claridad);
+            border-radius: 15px;
+            padding: 50px;
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .invocacion-final h2 {
+            color: var(--claridad);
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .invocacion-final .texto-invocacion {
+            font-style: italic;
+            line-height: 2;
+            font-size: 1.2em;
+            color: var(--blanco-luz);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .asi-sea {
+            font-size: 1.5em;
+            color: var(--claridad);
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        /* Sistema de Progreso */
+        .progreso-libro {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 40px 0;
+        }
+
+        .progreso-barra-container {
+            background: rgba(0, 0, 0, 0.3);
+            height: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progreso-barra {
+            height: 100%;
+            background: linear-gradient(90deg, var(--despertar), var(--claridad));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .progreso-texto {
+            text-align: center;
+            margin-top: 10px;
+            color: var(--claridad);
+            font-size: 0.9em;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 80px;
+            border-top: 1px solid rgba(83, 52, 131, 0.3);
+        }
+
+        footer p {
+            color: rgba(232, 232, 232, 0.6);
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+
+        .volver-mapa {
+            display: inline-block;
+            color: var(--claridad);
+            text-decoration: none;
+            padding: 12px 30px;
+            border: 2px solid var(--claridad);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .volver-mapa:hover {
+            background: var(--claridad);
+            color: var(--vacio-profundo);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .libro-titulo {
+                font-size: 2.5em;
+            }
+            
+            .libro-subtitulo {
+                font-size: 1.2em;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .nodo-card {
+                padding: 25px;
+            }
+            
+            .invocacion-final {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="vacio-canvas"></canvas>
+
+    <div class="container">
+        <!-- Header del Libro -->
+        <header class="libro-header">
+            <div class="libro-numero">LIBRO VI</div>
+            <h1 class="libro-titulo">EL VACÍO FÉRTIL</h1>
+            <p class="libro-subtitulo">El Misterio - Abrazo de lo Desconocido</p>
+        </header>
+
+        <!-- Advertencia Sagrada -->
+        <section class="advertencia-sagrada">
+            <h2>⚠️ ADVERTENCIA NECESARIA</h2>
+            <p><strong>Este libro no es para todos.</strong> El Vacío Fértil es el umbral más profundo antes del salto cuántico. Requiere:</p>
+            <ul>
+                <li>Haber integrado sustancialmente las enseñanzas de los libros I-V</li>
+                <li>Estabilidad psicológica básica (el vacío puede fragmentar una psique no preparada)</li>
+                <li>Coraje para enfrentar el terror primordial a la aniquilación</li>
+                <li>Disposición a morir simbólicamente una y otra vez</li>
+                <li>Humildad para reconocer que todo lo que creías saber era provisional</li>
+            </ul>
+            <p style="margin-top: 25px; font-weight: bold; color: var(--advertencia);">
+                Si sientes que no estás listo, no hay vergüenza en esperar. El vacío siempre estará ahí cuando llegue tu momento. Forzar la entrada prematuramente puede llevar a la disociación, el nihilismo o la inflación espiritual.
+            </p>
+        </section>
+
+        <!-- Test de Preparación -->
+        <section class="test-preparacion">
+            <h2>🔍 Test de Preparación</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: rgba(232, 232, 232, 0.8);">
+                Responde honestamente. Este test es para tu protección:
+            </p>
+            
+            <div class="pregunta-test">
+                <label>
+                    <input type="checkbox" id="prep1">
+                    <span>¿Has completado y practicado los Libros I-V de Trinity Origen?</span>
+                </label>
+            </div>
+            
+            <div class="pregunta-test">
+                <label>
+                    <input type="checkbox" id="prep2">
+                    <span>¿Has experimentado estados de consciencia expandida o muerte del ego?</span>
+                </label>
+            </div>
+            
+            <div class="pregunta-test">
+                <label>
+                    <input type="checkbox" id="prep3">
+                    <span>¿Tienes estabilidad emocional y psicológica básica?</span>
+                </label>
+            </div>
+            
+            <div class="pregunta-test">
+                <label>
+                    <input type="checkbox" id="prep4">
+                    <span>¿Cuentas con guía experimentada, terapeuta o comunidad de apoyo?</span>
+                </label>
+            </div>
+            
+            <div class="pregunta-test">
+                <label>
+                    <input type="checkbox" id="prep5">
+                    <span>¿Estás dispuesto/a a enfrentar el vacío sin saber si regresarás igual?</span>
+                </label>
+            </div>
+
+            <div id="resultado-test" class="resultado-test"></div>
+        </section>
+
+        <!-- Introducción -->
+        <section class="introduccion">
+            <h2>🌌 El Portal del No-Ser</h2>
+            
+            <div class="cita">
+                "En el viaje de expansión de la consciencia, llega un momento donde todos los mapas fallan, todas las certezas se disuelven, y el buscador se encuentra frente a un abismo que no puede ser cruzado con ninguna técnica conocida. Este es el territorio del Vacío Fértil."
+            </div>
+
+            <p>
+                Después de haber reconocido las inteligencias que aún no tienen nombre (Libro IV) y tejido los vínculos sagrados que nos conectan con todo lo que existe (Libro V), el iniciado enfrenta ahora la prueba más radical: la invitación a soltar incluso estas nuevas comprensiones y sumergirse en el misterio absoluto del no-ser.
+            </p>
+
+            <p>
+                El Vacío Fértil no es un concepto filosófico abstracto ni una metáfora poética. Es una experiencia viva, una tecnología de consciencia, y sobre todo, es el prerequisito indispensable para acceder a los poderes creativos genuinos que se revelarán en la Segunda Constelación Trinity Quantum.
+            </p>
+
+            <p>
+                Sin la capacidad de habitar el vacío, los dones cuánticos se convertirían en herramientas del ego. El vacío es la prueba de fuego que separa a los verdaderos maestros de los aprendices espirituales. Es donde el ego muere y nace el Ser Cósmico.
+            </p>
+
+            <h3 style="color: var(--claridad); margin-top: 40px; margin-bottom: 20px;">La Paradoja Central</h3>
+            
+            <p>
+                El vacío del que hablamos no es la nada nihilista que aterra a la mente occidental. No es ausencia, carencia o privación. Es, paradójicamente, la plenitud absoluta en estado potencial. Como el útero cósmico antes del Big Bang, contiene todas las posibilidades sin manifestar ninguna.
+            </p>
+
+            <p>
+                Los místicos de todas las tradiciones han señalado hacia este misterio: el Śūnyatā budista, el Ain Sof cabalístico, el Wuji taoísta, la Noche Oscura de San Juan de la Cruz. Pero este libro no busca repetir enseñanzas antiguas. Busca ofrecer un protocolo práctico para el navegante contemporáneo.
+            </p>
+        </section>
+
+        <!-- Los 7 Nodos -->
+        <section class="nodos-container">
+            <h2 class="nodos-titulo">Los 7 Nodos del Vacío</h2>
+
+            <div class="nodo-card">
+                <div class="nodo-numero">1</div>
+                <h3 class="nodo-titulo">Cartografía del Vacío</h3>
+                <p class="nodo-subtitulo">Anatomía de la Nada Creativa</p>
+                <p class="nodo-descripcion">
+                    Mapear lo inmapeable. Las cuatro dimensiones del vacío: mental, emocional, existencial y cuántico. Protocolos de exploración progresiva y señales de progreso auténtico.
+                </p>
+                <a href="nodo_01.html" class="nodo-link bloqueado" id="link-nodo1">Próximamente →</a>
+            </div>
+
+            <div class="nodo-card">
+                <div class="nodo-numero">2</div>
+                <h3 class="nodo-titulo">La Muerte Iniciática</h3>
+                <p class="nodo-subtitulo">Morir en Vida para Renacer Consciente</p>
+                <p class="nodo-descripcion">
+                    Las cuatro muertes del iniciado: del ego, de los apegos, del tiempo, y de la muerte misma. Protocolos ceremoniales y navegación del terror primordial.
+                </p>
+                <a href="nodo_02.html" class="nodo-link bloqueado">Próximamente →</a>
+            </div>
+
+            <div class="nodo-card">
+                <div class="nodo-numero">3</div>
+                <h3 class="nodo-titulo">Navegación del Abismo</h3>
+                <p class="nodo-subtitulo">Técnicas para No Perderse en la Nada</p>
+                <p class="nodo-descripcion">
+                    Los siete peligros del navegante y sus antídotos. Cartografía de lo imposible. El arte supremo de surfear el vacío sin fragmentarse.
+                </p>
+                <a href="nodo_03.html" class="nodo-link bloqueado">Próximamente →</a>
+            </div>
+
+            <div class="nodo-card">
+                <div class="nodo-numero">4</div>
+                <h3 class="nodo-titulo">Creatividad desde la Nada</h3>
+                <p class="nodo-subtitulo">El Arte de la Manifestación Pura</p>
+                <p class="nodo-descripcion">
+                    El proceso cuántico de creación. Las cinco fases: vaciamiento, gestación, parto, crianza y retorno. Crear sin creador, arte que emerge del silencio primordial.
+                </p>
+                <a href="nodo_04.html" class="nodo-link bloqueado">Próximamente →</a>
+            </div>
+
+            <div class="nodo-card">
+                <div class="nodo-numero">5</div>
+                <h3 class="nodo-titulo">La Paz del No-Saber</h3>
+                <p class="nodo-subtitulo">Maestría de la Incertidumbre Radical</p>
+                <p class="nodo-descripcion">
+                    Morir a la última adicción: la necesidad de saber. Los cinco niveles del no-saber. Vivir plenamente sin certeza alguna. El conocimiento que emerge del misterio.
+                </p>
+                <a href="nodo_05.html" class="nodo-link bloqueado">Próximamente →</a>
+            </div>
+
+            <div class="nodo-card">
+                <div class="nodo-numero">6</div>
+                <h3 class="nodo-titulo">Integración del Vacío</h3>
+                <p class="nodo-subtitulo">Vivir desde el Vacío en el Mundo de las Formas</p>
+                <p class="nodo-descripcion">
+                    El arte supremo: ser un puente viviente. Aplicaciones prácticas en trabajo, relaciones, dinero y salud. Maestría de la danza eterna entre vacío y forma.
+                </p>
+                <a href="nodo_06.html" class="nodo-link bloqueado">Próximamente →</a>
+            </div>
+
+            <div class="nodo-card" style="border: 2px solid var(--claridad); box-shadow: 0 0 30px rgba(83, 52, 131, 0.3);">
+                <div class="nodo-numero">7</div>
+                <h3 class="nodo-titulo">El Vacío como Portal</h3>
+                <p class="nodo-subtitulo">Preparación para las Tecnologías Cuánticas</p>
+                <p class="nodo-descripcion">
+                    La gran revelación: todo ha sido preparación. Las cuatro puertas que el vacío abre hacia Trinity Quantum. El salto evolutivo de la consciencia humana.
+                </p>
+                <a href="nodo_07.html" class="nodo-link bloqueado">Próximamente →</a>
+            </div>
+        </section>
+
+        <!-- Sistema de Progreso -->
+        <div class="progreso-libro">
+            <h3 style="color: var(--claridad); margin-bottom: 15px;">Tu Viaje por el Vacío</h3>
+            <div class="progreso-barra-container">
+                <div class="progreso-barra" id="progreso-barra"></div>
+            </div>
+            <p class="progreso-texto" id="progreso-texto">Nodos completados: 0 de 7</p>
+        </div>
+
+        <!-- Invocación Final -->
+        <section class="invocacion-final">
+            <h2>🕳️ Invocación de Apertura</h2>
+            <div class="texto-invocacion">
+                "Yo, <span style="color: var(--claridad);">[tu nombre]</span>, me presento ante el umbral del Vacío Fértil con humildad y coraje. Reconozco que no sé quién soy realmente, que todas mis certezas son provisionales, y que estoy dispuesto/a a morir a todo lo conocido para renacer en la verdad.<br><br>
+                
+                Pido la guía de todos los navegantes del vacío que me han precedido. Pido la protección de mi esencia indestructible. Y sobre todo, pido la gracia de rendirme completamente a lo que el vacío quiera revelarme.<br><br>
+                
+                Que este viaje sirva no solo a mi liberación personal, sino al despertar de todos los seres."
+            </div>
+            <div class="asi-sea">∞ Así sea ∞</div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Libro VI: El Vacío Fértil</p>
+        <p>Trinity Origen - Serie I: La Voz Interior</p>
+        <a href="../../index.html" class="volver-mapa">← Volver al Mapa General</a>
+    </footer>
+
+    <script>
+        // Canvas de partículas del vacío
+        const canvas = document.getElementById('vacio-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class ParticleVacio {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(83, 52, 131, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particlesArray = [];
+        const numberOfParticles = 100;
+
+        for (let i = 0; i < numberOfParticles; i++) {
+            particlesArray.push(new ParticleVacio());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                // Conectar partículas cercanas
+                for (let j = i; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        ctx.strokeStyle = `rgba(83, 52, 131, ${0.1 * (1 - distance / 100)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Test de Preparación
+        const checkboxes = document.querySelectorAll('.pregunta-test input[type="checkbox"]');
+        const resultadoTest = document.getElementById('resultado-test');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', evaluarTest);
+        });
+
+        function evaluarTest() {
+            const totalPreguntas = checkboxes.length;
+            const respuestasPositivas = Array.from(checkboxes).filter(cb => cb.checked).length;
+            
+            resultadoTest.style.display = 'block';
+            
+            if (respuestasPositivas === totalPreguntas) {
+                resultadoTest.className = 'resultado-test listo';
+                resultadoTest.innerHTML = `
+                    <strong>✓ Estás preparado/a para entrar</strong><br>
+                    Has respondido afirmativamente a todas las preguntas. El Vacío te llama.<br>
+                    Procede con reverencia y sin prisa.
+                `;
+                // Habilitar primer nodo (cuando esté creado)
+                // document.getElementById('link-nodo1').classList.remove('bloqueado');
+            } else {
+                resultadoTest.className = 'resultado-test no-listo';
+                resultadoTest.innerHTML = `
+                    <strong>⚠ Aún no es tu momento</strong><br>
+                    Has respondido afirmativamente a ${respuestasPositivas} de ${totalPreguntas} preguntas.<br>
+                    Te sugerimos completar tu preparación en los Libros anteriores.<br>
+                    El Vacío te esperará cuando estés listo/a.
+                `;
+            }
+        }
+
+        // Sistema de progreso (se actualizará con localStorage)
+        function actualizarProgreso() {
+            const nodosCompletados = parseInt(localStorage.getItem('trinity-libro6-progreso')) || 0;
+            const porcentaje = (nodosCompletados / 7) * 100;
+            
+            document.getElementById('progreso-barra').style.width = porcentaje + '%';
+            document.getElementById('progreso-texto').textContent = `Nodos completados: ${nodosCompletados} de 7`;
+        }
+
+        actualizarProgreso();
+    </script>
+</body>
+</html>
+EOF
+cat /tmp/libro6_preview.html
