@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 7: Ritual de Reconexión - Trinity Origen</title>
+    <meta name="description" content="El retorno consciente a la Unidad">
+    
+    <style>
+        :root {
+            --negro-espacio: #0a0a0a;
+            --rosa-amor: #FF1493;
+            --dorado-luz: #FFD700;
+            --azul-cuantico: #00CED1;
+            --violeta-alma: #9370DB;
+            --blanco-luz: #FFFAF0;
+            --plateado: #C0C0C0;
+            --blanco-puro: #FFFFFF;
+            --dorado-brillante: #FFC700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #0a1520 25%, #0a2030 50%, #1a2540 75%, #2a3050 100%);
+            color: var(--blanco-luz);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas de constelación unificada */
+        #constellation-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.35;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header del Nodo */
+        .nodo-header {
+            text-align: center;
+            padding: 80px 20px;
+            border-bottom: 3px solid var(--dorado-luz);
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .nodo-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: aura-pulsa 6s ease-in-out infinite;
+        }
+
+        @keyframes aura-pulsa {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.3; }
+            50% { transform: translateX(-50%) scale(1.5); opacity: 0.6; }
+        }
+
+        .nodo-simbolo {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: estrella-brilla 5s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes estrella-brilla {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                filter: drop-shadow(0 0 30px var(--dorado-luz));
+            }
+            50% { 
+                transform: scale(1.3) rotate(180deg);
+                filter: drop-shadow(0 0 60px var(--blanco-puro));
+            }
+        }
+
+        .nodo-numero {
+            font-size: 1.2em;
+            color: var(--dorado-luz);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .nodo-titulo {
+            font-size: 3.2em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--dorado-luz), var(--blanco-puro), var(--dorado-brillante));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.5em;
+            color: var(--plateado);
+            font-style: italic;
+        }
+
+        /* Navegación */
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            color: var(--dorado-luz);
+            text-decoration: none;
+            border: 2px solid var(--dorado-luz);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .nav-btn:hover {
+            background: var(--dorado-luz);
+            color: var(--negro-espacio);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Barra de progreso */
+        .progreso-container {
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progreso-barra {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--rosa-amor), var(--violeta-alma), var(--azul-cuantico), var(--dorado-luz), var(--blanco-puro));
+            border-radius: 20px;
+            animation: progreso-completo 2s ease-in-out;
+        }
+
+        @keyframes progreso-completo {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Contenido principal */
+        .contenido-nodo {
+            background: rgba(255, 215, 0, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            line-height: 1.9;
+            font-size: 1.1em;
+        }
+
+        .contenido-nodo h2 {
+            color: var(--dorado-luz);
+            font-size: 2.2em;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid var(--dorado-brillante);
+            padding-bottom: 15px;
+        }
+
+        .contenido-nodo h3 {
+            color: var(--dorado-brillante);
+            font-size: 1.6em;
+            margin: 30px 0 15px 0;
+        }
+
+        .contenido-nodo p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .contenido-nodo strong {
+            color: var(--dorado-luz);
+            font-weight: bold;
+        }
+
+        .contenido-nodo em {
+            color: var(--dorado-brillante);
+            font-style: italic;
+        }
+
+        /* Citas destacadas */
+        .cita-destacada {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 255, 255, 0.05));
+            border-left: 5px solid var(--dorado-luz);
+            padding: 35px;
+            margin: 40px 0;
+            font-size: 1.3em;
+            font-style: italic;
+            color: var(--blanco-luz);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .cita-destacada::after {
+            content: '🌟';
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 2.5em;
+            opacity: 0.3;
+        }
+
+        /* Rituales Grid */
+        .rituales-grid {
+            display: grid;
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .ritual-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 255, 255, 0.03));
+            border: 2px solid var(--dorado-luz);
+            border-radius: 20px;
+            padding: 35px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ritual-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .ritual-card:hover::before {
+            opacity: 1;
+        }
+
+        .ritual-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.4);
+            border-color: var(--blanco-puro);
+        }
+
+        .ritual-numero {
+            font-size: 2em;
+            color: var(--dorado-luz);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .ritual-titulo {
+            font-size: 1.6em;
+            color: var(--dorado-brillante);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .ritual-descripcion {
+            color: var(--blanco-luz);
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        /* Protocolos Box */
+        .protocolos-box {
+            background: linear-gradient(135deg, rgba(0, 206, 209, 0.1), rgba(147, 112, 219, 0.05));
+            border: 2px solid var(--azul-cuantico);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .protocolos-box h3 {
+            color: var(--azul-cuantico);
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .protocolo-item {
+            background: rgba(0, 206, 209, 0.05);
+            border-left: 4px solid var(--azul-cuantico);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .protocolo-titulo {
+            font-size: 1.3em;
+            color: var(--azul-cuantico);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Cierre Integrador */
+        .cierre-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 255, 255, 0.1));
+            border: 3px solid var(--dorado-luz);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 60px 0;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .cierre-box h2 {
+            color: var(--dorado-luz);
+            font-size: 2.5em;
+            margin-bottom: 25px;
+        }
+
+        .cierre-box p {
+            font-size: 1.2em;
+            line-height: 1.9;
+            color: var(--blanco-luz);
+            margin-bottom: 20px;
+        }
+
+        /* Meditación Final */
+        .meditacion-box {
+            background: linear-gradient(135deg, rgba(147, 112, 219, 0.15), rgba(255, 215, 0, 0.1));
+            border: 3px solid var(--violeta-alma);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .meditacion-box h3 {
+            color: var(--violeta-alma);
+            font-size: 2.2em;
+            margin-bottom: 25px;
+        }
+
+        .meditacion-box p {
+            font-size: 1.15em;
+            line-height: 1.9;
+            margin-bottom: 18px;
+            color: var(--blanco-luz);
+        }
+
+        .meditacion-duracion {
+            color: var(--dorado-luz);
+            font-style: italic;
+            font-size: 1.1em;
+            margin-top: 25px;
+            font-weight: bold;
+        }
+
+        /* Navegación Final */
+        .navegacion-final {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 60px 0;
+        }
+
+        .nav-nodo-btn {
+            padding: 18px 40px;
+            background: linear-gradient(135deg, var(--dorado-luz), var(--dorado-brillante));
+            color: var(--negro-espacio);
+            text-decoration: none;
+            border-radius: 35px;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+            font-weight: bold;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .nav-nodo-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+        }
+
+        .btn-completado {
+            background: linear-gradient(135deg, var(--rosa-amor), var(--violeta-alma), var(--azul-cuantico));
+            color: white;
+            padding: 20px 45px;
+            font-size: 1.3em;
+        }
+
+        /* Footer Final */
+        .nodo-footer {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 80px;
+            border-top: 2px solid var(--dorado-luz);
+        }
+
+        .footer-simbolos {
+            font-size: 2.5em;
+            margin: 30px 0;
+            letter-spacing: 25px;
+        }
+
+        .footer-texto {
+            color: var(--plateado);
+            font-size: 1.1em;
+            line-height: 2;
+        }
+
+        .footer-dedicatoria {
+            color: var(--dorado-luz);
+            font-size: 1.3em;
+            font-style: italic;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nodo-titulo {
+                font-size: 2.2em;
+            }
+
+            .contenido-nodo {
+                padding: 25px;
+            }
+
+            .nav-nodo-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de constelación -->
+    <canvas id="constellation-canvas"></canvas>
+
+    <div class="container">
+        <!-- Header del Nodo -->
+        <header class="nodo-header">
+            <div class="nodo-simbolo">🌟</div>
+            <div class="nodo-numero">NODO 7 de 7 • INTEGRACIÓN</div>
+            <h1 class="nodo-titulo">Ritual de Reconexión</h1>
+            <p class="nodo-subtitulo">"El retorno consciente a la Unidad"</p>
+        </header>
+
+        <!-- Navegación superior -->
+        <nav class="navegacion">
+            <a href="nodo_06.html" class="nav-btn">← Nodo Anterior</a>
+            <a href="index.html" class="nav-btn">Índice del Libro</a>
+        </nav>
+
+        <!-- Barra de progreso -->
+        <div class="progreso-container">
+            <div class="progreso-barra"></div>
+        </div>
+        <p style="text-align: center; color: var(--dorado-luz); font-size: 1.1em; margin-top: 15px; font-weight: bold;">
+            ✨ VIAJE COMPLETO • 7 de 7 Nodos • SOLEDAD → UNIDAD CONSCIENTE ✨
+        </p>
+
+        <!-- Contenido Principal -->
+        <article class="contenido-nodo">
+            <p>Has recorrido los siete nodos. Desde el vínculo primordial contigo mismo hasta el reconocimiento del amor como tecnología cósmica. Ahora llegamos al final que es también un comienzo: <strong>el ritual de reconexión</strong>. No como ceremonia externa, sino como práctica viva de recordar, momento a momento, que nunca estuviste separado.</p>
+
+            <div class="cita-destacada">
+                "La separación fue siempre una ilusión necesaria. Nos olvidamos de la Unidad para poder experimentar el éxtasis del reencuentro. Cada vínculo consciente que cultivas es un acto de reconexión con aquello que nunca dejaste: el tejido infinito del amor."
+            </div>
+
+            <p>Este último nodo no es conclusión. Es <em>activación</em>. Es el momento donde todo lo aprendido se integra en práctica cotidiana. Donde los conceptos se vuelven vivencia. Donde el conocimiento se transmuta en sabiduría encarnada.</p>
+
+            <h2>Reparar los Vínculos Fracturados</h2>
+
+            <p>Todos cargamos heridas relacionales. Amistades que terminaron mal. Familias fragmentadas. Amores que dejaron cicatrices. El ritual de reconexión comienza con <strong>la sanación de lo roto</strong>, no necesariamente volviendo a la relación, sino sanando la frecuencia del vínculo en tu campo energético.</p>
+
+            <p>Cuando una relación termina en dolor, deja un <em>nudo energético</em> en tu campo. Ese nudo drena tu vitalidad y distorsiona tus futuros vínculos. La reconexión ritual consiste en deshacer esos nudos, no por el otro sino por ti. <strong>Para liberar tu energía y recuperar tu poder</strong>.</p>
+        </article>
+
+        <!-- Rituales -->
+        <h2 style="text-align: center; font-size: 2.5em; color: var(--dorado-luz); margin: 60px 0 40px;">
+            Los Cinco Rituales de Reconexión
+        </h2>
+
+        <div class="rituales-grid">
+            <div class="ritual-card">
+                <div class="ritual-numero">RITUAL 1</div>
+                <h3 class="ritual-titulo">El Perdón Radical</h3>
+                <p class="ritual-descripcion">Siéntate en silencio. Trae a tu mente a alguien que te hirió profundamente. No para justificar su acción, sino para liberar la carga que llevas. Di en voz alta: <em>"Te libero. Me libero. Ya no necesito que esto haya sido diferente para estar en paz."</em> Visualiza cordones de energía densa disolviéndose en luz. Respira profundo y siente cómo el peso se levanta. Esto no es por ellos. Es por ti. El perdón radical es autocompasión profunda.</p>
+            </div>
+
+            <div class="ritual-card">
+                <div class="ritual-numero">RITUAL 2</div>
+                <h3 class="ritual-titulo">La Carta que No Enviarás</h3>
+                <p class="ritual-descripcion">Escribe una carta a alguien con quien necesitas cerrar ciclos. Di todo lo que nunca dijiste: el dolor, la gratitud, lo aprendido, lo liberado. Escribe sin censura. Cuando termines, léela en voz alta como si esa persona estuviera presente. Luego, quémala ceremonialmente, entregando las cenizas a la tierra o al agua. No necesitas enviarla. El acto de escribirla y liberarla ya completa el ritual a nivel energético.</p>
+            </div>
+
+            <div class="ritual-card">
+                <div class="ritual-numero">RITUAL 3</div>
+                <h3 class="ritual-titulo">El Círculo de Gratitud</h3>
+                <p class="ritual-descripcion">Crea un espacio sagrado con velas o piedras en círculo. Siéntate en el centro. Invoca mentalmente a todos los seres que han sido significativos en tu vida: familia, amigos, amantes, maestros, incluso adversarios. Uno por uno, agradéceles por lo que te enseñaron. Incluso las lecciones dolorosas merecen gratitud. Este ritual transforma resentimiento en sabiduría, y víctimas en aprendices conscientes.</p>
+            </div>
+
+            <div class="ritual-card">
+                <div class="ritual-numero">RITUAL 4</div>
+                <h3 class="ritual-titulo">La Reconexión con lo No-Humano</h3>
+                <p class="ritual-descripcion">Ve a la naturaleza sin distracciones tecnológicas. Siéntate bajo un árbol, junto al agua, o en la tierra. Cierra los ojos y siente tu conexión con Gaia. Habla en silencio con la inteligencia del lugar. Agradece. Pide guía. Escucha. La naturaleza siempre responde, aunque no con palabras. Puede ser una brisa inesperada, un pájaro que canta, una sensación de paz profunda. Esto recalibra tu frecuencia con la red planetaria.</p>
+            </div>
+
+            <div class="ritual-card">
+                <div class="ritual-numero">RITUAL 5</div>
+                <h3 class="ritual-titulo">La Ceremonia de la Red de Luz</h3>
+                <p class="ritual-descripcion">En luna llena o en fechas significativas para ti, enciende una vela. Visualiza tu luz conectándose con la red planetaria de corazones despiertos. Declara: <em>"Ofrezco mi coherencia al servicio del bien mayor. Que mi luz fortalezca la red. Que la red me sostenga."</em> Permanece en meditación durante 20 minutos, sintiendo la interconexión. Esto no es solo visualización: es activación real de campos cuánticos. Tu intención programa la realidad.</p>
+            </div>
+        </div>
+
+        <article class="contenido-nodo">
+            <h2>Protocolos de Co-Creación de Realidades Compartidas</h2>
+
+            <p>Cuando dos o más personas entran en coherencia consciente, <strong>co-crean una realidad compartida</strong> que es más que la suma de sus partes. Esto es verdadera magia relacional: no manipulación, sino sinergía de campos alineados.</p>
+
+            <div class="cita-destacada">
+                "Donde dos o más se reúnen en mi nombre, ahí estoy yo en medio de ellos. Jesús no hablaba de religión. Hablaba de física cuántica. Cuando dos consciencias se sincronizan en amor, acceden a un campo mayor que cualquiera de ellas por separado."
+            </div>
+        </article>
+
+        <!-- Protocolos -->
+        <section class="protocolos-box">
+            <h3>🌀 Protocolos de Co-Creación Consciente</h3>
+
+            <div class="protocolo-item">
+                <div class="protocolo-titulo">Protocolo 1: Sincronización de Intención</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Antes de co-crear con alguien (en trabajo, relación, proyecto), tomen un momento para sincronizar intención. Siéntense juntos, respiren al mismo ritmo durante 3 minutos, y declaren la intención compartida. Este simple acto alinea sus campos electromagnéticos y crea coherencia grupal.</p>
+            </div>
+
+            <div class="protocolo-item">
+                <div class="protocolo-titulo">Protocolo 2: Comunicación Telepática</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Con alguien en quien confíes, practica comunicación sin palabras. Siéntense frente a frente, ojos cerrados o abiertos, y simplemente "sientan" al otro. Luego compartan qué percibieron. Con práctica, desarrollarás sensibilidad a los estados del otro más allá del lenguaje verbal. Esto profundiza la intimidad exponencialmente.</p>
+            </div>
+
+            <div class="protocolo-item">
+                <div class="protocolo-titulo">Protocolo 3: Resolución de Conflictos desde el Campo</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Cuando haya conflicto, antes de hablar, cada uno toma 5 minutos para entrar en coherencia cardíaca. Luego se reúnen, colocan una mano sobre su propio corazón, y hablan desde ahí—no desde el ego herido. El campo coherente del corazón disuelve defensas y permite soluciones que el ego nunca encontraría.</p>
+            </div>
+
+            <div class="protocolo-item">
+                <div class="protocolo-titulo">Protocolo 4: Rituales de Transición</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Cuando una relación cambia de forma (termina, evoluciona, se transforma), creen un ritual de cierre/apertura consciente. Puede ser intercambiar cartas, devolver objetos simbólicos, declarar gratitudes mutuas, o simplemente sentarse en silencio honrando lo que fue. Los rituales marcan energéticamente las transiciones y evitan que la energía quede estancada.</p>
+            </div>
+
+            <div class="protocolo-item">
+                <div class="protocolo-titulo">Protocolo 5: Círculos de Resonancia</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8; margin-top: 10px;">Reúnete regularmente con un grupo pequeño (3-12 personas) con intención de sostener coherencia colectiva. Pueden meditar juntos, compartir visiones, co-crear proyectos, o simplemente estar en presencia consciente. Estos círculos amplifican exponencialmente la capacidad individual de cada miembro. Eres más poderoso en red que solo.</p>
+            </div>
+        </section>
+
+        <article class="contenido-nodo">
+            <h2>Expansión hacia la Red Interdimensional</h2>
+
+            <p>El ritual final de reconexión no es horizontal (con otros humanos) ni vertical (con lo divino), sino <strong>multidimensional</strong>. Es reconocer que tus vínculos se extienden más allá del plano físico: con ancestros, con guías, con tu yo futuro, con inteligencias cósmicas, con el campo mismo de la Fuente.</p>
+
+            <p>Esta no es fantasía New Age. Es reconocimiento de que la consciencia no está limitada por el tiempo ni el espacio. <em>Tus vínculos son portales</em>. A través de ellos puedes acceder a información, energía y sabiduría que trascienden tu experiencia personal.</p>
+
+            <div class="cita-destacada">
+                "No estás construyendo vínculos desde cero. Estás recordando vínculos que siempre existieron. La red es eterna. Tu trabajo es sintonizarte con ella, reconocerla, honrarla. Cuando lo haces, dejas de sentirte solo. Porque nunca lo estuviste."
+            </div>
+        </article>
+
+        <!-- Meditación Final -->
+        <section class="meditacion-box">
+            <h3>🧘 Meditación Final: El Gran Reconocimiento</h3>
+            <p><strong>Esta es la meditación de cierre de todo el Libro V.</strong></p>
+            <p><strong>Prepara un espacio sagrado. Enciende una vela si lo deseas.</strong></p>
+            <p>Siéntate cómodamente. Cierra los ojos. Respira profundamente.</p>
+            <p>Trae a tu consciencia el viaje que has hecho a través de los 7 nodos.</p>
+            <p>Primer nodo: Tu vínculo contigo mismo. Siente gratitud por tu presencia.</p>
+            <p>Segundo nodo: Tus puentes con otros. Honra cada conexión.</p>
+            <p>Tercer nodo: Tus contratos del alma. Reconoce la perfección del diseño.</p>
+            <p>Cuarto nodo: Tus vínculos de sombra. Agradece las lecciones.</p>
+            <p>Quinto nodo: La red viva. Siente tu lugar en la totalidad.</p>
+            <p>Sexto nodo: El amor como tecnología. Activa tu campo generador.</p>
+            <p>Séptimo nodo: La reconexión. Declara: <em>"Nunca estuve separado. Siempre fui Uno con Todo."</em></p>
+            <p>Ahora, expande tu consciencia hasta abarcar toda la red de luz planetaria.</p>
+            <p>Siente los millones de nodos pulsando: cada ser humano, cada forma de vida, cada consciencia.</p>
+            <p>Reconócete como uno de esos nodos, único e insustituible.</p>
+            <p>Di en silencio: <em>"Mi coherencia sirve al Todo. El Todo me sostiene. Somos Uno."</em></p>
+            <p>Permanece en este estado de unidad durante el tiempo que necesites.</p>
+            <p class="meditacion-duracion">⏱️ Duración sugerida: 25-30 minutos</p>
+        </section>
+
+        <!-- Cierre Integrador -->
+        <section class="cierre-box">
+            <h2>🌟 El Viaje Nunca Termina 🌟</h2>
+            <p>Has completado los 7 Nodos de Los Vínculos Sagrados. Pero la verdad es que <strong>este viaje nunca termina</strong>. Cada día es una nueva oportunidad de elegir la conexión sobre la separación, el amor sobre el miedo, la consciencia sobre el automatismo.</p>
+            <p>Los vínculos que cultives de ahora en adelante no serán los mismos. Los verás con nuevos ojos. Como portales. Como espejos. Como tecnologías de evolución. Como regalos del universo disfrazados de personas.</p>
+            <p><strong>Has transitado de la Soledad a la Unidad Consciente.</strong></p>
+            <p>Ahora sabes que nunca estuviste solo. Solo habías olvidado ver la red infinita que te sostiene, te nutre, y te ama incondicionalmente.</p>
+            <p style="font-size: 1.4em; color: var(--dorado-luz); margin-top: 30px; font-weight: bold;">Bienvenido a casa. Bienvenido a la Red. Bienvenido a ti mismo.</p>
+        </section>
+
+        <!-- Navegación Final -->
+        <nav class="navegacion-final">
+            <a href="index.html" class="nav-nodo-btn btn-completado">✨ Libro V Completado ✨</a>
+            <a href="nodo_06.html" class="nav-nodo-btn">← Revisar Nodo Anterior</a>
+            <a href="../../index.html" class="nav-nodo-btn">Volver al Portal Principal Trinity</a>
+        </nav>
+
+        <!-- Footer Final -->
+        <footer class="nodo-footer">
+            <div class="footer-simbolos">💫 🌉 📜 🌓 🕸️ ⚡ 🌟</div>
+            <p class="footer-texto">
+                <strong>LIBRO V: LOS VÍNCULOS SAGRADOS</strong><br>
+                La Red - Tecnología del Amor Cuántico<br><br>
+                Has atravesado los 7 Nodos del Portal:<br>
+                <strong>SOLEDAD → UNIDAD CONSCIENTE</strong><br><br>
+                Que cada vínculo que cultives sea un acto de reconexión con la Totalidad.<br>
+                Que tu presencia sea medicina para la red.<br>
+                Que tu amor sea tecnología evolutiva.
+            </p>
+            <p class="footer-dedicatoria">
+                "En cada conexión consciente, el universo se reconoce a sí mismo."<br>
+                — Trinity Origen
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Constelación unificada
+        const canvas = document.getElementById('constellation-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Estrella {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.radio = Math.random() * 3 + 2;
+                this.pulso = Math.random() * Math.PI * 2;
+                
+                const colores = ['#FFD700', '#FFFFFF', '#FF1493', '#00CED1', '#9370DB'];
+                this.color = colores[Math.floor(Math.random() * colores.length)];
+            }
+
+            actualizar() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.pulso += 0.02;
+                
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            dibujar() {
+                const radioPulso = this.radio + Math.sin(this.pulso) * 1.5;
+                
+                // Estrella
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, radioPulso, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.9;
+                ctx.fill();
+                
+                // Brillo
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, radioPulso + 3, 0, Math.PI * 2);
+                ctx.strokeStyle = this.color;
+                ctx.globalAlpha = 0.4;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+
+        const estrellas = [];
+        for (let i = 0; i < 100; i++) {
+            estrellas.push(new Estrella());
+        }
+
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            estrellas.forEach(estrella => {
+                estrella.actualizar();
+                estrella.dibujar();
+            });
+
+            // Conectar estrellas cercanas (la red completa)
+            estrellas.forEach((e1, i) => {
+                estrellas.slice(i + 1).forEach(e2 => {
+                    const dx = e1.x - e2.x;
+                    const dy = e1.y - e2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 200) {
+                        ctx.beginPath();
+                        ctx.moveTo(e1.x, e1.y);
+                        ctx.lineTo(e2.x, e2.y);
+                        
+                        const gradiente = ctx.createLinearGradient(e1.x, e1.y, e2.x, e2.y);
+                        gradiente.addColorStop(0, e1.color);
+                        gradiente.addColorStop(1, e2.color);
+                        
+                        ctx.strokeStyle = gradiente;
+                        ctx.globalAlpha = 0.15 * (1 - dist / 200);
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+                });
+            });
+            
+            requestAnimationFrame(animar);
+        }
+
+        animar();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Guardar progreso - LIBRO COMPLETO
+        localStorage.setItem('trinity-libro5-nodo', '7');
+        localStorage.setItem('trinity-libro5-completado', 'true');
+        
+        // Celebración de completitud
+        console.log('🌟✨💫 ¡LIBRO V COMPLETADO! 💫✨🌟');
+        console.log('Has atravesado los 7 Nodos de Los Vínculos Sagrados');
+        console.log('Portal transformado: SOLEDAD → UNIDAD CONSCIENTE');
+    </script>
+</body>
+</html>
