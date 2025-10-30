@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NODO 3: Navegación del Abismo | Vacío Fértil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: 'Georgia', serif;
+        background: #000000;
+        color: #e0e0e0;
+        line-height: 1.8;
+        overflow-x: hidden;
+    }
+
+    /* Canvas de fondo - Abismo animado */
+    #abyssCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        opacity: 0.4;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    /* Header del Nodo */
+    .nodo-header {
+        text-align: center;
+        margin-bottom: 60px;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, rgba(0, 0, 139, 0.3), rgba(0, 0, 0, 0.5));
+        border-radius: 20px;
+        border: 2px solid rgba(0, 100, 200, 0.4);
+        box-shadow: 0 0 40px rgba(0, 100, 200, 0.2);
+    }
+
+    .nodo-number {
+        font-size: 1.2rem;
+        color: #4da6ff;
+        letter-spacing: 3px;
+        margin-bottom: 10px;
+    }
+
+    .nodo-title {
+        font-size: 3rem;
+        color: #1e90ff;
+        margin-bottom: 20px;
+        text-shadow: 0 0 20px rgba(30, 144, 255, 0.5);
+    }
+
+    .nodo-subtitle {
+        font-size: 1.3rem;
+        color: #999;
+        font-style: italic;
+    }
+
+    /* Cita de apertura */
+    .opening-quote {
+        background: rgba(10, 10, 30, 0.8);
+        border-left: 4px solid #1e90ff;
+        padding: 30px;
+        margin: 40px 0;
+        border-radius: 10px;
+        font-style: italic;
+        font-size: 1.2rem;
+        color: #ccc;
+        box-shadow: 0 0 30px rgba(30, 144, 255, 0.1);
+    }
+
+    /* Secciones principales */
+    .section {
+        margin: 60px 0;
+        padding: 40px;
+        background: rgba(5, 5, 15, 0.9);
+        border-radius: 15px;
+        border: 1px solid rgba(30, 144, 255, 0.2);
+    }
+
+    .section-title {
+        font-size: 2rem;
+        color: #4da6ff;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    /* Fenomenología del Abismo */
+    .fenomeno {
+        background: linear-gradient(135deg, rgba(0, 0, 100, 0.2), rgba(0, 0, 0, 0.4));
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 10px;
+        border-left: 4px solid #1e90ff;
+    }
+
+    .fenomeno h4 {
+        color: #4da6ff;
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+    }
+
+    .fenomeno ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .fenomeno li {
+        padding: 8px 0;
+        padding-left: 30px;
+        position: relative;
+        color: #aaa;
+    }
+
+    .fenomeno li::before {
+        content: '◆';
+        position: absolute;
+        left: 0;
+        color: #1e90ff;
+    }
+
+    /* Cards de los 7 Peligros */
+    .peligro-card {
+        margin: 40px 0;
+        padding: 35px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, rgba(139, 0, 0, 0.15), rgba(0, 0, 0, 0.6));
+        border: 2px solid #8b0000;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .peligro-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(139, 0, 0, 0.1) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .peligro-card:hover::before {
+        opacity: 1;
+    }
+
+    .peligro-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(139, 0, 0, 0.3);
+        border-color: #ff4444;
+    }
+
+    .peligro-number {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #8b0000, #ff4444);
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 50px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(139, 0, 0, 0.5);
+    }
+
+    .peligro-title {
+        font-size: 1.8rem;
+        color: #ff6b6b;
+        margin-bottom: 15px;
+    }
+
+    .peligro-description {
+        color: #ccc;
+        margin-bottom: 25px;
+        font-size: 1.05rem;
+        line-height: 1.8;
+    }
+
+    /* Síntomas */
+    .sintomas {
+        background: rgba(0, 0, 0, 0.4);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border-left: 3px solid #ff4444;
+    }
+
+    .sintomas h4 {
+        color: #ff6b6b;
+        margin-bottom: 12px;
+    }
+
+    .sintomas ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sintomas li {
+        padding: 8px 0;
+        padding-left: 25px;
+        position: relative;
+        color: #ddd;
+    }
+
+    .sintomas li::before {
+        content: '⚠';
+        position: absolute;
+        left: 0;
+        color: #ff4444;
+    }
+
+    /* Técnica de Navegación */
+    .tecnica {
+        background: linear-gradient(135deg, rgba(0, 100, 0, 0.15), rgba(0, 0, 0, 0.3));
+        padding: 25px;
+        border-radius: 12px;
+        margin: 20px 0;
+        border: 2px solid #006400;
+    }
+
+    .tecnica-title {
+        color: #00ff00;
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .tecnica-steps {
+        counter-reset: step-counter;
+        list-style: none;
+        padding: 0;
+    }
+
+    .tecnica-steps li {
+        counter-increment: step-counter;
+        padding: 12px;
+        margin: 8px 0;
+        background: rgba(0, 100, 0, 0.1);
+        border-radius: 8px;
+        position: relative;
+        padding-left: 50px;
+        color: #ccc;
+    }
+
+    .tecnica-steps li::before {
+        content: counter(step-counter);
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #00ff00;
+        color: #000;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+    /* Mantra de Emergencia */
+    .mantra {
+        background: rgba(255, 215, 0, 0.1);
+        border: 2px dashed #ffd700;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 15px 0;
+        text-align: center;
+        font-style: italic;
+        color: #ffd700;
+        font-size: 1.1rem;
+    }
+
+    /* Historias de Navegación */
+    .historia {
+        background: linear-gradient(to right, rgba(30, 144, 255, 0.1), rgba(0, 0, 0, 0.3));
+        padding: 30px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border-left: 5px solid #1e90ff;
+    }
+
+    .historia-title {
+        color: #4da6ff;
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+    }
+
+    .historia-content {
+        color: #ccc;
+        line-height: 1.9;
+        font-style: italic;
+    }
+
+    .leccion {
+        margin-top: 20px;
+        padding: 15px;
+        background: rgba(0, 255, 0, 0.05);
+        border-left: 3px solid #00ff00;
+        border-radius: 5px;
+    }
+
+    .leccion strong {
+        color: #00ff00;
+    }
+
+    /* Protocolo Completo */
+    .protocolo-fase {
+        background: rgba(30, 144, 255, 0.08);
+        padding: 30px;
+        margin: 25px 0;
+        border-radius: 15px;
+        border: 2px solid rgba(30, 144, 255, 0.3);
+    }
+
+    .protocolo-fase h3 {
+        color: #4da6ff;
+        margin-bottom: 20px;
+        font-size: 1.6rem;
+    }
+
+    .protocolo-item {
+        background: rgba(0, 0, 0, 0.4);
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border-left: 3px solid #1e90ff;
+    }
+
+    .protocolo-item h4 {
+        color: #4da6ff;
+        margin-bottom: 8px;
+    }
+
+    /* Principios Fundamentales */
+    .principio {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 0, 0, 0.3));
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 10px;
+        border-left: 4px solid #ffd700;
+    }
+
+    .principio-numero {
+        color: #ffd700;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    /* Código del Navegante */
+    .codigo {
+        background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(0, 0, 0, 0.4));
+        padding: 35px;
+        margin: 40px 0;
+        border-radius: 15px;
+        border: 3px solid #8a2be2;
+    }
+
+    .codigo h3 {
+        color: #ba55d3;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 1.8rem;
+    }
+
+    .codigo ol {
+        color: #ddd;
+        font-size: 1.1rem;
+        line-height: 2;
+    }
+
+    .codigo ol li {
+        margin: 10px 0;
+    }
+
+    /* Estaciones del Navegante */
+    .estacion {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border: 2px solid;
+        transition: all 0.3s ease;
+    }
+
+    .estacion:hover {
+        transform: translateX(10px);
+    }
+
+    .estacion-1 { border-color: #ff4444; }
+    .estacion-2 { border-color: #4da6ff; }
+    .estacion-3 { border-color: #9370db; }
+    .estacion-4 { border-color: #ffd700; }
+    .estacion-5 { border-color: #00ff00; }
+
+    .estacion h4 {
+        margin-bottom: 12px;
+        font-size: 1.3rem;
+    }
+
+    .estacion-1 h4 { color: #ff6b6b; }
+    .estacion-2 h4 { color: #4da6ff; }
+    .estacion-3 h4 { color: #9370db; }
+    .estacion-4 h4 { color: #ffd700; }
+    .estacion-5 h4 { color: #00ff00; }
+
+    /* Gremio de Navegantes */
+    .gremio {
+        background: linear-gradient(135deg, rgba(75, 0, 130, 0.3), rgba(0, 0, 0, 0.6));
+        padding: 40px;
+        margin: 40px 0;
+        border-radius: 20px;
+        border: 3px solid #4b0082;
+        text-align: center;
+    }
+
+    .gremio-icons {
+        display: flex;
+        justify-content: space-around;
+        margin: 30px 0;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .gremio-icon {
+        text-align: center;
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .gremio-icon-symbol {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    .gremio-icon-text {
+        color: #9370db;
+        font-size: 0.95rem;
+    }
+
+    /* Práctica de Cierre */
+    .practica-cierre {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 100, 200, 0.3));
+        padding: 40px;
+        border-radius: 20px;
+        margin: 60px 0;
+        border: 3px solid #1e90ff;
+    }
+
+    .practica-cierre h2 {
+        color: #4da6ff;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .micro-nav-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .micro-nav-step {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 25px;
+        border-radius: 12px;
+        border: 2px solid #1e90ff;
+    }
+
+    .micro-nav-step h4 {
+        color: #4da6ff;
+        margin-bottom: 15px;
+    }
+
+    /* Navegación */
+    .navegacion {
+        display: flex;
+        justify-content: space-between;
+        margin: 60px 0;
+        padding: 30px;
+        background: rgba(10, 10, 30, 0.8);
+        border-radius: 15px;
+    }
+
+    .nav-button {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #1e90ff, #0047ab);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .nav-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(30, 144, 255, 0.4);
+        border-color: #4da6ff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .nodo-title {
+            font-size: 2rem;
+        }
+
+        .navegacion {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .gremio-icons {
+            flex-direction: column;
+        }
+    }
+
+    /* Animaciones */
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+
+    .floating {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    /* Scroll suave */
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="abyssCanvas"></canvas>
+
+```
+<div class="container">
+    <!-- Header del Nodo -->
+    <div class="nodo-header">
+        <div class="nodo-number">NODO 3 / 7</div>
+        <h1 class="nodo-title">🌊 NAVEGACIÓN DEL ABISMO</h1>
+        <p class="nodo-subtitle">Técnicas para No Perderse en la Nada</p>
+    </div>
+
+    <!-- Cita de Apertura -->
+    <div class="opening-quote">
+        "El vacío es un océano sin orillas donde muchos navegantes se han perdido. No por falta de coraje, sino por exceso de confianza. El abismo no perdona la arrogancia espiritual ni la preparación inadecuada."
+        <div style="text-align: right; margin-top: 15px; color: #4da6ff;">— Manual de los Navegantes del Vacío</div>
+    </div>
+
+    <!-- Introducción -->
+    <div class="section">
+        <h2 class="section-title">La Cartografía de lo Imposible</h2>
+        <p>Después de la muerte iniciática, el practicante se encuentra en un territorio que desafía toda descripción. No es un lugar ni un no-lugar. No es una experiencia ni una no-experiencia. Es el abismo primordial donde las leyes ordinarias de la realidad no aplican.</p>
+        
+        <p style="margin-top: 20px;">Muchos llegan aquí y se pierden para siempre. No en un sentido poético, sino literal: pierden la capacidad de regresar a la realidad consensual, de funcionar en el mundo de las formas, de mantener coherencia psíquica.</p>
+
+        <div style="margin: 30px 0; padding: 30px; background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(0, 0, 0, 0.4)); border-radius: 15px; border: 2px solid #8b0000;">
+            <p style="text-align: center; color: #ff6b6b; font-size: 1.2rem; font-weight: bold;">Este nodo es un manual de supervivencia para el abismo.</p>
+            <p style="text-align: center; margin-top: 15px; color: #ccc;">No garantiza seguridad —nada puede garantizarla en estos territorios— pero ofrece las mejores prácticas conocidas de aquellos que han navegado y regresado.</p>
+        </div>
+    </div>
+
+    <!-- Fenomenología del Abismo -->
+    <div class="section">
+        <h2 class="section-title">Fenomenología del Abismo</h2>
+        <p style="text-align: center; margin-bottom: 30px; color: #999;">El abismo no es simplemente "vacío" o "nada". Es un estado ontológico con características específicas:</p>
+
+        <div class="fenomeno">
+            <h4>🌀 No-direccionalidad</h4>
+            <ul>
+                <li>No hay arriba ni abajo, adelante ni atrás</li>
+                <li>Toda orientación espacial colapsa</li>
+                <li>Los intentos de moverse no llevan a ninguna parte</li>
+                <li>La sensación de caída infinita es común</li>
+            </ul>
+        </div>
+
+        <div class="fenomeno">
+            <h4>⏰ No-temporalidad</h4>
+            <ul>
+                <li>El tiempo no fluye ni se detiene, simplemente no existe</li>
+                <li>Un segundo puede sentirse como eones</li>
+                <li>Eones pueden pasar en un instante</li>
+                <li>La secuencia causa-efecto se disuelve</li>
+            </ul>
+        </div>
+
+        <div class="fenomeno">
+            <h4>👁️ No-identidad</h4>
+            <ul>
+                <li>No hay "tú" que experimente</li>
+                <li>Pero tampoco hay ausencia de experiencia</li>
+                <li>Consciencia sin sujeto ni objeto</li>
+                <li>El testigo y lo testimoniado colapsan</li>
+            </ul>
+        </div>
+
+        <div class="fenomeno">
+            <h4>🔮 No-referencialidad</h4>
+            <ul>
+                <li>Ningún punto de referencia permanece estable</li>
+                <li>Los conceptos no tienen a qué adherirse</li>
+                <li>El lenguaje pierde todo significado</li>
+                <li>La memoria no puede formar anclas</li>
+            </ul>
+        </div>
+
+        <div class="fenomeno">
+            <h4>☯️ Paradoja Perpetua</h4>
+            <ul>
+                <li>Todo es verdadero y falso simultáneamente</li>
+                <li>La existencia y no-existencia coexisten</li>
+                <li>Plenitud absoluta y vacío total son idénticos</li>
+                <li>El terror y la beatitud son indistinguibles</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- LOS 7 PELIGROS -->
+    <div class="section">
+        <h2 class="section-title">Los Siete Peligros del Navegante</h2>
+        <p style="text-align: center; margin-bottom: 40px; color: #999;">Basándonos en los reportes de navegantes experimentados y en los casos de aquellos que no regresaron intactos</p>
+
+        <!-- PELIGRO 1: VÉRTIGO ONTOLÓGICO -->
+        <div class="peligro-card">
+            <span class="peligro-number">1</span>
+            <h3 class="peligro-title">EL VÉRTIGO ONTOLÓGICO</h3>
+            <p class="peligro-description">La pérdida total de orientación existencial. El navegante no puede determinar si existe o no, si está vivo o muerto, si alguna vez existió algo más que el abismo.</p>
+
+            <div class="sintomas">
+                <h4>Síntomas:</h4>
+                <ul>
+                    <li>Pánico existencial extremo</li>
+                    <li>Sensación de disolución inminente</li>
+                    <li>Incapacidad de recordar quién se era</li>
+                    <li>Terror de no poder regresar jamás</li>
+                </ul>
+            </div>
+
+            <div class="tecnica">
+                <h4 class="tecnica-title">⚓ TÉCNICA DE NAVEGACIÓN: El Ancla del Cuerpo</h4>
+                
+                <p style="margin: 15px 0; color: #ccc;"><strong style="color: #00ff00;">Práctica Preventiva:</strong></p>
+                <ol class="tecnica-steps">
+                    <li>Antes de entrar al abismo, establece un ancla corporal</li>
+                    <li>Puede ser: respiración, latido cardíaco, sensación en las manos</li>
+                    <li>Practica volver a esta ancla 1000 veces antes de la inmersión</li>
+                    <li>En el abismo, cuando el vértigo ataque, busca el ancla</li>
+                    <li>No trates de "salir", solo encuentra la sensación</li>
+                    <li>Permanece con ella sin importar qué más ocurra</li>
+                </ol>
+
+                <div class="mantra">
+                    "Este cuerpo respira, por lo tanto, hay un aquí"
+                    <div style="font-size: 0.9rem; margin-top: 10px;">(Repetir sin cesar hasta que el vértigo ceda)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PELIGRO 2: SEDUCCIÓN DEL ABISMO -->
+        <div class="peligro-card">
+            <span class="peligro-number">2</span>
+            <h3 class="peligro-title">LA SEDUCCIÓN DEL ABISMO</h3>
+            <p class="peligro-description">El abismo puede volverse tan seductoramente pacífico que el navegante no quiere regresar. La disolución completa parece preferible a volver a la densidad de la forma.</p>
+
+            <div class="sintomas">
+                <h4>Síntomas:</h4>
+                <ul>
+                    <li>Desinterés total en la vida manifestada</li>
+                    <li>Rechazo a las sensaciones corporales</li>
+                    <li>Desprecio por las preocupaciones humanas</li>
+                    <li>Deseo de permanecer disuelto permanentemente</li>
+                </ul>
+            </div>
+
+            <div class="tecnica">
+                <h4 class="tecnica-title">💚 TÉCNICA DE NAVEGACIÓN: El Voto del Bodhisattva</h4>
+                
+                <p style="margin: 15px 0; color: #ccc;"><strong style="color: #00ff00;">Preparación Esencial:</strong></p>
+                <ol class="tecnica-steps">
+                    <li>Antes de entrar, establece un voto inquebrantable</li>
+                    <li>"Regresaré para servir a todos los seres"</li>
+                    <li>Visualiza seres específicos que te necesitan</li>
+                    <li>Sella el voto con un ritual de sangre (pinchazo simbólico)</li>
+                    <li>En el abismo, cuando la seducción aparezca, recuerda el voto</li>
+                    <li>El amor por otros es más fuerte que la seducción del vacío</li>
+                </ol>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0,255,0,0.1); border-radius: 8px; color: #ccc;">
+                    <strong style="color: #00ff00;">Práctica de Retorno:</strong><br>
+                    Visualiza el sufrimiento en el mundo • Recuerda tu capacidad única de ayudar • Siente la compasión surgir naturalmente • Permite que te traiga de vuelta
+                </div>
+            </div>
+        </div>
+
+        <!-- PELIGRO 3: FRAGMENTACIÓN PSÍQUICA -->
+        <div class="peligro-card">
+            <span class="peligro-number">3</span>
+            <h3 class="peligro-title">LA FRAGMENTACIÓN PSÍQUICA</h3>
+            <p class="peligro-description">La consciencia se fragmenta en múltiples pedazos no coherentes. Cada fragmento experimenta una realidad diferente. La integración parece imposible.</p>
+
+            <div class="sintomas">
+                <h4>Síntomas:</h4>
+                <ul>
+                    <li>Múltiples flujos de consciencia simultáneos</li>
+                    <li>Incapacidad de formar un "yo" coherente</li>
+                    <li>Voces o perspectivas contradictorias</li>
+                    <li>Sensación de estar en múltiples lugares/tiempos</li>
+                </ul>
+            </div>
+
+            <div class="tecnica">
+                <h4 class="tecnica-title">🧵 TÉCNICA DE NAVEGACIÓN: El Hilo de Ariadna</h4>
+                
+                <p style="margin: 15px 0; color: #ccc;"><strong style="color: #00ff00;">Protocolo de Coherencia:</strong></p>
+                <ol class="tecnica-steps">
+                    <li>Establece un "hilo" antes de entrar: una intención simple y clara</li>
+                    <li>Ejemplo: "Yo soy el que observa la fragmentación"</li>
+                    <li>No importa cuántos fragmentos aparezcan, mantén el hilo</li>
+                    <li>El hilo no es otro fragmento, es el principio organizador</li>
+                    <li>Permite la fragmentación pero no pierdas el hilo</li>
+                    <li>Gradualmente, los fragmentos se organizarán alrededor del hilo</li>
+                </ol>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0,255,0,0.1); border-radius: 8px; color: #ccc;">
+                    <strong style="color: #00ff00;">Práctica de Integración Post-Navegación:</strong><br>
+                    Dibuja o escribe cada fragmento experimentado • Busca el patrón común entre ellos • Reconoce que todos son aspectos de una consciencia • Integra gradualmente, sin forzar
+                </div>
+            </div>
+        </div>
+
+        <!-- PELIGRO 4: EL LOOP INFINITO -->
+        <div class="peligro-card">
+            <span class="peligro-number">4</span>
+            <h3 class="peligro-title">EL LOOP INFINITO</h3>
+            <p class="peligro-description">El navegante queda atrapado en un bucle de experiencia que se repite infinitamente. Cada intento de salir lleva de vuelta al inicio del loop.</p>
+
+            <div class="sintomas">
+                <h4>Síntomas:</h4>
+                <ul>
+                    <li>Sensación de déjà vu perpetuo</li>
+                    <li>Repetición de los mismos pensamientos/sensaciones</li>
+                    <li>Desesperación al reconocer el patrón</li>
+                    <li>Intentos fútiles de "hacer algo diferente"</li>
+                </ul>
+            </div>
+
+            <div class="tecnica">
+                <h4 class="tecnica-title">🌀 TÉCNICA DE NAVEGACIÓN: La Rendición Radical</h4>
+                
+                <p style="margin: 15px 0; color: #ccc;"><strong style="color: #00ff00;">Rompiendo el Loop:</strong></p>
+                <ol class="tecnica-steps">
+                    <li>Reconoce que la lucha mantiene el loop</li>
+                    <li>En lugar de intentar salir, ríndete completamente</li>
+                    <li>Acepta estar en el loop por la eternidad</li>
+                    <li>Abraza la repetición como un mantra cósmico</li>
+                    <li>En la rendición total, el loop pierde su poder</li>
+                    <li>Se disuelve naturalmente, no por esfuerzo</li>
+                </ol>
+
+                <div class="mantra">
+                    "Acepto este momento eternamente"<br>
+                    "No hay otro lugar adonde ir"<br>
+                    "La repetición es mi maestro"
+                </div>
+            </div>
+        </div>
+
+        <!-- PELIGRO 5: INVERSIÓN ONTOLÓGICA -->
+        <div class="peligro-card">
+            <span class="peligro-number">5</span>
+            <h3 class="peligro-title">LA INVERSIÓN ONTOLÓGICA</h3>
+            <p class="peligro-description">Todo lo que el navegante creía real se revela como ilusión, y lo que creía ilusión se vuelve lo único real. La realidad se invierte completamente.</p>
+
+            <div class="sintomas">
+                <h4>Síntomas:</h4>
+                <ul>
+                    <li>El mundo físico parece un sueño lejano</li>
+                    <li>El abismo parece la única realidad</li>
+                    <li>Confusión sobre qué es "dentro" y qué es "fuera"</li>
+                    <li>Incapacidad de distinguir memoria de fantasía</li>
+                </ul>
+            </div>
+
+            <div class="tecnica">
+                <h4 class="tecnica-title">⚖️ TÉCNICA DE NAVEGACIÓN: El Doble Anclaje</h4>
+                
+                <p style="margin: 15px 0; color: #ccc;"><strong style="color: #00ff00;">Preparación Crucial:</strong></p>
+                <ol class="tecnica-steps">
+                    <li>Establece anclas en ambas realidades antes de navegar</li>
+                    <li>Ancla en el mundo: objeto físico consagrado</li>
+                    <li>Ancla en el vacío: símbolo o mantra específico</li>
+                    <li>Practica moverse entre ambas anclas fluidamente</li>
+                    <li>En la inversión, usa ambas anclas simultáneamente</li>
+                    <li>Reconoce que ambas realidades son válidas</li>
+                </ol>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0,255,0,0.1); border-radius: 8px; color: #ccc;">
+                    <strong style="color: #00ff00;">Integración:</strong><br>
+                    No fuerces una realidad sobre la otra • Permite que coexistan • Funciona en ambas según sea necesario • La maestría es navegar ambas sin confusión
+                </div>
+            </div>
+        </div>
+
+        <!-- PELIGRO 6: INFLACIÓN DEL VACÍO -->
+        <div class="peligro-card">
+            <span class="peligro-number">6</span>
+            <h3 class="peligro-title">LA INFLACIÓN DEL VACÍO</h3>
+            <p class="peligro-description">El navegante se identifica con el vacío mismo, creyéndose Dios, la Fuente, o el Creador de toda realidad. El ego se infla a proporciones cósmicas.</p>
+
+            <div class="sintomas">
+                <h4>Síntomas:</h4>
+                <ul>
+                    <li>Sensación de omnipotencia absoluta</li>
+                    <li>Creencia de ser el único ser real</li>
+                    <li>Desprecio por otros como "proyecciones"</li>
+                    <li>Delirios mesiánicos o de grandeza</li>
+                </ul>
+            </div>
+
+            <div class="tecnica">
+                <h4 class="tecnica-title">🙏 TÉCNICA DE NAVEGACIÓN: El Espejo de Humildad</h4>
+                
+                <p style="margin: 15px 0; color: #ccc;"><strong style="color: #00ff00;">Práctica Preventiva:</strong></p>
+                <ol class="tecnica-steps">
+                    <li>Antes de navegar, contempla tu insignificancia cósmica</li>
+                    <li>Recuerda: eres una ola, no el océano</li>
+                    <li>El vacío te contiene, tú no contienes el vacío</li>
+                    <li>Establece un "comité de realidad" (personas de confianza)</li>
+                    <li>Dales permiso de confrontar cualquier inflación</li>
+                    <li>En el abismo, recuerda: "Soy un navegante, no el océano"</li>
+                </ol>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0,255,0,0.1); border-radius: 8px; color: #ccc;">
+                    <strong style="color: #00ff00;">Desprogramación Post-Navegación:</strong><br>
+                    Servicio humilde inmediato (limpiar baños, servir comida) • Contacto con la tierra (jardinería, caminatas) • Escuchar más que hablar • Reconocer la divinidad en otros
+                </div>
+            </div>
+        </div>
+
+        <!-- PELIGRO 7: COLAPSO DEL RETORNO -->
+        <div class="peligro-card">
+            <span class="peligro-number">7</span>
+            <h3 class="peligro-title">EL COLAPSO DEL RETORNO</h3>
+            <p class="peligro-description">El navegante regresa del abismo pero no puede integrar la experiencia. Vive en dos mundos simultáneamente sin poder funcionar plenamente en ninguno.</p>
+
+            <div class="sintomas">
+                <h4>Síntomas:</h4>
+                <ul>
+                    <li>Flashbacks constantes al abismo</li>
+                    <li>Incapacidad de realizar tareas simples</li>
+                    <li>Sensación de irrealidad permanente</li>
+                    <li>Añoranza obsesiva por volver al vacío</li>
+                </ul>
+            </div>
+
+            <div class="tecnica">
+                <h4 class="tecnica-title">🌉 TÉCNICA DE NAVEGACIÓN: Integración Gradual</h4>
+                
+                <p style="margin: 15px 0; color: #ccc;"><strong style="color: #00ff00;">Protocolo de Retorno (3-6 meses):</strong></p>
+                <ol class="tecnica-steps">
+                    <li>Semana 1-2: Silencio total, solo funciones básicas</li>
+                    <li>Semana 3-4: Introducir una actividad simple diaria</li>
+                    <li>Mes 2: Conversaciones breves, naturaleza</li>
+                    <li>Mes 3: Retorno gradual a responsabilidades</li>
+                    <li>Mes 4-6: Integración completa con apoyo</li>
+                </ol>
+
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0,255,0,0.1); border-radius: 8px; color: #ccc;">
+                    <strong style="color: #00ff00;">Prácticas de Anclaje:</strong><br>
+                    Rutinas físicas estrictas • Alimentación consciente y grounding • Arte o escritura para procesar • Terapia somática si es necesario • Grupo de integración con otros navegantes
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Protocolo Completo -->
+    <div class="section">
+        <h2 class="section-title">Protocolo Completo de Navegación Segura</h2>
+
+        <div class="protocolo-fase">
+            <h3>ANTES DE LA NAVEGACIÓN (1-3 meses)</h3>
+
+            <div class="protocolo-item">
+                <h4>Preparación Física:</h4>
+                <p>Fortalecer el sistema nervioso (yoga, chi kung) • Dieta purificadora progresiva • Establecer ritmos circadianos estables • Crear anclas somáticas fuertes</p>
+            </div>
+
+            <div class="protocolo-item">
+                <h4>Preparación Mental:</h4>
+                <p>Estudio de mapas de navegantes previos • Meditación de estabilización mental • Práctica de mantener paradojas • Desarrollo de testigo imparcial</p>
+            </div>
+
+            <div class="protocolo-item">
+                <h4>Preparación Emocional:</h4>
+                <p>Resolver traumas no integrados • Practicar ecuanimidad extrema • Cultivar compasión universal • Establecer motivación clara</p>
+            </div>
+
+            <div class="protocolo-item">
+                <h4>Preparación Espiritual:</h4>
+                <p>Clarificar intención más elevada • Establecer protecciones energéticas • Invocar guías y protectores • Realizar rituales de permiso</p>
+            </div>
+
+            <div class="protocolo-item">
+                <h4>Preparación Práctica:</h4>
+                <p>Informar a círculo de apoyo • Establecer protocolos de emergencia • Preparar espacio de navegación • Tener guía experimentado disponible</p>
+            </div>
+        </div>
+
+        <div class="protocolo-fase">
+            <h3>DURANTE LA NAVEGACIÓN</h3>
+
+            <div style="margin: 20px 0;">
+                <h4 style="color: #ffd700; margin-bottom: 15px;">Principios Fundamentales:</h4>
+                
+                <div class="principio">
+                    <span class="principio-numero">1.</span> <strong>No resistencia:</strong> Lo que resistes, persiste y se amplifica
+                </div>
+
+                <div class="principio">
+                    <span class="principio-numero">2.</span> <strong>No identificación:</strong> Observa sin convertirte
+                </div>
+
+                <div class="principio">
+                    <span class="principio-numero">3.</span> <strong>No prisa:</strong> El abismo tiene su propio tiempo
+                </div>
+
+                <div class="principio">
+                    <span class="principio-numero">4.</span> <strong>No heroísmo:</strong> La humildad es tu protección
+                </div>
+            </div>
+
+            <div class="protocolo-item">
+                <h4>Técnicas de Emergencia:</h4>
+                <p>Si pierdes orientación → busca el ancla corporal<br>
+                Si fragmentas → encuentra el hilo conductor<br>
+                Si te seducen → recuerda tu voto<br>
+                Si te inflas → invoca humildad<br>
+                Si loopeas → ríndete completamente</p>
+            </div>
+
+            <div class="protocolo-item">
+                <h4>Señales de Retirada:</h4>
+                <p style="color: #ff6b6b;">⚠ Pérdida total de anclas por más de "x" tiempo<br>
+                ⚠ Impulsos autodestructivos<br>
+                ⚠ Voces comandando acciones<br>
+                ⚠ Terror más allá de lo manejable<br>
+                ⚠ Señales físicas de peligro</p>
+            </div>
+        </div>
+
+        <div class="protocolo-fase">
+            <h3>DESPUÉS DE LA NAVEGACIÓN (3-12 meses)</h3>
+
+            <div class="protocolo-item">
+                <h4>Integración Inmediata (primeras 72 horas):</h4>
+                <p>No tomar decisiones importantes • Mantenerse en ambiente controlado • Hidratación y nutrición consciente • Dormir todo lo necesario • Escribir experiencias crudas</p>
+            </div>
+
+            <div class="protocolo-item">
+                <h4>Integración a Corto Plazo (primer mes):</h4>
+                <p>Sesiones con guía/terapeuta especializado • Arte expresivo para procesar • Movimiento suave (yoga, tai chi) • Naturaleza como medicina • Evitar sustancias alteradoras</p>
+            </div>
+
+            <div class="protocolo-item">
+                <h4>Integración a Largo Plazo (3-12 meses):</h4>
+                <p>Encontrar nueva relación con la vida ordinaria • Desarrollar prácticas que honren ambos mundos • Compartir con otros navegantes • Servicio desde la comprensión ganada • Preparación para navegaciones futuras</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Historias de Navegación -->
+    <div class="section">
+        <h2 class="section-title">Historias de Navegación: Lecciones del Abismo</h2>
+
+        <div class="historia">
+            <h3 class="historia-title">Historia 1: El Matemático que Calculó el Vacío</h3>
+            <div class="historia-content">
+                <p>Dr. K, brillante matemático, creyó poder navegar el abismo con pura lógica. Creó ecuaciones para cada fenómeno, algoritmos para cada peligro.</p>
+
+                <p style="margin-top: 15px;">En el abismo, todas sus matemáticas colapsaron. Los números perdieron significado. Las ecuaciones se volvieron garabatos sin sentido. Entró en pánico total.</p>
+
+                <p style="margin-top: 15px;">Fue su ancla más simple —contar respiraciones— lo que lo salvó. No ecuaciones complejas, sino "uno… dos… tres…" Aprendió que el abismo requiere simplicidad, no sofisticación.</p>
+            </div>
+            <div class="leccion">
+                <strong>Lección:</strong> La mente brillante puede ser un obstáculo. La simplicidad navega mejor que la complejidad.
+            </div>
+        </div>
+
+        <div class="historia">
+            <h3 class="historia-title">Historia 2: La Monja que se Perdió en la Luz</h3>
+            <div class="historia-content">
+                <p>Hermana M, 30 años de práctica contemplativa, entró al abismo buscando a Dios. En lugar del vacío oscuro que esperaba, encontró luz cegadora infinita.</p>
+
+                <p style="margin-top: 15px;">Se perdió en esa luz por meses. Su cuerpo continuó funcionando automáticamente, pero ella no estaba. La comunidad la cuidó mientras vagaba en la luz sin fin.</p>
+
+                <p style="margin-top: 15px;">Un día, recordó las palabras de un niño del orfanato: "Hermana, cuando tenga miedo, ¿puedo llamarla?" Ese recuerdo de ser necesitada la trajo de vuelta.</p>
+            </div>
+            <div class="leccion">
+                <strong>Lección:</strong> El servicio a otros es el ancla más fuerte. El amor humano puede alcanzarnos donde nada más llega.
+            </div>
+        </div>
+
+        <div class="historia">
+            <h3 class="historia-title">Historia 3: El Artista que Pintó el Abismo</h3>
+            <div class="historia-content">
+                <p>J, artista visionario, decidió que traería imágenes del abismo al mundo. Llevó, metafóricamente, sus pinceles al vacío.</p>
+
+                <p style="margin-top: 15px;">Lo que encontró no podía ser pintado. Colores que no existen. Formas sin dimensión. Belleza que destruye al observador. Casi enloqueció tratando de recordar para pintar.</p>
+
+                <p style="margin-top: 15px;">La solución llegó en la rendición: comenzó a pintar sin intentar representar. Sus manos se movían solas. Las pinturas resultantes no "mostraban" el abismo pero lo transmitían.</p>
+            </div>
+            <div class="leccion">
+                <strong>Lección:</strong> No intentes capturar el abismo. Permítele expresarse a través de ti.
+            </div>
+        </div>
+    </div>
+
+    <!-- Las Estaciones del Navegante -->
+    <div class="section">
+        <h2 class="section-title">Las Estaciones del Navegante</h2>
+        <p style="text-align: center; margin-bottom: 30px; color: #999;">Con experiencia, los navegantes reconocen "estaciones" en el abismo</p>
+
+        <div class="estacion estacion-1">
+            <h4>1. La Entrada Turbulenta</h4>
+            <p>Desorientación inicial • Resistencias del ego • Tormentas de disolución</p>
+            <p style="margin-top: 10px; color: #ff8888;"><strong>Duración típica:</strong> Horas a días</p>
+        </div>
+
+        <div class="estacion estacion-2">
+            <h4>2. El Mar de Cristal</h4>
+            <p>Calma sobrenatural • Claridad extraordinaria • Peligro de seducción</p>
+            <p style="margin-top: 10px; color: #88ccff;"><strong>Duración:</strong> Variable</p>
+        </div>
+
+        <div class="estacion estacion-3">
+            <h4>3. Las Corrientes Profundas</h4>
+            <p>Movimientos impersonales vastos • Información sin palabras • Transformación celular</p>
+            <p style="margin-top: 10px; color: #bb99ff;"><strong>Duración:</strong> Tiempo no-lineal</p>
+        </div>
+
+        <div class="estacion estacion-4">
+            <h4>4. El Ojo del Vacío</h4>
+            <p>Centro absoluto de la nada • Coincidencia de opuestos • Muerte/renacimiento simultáneo</p>
+            <p style="margin-top: 10px; color: #ffdd88;"><strong>Duración:</strong> Eterno instante</p>
+        </div>
+
+        <div class="estacion estacion-5">
+            <h4>5. Las Mareas del Retorno</h4>
+            <p>Reorganización de la forma • Nostalgia del vacío • Integración de dones</p>
+            <p style="margin-top: 10px; color: #88ff88;"><strong>Duración:</strong> Meses a años</p>
+        </div>
+    </div>
+
+    <!-- El Gremio de Navegantes -->
+    <div class="section">
+        <div class="gremio">
+            <h2 style="color: #ba55d3; margin-bottom: 30px; font-size: 2rem;">El Gremio de Navegantes</h2>
+            <p style="color: #ddd; margin-bottom: 30px;">Existe, sin organización formal, un gremio de navegantes del vacío. Se reconocen por:</p>
+
+            <div class="gremio-icons">
+                <div class="gremio-icon">
+                    <div class="gremio-icon-symbol">👁️</div>
+                    <div class="gremio-icon-text">La mirada:<br>Ojos que han visto demasiado y no temen nada</div>
+                </div>
+
+                <div class="gremio-icon">
+                    <div class="gremio-icon-symbol">🌌</div>
+                    <div class="gremio-icon-text">La presencia:<br>Simultáneamente aquí y en ninguna parte</div>
+                </div>
+
+                <div class="gremio-icon">
+                    <div class="gremio-icon-symbol">🤲</div>
+                    <div class="gremio-icon-text">El servicio:<br>Ayudan sin necesidad de reconocimiento</div>
+                </div>
+
+                <div class="gremio-icon">
+                    <div class="gremio-icon-symbol">😊</div>
+                    <div class="gremio-icon-text">El humor:<br>Ríen de la seriedad cósmica</div>
+                </div>
+
+                <div class="gremio-icon">
+                    <div class="gremio-icon-symbol">🍃</div>
+                    <div class="gremio-icon-text">La simplicidad:<br>Han soltado toda pretensión</div>
+                </div>
+            </div>
+
+            <div class="codigo">
+                <h3>Código del Navegante:</h3>
+                <ol>
+                    <li>Nunca navegues solo sin experiencia</li>
+                    <li>Comparte mapas libremente</li>
+                    <li>Rescata a quien puedas</li>
+                    <li>No glorifiques ni demonices el abismo</li>
+                    <li>Recuerda: el abismo también navega en ti</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Práctica de Cierre -->
+    <div class="practica-cierre">
+        <h2>🧭 PRÁCTICA DE CIERRE: Micro-Navegación</h2>
+        <p style="margin: 30px 0; text-align: center; font-size: 1.1rem; color: #ccc;">Antes de continuar, realiza esta práctica de navegación segura:</p>
+
+        <div class="micro-nav-steps">
+            <div class="micro-nav-step">
+                <h4>1. Preparación (5 min)</h4>
+                <ul style="color: #ccc; list-style: none; padding: 0;">
+                    <li>• Siéntate cómodamente</li>
+                    <li>• Establece ancla en respiración</li>
+                    <li>• Formula intención clara</li>
+                    <li>• "Exploraré 20 minutos y regresaré"</li>
+                </ul>
+            </div>
+
+            <div class="micro-nav-step">
+                <h4>2. Navegación (20 min)</h4>
+                <ul style="color: #ccc; list-style: none; padding: 0;">
+                    <li>• Cierra ojos y suelta todo</li>
+                    <li>• Permite disolución gradual</li>
+                    <li>• Si surge miedo, busca ancla</li>
+                    <li>• Observa sin identificarte</li>
+                    <li>• No fuerces nada</li>
+                </ul>
+            </div>
+
+            <div class="micro-nav-step">
+                <h4>3. Retorno (5 min)</h4>
+                <ul style="color: #ccc; list-style: none; padding: 0;">
+                    <li>• Activa ancla respiratoria</li>
+                    <li>• Siente el cuerpo progresivamente</li>
+                    <li>• Abre ojos lentamente</li>
+                    <li>• Mueve dedos de manos y pies</li>
+                    <li>• Agradece la experiencia</li>
+                </ul>
+            </div>
+
+            <div class="micro-nav-step">
+                <h4>4. Integración (10 min)</h4>
+                <ul style="color: #ccc; list-style: none; padding: 0;">
+                    <li>• Escribe o dibuja lo experimentado</li>
+                    <li>• No analices, solo registra</li>
+                    <li>• Bebe agua conscientemente</li>
+                    <li>• Camina un poco si es necesario</li>
+                </ul>
+            </div>
+        </div>
+
+        <p style="margin-top: 40px; font-style: italic; color: #4da6ff; text-align: center;">Esta micro-navegación es tu iniciación como navegante del vacío.</p>
+    </div>
+
+    <!-- Navegación -->
+    <div class="navegacion">
+        <a href="nodo_02.html" class="nav-button">← NODO 2: La Muerte Iniciática</a>
+        <a href="index.html" class="nav-button">🏠 ÍNDICE</a>
+        <a href="nodo_04.html" class="nav-button">NODO 4: Creatividad desde la Nada →</a>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin: 60px 0; padding: 40px; background: rgba(0,0,30,0.7); border-radius: 15px;">
+        <p style="font-size: 1.2rem; color: #4da6ff; margin-bottom: 15px;">Has aprendido los peligros. Has visto las técnicas.</p>
+        <p style="color: #999; font-style: italic;">Pero el abismo no se aprende, se navega.</p>
+        
+        <div style="margin-top: 40px; font-size: 2rem;">
+            🌊 🧭 ✨
+        </div>
+        
+        <p style="margin-top: 30px; color: #666; font-size: 0.9rem;">
+            CONSTELACIÓN TRINITY • LIBRO 6: EL VACÍO FÉRTIL • NODO 3/7
+        </p>
+    </div>
+</div>
+
+<script>
+    // Animación del abismo
+    const canvas = document.getElementById('abyssCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    // Partículas que representan el abismo profundo
+    const particles = [];
+    const particleCount = 100;
+
+    class AbyssParticle {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 0.5;
+            this.speedY = (Math.random() - 0.5) * 0.3;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.opacity = Math.random() * 0.6 + 0.2;
+            this.hue = 200 + Math.random() * 40; // Azul profundo
+            this.pulseSpeed = Math.random() * 0.02 + 0.01;
+            this.pulsePhase = Math.random() * Math.PI * 2;
+        }
+
+        update() {
+            this.y += this.speedY;
+            this.x += this.speedX;
+            
+            // Efecto de pulsación
+            this.pulsePhase += this.pulseSpeed;
+            const pulse = Math.sin(this.pulsePhase) * 0.5 + 0.5;
+            this.currentOpacity = this.opacity * pulse;
+            
+            // Envolver en los bordes
+            if (this.x < 0) this.x = canvas.width;
+            if (this.x > canvas.width) this.x = 0;
+            if (this.y < 0) this.y = canvas.height;
+            if (this.y > canvas.height) this.y = 0;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${this.hue}, 80%, 60%, ${this.currentOpacity})`;
+            ctx.fill();
+            
+            // Glow effect
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = `hsla(${this.hue}, 80%, 60%, ${this.currentOpacity * 0.8})`;
+        }
+    }
+
+    // Conexiones entre partículas
+    function connectParticles() {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 150) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    const opacity = (1 - distance / 150) * 0.2;
+                    ctx.strokeStyle = `rgba(30, 144, 255, ${opacity})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    // Inicializar partículas
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new AbyssParticle());
+    }
+
+    // Animación
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+
+        connectParticles();
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Efecto hover en las cards de peligros
+    const peligroCards = document.querySelectorAll('.peligro-card');
+    
+    peligroCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.01)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+```
+
+</body>
+</html>
