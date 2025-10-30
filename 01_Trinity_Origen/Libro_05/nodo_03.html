@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 3: Contratos y Pactos Invisibles - Trinity Origen</title>
+    <meta name="description" content="El momento del 'ya te conozco'">
+    
+    <style>
+        :root {
+            --negro-espacio: #0a0a0a;
+            --rosa-amor: #FF1493;
+            --dorado-luz: #FFD700;
+            --azul-cuantico: #00CED1;
+            --violeta-alma: #9370DB;
+            --blanco-luz: #FFFAF0;
+            --plateado: #C0C0C0;
+            --ambar: #FFBF00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0520 50%, #2d1b3d 100%);
+            color: var(--blanco-luz);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas de líneas del tiempo */
+        #timeline-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.2;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Header del Nodo */
+        .nodo-header {
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 3px solid var(--ambar);
+            margin-bottom: 50px;
+        }
+
+        .nodo-simbolo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: pergamino-despliega 6s ease-in-out infinite;
+        }
+
+        @keyframes pergamino-despliega {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                filter: drop-shadow(0 0 20px var(--ambar));
+            }
+            50% { 
+                transform: scale(1.15) rotate(5deg);
+                filter: drop-shadow(0 0 35px var(--dorado-luz));
+            }
+        }
+
+        .nodo-numero {
+            font-size: 1.1em;
+            color: var(--ambar);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .nodo-titulo {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--ambar), var(--dorado-luz), var(--violeta-alma));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nodo-subtitulo {
+            font-size: 1.3em;
+            color: var(--plateado);
+            font-style: italic;
+        }
+
+        /* Navegación */
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            color: var(--ambar);
+            text-decoration: none;
+            border: 2px solid var(--ambar);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .nav-btn:hover {
+            background: var(--ambar);
+            color: var(--negro-espacio);
+            transform: translateY(-2px);
+        }
+
+        /* Barra de progreso */
+        .progreso-container {
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progreso-barra {
+            width: 42.84%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--ambar), var(--dorado-luz), var(--violeta-alma));
+            border-radius: 20px;
+        }
+
+        /* Contenido principal */
+        .contenido-nodo {
+            background: rgba(255, 191, 0, 0.03);
+            border: 1px solid rgba(255, 191, 0, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            line-height: 1.9;
+            font-size: 1.1em;
+        }
+
+        .contenido-nodo h2 {
+            color: var(--ambar);
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid var(--dorado-luz);
+            padding-bottom: 10px;
+        }
+
+        .contenido-nodo h3 {
+            color: var(--dorado-luz);
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+        }
+
+        .contenido-nodo p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .contenido-nodo strong {
+            color: var(--ambar);
+            font-weight: bold;
+        }
+
+        .contenido-nodo em {
+            color: var(--dorado-luz);
+            font-style: italic;
+        }
+
+        /* Citas destacadas */
+        .cita-destacada {
+            background: rgba(255, 191, 0, 0.05);
+            border-left: 4px solid var(--ambar);
+            padding: 30px;
+            margin: 40px 0;
+            font-size: 1.2em;
+            font-style: italic;
+            color: var(--plateado);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .cita-destacada::after {
+            content: '📜';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            opacity: 0.2;
+        }
+
+        /* Señales Box */
+        .señales-box {
+            background: linear-gradient(135deg, rgba(255, 191, 0, 0.1), rgba(255, 215, 0, 0.05));
+            border: 2px solid var(--ambar);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .señales-box h3 {
+            color: var(--ambar);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .señal-item {
+            background: rgba(255, 191, 0, 0.05);
+            border-left: 4px solid var(--dorado-luz);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .señal-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 191, 0, 0.1);
+        }
+
+        .señal-titulo {
+            font-size: 1.3em;
+            color: var(--dorado-luz);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Tipos de Contratos */
+        .contratos-grid {
+            display: grid;
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .contrato-card {
+            background: linear-gradient(135deg, rgba(255, 191, 0, 0.1), rgba(147, 112, 219, 0.05));
+            border: 2px solid var(--ambar);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.4s ease;
+        }
+
+        .contrato-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 191, 0, 0.4);
+            border-color: var(--dorado-luz);
+        }
+
+        .contrato-icono {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .contrato-titulo {
+            font-size: 1.5em;
+            color: var(--ambar);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .contrato-descripcion {
+            color: var(--blanco-luz);
+            line-height: 1.8;
+            font-size: 1em;
+        }
+
+        /* Portales Temporales */
+        .portales-box {
+            background: rgba(147, 112, 219, 0.05);
+            border: 2px solid var(--violeta-alma);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .portales-box h3 {
+            color: var(--violeta-alma);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Preguntas Portal */
+        .preguntas-portal {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--dorado-luz);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+
+        .preguntas-portal h3 {
+            color: var(--dorado-luz);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .preguntas-portal ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .preguntas-portal li {
+            margin: 20px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        .preguntas-portal li::before {
+            content: '❓';
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        /* Meditación */
+        .meditacion-box {
+            background: linear-gradient(135deg, rgba(255, 191, 0, 0.1), rgba(147, 112, 219, 0.1));
+            border: 2px solid var(--violeta-alma);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .meditacion-box h3 {
+            color: var(--violeta-alma);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .meditacion-box p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: var(--plateado);
+        }
+
+        .meditacion-duracion {
+            color: var(--dorado-luz);
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        /* Navegación inferior */
+        .navegacion-nodos {
+            display: flex;
+            justify-content: space-between;
+            margin: 60px 0;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-nodo-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--ambar), var(--dorado-luz));
+            color: var(--negro-espacio);
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            flex: 1;
+            text-align: center;
+            min-width: 200px;
+            font-weight: bold;
+        }
+
+        .nav-nodo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 191, 0, 0.5);
+        }
+
+        /* Footer */
+        .nodo-footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 191, 0, 0.3);
+            color: var(--plateado);
+            font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nodo-titulo {
+                font-size: 2em;
+            }
+
+            .contenido-nodo {
+                padding: 25px;
+            }
+
+            .navegacion-nodos {
+                flex-direction: column;
+            }
+
+            .nav-nodo-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas de líneas temporales -->
+    <canvas id="timeline-canvas"></canvas>
+
+    <div class="container">
+        <!-- Header del Nodo -->
+        <header class="nodo-header">
+            <div class="nodo-simbolo">📜</div>
+            <div class="nodo-numero">NODO 3 de 7 • CONTRATOS</div>
+            <h1 class="nodo-titulo">Contratos y Pactos Invisibles</h1>
+            <p class="nodo-subtitulo">"El momento del 'ya te conozco'"</p>
+        </header>
+
+        <!-- Navegación superior -->
+        <nav class="navegacion">
+            <a href="nodo_02.html" class="nav-btn">← Nodo Anterior</a>
+            <a href="index.html" class="nav-btn">Índice del Libro</a>
+            <a href="nodo_04.html" class="nav-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Barra de progreso -->
+        <div class="progreso-container">
+            <div class="progreso-barra"></div>
+        </div>
+        <p style="text-align: center; color: var(--plateado); font-size: 0.9em; margin-top: 10px;">
+            ✨ Nodo 3 de 7 • RECORDANDO PACTOS
+        </p>
+
+        <!-- Contenido Principal -->
+        <article class="contenido-nodo">
+            <p>Hay encuentros que no se explican con la lógica del tiempo lineal. Conoces a alguien por primera vez y sientes que ya lo conocías. Hay una <strong>familiaridad inexplicable</strong>, una sensación de que este encuentro no es casual sino necesario, como si hubiera sido escrito en un lenguaje que tu mente no recuerda pero tu alma reconoce perfectamente.</p>
+
+            <div class="cita-destacada">
+                "Algunos encuentros no son coincidencias. Son citas agendadas antes de nacer. El alma firma contratos que la personalidad desconoce, hasta que el momento del reconocimiento llega."
+            </div>
+
+            <p>La tradición espiritual habla de <em>acuerdos del alma</em>: pactos que hacemos antes de encarnar, con otras almas, para encontrarnos en momentos específicos y cumplir propósitos específicos. Estos contratos trascienden la comprensión racional, operando desde una dimensión donde el tiempo no es lineal sino <strong>multidimensional</strong>.</p>
+
+            <h2>Los Acuerdos Pre-Encarnativos</h2>
+
+            <p>Imagina que antes de nacer, tu alma se reúne con otras almas en un espacio sin tiempo. En esa reunión, planean los grandes encuentros de la vida que viene. No planean cada detalle, pero sí los <strong>puntos de inflexión</strong>: los encuentros que cambiarán el rumbo, las relaciones que despertarán potenciales dormidos, los vínculos que traerán las lecciones más importantes.</p>
+
+            <p>Estos acuerdos pueden ser de distintos tipos:</p>
+
+            <ul style="list-style: none; padding-left: 20px;">
+                <li style="margin: 15px 0;">💫 <strong>Contratos de amor:</strong> Para recordarte qué significa amar incondicionalmente</li>
+                <li style="margin: 15px 0;">💫 <strong>Contratos de enseñanza:</strong> Para mostrarte lecciones que solo esa alma puede revelar</li>
+                <li style="margin: 15px 0;">💫 <strong>Contratos de sanación:</strong> Para sanar patrones kármicos o ancestrales juntos</li>
+                <li style="margin: 15px 0;">💫 <strong>Contratos de despertar:</strong> Para sacudirte de la inconsciencia y activar tu misión</li>
+            </ul>
+
+            <p>La física cuántica nos habla de <em>superposición temporal</em>: la posibilidad de que eventos futuros influyan en el presente. Los contratos del alma operan en esta lógica no-lineal. El encuentro que aún no ha sucedido ya está influyendo en tu camino presente, atrayéndote hacia ese punto de convergencia.</p>
+
+            <h2>El Reconocimiento Interdimensional</h2>
+
+            <p>¿Has experimentado alguna vez ese momento en que conoces a alguien y algo dentro de ti dice: <em>"Ah, eres tú"</em>? No es atracción física ni química cerebral. Es un <strong>reconocimiento que viene desde un nivel más profundo</strong>. Es tu alma diciendo: "Teníamos una cita. Y aquí estás, justo a tiempo."</p>
+
+            <div class="cita-destacada">
+                "El reconocimiento no es mental. Es visceral. Es como si cada célula de tu cuerpo recordara algo que tu mente olvidó. Y en ese instante, el tiempo colapsa. Pasado, presente y futuro se encuentran en un solo punto."
+            </div>
+
+            <p>Este tipo de reconocimiento puede venir acompañado de sensaciones específicas:</p>
+        </article>
+
+        <!-- Señales de Reconocimiento -->
+        <section class="señales-box">
+            <h3>✨ Señales de Reconocimiento Interdimensional</h3>
+
+            <div class="señal-item">
+                <div class="señal-titulo">🌟 Déjà Vu Relacional</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Sientes que ya has estado con esta persona antes, aunque sea imposible en términos de esta vida. Hay conversaciones que fluyen como si fueran continuaciones de diálogos antiguos. Hay silencios que se sienten cómodos porque ya fueron compartidos en otro tiempo.</p>
+            </div>
+
+            <div class="señal-item">
+                <div class="señal-titulo">⚡ Activación Instantánea</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Su presencia despierta algo en ti que estaba dormido. Puede ser un talento, una pasión, un propósito. Es como si su llegada activara códigos que esperaban ese momento preciso para encenderse. No es dependencia; es catálisis.</p>
+            </div>
+
+            <div class="señal-item">
+                <div class="señal-titulo">🔮 Sincronicidades Imposibles</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Las coincidencias que rodean el encuentro son tantas y tan precisas que resultan estadísticamente improbables. Piensan lo mismo en el mismo momento. Aparecen en los mismos lugares sin planearlo. El universo parece conspirar para que se encuentren.</p>
+            </div>
+
+            <div class="señal-item">
+                <div class="señal-titulo">💎 Transparencia Inmediata</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Hay una facilidad inexplicable para ser vulnerable. Las máscaras caen rápidamente. Puedes hablar de temas profundos sin los preliminares sociales habituales. Es como si ya hubieran ganado la confianza mutua en otro plano.</p>
+            </div>
+
+            <div class="señal-item">
+                <div class="señal-titulo">🌀 Sensación de Misión Compartida</div>
+                <p style="color: var(--blanco-luz); line-height: 1.8;">Percibes que están juntos no solo para disfrutar, sino para co-crear algo. Hay un propósito más grande que los incluye a ambos. Puede ser un proyecto, una enseñanza, una sanación, o simplemente ser testimonio del crecimiento mutuo.</p>
+            </div>
+        </section>
+
+        <article class="contenido-nodo">
+            <h2>Vínculos como Portales Temporales</h2>
+
+            <p>En la física cuántica, existen los <strong>agujeros de gusano</strong>: túneles que conectan puntos distantes del espacio-tiempo. Los vínculos profundos funcionan de manera similar: son portales que conectan diferentes momentos de tu existencia, incluyendo vidas pasadas, futuros posibles, y dimensiones paralelas de tu ser.</p>
+
+            <p>Cuando entras en un vínculo kármico o destinado, no solo estás interactuando con esa persona en el aquí y ahora. Estás <em>interactuando con todas las versiones de ambos</em> a través del tiempo. Por eso estos encuentros tienen tanta intensidad: no es solo química de esta vida, es resonancia de múltiples existencias superpuestas.</p>
+
+            <div class="cita-destacada">
+                "Los vínculos más profundos son portales. Te permiten acceder a memorias que no vienen de esta vida, a sabidurías que no aprendiste en esta encarnación, a amores que trascienden el tiempo lineal."
+            </div>
+        </article>
+
+        <!-- Tipos de Contratos -->
+        <h2 style="text-align: center; font-size: 2.2em; color: var(--ambar); margin: 60px 0 40px;">
+            Los Cinco Tipos de Contratos del Alma
+        </h2>
+
+        <div class="contratos-grid">
+            <div class="contrato-card">
+                <div class="contrato-icono">👥</div>
+                <h3 class="contrato-titulo">Contrato de Compañía</h3>
+                <p class="contrato-descripcion">Almas que acuerdan acompañarse durante períodos específicos. No necesariamente romántico. Puede ser un amigo, un familiar, un mentor. Su propósito es ofrecer apoyo mutuo, aprendizaje compartido, y compañía en el camino. La duración puede variar: algunos contratos son para toda la vida, otros solo para una etapa específica.</p>
+            </div>
+
+            <div class="contrato-card">
+                <div class="contrato-icono">⚔️</div>
+                <h3 class="contrato-titulo">Contrato de Desafío</h3>
+                <p class="contrato-descripcion">Una de las formas más intensas de amor del alma. Dos seres acuerdan ser adversarios, antagonistas, o portadores de lecciones difíciles para el otro. No porque se odien, sino porque se aman tanto que están dispuestos a jugar el papel del villano para que el otro crezca. Son los vínculos más dolorosos, pero también los más transformadores.</p>
+            </div>
+
+            <div class="contrato-card">
+                <div class="contrato-icono">💞</div>
+                <h3 class="contrato-titulo">Contrato de Llama Gemela</h3>
+                <p class="contrato-descripcion">El más raro y el más intenso. Es el encuentro con tu otro fragmento álmico. No es tu media naranja, porque no estás incompleto. Es tu espejo más perfecto. Estos contratos no siempre implican estar juntos en lo mundano; a veces su propósito es solo el despertar, y luego cada uno sigue su camino transformado.</p>
+            </div>
+
+            <div class="contrato-card">
+                <div class="contrato-icono">🔑</div>
+                <h3 class="contrato-titulo">Contrato de Activación</h3>
+                <p class="contrato-descripcion">Personas que llegan específicamente para desbloquear algo en ti. Pueden estar solo un momento en tu vida, pero ese momento es crucial. Son los catalizadores que encienden tu misión, despiertan tu don, o te empujan hacia tu propósito. Una vez cumplida la activación, pueden partir.</p>
+            </div>
+
+            <div class="contrato-card">
+                <div class="contrato-icono">🌊</div>
+                <h3 class="contrato-titulo">Contrato de Sanación Ancestral</h3>
+                <p class="contrato-descripcion">Vínculos que trascienden lo personal para sanar linajes completos. Dos personas se encuentran no solo por ellas mismas, sino para romper patrones transgeneracionales. Al sanar su relación, sanan las heridas de sus ancestros y abren nuevos caminos para sus descendientes.</p>
+            </div>
+        </div>
+
+        <!-- Portales Temporales -->
+        <section class="portales-box">
+            <h3>🌀 Exploración de Patrones Kármicos</h3>
+            <p style="color: var(--blanco-luz); line-height: 1.8; margin-bottom: 25px; text-align: center;">
+                Los contratos del alma a menudo incluyen la resolución de patrones kármicos: <br>dinámicas que se repiten hasta que son comprendidas y sanadas.
+            </p>
+            
+            <p style="color: var(--blanco-luz); line-height: 1.8; margin: 20px 0;">
+                <strong style="color: var(--violeta-alma);">¿Cómo identificar un patrón kármico?</strong>
+            </p>
+            
+            <ul style="list-style: none; padding-left: 20px; color: var(--blanco-luz);">
+                <li style="margin: 15px 0;">🔄 Se repite en múltiples relaciones con diferentes personas</li>
+                <li style="margin: 15px 0;">🔄 Sientes que "ya viviste esto antes"</li>
+                <li style="margin: 15px 0;">🔄 Las lecciones se intensifican cada vez que ignoras el patrón</li>
+                <li style="margin: 15px 0;">🔄 Hay una sensación de "tengo que resolver esto"</li>
+            </ul>
+            
+            <p style="color: var(--blanco-luz); line-height: 1.8; margin: 25px 0;">
+                El karma no es castigo. Es memoria que busca ser integrada. Cada vez que un patrón kármico se presenta, es una oportunidad de <strong style="color: var(--violeta-alma);">elegir diferente</strong>, de <strong style="color: var(--violeta-alma);">responder con mayor conciencia</strong>, de <strong style="color: var(--violeta-alma);">romper el ciclo</strong>.
+            </p>
+        </section>
+
+        <article class="contenido-nodo">
+            <div class="cita-destacada">
+                "No todos los encuentros son contratos. Pero los contratos siempre se manifiestan como encuentros. Y cuando llega el momento, lo sabes. No porque alguien te lo diga, sino porque cada fibra de tu ser lo reconoce."
+            </div>
+
+            <p>Los contratos del alma son sagrados, pero no son prisiones. Siempre existe el libre albedrío. Puedes elegir no honrar un contrato, aunque eso implique postergar aprendizajes o repetir ciclos. También puedes elegir completar un contrato con gracia y gratitud, permitiendo que ambas almas sigan su camino una vez cumplido el propósito.</p>
+
+            <p>Lo importante es <strong>reconocer cuando estás ante un contrato</strong>. No para aferrarte a él con desesperación, sino para honrarlo con conciencia. Para estar presente mientras dure. Para aprender lo que vino a enseñar. Y para liberar cuando el ciclo se complete.</p>
+        </article>
+
+        <!-- Preguntas Portal -->
+        <section class="preguntas-portal">
+            <h3>🔮 Preguntas Portal</h3>
+            <ul>
+                <li>¿Has experimentado algún encuentro que se sintió como un "reencuentro" inexplicable?</li>
+                <li>¿Qué patrones se repiten en tus relaciones y qué podrían estar intentando enseñarte?</li>
+                <li>¿Con quién sientes que tienes un contrato pendiente de honrar o completar?</li>
+            </ul>
+        </section>
+
+        <!-- Meditación -->
+        <section class="meditacion-box">
+            <h3>🧘 Meditación del Reconocimiento</h3>
+            <p><strong>Siéntate en silencio. Respira profundamente.</strong></p>
+            <p>Imagina que estás en un espacio sin tiempo, antes de nacer en esta vida.</p>
+            <p>Frente a ti aparecen las almas con las que has firmado contratos para esta encarnación.</p>
+            <p>Una por una, te miran con amor y te dicen: "Nos encontraremos. Y cuando lo hagamos, recordarás."</p>
+            <p>Ahora trae a tu conciencia a alguien significativo de tu vida actual.</p>
+            <p>Pregunta en silencio: <em>"¿Qué acuerdo hicimos juntos? ¿Qué vine a aprender de ti? ¿Qué viniste a aprender de mí?"</em></p>
+            <p>No fuerces respuestas. Solo permanece en la apertura.</p>
+            <p>Si viene una comprensión, recíbela con gratitud.</p>
+            <p class="meditacion-duracion">⏱️ Duración sugerida: 15 minutos</p>
+        </section>
+
+        <!-- Navegación entre Nodos -->
+        <nav class="navegacion-nodos">
+            <a href="nodo_02.html" class="nav-nodo-btn">← Nodo Anterior</a>
+            <a href="nodo_04.html" class="nav-nodo-btn">Siguiente Nodo →</a>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="nodo-footer">
+            <p>Nodo 3 de 7 • Contratos y Pactos Invisibles</p>
+            <p>Trinity Origen - Libro V: Los Vínculos Sagrados</p>
+        </footer>
+    </div>
+
+    <script>
+        // Líneas temporales entrelazadas
+        const canvas = document.getElementById('timeline-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class LineaTemporal {
+            constructor(y) {
+                this.y = y;
+                this.puntos = [];
+                this.color = ['#FFBF00', '#FFD700', '#9370DB'][Math.floor(Math.random() * 3)];
+                this.offset = Math.random() * Math.PI * 2;
+                
+                for (let x = 0; x < canvas.width + 50; x += 30) {
+                    this.puntos.push({
+                        x: x,
+                        y: this.y + Math.sin(x * 0.01 + this.offset) * 30
+                    });
+                }
+            }
+
+            actualizar() {
+                this.offset += 0.01;
+                for (let i = 0; i < this.puntos.length; i++) {
+                    this.puntos[i].y = this.y + Math.sin(this.puntos[i].x * 0.01 + this.offset) * 30;
+                }
+            }
+
+            dibujar() {
+                ctx.beginPath();
+                ctx.moveTo(this.puntos[0].x, this.puntos[0].y);
+                
+                for (let i = 1; i < this.puntos.length; i++) {
+                    ctx.lineTo(this.puntos[i].x, this.puntos[i].y);
+                }
+                
+                ctx.strokeStyle = this.color;
+                ctx.globalAlpha = 0.4;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Puntos de encuentro (contratos)
+                for (let i = 0; i < this.puntos.length; i += 50) {
+                    ctx.beginPath();
+                    ctx.arc(this.puntos[i].x, this.puntos[i].y, 4, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = 0.6;
+                    ctx.fill();
+                }
+            }
+        }
+
+        const lineas = [];
+        for (let i = 0; i < 5; i++) {
+            lineas.push(new LineaTemporal(i * (canvas.height / 4) + 100));
+        }
+
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            lineas.forEach(linea => {
+                linea.actualizar();
+                linea.dibujar();
+            });
+            
+            requestAnimationFrame(animar);
+        }
+
+        animar();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Guardar progreso
+        localStorage.setItem('trinity-libro5-nodo', '3');
+    </script>
+</body>
+</html>
