@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 4: Tecnologías de Consciencia para el Tránsito | La Muerte como Maestra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+    body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f1e 100%);
+        color: #e8e8e8;
+        line-height: 1.8;
+        overflow-x: hidden;
+    }
+
+    #velos-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 60px;
+        padding: 60px 20px;
+        background: rgba(26, 26, 46, 0.4);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 215, 0, 0.2);
+        box-shadow: 0 0 40px rgba(74, 20, 140, 0.3);
+    }
+
+    .book-title {
+        font-size: 1.1rem;
+        color: #ffd700;
+        letter-spacing: 4px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        opacity: 0.8;
+    }
+
+    .nodo-number {
+        font-size: 3.5rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #4a148c 0%, #7c3aed 50%, #9b4dca 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+    }
+
+    .nodo-title {
+        font-size: 2.8rem;
+        color: #ffffff;
+        margin-bottom: 30px;
+        text-shadow: 0 0 30px rgba(155, 77, 202, 0.5);
+    }
+
+    .quote {
+        font-style: italic;
+        font-size: 1.15rem;
+        color: #d4a5ff;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+        border-left: 3px solid #ffd700;
+        background: linear-gradient(135deg, rgba(74, 20, 140, 0.15) 0%, rgba(155, 77, 202, 0.1) 100%);
+        border-radius: 10px;
+    }
+
+    .section {
+        margin: 60px 0;
+        padding: 40px;
+        background: rgba(26, 26, 46, 0.3);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(155, 77, 202, 0.2);
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    h2 {
+        font-size: 2.2rem;
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    h3 {
+        font-size: 1.6rem;
+        color: #9b4dca;
+        margin: 30px 0 20px 0;
+    }
+
+    h4 {
+        font-size: 1.3rem;
+        color: #d4a5ff;
+        margin: 20px 0 15px 0;
+    }
+
+    p {
+        margin-bottom: 20px;
+        font-size: 1.05rem;
+        text-align: justify;
+    }
+
+    .tecnologia-card {
+        background: linear-gradient(135deg, rgba(74, 20, 140, 0.2) 0%, rgba(63, 81, 181, 0.15) 100%);
+        padding: 30px;
+        margin: 25px 0;
+        border-radius: 15px;
+        border-left: 5px solid #7c3aed;
+        transition: all 0.3s ease;
+    }
+
+    .tecnologia-card:hover {
+        transform: translateX(10px);
+        box-shadow: 0 5px 25px rgba(124, 58, 237, 0.3);
+    }
+
+    .tech-name {
+        font-size: 1.5rem;
+        color: #ffd700;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .testimonio {
+        background: rgba(27, 94, 32, 0.15);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border-left: 4px solid #4caf50;
+        font-style: italic;
+    }
+
+    .testimonio-autor {
+        text-align: right;
+        color: #4caf50;
+        font-weight: bold;
+        margin-top: 10px;
+        font-style: normal;
+    }
+
+    .practica-card {
+        background: linear-gradient(135deg, rgba(155, 77, 202, 0.2) 0%, rgba(124, 58, 237, 0.15) 100%);
+        padding: 35px;
+        margin: 30px 0;
+        border-radius: 18px;
+        border: 2px solid rgba(155, 77, 202, 0.4);
+        box-shadow: 0 8px 32px rgba(155, 77, 202, 0.2);
+    }
+
+    .practica-titulo {
+        font-size: 1.5rem;
+        color: #ffd700;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .practica-steps {
+        background: rgba(10, 10, 10, 0.3);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 15px;
+    }
+
+    .warning-box {
+        background: rgba(255, 152, 0, 0.15);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 167, 38, 0.4);
+    }
+
+    .warning-box::before {
+        content: '⚠️ ';
+        font-size: 1.5rem;
+    }
+
+    .lista-item {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(155, 77, 202, 0.05) 100%);
+        padding: 15px 20px;
+        margin: 12px 0;
+        border-radius: 10px;
+        border-left: 4px solid #ffd700;
+    }
+
+    ul, ol {
+        margin: 20px 0 20px 40px;
+    }
+
+    li {
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .conexion-box {
+        background: rgba(2, 136, 209, 0.1);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border-left: 4px solid #29b6f6;
+        font-style: italic;
+    }
+
+    .meditacion-box {
+        background: linear-gradient(135deg, rgba(74, 20, 140, 0.3) 0%, rgba(10, 10, 10, 0.5) 100%);
+        padding: 40px;
+        margin: 40px 0;
+        border-radius: 20px;
+        border: 2px solid rgba(155, 77, 202, 0.5);
+        text-align: center;
+    }
+
+    .preguntas-box {
+        background: rgba(255, 215, 0, 0.08);
+        padding: 30px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border: 2px dashed #ffd700;
+    }
+
+    .pregunta-item {
+        font-size: 1.1rem;
+        color: #ffd700;
+        margin: 15px 0;
+        font-weight: 500;
+    }
+
+    .transicion {
+        background: linear-gradient(135deg, rgba(155, 77, 202, 0.2) 0%, rgba(27, 94, 32, 0.2) 100%);
+        padding: 40px;
+        margin: 50px 0;
+        border-radius: 20px;
+        border: 3px solid rgba(255, 215, 0, 0.4);
+        text-align: center;
+    }
+
+    .simbolo-muerte {
+        font-size: 3rem;
+        margin: 20px 0;
+    }
+
+    strong {
+        color: #ffd700;
+    }
+
+    .highlight {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(155, 77, 202, 0.15) 100%);
+        padding: 3px 10px;
+        border-radius: 5px;
+    }
+
+    .navegacion {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 60px;
+        gap: 20px;
+    }
+
+    .nav-button {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #4a148c 0%, #7c3aed 100%);
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .nav-button:hover {
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        color: #0a0a0a;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    @media (max-width: 768px) {
+        .nodo-number {
+            font-size: 2.5rem;
+        }
+        
+        .nodo-title {
+            font-size: 2rem;
+        }
+        
+        h2 {
+            font-size: 1.7rem;
+        }
+        
+        .section {
+            padding: 25px;
+        }
+        
+        .navegacion {
+            flex-direction: column;
+        }
+    }
+
+    .icon {
+        font-size: 1.5rem;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="velos-canvas"></canvas>
+
+```
+<div class="container">
+    <div class="header">
+        <div class="book-title">📖 Libro 7: La Muerte como Maestra</div>
+        <div class="nodo-number">🔮 NODO 4 🔮</div>
+        <h1 class="nodo-title">TECNOLOGÍAS DE CONSCIENCIA PARA EL TRÁNSITO</h1>
+        <p class="quote">
+            "La muerte no es improvisación. Es el arte supremo que requiere preparación, técnica y las herramientas adecuadas. Desde el tambor chamánico hasta la neurotecnología, la humanidad ha desarrollado tecnologías precisas para navegar el gran tránsito."
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>📖 El Bardo Thodol Actualizado: GPS para el Más Allá</h2>
+        <p>
+            El "Libro Tibetano de los Muertos" es mal nombrado. Su título real, <strong>Bardo Thodol</strong>, significa "Liberación a través de la Escucha en el Estado Intermedio". Es un manual de navegación para la consciencia durante y después de la muerte. Pero fue escrito para monjes tibetanos del siglo VIII. ¿Cómo traducir su sabiduría para mentes occidentales del siglo XXI?
+        </p>
+
+        <h3>🗺️ Los Tres Bardos Esenciales</h3>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Bardo de la Vida (Kyenay Bardo)</div>
+            <ul>
+                <li>Desde el nacimiento hasta la muerte</li>
+                <li>Cada momento de vigilia es preparación</li>
+                <li>La vida como ensayo general</li>
+            </ul>
+        </div>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Bardo del Morir (Chikhai Bardo)</div>
+            <ul>
+                <li>El proceso de disolución</li>
+                <li>Los elementos retornando a la fuente</li>
+                <li>La oportunidad de liberación en la clara luz</li>
+            </ul>
+        </div>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Bardo del Después (Sidpa Bardo)</div>
+            <ul>
+                <li>El viaje post-mortem</li>
+                <li>Las visiones y pruebas</li>
+                <li>La elección del próximo nacimiento</li>
+            </ul>
+        </div>
+
+        <h3>🌟 Protocolo Occidental del Bardo</h3>
+
+        <div class="practica-card">
+            <div class="practica-titulo">🧘 Preparación en Vida</div>
+            <div class="practica-steps">
+                <ol>
+                    <li><strong>Meditación diaria</strong> sobre la impermanencia</li>
+                    <li><strong>Visualización</strong> del proceso de muerte</li>
+                    <li><strong>Familiarización</strong> con estados alterados</li>
+                    <li><strong>Práctica de phowa</strong> (transferencia de consciencia)</li>
+                    <li><strong>Creación de "anclas"</strong> - imágenes/mantras para el tránsito</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="practica-card">
+            <div class="practica-titulo">⚡ Durante el Morir</div>
+            <div class="practica-steps">
+                <ol>
+                    <li>Reconocer las señales de disolución</li>
+                    <li>Mantener lucidez a través de la respiración</li>
+                    <li>Soltar apegos conscientemente</li>
+                    <li>Buscar la luz clara en el momento de la muerte</li>
+                    <li>No temer las visiones - son proyecciones mentales</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="practica-card">
+            <div class="practica-titulo">🎙️ Instrucciones para el Acompañante</div>
+            <div class="practica-steps">
+                <ul>
+                    <li>Leer las instrucciones al oído del moribundo</li>
+                    <li>Continuar hasta 49 días después de la muerte</li>
+                    <li>Usar el nombre del fallecido frecuentemente</li>
+                    <li>Mantener tono calmado y claro</li>
+                    <li>Recordar: la consciencia sigue presente</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="testimonio">
+            "Usamos una versión adaptada del Bardo con mi madre. En lugar de deidades tibetanas, usamos sus propios símbolos sagrados. Funcionó. Murió con una sonrisa, como si reconociera algo hermoso."
+            <div class="testimonio-autor">— Laura, psicóloga transpersonal</div>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>🚪 Conexión con El Dolor como Portal:</strong> En ese libro, la respiración consciente es descrita como "el metrónomo de la conciencia". En el tránsito, la respiración puede convertirse en un ancla rítmica que conecta el presente corporal con dimensiones más amplias de la existencia.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🧠 Neurotecnología: Hackeando el Cerebro Moribundo</h2>
+        <p>
+            La ciencia está confirmando lo que los místicos siempre supieron: la muerte es un estado alterado de consciencia que puede ser navegado. Las nuevas tecnologías nos permiten facilitar este proceso.
+        </p>
+
+        <h3>⚡ Estimulación Gamma para Lucidez Terminal</h3>
+        <p>Estudios recientes muestran picos de ondas gamma en el momento de la muerte - más altos que en cualquier estado de vida. Es la consciencia consolidándose para el gran salto.</p>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Tecnología Aplicada</div>
+            <ul>
+                <li>Dispositivos de luz/sonido calibrados a 40Hz</li>
+                <li>Estimulación transcraneal suave</li>
+                <li>Biofeedback para mantener coherencia</li>
+                <li>Realidad virtual con paisajes de transición</li>
+            </ul>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>🔗 Conexión con Los Vínculos Sagrados:</strong> En ese libro se enseña una visualización llamada <strong>El Puente de Luz</strong>, que conecta simbólicamente a quienes se despiden con aquellos que esperan en otras dimensiones de la conciencia. Estas imágenes internas actúan como estructuras psíquicas de orientación.</p>
+        </div>
+
+        <h3>🌿 DMT: La Molécula del Espíritu</h3>
+        <p>La glándula pineal libera DMT endógeno en dos momentos: nacimiento y muerte. Es nuestro psicodélico interno para las grandes transiciones.</p>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Investigaciones Actuales</div>
+            <ul>
+                <li>DMT exógeno para "ensayar" la muerte</li>
+                <li>Protocolos de preparación psicodélica</li>
+                <li>Integración de experiencias cercanas a la muerte</li>
+                <li>Mapeo de territorios post-mortem</li>
+            </ul>
+        </div>
+
+        <div class="warning-box">
+            <strong>Protocolo de Preparación con DMT (donde es legal):</strong>
+            <ol>
+                <li>Screening médico/psicológico completo</li>
+                <li>Preparación meditativa de 3 meses</li>
+                <li>Sesión guiada con facilitador experto</li>
+                <li>Dosis progresivas para familiarización</li>
+                <li>Integración profunda de cada experiencia</li>
+                <li>Aplicación de insights a la vida diaria</li>
+            </ol>
+        </div>
+
+        <div class="testimonio">
+            "Mi experiencia con DMT me mostró que la muerte es solo un cambio de canal. El miedo se evaporó. Ahora trabajo preparando a otros para sus transiciones."
+            <div class="testimonio-autor">— Dr. Marcus, investigador</div>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>🌍 Conexión con Civilización Galáctica:</strong> En ese libro, el sonido se concibe como un lenguaje interestelar que la conciencia reconoce más allá de la forma humana. En el tránsito, frecuencias suaves y sostenidas actúan como guías no verbales.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🌿 Plantas Maestras: Aliadas en el Umbral</h2>
+        <p>Las plantas sagradas han sido utilizadas por milenios para preparar y facilitar el tránsito. No como escape, sino como maestras.</p>
+
+        <h3>🍃 Ayahuasca: La Liana de los Muertos</h3>
+        <p>En la Amazonía, la ayahuasca es conocida como la "pequeña muerte". Enseña a morir antes de morir.</p>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Enseñanzas de la Medicina</div>
+            <ul>
+                <li><strong>Disolución del ego</strong> sin perder consciencia</li>
+                <li><strong>Navegación</strong> de espacios no-ordinarios</li>
+                <li><strong>Encuentro</strong> con ancestros/guías</li>
+                <li><strong>Purga</strong> de miedos acumulados</li>
+                <li><strong>Visión</strong> de la continuidad de la consciencia</li>
+            </ul>
+        </div>
+
+        <h3>🌵 Peyote/San Pedro: Abriendo el Corazón</h3>
+        <p>Los cactus sagrados enseñan que la muerte es un acto del corazón, no de la mente.</p>
+
+        <h3>🍄 Hongos Psilocibios: Los Profesores</h3>
+        <p>Johns Hopkins está usando psilocibina para ansiedad terminal con resultados revolucionarios.</p>
+
+        <div class="practica-card">
+            <div class="practica-titulo">🏥 Protocolo Hospitalario Emergente</div>
+            <div class="practica-steps">
+                <ol>
+                    <li>Evaluación de candidatos terminales</li>
+                    <li>Preparación psicológica/espiritual</li>
+                    <li>Dosis única en entorno controlado</li>
+                    <li>Música específicamente diseñada</li>
+                    <li>Integración con terapeuta</li>
+                    <li><strong>Resultado:</strong> 80% reportan pérdida del miedo a la muerte</li>
+                </ol>
+            </div>
+        </div>
+
+        <h3>🌱 Cannabis Sagrado: El Consolador</h3>
+        <p>Usado ritualmente, no recreativamente, el cannabis puede:</p>
+        <div class="lista-item">Aliviar ansiedad terminal</div>
+        <div class="lista-item">Facilitar conversaciones profundas</div>
+        <div class="lista-item">Aumentar apreciación sensorial final</div>
+        <div class="lista-item">Suavizar la rigidez del ego</div>
+
+        <div class="conexion-box">
+            <p><strong>🚪 Conexión con El Dolor como Portal:</strong> En ese libro se describe cómo algunas plantas maestras han sido empleadas tradicionalmente para abrir el campo de conciencia antes de la muerte. No se trata de inducir un estado alterado por curiosidad, sino de preparar la percepción para recibir el pasaje con menos resistencia.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🔊 Tecnologías Sonoras: Frecuencias de Transición</h2>
+        <p>El sonido es vibración, y la vibración es el lenguaje fundamental del universo. En el umbral de la muerte, el sonido se vuelve medicina poderosa.</p>
+
+        <h3>🎵 Frecuencias Específicas</h3>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">111 Hz - La Frecuencia de los Templos</div>
+            <ul>
+                <li>Encontrada en cámaras mortuorias antiguas</li>
+                <li>Induce estados de trance</li>
+                <li>Facilita experiencias fuera del cuerpo</li>
+            </ul>
+        </div>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">528 Hz - Frecuencia del Amor</div>
+            <ul>
+                <li>Resonancia con el corazón</li>
+                <li>Reduce ansiedad terminal</li>
+                <li>Abre campos de conexión</li>
+            </ul>
+        </div>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Frecuencia Schumann (7.83 Hz)</div>
+            <ul>
+                <li>Resonancia terrestre</li>
+                <li>Ayuda en el "despegue" del cuerpo</li>
+                <li>Mantiene conexión con Gaia</li>
+            </ul>
+        </div>
+
+        <h3>🎼 Instrumentos Sagrados</h3>
+        <div class="lista-item"><strong>Cuencos Tibetanos:</strong> Armónicos que disuelven bloqueos</div>
+        <div class="lista-item"><strong>Tambor Chamánico:</strong> 4–7 Hz induce viaje</div>
+        <div class="lista-item"><strong>Didgeridoo:</strong> Frecuencias graves anclan y liberan</div>
+        <div class="lista-item"><strong>Gongs:</strong> Ondas que rompen patrones rígidos</div>
+        <div class="lista-item"><strong>Voz Humana:</strong> El instrumento más poderoso</div>
+
+        <div class="practica-card">
+            <div class="practica-titulo">🎶 Protocolo Sonoro para el Tránsito</div>
+            <div class="practica-steps">
+                <ol>
+                    <li><strong>Evaluación:</strong> ¿Qué sonidos ama/teme la persona?</li>
+                    <li><strong>Playlist Personalizada:</strong> Sus músicas significativas</li>
+                    <li><strong>Progresión:</strong> De lo familiar a lo trascendente</li>
+                    <li><strong>Volumen:</strong> Cada vez más sutil</li>
+                    <li><strong>Silencio Final:</strong> El sonido más poderoso</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="testimonio">
+            "Creé una 'partitura de muerte' para mi padre músico. Comenzó con sus jazz favoritos y terminó con cantos gregorianos. Murió en el silencio entre dos notas."
+            <div class="testimonio-autor">— Isabella, musicoterapeuta</div>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>🧠 Conexión con Psicología Cuántica:</strong> La <strong>Nota Raíz de Vida</strong>, mencionada en ese libro, es una frecuencia personal identificada a lo largo de la vida que puede ser reproducida para facilitar un pasaje armonioso.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>💻 Realidad Virtual: Ensayando el Viaje</h2>
+        <p>La VR está emergiendo como herramienta poderosa para preparar la transición.</p>
+
+        <h3>🎮 Aplicaciones Actuales</h3>
+        <div class="lista-item"><strong>"Death Simulator":</strong> Experimentar tu funeral</div>
+        <div class="lista-item"><strong>"Bardo VR":</strong> Navegación visual del después</div>
+        <div class="lista-item"><strong>"Peaceful Passing":</strong> Paisajes de transición</div>
+        <div class="lista-item"><strong>"Ancestor Realms":</strong> Encuentro con fallecidos</div>
+
+        <div class="practica-card">
+            <div class="practica-titulo">🎯 Protocolos Terapéuticos</div>
+            <div class="practica-steps">
+                <ol>
+                    <li><strong>Exposición Gradual:</strong> Comenzar con escenas suaves</li>
+                    <li><strong>Acompañamiento:</strong> Nunca solo, siempre guiado</li>
+                    <li><strong>Integración:</strong> Procesar cada experiencia</li>
+                    <li><strong>Personalización:</strong> Adaptar a creencias personales</li>
+                    <li><strong>Práctica:</strong> Repetir hasta familiaridad</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🌟 Preparación Consciente: El Arte de Morir Bien</h2>
+
+        <h3>📜 Creación del "Death Plan" Personal</h3>
+        <p>Como tenemos birth plans, necesitamos death plans:</p>
+
+        <div class="practica-card">
+            <div class="practica-titulo">📋 Documento Incluye</div>
+            <div class="practica-steps">
+                <ol>
+                    <li><strong>Ambiente deseado:</strong> Lugar, luz, aromas</li>
+                    <li><strong>Sonidos:</strong> Música, mantras, silencio</li>
+                    <li><strong>Presencias:</strong> Quién sí, quién no</li>
+                    <li><strong>Textos:</strong> Qué leer, cuándo</li>
+                    <li><strong>Rituales:</strong> Específicos a tu tradición</li>
+                    <li><strong>Tecnologías:</strong> Cuáles sí, cuáles no</li>
+                    <li><strong>Post-mortem:</strong> Instrucciones inmediatas</li>
+                </ol>
+            </div>
+        </div>
+
+        <h3>🔆 Práctica de Phowa Occidental</h3>
+        <p>Adaptación de la transferencia de consciencia tibetana:</p>
+
+        <div class="practica-card">
+            <div class="practica-titulo">🧘 Ejercicio de Phowa</div>
+            <div class="practica-steps">
+                <ol>
+                    <li>Visualiza canal central desde corazón a corona</li>
+                    <li>Imagina tu consciencia como perla de luz</li>
+                    <li>Practica elevarla con la respiración</li>
+                    <li>Proyéctala fuera de la corona</li>
+                    <li>Regresa suavemente</li>
+                    <li>Repite hasta que sea natural</li>
+                </ol>
+                <p style="margin-top: 20px; font-style: italic;"><strong>En el momento de la muerte, este "músculo" estará entrenado.</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🔬 Investigaciones de Frontera</h2>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Proyecto AWARE</div>
+            <p>Estudiando consciencia durante paro cardíaco. <strong>Resultados:</strong> consciencia continúa 3–5 minutos post "muerte clínica".</p>
+        </div>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Comunicación Post-Mortem Verificada</div>
+            <p>Médiums en laboratorio con resultados estadísticamente significativos.</p>
+        </div>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Fotografía de Biofotones</div>
+            <p>Luz emitida por el cuerpo hasta 48 horas post-mortem.</p>
+        </div>
+
+        <div class="tecnologia-card">
+            <div class="tech-name">Peso del Alma</div>
+            <p>Replicación moderna del experimento de 21 gramos con resultados intrigantes.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>💎 Casos de Transformación Tecnológica</h2>
+
+        <div class="testimonio">
+            <strong>Sarah, 42 años - Cáncer Terminal</strong><br><br>
+            "El protocolo de psilocibina cambió todo. Vi mi muerte como nacimiento. El tumor ya no era enemigo, era maestro. Mis últimos meses fueron los más vivos de mi vida."
+        </div>
+
+        <div class="testimonio">
+            <strong>David, 67 años - Ingeniero Escéptico</strong><br><br>
+            "No creía en nada espiritual. Pero la neurotecnología me mostró estados que… no hay palabras. Ahora sé que soy más que este hardware biológico."
+        </div>
+
+        <div class="testimonio">
+            <strong>Carmen, 55 años - Madre en Duelo</strong><br><br>
+            "Después de perder a mi hijo, quería morir. La ayahuasca me mostró que él seguía existiendo, solo cambió de forma. Ahora ayudo a otros padres en duelo a conectar."
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🌈 Integración de Tecnologías</h2>
+        <p>No se trata de usar todas las tecnologías, sino de encontrar la combinación correcta para cada persona:</p>
+
+        <div class="lista-item"><strong>Para el Intelectual:</strong> Neurotecnología + Bardo study</div>
+        <div class="lista-item"><strong>Para el Devoto:</strong> Mantras + Plantas sagradas</div>
+        <div class="lista-item"><strong>Para el Artista:</strong> Sonido + Realidad virtual</div>
+        <div class="lista-item"><strong>Para el Escéptico:</strong> Investigación + Experiencia directa</div>
+        <div class="lista-item"><strong>Para el Tradicional:</strong> Rituales ancestrales actualizados</div>
+
+        <div class="conexion-box">
+            <p><strong>🌍 Conexión con Civilización Galáctica:</strong> En ese libro se explora el uso de tecnologías sonoras, visuales y de estimulación cerebral para facilitar estados de paz y expansión. La clave, como se menciona en <strong>Psicología Cuántica</strong>, no está en la sofisticación del aparato, sino en la intención consciente con la que se emplea.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🕊️ El Futuro de la Muerte Consciente</h2>
+        <p>Estamos en el umbral de una revolución en cómo morimos. Las tecnologías antiguas se encuentran con las nuevas, creando posibilidades sin precedentes:</p>
+
+        <div class="lista-item"><strong>Centros de Transición:</strong> Espacios diseñados para muerte consciente</div>
+        <div class="lista-item"><strong>Guías Certificados:</strong> Profesionales del acompañamiento tecnológico</div>
+        <div class="lista-item"><strong>Muerte Personalizada:</strong> Protocolos únicos para cada ser</div>
+        <div class="lista-item"><strong>Investigación Abierta:</strong> Desmitificación científica del proceso</div>
+        <div class="lista-item"><strong>Educación Temprana:</strong> Preparación desde la infancia</div>
+    </div>
+
+    <div class="meditacion-box">
+        <h2>🧘 Meditación: Tu Tecnología Interior</h2>
+        <div class="simbolo-muerte">🔮 ✨ 🕊️</div>
+        
+        <p style="font-style: italic; line-height: 2; max-width: 800px; margin: 20px auto;">
+            La más poderosa tecnología para la muerte ya está dentro de ti. Siéntate. Respira. Siente tu consciencia - esa que observa todos los pensamientos, todas las sensaciones.
+        </p>
+        
+        <p style="margin: 30px 0;">
+            <strong>Esa consciencia no nació con tu cuerpo. No morirá con él.</strong> Es tu tecnología innata de trascendencia. Todo lo demás son ayudas para recordar lo que ya eres.
+        </p>
+        
+        <p style="font-weight: bold; font-size: 1.3rem; margin-top: 30px; color: #ffd700;">
+            Eterna. Infinita. Indestructible.
+        </p>
+    </div>
+
+    <div class="section">
+        <div class="preguntas-box">
+            <h2 style="text-align: center; margin-bottom: 30px;">🌺 Preguntas para la Exploración</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Antes de continuar al siguiente nodo, contempla:</p>
+            
+            <ol>
+                <li class="pregunta-item">¿Qué tecnologías resuenan con mi alma?</li>
+                <li class="pregunta-item">¿Cuáles rechazo por miedo o prejuicio?</li>
+                <li class="pregunta-item">¿Cómo quiero prepararme tecnológicamente?</li>
+                <li class="pregunta-item">¿Qué combinación sería ideal para mí?</li>
+                <li class="pregunta-item">¿Puedo mantener discernimiento sin cerrarme?</li>
+                <li class="pregunta-item">¿Qué tecnología interior necesito desarrollar?</li>
+                <li class="pregunta-item">¿Cómo puedo servir a otros con estas herramientas?</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="transicion">
+        <h2>🚪 Transición al Nodo 5</h2>
+        <div class="simbolo-muerte">🔮 → 💀 → ✨</div>
+        
+        <p style="font-size: 1.1rem; line-height: 1.8; max-width: 900px; margin: 20px auto;">
+            Has explorado el arsenal de tecnologías disponibles para hacer del morir un arte consciente. Antiguas y nuevas, todas apuntan a lo mismo: <strong>la muerte puede ser navegada con lucidez, gracia y hasta éxtasis.</strong>
+        </p>
+        
+        <p style="font-size: 1.1rem; line-height: 1.8; max-width: 900px; margin: 20px auto;">
+            Pero hay una muerte que no requiere que el cuerpo muera. Una muerte más radical que la física: <span class="highlight">la muerte del ego</span>. En el próximo nodo, exploraremos esta "gran muerte antes de la muerte" - la que los místicos consideran la verdadera liberación.
+        </p>
+        
+        <p style="font-size: 1.15rem; margin-top: 30px;">
+            <strong>Prepárate. Esto es muerte en vida. Y vida más allá de la muerte.</strong>
+        </p>
+    </div>
+
+    <div class="navegacion">
+        <a href="nodo_03.html" class="nav-button">← Nodo 3: El Acompañamiento</a>
+        <a href="nodo_05.html" class="nav-button">Nodo 5: La Muerte del Ego →</a>
+    </div>
+</div>
+
+<script>
+    // Canvas de velos disolviéndose
+    const canvas = document.getElementById('velos-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    class Velo {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.width = Math.random() * 200 + 100;
+            this.height = Math.random() * 300 + 150;
+            this.opacity = Math.random() * 0.3 + 0.1;
+            this.speed = Math.random() * 0.3 + 0.1;
+            this.dissolveRate = Math.random() * 0.001 + 0.0005;
+            this.rotation = Math.random() * Math.PI * 2;
+            this.rotationSpeed = (Math.random() - 0.5) * 0.001;
+        }
+
+        update() {
+            this.y += this.speed;
+            this.rotation += this.rotationSpeed;
+            this.opacity -= this.dissolveRate;
+
+            if (this.y > canvas.height + this.height || this.opacity <= 0) {
+                this.y = -this.height;
+                this.x = Math.random() * canvas.width;
+                this.opacity = Math.random() * 0.3 + 0.1;
+            }
+        }
+
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            ctx.globalAlpha = this.opacity;
+
+            const gradient = ctx.createLinearGradient(
+                -this.width / 2, -this.height / 2,
+                this.width / 2, this.height / 2
+            );
+            gradient.addColorStop(0, 'rgba(74, 20, 140, 0.3)');
+            gradient.addColorStop(0.5, 'rgba(155, 77, 202, 0.2)');
+            gradient.addColorStop(1, 'rgba(255, 215, 0, 0.1)');
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+
+            ctx.restore();
+        }
+    }
+
+    const velos = [];
+    for (let i = 0; i < 15; i++) {
+        velos.push(new Velo());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        velos.forEach(velo => {
+            velo.update();
+            velo.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
