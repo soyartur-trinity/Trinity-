@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 2: Las Pequeñas Muertes | La Muerte como Maestra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+    body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(135deg, #1a1410 0%, #2d2416 50%, #1a1410 100%);
+        color: #e8d5b7;
+        line-height: 1.8;
+        overflow-x: hidden;
+    }
+
+    /* Canvas animado de fondo */
+    #autumnCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+    .container {
+        position: relative;
+        z-index: 2;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    /* Header */
+    header {
+        text-align: center;
+        padding: 60px 20px;
+        background: rgba(139, 90, 43, 0.1);
+        border: 2px solid #d4a574;
+        border-radius: 20px;
+        margin-bottom: 60px;
+        box-shadow: 0 8px 32px rgba(212, 165, 116, 0.2);
+        backdrop-filter: blur(10px);
+    }
+
+    h1 {
+        font-size: 3.5em;
+        color: #d4a574;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        letter-spacing: 2px;
+    }
+
+    .subtitle {
+        font-size: 1.5em;
+        color: #c9a875;
+        font-style: italic;
+        margin-bottom: 30px;
+    }
+
+    .quote {
+        font-size: 1.2em;
+        color: #e8d5b7;
+        font-style: italic;
+        line-height: 1.6;
+        padding: 30px;
+        background: rgba(0, 0, 0, 0.3);
+        border-left: 4px solid #d4a574;
+        border-radius: 10px;
+        margin: 20px 0;
+    }
+
+    /* Secciones */
+    section {
+        background: rgba(26, 20, 16, 0.6);
+        backdrop-filter: blur(10px);
+        padding: 40px;
+        margin: 40px 0;
+        border-radius: 15px;
+        border: 1px solid rgba(212, 165, 116, 0.3);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+        font-size: 2.5em;
+        color: #d4a574;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    h3 {
+        font-size: 1.8em;
+        color: #c9a875;
+        margin: 30px 0 20px 0;
+    }
+
+    p {
+        margin-bottom: 20px;
+        font-size: 1.1em;
+    }
+
+    /* Cards de práctica */
+    .practice-card {
+        background: linear-gradient(135deg, rgba(139, 90, 43, 0.2), rgba(101, 67, 33, 0.2));
+        padding: 30px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border: 2px solid #8b5a2b;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .practice-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(139, 90, 43, 0.4);
+    }
+
+    .practice-title {
+        font-size: 1.6em;
+        color: #d4a574;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .practice-duration {
+        display: inline-block;
+        background: #8b5a2b;
+        color: #fff;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+
+    .practice-steps {
+        list-style: none;
+        counter-reset: step-counter;
+    }
+
+    .practice-steps li {
+        counter-increment: step-counter;
+        margin: 15px 0;
+        padding-left: 40px;
+        position: relative;
+    }
+
+    .practice-steps li::before {
+        content: counter(step-counter);
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: #d4a574;
+        color: #1a1410;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    /* Catálogo de muertes */
+    .death-catalog {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+    }
+
+    .death-item {
+        background: rgba(139, 90, 43, 0.15);
+        padding: 25px;
+        border-radius: 12px;
+        border-left: 4px solid #d4a574;
+        transition: all 0.3s ease;
+    }
+
+    .death-item:hover {
+        background: rgba(139, 90, 43, 0.25);
+        transform: translateX(10px);
+    }
+
+    .death-number {
+        font-size: 2em;
+        color: #d4a574;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .death-name {
+        font-size: 1.3em;
+        color: #c9a875;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    /* Testimonios */
+    .testimonial {
+        background: linear-gradient(135deg, rgba(76, 187, 23, 0.1), rgba(56, 142, 60, 0.1));
+        padding: 30px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border-left: 5px solid #4caf50;
+        font-style: italic;
+    }
+
+    .testimonial-author {
+        text-align: right;
+        color: #81c784;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    /* Ciclos */
+    .cycle-card {
+        background: rgba(212, 165, 116, 0.1);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border: 2px solid #d4a574;
+    }
+
+    .cycle-title {
+        font-size: 1.5em;
+        color: #d4a574;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Señales grid */
+    .signals-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+    }
+
+    .signal-box {
+        background: rgba(129, 199, 132, 0.15);
+        padding: 20px;
+        border-radius: 12px;
+        border: 2px solid #4caf50;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .signal-box:hover {
+        background: rgba(129, 199, 132, 0.25);
+        transform: scale(1.05);
+    }
+
+    .signal-number {
+        font-size: 2.5em;
+        color: #4caf50;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    /* Casos de transformación */
+    .case-study {
+        background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(139, 90, 43, 0.15));
+        padding: 35px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border: 2px solid #d4a574;
+    }
+
+    .case-name {
+        font-size: 1.8em;
+        color: #d4a574;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .case-subtitle {
+        font-size: 1.2em;
+        color: #c9a875;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    /* Protocolo */
+    .protocol-step {
+        background: rgba(139, 90, 43, 0.1);
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 10px;
+        border-left: 4px solid #8b5a2b;
+    }
+
+    .protocol-step strong {
+        color: #d4a574;
+        font-size: 1.2em;
+    }
+
+    /* Meditación final */
+    .meditation {
+        background: linear-gradient(135deg, rgba(212, 165, 116, 0.2), rgba(139, 90, 43, 0.2));
+        padding: 40px;
+        margin: 40px 0;
+        border-radius: 20px;
+        border: 3px solid #d4a574;
+        text-align: center;
+    }
+
+    .meditation-title {
+        font-size: 2.5em;
+        color: #d4a574;
+        margin-bottom: 30px;
+    }
+
+    .meditation-text {
+        font-size: 1.3em;
+        line-height: 2;
+        color: #e8d5b7;
+        font-style: italic;
+    }
+
+    /* Conexiones Trinity */
+    .trinity-connections {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin: 40px 0;
+    }
+
+    .trinity-card {
+        background: rgba(30, 136, 229, 0.15);
+        padding: 25px;
+        border-radius: 12px;
+        border: 2px solid #1e88e5;
+        transition: all 0.3s ease;
+    }
+
+    .trinity-card:hover {
+        background: rgba(30, 136, 229, 0.25);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(30, 136, 229, 0.3);
+    }
+
+    .trinity-icon {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+
+    .trinity-title {
+        font-size: 1.3em;
+        color: #64b5f6;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    /* Preguntas contemplativas */
+    .questions {
+        background: rgba(212, 165, 116, 0.1);
+        padding: 35px;
+        margin: 40px 0;
+        border-radius: 15px;
+        border: 2px solid #d4a574;
+    }
+
+    .questions ol {
+        counter-reset: question-counter;
+        list-style: none;
+    }
+
+    .questions li {
+        counter-increment: question-counter;
+        margin: 20px 0;
+        padding-left: 40px;
+        position: relative;
+        font-size: 1.2em;
+        color: #e8d5b7;
+    }
+
+    .questions li::before {
+        content: counter(question-counter);
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: #d4a574;
+        color: #1a1410;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    /* Navegación */
+    .navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 60px 0 40px 0;
+        padding: 30px;
+        background: rgba(139, 90, 43, 0.2);
+        border-radius: 15px;
+        border: 2px solid #d4a574;
+    }
+
+    .nav-button {
+        padding: 15px 30px;
+        background: #d4a574;
+        color: #1a1410;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-button:hover {
+        background: #c9a875;
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(212, 165, 116, 0.4);
+    }
+
+    .nav-center {
+        text-align: center;
+        color: #d4a574;
+        font-size: 1.2em;
+    }
+
+    /* Animaciones */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    section {
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2.5em;
+        }
+
+        h2 {
+            font-size: 2em;
+        }
+
+        .navigation {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .death-catalog {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+
+</head>
+<body>
+    <canvas id="autumnCanvas"></canvas>
+
+
+<div class="container">
+    <header>
+        <h1>🍂 NODO 2: LAS PEQUEÑAS MUERTES 🍂</h1>
+        <p class="subtitle">Entrenamiento diario en el arte de soltar</p>
+        <div class="quote">
+            "No esperes a la muerte para aprender a morir. Cada momento te ofrece una oportunidad de práctica. El maestro Zen que puede soltar su taza de té está listo para soltar su vida."
+        </div>
+    </header>
+
+    <section>
+        <h2>🌬️ La Muerte en Cada Respiración</h2>
+        <p>Inhala. En este momento, el aire entra, tu pecho se expande, la vida fluye. Exhala. El aire sale, tu pecho se contrae, algo muere. Esta simple verdad - que respiramos muerte y vida 20,000 veces al día - es quizás la enseñanza más profunda y más ignorada.</p>
+        
+        <p>Los yoguis lo saben desde hace milenios. Ellos no cuentan sus vidas en años, sino en respiraciones. Saben que cada exhalación es una micro-muerte, cada inhalación un micro-nacimiento. Y en la pausa entre ambas - ese momento suspendido - está el vacío del cual todo emerge.</p>
+
+        <div class="practice-card">
+            <div class="practice-title">⭕ Práctica: Respiración Consciente de Muerte y Renacimiento</div>
+            <div class="practice-duration">⏱️ 15-20 minutos</div>
+            <p>Siéntate con la columna erguida. Cierra los ojos.</p>
+            <ol class="practice-steps">
+                <li><strong>Inhala contando hasta 4:</strong> Siente la vida entrando. Di mentalmente: "Nazco"</li>
+                <li><strong>Retén contando hasta 4:</strong> Suspéndete en la plenitud. Di: "Vivo"</li>
+                <li><strong>Exhala contando hasta 6:</strong> Suelta completamente. Di: "Muero"</li>
+                <li><strong>Pausa contando hasta 2:</strong> Flota en el vacío. Di: "Soy"</li>
+            </ol>
+            <p style="margin-top: 20px;"><strong>Repite 21 veces.</strong> Con cada ciclo, profundiza en la experiencia de morir y renacer.</p>
+        </div>
+
+        <div class="testimonial">
+            "Cuando aprendí a morir en cada exhalación, mi ansiedad desapareció. ¿Cómo temer a la muerte si la practico 20,000 veces al día?"
+            <div class="testimonial-author">- Laura, instructora de yoga</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>🌙 El Sueño: Ensayo General de la Muerte</h2>
+        <p>Cada noche, realizamos el ensayo más extraordinario. Soltamos la consciencia, dejamos ir el control, nos disolvemos en la oscuridad. El sueño es la hermana pequeña de la muerte, y sin embargo, nos vamos a la cama sin ceremonia, sin consciencia, desperdiciando esta práctica sagrada.</p>
+
+        <h3>Los Tibetanos y el Yoga de los Sueños</h3>
+        <p>En el Tíbet, los practicantes avanzados ven el momento de dormir como una oportunidad preciosa. Practican el "yoga de los sueños" - mantener consciencia mientras el cuerpo duerme. ¿Por qué? Porque si puedes mantener consciencia durante el sueño, podrás mantenerla durante la muerte.</p>
+
+        <div class="practice-card">
+            <div class="practice-title">🌜 Práctica: El Dormir Consciente</div>
+            <div class="practice-duration">⏱️ 10 minutos antes de dormir</div>
+            
+            <h4 style="color: #d4a574; margin: 20px 0 15px 0;">Preparación (10 minutos antes de dormir):</h4>
+            <ol class="practice-steps">
+                <li>Apaga todas las pantallas</li>
+                <li>Enciende una vela junto a tu cama</li>
+                <li>Siéntate en el borde de la cama</li>
+            </ol>
+
+            <h4 style="color: #d4a574; margin: 20px 0 15px 0;">El Ritual:</h4>
+            <ol class="practice-steps">
+                <li><strong>Revisión del día:</strong> "Hoy estas partes de mí murieron…" (nómbralas)</li>
+                <li><strong>Gratitud:</strong> "Agradezco haber vivido este día que no volverá"</li>
+                <li><strong>Preparación:</strong> "Me preparo para la pequeña muerte del sueño"</li>
+                <li><strong>Intención:</strong> "Que permanezca consciente mientras mi cuerpo muere al día"</li>
+            </ol>
+
+            <h4 style="color: #d4a574; margin: 20px 0 15px 0;">Al acostarte:</h4>
+            <ul style="list-style: none; padding-left: 0;">
+                <li>🦁 Adopta la "postura del león dormido" (lado derecho, mano bajo la mejilla)</li>
+                <li>✨ Visualiza una pequeña luz en tu corazón</li>
+                <li>🔄 Repite: "Consciente duermo, consciente sueño, consciente despierto"</li>
+                <li>🍃 Suelta todo esfuerzo y entrégate</li>
+            </ul>
+
+            <h4 style="color: #d4a574; margin: 20px 0 15px 0;">Al despertar:</h4>
+            <ul style="list-style: none; padding-left: 0;">
+                <li>🌅 Antes de moverte, recuerda: "He renacido"</li>
+                <li>🙏 Agradece la oportunidad de otro día</li>
+                <li>🔍 Observa: ¿Mantuviste algo de consciencia? ¿Recuerdas el momento de transición?</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>🍁 Las Muertes Cotidianas que No Vemos</h2>
+        <p>La vida está llena de finales que no honramos. Cada uno es una oportunidad perdida de practicar el arte del soltar:</p>
+
+        <h3>El Catálogo de Pequeñas Muertes</h3>
+        <div class="death-catalog">
+            <div class="death-item">
+                <div class="death-number">1.</div>
+                <div class="death-name">El final de una conversación</div>
+                <p>Cada "adiós" es una muerte. ¿Cuántas despedidas haces inconsciente, asumiendo un próximo encuentro?</p>
+            </div>
+
+            <div class="death-item">
+                <div class="death-number">2.</div>
+                <div class="death-name">El último sorbo de té</div>
+                <p>Ese momento cuando la taza se vacía. Micro-funeral de una experiencia.</p>
+            </div>
+
+            <div class="death-item">
+                <div class="death-number">3.</div>
+                <div class="death-name">El final de un libro</div>
+                <p>Cerrar la última página es despedirse de un mundo, de personajes que vivieron en ti.</p>
+            </div>
+
+            <div class="death-item">
+                <div class="death-number">4.</div>
+                <div class="death-name">Una relación que termina</div>
+                <p>No solo las románticas. Amistades que se desvanecen, colegas que cambian de trabajo, vecinos que se mudan.</p>
+            </div>
+
+            <div class="death-item">
+                <div class="death-number">5.</div>
+                <div class="death-name">El cambio de estaciones</div>
+                <p>Cada hoja que cae es una maestra. La naturaleza no se aferra. ¿Por qué nosotros sí?</p>
+            </div>
+
+            <div class="death-item">
+                <div class="death-number">6.</div>
+                <div class="death-name">Mudanzas y cambios</div>
+                <p>Dejar una casa, un trabajo, una ciudad. Cada transición es una muerte-renacimiento.</p>
+            </div>
+
+            <div class="death-item">
+                <div class="death-number">7.</div>
+                <div class="death-name">El fin de cada día</div>
+                <p>El sol muere cada noche en el horizonte. ¿Lo honras o solo "se hace tarde"?</p>
+            </div>
+        </div>
+
+        <div class="practice-card">
+            <div class="practice-title">🕯️ Práctica: Ceremonia de las Pequeñas Muertes</div>
+            <div class="practice-duration">⏱️ Una semana de práctica</div>
+            <p>Elige una "pequeña muerte" diaria para honrar conscientemente durante una semana.</p>
+            
+            <h4 style="color: #d4a574; margin: 20px 0 15px 0;">Ejemplo: El Final del Día</h4>
+            <ol class="practice-steps">
+                <li>Media hora antes del atardecer, pausa tus actividades</li>
+                <li>Sal al exterior (o mira por una ventana)</li>
+                <li>Observa cómo el día muere</li>
+                <li>Reflexiona: ¿Qué muere con este día? ¿Qué no volverá?</li>
+                <li>Suelta: "Dejo ir este día con gratitud y sin apego"</li>
+                <li>Recibe: "Doy la bienvenida a la noche y su misterio"</li>
+            </ol>
+            <p style="margin-top: 20px;"><em>Después de una semana, notarás cómo tu relación con los finales se transforma.</em></p>
+        </div>
+    </section>
+
+    <section>
+        <h2>🔄 Los Ciclos Como Maestros</h2>
+        <p>Todo en la naturaleza nos enseña sobre la muerte y el renacimiento. Hemos perdido conexión con estos ciclos, viviendo en la ilusión de la permanencia eléctrica, la eterna primavera del consumismo.</p>
+
+        <h3>Recuperando la Sabiduría Cíclica</h3>
+
+        <div class="cycle-card">
+            <div class="cycle-title">🌸 Ciclo Menstrual</div>
+            <p>Las mujeres tienen una ventaja - sangran muerte y renacimiento cada mes. Cuando una cultura demoniza la menstruación, pierde una de las maestras más poderosas de la impermanencia.</p>
+            <div class="testimonial">
+                "Mi abuela me enseñó que cada menstruación es una pequeña muerte. 'Dejas ir lo que pudo ser', me decía. Ahora enseño a mi hija: su sangre es sagrada, es práctica de soltar."
+                <div class="testimonial-author">- María, partera tradicional</div>
+            </div>
+        </div>
+
+        <div class="cycle-card">
+            <div class="cycle-title">🌙 Ciclo Lunar</div>
+            <p>28 días de nacimiento, plenitud, declive, muerte, renacimiento. Nuestros ancestros vivían sintonizados. Nosotros apenas notamos.</p>
+        </div>
+
+        <div class="cycle-card">
+            <div class="cycle-title">🍂 Ciclo Anual</div>
+            <p>Primavera-Verano-Otoño-Invierno. Cada estación una fase de vida-muerte. El invierno no es "mal clima" - es la muerte necesaria para la próxima primavera.</p>
+        </div>
+
+        <div class="practice-card">
+            <div class="practice-title">🌕 Práctica: Sintonización con los Ciclos</div>
+            <div class="practice-duration">⏱️ Un mes completo</div>
+            <ol class="practice-steps">
+                <li>Observa la luna cada noche durante un mes</li>
+                <li>Registra tu energía, emociones, creatividad</li>
+                <li>Nota cómo fluctúas con ella</li>
+                <li>En luna nueva: ¿Qué necesita morir en tu vida?</li>
+                <li>En luna llena: ¿Qué está listo para culminar?</li>
+                <li>En menguante: Practica soltar activamente</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h2>💔 El Dolor de las Pequeñas Muertes</h2>
+        <p>No romantizamos: las pequeñas muertes duelen. El final de una relación puede sentirse como una amputación. Perder un trabajo, una muerte de identidad. Estos dolores son reales y deben ser honrados.</p>
+
+        <h3>La Neurociencia del Desapego</h3>
+        <p>Estudios recientes muestran que el cerebro procesa pérdidas emocionales en las mismas áreas que el dolor físico. Literalmente duele soltar. Pero aquí está la magia: cada vez que practicamos soltar conscientemente, construimos nuevas vías neuronales. El cerebro aprende: soltar no es peligroso, es liberador.</p>
+
+        <h3>Protocolo para Procesar Pequeñas Muertes</h3>
+        
+        <div class="protocol-step">
+            <strong>1. Reconoce:</strong> "Algo está muriendo en mi vida"
+        </div>
+
+        <div class="protocol-step">
+            <strong>2. Siente:</strong> Permítete sentir el dolor sin historia
+        </div>
+
+        <div class="protocol-step">
+            <strong>3. Honra:</strong> Crea un ritual, por pequeño que sea
+        </div>
+
+        <div class="protocol-step">
+            <strong>4. Suelta:</strong> Físicamente - escribe y quema, entierra un símbolo
+        </div>
+
+        <div class="protocol-step">
+            <strong>5. Vacío:</strong> Siéntate en el espacio vacío sin llenarlo inmediatamente
+        </div>
+
+        <div class="protocol-step">
+            <strong>6. Apertura:</strong> Pregunta: "¿Qué quiere nacer ahora?"
+        </div>
+    </section>
+
+    <section>
+        <h2>🦋 Casos de Transformación</h2>
+
+        <div class="case-study">
+            <div class="case-name">Roberto, 52 años</div>
+            <div class="case-subtitle">La Muerte de la Identidad Corporativa</div>
+            <p>"Fui gerente senior por 25 años. Cuando me despidieron, sentí que moría. Mi identidad, mi valor, todo atado a ese título. Los primeros meses fueron el infierno - intentaba aferrarme, mandar CVs desesperadamente.</p>
+            <p>Un amigo me llevó a un retiro de muerte del ego. Ahí entendí: no perdí un trabajo, estaba en un proceso de muerte-renacimiento. Hice un funeral para mi yo corporativo. Literalmente. Traje, corbata, tarjetas de presentación - todo a la fogata.</p>
+            <p>Seis meses en el vacío. Difícil, aterrador, pero necesario. Luego, como brotes después del incendio, nueva vida. Ahora soy ceramista. Mis manos crean en lugar de escribir memos. Gano menos, vivo más."</p>
+        </div>
+
+        <div class="case-study">
+            <div class="case-name">Elena, 34 años</div>
+            <div class="case-subtitle">Pequeñas Muertes Después del Divorcio</div>
+            <p>"El divorcio fue la muerte obvia. Pero nadie me preparó para las mil pequeñas muertes que siguieron. La primera vez que cociné para uno. El lado vacío de la cama. Su taza favorita en la alacena.</p>
+            <p>Empecé a hacer rituales para cada una. La taza la convertí en maceta - muerte y nueva vida. El lado de la cama lo llené de libros - el vacío se volvió posibilidad. Cada pequeña muerte, honrada, se convirtió en renacimiento.</p>
+            <p>Ahora facilito grupos para divorciadas. Les enseño: el divorcio no es una muerte, son mil. Y cada una es una oportunidad de renacer más auténtica."</p>
+        </div>
+
+        <div class="case-study">
+            <div class="case-name">Tomás, 28 años</div>
+            <div class="case-subtitle">Adicción y Renacimiento Diario</div>
+            <p>"Soy adicto en recuperación. Cada día que no consumo es una pequeña muerte - muere el yo que necesita la sustancia. Los primeros días, agonía. El adicto no quiere morir.</p>
+            <p>Mi padrino me enseñó: 'No es una muerte, son 86,400 - una por cada segundo que eliges no consumir.' Empecé a verlo así. Cada momento sobrio, una victoria sobre una pequeña muerte.</p>
+            <p>Llevo 1,095 días limpio. 1,095 muertes del adicto. 1,095 nacimientos del hombre que realmente soy. La muerte diaria es mi medicina."</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>🌱 Integrando las Pequeñas Muertes</h2>
+        
+        <h3>Señales de Maestría</h3>
+        <p>Sabrás que estás integrando esta enseñanza cuando:</p>
+
+        <div class="signals-grid">
+            <div class="signal-box">
+                <div class="signal-number">1</div>
+                <p><strong>Los finales no te sorprendan</strong><br>Los ves venir, los honras</p>
+            </div>
+
+            <div class="signal-box">
+                <div class="signal-number">2</div>
+                <p><strong>Sueltes con más facilidad</strong><br>Aún duele, pero no te aferras</p>
+            </div>
+
+            <div class="signal-box">
+                <div class="signal-number">3</div>
+                <p><strong>Veas belleza en la impermanencia</strong><br>Como los japoneses con el sakura</p>
+            </div>
+
+            <div class="signal-box">
+                <div class="signal-number">4</div>
+                <p><strong>Tu ansiedad disminuya</strong><br>Practicar morir calma el miedo a vivir</p>
+            </div>
+
+            <div class="signal-box">
+                <div class="signal-number">5</div>
+                <p><strong>Te vuelvas más presente</strong><br>Sabiendo que todo termina, saboreas más</p>
+            </div>
+
+            <div class="signal-box">
+                <div class="signal-number">6</div>
+                <p><strong>Confíes en los ciclos</strong><br>Después del invierno, siempre viene primavera</p>
+            </div>
+
+            <div class="signal-box">
+                <div class="signal-number">7</div>
+                <p><strong>Celebres los finales</strong><br>Con la misma intensidad que los comienzos</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="meditation">
+        <h2 class="meditation-title">🕯️ Meditación: El Río de la Impermanencia</h2>
+        <div class="meditation-text">
+            <p>Siéntate junto a un río (real o imaginado). Observa el agua fluir.</p>
+            <p>Cada molécula pasa una sola vez por ese punto exacto.</p>
+            <p>Nunca se repite el mismo río.</p>
+            <p style="margin-top: 30px;">Ahora siente tu vida como ese río.</p>
+            <p>Cada momento fluyendo, muriendo al siguiente, naciendo del anterior.</p>
+            <p>No puedes detener el río. No puedes aferrarte al agua.</p>
+            <p style="margin-top: 30px;">Eres el río y eres la orilla.</p>
+            <p>Eres lo que fluye y lo que permanece.</p>
+            <p>En esta paradoja está la paz.</p>
+            <p style="margin-top: 30px;">Cuando abras los ojos, habrás muerto y renacido.</p>
+            <p>Como cada momento. Como siempre.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>🔗 Conexiones con la Constelación Trinity</h2>
+        <p>El Nodo de las Pequeñas Muertes resuena profundamente con otras obras de la Constelación:</p>
+
+        <div class="trinity-connections">
+            <div class="trinity-card">
+                <div class="trinity-icon">🗣️</div>
+                <div class="trinity-title">La Voz Interior</div>
+                <p>El reconocimiento de los cierres cotidianos se trabaja como ejercicio de gratitud: al nombrar lo que termina, fortalecemos la capacidad de decir adiós sin resentimiento.</p>
+            </div>
+
+            <div class="trinity-card">
+                <div class="trinity-icon">🚪</div>
+                <div class="trinity-title">El Dolor como Portal</div>
+                <p>Las pequeñas muertes, al doler, nos recuerdan que estamos vivos y en constante transformación. El dolor no es obstáculo, sino umbral.</p>
+            </div>
+
+            <div class="trinity-card">
+                <div class="trinity-icon">🔗</div>
+                <div class="trinity-title">Los Vínculos Sagrados</div>
+                <p>El arte de soltar se relaciona con la red relacional: cuando soltamos, liberamos no solo nuestra energía, sino también a los otros, permitiéndoles continuar su propio ciclo.</p>
+            </div>
+
+            <div class="trinity-card">
+                <div class="trinity-icon">📚</div>
+                <div class="trinity-title">Educación Cuántica</div>
+                <p>El "diario de pequeñas muertes" dialoga con la enseñanza a los jóvenes a registrar cambios y transiciones como aprendizajes, no como pérdidas.</p>
+            </div>
+
+            <div class="trinity-card">
+                <div class="trinity-icon">🧠</div>
+                <div class="trinity-title">Psicología Cuántica</div>
+                <p>La pausa entre inhalación y exhalación se describe como el "umbral de no-forma": un instante en el que no somos lo que fuimos ni lo que seremos.</p>
+            </div>
+
+            <div class="trinity-card">
+                <div class="trinity-icon">🏠</div>
+                <div class="trinity-title">El Retorno a Casa</div>
+                <p>La paradoja: mientras más abrazamos el final, más íntegro se vuelve cada comienzo. "La vida que nace de su propia desaparición."</p>
+            </div>
+
+            <div class="trinity-card">
+                <div class="trinity-icon">🌌</div>
+                <div class="trinity-title">Civilización Galáctica</div>
+                <p>La visualización del río conecta con la conciencia como corriente estelar: lo que fluye no se pierde, solo cambia de forma y dirección.</p>
+            </div>
+
+            <div class="trinity-card">
+                <div class="trinity-icon">🌀</div>
+                <div class="trinity-title">El Vacío Fértil</div>
+                <p>En el sueño, la entrega diaria a la fuente se revela como un retiro silencioso al campo original. El Yoga de los Sueños transforma el descanso en entrenamiento para el tránsito final.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>🔮 Experimento de Consciencia</h2>
+        <p>Durante los próximos 7 días, elige una práctica:</p>
+
+        <div class="practice-card">
+            <div class="practice-title">📓 1. Diario de Muertes</div>
+            <p>Cada noche, lista 3 cosas que murieron ese día</p>
+        </div>
+
+        <div class="practice-card">
+            <div class="practice-title">⚰️ 2. Funeral Semanal</div>
+            <p>Cada domingo, haz un ritual para lo que terminó esa semana</p>
+        </div>
+
+        <div class="practice-card">
+            <div class="practice-title">📸 3. Fotografía de Finales</div>
+            <p>Captura imágenes de cosas terminando/muriendo</p>
+        </div>
+
+        <div class="practice-card">
+            <div class="practice-title">🍃 4. Ayuno de Permanencia</div>
+            <p>Suelta algo diferente cada día por una semana</p>
+        </div>
+
+        <div class="practice-card">
+            <div class="practice-title">💬 5. Conversaciones de Cierre</div>
+            <p>Despídete de cada persona como si fuera la última vez</p>
+        </div>
+
+        <h3 style="margin-top: 30px;">Registra:</h3>
+        <ul style="font-size: 1.1em; margin-left: 20px;">
+            <li>¿Qué resistencias surgen?</li>
+            <li>¿Qué insights emergen?</li>
+            <li>¿Cómo cambia tu relación con el cambio?</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>💀 La Paradoja de la Práctica</h2>
+        <p>Aquí está el misterio: mientras más practicas morir, más vivo te sientes. Cada pequeña muerte es una iniciación. Cada final consciente es un portal. No estamos practicando para la muerte - estamos practicando la vida total.</p>
+        
+        <p>Como dijo Sócrates antes de beber la cicuta: "La vida no examinada no vale la pena vivirla." Podríamos agregar: "La muerte no practicada hace imposible vivir plenamente."</p>
+    </section>
+
+    <section class="questions">
+        <h2>🌅 Preguntas para Contemplar</h2>
+        <ol>
+            <li>¿Qué pequeña muerte has estado evitando?</li>
+            <li>¿Cómo sería honrar conscientemente cada despedida?</li>
+            <li>¿Qué ciclo natural has perdido de vista?</li>
+            <li>¿Cuántas veces "mueres" sin darte cuenta cada día?</li>
+            <li>Si cada exhalación fuera consciente, ¿cómo cambiaría tu día?</li>
+            <li>¿Qué necesita completarse en tu vida?</li>
+            <li>¿Puedes amar algo sabiendo que terminará?</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>🌟 Transición al Nodo 3</h2>
+        <p>Has aprendido a reconocer las pequeñas muertes. Has comenzado a practicar el soltar. Pero hay momentos cuando no mueres solo - cuando eres llamado a ser testigo de la muerte de otro. Este es uno de los servicios más sagrados que un ser humano puede ofrecer a otro.</p>
+        
+        <p>En el próximo nodo, exploraremos el arte perdido del acompañamiento - cómo ser una presencia de amor cuando otro ser hace su transición final. Porque la muerte no debe ser enfrentada en soledad. Y ser testigo consciente de la muerte es, paradójicamente, una de las experiencias más vivificantes posibles.</p>
+        
+        <p style="text-align: center; font-size: 1.3em; color: #d4a574; margin-top: 30px;"><strong>Prepárate. Este es territorio sagrado.</strong></p>
+    </section>
+
+    <nav class="navigation">
+        <a href="nodo_01.html" class="nav-button">← Nodo 1: El Tabú Primordial</a>
+        <div class="nav-center">⭕ La Constelación Trinity ⭕</div>
+        <a href="nodo_03.html" class="nav-button">Nodo 3: El Acompañamiento →</a>
+    </nav>
+</div>
+
+<script>
+    // Canvas animado con hojas cayendo y transformándose
+    const canvas = document.getElementById('autumnCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    class Leaf {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = -20;
+            this.speed = 0.5 + Math.random() * 1.5;
+            this.swingSpeed = 0.02 + Math.random() * 0.03;
+            this.swingAmount = 20 + Math.random() * 30;
+            this.rotation = Math.random() * Math.PI * 2;
+            this.rotationSpeed = (Math.random() - 0.5) * 0.1;
+            this.size = 15 + Math.random() * 20;
+            this.opacity = 0.3 + Math.random() * 0.4;
+            this.time = Math.random() * 1000;
+            
+            // Colores otoñales
+            const colors = ['#d4a574', '#c9a875', '#8b5a2b', '#cd853f', '#daa520'];
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        update() {
+            this.time += 1;
+            this.y += this.speed;
+            this.x += Math.sin(this.time * this.swingSpeed) * 0.5;
+            this.rotation += this.rotationSpeed;
+
+            if (this.y > canvas.height + 20) {
+                this.reset();
+            }
+        }
+
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            ctx.globalAlpha = this.opacity;
+
+            // Dibujar hoja
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.moveTo(0, -this.size);
+            ctx.bezierCurveTo(
+                this.size * 0.5, -this.size * 0.7,
+                this.size * 0.5, -this.size * 0.3,
+                0, 0
+            );
+            ctx.bezierCurveTo(
+                -this.size * 0.5, -this.size * 0.3,
+                -this.size * 0.5, -this.size * 0.7,
+                0, -this.size
+            );
+            ctx.fill();
+
+            // Vena central
+            ctx.strokeStyle = 'rgba(139, 90, 43, 0.5)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(0, -this.size);
+            ctx.lineTo(0, 0);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+    }
+
+    // Crear hojas
+    const leaves = [];
+    for (let i = 0; i < 30; i++) {
+        leaves.push(new Leaf());
+        // Distribuir inicialmente
+        leaves[i].y = Math.random() * canvas.height;
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        leaves.forEach(leaf => {
+            leaf.update();
+            leaf.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Redimensionar canvas
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
+
+
+</body>
+</html>
