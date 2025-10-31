@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 7: La Gran Reunión | La Muerte como Maestra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+    body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(135deg, #0a1a0a 0%, #1a2e3e 50%, #0f1e2e 100%);
+        color: #e8e8e8;
+        line-height: 1.8;
+        overflow-x: hidden;
+    }
+
+    #red-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.35;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 60px;
+        padding: 60px 20px;
+        background: rgba(26, 46, 62, 0.5);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(76, 175, 80, 0.4);
+        box-shadow: 0 0 50px rgba(76, 175, 80, 0.3);
+    }
+
+    .book-title {
+        font-size: 1.1rem;
+        color: #4caf50;
+        letter-spacing: 4px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        opacity: 0.9;
+    }
+
+    .nodo-number {
+        font-size: 3.5rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #4caf50 0%, #81c784 50%, #64b5f6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+    }
+
+    .nodo-title {
+        font-size: 2.8rem;
+        color: #ffffff;
+        margin-bottom: 30px;
+        text-shadow: 0 0 40px rgba(76, 175, 80, 0.6);
+    }
+
+    .quote {
+        font-style: italic;
+        font-size: 1.15rem;
+        color: #a5d6a7;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+        border-left: 3px solid #4caf50;
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(33, 150, 243, 0.1) 100%);
+        border-radius: 10px;
+    }
+
+    .section {
+        margin: 60px 0;
+        padding: 40px;
+        background: rgba(26, 46, 62, 0.35);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(76, 175, 80, 0.2);
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    h2 {
+        font-size: 2.2rem;
+        background: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    h3 {
+        font-size: 1.6rem;
+        color: #4caf50;
+        margin: 30px 0 20px 0;
+    }
+
+    h4 {
+        font-size: 1.3rem;
+        color: #81c784;
+        margin: 20px 0 15px 0;
+    }
+
+    p {
+        margin-bottom: 20px;
+        font-size: 1.05rem;
+        text-align: justify;
+    }
+
+    .extincion-card {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(33, 150, 243, 0.12) 100%);
+        padding: 30px;
+        margin: 25px 0;
+        border-radius: 15px;
+        border-left: 5px solid #4caf50;
+        transition: all 0.3s ease;
+    }
+
+    .extincion-card:hover {
+        transform: translateX(10px);
+        box-shadow: 0 5px 25px rgba(76, 175, 80, 0.4);
+    }
+
+    .extincion-name {
+        font-size: 1.8rem;
+        color: #4caf50;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .testimonio {
+        background: rgba(255, 193, 7, 0.12);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border-left: 4px solid #ffc107;
+        font-style: italic;
+    }
+
+    .testimonio-autor {
+        text-align: right;
+        color: #ffc107;
+        font-weight: bold;
+        margin-top: 10px;
+        font-style: normal;
+    }
+
+    .practica-card {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(33, 150, 243, 0.15) 100%);
+        padding: 35px;
+        margin: 30px 0;
+        border-radius: 18px;
+        border: 2px solid rgba(76, 175, 80, 0.4);
+        box-shadow: 0 8px 32px rgba(76, 175, 80, 0.2);
+    }
+
+    .practica-titulo {
+        font-size: 1.5rem;
+        color: #4caf50;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .practica-duracion {
+        font-size: 0.9rem;
+        color: #81c784;
+        font-style: italic;
+        margin-bottom: 20px;
+    }
+
+    .practica-steps {
+        background: rgba(10, 26, 26, 0.4);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 15px;
+    }
+
+    .gaia-box {
+        background: rgba(76, 175, 80, 0.18);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border: 2px solid rgba(76, 175, 80, 0.5);
+    }
+
+    .gaia-box::before {
+        content: '🌍 ';
+        font-size: 1.5rem;
+    }
+
+    .lista-item {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.12) 0%, rgba(33, 150, 243, 0.08) 100%);
+        padding: 15px 20px;
+        margin: 12px 0;
+        border-radius: 10px;
+        border-left: 4px solid #4caf50;
+    }
+
+    ul, ol {
+        margin: 20px 0 20px 40px;
+    }
+
+    li {
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .conexion-box {
+        background: rgba(33, 150, 243, 0.12);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border-left: 4px solid #64b5f6;
+        font-style: italic;
+    }
+
+    .sintoma-card {
+        background: linear-gradient(135deg, rgba(255, 152, 0, 0.15) 0%, rgba(76, 175, 80, 0.1) 100%);
+        padding: 30px;
+        margin: 25px 0;
+        border-radius: 15px;
+        border-left: 5px solid #ff9800;
+        transition: all 0.3s ease;
+    }
+
+    .sintoma-card:hover {
+        transform: translateX(10px);
+        box-shadow: 0 5px 25px rgba(255, 152, 0, 0.3);
+    }
+
+    .sintoma-name {
+        font-size: 1.6rem;
+        color: #ffa726;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .vision-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+    }
+
+    .vision-item {
+        background: rgba(76, 175, 80, 0.15);
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid #4caf50;
+        transition: all 0.3s ease;
+    }
+
+    .vision-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+    }
+
+    .meditacion-box {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(10, 26, 26, 0.5) 100%);
+        padding: 40px;
+        margin: 40px 0;
+        border-radius: 20px;
+        border: 2px solid rgba(76, 175, 80, 0.5);
+        text-align: center;
+    }
+
+    .preguntas-box {
+        background: rgba(76, 175, 80, 0.1);
+        padding: 30px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border: 2px dashed #4caf50;
+    }
+
+    .pregunta-item {
+        font-size: 1.1rem;
+        color: #81c784;
+        margin: 15px 0;
+        font-weight: 500;
+    }
+
+    .final-box {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.25) 0%, rgba(255, 215, 0, 0.2) 100%);
+        padding: 50px;
+        margin: 50px 0;
+        border-radius: 20px;
+        border: 3px solid rgba(76, 175, 80, 0.6);
+        text-align: center;
+    }
+
+    .simbolo-muerte {
+        font-size: 3rem;
+        margin: 20px 0;
+    }
+
+    strong {
+        color: #81c784;
+    }
+
+    .highlight {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.25) 0%, rgba(33, 150, 243, 0.15) 100%);
+        padding: 3px 10px;
+        border-radius: 5px;
+    }
+
+    .navegacion {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 60px;
+        gap: 20px;
+    }
+
+    .nav-button {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .nav-button:hover {
+        background: linear-gradient(135deg, #66bb6a 0%, #81c784 100%);
+        color: #0a1a0a;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 20px rgba(76, 175, 80, 0.5);
+    }
+
+    .metamorfosis-box {
+        background: linear-gradient(135deg, rgba(156, 39, 176, 0.15) 0%, rgba(76, 175, 80, 0.15) 100%);
+        padding: 30px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border: 2px solid rgba(171, 71, 188, 0.4);
+        text-align: center;
+    }
+
+    .rol-box {
+        background: linear-gradient(135deg, rgba(33, 150, 243, 0.18) 0%, rgba(76, 175, 80, 0.12) 100%);
+        padding: 30px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border: 2px solid rgba(100, 181, 246, 0.5);
+    }
+
+    .decada-box {
+        background: rgba(255, 152, 0, 0.15);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border-left: 4px solid #ff9800;
+    }
+
+    .caso-card {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(255, 193, 7, 0.1) 100%);
+        padding: 30px;
+        margin: 25px 0;
+        border-radius: 15px;
+        border-left: 5px solid #4caf50;
+        transition: all 0.3s ease;
+    }
+
+    .caso-card:hover {
+        transform: translateX(10px);
+        box-shadow: 0 5px 25px rgba(76, 175, 80, 0.3);
+    }
+
+    .caso-name {
+        font-size: 1.6rem;
+        color: #4caf50;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .convergencia-box {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(255, 215, 0, 0.15) 100%);
+        padding: 35px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border: 2px solid rgba(76, 175, 80, 0.5);
+    }
+
+    @media (max-width: 768px) {
+        .nodo-number {
+            font-size: 2.5rem;
+        }
+        
+        .nodo-title {
+            font-size: 2rem;
+        }
+        
+        h2 {
+            font-size: 1.7rem;
+        }
+        
+        .section {
+            padding: 25px;
+        }
+        
+        .vision-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .navegacion {
+            flex-direction: column;
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+    }
+
+    blockquote {
+        font-style: italic;
+        padding: 20px;
+        margin: 20px 0;
+        border-left: 4px solid #4caf50;
+        background: rgba(76, 175, 80, 0.1);
+    }
+
+    .ejercicio-box {
+        background: rgba(76, 175, 80, 0.08);
+        padding: 30px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border: 2px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .ejercicio-titulo {
+        font-size: 1.4rem;
+        color: #4caf50;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="red-canvas"></canvas>
+
+```
+<div class="container">
+    <div class="header">
+        <div class="book-title">📖 Libro 7: La Muerte como Maestra</div>
+        <div class="nodo-number">🌍 NODO 7 🌍</div>
+        <h1 class="nodo-title">LA GRAN REUNIÓN</h1>
+        <p class="quote">
+            "No estás aquí por accidente en este momento de la historia. Eres parte de la generación puente - los que presenciarán y facilitarán la muerte de un mundo y el nacimiento de otro. La Tierra misma está en trabajo de parto, y tú eres su comadrona."
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>🌊 La Sexta Extinción: Perspectiva Cósmica</h2>
+        <p>
+            Los científicos la llaman la "Sexta Extinción Masiva". Los medios hablan de catástrofe climática. Los gobiernos entran en pánico. Pero desde una perspectiva más amplia, estamos presenciando algo más profundo: <strong>el planeta Tierra está mudando de piel.</strong>
+        </p>
+        <p>
+            Como la serpiente que debe dejar ir su piel vieja para crecer, como la oruga que debe disolverse completamente para convertirse en mariposa, <span class="highlight">Gaia está en proceso de metamorfosis radical.</span> Y nosotros - la humanidad - somos tanto el catalizador como el sujeto de esta transformación.
+        </p>
+
+        <h3>🦖 Las Extinciones Anteriores como Maestras</h3>
+
+        <div class="extincion-card">
+            <div class="extincion-name">Ordovícico-Silúrico (444 millones de años)</div>
+            <ul>
+                <li>86% de especies marinas murieron</li>
+                <li>Preparó el camino para la vida compleja</li>
+            </ul>
+        </div>
+
+        <div class="extincion-card">
+            <div class="extincion-name">Devónico Tardío (375 millones de años)</div>
+            <ul>
+                <li>75% de especies desaparecieron</li>
+                <li>Nacieron los primeros bosques</li>
+            </ul>
+        </div>
+
+        <div class="extincion-card">
+            <div class="extincion-name">Pérmico-Triásico (251 millones de años)</div>
+            <ul>
+                <li>96% de especies marinas, 70% terrestres</li>
+                <li>La "Gran Mortandad" dio origen a los dinosaurios</li>
+            </ul>
+        </div>
+
+        <div class="extincion-card">
+            <div class="extincion-name">Triásico-Jurásico (200 millones de años)</div>
+            <ul>
+                <li>Fin de competidores de dinosaurios</li>
+                <li>Explosión de diversidad reptiliana</li>
+            </ul>
+        </div>
+
+        <div class="extincion-card">
+            <div class="extincion-name">Cretácico-Paleógeno (66 millones de años)</div>
+            <ul>
+                <li>Fin de dinosaurios</li>
+                <li>Mamíferos heredaron la Tierra</li>
+            </ul>
+        </div>
+
+        <div class="gaia-box">
+            <h4 style="color: #4caf50; margin-bottom: 15px;">Patrón Revelador</h4>
+            <p>
+                <strong>Cada extinción fue un parto.</strong> Cada muerte masiva precedió una explosión de creatividad evolutiva. La muerte a escala planetaria es el mecanismo de actualización de Gaia.
+            </p>
+        </div>
+
+        <div class="testimonio">
+            "Cuando entendí que las extinciones son los orgasmos creativos de la Tierra, mi eco-ansiedad se transformó en asombro sagrado."
+            <div class="testimonio-autor">— Dra. Elena Rodríguez, paleontóloga</div>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>🌱 Conexión con El Vacío Fértil:</strong> En ese libro se describe cómo el vacío no es ausencia sino potencial puro. Las extinciones masivas son el vacío fértil de Gaia - espacios de muerte total que permiten renacimientos radicales.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🔥 La Diferencia Esta Vez: Extinción Consciente</h2>
+        <p>
+            Por primera vez en la historia de la Tierra, <strong>una especie es consciente de la extinción mientras ocurre.</strong> Más revolucionario aún: somos la primera especie que puede PARTICIPAR CONSCIENTEMENTE en nuestra propia transformación.
+        </p>
+
+        <h3>🦋 De Víctimas a Parteras</h3>
+
+        <div class="metamorfosis-box">
+            <p style="font-size: 1.2rem; line-height: 2;">
+                <strong style="color: #ef5350;">Narrativa Vieja:</strong> La humanidad es un cáncer destruyendo la Tierra
+            </p>
+            <div class="simbolo-muerte">⬇️</div>
+            <p style="font-size: 1.2rem; line-height: 2;">
+                <strong style="color: #4caf50;">Narrativa Nueva:</strong> La humanidad es el sistema nervioso de Gaia volviéndose autoconsciente
+            </p>
+        </div>
+
+        <p style="text-align: center; font-size: 1.15rem; margin: 30px 0;">
+            No somos el problema - <strong>somos el dolor de parto.</strong> Y como cualquier parto, puede ser traumático o extático dependiendo de nuestra participación.
+        </p>
+
+        <h3>🌟 El Rol Humano en la Metamorfosis</h3>
+
+        <div class="vision-grid">
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">⚡ Catalizadores</h4>
+                <p>Nuestra crisis fuerza la evolución</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">👁️ Testigos</h4>
+                <p>Nuestra consciencia registra el proceso</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🤲 Parteras</h4>
+                <p>Podemos facilitar o resistir</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🌉 Puente</h4>
+                <p>Conectamos la vieja Tierra con la nueva</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🌱 Semilla</h4>
+                <p>Portamos los códigos del próximo mundo</p>
+            </div>
+        </div>
+
+        <div class="testimonio">
+            "Somos la generación bisagra. Con un pie en el mundo que muere y otro en el que nace. Nuestro trabajo no es salvar el viejo mundo, sino dar a luz al nuevo."
+            <div class="testimonio-autor">— Joanna Macy, eco-filósofa</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🦋 Síntomas de la Metamorfosis Planetaria</h2>
+
+        <h3>🌿 En la Biosfera</h3>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Clima Caótico</div>
+            <p>El sistema nervioso de Gaia recalibrándose</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Extinciones Masivas</div>
+            <p>Hacer espacio para nuevas formas</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Mutaciones Aceleradas</div>
+            <p>Vida experimentando rápidamente</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Simbiosis Inesperadas</div>
+            <p>Especies uniéndose en formas nuevas</p>
+        </div>
+
+        <h3>🧠 En la Noosfera (Esfera del Pensamiento)</h3>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Colapso de Instituciones</div>
+            <p>Estructuras obsoletas muriendo</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Despertar Masivo</div>
+            <p>Consciencia explotando globalmente</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Tecnología Exponencial</div>
+            <p>Extensiones del sistema nervioso de Gaia</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Unificación Forzada</div>
+            <p>Crisis creando unidad</p>
+        </div>
+
+        <h3>💫 En la Psychosfera (Campo Emocional Colectivo)</h3>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Ansiedad Global</div>
+            <p>El dolor de parto colectivo</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Depresión Masiva</div>
+            <p>El duelo por el mundo viejo</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Búsqueda Espiritual</div>
+            <p>Hambre de significado</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Polarización Extrema</div>
+            <p>La tensión antes del salto</p>
+        </div>
+
+        <h3>⚛️ En el Campo Cuántico</h3>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Resonancia Schumann Elevándose</div>
+            <p>El "latido" de la Tierra acelerando</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Velo Adelgazándose</div>
+            <p>Dimensiones convergiendo</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Sincronicidades Aumentando</div>
+            <p>La causalidad volviéndose no-lineal</p>
+        </div>
+
+        <div class="sintoma-card">
+            <div class="sintoma-name">Tiempo Colapsando</div>
+            <p>Pasado-presente-futuro fusionándose</p>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>⚡ Conexión con Psicología Cuántica:</strong> En ese libro se describe cómo la consciencia individual y la planetaria están entrelazadas. Los síntomas que experimentas personalmente (ansiedad, depresión, despertar) son hologramas del proceso planetario.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🌟 La Visión: ¿Hacia Dónde Vamos?</h2>
+
+        <h3>🧬 Homo Sapiens → Homo Conscientius</h3>
+        <p>No es que vayamos a desarrollar súper poderes físicos. <strong>La mutación es de consciencia:</strong></p>
+
+        <div class="vision-grid">
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">📡 Telepatía Emocional</h4>
+                <p>Natural, no aprendida</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">👁️ Percepción Multidimensional</h4>
+                <p>Ver más allá del 3D</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🎵 Sincronización Espontánea</h4>
+                <p>Con otros y con Gaia</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">💖 Amor como Estado Base</h4>
+                <p>No excepcional sino natural</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🕊️ Muerte Consciente</h4>
+                <p>Como transición elegida</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🌍 Identidad Planetaria</h4>
+                <p>Primaria sobre la nacional</p>
+            </div>
+        </div>
+
+        <h3>🏛️ Civilización 1.0 → Civilización 2.0</h3>
+
+        <div class="metamorfosis-box">
+            <p style="font-size: 1.15rem; line-height: 2;">
+                <strong style="color: #ef5350;">De:</strong> Competencia, escasez, separación, explotación
+            </p>
+            <div class="simbolo-muerte">⬇️</div>
+            <p style="font-size: 1.15rem; line-height: 2;">
+                <strong style="color: #4caf50;">A:</strong> Colaboración, abundancia, unidad, regeneración
+            </p>
+        </div>
+
+        <h4 style="color: #4caf50; text-align: center; margin: 30px 0;">Nuevas Estructuras:</h4>
+
+        <div class="lista-item">💰 Economía del Regalo Cuántico</div>
+        <div class="lista-item">🗳️ Gobernanza por Resonancia</div>
+        <div class="lista-item">📚 Educación como Despertar</div>
+        <div class="lista-item">🏥 Medicina como Armonización</div>
+        <div class="lista-item">🖥️ Tecnología como Extensión de Consciencia</div>
+
+        <h3>🌍 Tierra Biosfera → Tierra Noosfera</h3>
+        <p>La visión de Teilhard de Chardin haciéndose realidad:</p>
+
+        <div class="gaia-box">
+            <ul style="text-align: left; max-width: 800px; margin: 0 auto;">
+                <li>La Tierra desarrolla "mente global"</li>
+                <li>Internet como proto-sistema nervioso</li>
+                <li>Humanidad como neuronas planetarias</li>
+                <li>Gaia volviéndose consciente de sí misma</li>
+            </ul>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>🌐 Conexión con Civilización Galáctica:</strong> En ese libro se describe cómo cada planeta que desarrolla consciencia colectiva se convierte en un "nodo" en la red galáctica. La Tierra está naciendo como neurona cósmica.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>💀 Navegando Tu Parte en la Gran Muerte</h2>
+
+        <h3>🦋 Muerte del Viejo Yo</h3>
+        <p>Cada individuo debe pasar por su propia metamorfosis:</p>
+
+        <div class="rol-box">
+            <h4 style="color: #ef5350; margin-bottom: 15px;">❌ Lo que Debe Morir en Ti:</h4>
+            <div class="lista-item">El consumidor inconsciente</div>
+            <div class="lista-item">El separado del todo</div>
+            <div class="lista-item">El que busca salvación individual</div>
+            <div class="lista-item">El que niega la crisis</div>
+            <div class="lista-item">El adicto al viejo mundo</div>
+        </div>
+
+        <div class="rol-box">
+            <h4 style="color: #4caf50; margin-bottom: 15px;">✨ Lo que Quiere Nacer:</h4>
+            <div class="lista-item">El servidor planetario</div>
+            <div class="lista-item">El tejedor de nuevas realidades</div>
+            <div class="lista-item">El que abraza la incertidumbre</div>
+            <div class="lista-item">El místico práctico</div>
+            <div class="lista-item">El puente entre mundos</div>
+        </div>
+
+        <div class="practica-card">
+            <div class="practica-titulo">🌍 Práctica: Alineación con la Metamorfosis</div>
+            
+            <h4 style="color: #4caf50; margin-top: 20px;">Diariamente:</h4>
+            <div class="practica-steps">
+                <ol>
+                    <li><strong>Al despertar:</strong> "Soy célula de Gaia en transformación"</li>
+                    <li><strong>Antes de decisiones:</strong> "¿Esto sirve al mundo que muere o al que nace?"</li>
+                    <li><strong>En crisis personales:</strong> "Mi caos es parte del parto planetario"</li>
+                    <li><strong>Al dormir:</strong> "Entrego mi transformación a la inteligencia mayor"</li>
+                </ol>
+            </div>
+
+            <h4 style="color: #4caf50; margin-top: 20px;">Semanalmente:</h4>
+            <div class="practica-steps">
+                <ul>
+                    <li>Ritual de soltar un aspecto del viejo paradigma</li>
+                    <li>Cultivar una cualidad del nuevo</li>
+                    <li>Conectar con otros en transformación</li>
+                    <li>Servir de alguna forma a la transición</li>
+                </ul>
+            </div>
+
+            <h4 style="color: #4caf50; margin-top: 20px;">Mensualmente:</h4>
+            <div class="practica-steps">
+                <ul>
+                    <li>Ayuno/purga consciente</li>
+                    <li>Inmersión en naturaleza salvaje</li>
+                    <li>Revisión: ¿Estoy muriendo lo suficientemente rápido?</li>
+                    <li>Celebración de pequeños renacimientos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="ejercicio-box">
+            <div class="ejercicio-titulo">✍️ Escribiendo tu Propio Epitafio Vivo</div>
+            
+            <p style="margin-bottom: 20px;">
+                Un epitafio se escribe cuando alguien muere. Un "epitafio vivo" se escribe para definir cómo eliges vivir a partir de ahora, a la luz de la conciencia de la muerte. No es sobre lo que has hecho, sino sobre la cualidad del Ser que eliges encarnar.
+            </p>
+
+            <div class="practica-steps">
+                <h4 style="color: #4caf50;">Responde en un diario, como carta a ti mismo:</h4>
+                
+                <p style="margin-top: 15px;"><strong>La Lección Principal:</strong> Si tuvieras que destilar todo lo que la Muerte te ha enseñado en una sola frase, ¿cuál sería? (Ej: "No posponer el amor", "La autenticidad es el único legado", "Vivir con ligereza").</p>
+                
+                <p style="margin-top: 15px;"><strong>El Legado del Ser:</strong> Olvida los logros. ¿Qué "fragancia" quieres dejar en los espacios y en los corazones que tocas, momento a momento? ¿Quieres que tu legado sea la paz, la alegría, la valentía, la compasión, la creatividad? Elige de una a tres cualidades esenciales.</p>
+                
+                <p style="margin-top: 15px;"><strong>La Acción Mínima Viable:</strong> ¿Cuál es la acción más pequeña, concreta e inmediata que puedes realizar en las próximas 24 horas para encarnar una de esas cualidades?</p>
+                
+                <p style="margin-top: 15px;"><strong>Tu Epitafio Vivo:</strong> Combina tus respuestas en una declaración de intenciones. Este es tu nuevo norte. Escríbelo en un lugar visible.</p>
+                
+                <p style="margin-top: 15px; font-style: italic;">Ejemplo: "Habiendo aprendido de la Muerte a no posponer el amor, elijo vivir de tal manera que mi presencia sea un legado de paz y compasión. Hoy, empezaré por escuchar de verdad a mi pareja cuando me hable de su día."</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🌈 Tecnologías para la Transición Colectiva</h2>
+
+        <h3>🍄 Campos Morfogenéticos de Nueva Tierra</h3>
+        <p>Grupos alrededor del mundo están creando "burbujas de futuro":</p>
+
+        <div class="vision-grid">
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🏘️ Ecoaldeas Conscientes</h4>
+                <p>Prototipos de nueva civilización</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">⭕ Círculos de Sanación</h4>
+                <p>Procesando trauma colectivo</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🧘 Meditaciones Sincronizadas</h4>
+                <p>Estabilizando el campo</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🌱 Proyectos Regenerativos</h4>
+                <p>Midwifing nuevos sistemas</p>
+            </div>
+        </div>
+
+        <h3>🕸️ La Red Micelial Humana</h3>
+        <p>Como los hongos conectan bosques, los despiertos conectan la consciencia:</p>
+
+        <div class="rol-box">
+            <h4 style="color: #4caf50; margin-bottom: 20px;">Nodos de la Red:</h4>
+            <div class="lista-item">🧘 Meditadores manteniendo frecuencia</div>
+            <div class="lista-item">💚 Sanadores limpiando trauma ancestral</div>
+            <div class="lista-item">🔮 Visionarios descargando nuevos códigos</div>
+            <div class="lista-item">🌉 Puentes traduciendo entre mundos</div>
+            <div class="lista-item">🛡️ Guardianes protegiendo lo sagrado</div>
+        </div>
+
+        <div class="testimonio">
+            "Siento la red. En meditación profunda, percibo millones de luces - otros haciendo este trabajo. No estamos solos. Somos un organismo despertando."
+            <div class="testimonio-autor">— Ana, facilitadora de círculos</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🔮 2020–2030: La Década del Parto</h2>
+
+        <h3>📅 Las Contracciones se Intensifican</h3>
+
+        <div class="decada-box">
+            <strong>2020–2023:</strong> Ruptura de bolsa (pandemia como iniciación)
+        </div>
+
+        <div class="decada-box">
+            <strong>2024–2026:</strong> Contracciones acelerando (colapsos sistémicos)
+        </div>
+
+        <div class="decada-box">
+            <strong>2027–2029:</strong> Transición (caos máximo, breakthrough inminente)
+        </div>
+
+        <div class="decada-box">
+            <strong>2030+:</strong> Nacimiento (nuevas estructuras emergiendo)
+        </div>
+
+        <h3>🎯 Tu Rol en el Parto</h3>
+
+        <div class="vision-grid">
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">Si eres Sanador</h4>
+                <p>Procesa trauma colectivo</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">Si eres Visionario</h4>
+                <p>Descarga blueprints del futuro</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">Si eres Constructor</h4>
+                <p>Crea estructuras puente</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">Si eres Guardián</h4>
+                <p>Protege lo que debe preservarse</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">Si eres Destructor Sagrado</h4>
+                <p>Ayuda a morir lo obsoleto</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">Si eres Comunicador</h4>
+                <p>Traduce entre paradigmas</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">Si eres Simplemente Humano</h4>
+                <p>Ama ferozmente</p>
+            </div>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>💼 Conexión con Liderazgo Consciente:</strong> En ese libro se describe cómo los líderes del nuevo paradigma no "dirigen" - sirven como canales para la inteligencia emergente. Tu rol en el parto no lo eliges con la mente - lo reconoces con el corazón.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🌍 Casos de Muerte/Renacimiento Colectivo</h2>
+
+        <div class="caso-card">
+            <div class="caso-name">🇨🇷 La Revolución Micelial de 2025</div>
+            <p>
+                En Costa Rica, una red de comunidades conectadas por rituales sincronizados creó un campo tan coherente que el gobierno adoptó sus prácticas. <strong>En 6 meses: criminalidad cayó 70%, reforestación espontánea, juventud dejando drogas por meditación.</strong> Un país entero como organismo coherente.
+            </p>
+        </div>
+
+        <div class="caso-card">
+            <div class="caso-name">🏙️ El Colapso Creativo de Detroit</div>
+            <p>
+                Cuando la ciudad "murió" económicamente, algo mágico ocurrió. Sin sistema que mantener, los ciudadanos crearon otro. Granjas urbanas, economía de regalo, arte en ruinas. <strong>Detroit se volvió modelo de resiliencia post-colapso. La muerte fue su liberación.</strong>
+            </p>
+        </div>
+
+        <div class="caso-card">
+            <div class="caso-name">👶 Los Niños del 2012</div>
+            <p>
+                Los nacidos alrededor del 2012 muestran características inusuales: telepatía natural, rechazo a mentiras, conexión con naturaleza, sabiduría precoz. Los llaman "índigo" o "cristal", pero son simplemente <strong>humanos nativos del nuevo paradigma.</strong>
+            </p>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>📚 Conexión con Educación Cuántica:</strong> En ese libro se describe cómo la educación debe evolucionar para los niños del nuevo paradigma. No es enseñarles - es no interferir con su sabiduría innata mientras les damos herramientas para el mundo de transición.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>💫 El Momento del Salto Cuántico Colectivo</h2>
+
+        <h3>📊 Masa Crítica: La Centésima Humana</h3>
+        <p>Como los monos lavando papas, cuando suficientes humanos encarnen la nueva consciencia, todos saltarán. Los cálculos varían:</p>
+
+        <div class="gaia-box">
+            <ul style="text-align: left; max-width: 800px; margin: 0 auto;">
+                <li><strong>Instituto HeartMath:</strong> 1% de población en coherencia</li>
+                <li><strong>Maharishi:</strong> Raíz cuadrada del 1% meditando</li>
+                <li><strong>Otros:</strong> 144,000 seres realizados</li>
+            </ul>
+            <p style="margin-top: 20px; text-align: center; font-size: 1.15rem;">
+                La matemática importa menos que esto: <strong>Cada ser que despierta acelera el despertar de todos.</strong>
+            </p>
+        </div>
+
+        <h3>⚡ Señales del Salto Inminente</h3>
+
+        <div class="vision-grid">
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🎯 Sincronicidades</h4>
+                <p>Volviéndose ridículamente obvias</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">📡 Telepatía Espontánea</h4>
+                <p>Aumentando</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">👶 Niños Conscientes</h4>
+                <p>Naciendo cada vez más despiertos</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🏛️ Sistemas Viejos</h4>
+                <p>Colapsando aceleradamente</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">💡 Soluciones Emergentes</h4>
+                <p>Apareciendo "de la nada"</p>
+            </div>
+            <div class="vision-item">
+                <h4 style="color: #4caf50;">🌊 Sensación Colectiva</h4>
+                <p>"Algo viene"</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🕊️ La Gran Reunión: Convergencia Final</h2>
+
+        <h3>🌟 ¿Reunión de Qué?</h3>
+
+        <div class="convergencia-box">
+            <div class="lista-item">☁️ <strong>Cielo y Tierra:</strong> Lo espiritual aterrizando</div>
+            <div class="lista-item">⏳ <strong>Pasado y Futuro:</strong> Sabiduría ancestral + tecnología consciente</div>
+            <div class="lista-item">🌿 <strong>Humano y Naturaleza:</strong> Fin de la separación</div>
+            <div class="lista-item">💀 <strong>Vida y Muerte:</strong> Comprensión de continuidad</div>
+            <div class="lista-item">🧘 <strong>Individual y Colectivo:</strong> Yo soy/Nosotros somos</div>
+            <div class="lista-item">🌌 <strong>Local y Galáctico:</strong> Tierra tomando su lugar cósmico</div>
+        </div>
+
+        <h3>💎 Tu Muerte Individual Como Ensayo</h3>
+        <p>Todo lo explorado en los nodos anteriores es preparación:</p>
+
+        <div class="rol-box">
+            <div class="lista-item"><strong>Nodo 1:</strong> Soltar el tabú cultural = Soltar civilización vieja</div>
+            <div class="lista-item"><strong>Nodo 2:</strong> Pequeñas muertes = Practicar para la grande</div>
+            <div class="lista-item"><strong>Nodo 3:</strong> Acompañar moribundos = Acompañar mundo moribundo</div>
+            <div class="lista-item"><strong>Nodo 4:</strong> Tecnologías de tránsito = Herramientas colectivas</div>
+            <div class="lista-item"><strong>Nodo 5:</strong> Muerte del ego = Muerte del ego colectivo</div>
+            <div class="lista-item"><strong>Nodo 6:</strong> Legado cuántico = Co-crear el nuevo mundo</div>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>🌐 Conexión con La Consciencia Planetaria:</strong> En ese libro se describe cómo cada práctica individual de muerte consciente contribuye al despertar colectivo. No hay separación entre tu transformación y la de Gaia.</p>
+        </div>
+    </div>
+
+    <div class="meditacion-box">
+        <h2>🌟 Meditación Final: Tu Lugar en la Gran Obra</h2>
+        <div class="simbolo-muerte">🌍 💫 ✨</div>
+        
+        <p style="font-style: italic; line-height: 2; max-width: 800px; margin: 20px auto;">
+            Siéntate. Respira profundo. Siente tus raíces penetrando la Tierra.
+        </p>
+        
+        <p style="margin: 30px auto; max-width: 800px; line-height: 2;">
+            Siente a Gaia debajo de ti - vasta, antigua, en trabajo de parto.<br>
+            Siente su dolor. Su poder. Su propósito.
+        </p>
+        
+        <p style="margin: 30px auto; max-width: 800px; line-height: 2;">
+            Ahora siente a la humanidad - billones de células de su cuerpo.<br>
+            Todas transformándose. Todas conectadas. Todas necesarias.
+        </p>
+        
+        <p style="font-weight: bold; font-size: 1.3rem; margin-top: 30px; color: #4caf50;">
+            Siente tu lugar único en este organismo.<br>
+            ¿Qué célula eres? ¿Qué función sirves?
+        </p>
+        
+        <p style="margin: 30px auto; max-width: 800px; line-height: 2;">
+            Respira con Gaia. Contrae con ella. Expande con ella.<br>
+            Tu respiración es su respiración.<br>
+            Tu transformación es su transformación.
+        </p>
+        
+        <p style="margin: 30px auto; max-width: 800px; line-height: 2;">
+            Desde este lugar, pregunta:<br>
+            <strong>"¿Cómo puedo servir mejor al parto?"</strong>
+        </p>
+        
+        <p style="margin: 30px auto; max-width: 800px; line-height: 2;">
+            Escucha. La respuesta viene del centro de la Tierra.<br>
+            Y del centro de tu corazón.<br>
+            <strong>Son lo mismo.</strong>
+        </p>
+        
+        <p style="font-size: 1.2rem; margin: 30px auto; line-height: 2;">
+            Cuando abras los ojos, habrás tomado tu lugar.<br>
+            En la muerte más sagrada.<br>
+            Y el nacimiento más glorioso.<br>
+            <strong>De todos los tiempos.</strong>
+        </p>
+    </div>
+
+    <div class="final-box">
+        <h2>💎 Palabras Finales: La Muerte Como Maestra</h2>
+        <div class="simbolo-muerte">💀 ✨ 🌍 🌟</div>
+        
+        <p style="font-size: 1.15rem; line-height: 2; max-width: 900px; margin: 20px auto;">
+            Has viajado a través de <strong>siete iniciaciones.</strong> Has visto la muerte en todas sus formas - desde el tabú cultural hasta la transformación planetaria. Has aprendido que la muerte no es el enemigo, sino <span class="highlight">la maestra más sabia.</span>
+        </p>
+        
+        <div class="gaia-box" style="margin: 30px 0;">
+            <h3 style="color: #4caf50; margin-bottom: 20px;">Ahora sabes:</h3>
+            <div class="lista-item">Cómo morir antes de morir</div>
+            <div class="lista-item">Cómo acompañar a otros en su tránsito</div>
+            <div class="lista-item">Cómo dejar legado cuántico</div>
+            <div class="lista-item">Cómo participar en la metamorfosis planetaria</div>
+        </div>
+        
+        <p style="font-size: 1.15rem; line-height: 2; max-width: 900px; margin: 30px auto;">
+            Pero el conocimiento no es suficiente. <strong>La muerte como maestra exige práctica. Vida. Entrega. Servicio.</strong>
+        </p>
+        
+        <p style="font-size: 1.2rem; line-height: 2; max-width: 900px; margin: 30px auto; color: #81c784;">
+            En este momento de la historia, <strong>tu despertar no es logro personal - es necesidad colectiva.</strong> Tu transformación es medicina para el mundo. Tu muerte consciente al viejo paradigma es partería del nuevo.
+        </p>
+        
+        <div class="metamorfosis-box" style="margin: 40px 0;">
+            <p style="font-size: 1.15rem; line-height: 2;">
+                No hay tiempo que perder.<br>
+                Y todo el tiempo del mundo.<br><br>
+                Porque en el reino de la muerte consciente,<br>
+                <strong>el tiempo no es línea sino espiral.</strong>
+            </p>
+        </div>
+        
+        <p style="font-size: 1.3rem; line-height: 2; margin: 40px auto; color: #4caf50;">
+            <strong>La Tierra está muriendo al mundo que conocimos.</strong><br>
+            <strong>Está naciendo al mundo que apenas podemos imaginar.</strong><br><br>
+            Y tú - sí, tú - eres parte integral de este misterio.
+        </p>
+        
+        <div class="simbolo-muerte">🌱 🦋 🌟</div>
+        
+        <h3 style="color: #4caf50; margin: 40px 0;">Vive en consecuencia.<br>Muere en consecuencia.<br>Renace en consecuencia.</h3>
+        
+        <p style="font-size: 1.15rem; line-height: 2; margin: 30px auto;">
+            La Gran Obra te espera.<br>
+            La Gran Reunión ha comenzado.<br><br>
+            Bienvenido a la generación más importante<br>
+            en la historia de la Tierra.<br><br>
+            <strong>Bienvenido a tu verdadero propósito.</strong><br>
+            <strong>Bienvenido a casa.</strong>
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>🌍 EL CÍRCULO SE CIERRA</h2>
+        
+        <div class="convergencia-box" style="text-align: center;">
+            <p style="font-size: 1.2rem; line-height: 2; margin: 20px 0;">
+                La muerte te ha enseñado a vivir.<br>
+                Ahora, vive de tal manera que enseñes a otros a morir.<br>
+                Y muere de tal manera que muestres a otros cómo renacer.
+            </p>
+            
+            <div class="simbolo-muerte">∞</div>
+            
+            <p style="font-size: 1.15rem; margin-top: 20px; color: #81c784;">
+                La espiral continúa.<br>
+                La maestra sonríe.<br>
+                La lección nunca termina.
+            </p>
+        </div>
+    </div>
+
+    <div class="navegacion">
+        <a href="nodo_06.html" class="nav-button">← Nodo 6: El Legado Cuántico</a>
+        <a href="index.html" class="nav-button">🏠 Inicio del Libro</a>
+    </div>
+</div>
+
+<script>
+    // Canvas de red micelial planetaria
+    const canvas = document.getElementById('red-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    class Nodo {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.3;
+            this.vy = (Math.random() - 0.5) * 0.3;
+            this.radius = Math.random() * 3 + 2;
+            this.connections = [];
+            this.hue = Math.random() * 40 + 100; // Verde-azul
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${this.hue}, 70%, 60%, 0.8)`;
+            ctx.fill();
+
+            // Glow
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius * 2, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${this.hue}, 70%, 60%, 0.2)`;
+            ctx.fill();
+        }
+    }
+
+    const nodos = [];
+    const maxDistance = 150;
+
+    for (let i = 0; i < 80; i++) {
+        nodos.push(new Nodo());
+    }
+
+    function conectarNodos() {
+        for (let i = 0; i < nodos.length; i++) {
+            for (let j = i + 1; j < nodos.length; j++) {
+                const dx = nodos[i].x - nodos[j].x;
+                const dy = nodos[i].y - nodos[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < maxDistance) {
+                    const opacity = (1 - distance / maxDistance) * 0.4;
+                    ctx.beginPath();
+                    ctx.moveTo(nodos[i].x, nodos[i].y);
+                    ctx.lineTo(nodos[j].x, nodos[j].y);
+                    ctx.strokeStyle = `hsla(${(nodos[i].hue + nodos[j].hue) / 2}, 70%, 60%, ${opacity})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        nodos.forEach(nodo => {
+            nodo.update();
+            nodo.draw();
+        });
+
+        conectarNodos();
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
