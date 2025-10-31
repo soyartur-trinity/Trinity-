@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nodo 1: El Tabú Primordial | La Muerte como Maestra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+    body {
+        font-family: 'Georgia', serif;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f1e 100%);
+        color: #e8e8e8;
+        line-height: 1.8;
+        overflow-x: hidden;
+    }
+
+    #velos-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 60px;
+        padding: 60px 20px;
+        background: rgba(26, 26, 46, 0.4);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 215, 0, 0.2);
+        box-shadow: 0 0 40px rgba(74, 20, 140, 0.3);
+    }
+
+    .book-title {
+        font-size: 1.1rem;
+        color: #ffd700;
+        letter-spacing: 4px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        opacity: 0.8;
+    }
+
+    .nodo-number {
+        font-size: 3.5rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #4a148c 0%, #7c3aed 50%, #9b4dca 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+    }
+
+    .nodo-title {
+        font-size: 2.8rem;
+        color: #ffffff;
+        margin-bottom: 30px;
+        text-shadow: 0 0 30px rgba(155, 77, 202, 0.5);
+    }
+
+    .quote {
+        font-style: italic;
+        font-size: 1.15rem;
+        color: #d4a5ff;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+        border-left: 3px solid #ffd700;
+        background: linear-gradient(135deg, rgba(74, 20, 140, 0.15) 0%, rgba(155, 77, 202, 0.1) 100%);
+        border-radius: 10px;
+    }
+
+    .section {
+        margin: 60px 0;
+        padding: 40px;
+        background: rgba(26, 26, 46, 0.3);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(155, 77, 202, 0.2);
+    }
+
+    h2 {
+        font-size: 2.2rem;
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    h3 {
+        font-size: 1.6rem;
+        color: #9b4dca;
+        margin: 30px 0 20px 0;
+    }
+
+    h4 {
+        font-size: 1.3rem;
+        color: #d4a5ff;
+        margin: 20px 0 15px 0;
+    }
+
+    p {
+        margin-bottom: 20px;
+        font-size: 1.05rem;
+        text-align: justify;
+    }
+
+    .cultura-card {
+        background: linear-gradient(135deg, rgba(74, 20, 140, 0.2) 0%, rgba(27, 94, 32, 0.15) 100%);
+        padding: 30px;
+        margin: 25px 0;
+        border-radius: 15px;
+        border-left: 5px solid #ffd700;
+        transition: all 0.3s ease;
+    }
+
+    .cultura-card:hover {
+        transform: translateX(10px);
+        box-shadow: 0 5px 25px rgba(255, 215, 0, 0.3);
+    }
+
+    .cultura-name {
+        font-size: 1.8rem;
+        color: #ffd700;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .testimonio {
+        background: rgba(27, 94, 32, 0.15);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border-left: 4px solid #4caf50;
+        font-style: italic;
+    }
+
+    .testimonio-autor {
+        text-align: right;
+        color: #4caf50;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .precio-box {
+        background: rgba(211, 47, 47, 0.15);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border: 2px solid rgba(239, 83, 80, 0.4);
+    }
+
+    .practica-card {
+        background: linear-gradient(135deg, rgba(155, 77, 202, 0.2) 0%, rgba(124, 58, 237, 0.15) 100%);
+        padding: 35px;
+        margin: 30px 0;
+        border-radius: 18px;
+        border: 2px solid rgba(155, 77, 202, 0.4);
+        box-shadow: 0 8px 32px rgba(155, 77, 202, 0.2);
+    }
+
+    .practica-titulo {
+        font-size: 1.5rem;
+        color: #ffd700;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .practica-duracion {
+        font-size: 0.9rem;
+        color: #9b4dca;
+        font-style: italic;
+        margin-bottom: 20px;
+    }
+
+    .practica-steps {
+        background: rgba(10, 10, 10, 0.3);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 15px;
+    }
+
+    .lista-item {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(155, 77, 202, 0.05) 100%);
+        padding: 15px 20px;
+        margin: 12px 0;
+        border-radius: 10px;
+        border-left: 4px solid #ffd700;
+    }
+
+    ul, ol {
+        margin: 20px 0 20px 40px;
+    }
+
+    li {
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .senales-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+    }
+
+    .senal-item {
+        background: rgba(76, 175, 80, 0.15);
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid #4caf50;
+        transition: all 0.3s ease;
+    }
+
+    .senal-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+    }
+
+    .senal-numero {
+        font-size: 1.8rem;
+        color: #4caf50;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .meditacion-box {
+        background: linear-gradient(135deg, rgba(74, 20, 140, 0.3) 0%, rgba(10, 10, 10, 0.5) 100%);
+        padding: 40px;
+        margin: 40px 0;
+        border-radius: 20px;
+        border: 2px solid rgba(155, 77, 202, 0.5);
+        text-align: center;
+    }
+
+    .preguntas-box {
+        background: rgba(255, 215, 0, 0.08);
+        padding: 30px;
+        margin: 30px 0;
+        border-radius: 15px;
+        border: 2px dashed #ffd700;
+    }
+
+    .preguntas-box ol {
+        text-align: left;
+    }
+
+    .pregunta-item {
+        font-size: 1.1rem;
+        color: #ffd700;
+        margin: 15px 0;
+        font-weight: 500;
+    }
+
+    .transicion {
+        background: linear-gradient(135deg, rgba(155, 77, 202, 0.2) 0%, rgba(27, 94, 32, 0.2) 100%);
+        padding: 40px;
+        margin: 50px 0;
+        border-radius: 20px;
+        border: 3px solid rgba(255, 215, 0, 0.4);
+        text-align: center;
+    }
+
+    .simbolo-muerte {
+        font-size: 3rem;
+        margin: 20px 0;
+    }
+
+    strong {
+        color: #ffd700;
+    }
+
+    .highlight {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(155, 77, 202, 0.15) 100%);
+        padding: 3px 10px;
+        border-radius: 5px;
+    }
+
+    .navegacion {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 60px;
+        gap: 20px;
+    }
+
+    .nav-button {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #4a148c 0%, #7c3aed 100%);
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .nav-button:hover {
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        color: #0a0a0a;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    @media (max-width: 768px) {
+        .nodo-number {
+            font-size: 2.5rem;
+        }
+
+        .nodo-title {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.7rem;
+        }
+
+        .section {
+            padding: 25px;
+        }
+
+        .senales-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .navegacion {
+            flex-direction: column;
+        }
+    }
+
+    .icon {
+        font-size: 1.5rem;
+    }
+
+    .conexion-box {
+        background: rgba(2, 136, 209, 0.1);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 12px;
+        border-left: 4px solid #29b6f6;
+        font-style: italic;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section {
+        animation: fadeIn 0.8s ease-out;
+    }
+</style>
+
+
+</head>
+<body>
+    <canvas id="velos-canvas"></canvas>
+
+
+<div class="container">
+    <div class="header">
+        <div class="book-title">📖 Libro 7: La Muerte como Maestra</div>
+        <div class="nodo-number">💀 NODO 1 💀</div>
+        <h1 class="nodo-title">EL TABÚ PRIMORDIAL</h1>
+        <p class="quote">
+            "Una civilización que niega la muerte es una civilización que no puede vivir plenamente. El tabú más grande es también la puerta más grande."
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>🎭 La Gran Negación Colectiva</h2>
+        <p>
+            Vivimos en la primera civilización de la historia humana que ha convertido la muerte en el enemigo absoluto. No siempre fue así. Durante milenios, nuestros ancestros danzaron con la muerte, la honraron, la integraron como la compañera sagrada de la vida. ¿Qué pasó? ¿Cómo llegamos a este estado de negación patológica?
+        </p>
+        <p>
+            La respuesta está tejida en el mismo tejido de nuestra modernidad. Cuando la ciencia materialista declaró que somos solo carne y huesos, cuando el capitalismo necesitó consumidores eternos, cuando la medicina se convirtió en guerra contra la mortalidad, creamos colectivamente el tabú más dañino de nuestra era.
+        </p>
+
+        <div class="conexion-box">
+            <p><strong>🌀 Conexión con El Vacío Fértil:</strong> En ese libro, se describe cómo la cultura contemporánea rehúye el misterio, intentando llenarlo con objetos y promesas externas. Este rechazo al misterio es la misma raíz que aquí adopta la forma de la negación de la muerte. El velo que cubre a la muerte y el velo que cubre al vacío son, en realidad, el mismo tejido.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>💔 El Precio de la Negación</h2>
+        <p>Cada vez que una cultura niega la muerte, paga un precio devastador:</p>
+
+        <div class="precio-box">
+            <h3>Vidas no vividas</h3>
+            <p>El miedo inconsciente a la muerte se convierte en miedo a la vida. Posponemos, procrastinamos, vivimos en la superficie porque en el fondo sabemos que evitamos el encuentro inevitable.</p>
+        </div>
+
+        <div class="precio-box">
+            <h3>Consumismo desesperado</h3>
+            <p>Compramos la ilusión de permanencia. Cada objeto, cada logro, cada "like" es un amuleto contra nuestra mortalidad. El capitalismo se alimenta de nuestro terror no procesado.</p>
+        </div>
+
+        <div class="precio-box">
+            <h3>Violencia externalizada</h3>
+            <p>Lo que no enfrentamos internamente, lo proyectamos. Una civilización que no puede procesar la muerte pacíficamente, la crea violentamente. Las guerras son rituales de muerte mal dirigidos.</p>
+        </div>
+
+        <div class="precio-box">
+            <h3>Desconexión espiritual</h3>
+            <p>Al negar la muerte, negamos la mitad del ciclo sagrado. ¿Cómo puede haber resurrección sin muerte? ¿Primavera sin invierno? ¿Amanecer sin noche?</p>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>🗣️ Conexión con La Voz Interior:</strong> En ese libro se describe que toda voz interna que niega la pérdida genera un eco de ansiedad permanente. La desconexión espiritual no solo nos aparta del sentido trascendente, sino que nos impide integrar la enseñanza que la muerte trae: que lo sagrado no está en preservar, sino en participar plenamente del ciclo.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🌍 Culturas que Abrazan la Muerte</h2>
+        <p>Mientras Occidente tiembla, otras culturas mantienen viva la sabiduría:</p>
+
+        <div class="cultura-card">
+            <div class="cultura-name">🇲🇽 México: Día de los Muertos</div>
+            <p>
+                No es coincidencia que una de las culturas más vibrantes del planeta sea también la que más alegremente celebra la muerte. Los mexicanos entienden: la muerte no es el opuesto de la vida, es su sabor más intenso. Las calaveras de azúcar no son morbosas - son dulces recordatorios de nuestra dulce mortalidad.
+            </p>
+            <div class="testimonio">
+                "Mi abuela me enseñó a platicar con la muerte como con una comadre. Ahora, cuando siento miedo, le digo: 'Ay, flaca, todavía no, tengo mucho que hacer.' Y ella se ríe."
+                <div class="testimonio-autor">— María, curandera de Oaxaca</div>
+            </div>
+        </div>
+
+        <div class="cultura-card">
+            <div class="cultura-name">🏔️ Tíbet: El Bardo Thodol</div>
+            <p>
+                Los tibetanos han mapeado la muerte con la precisión de cartógrafos cósmicos. Para ellos, la muerte no es un evento, es un viaje - uno para el cual puedes y debes prepararte. Sus prácticas de muerte consciente (phowa) son tecnologías de consciencia que Occidente apenas comienza a comprender.
+            </p>
+        </div>
+
+        <div class="cultura-card">
+            <div class="cultura-name">🕉️ Varanasi: La Ciudad de la Liberación</div>
+            <p>
+                En las ghats de Varanasi, los fuegos crematorios nunca se apagan. Los hindúes viajan miles de kilómetros para morir aquí, junto al Ganges. No es morbo - es comprensión profunda de que el lugar y la consciencia de tu muerte determinan tu próximo nacimiento.
+            </p>
+        </div>
+
+        <div class="cultura-card">
+            <div class="cultura-name">🌍 Los Dagara: Muerte como Iniciación Comunitaria</div>
+            <p>
+                En Burkina Faso, los Dagara ven cada muerte como una iniciación para toda la comunidad. Los rituales funerarios duran días, no para "superar" la pérdida, sino para integrarla completamente. Saben que los no-nacidos, los vivos y los muertos forman un solo tejido.
+            </p>
+        </div>
+
+        <div class="conexion-box">
+            <p><strong>🔗 Conexión con Los Vínculos Sagrados:</strong> El reconocimiento de la muerte como iniciación conecta directamente con ese libro, donde la relación entre vivos y muertos es vista como una alianza activa, no como una memoria pasiva. En estas culturas, la comunidad entera se convierte en el espacio de tránsito, uniendo lo que Psicología Cuántica describe como "campos de conciencia compartidos" que no se disuelven con la muerte física.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>💰 La Muerte y el Capitalismo: Una Alianza Perversa</h2>
+        <p>El capitalismo necesita que temas la muerte, pero de manera muy específica:</p>
+
+        <ul>
+            <li><strong>Debes temerla lo suficiente</strong> para comprar seguros, medicamentos, tratamientos, productos "anti-edad".</li>
+            <li><strong>Pero no tanto</strong> que dejes de consumir, que cuestiones el sentido de acumular, que te vuelvas espiritual.</li>
+            <li><strong>La muerte debe ser médica</strong>, no sagrada. Un problema técnico a resolver, no un misterio a honrar.</li>
+        </ul>
+
+        <h3>Esta relación perversa ha creado una industria de la negación:</h3>
+        <div class="lista-item">Funerarias que maquillan cadáveres para parecer "dormidos"</div>
+        <div class="lista-item">Cementerios que parecen parques temáticos</div>
+        <div class="lista-item">Un lenguaje que evita: "partió", "nos dejó", "descansa"</div>
+        <div class="lista-item">Medicina que ve la muerte como fracaso, no como culminación</div>
+
+        <div class="conexion-box">
+            <p><strong>👑 Conexión con Liderazgo Consciente:</strong> En ese libro se advierte que cualquier sistema que niega los ciclos naturales termina por producir líderes y estructuras desconectadas de la verdad fundamental de la impermanencia. Este mismo patrón se repite aquí: un modelo económico que no sabe honrar finales tampoco sabe renovarse, quedando atrapado en una acumulación que, tarde o temprano, colapsa.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🔥 Prácticas de Desprogramación</h2>
+
+        <div class="practica-card">
+            <div class="practica-titulo">🧘 Contemplación de la Impermanencia</div>
+            <div class="practica-duracion">Duración: 20 minutos diarios por 21 días</div>
+            
+            <p>Siéntate cómodamente. Respira profundo. Ahora contempla:</p>
+            
+            <div class="practica-steps">
+                <p><strong>Este cuerpo que habito morirá.</strong> No "tal vez". Morirá.</p>
+                <p><strong>Todos los que amo morirán.</strong> Sin excepción.</p>
+                <p><strong>Todo lo que construyo se desvanecerá.</strong></p>
+                <p><strong>Cada momento que vivo es uno menos que me queda.</strong></p>
+            </div>
+
+            <p style="margin-top: 20px; font-style: italic;">No se trata de deprimirse. Se trata de despertar a la preciosa fragilidad de estar vivo.</p>
+
+            <div class="conexion-box">
+                <p><strong>🚪 Conexión con El Dolor como Portal:</strong> Esta práctica es hermana directa de las que propone ese libro: mirar de frente aquello que tememos para descubrir que, al hacerlo, el miedo se transforma en un catalizador de vida plena.</p>
+            </div>
+        </div>
+
+        <div class="practica-card">
+            <div class="practica-titulo">📔 Diario de Pequeñas Muertes</div>
+            <div class="practica-duracion">Práctica continua</div>
+            
+            <p>Cada noche, antes de dormir, escribe:</p>
+            
+            <div class="practica-steps">
+                <ol>
+                    <li>¿Qué murió hoy en mí? (Un hábito, una creencia, una versión de mí)</li>
+                    <li>¿Cómo morí a algo viejo?</li>
+                    <li>¿Qué está muriendo en mi vida ahora?</li>
+                    <li>¿Qué necesita morir para que algo nuevo nazca?</li>
+                </ol>
+            </div>
+
+            <div class="conexion-box">
+                <p><strong>📚 Conexión con Educación Cuántica:</strong> El "diario de pequeñas muertes" dialoga con ese libro, donde se enseña a los más jóvenes a registrar cambios y transiciones como aprendizajes, no como pérdidas.</p>
+            </div>
+        </div>
+
+        <div class="practica-card">
+            <div class="practica-titulo">🕯️ Ritual de Despedida Consciente</div>
+            <div class="practica-duracion">Mensual, en luna menguante</div>
+            
+            <p>Crea un altar simple. Coloca fotos, objetos, símbolos de lo que está terminando en tu vida. Enciende una vela. Habla en voz alta:</p>
+            
+            <div class="practica-steps">
+                <p><em>"Honro lo que fuiste en mi vida.<br>
+                Agradezco las lecciones que trajiste.<br>
+                Te libero con amor.<br>
+                Te dejo ir con gratitud.<br>
+                Que tu muerte fertilice mi nuevo crecimiento."</em></p>
+            </div>
+
+            <p style="margin-top: 20px;">Quema (de forma segura) papeles con lo que sueltas. Entierra las cenizas.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🌱 Señales de Desprogramación Exitosa</h2>
+        <p>Sabrás que el tabú se está disolviendo cuando:</p>
+
+        <div class="senales-grid">
+            <div class="senal-item">
+                <div class="senal-numero">1</div>
+                <p>Puedas hablar de tu muerte sin que se te cierre la garganta</p>
+            </div>
+            <div class="senal-item">
+                <div class="senal-numero">2</div>
+                <p>Planifiques tu funeral como planificarías una boda - con amor y creatividad</p>
+            </div>
+            <div class="senal-item">
+                <div class="senal-numero">3</div>
+                <p>Veas cadáveres (en contextos apropiados) sin horror, con respeto sagrado</p>
+            </div>
+            <div class="senal-item">
+                <div class="senal-numero">4</div>
+                <p>La impermanencia te inspire urgencia de vivir, no parálisis</p>
+            </div>
+            <div class="senal-item">
+                <div class="senal-numero">5</div>
+                <p>Reconozcas la muerte en cada exhalación, cada otoño, cada despedida</p>
+            </div>
+            <div class="senal-item">
+                <div class="senal-numero">6</div>
+                <p>Dejes de postponer lo importante "para cuando tenga tiempo"</p>
+            </div>
+            <div class="senal-item">
+                <div class="senal-numero">7</div>
+                <p>Tu consumismo disminuya naturalmente - ¿para qué acumular?</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🗣️ Testimonios de Liberación</h2>
+
+        <div class="testimonio">
+            <strong>Carlos, 45 años, ex-ejecutivo:</strong><br><br>
+            "Mi despertar llegó con mi primer infarto. En la ambulancia, mientras creía morir, vi toda mi vida: reuniones sin sentido, PowerPoints vacíos, cenas familiares perdidas por 'trabajo importante'. Si sobrevivía, juré, todo cambiaría. Sobreviví. Todo cambió. Ahora facilito talleres sobre muerte consciente. Ironías de la vida - o de la muerte."
+        </div>
+
+        <div class="testimonio">
+            <strong>Ana, 67 años, abuela:</strong><br><br>
+            "Cuando mi esposo murió, mis hijos quisieron 'protegerme' del dolor. No me dejaron ver el cuerpo, organizaron todo rápido, me llenaron de pastillas. Pero yo necesitaba despedirme. Dos años después, hice mi propio ritual. Fui al mar, hablé con él, lloré hasta vaciarme. Solo entonces pude continuar. Ahora enseño a otras viudas: el dolor no es el enemigo. La negación sí."
+        </div>
+
+        <div class="testimonio">
+            <strong>Javier, 23 años, estudiante:</strong><br><br>
+            "Mi generación creció con videojuegos donde 'mueres' y reapareces. Muerte sin consecuencias. Cuando mi mejor amigo murió en un accidente, no pude procesarlo. Parecía un bug en el sistema. Tuve que desaprender todo. Ahora estudio tanatología. Quiero que mi generación aprenda a morir de verdad para poder vivir de verdad."
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>💀 La Muerte como Espejo de Verdad</h2>
+        <p>
+            Hay una práctica tibetana donde meditas frente a un espejo hasta ver tu rostro convertirse en calavera. No es macabro - es ver a través de la ilusión temporal hacia la verdad eterna. La muerte es el espejo más honesto:
+        </p>
+
+        <div class="lista-item">Te muestra qué realmente importa (pista: no es tu cuenta bancaria)</div>
+        <div class="lista-item">Revela tus apegos más profundos</div>
+        <div class="lista-item">Desnuda tus prioridades reales</div>
+        <div class="lista-item">Expone la futilidad de los juegos del ego</div>
+
+        <blockquote style="font-style: italic; padding: 20px; margin: 20px 0; border-left: 4px solid #ffd700; background: rgba(255, 215, 0, 0.1);">
+            "Vive como si fueras a morir mañana. Aprende como si fueras a vivir para siempre." 
+            <div style="text-align: right; margin-top: 10px; color: #ffd700;">— Mahatma Gandhi</div>
+        </blockquote>
+
+        <p>Gandhi entendía: la paradoja se resuelve en la acción consciente.</p>
+
+        <div class="conexion-box">
+            <p><strong>🧠 Conexión con Psicología Cuántica:</strong> En ese libro se estudia cómo la contemplación de la impermanencia actúa como espejo de las estructuras internas, revelando lo que permanece más allá de toda forma. La muerte externa refleja esa muerte interna de las ilusiones.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🔮 El Regalo Oculto del Tabú</h2>
+        <p>
+            Paradójicamente, vivir en una cultura que niega la muerte tiene un regalo oculto: cuando finalmente despiertas a tu mortalidad, el contraste es tan fuerte que puede catalizar un despertar profundo.
+        </p>
+        <p>
+            Los místicos nacidos en culturas death-positive a veces dan por sentada la muerte. Pero nosotros, los que hemos vivido en la negación, cuando finalmente abrazamos nuestra mortalidad, lo hacemos con la pasión de los conversos.
+        </p>
+
+        <div class="conexion-box">
+            <p><strong>🌍 Conexión con La Consciencia Planetaria:</strong> El contraste que provoca despertar en un mundo que niega la muerte es similar al de un buscador que encuentra sentido en una cultura que ha olvidado el silencio: el cambio es tan radical que se convierte en misión.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="preguntas-box">
+            <h2 style="text-align: center; margin-bottom: 30px;">🌟 Preguntas para el Alma</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Antes de continuar al siguiente nodo, siéntate con estas preguntas. No las respondas rápidamente. Déjalas percollar en tu ser:</p>
+            
+            <ol>
+                <li class="pregunta-item">¿Cuándo fue la última vez que realmente sentiste tu mortalidad?</li>
+                <li class="pregunta-item">¿Qué cambiaría en tu vida si supieras que morirás en un año?</li>
+                <li class="pregunta-item">¿Qué te impide hacer esos cambios ahora?</li>
+                <li class="pregunta-item">¿Cómo ha moldeado el miedo a la muerte tus decisiones de vida?</li>
+                <li class="pregunta-item">¿Qué aspecto de ti necesita morir para que nazcas completamente?</li>
+                <li class="pregunta-item">Si pudieras diseñar tu muerte ideal, ¿cómo sería?</li>
+                <li class="pregunta-item">¿Qué legado dejarías si murieras hoy?</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="meditacion-box">
+        <h2>🕯️ Meditación de Cierre del Nodo</h2>
+        <div class="simbolo-muerte">💀 ✨ 🕊️</div>
+        
+        <p style="font-style: italic; line-height: 2; max-width: 800px; margin: 20px auto;">
+            Cierra los ojos. Respira profundo. Imagina que estás en tu lecho de muerte, muchos años en el futuro. Has vivido plenamente. Estás listo. Alrededor tuyo, los rostros de quienes amas. No hay miedo, solo gratitud.
+        </p>
+        
+        <p style="margin: 30px 0;">
+            Desde ese lugar de completitud, mira hacia atrás a tu vida desde hoy hasta ese momento. ¿Qué ves? ¿Qué viviste? ¿Qué amaste? ¿Qué creaste? ¿Qué soltaste?
+        </p>
+        
+        <p style="margin: 30px 0;">
+            Ahora, regresa a este momento presente. Traes contigo la sabiduría de tu yo moribundo. Esa versión de ti que ya no teme porque ya vivió.
+        </p>
+        
+        <p style="font-weight: bold; font-size: 1.2rem; margin-top: 30px;">
+            Abre los ojos. Tu vida real comienza ahora.
+        </p>
+    </div>
+
+    <div class="transicion">
+        <h2>🌊 Transición al Nodo 2</h2>
+        <div class="simbolo-muerte">🍂 → 💀 → 🌱</div>
+        
+        <p style="font-size: 1.1rem; line-height: 1.8; max-width: 900px; margin: 20px auto;">
+            Has comenzado a disolver el tabú. El velo se adelgaza. Pero intelectualmente aceptar la muerte no es suficiente. Necesitas <strong>practicarla</strong>. En el próximo nodo, exploraremos las <span class="highlight">"pequeñas muertes"</span> - los entrenamientos diarios en el arte de soltar que te preparan para la gran transición.
+        </p>
+        
+        <p style="font-size: 1.15rem; margin-top: 30px;">
+            La muerte, descubrirás, no es un evento futuro. Está sucediendo ahora mismo, en cada momento. La pregunta es: <strong>¿estás despierto para verla?</strong>
+        </p>
+    </div>
+
+    <div class="navegacion">
+        <a href="index.html" class="nav-button">← Volver al Índice</a>
+        <a href="nodo_02.html" class="nav-button">Nodo 2: Las Pequeñas Muertes →</a>
+    </div>
+</div>
+
+<script>
+    // Canvas de velos disolviéndose
+    const canvas = document.getElementById('velos-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    class Velo {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.width = Math.random() * 200 + 100;
+            this.height = Math.random() * 300 + 150;
+            this.opacity = Math.random() * 0.3 + 0.1;
+            this.speed = Math.random() * 0.3 + 0.1;
+            this.dissolveRate = Math.random() * 0.001 + 0.0005;
+            this.rotation = Math.random() * Math.PI * 2;
+            this.rotationSpeed = (Math.random() - 0.5) * 0.001;
+        }
+
+        update() {
+            this.y += this.speed;
+            this.rotation += this.rotationSpeed;
+            this.opacity -= this.dissolveRate;
+
+            if (this.y > canvas.height + this.height || this.opacity <= 0) {
+                this.y = -this.height;
+                this.x = Math.random() * canvas.width;
+                this.opacity = Math.random() * 0.3 + 0.1;
+            }
+        }
+
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            ctx.globalAlpha = this.opacity;
+
+            const gradient = ctx.createLinearGradient(
+                -this.width / 2, -this.height / 2,
+                this.width / 2, this.height / 2
+            );
+            gradient.addColorStop(0, 'rgba(74, 20, 140, 0.3)');
+            gradient.addColorStop(0.5, 'rgba(155, 77, 202, 0.2)');
+            gradient.addColorStop(1, 'rgba(255, 215, 0, 0.1)');
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+
+            ctx.restore();
+        }
+    }
+
+    const velos = [];
+    for (let i = 0; i < 15; i++) {
+        velos.push(new Velo());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        velos.forEach(velo => {
+            velo.update();
+            velo.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
