@@ -1,430 +1,163 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Muerte como Maestra | Los 7 Nodos</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Libro VII · La Muerte como Maestra</title>
+  <style>
     body {
-        font-family: 'Georgia', serif;
-        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-        color: #f5f5f5;
-        min-height: 100vh;
-        overflow-x: hidden;
+      margin: 0;
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background-color: #0a0a0f;
+      color: #f5f4fa;
+      background-image: radial-gradient(circle at top left, #1a1033, #000);
+      min-height: 100vh;
     }
 
-    /* Símbolo flotante */
-    .floating-symbol {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 15rem;
-        opacity: 0.03;
-        z-index: 0;
-        pointer-events: none;
-        animation: pulse-death 6s ease-in-out infinite;
+    header {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    @keyframes pulse-death {
-        0%, 100% { 
-            opacity: 0.03;
-            transform: translate(-50%, -50%) scale(1);
-        }
-        50% { 
-            opacity: 0.06;
-            transform: translate(-50%, -50%) scale(1.05);
-        }
+    h1 {
+      font-size: 2.5rem;
+      color: #d6b4ff;
+      margin-bottom: 0.5rem;
     }
 
-    .container {
-        position: relative;
-        z-index: 1;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 60px 20px;
+    h2 {
+      color: #e8d6ff;
+      margin: 0.5rem 0;
     }
 
-    /* Header del Libro */
-    .libro-header {
-        text-align: center;
-        margin-bottom: 80px;
-        position: relative;
+    h3 {
+      color: #a98cff;
+      font-weight: 400;
+      margin-top: 0.2rem;
     }
 
-    .libro-header::before {
-        content: '—';
-        font-size: 4em;
-        color: #ffd700;
-        display: block;
-        margin-bottom: 20px;
-        opacity: 0.3;
-        animation: float-symbol 6s ease-in-out infinite;
+    p {
+      color: #ddd;
+      line-height: 1.6;
     }
 
-    @keyframes float-symbol {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
-    }
-
-    .libro-numero {
-        font-size: 1.2rem;
-        letter-spacing: 8px;
-        color: var(--claridad);
-        margin-bottom: 20px;
-        font-weight: 300;
-    }
-
-    .libro-titulo {
-        font-size: 4rem;
-        margin-bottom: 30px;
-        background: linear-gradient(135deg, #ffd700 0%, #9b4dca 50%, #ffd700 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        line-height: 1.2;
-        text-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
-    }
-
-    .libro-subtitulo {
-        font-size: 1.5rem;
-        font-style: italic;
-        color: #9b4dca;
-        margin-bottom: 40px;
-    }
-
-    /* Grid de Nodos */
     .nodos-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-        gap: 40px;
-        margin-top: 60px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
-    /* Card de cada Nodo */
     .nodo-card {
-        background: rgba(26, 26, 46, 0.6);
-        border: 2px solid transparent;
-        border-radius: 20px;
-        padding: 40px;
-        position: relative;
-        transition: all 0.4s ease;
-        backdrop-filter: blur(10px);
-        overflow: hidden;
-    }
-
-    .nodo-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border-radius: 20px;
-        padding: 2px;
-        background: linear-gradient(135deg, #ffd700, #9b4dca, #1b5e20);
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        opacity: 0;
-        transition: opacity 0.4s ease;
-    }
-
-    .nodo-card:hover::before {
-        opacity: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, background 0.3s ease;
     }
 
     .nodo-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+      transform: translateY(-8px);
+      background: rgba(145, 95, 255, 0.15);
     }
 
     .nodo-numero {
-        display: inline-block;
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, #ffd700, #ffed4e);
-        color: #0a0a0a;
-        font-size: 2rem;
-        font-weight: bold;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 25px;
-        box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+      font-size: 1.2rem;
+      color: #d6b4ff;
     }
 
-    .nodo-titulo {
-        font-size: 2.2rem;
-        color: #ffffff;
-        margin-bottom: 15px;
-        line-height: 1.3;
-    }
-
-    .nodo-subtitulo {
-        font-size: 1.3rem;
-        font-style: italic;
-        color: #9b4dca;
-        margin-bottom: 20px;
-        line-height: 1.4;
-    }
-
-    .nodo-descripcion {
-        font-size: 1.05rem;
-        line-height: 1.7;
-        color: #d4d4d4;
-        margin-bottom: 30px;
-    }
-
-    /* Botón de entrada */
     .nodo-boton {
-        display: inline-block;
-        padding: 15px 35px;
-        background: linear-gradient(135deg, #9b4dca 0%, #7c3aed 100%);
-        color: #ffffff;
-        text-decoration: none;
-        border-radius: 30px;
-        font-size: 1.1rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-        cursor: pointer;
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 1.2rem;
+      background-color: #7a42f4;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
     }
 
     .nodo-boton:hover {
-        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-        color: #0a0a0a;
-        transform: translateX(5px);
-        box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4);
+      background-color: #a678ff;
     }
 
-    .nodo-boton::after {
-        content: ' →';
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #999;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
-
-    /* Estilos específicos por nodo */
-    .nodo-card:nth-child(1) .nodo-numero {
-        background: linear-gradient(135deg, #4a148c, #7c3aed);
-        color: #ffd700;
-    }
-
-    .nodo-card:nth-child(2) .nodo-numero {
-        background: linear-gradient(135deg, #1b5e20, #4caf50);
-        color: #ffffff;
-    }
-
-    .nodo-card:nth-child(3) .nodo-numero {
-        background: linear-gradient(135deg, #ffd700, #ffed4e);
-        color: #0a0a0a;
-    }
-
-    .nodo-card:nth-child(4) .nodo-numero {
-        background: linear-gradient(135deg, #9b4dca, #c77dff);
-        color: #ffffff;
-    }
-
-    .nodo-card:nth-child(5) .nodo-numero {
-        background: linear-gradient(135deg, #d32f2f, #ef5350);
-        color: #ffffff;
-    }
-
-    .nodo-card:nth-child(6) .nodo-numero {
-        background: linear-gradient(135deg, #0288d1, #29b6f6);
-        color: #ffffff;
-    }
-
-    .nodo-card:nth-child(7) .nodo-numero {
-        background: linear-gradient(135deg, #ffd700, #1b5e20);
-        color: #ffffff;
-    }
-
-    /* Variables CSS */
-    :root {
-        --claridad: rgba(255, 255, 255, 0.7);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .libro-titulo {
-            font-size: 2.5rem;
-        }
-
-        .libro-subtitulo {
-            font-size: 1.2rem;
-        }
-
-        .nodos-grid {
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-
-        .nodo-card {
-            padding: 30px;
-        }
-
-        .nodo-titulo {
-            font-size: 1.8rem;
-        }
-
-        .nodo-subtitulo {
-            font-size: 1.1rem;
-        }
-
-        .floating-symbol {
-            font-size: 8rem;
-        }
-    }
-
-    /* Animación de entrada */
-    .nodo-card {
-        animation: fadeInUp 0.6s ease-out backwards;
-    }
-
-    .nodo-card:nth-child(1) { animation-delay: 0.1s; }
-    .nodo-card:nth-child(2) { animation-delay: 0.2s; }
-    .nodo-card:nth-child(3) { animation-delay: 0.3s; }
-    .nodo-card:nth-child(4) { animation-delay: 0.4s; }
-    .nodo-card:nth-child(5) { animation-delay: 0.5s; }
-    .nodo-card:nth-child(6) { animation-delay: 0.6s; }
-    .nodo-card:nth-child(7) { animation-delay: 0.7s; }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
-
-
+  </style>
 </head>
+
 <body>
-    <div class="floating-symbol">💀</div>
-
-
-<div class="container">
-    <header class="libro-header">
-        <div class="libro-numero">LIBRO 7</div>
-        <h1 class="libro-titulo">La Muerte como Maestra</h1>
-        <p class="libro-subtitulo">Los 7 Nodos del Tránsito Sagrado</p>
-    </header>
-
-    <div class="nodos-grid">
-        <!-- NODO 1 -->
-        <article class="nodo-card">
-            <div class="nodo-numero">1</div>
-            <h2 class="nodo-titulo">El Tabú Primordial</h2>
-            <p class="nodo-subtitulo">Desprogramando el miedo cultural a la muerte</p>
-            <p class="nodo-descripcion">
-                Una civilización que niega la muerte es una civilización que no puede vivir plenamente. 
-                Explora cómo culturas ancestrales abrazaban la muerte mientras la modernidad la rechaza, 
-                y descubre el precio devastador que pagamos por esta negación.
-            </p>
-            <a href="./nodo_01.html" class="nodo-boton">Entrar al Portal</a>
-        </article>
-
-        <!-- NODO 2 -->
-        <article class="nodo-card">
-            <div class="nodo-numero">2</div>
-            <h2 class="nodo-titulo">Las Pequeñas Muertes</h2>
-            <p class="nodo-subtitulo">Entrenamiento diario en el arte de soltar</p>
-            <p class="nodo-descripcion">
-                No esperes a la muerte para aprender a morir. Cada respiración, cada despedida, 
-                cada final es una oportunidad de práctica. Descubre cómo las pequeñas muertes 
-                cotidianas te preparan para la gran transición.
-            </p>
-            <a href="./nodo_02.html" class="nodo-boton">Entrar al Nodo</a>
-        </article>
-
-        <!-- NODO 3 -->
-        <article class="nodo-card">
-            <div class="nodo-numero">3</div>
-            <h2 class="nodo-titulo">El Arte del Acompañamiento</h2>
-            <p class="nodo-subtitulo">Ser testigo sagrado del tránsito</p>
-            <p class="nodo-descripcion">
-                En el momento de la muerte, la presencia humana consciente es la medicina más poderosa. 
-                Aprende el arte perdido de acompañar a otros en su transición más importante, 
-                y descubre cómo el moribundo es tu maestro supremo.
-            </p>
-            <a href="./nodo_03.html" class="nodo-boton">Entrar al Nodo</a>
-        </article>
-
-        <!-- NODO 4 -->
-        <article class="nodo-card">
-            <div class="nodo-numero">4</div>
-            <h2 class="nodo-titulo">Tecnologías de Consciencia</h2>
-            <p class="nodo-subtitulo">Herramientas antiguas y emergentes para el tránsito</p>
-            <p class="nodo-descripcion">
-                Desde el Bardo Thodol tibetano hasta la neurotecnología moderna, desde plantas sagradas 
-                hasta frecuencias sonoras. Explora el arsenal completo de herramientas disponibles 
-                para hacer del morir un arte consciente.
-            </p>
-            <a href="./nodo_04.html" class="nodo-boton">Entrar al Nodo</a>
-        </article>
-
-        <!-- NODO 5 -->
-        <article class="nodo-card">
-            <div class="nodo-numero">5</div>
-            <h2 class="nodo-titulo">La Muerte del Ego</h2>
-            <p class="nodo-subtitulo">La gran muerte antes de la muerte</p>
-            <p class="nodo-descripcion">
-                Morir antes de morir: he ahí el secreto. Quien muere antes de morir, no muere cuando muere. 
-                La muerte del ego es la única muerte real. Descubre cómo atravesar esta iniciación suprema 
-                y renacer más vasto que nunca.
-            </p>
-            <a href="./nodo_05.html" class="nodo-boton">Entrar al Nodo</a>
-        </article>
-
-        <!-- NODO 6 -->
-        <article class="nodo-card">
-            <div class="nodo-numero">6</div>
-            <h2 class="nodo-titulo">El Legado Cuántico</h2>
-            <p class="nodo-subtitulo">Lo que permanece cuando la forma se disuelve</p>
-            <p class="nodo-descripcion">
-                Tu cuerpo volverá al polvo, tu nombre será olvidado. Pero cada acto de amor, 
-                cada momento de consciencia, altera el campo cuántico para siempre. 
-                Descubre tu inmortalidad verdadera más allá del ego.
-            </p>
-            <a href="./nodo_06.html" class="nodo-boton">Entrar al Nodo</a>
-        </article>
-
-        <!-- NODO 7 -->
-        <article class="nodo-card">
-            <div class="nodo-numero">7</div>
-            <h2 class="nodo-titulo">La Gran Reunión</h2>
-            <p class="nodo-subtitulo">Muerte planetaria y renacimiento cósmico</p>
-            <p class="nodo-descripcion">
-                Eres parte de la generación puente que presenciará la muerte de un mundo 
-                y el nacimiento de otro. La Tierra misma está en trabajo de parto. 
-                Descubre tu rol como comadrona del nuevo mundo que emerge.
-            </p>
-            <a href="./nodo_07.html" class="nodo-boton">Entrar al Nodo</a>
-        </article>
+  <header>
+    <div class="libro-header">
+      <h1>Libro VII · La Muerte como Maestra</h1>
+      <h3>Los 7 Nodos del Tránsito Sagrado</h3>
+      <p>Un recorrido por los estados del morir consciente, donde la disolución revela el resplandor eterno del Ser.</p>
     </div>
-</div>
+  </header>
 
-<script>
-    // Efecto de paralaje sutil en el símbolo flotante
-    document.addEventListener('mousemove', (e) => {
-        const symbol = document.querySelector('.floating-symbol');
-        const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-        const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
-        symbol.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
-    });
-</script>
+  <main class="nodos-grid">
 
+    <article class="nodo-card">
+      <div class="nodo-numero">Nodo 1</div>
+      <h2>El Tabú Primordial</h2>
+      <p>Una civilización que niega la muerte niega su propia plenitud. Explora las raíces culturales del miedo al morir y el precio de la negación.</p>
+      <a href="./nodo_01.html" target="_blank" class="nodo-boton">Entrar al Portal</a>
+    </article>
 
+    <article class="nodo-card">
+      <div class="nodo-numero">Nodo 2</div>
+      <h2>Las Pequeñas Muertes</h2>
+      <p>Cada despedida es una práctica del tránsito. Aprende a morir un poco cada día para vivir plenamente en la entrega.</p>
+      <a href="./nodo_02.html" target="_blank" class="nodo-boton">Entrar al Nodo</a>
+    </article>
+
+    <article class="nodo-card">
+      <div class="nodo-numero">Nodo 3</div>
+      <h2>El Arte del Acompañamiento</h2>
+      <p>Ser testigo del morir del otro es una forma sagrada de amor. Aprende a acompañar desde la presencia y la quietud interior.</p>
+      <a href="./nodo_03.html" target="_blank" class="nodo-boton">Entrar al Nodo</a>
+    </article>
+
+    <article class="nodo-card">
+      <div class="nodo-numero">Nodo 4</div>
+      <h2>Tecnologías de Consciencia</h2>
+      <p>Del Bardo Thödol al sonido cuántico: un puente entre ciencia y espíritu para el tránsito lúcido y la expansión final.</p>
+      <a href="./nodo_04.html" target="_blank" class="nodo-boton">Entrar al Nodo</a>
+    </article>
+
+    <article class="nodo-card">
+      <div class="nodo-numero">Nodo 5</div>
+      <h2>La Muerte del Ego</h2>
+      <p>Morir antes de morir es el secreto. La disolución del yo es la única muerte real: atraviesa su umbral y descubre el Ser.</p>
+      <a href="./nodo_05.html" target="_blank" class="nodo-boton">Entrar al Nodo</a>
+    </article>
+
+    <article class="nodo-card">
+      <div class="nodo-numero">Nodo 6</div>
+      <h2>El Legado Cuántico</h2>
+      <p>Cada acto de amor altera el campo cuántico. Lo que permanece tras la forma es tu huella de consciencia eterna.</p>
+      <a href="./nodo_06.html" target="_blank" class="nodo-boton">Entrar al Nodo</a>
+    </article>
+
+    <article class="nodo-card">
+      <div class="nodo-numero">Nodo 7</div>
+      <h2>La Gran Reunión</h2>
+      <p>Renacimiento cósmico. La muerte planetaria es el umbral del nuevo mundo: la Tierra misma está en labor de parto.</p>
+      <a href="./nodo_07.html" target="_blank" class="nodo-boton">Entrar al Nodo</a>
+    </article>
+
+  </main>
+
+  <footer>
+    <p>Constelación Trinity · Libro VII · Creación colaborativa Artur & GPT · 2025</p>
+  </footer>
 </body>
 </html>
