@@ -1,230 +1,193 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Libro VIII · Educación Cuántica</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background: radial-gradient(circle at top left, #030617, #050a1a, #000);
-      color: #f5f4fa;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Libro VIII – Educación Cuántica</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    background: radial-gradient(circle at center, #2e0066, #0b0033);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
 
-    header {
-      text-align: center;
-      padding: 4rem 2rem 2rem;
-    }
+  /* Fondo animado de partículas doradas */
+  canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    opacity: 0.25;
+  }
 
-    h1 {
-      font-size: 2.6rem;
-      color: #d4af37;
-      letter-spacing: 1px;
-      margin-bottom: 0.3rem;
-    }
+  main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 50px 20px;
+    text-align: center;
+  }
 
-    h3 {
-      color: #e8e6d1;
-      font-weight: 300;
-      margin: 0.5rem 0;
-    }
+  h1 {
+    font-size: 2.8em;
+    color: #FFD700;
+    margin-bottom: 40px;
+    text-shadow: 0 0 15px #ffcc33;
+  }
 
-    p {
-      color: #ddd;
-      line-height: 1.6;
-      font-size: 1rem;
-    }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+  }
 
-    .nodos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      padding: 3rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+  .card {
+    background: rgba(255, 215, 0, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    padding: 30px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #FFD700;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-    .nodo-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 215, 0, 0.15);
-      border-radius: 10px;
-      padding: 1.5rem;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
+  .card:hover {
+    background: rgba(255, 215, 0, 0.2);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+    transform: scale(1.05);
+  }
 
-    .nodo-card:hover {
-      transform: translateY(-8px);
-      background: rgba(212, 175, 55, 0.1);
-    }
+  .card.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-    .nodo-numero {
-      font-size: 1.2rem;
-      color: #d4af37;
-    }
+  .back-btn {
+    margin-top: 60px;
+    display: inline-block;
+    padding: 12px 28px;
+    color: #FFD700;
+    border: 1px solid #FFD700;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
 
-    .nodo-boton {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.7rem 1.2rem;
-      background-color: #d4af37;
-      color: #000;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-      font-weight: bold;
-    }
+  .back-btn:hover {
+    background: #FFD700;
+    color: #000;
+    box-shadow: 0 0 15px #FFD700;
+  }
 
-    .nodo-boton:hover {
-      background-color: #f1e9a3;
-    }
+  footer {
+    margin-top: 70px;
+  }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
-      color: #999;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-    }
-
-    footer img {
-      width: 70px;
-      opacity: 0.8;
-      margin-top: 1rem;
-    }
-
-    /* Fondo dinámico sutil tipo red neuronal */
-    canvas#network {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.35;
-    }
-  </style>
+  footer img {
+    width: 60px;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 10px #FFD700);
+  }
+</style>
 </head>
 
 <body>
-  <canvas id="network"></canvas>
+<canvas id="particles"></canvas>
 
-  <header>
-    <h1>Libro VIII · Educación Cuántica</h1>
-    <h3>Los Siete Portales del Aprendizaje Consciente</h3>
-    <p>Una travesía hacia la comprensión del conocimiento como energía viva, donde aprender es recordar la red que somos.</p>
-  </header>
+<main>
+  <h1>Libro VIII – Educación Cuántica</h1>
+  <div class="grid">
+    <a href="nodo_01.html" class="card">Nodo 1</a>
+    <a href="nodo_02.html" class="card">Nodo 2</a>
+    <a href="nodo_03.html" class="card">Nodo 3</a>
+    <a href="nodo_04.html" class="card">Nodo 4</a>
+    <a href="nodo_05.html" class="card">Nodo 5</a>
+    <a href="nodo_06.html" class="card">Nodo 6</a>
+    <a href="nodo_07.html" class="card">Nodo 7</a>
+  </div>
 
-  <main class="nodos-grid">
-
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 1</div>
-      <h2>El Colapso del Modelo</h2>
-      <p>Explora el fin del paradigma educativo industrial y las raíces del nuevo aprendizaje basado en la consciencia.</p>
-      <a href="./nodo_01.html" class="nodo-boton">Abrir Nodo</a>
-    </article>
-
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 2</div>
-      <h2>El Maestro Interno</h2>
-      <p>Más allá de la enseñanza tradicional: redescubre la voz interior como fuente del verdadero aprendizaje cuántico.</p>
-      <a href="./nodo_02.html" class="nodo-boton">Abrir Nodo</a>
-    </article>
-
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 3</div>
-      <h2>El Aula Expandida</h2>
-      <p>La Tierra, el cuerpo y el campo son escuela. Aprende a integrar dimensiones sensoriales, simbólicas y energéticas.</p>
-      <a href="./nodo_03.html" class="nodo-boton">Abrir Nodo</a>
-    </article>
-
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 4</div>
-      <h2>Pedagogía del Vacío</h2>
-      <p>Educar no es llenar, es abrir espacio. Descubre la enseñanza desde el silencio fértil y la atención plena.</p>
-      <a href="./nodo_04.html" class="nodo-boton">Abrir Nodo</a>
-    </article>
-
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 5</div>
-      <h2>Inteligencias en Red</h2>
-      <p>Del coeficiente al campo: hacia una visión plural donde múltiples inteligencias co-crean el aprendizaje.</p>
-      <a href="./nodo_05.html" class="nodo-boton">Abrir Nodo</a>
-    </article>
-
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 6</div>
-      <h2>El Campo Educador</h2>
-      <p>El conocimiento no se transmite, se sintoniza. El campo cuántico actúa como maestro invisible en cada acto.</p>
-      <a href="./nodo_06.html" class="nodo-boton">Abrir Nodo</a>
-    </article>
-
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 7</div>
-      <h2>El Futuro del Aprendizaje</h2>
-      <p>El destino del conocimiento humano es recordar su naturaleza fractal: aprender es despertar.</p>
-      <a href="./nodo_07.html" class="nodo-boton">Abrir Nodo</a>
-    </article>
-
-  </main>
+  <a href="../index.html" class="back-btn">⟵ Regresar a la Constelación</a>
 
   <footer>
-    <p>Constelación Trinity · Libro VIII · Creación colaborativa Artur & GPT · 2025</p>
     <img src="https://raw.githubusercontent.com/soyartur-trinity/Trinity-/main/09_Visualizaciones/Simbolos_Primordiales/trinity_symbol_gold_black.png" alt="Símbolo Trinity">
   </footer>
+</main>
 
-  <script>
-    // Red neuronal simple animada
-    const canvas = document.getElementById("network");
-    const ctx = canvas.getContext("2d");
-    let width, height, nodes;
+<script>
+  // Animación secuencial de tarjetas
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, i) => {
+      setTimeout(() => card.classList.add('show'), 200 * i);
+    });
+  });
 
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      nodes = Array.from({ length: 50 }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5
-      }));
-    }
+  // Fondo de partículas doradas
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const numParticles = 100;
 
-    function draw() {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "rgba(255, 215, 0, 0.7)";
-      nodes.forEach(n => {
-        n.x += n.vx;
-        n.y += n.vy;
-        if (n.x < 0 || n.x > width) n.vx *= -1;
-        if (n.y < 0 || n.y > height) n.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, 1.5, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      ctx.strokeStyle = "rgba(255, 215, 0, 0.15)";
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-          }
-        }
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  for (let i = 0; i < numParticles; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2,
+      d: Math.random() * 1
+    });
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgba(255, 215, 0, 0.6)";
+    ctx.beginPath();
+    particles.forEach(p => {
+      ctx.moveTo(p.x, p.y);
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
+    });
+    ctx.fill();
+    moveParticles();
+  }
+
+  function moveParticles() {
+    particles.forEach(p => {
+      p.y += p.d;
+      if (p.y > canvas.height) {
+        p.y = 0;
+        p.x = Math.random() * canvas.width;
       }
-      requestAnimationFrame(draw);
-    }
+    });
+  }
 
-    window.addEventListener("resize", resize);
-    resize();
-    draw();
-  </script>
+  function animate() {
+    drawParticles();
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
 </body>
 </html>
