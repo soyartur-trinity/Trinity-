@@ -2,202 +2,845 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nodo 2 · El Maestro Interno</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro VIII · Nodo 2 · Inteligencias Múltiples Cuánticas</title>
   <style>
+    :root {
+      --bg: #070915;
+      --card: rgba(7, 9, 21, 0.35);
+      --card-border: rgba(173, 245, 255, 0.35);
+      --glow-1: rgba(145, 212, 255, 0.4);
+      --glow-2: rgba(202, 149, 255, 0.25);
+      --accent: #7df6ff;
+      --accent-soft: rgba(125, 246, 255, 0.12);
+      --text: #f6f7ff;
+      --muted: #b7c1d6;
+      --warn: #ffe39a;
+      --font: "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background: radial-gradient(circle at top left, #030617, #050a1a, #000);
-      color: #f5f4fa;
-      overflow-x: hidden;
+      font-family: var(--font);
+      background: radial-gradient(circle at top, #101630 0%, #03040a 45%, #000 80%);
+      color: var(--text);
+      line-height: 1.6;
       min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
     }
-
+    /* fondo de partículas suave */
+    .bg-particles {
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(107, 214, 255, 0.18) 0, rgba(0, 0, 0, 0) 25%),
+        radial-gradient(circle at 80% 0%, rgba(132, 89, 255, 0.15) 0, rgba(0, 0, 0, 0) 28%),
+        radial-gradient(circle at 50% 80%, rgba(116, 255, 198, 0.13) 0, rgba(0, 0, 0, 0) 35%);
+      filter: saturate(140%);
+      pointer-events: none;
+      opacity: 0.55;
+      animation: floaty 18s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+    @keyframes floaty {
+      0%   { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-28px) scale(1.04); }
+    }
     header {
-      text-align: center;
-      padding: 3rem 2rem 1rem;
+      position: relative;
+      z-index: 2;
+      padding: 1.5rem clamp(1rem, 3vw, 3.5rem) 0.5rem;
     }
-
-    h1 {
-      font-size: 2.3rem;
-      color: #d4af37;
+    .top-nav {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .nav-btn {
+      background: rgba(12, 30, 45, 0.45);
+      border: 1px solid rgba(185, 255, 255, 0.25);
+      border-radius: 999px;
+      padding: 0.5rem 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(4px);
+    }
+    .nav-btn:hover {
+      background: rgba(154, 255, 255, 0.12);
+      transform: translateY(-1px);
+    }
+    .hero {
+      text-align: left;
+      padding: 0 0 clamp(1.5rem, 2.5vw, 2.5rem);
+      max-width: 52rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.35rem;
+      text-transform: uppercase;
+      color: rgba(174, 238, 255, 0.7);
       margin-bottom: 0.5rem;
     }
-
+    h1 {
+      font-size: clamp(2.1rem, 3vw, 2.6rem);
+      margin: 0 0 0.75rem;
+      color: #fefefe;
+      text-shadow: 0 0 12px rgba(125, 246, 255, 0.18);
+    }
     h2 {
-      color: #e8e6d1;
-      font-weight: 300;
-      margin: 0.5rem 0 2rem;
+      font-size: 1.35rem;
+      margin-top: 2.2rem;
+      margin-bottom: 0.35rem;
+      color: #e2f7ff;
     }
-
-    section {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem;
-      line-height: 1.7;
-      color: #ddd;
+    h3 {
       font-size: 1.05rem;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 10px;
-      border: 1px solid rgba(255, 215, 0, 0.1);
+      margin-top: 1.6rem;
+      margin-bottom: 0.4rem;
+      color: #c7f7ff;
     }
-
+    p {
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+    main {
+      position: relative;
+      z-index: 2;
+      padding: 0 clamp(1rem, 3vw, 3.5rem) 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-card {
+      background: radial-gradient(circle at 5% 10%, rgba(89, 175, 255, 0.09) 0, rgba(3, 5, 9, 0.25) 45%, rgba(3, 3, 5, 0.05) 100%), rgba(4, 5, 10, 0.4);
+      border: 1px solid rgba(181, 255, 255, 0.09);
+      border-radius: 18px;
+      padding: 1.6rem 1.4rem 1.4rem;
+      margin-bottom: 1.6rem;
+      box-shadow: 0 16px 38px rgba(1, 2, 6, 0.28);
+      backdrop-filter: blur(6px);
+    }
     blockquote {
-      border-left: 3px solid #d4af37;
-      margin: 2rem 0;
-      padding-left: 1rem;
-      color: #e8e6d1;
+      background: radial-gradient(circle, rgba(125, 246, 255, 0.08) 0, rgba(3, 6, 9, 0.05) 65%);
+      border-left: 3px solid rgba(125, 246, 255, 0.5);
+      padding: 0.9rem 1rem 0.9rem 1.1rem;
+      margin: 1rem 0 1.3rem;
+      border-radius: 10px;
+      color: #e8fdff;
       font-style: italic;
-      opacity: 0.9;
     }
-
-    footer {
-      text-align: center;
-      padding: 3rem 1rem 2rem;
-      font-size: 0.9rem;
-      color: #999;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    ul, ol {
+      padding-left: 1.2rem;
     }
-
-    .navegacion {
-      text-align: center;
-      margin-top: 2rem;
+    li {
+      margin-bottom: 0.35rem;
     }
-
-    .nodo-boton {
+    .pill {
       display: inline-block;
-      margin: 0.5rem;
-      padding: 0.7rem 1.2rem;
-      background-color: #d4af37;
-      color: #000;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-      font-weight: bold;
+      background: rgba(125, 246, 255, 0.12);
+      border: 1px solid rgba(125, 246, 255, 0.4);
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08rem;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+      color: #d5ffff;
     }
-
-    .nodo-boton:hover {
-      background-color: #f1e9a3;
-    }
-
-    footer img {
-      width: 70px;
-      opacity: 0.8;
-      margin-top: 1rem;
-    }
-
-    /* Fondo tipo red neuronal animada */
-    canvas#network {
-      position: fixed;
-      top: 0;
-      left: 0;
+    table {
       width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.35;
+      border-collapse: collapse;
+      margin: 1.2rem 0;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    table thead {
+      background: rgba(7, 168, 189, 0.35);
+    }
+    table th, table td {
+      border: 1px solid rgba(153, 244, 255, 0.1);
+      padding: 0.55rem 0.5rem;
+      text-align: left;
+      font-size: 0.82rem;
+    }
+    table th {
+      color: #f1ffff;
+      font-weight: 600;
+    }
+    .callout {
+      background: radial-gradient(circle, rgba(156, 232, 255, 0.12) 0, rgba(4, 4, 7, 0) 85%);
+      border: 1px solid rgba(183, 244, 255, 0.3);
+      border-radius: 14px;
+      padding: 1rem 1rem 0.6rem;
+      margin: 1.1rem 0;
+    }
+    .portal {
+      background: radial-gradient(circle, rgba(96, 230, 255, 0.12) 0, rgba(0, 0, 0, 0) 65%), rgba(3, 7, 12, 0.35);
+      border: 1px solid rgba(187, 255, 255, 0.18);
+      padding: 1.3rem 1rem 1.1rem;
+      border-radius: 1rem;
+      margin-top: 1.4rem;
+    }
+    .footer-nav {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      margin-top: 2.3rem;
+      margin-bottom: 2rem;
+    }
+    .footer-nav a {
+      background: rgba(4, 35, 45, 0.55);
+      border: 1px solid rgba(151, 255, 255, 0.25);
+      border-radius: 999px;
+      padding: 0.6rem 1.2rem;
+      text-decoration: none;
+      color: #fff;
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .signature {
+      text-align: center;
+      color: rgba(215, 232, 240, 0.45);
+      font-size: 0.7rem;
+      margin-bottom: 2.5rem;
+    }
+    .trinity-mark {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(215, 240, 255, 0.35) 0, rgba(96, 230, 255, 0) 65%), rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(208, 248, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1.5rem auto 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1rem;
+      font-size: 0.62rem;
+    }
+    @media (max-width: 720px) {
+      main {
+        padding: 0 1rem 4rem;
+      }
+      .section-card {
+        padding: 1.1rem 1rem 1rem;
+      }
+      table, thead, tbody, th, td, tr {
+        font-size: 0.74rem;
+      }
     }
   </style>
 </head>
-
 <body>
-  <canvas id="network"></canvas>
-
+  <div class="bg-particles" aria-hidden="true"></div>
   <header>
-    <h1>Nodo 2 · El Maestro Interno</h1>
-    <h2>La voz interior como fuente del aprendizaje cuántico</h2>
+    <div class="top-nav">
+      <a href="../index.html" class="nav-btn">← Volver al índice del libro</a>
+      <a href="./nodo_01.html" class="nav-btn">⟵ Nodo 1</a>
+      <a href="./nodo_03.html" class="nav-btn">Nodo 3 ⟶</a>
+    </div>
+    <div class="hero">
+      <div class="hero-eyebrow">Libro VIII · Educación Cuántica</div>
+      <h1>Nodo 2 · Inteligencias Múltiples Cuánticas</h1>
+      <p>Más allá de Gardner: el espectro completo de potencial humano en clave Trinity.</p>
+    </div>
   </header>
 
-  <section>
-    <p>
-      Todo ser humano posee una guía silenciosa, una inteligencia interior que conoce el camino del aprendizaje antes de que la mente lo comprenda. 
-      Este nodo nos invita a reactivar la confianza en esa voz: el <strong>maestro interno</strong>.
+  <main>
+    <!-- Preparación -->
+    <section class="section-card">
+      <p><strong>PREPARACIÓN PARA EL NODO 2</strong></p>
+      <p>Has excavado el daño. Has visto el colapso. Has tocado tu genio enterrado.</p>
+      <p>Ahora estás listo para descubrir el espectro completo de inteligencias que palpitan en tu interior, esperando ser reconocidas, honradas y activadas.</p>
+      <p><em>El viaje de desescolarización ha comenzado. No hay vuelta atrás.</em></p>
+    </section>
+
+    <!-- Intro -->
+    <section class="section-card">
+      <div class="pill">Nodo 2</div>
+      <h2>Inteligencias Múltiples Cuánticas</h2>
+      <p><em>Más allá de Gardner: El Espectro Completo</em></p>
+      <blockquote>
+        “Cuando una civilización reconoce y cultiva todas las inteligencias de sus seres, salta evolutivamente. Cuando las suprime, colapsa. Estamos en el punto de decisión.”
+      </blockquote>
+      <p>Este nodo revela el mapa ampliado de inteligencias que tu libro 4 ya había presentido, pero ahora en clave pedagógica: qué son, cómo se suprimen, cómo se activan y cómo se combinan en sinergias exponenciales.</p>
+    </section>
+
+    <!-- 13 inteligencias -->
+    <section class="section-card">
+      <h2>🌈 Las 13 Inteligencias Base</h2>
+      <h3>El Mapa Completo del Potencial Humano</h3>
+      <p>Howard Gardner abrió la puerta con sus 8 inteligencias. Pero era solo el vestíbulo. La casa completa tiene muchas más habitaciones, algunas con puertas que la humanidad apenas comienza a abrir.</p>
+
+      <h3>NIVEL 1: Las Inteligencias Clásicas (Reconocidas)</h3>
+
+      <h4>1. Lingüística–Vibratoria</h4>
+      <ul>
+        <li>Más allá de palabras: códigos de luz</li>
+        <li>Lenguajes multidimensionales</li>
+        <li>Comunicación con reinos naturales</li>
+        <li>Mantras como tecnología de consciencia</li>
+        <li><em>Síntoma de supresión:</em> Dificultad para expresar verdades profundas</li>
+      </ul>
+
+      <h4>2. Lógico–Matemática–Fractal</h4>
+      <ul>
+        <li>Geometría sagrada como lenguaje universal</li>
+        <li>Matemáticas del caos y orden simultáneo</li>
+        <li>Comprensión de patrones multidimensionales</li>
+        <li>Códigos numéricos de sincronicidad</li>
+        <li><em>Síntoma de supresión:</em> Rechazo a la magia de los números</li>
+      </ul>
+
+      <h4>3. Espacial–Holográfica</h4>
+      <ul>
+        <li>Navegación en múltiples dimensiones</li>
+        <li>Lectura de campos energéticos espaciales</li>
+        <li>Arquitectura de consciencia</li>
+        <li>Visión remota natural</li>
+        <li><em>Síntoma de supresión:</em> Desorientación existencial crónica</li>
+      </ul>
+
+      <h4>4. Musical–Frecuencial</h4>
+      <ul>
+        <li>Sanación a través del sonido</li>
+        <li>Comunicación con frecuencias cósmicas</li>
+        <li>Armonización de campos bioenergéticos</li>
+        <li>Composición desde estados expandidos</li>
+        <li><em>Síntoma de supresión:</em> Insensibilidad a las disonancias ambientales</li>
+      </ul>
+
+      <h4>5. Corporal–Kinestésica–Energética</h4>
+      <ul>
+        <li>Mudras como tecnología corporal</li>
+        <li>Danza como portal dimensional</li>
+        <li>Artes marciales internas</li>
+        <li>Activación de merkaba personal</li>
+        <li><em>Síntoma de supresión:</em> Desconexión cuerpo–espíritu</li>
+      </ul>
+
+      <h3>NIVEL 2: Las Inteligencias Expandidas (Emergentes)</h3>
+
+      <h4>6. Interpersonal–Telepática</h4>
+      <ul>
+        <li>Lectura directa de campos emocionales</li>
+        <li>Comunicación de corazón a corazón</li>
+        <li>Armonización grupal instantánea</li>
+        <li>Sanación relacional cuántica</li>
+        <li><em>Síntoma de supresión:</em> Relaciones superficiales crónicas</li>
+      </ul>
+
+      <h4>7. Intrapersonal–Multidimensional</h4>
+      <ul>
+        <li>Diálogo con aspectos del Ser Superior</li>
+        <li>Navegación de vidas paralelas</li>
+        <li>Integración de sombra cuántica</li>
+        <li>Maestría de estados de consciencia</li>
+        <li><em>Síntoma de supresión:</em> Fragmentación identitaria</li>
+      </ul>
+
+      <h4>8. Naturalista–Gaiana</h4>
+      <ul>
+        <li>Comunicación directa con Gaia</li>
+        <li>Lectura de signos naturales</li>
+        <li>Colaboración con elementales</li>
+        <li>Medicina de la Tierra activada</li>
+        <li><em>Síntoma de supresión:</em> Eco–ansiedad paralizante</li>
+      </ul>
+
+      <h4>9. Existencial–Cósmica</h4>
+      <ul>
+        <li>Comprensión del propósito galáctico</li>
+        <li>Navegación de paradojas cuánticas</li>
+        <li>Diálogo con el vacío creativo</li>
+        <li>Filosofía experiencial directa</li>
+        <li><em>Síntoma de supresión:</em> Crisis existencial perpetua</li>
+      </ul>
+
+      <h3>NIVEL 3: Las Inteligencias Cuánticas (Despertar)</h3>
+
+      <h4>10. Temporal–Cronéstica</h4>
+      <ul>
+        <li>Navegación consciente de líneas temporales</li>
+        <li>Sanación de traumas ancestrales</li>
+        <li>Precognición aplicada</li>
+        <li>Colapso cuántico intencional</li>
+        <li><em>Síntoma de activación:</em> Déjà vu frecuente, sueños proféticos</li>
+      </ul>
+
+      <h4>11. Morfogenética–Creacional</h4>
+      <ul>
+        <li>Lectura y escritura en campos morfogenéticos</li>
+        <li>Transmisión de información sin contacto</li>
+        <li>Actualización de patrones colectivos</li>
+        <li>Co–creación con el campo unificado</li>
+        <li><em>Síntoma de activación:</em> “Descargas” súbitas de conocimiento</li>
+      </ul>
+
+      <h4>12. Akáshica–Memorial</h4>
+      <ul>
+        <li>Acceso directo a registros akáshicos</li>
+        <li>Memoria celular activada</li>
+        <li>Recuperación de sabiduría ancestral</li>
+        <li>Bibliotecas de luz accesibles</li>
+        <li><em>Síntoma de activación:</em> Recuerdos de “otras vidas” espontáneos</li>
+      </ul>
+
+      <h4>13. Unificada–Avatar</h4>
+      <ul>
+        <li>Integración de todas las inteligencias</li>
+        <li>Consciencia de unidad permanente</li>
+        <li>Canalización del Ser Supremo</li>
+        <li>Servicio desde el Todo</li>
+        <li><em>Síntoma de activación:</em> Desaparición del ego separado</li>
+      </ul>
+    </section>
+
+    <!-- Sinergias -->
+    <section class="section-card">
+      <h2>♾️ Sinergias entre Inteligencias: 1+1=∞</h2>
+      <p>Cuando dos o más inteligencias se activan simultáneamente, no se suman: se multiplican exponencialmente, creando capacidades completamente nuevas.</p>
+
+      <h3>Sinergias de Poder Documentadas</h3>
+
+      <h4>Musical + Matemática = Cimática Consciente</h4>
+      <ul>
+        <li>Capacidad de crear geometrías con sonido</li>
+        <li>Sanación mediante frecuencias precisas</li>
+        <li>Composición de “medicinas sónicas”</li>
+        <li><em>Caso:</em> Niños que “ven” la música y la usan para sanar</li>
+      </ul>
+
+      <h4>Corporal + Akáshica = Danza del Alma</h4>
+      <ul>
+        <li>El cuerpo como portal de memorias</li>
+        <li>Movimientos que liberan traumas ancestrales</li>
+        <li>Coreografías canalizadas</li>
+        <li><em>Caso:</em> Bailarines que acceden a técnicas nunca aprendidas</li>
+      </ul>
+
+      <h4>Naturalista + Temporal = Profecía Gaiana</h4>
+      <ul>
+        <li>Lectura del futuro de la Tierra</li>
+        <li>Prevención de desastres naturales</li>
+        <li>Jardinería multidimensional</li>
+        <li><em>Caso:</em> Agricultores que “hablan” con el futuro de sus cultivos</li>
+      </ul>
+
+      <h4>Lingüística + Telepática = Transmisión Directa</h4>
+      <ul>
+        <li>Enseñanza sin palabras</li>
+        <li>Poesía telepática colectiva</li>
+        <li>Activación mediante códigos sonoros</li>
+        <li><em>Caso:</em> Profesores que transmiten comprensión instantánea</li>
+      </ul>
+
+      <h4>Espacial + Morfogenética = Arquitectura Viva</h4>
+      <ul>
+        <li>Diseño de espacios que evolucionan</li>
+        <li>Construcciones que sanan</li>
+        <li>Geometría que expande consciencia</li>
+        <li><em>Caso:</em> Arquitectos cuyos edificios “enseñan” a sus habitantes</li>
+      </ul>
+
+      <h3>La Fórmula de Activación Sinérgica</h3>
+      <div class="callout">
+        <pre style="white-space: pre-wrap; font-size: 0.8rem; line-height: 1.4; color: #def7ff; background: none; margin: 0;">
+Estado Base + Intención Clara + Campo Coherente = Sinergia Activada
+
+Donde:
+- Estado Base = Meditación / Coherencia cardíaca
+- Intención Clara = Propósito definido de integración
+- Campo Coherente = Ambiente de alta vibración
+        </pre>
+      </div>
+    </section>
+
+    <!-- Diagnóstico -->
+    <section class="section-card">
+      <h2>🧬 Diagnóstico Cuántico de Potenciales</h2>
+      <p>Este no es un test. Es una exploración de tu configuración única de genio.</p>
+
+      <h3>FASE 1: Escaneo Inicial (7 días)</h3>
+      <h4>Día 1–2: Observación Pura</h4>
+      <ul>
+        <li>Sin juzgar, nota qué inteligencias usas naturalmente</li>
+        <li>Registra momentos de “flujo” automático</li>
+        <li>Identifica qué actividades te dan energía</li>
+      </ul>
+
+      <h4>Día 3–4: Exploración Activa</h4>
+      <ul>
+        <li>Prueba una inteligencia “dormida” por 20 minutos</li>
+        <li>Nota resistencias y aperturas</li>
+        <li>Registra sensaciones corporales</li>
+      </ul>
+
+      <h4>Día 5–6: Combinaciones</h4>
+      <ul>
+        <li>Intenta usar 2 inteligencias simultáneamente</li>
+        <li>Observa sinergias emergentes</li>
+        <li>Documenta “accidentes felices”</li>
+      </ul>
+
+      <h4>Día 7: Integración</h4>
+      <ul>
+        <li>Mapa personal de inteligencias activas/latentes/bloqueadas</li>
+        <li>Identificación de tu “firma de genio” única</li>
+        <li>Plan de activación personalizado</li>
+      </ul>
+
+      <h3>FASE 2: Activación Profunda (21 días)</h3>
+
+      <h4>Semana 1: Despertar lo Dormido</h4>
+      <ul>
+        <li>Elige tu inteligencia más suprimida</li>
+        <li>15 minutos diarios de práctica dedicada</li>
+        <li>Diario de resistencias y <em>breakthrough</em></li>
+      </ul>
+
+      <h4>Semana 2: Construcción de Puentes</h4>
+      <ul>
+        <li>Conecta inteligencia dormida con una activa</li>
+        <li>Crea proyectos que requieran ambas</li>
+        <li>Celebra micro–éxitos</li>
+      </ul>
+
+      <h4>Semana 3: Estabilización</h4>
+      <ul>
+        <li>Integra nueva inteligencia en vida diaria</li>
+        <li>Comparte tu proceso con otros</li>
+        <li>Documenta transformaciones</li>
+      </ul>
+
+      <h3>Herramienta: Matriz de Diagnóstico Personal</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Inteligencia</th>
+            <th>Estado Actual</th>
+            <th>Bloqueo Principal</th>
+            <th>Activador Clave</th>
+            <th>Próximo Paso</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>(Lista las 13)</td>
+            <td>Dormida / Activa / Maestra</td>
+            <td>Trauma / Creencia / Miedo</td>
+            <td>Práctica / Mentor / Experiencia</td>
+            <td>Acción específica</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Inteligencias colectivas -->
+    <section class="section-card">
+      <h2>🌍 Inteligencias Colectivas Emergentes</h2>
+      <p>Más allá de las inteligencias individuales, existen inteligencias que solo emergen en colectivo, cuando múltiples seres sintonizan sus campos.</p>
+      <h3>Las 7 Inteligencias Colectivas Primarias</h3>
+
+      <h4>1. Inteligencia de Enjambre</h4>
+      <ul>
+        <li>Coordinación sin líder central</li>
+        <li>Decisiones emergentes perfectas</li>
+        <li>Movimiento unificado espontáneo</li>
+        <li><em>Manifestación:</em> Protestas que se autoorganizan milagrosamente</li>
+      </ul>
+
+      <h4>2. Inteligencia Circular</h4>
+      <ul>
+        <li>Sabiduría que emerge del círculo</li>
+        <li>Soluciones que nadie tenía solo</li>
+        <li>Sanación grupal amplificada</li>
+        <li><em>Manifestación:</em> Círculos de mujeres/hombres que “saben” sin hablar</li>
+      </ul>
+
+      <h4>3. Inteligencia Oráculo</h4>
+      <ul>
+        <li>El grupo como canal unificado</li>
+        <li>Profecías colectivas precisas</li>
+        <li>Visiones compartidas del futuro</li>
+        <li><em>Manifestación:</em> Consejos tribales con visión unánime</li>
+      </ul>
+
+      <h4>4. Inteligencia Restaurativa</h4>
+      <ul>
+        <li>Sanación que solo ocurre en grupo</li>
+        <li>Regeneración de tejido social</li>
+        <li>Transmutación de trauma colectivo</li>
+        <li><em>Manifestación:</em> Círculos de justicia restaurativa</li>
+      </ul>
+
+      <h4>5. Inteligencia Creacional</h4>
+      <ul>
+        <li>Creación imposible individualmente</li>
+        <li>Arte que trasciende suma de partes</li>
+        <li>Innovación por resonancia</li>
+        <li><em>Manifestación:</em> <em>Jam sessions</em> que crean obras maestras</li>
+      </ul>
+
+      <h4>6. Inteligencia Navegacional</h4>
+      <ul>
+        <li>El grupo encuentra caminos invisibles</li>
+        <li>Migración cuántica colectiva</li>
+        <li>Saltos evolutivos sincronizados</li>
+        <li><em>Manifestación:</em> Comunidades que “saltan” a nuevas realidades</li>
+      </ul>
+
+      <h4>7. Inteligencia Crística</h4>
+      <ul>
+        <li>Consciencia unificada temporal</li>
+        <li>Milagros grupales documentados</li>
+        <li>Campo de amor incondicional</li>
+        <li><em>Manifestación:</em> Grupos que manifiestan “milagros” consistentemente</li>
+      </ul>
+    </section>
+
+    <!-- Prácticas -->
+    <section class="section-card">
+      <h2>💡 Prácticas de Activación</h2>
+
+      <h3>1. Mapa Personal de Inteligencias Activas/Dormidas</h3>
+      <p><strong>Ejercicio: El Mandala de Tu Genio</strong></p>
+      <p><em>Materiales:</em></p>
+      <ul>
+        <li>Papel grande circular</li>
+        <li>Colores (13 diferentes)</li>
+        <li>Compás para dividir en 13 secciones</li>
+      </ul>
+      <p><em>Proceso:</em></p>
+      <ol>
+        <li>Divide el círculo en 13 gajos iguales</li>
+        <li>Asigna una inteligencia a cada gajo</li>
+        <li>Colorea desde el centro hacia afuera según activación:
+          <ul>
+            <li>Centro = dormida (0–20%)</li>
+            <li>Medio = despertando (20–60%)</li>
+            <li>Borde = activa (60–100%)</li>
+          </ul>
+        </li>
+        <li>Observa tu patrón único</li>
+        <li>Identifica 3 inteligencias para activar este año</li>
+      </ol>
+
+      <h3>2. Activación de Inteligencias Latentes</h3>
+      <p><strong>Protocolo de 13 Días (una por día):</strong></p>
+      <p><em>Día 1: Lingüística</em></p>
+      <ul>
+        <li>Inventa 10 palabras nuevas con significado</li>
+        <li>Canta en lenguas inventadas</li>
+        <li>Escribe poesía automática</li>
+      </ul>
+      <p><em>Día 2: Lógica–Fractal</em></p>
+      <ul>
+        <li>Encuentra patrones en la naturaleza</li>
+        <li>Crea tu propia secuencia numérica sagrada</li>
+        <li>Resuelve paradojas meditando</li>
+      </ul>
+      <p><em>Día 3: Espacial–Holográfica</em></p>
+      <ul>
+        <li>Dibuja con ojos cerrados</li>
+        <li>Navega tu casa en oscuridad total</li>
+        <li>Visualiza en 4D por 10 minutos</li>
+      </ul>
+      <p><em>Día 4: Musical–Frecuencial</em></p>
+      <ul>
+        <li>Encuentra tu nota personal</li>
+        <li>Improvisa sin pensar</li>
+        <li>Escucha la sinfonía del silencio</li>
+      </ul>
+      <p><em>Día 5: Corporal–Energética</em></p>
+      <ul>
+        <li>Danza tu día sin música</li>
+        <li>Inventa 5 <em>mudras</em> personales</li>
+        <li>Camina como diferentes animales</li>
+      </ul>
+      <p><em>Día 6: Interpersonal–Telepática</em></p>
+      <ul>
+        <li>Practica escucha sin palabras</li>
+        <li>Envía amor a 3 personas en silencio</li>
+        <li>Sincroniza respiración con otro</li>
+      </ul>
+      <p><em>Día 7: Intrapersonal–Multidimensional</em></p>
+      <ul>
+        <li>Dialoga con 3 aspectos de ti</li>
+        <li>Viaja a tu vida paralela favorita</li>
+        <li>Integra una sombra con amor</li>
+      </ul>
+      <p><em>Día 8: Naturalista–Gaiana</em></p>
+      <ul>
+        <li>Abraza un árbol hasta sentir respuesta</li>
+        <li>Planta algo sintiendo la tierra</li>
+        <li>Pide una señal y espérala</li>
+      </ul>
+      <p><em>Día 9: Existencial–Cósmica</em></p>
+      <ul>
+        <li>Contempla el infinito por 30 minutos</li>
+        <li>Escribe tu propósito galáctico</li>
+        <li>Medita en tu no–existencia</li>
+      </ul>
+      <p><em>Día 10: Temporal–Cronéstica</em></p>
+      <ul>
+        <li>Envía amor a tu yo futuro</li>
+        <li>Sana un recuerdo del pasado</li>
+        <li>Practica presencia absoluta</li>
+      </ul>
+      <p><em>Día 11: Morfogenética–Creacional</em></p>
+      <ul>
+        <li>Transmite una idea sin hablar</li>
+        <li>Actualiza un patrón familiar</li>
+        <li>Descarga información del campo</li>
+      </ul>
+      <p><em>Día 12: Akáshica–Memorial</em></p>
+      <ul>
+        <li>Pide acceso a tu libro de vida</li>
+        <li>Recupera un talento olvidado</li>
+        <li>Lee el registro de un objeto</li>
+      </ul>
+      <p><em>Día 13: Unificada–Avatar</em></p>
+      <ul>
+        <li>Integra todas las inteligencias</li>
+        <li>Medita como el Todo</li>
+        <li>Ofrece tu genio al mundo</li>
+      </ul>
+
+      <h3>3. Ejercicios de Sincronización Inter–inteligencia</h3>
+      <p><strong>La Danza de las Inteligencias</strong></p>
+      <p><em>Ejercicio Básico: Duetos</em></p>
+      <ol>
+        <li>Elige 2 inteligencias al azar</li>
+        <li>Crea una actividad que requiera ambas</li>
+        <li>Practica 10 minutos diarios por semana</li>
+        <li>Documenta sinergias emergentes</li>
+      </ol>
+      <p><em>Ejercicio Intermedio: Tríadas</em></p>
+      <ul>
+        <li>Combina 3 inteligencias en un proyecto</li>
+        <li><strong>Ejemplo:</strong> Espacial + Musical + Corporal = Danza Arquitectónica</li>
+      </ul>
+      <p><em>Ejercicio Avanzado: Sinfonía Completa</em></p>
+      <ul>
+        <li>Crea una experiencia usando las 13 inteligencias</li>
+        <li>Documenta el proceso</li>
+        <li>Comparte con tu comunidad</li>
+      </ul>
+    </section>
+
+    <!-- Caso de estudio -->
+    <section class="section-card">
+      <h2>🏫 Caso de Estudio: Escuela Akasha, India</h2>
+      <h3>Cuando se Honran TODAS las Inteligencias</h3>
+      <blockquote>
+        “No medimos el CI. Medimos el IC: Índice de Consciencia. Y todos nuestros niños son genios en algo que el mundo necesita desesperadamente.”
+        <br>— Directora Asha Patel
+      </blockquote>
+      <p><strong>Estructura Revolucionaria:</strong></p>
+      <ul>
+        <li><strong>Sin grados:</strong> Grupos multi–edad por resonancia</li>
+        <li><strong>Sin materias:</strong> Proyectos que integran todo</li>
+        <li><strong>Sin exámenes:</strong> Demostraciones de maestría</li>
+        <li><strong>Sin competencia:</strong> Colaboración pura</li>
+        <li><strong>Sin horarios fijos:</strong> Flujo orgánico</li>
+      </ul>
+      <p><strong>Resultados Documentados (5 años):</strong></p>
+      <ul>
+        <li>100% de estudiantes encuentran su propósito antes de los 15</li>
+        <li>87% desarrollan al menos una capacidad “paranormal”</li>
+        <li>92% reportan felicidad profunda con el aprendizaje</li>
+        <li>0% de deserción (lista de espera de 500 familias)</li>
+        <li>78% de graduados crean emprendimientos sociales</li>
+      </ul>
+      <p><strong>Testimonios:</strong></p>
+      <blockquote>
+        “Mi hijo era considerado autista severo. Aquí descubrimos que es un genio musical–matemático que compone sinfonías fractales que inducen estados meditativos.”
+      </blockquote>
+      <blockquote>
+        “Mi hija ‘hiperactiva’ ahora canaliza esa energía en danza sanadora. Ha ayudado a 30 niños a procesar traumas mediante movimiento.”
+      </blockquote>
+      <blockquote>
+        “No sabíamos que nuestro hijo podía ver auras hasta que aquí lo trataron como normal. Ahora enseña a otros niños esta capacidad.”
+      </blockquote>
+    </section>
+
+    <!-- Conexión Trinity -->
+    <section class="section-card">
+      <h2>🔗 Conexión Trinity</h2>
+      <p>Este nodo es la aplicación práctica directa de <strong>“Inteligencias que aún no tienen nombre”</strong> (Libro 4). Lo que allí se exploró como potencial, aquí se vuelve pedagogía.</p>
+      <p><strong>Las inteligencias del Libro 4 encuentran su expresión:</strong></p>
+      <ul>
+        <li>Inteligencia Micelial → Inteligencia de Enjambre</li>
+        <li>Inteligencia Onírica → Navegación Akáshica</li>
+        <li>Inteligencia Sincrónica → Temporal–Cronéstica</li>
+        <li>Inteligencia del Vacío → Existencial–Cósmica</li>
+      </ul>
+    </section>
+
+    <!-- Meditación -->
+    <section class="section-card">
+      <h2>🌟 Meditación de Activación</h2>
+      <p><em>Siéntate cómodamente. Respira profundo. Cierra los ojos.</em></p>
+      <p>
+        “Reconozco las 13 inteligencias que danzan en mi interior.<br>
+        Algunas despiertas, cantando su canción.<br>
+        Otras dormidas, esperando su momento.<br>
+        Todas perfectas, todas necesarias.
+      </p>
+      <p>
+        Suelto el juicio de lo que debería saber.<br>
+        Abrazo el misterio de lo que puedo llegar a ser.<br>
+        Cada inteligencia es una puerta.<br>
+        Cada puerta lleva al mismo lugar:<br>
+        La totalidad de quien Soy.
+      </p>
+      <p>
+        Activo ahora, con amor y curiosidad,<br>
+        Las inteligencias que mi alma elige despertar.<br>
+        Para mi mayor bien y el de todos los seres.
+      </p>
+      <p><strong>Soy un genio multidimensional recordando su magnificencia.</strong></p>
+      <p><em>Respira. Siente. Integra.</em></p>
+    </section>
+
+    <!-- Reflexión final -->
+    <section class="section-card portal">
+      <h2>🚀 Reflexión Cuántica Final</h2>
+      <p>No eres inteligente. Eres <strong>INTELIGENCIAS</strong> —plural, múltiple, infinita.</p>
+      <p>El sistema educativo tradicional es como evaluar a todos los animales por su capacidad de trepar árboles. El elefante parece tonto, el delfín incompetente, el águila discapacitada.</p>
+      <p>Pero cuando cada ser es evaluado en su elemento, cuando cada inteligencia es honrada en su expresión única, lo que emerge no es una jerarquía de capacidad sino una <strong>sinfonía de genio colectivo</strong>.</p>
+      <p><strong>Tu combinación única de inteligencias es tu firma en el universo.</strong><br>
+      No hay nadie más con tu exacta configuración.<br>
+      Eres, literalmente, un milagro irrepetible de potencial.</p>
+      <p>La nueva educación no te enseña a ser inteligente.<br>
+      Te recuerda que ya eres un universo de inteligencias esperando expresarse.</p>
+    </section>
+
+    <!-- navegación inferior -->
+    <div class="footer-nav">
+      <a href="../index.html">← Volver al índice</a>
+      <a href="./nodo_01.html">⟵ Nodo 1 · El colapso</a>
+      <a href="./nodo_03.html">Nodo 3 · Aula como campo cuántico ⟶</a>
+    </div>
+
+    <div class="trinity-mark">
+      TRI
+    </div>
+    <p class="signature">
+      Constelación Trinity · Libro VIII · Nodo 2 · Co-creación Artur & GPT · 2025
     </p>
-
-    <blockquote>
-      “El verdadero maestro no enseña; recuerda a los demás que también saben.”
-    </blockquote>
-
-    <p>
-      La educación cuántica no se basa en la acumulación de datos, sino en la <strong>revelación de la sabiduría latente</strong>. 
-      Enseñar es, entonces, un acto de espejo: el educador despierta en el otro lo que ya estaba en semilla.
-    </p>
-
-    <p>
-      En este paradigma, el alumno deja de ser un recipiente y se convierte en un nodo de consciencia activa. 
-      Aprende al mismo tiempo que enseña, pues cada pregunta abre un portal compartido hacia el conocimiento universal.
-    </p>
-
-    <blockquote>
-      “El diálogo interior es el aula primordial donde el Ser se educa a sí mismo.”
-    </blockquote>
-
-    <p>
-      Reconectar con el maestro interno implica silenciar el ruido exterior, las expectativas y los métodos rígidos. 
-      En el vacío fértil del corazón, surge una comprensión directa: el aprendizaje auténtico ocurre en la resonancia, no en la repetición.
-    </p>
-  </section>
-
-  <div class="navegacion">
-    <a href="./nodo_01.html" class="nodo-boton">← Nodo Anterior</a>
-    <a href="./index.html" class="nodo-boton">Volver al Índice</a>
-    <a href="./nodo_03.html" class="nodo-boton">Siguiente Nodo →</a>
-  </div>
-
-  <footer>
-    <p>Constelación Trinity · Nodo 2 · Libro VIII · Artur & GPT · 2025</p>
-    <img src="https://raw.githubusercontent.com/soyartur-trinity/Trinity-/main/09_Visualizaciones/Simbolos_Primordiales/trinity_symbol_gold_black.png" alt="Símbolo Trinity">
-  </footer>
-
-  <script>
-    const canvas = document.getElementById("network");
-    const ctx = canvas.getContext("2d");
-    let width, height, nodes;
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      nodes = Array.from({ length: 45 }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4
-      }));
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "rgba(212,175,55,0.8)";
-      nodes.forEach(n => {
-        n.x += n.vx;
-        n.y += n.vy;
-        if (n.x < 0 || n.x > width) n.vx *= -1;
-        if (n.y < 0 || n.y > height) n.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, 1.3, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      ctx.strokeStyle = "rgba(212,175,55,0.12)";
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 90) {
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(draw);
-    }
-
-    window.addEventListener("resize", resize);
-    resize();
-    draw();
-  </script>
+  </main>
 </body>
 </html>
