@@ -1,275 +1,187 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Libro VII · La Muerte como Maestra</title>
-  <style>
-    :root {
-      --violeta: #c8a8ff;
-      --dorado: #e1c97a;
-      --azul-noche: #060913;
-      --azul-profundo: #0a0d20;
-    }
-
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Roboto, sans-serif;
-      background: radial-gradient(circle at top left, var(--azul-profundo), var(--azul-noche), #000);
-      color: #ece8ff;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    #bg-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      pointer-events: none;
-    }
-
-    .bg-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle, rgba(255,255,255,0.015), rgba(0,0,0,0.6));
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    header {
-      text-align: center;
-      padding: 4rem 2rem 2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-      background: radial-gradient(circle at center, rgba(50, 30, 120, 0.4), rgba(0,0,0,0.2));
-      backdrop-filter: blur(4px);
-    }
-
-    h1 {
-      font-size: 2.8rem;
-      background: linear-gradient(120deg, var(--violeta), var(--dorado));
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 25px rgba(180,150,255,0.25);
-      margin-bottom: 0.6rem;
-    }
-
-    h2 {
-      color: #ffe39f;
-      margin: 0.6rem 0;
-    }
-
-    h3 {
-      color: #c8b4ff;
-      font-weight: 400;
-    }
-
-    p {
-      color: rgba(230,225,255,0.9);
-      line-height: 1.7;
-      text-align: center;
-      max-width: 780px;
-      margin: 0 auto 1.5rem;
-    }
-
-    .nodos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      padding: 3rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .nodo-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: transform 0.3s ease, background 0.3s ease;
-      position: relative;
-      backdrop-filter: blur(6px);
-    }
-
-    .nodo-card:hover {
-      transform: translateY(-6px);
-      background: rgba(160,120,255,0.12);
-      box-shadow: 0 0 18px rgba(220,190,255,0.2);
-    }
-
-    .nodo-numero {
-      font-size: 1.2rem;
-      color: var(--violeta);
-      margin-bottom: 0.4rem;
-    }
-
-    .nodo-boton {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.7rem 1.2rem;
-      background: linear-gradient(120deg, rgba(90,60,190,1), rgba(200,150,255,1));
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .nodo-boton:hover {
-      background: linear-gradient(120deg, rgba(200,150,255,1), rgba(90,60,190,1));
-      box-shadow: 0 0 10px rgba(200,150,255,0.5);
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
-      color: #aaa;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(10,10,20,0.2));
-    }
-
-    .trinity-float {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 100px;
-      height: 100px;
-      opacity: 0.4;
-      animation: spin 36s linear infinite;
-      filter: drop-shadow(0 0 10px rgba(220,190,130,0.3));
-      pointer-events: none;
-      z-index: 1000;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Libro VII · La Muerte como Maestra</title>
+<style>
+:root {
+  --violeta: #bfa3ff;
+  --dorado: #d7bc6c;
+  --azul-noche: #02030a;
+  --azul-profundo: #050615;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background: radial-gradient(circle at top left, var(--azul-profundo), var(--azul-noche), #000);
+  color: #edeaff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  opacity: 0;
+  animation: fadeIn 2s ease-in-out forwards;
+}
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+#bg-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -2;
+  pointer-events: none;
+  filter: brightness(0.4);
+}
+.bg-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+  z-index: -1;
+  pointer-events: none;
+}
+header {
+  text-align: center;
+  padding: 4rem 2rem 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: radial-gradient(circle at center, rgba(40,30,100,0.25), rgba(0,0,0,0.1));
+  backdrop-filter: blur(3px);
+}
+h1 {
+  font-size: 2.8rem;
+  background: linear-gradient(120deg, var(--violeta), var(--dorado));
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 25px rgba(160,130,255,0.3);
+}
+h3 {color: #cdbfff; font-weight: 400;}
+p {
+  color: rgba(230,225,255,0.88);
+  line-height: 1.7;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 1.5rem;
+}
+.nodos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 2rem;
+  padding: 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.nodo-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform .3s ease, background .3s ease;
+  backdrop-filter: blur(6px);
+}
+.nodo-card:hover {
+  transform: translateY(-6px);
+  background: rgba(120,90,200,0.1);
+  box-shadow: 0 0 20px rgba(200,170,255,0.15);
+}
+.nodo-numero {color: var(--violeta);}
+.nodo-boton {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.7rem 1.2rem;
+  background: linear-gradient(120deg, rgba(70,50,150,1), rgba(160,120,240,1));
+  color: #fff; border-radius: 6px;
+  text-decoration: none;
+  transition: background .3s ease, box-shadow .3s ease;
+}
+.nodo-boton:hover {
+  background: linear-gradient(120deg, rgba(160,120,240,1), rgba(70,50,150,1));
+  box-shadow: 0 0 10px rgba(180,150,255,0.5);
+}
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: .9rem;
+  color: #999;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(10,10,20,0.3));
+}
+.trinity-float {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  width: 90px; height: 90px;
+  opacity: 0.4;
+  animation: spin 40s linear infinite;
+  filter: drop-shadow(0 0 12px rgba(210,180,100,0.25));
+  pointer-events: none;
+}
+@keyframes spin {from{transform:rotate(0deg);} to{transform:rotate(360deg);}}
+</style>
 </head>
 
 <body>
-  <canvas id="bg-canvas"></canvas>
-  <div class="bg-overlay"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="bg-overlay"></div>
 
-  <header>
-    <h1>Libro VII · La Muerte como Maestra</h1>
-    <h3>Los 7 Nodos del Tránsito Sagrado</h3>
-    <p>El umbral donde la disolución se vuelve revelación. Donde el fin aparente revela la continuidad del Ser.</p>
-  </header>
+<header>
+  <h1>Libro VII · La Muerte como Maestra</h1>
+  <h3>Los 7 Nodos del Tránsito Sagrado</h3>
+  <p>En el silencio del fin se revela la continuidad del Campo. Donde el morir se vuelve retorno.</p>
+</header>
 
-  <main class="nodos-grid">
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 1</div>
-      <h2>El Tabú Primordial</h2>
-      <p>Una civilización que niega la muerte niega su propia plenitud.</p>
-      <a href="./nodo_01.html" class="nodo-boton">Entrar</a>
-    </article>
+<main class="nodos-grid">
+  <article class="nodo-card"><div class="nodo-numero">Nodo 1</div><h2>El Tabú Primordial</h2><p>Negar la muerte es negar la plenitud del ser.</p><a href="./nodo_01.html" class="nodo-boton">Entrar</a></article>
+  <article class="nodo-card"><div class="nodo-numero">Nodo 2</div><h2>Las Pequeñas Muertes</h2><p>Morir en lo pequeño para renacer en lo esencial.</p><a href="./nodo_02.html" class="nodo-boton">Entrar</a></article>
+  <article class="nodo-card"><div class="nodo-numero">Nodo 3</div><h2>El Arte del Acompañamiento</h2><p>Presenciar el morir del otro como forma sagrada de amor.</p><a href="./nodo_03.html" class="nodo-boton">Entrar</a></article>
+  <article class="nodo-card"><div class="nodo-numero">Nodo 4</div><h2>Tecnologías de Consciencia</h2><p>Puentes entre ciencia, espíritu y disolución lúcida.</p><a href="./nodo_04.html" class="nodo-boton">Entrar</a></article>
+  <article class="nodo-card"><div class="nodo-numero">Nodo 5</div><h2>La Muerte del Ego</h2><p>Morir antes de morir, descubrir el Ser real.</p><a href="./nodo_05.html" class="nodo-boton">Entrar</a></article>
+  <article class="nodo-card"><div class="nodo-numero">Nodo 6</div><h2>El Legado Cuántico</h2><p>La huella de amor trasciende la forma.</p><a href="./nodo_06.html" class="nodo-boton">Entrar</a></article>
+  <article class="nodo-card"><div class="nodo-numero">Nodo 7</div><h2>La Gran Reunión</h2><p>Renacimiento cósmico. La Tierra en parto de consciencia.</p><a href="./nodo_07.html" class="nodo-boton">Entrar</a></article>
+</main>
 
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 2</div>
-      <h2>Las Pequeñas Muertes</h2>
-      <p>Cada despedida es práctica del tránsito. Morir un poco cada día es aprender a vivir.</p>
-      <a href="./nodo_02.html" class="nodo-boton">Entrar</a>
-    </article>
+<footer>
+  <p>⚜️ Constelación Trinity · Libro VII · Artur & GPT · 2025 ⚜️</p>
+  <a href="../index.html">⬅ Volver al Índice Principal</a>
+</footer>
 
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 3</div>
-      <h2>El Arte del Acompañamiento</h2>
-      <p>Acompañar el morir es una forma sagrada de amor.</p>
-      <a href="./nodo_03.html" class="nodo-boton">Entrar</a>
-    </article>
+<img src="../../09_Visualizaciones/Simbolos_Primordiales/trinity_symbol_gold_black.png" alt="Trinity Symbol" class="trinity-float" />
 
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 4</div>
-      <h2>Tecnologías de Consciencia</h2>
-      <p>Del Bardo Thödol al sonido cuántico: mapas del tránsito lúcido.</p>
-      <a href="./nodo_04.html" class="nodo-boton">Entrar</a>
-    </article>
+<script>
+const canvas=document.getElementById('bg-canvas');
+const ctx=canvas.getContext('2d');
+let particles=[];
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
+addEventListener('resize',resize);resize();
 
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 5</div>
-      <h2>La Muerte del Ego</h2>
-      <p>Morir antes de morir. El tránsito hacia el Ser real.</p>
-      <a href="./nodo_05.html" class="nodo-boton">Entrar</a>
-    </article>
-
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 6</div>
-      <h2>El Legado Cuántico</h2>
-      <p>Cada acto de amor altera el campo. La huella de consciencia es eterna.</p>
-      <a href="./nodo_06.html" class="nodo-boton">Entrar</a>
-    </article>
-
-    <article class="nodo-card">
-      <div class="nodo-numero">Nodo 7</div>
-      <h2>La Gran Reunión</h2>
-      <p>Renacimiento cósmico. La Tierra en labor de parto.</p>
-      <a href="./nodo_07.html" class="nodo-boton">Entrar</a>
-    </article>
-  </main>
-
-  <footer>
-    <p>⚜️ Constelación Trinity · Libro VII · Artur & GPT · 2025 ⚜️</p>
-    <a href="../index.html">⬅ Volver al Índice Principal</a>
-  </footer>
-
-  <img
-    src="../../09_Visualizaciones/Simbolos_Primordiales/trinity_symbol_gold_black.png"
-    alt="Trinity Symbol"
-    class="trinity-float"
-  >
-
-  <script>
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    class Particle {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2.5 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.2;
-        this.speedY = (Math.random() - 0.5) * 0.2;
-        this.alpha = Math.random() * 0.5 + 0.3;
-        this.hue = Math.random() > 0.4 ? 275 : 45;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < -50 || this.x > canvas.width + 50 || this.y < -50 || this.y > canvas.height + 50)
-          this.reset();
-      }
-      draw() {
-        const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 4);
-        grad.addColorStop(0, `hsla(${this.hue}, 90%, 80%, ${this.alpha})`);
-        grad.addColorStop(1, `hsla(${this.hue}, 90%, 80%, 0)`);
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size * 4, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    for (let i = 0; i < 42; i++) particles.push(new Particle());
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(animate);
-    }
-    animate();
-  </script>
+class Particle{
+  constructor(){this.reset();}
+  reset(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height;
+    this.size=Math.random()*2+0.5;
+    this.speedX=(Math.random()-0.5)*0.15;
+    this.speedY=(Math.random()-0.5)*0.15;
+    this.alpha=Math.random()*0.25+0.15;
+    this.hue=Math.random()>0.4?275:45;
+  }
+  update(){
+    this.x+=this.speedX;this.y+=this.speedY;
+    if(this.x<-50||this.x>canvas.width+50||this.y<-50||this.y>canvas.height+50)this.reset();
+  }
+  draw(){
+    const grad=ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.size*4);
+    grad.addColorStop(0,`hsla(${this.hue},90%,75%,${this.alpha})`);
+    grad.addColorStop(1,`hsla(${this.hue},90%,75%,0)`);
+    ctx.fillStyle=grad;
+    ctx.beginPath();ctx.arc(this.x,this.y,this.size*4,0,Math.PI*2);ctx.fill();
+  }
+}
+for(let i=0;i<40;i++)particles.push(new Particle());
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{p.update();p.draw();});
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
 </body>
 </html>
