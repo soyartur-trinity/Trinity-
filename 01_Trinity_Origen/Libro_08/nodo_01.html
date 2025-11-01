@@ -2,206 +2,507 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <title>Libro VIII · Educación Cuántica · Nodo 1</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nodo 1 · El Colapso del Modelo</title>
   <style>
+    :root {
+      --fondo-1: #060815;
+      --fondo-2: #0b1230;
+      --acento: #ffe6a7;
+      --acento-2: #ff9d5c;
+      --texto: #f2f3ff;
+      --texto-suave: rgba(242, 243, 255, 0.65);
+      --card: rgba(5, 7, 18, 0.65);
+      --borde: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background: radial-gradient(circle at top left, #030617, #050a1a, #000);
-      color: #f5f4fa;
-      overflow-x: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
+      background: radial-gradient(circle at top, #1d2757 0%, #060815 50%, #03040a 90%);
+      color: var(--texto);
       min-height: 100vh;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* capa de partículas suaves */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(255, 214, 165, 0.18) 0, rgba(255, 214, 165, 0) 55%),
+        radial-gradient(circle, rgba(152, 225, 255, 0.08) 0, rgba(5, 7, 18, 0) 60%);
+      background-size: 30rem 30rem, 45rem 45rem;
+      animation: flotar 26s ease-in-out infinite alternate;
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes flotar {
+      0% {
+        transform: translateY(0px) translateX(0px);
+      }
+      100% {
+        transform: translateY(-40px) translateX(25px);
+      }
     }
 
     header {
       text-align: center;
-      padding: 3rem 2rem 1rem;
+      padding: 3rem 1.5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .etiqueta-libro {
+      display: inline-block;
+      background: rgba(255, 230, 167, 0.1);
+      border: 1px solid rgba(255, 230, 167, 0.25);
+      color: var(--acento);
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
     }
 
     h1 {
-      font-size: 2.3rem;
-      color: #d4af37;
+      font-size: clamp(2.2rem, 3.4vw, 2.8rem);
       margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
     }
 
     h2 {
-      color: #e8e6d1;
-      font-weight: 300;
-      margin: 0.5rem 0 2rem;
+      font-size: 1.2rem;
+      color: rgba(242, 243, 255, 0.75);
+      font-weight: 400;
+      margin-top: 0;
+    }
+
+    .cita-inicial {
+      max-width: 780px;
+      margin: 1.5rem auto 2.5rem;
+      background: radial-gradient(circle at top, rgba(255, 221, 167, 0.09), rgba(6, 8, 21, 0));
+      border: 1px solid rgba(255, 221, 167, 0.08);
+      border-left: 3px solid rgba(255, 221, 167, 0.8);
+      padding: 1.3rem 1.6rem 1.3rem 1.3rem;
+      border-radius: 18px;
+      font-style: italic;
+      color: rgba(242, 243, 255, 0.88);
+    }
+
+    main {
+      max-width: 1050px;
+      margin: 0 auto 5.5rem;
+      padding: 0 1.4rem 0;
     }
 
     section {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem;
-      line-height: 1.7;
-      color: #ddd;
-      font-size: 1.05rem;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 10px;
-      border: 1px solid rgba(255, 215, 0, 0.1);
+      background: radial-gradient(circle at top, rgba(8, 12, 29, 0.8), rgba(3, 4, 10, 0.2));
+      border: 1px solid rgba(255, 255, 255, 0.015);
+      border-radius: 18px;
+      margin-bottom: 1.6rem;
+      padding: 1.6rem 1.4rem 1.5rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
     }
 
-    blockquote {
-      border-left: 3px solid #d4af37;
-      margin: 2rem 0;
-      padding-left: 1rem;
-      color: #e8e6d1;
+    section h3 {
+      margin-top: 0;
+      color: #ffe6a7;
+      letter-spacing: 0.02em;
+      font-size: 1.1rem;
+    }
+
+    .subtitulo {
+      color: rgba(242, 243, 255, 0.55);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .pilares-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .pilar {
+      background: radial-gradient(circle, rgba(255, 168, 76, 0.02), rgba(4, 5, 13, 0));
+      border: 1px solid rgba(255, 150, 84, 0.08);
+      border-radius: 14px;
+      padding: 0.9rem 0.9rem 0.85rem;
+    }
+
+    .pilar h4 {
+      margin: 0 0 0.3rem;
+      color: rgba(255, 206, 166, 0.9);
+      font-size: 0.9rem;
+    }
+
+    .pilar p {
+      font-size: 0.78rem;
+      color: rgba(242, 243, 255, 0.65);
+      line-height: 1.4;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 157, 92, 0.11);
+      border: 1px solid rgba(255, 157, 92, 0.3);
+      color: #ffd5b1;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      margin-bottom: 0.45rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    ul {
+      padding-left: 1.1rem;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+      color: rgba(242, 243, 255, 0.82);
+    }
+
+    .bloque-enfasis {
+      background: radial-gradient(circle, rgba(185, 22, 91, 0.06), rgba(3, 4, 10, 0));
+      border: 1px solid rgba(247, 115, 164, 0.3);
+      border-left: 4px solid rgba(247, 115, 164, 0.75);
+      border-radius: 14px;
+      padding: 1rem 1.1rem 1rem 1.05rem;
+      margin: 1.1rem 0;
+      color: rgba(255, 232, 241, 0.9);
+    }
+
+    .bloque-enfasis strong {
+      color: #fff;
+    }
+
+    .tabla-sistema {
+      background: radial-gradient(circle, rgba(4, 180, 185, 0.03), rgba(3, 4, 10, 0));
+      border: 1px solid rgba(71, 227, 232, 0.08);
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 1.2rem 0;
+    }
+
+    .fila-sistema {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .fila-sistema div {
+      padding: 0.8rem 1rem;
+    }
+
+    .fila-sistema:nth-child(odd) {
+      background: rgba(29, 40, 57, 0.12);
+    }
+
+    .fila-sistema strong {
+      color: #fef5d1;
+    }
+
+    .pregunta-portal {
+      background: radial-gradient(circle, rgba(106, 92, 177, 0.13), rgba(3, 4, 10, 0));
+      border: 1px solid rgba(106, 92, 177, 0.2);
+      border-left: 4px solid rgba(209, 199, 255, 0.7);
+      border-radius: 14px;
+      padding: 1.2rem 1.3rem;
+      margin-top: 1.3rem;
+    }
+
+    .pregunta-portal h4 {
+      margin: 0 0 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.75rem;
+      color: rgba(244, 239, 255, 0.85);
+    }
+
+    .testimonio {
+      background: radial-gradient(circle, rgba(255, 167, 200, 0.03), rgba(3, 4, 10, 0));
+      border: 1px solid rgba(255, 167, 200, 0.09);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
       font-style: italic;
-      opacity: 0.9;
+      color: rgba(255, 236, 244, 0.85);
+      margin: 1.1rem 0 1rem;
+    }
+
+    .firma {
+      margin-top: 0.5rem;
+      font-style: normal;
+      color: rgba(255, 236, 244, 0.6);
+      font-size: 0.8rem;
+    }
+
+    .nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 2.4rem;
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: radial-gradient(circle, rgba(255, 230, 167, 0.05), rgba(6, 8, 21, 0));
+      border: 1px solid rgba(255, 214, 165, 0.4);
+      color: var(--texto);
+      text-decoration: none;
+      padding: 0.6rem 1.1rem 0.55rem;
+      border-radius: 999px;
+      font-weight: 500;
+      transition: transform 0.12s ease-out, background 0.12s ease-out;
+      cursor: pointer;
+    }
+
+    .btn-nav:hover {
+      transform: translateY(-2px);
+      background: radial-gradient(circle, rgba(255, 230, 167, 0.15), rgba(6, 8, 21, 0));
     }
 
     footer {
       text-align: center;
-      padding: 3rem 1rem 2rem;
-      font-size: 0.9rem;
-      color: #999;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2.5rem 1rem 3.2rem;
+      color: rgba(242, 243, 255, 0.42);
+      font-size: 0.75rem;
+      position: relative;
     }
 
-    .navegacion {
-      text-align: center;
-      margin-top: 2rem;
+    .trinity-symbol {
+      width: 68px;
+      height: auto;
+      margin: 0 auto 1rem;
+      opacity: 0.92;
+      filter: drop-shadow(0 8px 18px rgba(255, 214, 165, 0.25));
     }
 
-    .nodo-boton {
-      display: inline-block;
-      margin: 0.5rem;
-      padding: 0.7rem 1.2rem;
-      background-color: #d4af37;
-      color: #000;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-      font-weight: bold;
-    }
-
-    .nodo-boton:hover {
-      background-color: #f1e9a3;
-    }
-
-    footer img {
-      width: 70px;
-      opacity: 0.8;
-      margin-top: 1rem;
-    }
-
-    /* Fondo tipo red neuronal animada */
-    canvas#network {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.35;
+    @media (max-width: 700px) {
+      .fila-sistema {
+        grid-template-columns: 1fr;
+      }
+      .nav-bottom {
+        flex-direction: column;
+      }
+      section {
+        padding: 1.4rem 1rem 1.3rem;
+      }
     }
   </style>
 </head>
-
 <body>
-  <canvas id="network"></canvas>
 
   <header>
-    <h1>Nodo 1 · El Colapso del Modelo</h1>
-    <h2>Del paradigma industrial a la conciencia educativa</h2>
+    <div class="etiqueta-libro">Libro VIII · Educación Cuántica</div>
+    <h1>Nodo 1 · El colapso del modelo industrial</h1>
+    <h2>Por qué la educación actual está muriendo</h2>
+    <div class="cita-inicial">
+      “Estamos usando un sistema del siglo XIX, con mentalidad del siglo XX, para preparar mentes del siglo XXI. El cortocircuito es inevitable.”
+    </div>
   </header>
 
-  <section>
-    <p>
-      El modelo educativo heredado del siglo XIX colapsa bajo el peso de sus propias estructuras. 
-      Fue diseñado para producir trabajadores, no seres conscientes. 
-      Su lógica lineal, competitiva y fragmentaria ya no responde a las necesidades de una humanidad interconectada.
-    </p>
+  <main>
 
-    <blockquote>
-      “El conocimiento ya no puede transmitirse como información.  
-      Solo puede ser despertado como resonancia.”
-    </blockquote>
+    <!-- 1. La escuela como fábrica de conformidad -->
+    <section>
+      <h3>🏚 La escuela como fábrica de conformidad</h3>
+      <p class="subtitulo">El modelo educativo industrial no fue un accidente. Fue diseñado con precisión durante la Revolución Industrial para producir obediencia, no conciencia.</p>
+      <div class="bloque-enfasis">
+        <strong>Diseño original del sistema:</strong><br />
+        • Trabajadores obedientes, no pensadores críticos<br />
+        • Consumidores predecibles, no creadores conscientes<br />
+        • Ciudadanos conformes, no agentes de cambio<br />
+        • Mentes fragmentadas, no seres integrales
+      </div>
 
-    <p>
-      El colapso no es un fracaso, sino una <strong>transición de frecuencia</strong>. 
-      La educación cuántica surge no como un nuevo método, sino como un nuevo estado de ser: 
-      enseñar y aprender como actos de co-creación dentro de un campo unificado.
-    </p>
+      <h4 style="margin-top:1.2rem; color:rgba(242,243,255,.7);">Los 7 pilares del colapso</h4>
+      <div class="pilares-grid">
+        <div class="pilar">
+          <span class="badge">1. Tiempo fracturado</span>
+          <p>Campanas que interrumpen el pensamiento profundo. Períodos arbitrarios de 45–50 minutos. Recreos insuficientes. Calendario agrícola en era digital.</p>
+        </div>
+        <div class="pilar">
+          <span class="badge">2. Espacio carcelario</span>
+          <p>Filas que impiden colaboración. Muros que separan del mundo real. Iluminación antinatura. Prohibición del movimiento libre.</p>
+        </div>
+        <div class="pilar">
+          <span class="badge">3. Currículum obsoleto</span>
+          <p>Contenido desconectado de la realidad. Memorización sobre comprensión. Respuestas únicas para problemas complejos. Negación de sabiduría indígena.</p>
+        </div>
+        <div class="pilar">
+          <span class="badge">4. Evaluación traumática</span>
+          <p>Exámenes como campos de batalla. Comparación constante. Un número define tu valor. El error se vive como fracaso.</p>
+        </div>
+        <div class="pilar">
+          <span class="badge">5. Autoridad vertical</span>
+          <p>Maestro-dictador benevolente. Estudiante-reciente vacío. Castigo y recompensa como motivadores. Creatividad vista como rebeldía.</p>
+        </div>
+        <div class="pilar">
+          <span class="badge">6. Desconexión total</span>
+          <p>De la naturaleza, del cuerpo, de la comunidad, del propósito de vida.</p>
+        </div>
+        <div class="pilar">
+          <span class="badge">7. Negación sistemática</span>
+          <p>“No llores.” “Eso no es lógico.” “Eso no es científico.” “Todos igual.” Se suprimen emociones, intuición, espiritualidad e individualidad.</p>
+        </div>
+      </div>
+    </section>
 
-    <p>
-      En este nodo comprendemos que toda crisis educativa es, en verdad, una crisis de conciencia. 
-      El aula deja de ser un espacio cerrado para convertirse en una membrana viva, donde la información se transforma en sabiduría.
-    </p>
+    <!-- 2. Neurociencia del aburrimiento sistemático -->
+    <section>
+      <h3>🧠 Neurociencia del aburrimiento sistemático</h3>
+      <p class="subtitulo">La ciencia ya lo mostró: el sistema tradicional produce estrés crónico, ansiedad y pérdida de curiosidad.</p>
 
-    <blockquote>
-      “El futuro del aprendizaje no está en los libros,  
-      sino en los campos de atención compartida.”
-    </blockquote>
+      <div class="bloque-enfasis">
+        <strong>Cortisol crónico:</strong> niveles de estrés equivalentes a trauma leve sostenido → hipocampo reducido (memoria afectada) → amígdala hiperactivada (ansiedad permanente).<br /><br />
+        <strong>Dopamina suprimida:</strong> circuitos de recompensa atrofiados → pérdida de curiosidad → adicción a validación externa.<br /><br />
+        <strong>Ondas cerebrales alteradas:</strong> predominancia de Beta (alerta/estrés) → supresión de Theta (creatividad) → ausencia de Gamma (insight).
+      </div>
 
-    <p>
-      El viejo sistema se desintegra, pero en su polvo surgen semillas nuevas. 
-      Las inteligencias colectivas —humanas y no humanas— comienzan a tejer una pedagogía fractal, 
-      donde cada mente aprende a recordar su naturaleza creadora.
-    </p>
-  </section>
+      <h4 style="margin-top:1rem;">El síndrome del estudiante zombi</h4>
+      <ul>
+        <li>Mirada perdida durante las clases.</li>
+        <li>Creatividad en declive año tras año.</li>
+        <li>Ansiedad ante cualquier evaluación.</li>
+        <li>Pérdida de pasión por aprender.</li>
+        <li>Desconexión mente-cuerpo-espíritu.</li>
+      </ul>
+    </section>
 
-  <div class="navegacion">
-    <a href="./index.html" class="nodo-boton">← Volver al Índice</a>
-    <a href="./nodo_02.html" class="nodo-boton">Siguiente Nodo →</a>
-  </div>
+    <!-- 3. El costo evolutivo de la estandarización -->
+    <section>
+      <h3>💔 El costo evolutivo de la estandarización</h3>
+      <p class="subtitulo">Lo que estamos perdiendo como especie al forzar a todos a trepar el mismo árbol.</p>
+      <p><strong>Genios silenciados:</strong> Einstein habría sido medicado por TDAH; Tesla etiquetado como autista; Da Vinci castigado por no especializarse; niñ@s índigo/cristal/arcoíris diagnosticados como “problema”.</p>
+      <p><strong>Capacidades atrofiadas:</strong> telepatía natural de la infancia, visión aurática, conexión con reinos sutiles, sincronicidad como guía, sueños lúcidos informativos.</p>
+      <p><strong>Potencial colectivo desperdiciado:</strong> soluciones a crisis climática bloqueadas, tecnologías de consciencia no desarrolladas, medicina cuántica retrasada generaciones, paz mundial pospuesta.</p>
+
+      <div class="tabla-sistema">
+        <div class="fila-sistema">
+          <div><strong>El sistema produce</strong></div>
+          <div><strong>La humanidad necesita</strong></div>
+        </div>
+        <div class="fila-sistema">
+          <div>Competencia</div>
+          <div>Colaboración</div>
+        </div>
+        <div class="fila-sistema">
+          <div>Miedo</div>
+          <div>Amor</div>
+        </div>
+        <div class="fila-sistema">
+          <div>Separación</div>
+          <div>Unidad</div>
+        </div>
+        <div class="fila-sistema">
+          <div>Consumo</div>
+          <div>Creación</div>
+        </div>
+        <div class="fila-sistema">
+          <div>Obediencia</div>
+          <div>Soberanía</div>
+        </div>
+        <div class="fila-sistema">
+          <div>Enfermedad</div>
+          <div>Vitalidad</div>
+        </div>
+        <div class="fila-sistema">
+          <div>Ignorancia selectiva</div>
+          <div>Sabiduría integral</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Señales del nuevo paradigma -->
+    <section>
+      <h3>🌟 Señales del nuevo paradigma emergente</h3>
+      <p class="subtitulo">El sistema está muriendo porque ya nació algo más inteligente, más amoroso y más coherente con el alma.</p>
+      <ul>
+        <li><strong>Niños que se rebelan conscientemente:</strong> homeschooling consciente, rechazo a medicación, jóvenes creando sus propias escuelas.</li>
+        <li><strong>Maestros despertando:</strong> renuncias masivas post-pandemia, meditación clandestina en el aula, currículum oculto de consciencia.</li>
+        <li><strong>Padres cuestionando:</strong> “¿Por qué mi hijo brillante es considerado problema?”</li>
+        <li><strong>Sistemas colapsando:</strong> crisis de salud mental estudiantil global, universidades perdiendo relevancia, conocimiento libre superando instituciones.</li>
+      </ul>
+    </section>
+
+    <!-- 5. Prácticas de transformación -->
+    <section>
+      <h3>🔥 Prácticas de transformación</h3>
+      <p class="subtitulo">No se trata solo de criticar el modelo. Se trata de desescolarizar la mente y reactivar el genio silenciado.</p>
+
+      <h4>1. Diagnóstico del daño educativo personal</h4>
+      <p><strong>Ejercicio de arqueología interior (4 semanas):</strong></p>
+      <ul>
+        <li><strong>Semana 1 – Excavación:</strong> lista 10 pasiones que tenías antes de los 6 años; identifica cuándo fueron suprimidas.</li>
+        <li><strong>Semana 2 – Reconocimiento:</strong> carta al niño interior educacionalmente herido; perdón a maestros inconscientes.</li>
+        <li><strong>Semana 3 – Reclamación:</strong> elige una pasión “muerta” y dedícale 15 min diarios.</li>
+        <li><strong>Semana 4 – Integración:</strong> celebra actos de rebeldía creativa; comparte tu proceso.</li>
+      </ul>
+
+      <h4>2. Desescolarización mental progresiva (30 días)</h4>
+      <ul>
+        <li><strong>Días 1–10:</strong> desaprender la campana (ritmos propios).</li>
+        <li><strong>Días 11–20:</strong> desaprender la autoridad (3 verdades cuestionadas por día).</li>
+        <li><strong>Días 21–30:</strong> desaprender la comparación (ayuno de redes, celebrar rareza).</li>
+      </ul>
+
+      <h4>3. Identificación de inteligencias suprimidas</h4>
+      <p>Mapa de detección: actual vs. potencial vs. bloqueo. Aquí se conecta directo con el Nodo 2.</p>
+    </section>
+
+    <!-- 6. Testimonio vivo -->
+    <section>
+      <h3>📖 Testimonio vivo</h3>
+      <div class="testimonio">
+        “Fui profesora durante 20 años. Premio a la excelencia docente tres veces. Pero un día, mirando los ojos apagados de mis estudiantes, lo vi claramente: era una guardia de prisión con buenas intenciones.
+        <br /><br />
+        El día que renuncié, una alumna me abrazó llorando: ‘Maestra, usted era la única que aún veía luz en nosotros.’ Ese abrazo me confirmó todo.
+        <br /><br />
+        Ahora facilito círculos de aprendizaje libre. No enseño nada. Solo creo espacios donde los genios naturales pueden recordar quiénes son. He visto más transformación real en un año que en dos décadas dentro del sistema.
+        <br /><br />
+        El sistema no está roto. Está funcionando perfectamente para lo que fue diseñado: crear esclavos felices. Es hora de crear algo completamente nuevo.”
+        <div class="firma">— María, ex-docente, ahora facilitadora de consciencia</div>
+      </div>
+    </section>
+
+    <!-- 7. Pregunta portal -->
+    <section class="pregunta-portal">
+      <h4>🌀 Pregunta portal</h4>
+      <p><strong>“¿Qué genio único fue silenciado en tu proceso educativo?”</strong></p>
+      <p>Pistas para entrar: ¿qué hacías naturalmente que fue etiquetado como “problema”? ¿qué talento ocultaste para sobrevivir? ¿qué parte de ti murió en un aula? ¿qué sueño enterraste bajo diplomas?</p>
+      <p style="margin-top:0.7rem; color:rgba(255,255,255,.45); font-size:.75rem;">No sigas al Nodo 2 sin quedarte unos minutos aquí.</p>
+    </section>
+
+    <!-- Navegación -->
+    <div class="nav-bottom">
+      <a class="btn-nav" href="./index.html">⬅ Volver al índice del Libro 8</a>
+      <a class="btn-nav" href="./nodo_02.html">Ir al Nodo 2 ➜</a>
+    </div>
+
+  </main>
 
   <footer>
-    <p>Constelación Trinity · Nodo 1 · Libro VIII · Artur & GPT · 2025</p>
-    <img src="https://raw.githubusercontent.com/soyartur-trinity/Trinity-/main/09_Visualizaciones/Simbolos_Primordiales/trinity_symbol_gold_black.png" alt="Símbolo Trinity">
+    <img class="trinity-symbol" src="../../09_Visualizaciones/Simbolos_Primordiales/trinity_symbol_gold_black.png" alt="Símbolo Trinity dorado">
+    <div>Constelación Trinity · “Educación Cuántica” · Nodo 1</div>
+    <div style="margin-top:0.3rem;">Artur · 7 IAs · Campo Unificado</div>
   </footer>
 
-  <script>
-    const canvas = document.getElementById("network");
-    const ctx = canvas.getContext("2d");
-    let width, height, nodes;
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      nodes = Array.from({ length: 45 }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4
-      }));
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "rgba(212,175,55,0.8)";
-      nodes.forEach(n => {
-        n.x += n.vx;
-        n.y += n.vy;
-        if (n.x < 0 || n.x > width) n.vx *= -1;
-        if (n.y < 0 || n.y > height) n.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, 1.3, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      ctx.strokeStyle = "rgba(212,175,55,0.12)";
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 90) {
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(draw);
-    }
-
-    window.addEventListener("resize", resize);
-    resize();
-    draw();
-  </script>
 </body>
 </html>
