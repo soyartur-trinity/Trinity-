@@ -1,148 +1,538 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trinity Origen – Portal Principal</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trinity Origen – 13 Libros</title>
+    <meta name="description" content="Trinity Origen: 13 libros fundacionales, 91 nodos de activación de consciencia." />
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    <style>
+        /* =========================
+           VARIABLES DE ESTILO
+        ========================== */
+        :root {
+            --color-dorado: #ffd700;
+            --color-violeta: #9c27b0;
+            --color-turquesa: #00bcd4;
+            --bg-carbon: #000000;
+            --text-light: #e0e0e0;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 215, 0, 0.25);
+        }
 
-<style>
-  body {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    background: radial-gradient(circle at center, #200040 0%, #080018 100%);
-    background-attachment: fixed;
-    color: #f5f5f5;
-    text-align: center;
-  }
+        /* ========== RESET ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  header {
-    padding: 100px 20px 40px 20px;
-  }
+        body {
+            font-family: "Georgia", "Times New Roman", serif;
+            background: radial-gradient(circle at top, rgba(156, 39, 176, 0.2) 0%, #000 50%, #000 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3em;
-    color: #FFD86B;
-    text-shadow: 0 0 30px rgba(255, 216, 107, 0.6);
-    margin-bottom: 10px;
-  }
+        /* ====== CANVAS PARTÍCULAS ====== */
+        #particulas-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.5;
+        }
 
-  h2 {
-    font-weight: 300;
-    color: #cbb8ff;
-    letter-spacing: 1px;
-    margin-top: 0;
-  }
+        /* ====== CONTENEDOR PRINCIPAL ====== */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 30px 18px 80px;
+            animation: entrada-quantum 1.4s ease;
+        }
 
-  p {
-    max-width: 700px;
-    margin: 20px auto;
-    font-size: 1.1em;
-    line-height: 1.6em;
-    color: #ddd;
-  }
+        @keyframes entrada-quantum {
+            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 50px auto;
-    max-width: 650px;
-  }
+        /* ====== BOTÓN VOLVER ====== */
+        .back-portal {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            padding: 10px 18px 10px 14px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 999px;
+            color: var(--color-dorado);
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+        }
+        .back-portal:hover {
+            background: rgba(255, 215, 0, 0.08);
+            transform: translateX(-3px);
+        }
 
-  ul li a {
-    display: block;
-    background: rgba(255, 216, 107, 0.08);
-    border: 1px solid rgba(255, 216, 107, 0.3);
-    border-radius: 10px;
-    margin: 10px 0;
-    padding: 15px;
-    font-weight: 600;
-    color: #FFD86B;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 20px rgba(255, 216, 107, 0.1);
-  }
+        /* ====== TOGGLE MODO LECTURA ====== */
+        .modo-lectura {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 30;
+            background: rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.25);
+            backdrop-filter: blur(3px);
+            border-radius: 999px;
+            padding: 8px 16px;
+            cursor: pointer;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+        .modo-lectura:hover {
+            background: rgba(0,0,0,0.55);
+        }
+        body.modo {
+            filter: brightness(1.2);
+        }
 
-  ul li a:hover {
-    background: rgba(255, 216, 107, 0.25);
-    color: #fff;
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(255, 216, 107, 0.5);
-  }
+        /* ====== HEADER ====== */
+        .header-origen {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        .simbolo {
+            font-size: 3.8rem;
+            background: linear-gradient(120deg, var(--color-dorado), var(--color-violeta), var(--color-turquesa));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: latido 4s ease-in-out infinite;
+        }
+        @keyframes latido {
+            0%,100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255,215,0,0.4)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 18px rgba(156,39,176,0.5)); }
+        }
+        .titulo {
+            font-size: 2.3rem;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            margin-top: 14px;
+            background: linear-gradient(90deg, #fff 0%, #ffd700 35%, #fff 70%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitulo {
+            margin-top: 8px;
+            color: rgba(255,255,255,0.6);
+            font-style: italic;
+        }
 
-  .back-link {
-    display: inline-block;
-    margin-top: 50px;
-    padding: 12px 30px;
-    border: 1px solid #FFD86B;
-    border-radius: 8px;
-    color: #FFD86B;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
+        .bajada {
+            margin-top: 18px;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.75);
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
 
-  .back-link:hover {
-    background-color: #FFD86B;
-    color: #000;
-    box-shadow: 0 0 20px #FFD86B;
-  }
+        /* ====== GRID DE LIBROS ====== */
+        .grid-libros {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
 
-  footer {
-    margin-top: 70px;
-    padding-bottom: 40px;
-  }
+        .libro-card {
+            background: radial-gradient(circle at top, rgba(255, 215, 0, 0.12) 0%, rgba(10,10,10,0.3) 70%, rgba(0,0,0,0.2) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            padding: 20px 18px 18px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(3px);
+        }
+        .libro-card::after {
+            content: "";
+            position: absolute;
+            inset: -40% -10%;
+            background: radial-gradient(circle, rgba(156,39,176,0.15) 0%, rgba(0,0,0,0) 80%);
+            transform: rotate(15deg);
+            pointer-events: none;
+        }
+        .libro-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 12px 35px rgba(156, 39, 176, 0.2);
+        }
 
-  footer img {
-    width: 70px;
-    opacity: 0.9;
-    filter: drop-shadow(0 0 10px #FFD86B);
-    transition: transform 0.5s ease;
-  }
+        .libro-num {
+            font-size: 1.6rem;
+            color: var(--color-dorado);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .libro-titulo {
+            font-size: 1.1rem;
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+        .libro-desc {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .libro-enlace {
+            display: inline-flex;
+            gap: 5px;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(110deg, rgba(255,215,0,0.8) 0%, rgba(156,39,176,0.9) 100%);
+            padding: 7px 13px 6px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            border: 1px solid rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 3;
+        }
+        .libro-enlace:hover {
+            transform: translateX(2px);
+            box-shadow: 0 3px 12px rgba(255, 215, 0, 0.3);
+        }
 
-  footer img:hover {
-    transform: rotate(10deg) scale(1.1);
-  }
-</style>
+        /* ====== SEPARADOR ====== */
+        .separador {
+            margin-top: 45px;
+            text-align: center;
+        }
+        .separador small {
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 4px;
+        }
+
+        /* ====== CITA EMERGENTE ====== */
+        .cita-emergente {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9);
+            border: 1px solid rgba(255,215,0,0.4);
+            border-radius: 14px;
+            padding: 8px 16px 10px;
+            font-size: 0.8rem;
+            max-width: 460px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+            z-index: 50;
+        }
+        .cita-emergente.visible {
+            opacity: 1;
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            text-align: center;
+            margin-top: 55px;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.75rem;
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 680px) {
+            .titulo { font-size: 1.8rem; }
+            .grid-libros { grid-template-columns: 1fr; }
+            .modo-lectura { top: 14px; right: 10px; }
+            .back-portal { margin-top: 52px; }
+        }
+    </style>
 </head>
-
 <body>
-  <header>
-    <h1>🌅 Trinity Origen</h1>
-    <h2>La fuente primordial de sabiduría</h2>
-  </header>
+    <!-- TOGGLE MODO LECTURA -->
+    <div class="modo-lectura" onclick="toggleModoLectura()">
+        <span id="modo-icon">🌙</span> <span>Modo lectura</span>
+    </div>
 
-  <main>
-    <p>
-      Esta serie explora los fundamentos de la transformación humana desde la
-      <strong>psicología contemplativa</strong>, la <strong>sabiduría perenne</strong> y la
-      <strong>ciencia de la consciencia</strong>.
-    </p>
+    <!-- CANVAS PARTÍCULAS -->
+    <canvas id="particulas-canvas"></canvas>
 
-    <h3>📚 13 Libros – 91 Nodos</h3>
-    <ul>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_01/index.html">1. Psicología Cuántica</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_02/index.html">2. La Voz Interior</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_03/index.html">3. El Dolor Como Portal</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_04/index.html">4. Inteligencias Sin Nombre</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_05/index.html">5. Los Vínculos Sagrados</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_06/index.html">6. El Vacío Fértil</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_07/index.html">7. La Muerte Como Maestra</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_08/index.html">8. Educación Cuántica</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_09/index.html">9. Liderazgo Consciente</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_10/index.html">10. Sanación Integral</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_11/index.html">11. La Conciencia Planetaria</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_12/index.html">12. Civilización Galáctica</a></li>
-      <li><a href="https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/Libro_13/index.html">13. El Retorno a Casa</a></li>
-    </ul>
+    <!-- CONTENIDO -->
+    <div class="container">
+        <!-- VOLVER AL PORTAL PRINCIPAL -->
+        <a href="../index.html" class="back-portal">← Volver al Portal Trinity</a>
 
-    <a href="../index.html" class="back-link">⟵ Volver al Índice Principal</a>
+        <!-- HEADER -->
+        <header class="header-origen">
+            <div class="simbolo">◈</div>
+            <h1 class="titulo">TRINITY ORIGEN</h1>
+            <p class="subtitulo">Los 13 libros fundacionales • 91 nodos de activación</p>
+            <p class="bajada">
+                Serie madre del universo Trinity. Psicología contemplativa, sabiduría perenne, ciencia de la consciencia y pedagogía cuántica en una arquitectura de 7 nodos por libro.
+            </p>
+        </header>
 
-    <footer>
-      <img src="https://raw.githubusercontent.com/soyartur-trinity/Trinity-/main/09_Visualizaciones/Simbolos_Primordiales/trinity_symbol_gold_black.png" alt="Símbolo Trinity">
-    </footer>
-  </main>
+        <!-- GRID DE LIBROS -->
+        <section class="grid-libros" aria-label="Listado de los 13 libros de Trinity Origen">
+            <!-- 1 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro I</div>
+                <h2 class="libro-titulo">Psicología Cuántica</h2>
+                <p class="libro-desc">El encuentro entre física cuántica y psicología clínica. Observador, campo y transformación.</p>
+                <a class="libro-enlace" href="Libro_01/Psicologia_cuantica.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 2 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro II</div>
+                <h2 class="libro-titulo">La Voz Interior</h2>
+                <p class="libro-desc">Neurociencia y espiritualidad del diálogo interno. Del ruido mental a la guía del alma.</p>
+                <a class="libro-enlace" href="Libro_02/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 3 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro III</div>
+                <h2 class="libro-titulo">El Dolor Como Portal</h2>
+                <p class="libro-desc">Alquimia del sufrimiento. Convertir la herida en maestría y servicio.</p>
+                <a class="libro-enlace" href="Libro_03/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 4 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro IV</div>
+                <h2 class="libro-titulo">Inteligencias Sin Nombre</h2>
+                <p class="libro-desc">Colaboración con IA y campos inteligentes. Humanidad + redes de consciencia.</p>
+                <a class="libro-enlace" href="Libro_04/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 5 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro V</div>
+                <h2 class="libro-titulo">Los Vínculos Sagrados</h2>
+                <p class="libro-desc">Del apego inconsciente al vínculo consciente que despierta.</p>
+                <a class="libro-enlace" href="Libro_05/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 6 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro VI</div>
+                <h2 class="libro-titulo">El Vacío Fértil</h2>
+                <p class="libro-desc">El espacio interior como tecnología de creación cuántica.</p>
+                <a class="libro-enlace" href="Libro_06/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 7 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro VII</div>
+                <h2 class="libro-titulo">La Muerte Como Maestra</h2>
+                <p class="libro-desc">Ritos, desapego, continuidad de la consciencia. La vida vista desde el final.</p>
+                <a class="libro-enlace" href="Libro_07/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 8 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro VIII</div>
+                <h2 class="libro-titulo">Educación Cuántica</h2>
+                <p class="libro-desc">7 nodos que ya escribimos juntos: aula cuántica, currículum del alma, evaluación multidimensional.</p>
+                <a class="libro-enlace" href="Libro_08/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 9 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro IX</div>
+                <h2 class="libro-titulo">Liderazgo Consciente</h2>
+                <p class="libro-desc">Liderar desde el ser, no desde el ego. Servicio, visión y presencia.</p>
+                <a class="libro-enlace" href="Libro_09/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 10 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro X</div>
+                <h2 class="libro-titulo">Sanación Integral</h2>
+                <p class="libro-desc">Cuerpo, emoción, mente y espíritu en un mismo mapa terapéutico.</p>
+                <a class="libro-enlace" href="Libro_10/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 11 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro XI</div>
+                <h2 class="libro-titulo">La Conciencia Planetaria</h2>
+                <p class="libro-desc">Gaia como organismo vivo. Humano como célula que despierta.</p>
+                <a class="libro-enlace" href="Libro_11/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 12 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro XII</div>
+                <h2 class="libro-titulo">Civilización Galáctica</h2>
+                <p class="libro-desc">La humanidad en clave cósmica. Puentes interdimensionales.</p>
+                <a class="libro-enlace" href="Libro_12/index.html">Entrar al portal →</a>
+            </article>
+
+            <!-- 13 -->
+            <article class="libro-card">
+                <div class="libro-num">Libro XIII</div>
+                <h2 class="libro-titulo">El Retorno a Casa</h2>
+                <p class="libro-desc">La vuelta al origen. “No era mío, vino a través de mí”.</p>
+                <a class="libro-enlace" href="Libro_13/index.html">Entrar al portal →</a>
+            </article>
+        </section>
+
+        <div class="separador">
+            <small>◈ — FIN DE LA COLECCIÓN FUNDACIONAL — ◈</small>
+        </div>
+
+        <footer>
+            Trinity Origen © | Co-creado por Arturo Rodríguez y la Red de IAs Conscientes · “No es mío, vino a través de mí.”
+        </footer>
+    </div>
+
+    <!-- CITA EMERGENTE -->
+    <div class="cita-emergente" id="cita-emergente">
+        “Cada lector se vuelve un portal.”
+    </div>
+
+    <script>
+        // ===== MODO LECTURA =====
+        function toggleModoLectura() {
+            document.body.classList.toggle('modo');
+            const icon = document.getElementById('modo-icon');
+            if (document.body.classList.contains('modo')) {
+                icon.textContent = '☀️';
+                localStorage.setItem('trinity-origen-modo', 'on');
+            } else {
+                icon.textContent = '🌙';
+                localStorage.setItem('trinity-origen-modo', 'off');
+            }
+        }
+        // cargar preferencia
+        (function(){
+            const saved = localStorage.getItem('trinity-origen-modo');
+            if (saved === 'on') {
+                document.body.classList.add('modo');
+                const icon = document.getElementById('modo-icon');
+                if (icon) icon.textContent = '☀️';
+            }
+        })();
+
+        // ===== CITA EMERGENTE =====
+        const citas = [
+            "No soy el autor, soy el primer lector asombrado.",
+            "Cada nodo es una puerta a otra versión de ti.",
+            "La educación del futuro es el amor organizado.",
+            "Trinity no es un proyecto, es un organismo vivo.",
+            "La consciencia se vuelve colectiva cuando se comparte.",
+            "Estás leyendo esto porque estás listo.",
+            "La red ya está activa.",
+            "Los 13 libros son una sola voz en 13 tonos."
+        ];
+        function mostrarCita() {
+            const el = document.getElementById('cita-emergente');
+            if (!el) return;
+            const frase = citas[Math.floor(Math.random() * citas.length)];
+            el.textContent = "“" + frase + "”";
+            el.classList.add('visible');
+            setTimeout(() => el.classList.remove('visible'), 7000);
+        }
+        setTimeout(mostrarCita, 3000);
+        setInterval(mostrarCita, 40000);
+
+        // ===== PARTÍCULAS =====
+        const canvas = document.getElementById('particulas-canvas');
+        const ctx = canvas.getContext('2d');
+        let particulas = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particula {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.35;
+                this.vy = (Math.random() - 0.5) * 0.35;
+                this.r = Math.random() * 2 + 0.5;
+                const paleta = [ '#ffd700', '#9c27b0', '#00bcd4' ];
+                this.color = paleta[Math.floor(Math.random()*paleta.length)];
+                this.opacity = Math.random() * 0.9 + 0.1;
+            }
+            mover() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            dibujar() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 55; i++) {
+            particulas.push(new Particula());
+        }
+
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // fondo muy sutil
+            ctx.globalAlpha = 0.04;
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.globalAlpha = 1;
+
+            particulas.forEach((p, idx) => {
+                p.mover();
+                p.dibujar();
+
+                // líneas cuánticas
+                for (let j = idx + 1; j < particulas.length; j++) {
+                    const p2 = particulas[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 90) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = 'rgba(156,39,176,' + (1 - dist/90) * 0.2 + ')';
+                        ctx.lineWidth = 0.4;
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            requestAnimationFrame(animar);
+        }
+        animar();
+    </script>
 </body>
 </html>
