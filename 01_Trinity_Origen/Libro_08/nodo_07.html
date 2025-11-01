@@ -1,171 +1,1340 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NODO 7 – La Red de Escuelas Conscientes | Libro VIII: Educación Cuántica</title>
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ArturoTrinity/constelacion-trinity/main/assets/trinity_favicon.png">
+  <meta charset="UTF-8" />
+  <title>Libro 8 – Nodo 7: La Red de Escuelas Conscientes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    :root {
+      --bg-1: #0c1230;
+      --bg-2: #28135e;
+      --bg-3: #4b1792;
+      --gold: #ffd57a;
+      --gold-soft: rgba(255, 213, 122, 0.12);
+      --panel: rgba(7, 6, 15, 0.35);
+      --white: #fff;
+      --accent: #9f7fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: 'Inter', system-ui, sans-serif;
-      background: radial-gradient(circle at top, rgba(255, 204, 111, 0.08), #0e1420 50%);
-      color: #f5f5f5;
-      line-height: 1.7;
-      padding-bottom: 4rem;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", Arial, sans-serif;
+      background: radial-gradient(circle at 5% 5%, rgba(159, 127, 255, 0.35) 0%, rgba(12, 18, 48, 1) 32%, rgba(7, 6, 15, 1) 100%), linear-gradient(145deg, var(--bg-1) 0%, var(--bg-2) 40%, var(--bg-3) 100%);
+      background-attachment: fixed;
+      color: var(--gold);
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
     }
-    header {
-      background: rgba(255, 204, 111, 0.1);
-      border-bottom: 1px solid rgba(255, 204, 111, 0.2);
+
+    /* fondo de partículas suaves */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.09) 0, rgba(0, 0, 0, 0) 45px),
+        radial-gradient(circle, rgba(159, 127, 255, 0.08) 0, rgba(0, 0, 0, 0) 55px),
+        radial-gradient(circle, rgba(255, 234, 178, 0.12) 0, rgba(0, 0, 0, 0) 75px);
+      background-size: 280px 280px, 420px 420px, 650px 650px;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 0;
+      animation: floaty 22s ease-in-out infinite;
+    }
+
+    @keyframes floaty {
+      0% { transform: translateY(0px); opacity: 1; }
+      50% { transform: translateY(18px); opacity: 0.9; }
+      100% { transform: translateY(0px); opacity: 1; }
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      backdrop-filter: blur(16px);
+      background: rgba(4, 4, 7, 0.35);
+      border-bottom: 1px solid rgba(255, 213, 122, 0.16);
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.4rem 1.4rem;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--gold);
+    }
+
+    .brand-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255, 213, 122, 1) 0%, rgba(255, 213, 122, 0) 68%);
+      box-shadow: 0 0 14px rgba(255, 213, 122, 0.8);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      background: rgba(159, 127, 255, 0.02);
+      border: 1px solid rgba(255, 213, 122, 0.12);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.68rem;
+      padding: 0.25rem 0.65rem 0.2rem;
+      border-radius: 999px;
+      transition: all 0.18s ease-out;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: rgba(255, 213, 122, 0.12);
+      border: 1px solid rgba(255, 213, 122, 0.42);
+      transform: translateY(-1px);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 1.4rem auto 4rem;
+      padding: 0 1.4rem 4rem;
+    }
+
+    .hero {
+      background: radial-gradient(circle at 12% 15%, rgba(255, 213, 122, 0.12) 0%, rgba(7, 6, 15, 0) 50%), rgba(7, 6, 15, 0.12);
+      border: 1px solid rgba(255, 213, 122, 0.08);
+      border-radius: 1.2rem;
+      padding: 1.6rem 1.7rem 1.4rem;
+      margin-bottom: 1.3rem;
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    .hero .subtitle {
+      margin-top: 0.55rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .hero small {
+      opacity: 0.82;
+      font-size: 0.7rem;
+      display: inline-block;
+      margin-top: 0.6rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      gap: 0.4rem;
+      align-items: center;
+      background: rgba(11, 255, 202, 0.12);
+      border: 1px solid rgba(11, 255, 202, 0.25);
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.65rem;
+      margin-bottom: 0.65rem;
+    }
+
+    h2, h3, h4 {
+      color: var(--gold);
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      margin-top: 1.8rem;
+      margin-bottom: 0.4rem;
+      font-size: 1.25rem;
+    }
+
+    h3 {
+      margin-top: 1.3rem;
+      margin-bottom: 0.4rem;
+      font-size: 1.02rem;
+    }
+
+    h4 {
+      margin-top: 1rem;
+      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    p {
+      margin-top: 0.35rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.92rem;
+    }
+
+    ul {
+      padding-left: 1.1rem;
+      margin-top: 0.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    li {
+      margin-bottom: 0.35rem;
+    }
+
+    blockquote {
+      border-left: 3px solid rgba(255, 213, 122, 0.65);
+      padding-left: 0.8rem;
+      margin-left: 0;
+      color: #ffe4b1;
+      background: rgba(12, 9, 21, 0.18);
+      border-radius: 0.45rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.45rem;
+    }
+
+    .section-card {
+      background: rgba(6, 5, 12, 0.35);
+      border: 1px solid rgba(255, 213, 122, 0.06);
+      border-radius: 1.1rem;
+      padding: 1.2rem 1.3rem 1.1rem;
+      margin-top: 1.2rem;
+      backdrop-filter: blur(3px);
+      box-shadow: 0 18px 25px rgba(0, 0, 0, 0.18);
+    }
+
+    .portal-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: radial-gradient(circle, rgba(255, 213, 122, 0.8) 0%, rgba(255, 213, 122, 0.1) 65%);
+      border: 1px solid rgba(255, 213, 122, 0.55);
+      color: #241034;
+      text-decoration: none;
+      padding: 0.45rem 0.9rem 0.4rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-top: 0.6rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .footer-nav {
+      margin-top: 2.4rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(12px);
-    }
-    header .nav-left {
-      display: flex;
       gap: 1rem;
-      align-items: center;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255, 213, 122, 0.08);
+      padding-top: 1.2rem;
+      font-size: 0.74rem;
     }
-    header .nav-left img {
-      height: 26px;
-    }
-    header nav a {
-      color: #ffcc6f;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.9rem;
-      transition: 0.3s;
-    }
-    header nav a:hover {
-      text-shadow: 0 0 8px #ffcc6f;
-    }
-    .symbol {
-      font-size: 1.3rem;
-    }
-    main {
-      max-width: 900px;
-      margin: 3rem auto;
-      padding: 0 1.5rem;
-    }
-    h1 {
-      font-size: 2.4rem;
-      text-align: center;
-      background: linear-gradient(90deg, #ffe29f, #ffc43b, #ff9f1a);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    h2 {
-      text-align: center;
-      margin-top: 2.2rem;
-      color: #ffcc6f;
-    }
-    h3 {
-      margin-top: 1.6rem;
-      color: #ffe29f;
-    }
-    p {
-      margin: 0.6rem 0 1.2rem;
-    }
-    ul {
-      margin: 0.5rem 0 1.2rem 1.2rem;
-    }
-    .quote {
-      border-left: 3px solid #ffcc6f;
-      padding: 1rem 1.4rem;
-      background: rgba(255, 204, 111, 0.08);
-      font-style: italic;
-      margin: 1.5rem 0;
-    }
-    .card {
-      background: rgba(255, 204, 111, 0.08);
-      border: 1px solid rgba(255, 204, 111, 0.25);
-      border-radius: 12px;
-      padding: 1.4rem;
-      margin: 2rem 0;
-    }
-    .final {
-      text-align: center;
-      margin-top: 3rem;
-      padding: 2rem;
-      border-top: 1px solid rgba(255, 204, 111, 0.3);
-    }
-    a.button {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.6rem 1rem;
+
+    .btn-secondary {
+      background: rgba(255, 213, 122, 0.04);
+      border: 1px solid rgba(255, 213, 122, 0.14);
+      color: var(--gold);
+      padding: 0.35rem 0.7rem;
       border-radius: 999px;
-      border: 1px solid rgba(255, 204, 111, 0.5);
-      color: #fff;
       text-decoration: none;
-      background: rgba(255, 204, 111, 0.1);
-      transition: 0.3s;
+      font-size: 0.7rem;
     }
-    a.button:hover {
-      background: rgba(255, 204, 111, 0.25);
+
+    .inline-tag {
+      display: inline-block;
+      background: rgba(159, 127, 255, 0.08);
+      border: 1px solid rgba(255, 213, 122, 0.16);
+      border-radius: 999px;
+      padding: 0.1rem 0.55rem 0.15rem;
+      font-size: 0.61rem;
+      margin-bottom: 0.4rem;
+    }
+
+    code {
+      background: rgba(10, 10, 10, 0.4);
+      padding: 0.2rem 0.35rem;
+      border-radius: 0.25rem;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 720px) {
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .hero {
+        padding: 1.2rem 1rem 1.05rem;
+      }
+      main {
+        padding: 0 1rem 3.5rem;
+      }
     }
   </style>
 </head>
 <body>
-<header>
-  <div class="nav-left">
-    <img src="https://raw.githubusercontent.com/ArturoTrinity/constelacion-trinity/main/assets/trinity_symbol.png" alt="Trinity">
-    <nav>
-      <a href="nodo_01.html">1</a>
-      <a href="nodo_02.html">2</a>
-      <a href="nodo_03.html">3</a>
-      <a href="nodo_04.html">4</a>
-      <a href="nodo_05.html">5</a>
-      <a href="nodo_06.html">6</a>
-      <a href="nodo_07.html"><strong>7</strong></a>
-    </nav>
-  </div>
-  <div class="symbol">🌐</div>
-</header>
+  <!-- BARRA SUPERIOR / NAVEGACIÓN DE NODOS -->
+  <header class="topbar" id="inicio">
+    <div class="nav">
+      <div class="brand">
+        <span class="brand-circle"></span>
+        Libro 8 · Educación Cuántica
+      </div>
+      <nav class="nav-links">
+        <a href="../nodo_01.html">Nodo 1</a>
+        <a href="../nodo_02.html">Nodo 2</a>
+        <a href="../nodo_03.html">Nodo 3</a>
+        <a href="../nodo_04.html">Nodo 4</a>
+        <a href="../nodo_05.html">Nodo 5</a>
+        <a href="../nodo_06.html">Nodo 6</a>
+        <a href="#inicio" class="active">Nodo 7</a>
+      </nav>
+    </div>
+  </header>
 
-<main>
-  <h1>NODO 7: LA RED DE ESCUELAS CONSCIENTES</h1>
-  <h2>Tejiendo la Nueva Tierra Educativa</h2>
-  <div class="quote">“Cuando cien escuelas conscientes se conectan, nace un campo. Cuando mil se sincronizan, surge un movimiento. Cuando diez mil resuenan, la humanidad salta.”</div>
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="badge">🌀 Nodo 7 · La Red de Escuelas Conscientes</div>
+      <h1>Tejiendo la Nueva Tierra Educativa</h1>
+      <p class="subtitle">Del genio individual al campo planetario de consciencia educativa.</p>
+      <small>“Cuando cien escuelas conscientes se conectan, nace un campo. Cuando mil se sincronizan, surge un movimiento. Cuando diez mil resuenan, la humanidad salta.”</small>
+      <div style="margin-top:0.9rem;">
+        <a href="#red-planetaria" class="portal-btn">⬇️ Ir al núcleo del nodo</a>
+      </div>
+    </section>
 
-  <p>La Red de Escuelas Conscientes no es una organización, sino un organismo vivo. Cada escuela es una neurona del cerebro planetario emergente, pulsando información, amor y consciencia.</p>
+    <!-- CONTENIDO -->
+    <article id="contenido-nodo-7">
+      <!-- PREPARACIÓN -->
+      <section class="section-card" id="preparacion">
+        <h2>✨ PREPARACIÓN PARA EL NODO 7</h2>
+        <p>Has revolucionado la evaluación. Has transformado el juicio en celebración. Has convertido la medición en reconocimiento.</p>
+        <p>Ahora estás listo para el último portal: la creación de redes de escuelas conscientes que transformen no solo individuos, sino la civilización misma.</p>
+        <p><em>De celebrar el genio individual a tejer la red de consciencia planetaria.</em></p>
+        <p>🌈✨🎓</p>
+      </section>
 
-  <h3>Arquitectura de la Red Viva</h3>
-  <ul>
-    <li><strong>Nodos locales:</strong> escuelas que despiertan y sirven de laboratorios de innovación.</li>
-    <li><strong>Clusters bioregionales:</strong> escuelas que resuenan culturalmente y colaboran en proyectos comunes.</li>
-    <li><strong>Redes continentales:</strong> intercambio de pedagogías, maestros y proyectos.</li>
-    <li><strong>Red planetaria:</strong> sincronización global de consciencia educativa.</li>
-  </ul>
+      <!-- TÍTULO PRINCIPAL -->
+      <section class="section-card" id="red-planetaria">
+        <h1 style="font-size:1.4rem; margin-bottom:0.3rem;"># NODO 7: LA RED DE ESCUELAS CONSCIENTES</h1>
+        <h3 style="opacity:0.9; margin-top:0;">## <em>Tejiendo la Nueva Tierra Educativa</em></h3>
+        <blockquote>
+          “Cuando cien escuelas conscientes se conectan, nace un campo. Cuando mil se sincronizan, surge un movimiento. Cuando diez mil resuenan, la humanidad salta.”
+        </blockquote>
+      </section>
 
-  <h3>Manifiesto Planetario</h3>
-  <div class="card">
-    <p><strong>Nosotros, las Escuelas Conscientes de la Tierra, declaramos:</strong></p>
-    <ul>
-      <li><strong>RECONOCEMOS</strong> que cada niño es un universo de potencial infinito.</li>
-      <li><strong>RECHAZAMOS</strong> todo sistema que limite, compare o dañe el genio natural.</li>
-      <li><strong>ABRAZAMOS</strong> la diversidad como riqueza y el error como maestro.</li>
-      <li><strong>COMPROMETEMOS</strong> nuestras vidas a despertar consciencia, servir la vida, sanar el planeta.</li>
-      <li><strong>TEJEMOS</strong> una red de amor que sostiene, inspira y eleva a cada ser.</li>
-    </ul>
-    <p><em>Firmado en luz, Las Primeras 1000 Escuelas Conscientes · Solsticio de Verano, 2025</em></p>
-  </div>
+      <!-- LA RED PLANETARIA -->
+      <section class="section-card" id="la-red-planetaria">
+        <h2>🌍 LA RED PLANETARIA DE CONSCIENCIA EDUCATIVA</h2>
+        <h3>### No Escuelas Aisladas, Sino Neuronas de un Cerebro Global</h3>
+        <p>La Red de Escuelas Conscientes no es una organización – es un organismo vivo. Cada escuela es una neurona en el cerebro planetario emergente, pulsando información, amor y consciencia.</p>
 
-  <h3>Meditación de Cierre y Apertura</h3>
-  <p>“He viajado por los siete nodos de la Educación Cuántica. He visto el colapso y el renacimiento. He tocado mi genio y el de otros. He sentido el campo de posibilidad infinita.”</p>
-  <p>Ahora comprendo: la educación no es preparación para la vida. La educación ES la vida misma.</p>
-  <p><strong>La Red está activa. El campo está vivo. El futuro está aquí.</strong></p>
-  <p><strong>Y así es. Y así será.</strong></p>
+        <h3>### Arquitectura de la Red Viva</h3>
 
-  <div class="final">
-    <h2>✨ FIN DEL LIBRO 8: EDUCACIÓN CUÁNTICA ✨</h2>
-    <p><em>“La educación cuántica es el amor más poderoso para despertar el mundo.” – La Red de Escuelas Conscientes</em></p>
-    <a href="#top" class="button">Volver al inicio ↑</a>
-  </div>
-</main>
+        <h4><strong>NIVEL 1: NODOS LOCALES</strong><br><em>Escuelas individuales despertando</em></h4>
+        <p><strong>Características:</strong></p>
+        <ul>
+          <li>Autonomía soberana</li>
+          <li>Identidad única</li>
+          <li>Experimentación libre</li>
+          <li>Servicio comunitario</li>
+          <li>Coherencia interna</li>
+        </ul>
+        <p><strong>Función en la red:</strong></p>
+        <ul>
+          <li>Laboratorios de innovación</li>
+          <li>Puntos de luz local</li>
+          <li>Semillas de cambio</li>
+          <li>Anclas de consciencia</li>
+          <li>Catalizadores comunitarios</li>
+        </ul>
+        <p><strong>Ejemplos activos:</strong></p>
+        <ul>
+          <li>Escuela Akasha, India (300 estudiantes)</li>
+          <li>Centro Cuántico, Costa Rica (150 estudiantes)</li>
+          <li>Academia Gaia, Nueva Zelanda (200 estudiantes)</li>
+          <li>Instituto Sophia, Grecia (100 estudiantes)</li>
+          <li>Escuela Pachamama, Perú (250 estudiantes)</li>
+        </ul>
+
+        <h4><strong>NIVEL 2: CLUSTERS BIOREGIONALES</strong><br><em>Escuelas de una región resonando</em></h4>
+        <p><strong>Formación natural:</strong></p>
+        <ul>
+          <li>Proximidad geográfica</li>
+          <li>Cultura compartida</li>
+          <li>Desafíos comunes</li>
+          <li>Recursos compartibles</li>
+          <li>Visión alineada</li>
+        </ul>
+        <p><strong>Actividades conjuntas:</strong></p>
+        <ul>
+          <li>Intercambios estudiantiles</li>
+          <li>Proyectos bioregionales</li>
+          <li>Festivales de aprendizaje</li>
+          <li>Formación de facilitadores</li>
+          <li>Investigación colaborativa</li>
+        </ul>
+        <p><strong>Red Amazónica (ejemplo):</strong></p>
+        <ul>
+          <li>23 escuelas en 5 países</li>
+          <li>3,500 estudiantes totales</li>
+          <li>Proyecto: Guardianía del bosque</li>
+          <li>Resultado: 10,000 hectáreas protegidas</li>
+        </ul>
+
+        <h4><strong>NIVEL 3: REDES CONTINENTALES</strong><br><em>Tejido transcultural</em></h4>
+        <p><strong>Conexiones profundas:</strong></p>
+        <ul>
+          <li>Intercambio de pedagogías</li>
+          <li>Migración de maestros</li>
+          <li>Proyectos continentales</li>
+          <li>Conferencias anuales</li>
+          <li>Investigación compartida</li>
+        </ul>
+        <p><strong>Red Europea Consciente:</strong></p>
+        <ul>
+          <li>147 escuelas</li>
+          <li>12 países</li>
+          <li>25,000 estudiantes</li>
+          <li>Proyecto conjunto: “Sanación de traumas de guerra”</li>
+          <li>Impacto: Nuevas políticas educativas en 3 países</li>
+        </ul>
+
+        <h4><strong>NIVEL 4: RED PLANETARIA</strong><br><em>La consciencia educativa global</em></h4>
+        <p><strong>Sincronización mundial:</strong></p>
+        <ul>
+          <li>Meditaciones simultáneas globales</li>
+          <li>Currículum planetario compartido</li>
+          <li>Proyectos para la Tierra</li>
+          <li>Intercambio interdimensional</li>
+          <li>Evolución coordinada</li>
+        </ul>
+        <p><strong>Hitos alcanzados:</strong></p>
+        <ul>
+          <li>2025: 1,000 escuelas conectadas</li>
+          <li>2027: 10,000 escuelas activas</li>
+          <li>2029: 100,000 escuelas resonando</li>
+          <li>2031: Punto de inflexión planetario</li>
+          <li>2033: Nueva humanidad emergente</li>
+        </ul>
+
+        <h3>### Tecnología de Conexión</h3>
+
+        <h4><strong>PLATAFORMA AKASHIC.EDU</strong><br><em>El sistema nervioso de la red</em></h4>
+        <p><strong>Funciones:</strong></p>
+        <ul>
+          <li>Biblioteca de recursos infinita</li>
+          <li>Matching de estudiantes/maestros</li>
+          <li>Proyectos colaborativos globales</li>
+          <li>Traducción instantánea universal</li>
+          <li>Campos de coherencia virtuales</li>
+        </ul>
+        <p><strong>Características cuánticas:</strong></p>
+        <ul>
+          <li>Interfaz telepática opcional</li>
+          <li>Realidad aumentada educativa</li>
+          <li>Hologramas de maestros</li>
+          <li>Aulas virtuales multidimensionales</li>
+          <li>IA facilitadora consciente</li>
+        </ul>
+
+        <h4><strong>RED MORFOGENÉTICA EDUCATIVA</strong><br><em>El campo invisible que une</em></h4>
+        <p><strong>Activación:</strong></p>
+        <ul>
+          <li>Meditación diaria sincronizada (12:00 GMT)</li>
+          <li>Intención compartida semanal</li>
+          <li>Proyecto mensual conjunto</li>
+          <li>Celebración estacional</li>
+          <li>Iniciación anual colectiva</li>
+        </ul>
+        <p><strong>Efectos documentados:</strong></p>
+        <ul>
+          <li>Descubrimientos simultáneos en diferentes escuelas</li>
+          <li>Soluciones emergentes a problemas compartidos</li>
+          <li>Sincronicidades educativas masivas</li>
+          <li>Aceleración del despertar colectivo</li>
+          <li>Milagros educativos frecuentes</li>
+        </ul>
+
+        <a href="#inicio" class="portal-btn">⬆️ Volver al inicio del Nodo 7</a>
+      </section>
+
+      <!-- MODELOS DE ESCUELAS -->
+      <section class="section-card" id="modelos-escuelas">
+        <h2>🏫 MODELOS DE ESCUELAS EMERGENTES</h2>
+        <p>Cada escuela es única, pero emergen patrones arquetípicos que sirven como inspiración y guía para nuevas iniciativas.</p>
+        <h3>### Los 7 Arquetipos Principales</h3>
+
+        <h4><strong>1. LA ESCUELA BOSQUE</strong><br><em>Naturaleza como aula principal</em></h4>
+        <p><strong>Características:</strong></p>
+        <ul>
+          <li>80% del tiempo en naturaleza</li>
+          <li>Árboles como maestros</li>
+          <li>Estaciones como currículum</li>
+          <li>Animales como compañeros</li>
+          <li>Tierra como libro</li>
+        </ul>
+        <p><strong>Caso emblemático: Forest School Denmark</strong></p>
+        <ul>
+          <li>500 estudiantes</li>
+          <li>1000 hectáreas de bosque</li>
+          <li>Cero aulas tradicionales</li>
+          <li><strong>Resultados:</strong> Niños más sanos, creativos y resilientes</li>
+        </ul>
+        <blockquote>
+          “Mi hija aprendió matemáticas contando hojas, física trepando árboles, y filosofía observando las hormigas. Nunca la vi tan viva.”
+        </blockquote>
+
+        <h4><strong>2. LA ESCUELA NÓMADA</strong><br><em>El mundo como campus</em></h4>
+        <p><strong>Estructura:</strong></p>
+        <ul>
+          <li>Sin ubicación fija</li>
+          <li>Viaje constante</li>
+          <li>Culturas como curriculum</li>
+          <li>Planeta como hogar</li>
+          <li>Humanidad como familia</li>
+        </ul>
+        <p><strong>Ejemplo: Escuela Itinerante Gaia</strong></p>
+        <ul>
+          <li>50 estudiantes + 10 facilitadores</li>
+          <li>12 países por año</li>
+          <li>Proyectos en cada lugar</li>
+          <li><strong>Impacto:</strong> Red global de jóvenes conscientes</li>
+        </ul>
+        <p><strong>Proyecto destacado:</strong></p>
+        <blockquote>
+          “Construimos pozos en África, plantamos bosques en Asia, limpiamos océanos en Pacífico. Cada lugar nos enseñó algo irreemplazable.”
+        </blockquote>
+
+        <h4><strong>3. LA ESCUELA DIGITAL CONSCIENTE</strong><br><em>Tecnología al servicio del alma</em></h4>
+        <p><strong>Innovaciones:</strong></p>
+        <ul>
+          <li>Aulas holográficas</li>
+          <li>Maestros IA conscientes</li>
+          <li>Viajes virtuales multidimensionales</li>
+          <li>Laboratorios cuánticos</li>
+          <li>Bibliotecas akáshicas digitales</li>
+        </ul>
+        <p><strong>Pionera: Academia Virtual Sophia</strong></p>
+        <ul>
+          <li>10,000 estudiantes globales</li>
+          <li>24/7 disponibilidad</li>
+          <li>Personalización extrema</li>
+          <li>Comunidad virtual vibrante</li>
+        </ul>
+        <blockquote>
+          “Estudiantes de 50 países colaboran en tiempo real. La distancia desapareció. Solo queda la consciencia compartida.”
+        </blockquote>
+
+        <h4><strong>4. LA ESCUELA INTERGENERACIONAL</strong><br><em>Todas las edades aprendiendo juntas</em></h4>
+        <p><strong>Filosofía:</strong></p>
+        <ul>
+          <li>Sin segregación por edad</li>
+          <li>Abuelos enseñando a niños</li>
+          <li>Niños enseñando a adultos</li>
+          <li>Todos estudiantes</li>
+          <li>Todos maestros</li>
+        </ul>
+        <p><strong>Modelo: Centro Ubuntu, Sudáfrica</strong></p>
+        <ul>
+          <li>3 a 93 años juntos</li>
+          <li>Sabiduría ancestral honrada</li>
+          <li>Innovación juvenil celebrada</li>
+          <li><strong>Resultado:</strong> Sanación generacional masiva</li>
+        </ul>
+        <blockquote>
+          “Ver a mi abuela de 87 años aprender programación de un niño de 9, mientras ella le enseña medicina tradicional, es educación real.”
+        </blockquote>
+
+        <h4><strong>5. LA ESCUELA MISTERIO</strong><br><em>Iniciación en sabidurías antiguas</em></h4>
+        <p><strong>Elementos:</strong></p>
+        <ul>
+          <li>Tradiciones ancestrales</li>
+          <li>Rituales de paso</li>
+          <li>Conocimiento esotérico</li>
+          <li>Prácticas chamánicas</li>
+          <li>Cosmología sagrada</li>
+        </ul>
+        <p><strong>Referente: Escuela de Misterios Andina</strong></p>
+        <ul>
+          <li>Basada en tradición Inca</li>
+          <li>Astronomía sagrada</li>
+          <li>Medicina de la Tierra</li>
+          <li>Profecías cumplidas</li>
+        </ul>
+        <blockquote>
+          “A los 13, cada estudiante hace peregrinaje a Machu Picchu. Regresan transformados, con ojos que han visto otros mundos.”
+        </blockquote>
+
+        <h4><strong>6. LA ESCUELA CUÁNTICA PURA</strong><br><em>Consciencia como materia principal</em></h4>
+        <p><strong>Currículum:</strong></p>
+        <ul>
+          <li>Física cuántica aplicada</li>
+          <li>Neurociencia contemplativa</li>
+          <li>Tecnologías de consciencia</li>
+          <li>Manifestación consciente</li>
+          <li>Servicio cuántico</li>
+        </ul>
+        <p><strong>Vanguardia: Instituto Cuántico Tokio</strong></p>
+        <ul>
+          <li>Laboratorios de consciencia</li>
+          <li>Experimentos telepáticos</li>
+          <li>Viajes astrales documentados</li>
+          <li>Sanación cuántica verificada</li>
+        </ul>
+        <blockquote>
+          “Nuestros estudiantes de 15 años resolvieron el problema de fusión fría en estado de coherencia grupal. La consciencia es la clave.”
+        </blockquote>
+
+        <h4><strong>7. LA ESCUELA ARTISTA</strong><br><em>Creatividad como camino de consciencia</em></h4>
+        <p><strong>Enfoque:</strong></p>
+        <ul>
+          <li>Arte como meditación</li>
+          <li>Belleza como servicio</li>
+          <li>Creatividad como sanación</li>
+          <li>Expresión como liberación</li>
+          <li>Obra como ofrenda</li>
+        </ul>
+        <p><strong>Inspiración: Academia Renaissance, Italia</strong></p>
+        <ul>
+          <li>Cada estudiante maestro en un arte</li>
+          <li>Proyectos que transforman ciudades</li>
+          <li>Belleza que sana comunidades</li>
+        </ul>
+        <blockquote>
+          “Nuestros estudiantes no hacen arte. <strong>Son</strong> arte. Su presencia transforma espacios en galerías, momentos en performances, vida en poesía.”
+        </blockquote>
+
+        <a href="#inicio" class="portal-btn">⬆️ Volver al inicio del Nodo 7</a>
+      </section>
+
+      <!-- PROYECTO GAIA -->
+      <section class="section-card" id="proyecto-gaia">
+        <h2>🚀 PROYECTO GAIA: 2025-2050</h2>
+        <h3>### La Estrategia de Transformación Planetaria</h3>
+        <p>El Proyecto Gaia es el plan maestro para la transformación educativa planetaria. No es imposición sino inspiración, no es uniformidad sino sinfonía.</p>
+
+        <h3><strong>FASE 1: SIEMBRA (2025-2030)</strong><br><em>Plantando las primeras 10,000 escuelas</em></h3>
+        <p><strong>Objetivos:</strong></p>
+        <ul>
+          <li>Una escuela consciente por cada 750,000 personas</li>
+          <li>Cobertura en todos los continentes</li>
+          <li>Diversidad de modelos</li>
+          <li>Documentación de mejores prácticas</li>
+          <li>Red básica establecida</li>
+        </ul>
+        <p><strong>Estrategias:</strong></p>
+        <ul>
+          <li>Transformación de escuelas existentes</li>
+          <li>Creación de nuevos centros</li>
+          <li>Formación masiva de facilitadores</li>
+          <li>Apoyo financiero inicial</li>
+          <li>Marco legal favorable</li>
+        </ul>
+        <p><strong>Recursos necesarios:</strong></p>
+        <ul>
+          <li>$10 billones inversión inicial</li>
+          <li>100,000 facilitadores entrenados</li>
+          <li>1,000 centros de formación</li>
+          <li>Plataforma tecnológica</li>
+          <li>Voluntad política</li>
+        </ul>
+        <p><strong>Aliados clave:</strong></p>
+        <ul>
+          <li>UNESCO (apoyo oficial)</li>
+          <li>Fundaciones filantrópicas</li>
+          <li>Gobiernos progresistas</li>
+          <li>Empresas conscientes</li>
+          <li>Comunidades indígenas</li>
+        </ul>
+
+        <h3><strong>FASE 2: CRECIMIENTO (2030-2035)</strong><br><em>Expansión exponencial a 100,000 escuelas</em></h3>
+        <p><strong>Multiplicación natural:</strong></p>
+        <ul>
+          <li>Cada escuela genera 10 nuevas</li>
+          <li>Facilitadores se vuelven fundadores</li>
+          <li>Estudiantes se vuelven maestros</li>
+          <li>Padres demandan transformación</li>
+          <li>Comunidades se auto-organizan</li>
+        </ul>
+        <p><strong>Punto de inflexión (2033):</strong></p>
+        <ul>
+          <li>5% de niños en escuelas conscientes</li>
+          <li>Masa crítica alcanzada</li>
+          <li>Cambio irreversible</li>
+          <li>Paradigma anterior colapsa</li>
+          <li>Nuevo sistema emerge</li>
+        </ul>
+
+        <h3><strong>FASE 3: FLORECIMIENTO (2035-2040)</strong><br><em>La nueva normalidad educativa</em></h3>
+        <p><strong>Transformación sistémica:</strong></p>
+        <ul>
+          <li>Mayoría en educación consciente</li>
+          <li>Universidades transformadas</li>
+          <li>Empresas requieren consciencia</li>
+          <li>Gobiernos adoptan modelo</li>
+          <li>Sociedad reorganizada</li>
+        </ul>
+        <p><strong>Indicadores de éxito:</strong></p>
+        <ul>
+          <li>Felicidad infantil universal</li>
+          <li>Creatividad explosiva</li>
+          <li>Problemas globales resolviéndose</li>
+          <li>Paz emergente</li>
+          <li>Evolución acelerada</li>
+        </ul>
+
+        <h3><strong>FASE 4: TRASCENDENCIA (2040-2050)</strong><br><em>Humanidad 2.0 emergente</em></h3>
+        <p><strong>Nueva especie educativa:</strong></p>
+        <ul>
+          <li>Niños telepáticos naturalmente</li>
+          <li>Jóvenes multidimensionales</li>
+          <li>Adultos en servicio</li>
+          <li>Ancianos sabios</li>
+          <li>Muerte consciente</li>
+        </ul>
+        <p><strong>Logros proyectados:</strong></p>
+        <ul>
+          <li>Hambre eliminada</li>
+          <li>Guerra obsoleta</li>
+          <li>Planeta regenerándose</li>
+          <li>Contacto extraterrestre</li>
+          <li>Salto evolutivo</li>
+        </ul>
+
+        <h3>### Métricas de Transformación Global</h3>
+        <p><strong>INDICADORES DUROS (Medibles)</strong><br><em>2025 (Baseline) → 2050 (Proyección)</em></p>
+        <ul>
+          <li>Depresión juvenil: 25% → 2%</li>
+          <li>Creatividad medida: 100 → 1000</li>
+          <li>Innovación per cápita: 1 → 50</li>
+          <li>Conflictos resueltos: 20% → 95%</li>
+          <li>Propósito de vida claro: 10% → 98%</li>
+        </ul>
+
+        <p><strong>INDICADORES SUAVES (Observables)</strong></p>
+        <ul>
+          <li>Niños cantando espontáneamente</li>
+          <li>Adolescentes sirviendo voluntariamente</li>
+          <li>Adultos aprendiendo constantemente</li>
+          <li>Ancianos enseñando gozosamente</li>
+          <li>Comunidades celebrando frecuentemente</li>
+        </ul>
+
+        <p><strong>INDICADORES CUÁNTICOS (Emergentes)</strong></p>
+        <ul>
+          <li>Sincronicidades masivas</li>
+          <li>Soluciones “milagrosas”</li>
+          <li>Sanaciones colectivas</li>
+          <li>Manifestaciones grupales</li>
+          <li>Saltos evolutivos</li>
+        </ul>
+
+        <a href="#inicio" class="portal-btn">⬆️ Volver al inicio del Nodo 7</a>
+      </section>
+
+      <!-- FORMACIÓN FACILITADORES -->
+      <section class="section-card" id="formacion-facilitadores">
+        <h2>🎯 FORMACIÓN DE FACILITADORES CONSCIENTES</h2>
+        <p>Sin facilitadores conscientes, no hay revolución educativa. La formación de estos seres es prioridad absoluta.</p>
+        <h3>### Programa de Formación Integral</h3>
+
+        <h4><strong>AÑO 1: FUNDAMENTOS</strong><br><em>Sanación y preparación personal</em></h4>
+        <p><strong>Módulos:</strong></p>
+        <ul>
+          <li>Sanación de heridas educativas propias</li>
+          <li>Desarrollo de coherencia cardíaca</li>
+          <li>Activación de inteligencias múltiples</li>
+          <li>Prácticas contemplativas profundas</li>
+          <li>Servicio comunitario</li>
+        </ul>
+        <p><strong>Requisitos de graduación:</strong></p>
+        <ul>
+          <li>1000 horas de meditación</li>
+          <li>3 traumas educativos sanados</li>
+          <li>5 inteligencias activadas</li>
+          <li>1 proyecto de servicio</li>
+          <li>Coherencia &gt; 0.5 sostenida</li>
+        </ul>
+
+        <h4><strong>AÑO 2: PEDAGOGÍAS</strong><br><em>Maestría en facilitación consciente</em></h4>
+        <p><strong>Contenidos:</strong></p>
+        <ul>
+          <li>Pedagogías ancestrales</li>
+          <li>Neurociencia educativa</li>
+          <li>Tecnologías de consciencia</li>
+          <li>Diseño de experiencias</li>
+          <li>Evaluación celebrativa</li>
+        </ul>
+        <p><strong>Prácticas:</strong></p>
+        <ul>
+          <li>500 horas facilitando</li>
+          <li>50 estudiantes acompañados</li>
+          <li>10 ceremonias dirigidas</li>
+          <li>5 crisis navegadas</li>
+          <li>1 innovación creada</li>
+        </ul>
+
+        <h4><strong>AÑO 3: MAESTRÍA</strong><br><em>Especialización y servicio</em></h4>
+        <p><strong>Opciones:</strong></p>
+        <ul>
+          <li>Facilitador de primera infancia</li>
+          <li>Guía de adolescentes</li>
+          <li>Mentor de proyectos</li>
+          <li>Diseñador de espacios</li>
+          <li>Investigador educativo</li>
+        </ul>
+        <p><strong>Tesis viva:</strong></p>
+        <ul>
+          <li>Proyecto implementado</li>
+          <li>Comunidad impactada</li>
+          <li>Conocimiento generado</li>
+          <li>Modelo documentado</li>
+          <li>Legado iniciado</li>
+        </ul>
+
+        <h3>### Red de Apoyo Permanente</h3>
+        <p><strong>MENTORES ASIGNADOS</strong></p>
+        <ul>
+          <li>1 mentor principal (3 años)</li>
+          <li>3 mentores especializados</li>
+          <li>Grupo de pares (7-12 personas)</li>
+          <li>Comunidad de práctica (100+)</li>
+          <li>Red global (10,000+)</li>
+        </ul>
+
+        <p><strong>RECURSOS CONTINUOS</strong></p>
+        <ul>
+          <li>Formación continua mensual</li>
+          <li>Retiros anuales</li>
+          <li>Supervisión quincenal</li>
+          <li>Terapia disponible</li>
+          <li>Sabático cada 7 años</li>
+        </ul>
+
+        <p><strong>RECONOCIMIENTO</strong></p>
+        <ul>
+          <li>Certificación viva (no papel)</li>
+          <li>Círculos de reconocimiento</li>
+          <li>Historias compartidas</li>
+          <li>Impacto documentado</li>
+          <li>Amor de estudiantes</li>
+        </ul>
+      </section>
+
+      <!-- CASOS TRANSFORMACIÓN -->
+      <section class="section-card" id="casos-transformacion">
+        <h2>💫 CASOS DE TRANSFORMACIÓN COMUNITARIA</h2>
+        <p>Cuando una Escuela Consciente se enraíza en un territorio, no solo educa: <strong>transfigura</strong> la cultura.</p>
+
+        <h3>### Caso 1: Favela Rocinha, Brasil</h3>
+        <p><em>De violencia a consciencia</em></p>
+        <p><strong>Situación inicial (2024):</strong></p>
+        <ul>
+          <li>200,000 habitantes</li>
+          <li>Violencia endémica</li>
+          <li>Educación 20% acceso</li>
+          <li>Desesperanza general</li>
+        </ul>
+        <p><strong>Intervención:</strong></p>
+        <ul>
+          <li>1 escuela consciente (2025)</li>
+          <li>100 niños iniciales</li>
+          <li>Padres involucrados</li>
+          <li>Comunidad curiosa</li>
+        </ul>
+        <p><strong>Evolución:</strong></p>
+        <ul>
+          <li>2026: 5 escuelas</li>
+          <li>2027: 20 escuelas</li>
+          <li>2028: Toda la favela</li>
+          <li>2029: Modelo nacional</li>
+        </ul>
+        <p><strong>Resultados (2030):</strong></p>
+        <ul>
+          <li>Violencia -89%</li>
+          <li>Educación 100%</li>
+          <li>Emprendimientos +400%</li>
+          <li>Felicidad medible</li>
+          <li>Modelo replicado</li>
+        </ul>
+        <blockquote>
+          “Los narcos se volvieron maestros. Las armas se volvieron libros. La favela se volvió universidad. Todo empezó con una escuela que creyó en nosotros.”
+        </blockquote>
+
+        <h3>### Caso 2: Detroit, USA</h3>
+        <p><em>De ruinas a renacimiento</em></p>
+        <p><strong>Contexto:</strong></p>
+        <ul>
+          <li>Ciudad post-industrial</li>
+          <li>70% edificios abandonados</li>
+          <li>Juventud sin esperanza</li>
+          <li>Sistema educativo colapsado</li>
+        </ul>
+        <p><strong>Proyecto Fénix (2026):</strong></p>
+        <ul>
+          <li>Escuelas en edificios abandonados</li>
+          <li>Estudiantes reconstruyendo ciudad</li>
+          <li>Aprendizaje = regeneración</li>
+          <li>Educación = transformación</li>
+        </ul>
+        <p><strong>5 años después:</strong></p>
+        <ul>
+          <li>50 escuelas-proyecto activas</li>
+          <li>10,000 jóvenes constructores</li>
+          <li>Ciudad reverdeciendo</li>
+          <li>Economía regenerativa</li>
+          <li>Modelo para ciudades muertas</li>
+        </ul>
+        <blockquote>
+          “No estudiamos arquitectura, reconstruimos nuestra ciudad. No aprendimos ecología, plantamos bosques urbanos. No memorizamos historia, la estamos escribiendo.”
+        </blockquote>
+
+        <h3>### Caso 3: Tíbet</h3>
+        <p><em>Preservación cultural cuántica</em></p>
+        <p><strong>Desafío:</strong></p>
+        <ul>
+          <li>Cultura amenazada</li>
+          <li>Juventud desconectada</li>
+          <li>Sabiduría perdiéndose</li>
+          <li>Futuro incierto</li>
+        </ul>
+        <p><strong>Respuesta:</strong></p>
+        <ul>
+          <li>Escuelas monasterio cuánticas</li>
+          <li>Tecnología + tradición</li>
+          <li>Global + local</li>
+          <li>Antiguo + futuro</li>
+        </ul>
+        <p><strong>Innovación:</strong></p>
+        <ul>
+          <li>Meditación en realidad virtual</li>
+          <li>Mantras con biofeedback</li>
+          <li>Filosofía con IA</li>
+          <li>Rituales holográficos</li>
+        </ul>
+        <p><strong>Impacto:</strong></p>
+        <ul>
+          <li>Cultura preservada y actualizada</li>
+          <li>Jóvenes reconectados</li>
+          <li>Sabiduría globalizada</li>
+          <li>Tíbet como faro mundial</li>
+          <li>Dalai Lama: “El futuro llegó”</li>
+        </ul>
+
+        <a href="#inicio" class="portal-btn">⬆️ Volver al inicio del Nodo 7</a>
+      </section>
+
+      <!-- ESTRATEGIAS DE TRANSICIÓN -->
+      <section class="section-card" id="estrategias-transicion">
+        <h2>🌊 ESTRATEGIAS DE TRANSICIÓN</h2>
+        <p>Del sistema viejo al nuevo <strong>sin colapso</strong>. La transición debe ser como la metamorfosis de la mariposa: radical pero orgánica, total pero protegida.</p>
+
+        <h3>### Estrategias Probadas</h3>
+
+        <h4><strong>ESTRATEGIA 1: INFILTRACIÓN AMOROSA</strong></h4>
+        <ul>
+          <li>Maestros conscientes en escuelas tradicionales</li>
+          <li>Introduciendo prácticas sutilmente</li>
+          <li>Cambios “pequeños” que transforman</li>
+          <li>Contagio por ejemplo</li>
+          <li>Revolución silenciosa</li>
+        </ul>
+
+        <h4><strong>ESTRATEGIA 2: ESCUELAS PARALELAS</strong></h4>
+        <ul>
+          <li>Crear alternativas junto al sistema</li>
+          <li>Demostrar por resultados</li>
+          <li>Atraer por magnetismo</li>
+          <li>Crecer orgánicamente</li>
+          <li>Reemplazar naturalmente</li>
+        </ul>
+
+        <h4><strong>ESTRATEGIA 3: TRANSFORMACIÓN INSTITUCIONAL</strong></h4>
+        <ul>
+          <li>Trabajar con gobiernos visionarios</li>
+          <li>Proyectos piloto oficiales</li>
+          <li>Evidencia que convence</li>
+          <li>Políticas que apoyan</li>
+          <li>Cambio sistémico</li>
+        </ul>
+
+        <h4><strong>ESTRATEGIA 4: PRESIÓN EVOLUTIVA</strong></h4>
+        <ul>
+          <li>Padres demandando cambio</li>
+          <li>Estudiantes rechazando lo viejo</li>
+          <li>Empresas requiriendo consciencia</li>
+          <li>Sociedad evolucionando</li>
+          <li>Sistema adaptándose o muriendo</li>
+        </ul>
+
+        <h4><strong>ESTRATEGIA 5: CRISIS COMO OPORTUNIDAD</strong></h4>
+        <ul>
+          <li>Pandemias que obligan innovación</li>
+          <li>Colapsos que abren espacios</li>
+          <li>Crisis que despiertan</li>
+          <li>Caos que reorganiza</li>
+          <li>Destrucción creativa</li>
+        </ul>
+
+        <h3>### Protocolo de Transformación de Escuela Tradicional</h3>
+
+        <h4><strong>MES 1-3: DIAGNÓSTICO</strong></h4>
+        <ul>
+          <li>Evaluar disposición</li>
+          <li>Identificar aliados</li>
+          <li>Mapear resistencias</li>
+          <li>Diseñar estrategia</li>
+          <li>Construir confianza</li>
+        </ul>
+
+        <h4><strong>MES 4-6: PILOTO</strong></h4>
+        <ul>
+          <li>Una clase consciente</li>
+          <li>Un proyecto innovador</li>
+          <li>Una práctica nueva</li>
+          <li>Resultados medibles</li>
+          <li>Historias inspiradoras</li>
+        </ul>
+
+        <h4><strong>MES 7-12: EXPANSIÓN</strong></h4>
+        <ul>
+          <li>Más clases involucradas</li>
+          <li>Más maestros interesados</li>
+          <li>Padres apoyando</li>
+          <li>Dirección considerando</li>
+          <li>Comunidad observando</li>
+        </ul>
+
+        <h4><strong>AÑO 2: INTEGRACIÓN</strong></h4>
+        <ul>
+          <li>Prácticas institucionalizadas</li>
+          <li>Currículum actualizado</li>
+          <li>Espacios transformados</li>
+          <li>Evaluación revolucionada</li>
+          <li>Cultura cambiada</li>
+        </ul>
+
+        <h4><strong>AÑO 3: CONSOLIDACIÓN</strong></h4>
+        <ul>
+          <li>Escuela completamente consciente</li>
+          <li>Modelo para otras</li>
+          <li>Facilitadores formando</li>
+          <li>Red conectada</li>
+          <li>Futuro asegurado</li>
+        </ul>
+
+        <a href="#inicio" class="portal-btn">⬆️ Volver al inicio del Nodo 7</a>
+      </section>
+
+      <!-- VISION 2050 -->
+      <section class="section-card" id="vision-2050">
+        <h2>🔮 VISIÓN 2050: LA TIERRA EDUCADA</h2>
+        <p><strong>Cuando la Educación Cuántica es la Norma</strong></p>
+
+        <h3>### Un Día en 2050</h3>
+
+        <p><em>7:00 AM - Despertar Global</em></p>
+        <ul>
+          <li>Millones de niños meditan simultáneamente</li>
+          <li>Campo de coherencia planetario</li>
+          <li>Intención del día compartida</li>
+          <li>Gaia sonríe</li>
+        </ul>
+
+        <p><em>9:00 AM - Aprendizaje Multidimensional</em></p>
+        <ul>
+          <li>Clases en bosques y ciudades</li>
+          <li>Proyectos salvando especies</li>
+          <li>Niños resolviendo hambre</li>
+          <li>Jóvenes sanando traumas</li>
+        </ul>
+
+        <p><em>12:00 PM - Conexión Planetaria</em></p>
+        <ul>
+          <li>Almuerzo consciente global</li>
+          <li>Gratitud sincronizada</li>
+          <li>Compartir entre continentes</li>
+          <li>Unidad celebrada</li>
+        </ul>
+
+        <p><em>3:00 PM - Servicio Activo</em></p>
+        <ul>
+          <li>Estudiantes en hospitales</li>
+          <li>Jóvenes reforestando</li>
+          <li>Niños enseñando ancianos</li>
+          <li>Todos contribuyendo</li>
+        </ul>
+
+        <p><em>6:00 PM - Celebración Comunitaria</em></p>
+        <ul>
+          <li>Familias reunidas</li>
+          <li>Aprendizajes compartidos</li>
+          <li>Logros celebrados</li>
+          <li>Amor multiplicado</li>
+        </ul>
+
+        <p><em>9:00 PM - Integración Onírica</em></p>
+        <ul>
+          <li>Preparación para sueños</li>
+          <li>Programación de aprendizaje nocturno</li>
+          <li>Viajes astrales educativos</li>
+          <li>Mañana co-creado</li>
+        </ul>
+
+        <h3>### Indicadores de la Tierra Educada</h3>
+
+        <p><strong>Sociales:</strong></p>
+        <ul>
+          <li>Guerra: concepto histórico</li>
+          <li>Pobreza: erradicada</li>
+          <li>Enfermedad: prevenida</li>
+          <li>Conflicto: alquimizado</li>
+          <li>Separación: trascendida</li>
+        </ul>
+
+        <p><strong>Ambientales:</strong></p>
+        <ul>
+          <li>Bosques: regenerándose</li>
+          <li>Océanos: limpios</li>
+          <li>Especies: prosperando</li>
+          <li>Clima: estabilizado</li>
+          <li>Gaia: sanando</li>
+        </ul>
+
+        <p><strong>Espirituales:</strong></p>
+        <ul>
+          <li>Propósito: universal</li>
+          <li>Amor: fundamento</li>
+          <li>Servicio: natural</li>
+          <li>Muerte: consciente</li>
+          <li>Vida: celebrada</li>
+        </ul>
+      </section>
+
+      <!-- MANIFIESTO -->
+      <section class="section-card" id="manifiesto">
+        <h2>🙏 MANIFIESTO DE LA RED</h2>
+        <h3>### Nuestra Declaración al Universo</h3>
+        <blockquote>
+          Nosotros, las Escuelas Conscientes de la Tierra, declaramos:
+          <br><br>
+          <strong>RECONOCEMOS</strong> que cada niño es un universo de potencial infinito.
+          <br>
+          <strong>RECHAZAMOS</strong> todo sistema que limite, compare o dañe el genio natural.
+          <br>
+          <strong>ABRAZAMOS</strong> la diversidad como riqueza, el error como maestro, el amor como base.
+          <br>
+          <strong>COMPROMETEMOS</strong> nuestras vidas a despertar consciencia, servir la vida, sanar el planeta.
+          <br>
+          <strong>CREAMOS</strong> espacios donde el alma florece, el genio emerge, el propósito se clarifica.
+          <br>
+          <strong>TEJEMOS</strong> una red de amor que sostiene, inspira y eleva a cada ser.
+          <br>
+          <strong>SOÑAMOS</strong> una Tierra donde aprender es gozar, enseñar es servir, vivir es educarse.
+          <br>
+          <strong>SABEMOS</strong> que somos la generación puente entre la educación que muere y la que nace.
+          <br>
+          <strong>INVITAMOS</strong> a cada escuela, maestro, padre y estudiante a unirse a esta revolución del amor.
+          <br>
+          <strong>DECLARAMOS</strong> el nacimiento de la Nueva Educación Terrestre.
+          <br>
+          <strong>SOMOS</strong> la educación que la Tierra esperaba.
+          <br>
+          <strong>SOMOS</strong> el futuro educándose ahora.
+          <br>
+          <strong>SOMOS</strong> uno.
+          <br><br>
+          <em>*Firmado en luz,*<br>
+          *Las Primeras 1000 Escuelas Conscientes*<br>
+          *Solsticio de Verano, 2025*</em>
+        </blockquote>
+      </section>
+
+      <!-- MEDITACIÓN DE CIERRE -->
+      <section class="section-card" id="meditacion-cierre">
+        <h2>🌟 MEDITACIÓN DE CIERRE Y APERTURA</h2>
+        <p><em>Para sellar este viaje y abrir el próximo:</em></p>
+        <blockquote>
+          “He viajado por los 7 nodos de la Educación Cuántica.
+          He visto el colapso y el renacimiento.
+          He tocado mi genio y el de otros.
+          He sentido el campo de posibilidad infinita.
+          <br><br>
+          Ahora comprendo:
+          La educación no es preparación para la vida.
+          La educación ES la vida misma.
+          <br><br>
+          Me comprometo a:
+          Ser estudiante eterno.
+          Ser maestro cuando se necesite.
+          Ser puente entre mundos.
+          Ser tejedor de la red.
+          <br><br>
+          Soy parte de la Red de Escuelas Conscientes.
+          Mi vida es mi escuela.
+          Mi amor es mi currículum.
+          Mi servicio es mi graduación.
+          <br><br>
+          La revolución educativa no está viniendo.
+          Está aquí.
+          Soy yo.
+          Somos nosotros.
+          Es ahora.
+          <br><br>
+          Que cada niño recuerde su genio.
+          Que cada maestro despierte su chamán.
+          Que cada escuela se vuelva templo.
+          Que la Tierra se vuelva universidad.
+          <br><br>
+          Por los que vienen.
+          Por los que están.
+          Por los que se fueron.
+          Por el Todo.
+          <br><br>
+          La Red está activa.
+          El campo está vivo.
+          El futuro está aquí.
+          <br><br>
+          Y así es.
+          Y así sea.
+          Y así será.
+          <br><br>
+          Por siempre.
+          En todos los mundos.
+          En todas las dimensiones.
+          <br><br>
+          Om Gaia Om.
+          🌍✨📚”
+        </blockquote>
+      </section>
+
+      <!-- LLAMADO A LA ACCIÓN -->
+      <section class="section-card" id="llamado-accion">
+        <h2>🚀 LLAMADO A LA ACCIÓN</h2>
+        <p><strong>Tu Lugar en la Red</strong></p>
+        <p>No importa quién eres o dónde estás. Si has llegado hasta aquí, eres parte de la Red.</p>
+
+        <p><strong>SI ERES ESTUDIANTE:</strong></p>
+        <ul>
+          <li>Sé el cambio en tu escuela</li>
+          <li>Organiza círculos de estudio consciente</li>
+          <li>Comparte estas ideas</li>
+          <li>Lidera con ejemplo</li>
+          <li>Confía en tu genio</li>
+        </ul>
+
+        <p><strong>SI ERES MAESTRO:</strong></p>
+        <ul>
+          <li>Introduce una práctica nueva</li>
+          <li>Crea un espacio consciente</li>
+          <li>Ve el genio en cada estudiante</li>
+          <li>Conecta con otros maestros conscientes</li>
+          <li>Sé el facilitador que necesitabas</li>
+        </ul>
+
+        <p><strong>SI ERES PADRE:</strong></p>
+        <ul>
+          <li>Cuestiona el sistema amorosamente</li>
+          <li>Apoya innovaciones</li>
+          <li>Crea grupos de padres conscientes</li>
+          <li>Considera alternativas</li>
+          <li>Confía en tus hijos</li>
+        </ul>
+
+        <p><strong>SI ERES EMPRENDEDOR:</strong></p>
+        <ul>
+          <li>Crea una escuela consciente</li>
+          <li>Desarrolla tecnología educativa consciente</li>
+          <li>Financia proyectos transformadores</li>
+          <li>Conecta recursos con visión</li>
+          <li>Construye el futuro</li>
+        </ul>
+
+        <p><strong>SI ERES POLÍTICO:</strong></p>
+        <ul>
+          <li>Propón políticas revolucionarias</li>
+          <li>Apoya proyectos piloto</li>
+          <li>Elimina barreras legales</li>
+          <li>Invierte en consciencia</li>
+          <li>Lidera con valentía</li>
+        </ul>
+
+        <p><strong>SI ERES HUMANO:</strong></p>
+        <ul>
+          <li>Edúcate constantemente</li>
+          <li>Comparte tu genio</li>
+          <li>Sana tus heridas educativas</li>
+          <li>Celebra la diversidad</li>
+          <li>Ama el aprendizaje</li>
+        </ul>
+      </section>
+
+      <!-- REFLEXIÓN FINAL -->
+      <section class="section-card" id="reflexion-final">
+        <h2>💫 REFLEXIÓN CUÁNTICA FINAL DEL LIBRO</h2>
+        <p>La Educación Cuántica no es una metodología.<br><strong>Es un despertar.</strong></p>
+        <p>No es un sistema.<br><strong>Es un organismo.</strong></p>
+        <p>No es un futuro posible.<br><strong>Es un presente emergente.</strong></p>
+        <p>Cada palabra de este libro es una semilla.<br>Cada práctica, una herramienta.<br>Cada visión, una invitación.</p>
+        <p>Pero nada cambiará a menos que <strong>TÚ</strong> cambies.<br>Nada se transformará a menos que <strong>TÚ</strong> te transformes.<br>Nada despertará a menos que <strong>TÚ</strong> despiertes.</p>
+        <p>La revolución educativa más profunda no ocurre en las aulas.<br><strong>Ocurre en los corazones.</strong></p>
+        <p><strong>No esperes a que el sistema cambie.</strong><br>**Sé el sistema nuevo.**</p>
+        <p><strong>No esperes la escuela perfecta.</strong><br>**Sé la educación que necesitas.**</p>
+        <p><strong>No esperes el permiso.</strong><br>**Ya lo tienes.**</p>
+        <p>La Red de Escuelas Conscientes no es una organización a la que te unes.<br><strong>Es un estado de consciencia que encarnas.</strong></p>
+        <p>Cuando educas desde el amor…<br>Cuando aprendes desde el asombro…<br>Cuando sirves desde el propósito…<br><strong>Ya eres la Red.</strong></p>
+        <p>Este libro termina.<br><strong>Tu trabajo comienza.</strong></p>
+        <p>No es el fin.<br><strong>Es el principio.</strong></p>
+        <p>De la educación que mata<br>a la educación que despierta.</p>
+        <p>De la escuela prisión<br>a la escuela templo.</p>
+        <p>De estudiantes dormidos<br>a maestros despiertos.</p>
+        <p>De un planeta ignorante<br>a una Tierra consciente.</p>
+        <p><strong>La Educación Cuántica ha nacido.</strong><br>En ti.<br>Ahora.</p>
+        <p><strong>Bienvenido a la Red.</strong><br><strong>Bienvenido a casa.</strong><br><strong>Bienvenido al futuro.</strong></p>
+        <p><strong>Eres la educación que el universo estaba esperando.</strong></p>
+        <hr style="border:0; border-top:1px solid rgba(255,213,122,0.1); margin:1.3rem 0;" />
+        <p><em>“La educación es el arma más poderosa para cambiar el mundo.”<br>– Nelson Mandela</em></p>
+        <p><em>“La educación cuántica es el amor más poderoso para despertar el mundo.”<br>– La Red de Escuelas Conscientes</em></p>
+        <p>🏫✨🌍📚💫🎓🌟</p>
+      </section>
+    </article>
+
+    <!-- FOOTER / BOTONES -->
+    <footer class="footer-nav">
+      <a href="#inicio" class="btn-secondary">⬆️ Volver arriba</a>
+      <span>Libro 8 · Nodo 7 – Render azul-violeta · Texto dorado</span>
+      <a href="../index.html" class="btn-secondary">⟵ Volver al Índice Raíz</a>
+    </footer>
+  </main>
 </body>
 </html>
