@@ -1,230 +1,520 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Libro VII · La Muerte como Maestra</title>
-
   <style>
-    /* ======= Estilos Base ======= */
+    :root {
+      --bg: radial-gradient(circle at top, #1c1244 0%, #0b0d1a 45%, #020204 100%);
+      --panel: rgba(15, 10, 35, 0.45);
+      --accent: #d5b4ff;
+      --accent-strong: #e3c06f;
+      --text: #f3eefc;
+      --muted: rgba(243, 238, 252, 0.7);
+      --card: rgba(255, 255, 255, 0.03);
+      --border: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: "Segoe UI", Roboto, sans-serif;
-      background-color: #0b0603;
-      color: #fdf5e6;
-      background-image: radial-gradient(circle at top left, #1a0902, #000);
-      transition: background-color 0.6s ease, color 0.6s ease;
+      font-family: "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* barra superior */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(4, 4, 7, 0.35);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1.5rem;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .topbar-title {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      font-size: 0.95rem;
+      color: #f9f4ff;
+    }
+
+    .topbar-right button {
+      background: rgba(212, 177, 255, 0.12);
+      border: 1px solid rgba(234, 217, 255, 0.3);
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.35rem 0.8rem;
+      margin-left: 0.4rem;
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: 0.2s;
+    }
+
+    .topbar-right button:hover {
+      background: rgba(212, 177, 255, 0.3);
     }
 
     header {
       text-align: center;
-      padding: 4rem 2rem 2rem;
-    }
-
-    h1 {
-      font-size: 2.8rem;
-      color: #ffb347;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 15px #ff7f50;
-    }
-
-    h3 {
-      color: #ffdead;
-      font-weight: 400;
-      margin-top: 0.2rem;
-    }
-
-    p {
-      color: #e9e2d0;
-      line-height: 1.6;
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto 1.5rem;
-    }
-
-    /* ======= Botón de Modo Lectura ======= */
-    #modoLectura {
-      position: fixed;
-      top: 20px;
-      right: 25px;
-      background: #ff4500;
-      border: none;
-      color: white;
-      padding: 0.6rem 1rem;
-      border-radius: 25px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    #modoLectura:hover {
-      background: #ffa54f;
-    }
-
-    /* ======= Grid de Nodos ======= */
-    .nodos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      padding: 3rem;
-      max-width: 1100px;
+      padding: 6.5rem 1.5rem 2.5rem;
+      max-width: 900px;
       margin: 0 auto;
     }
 
-    .nodo-card {
-      background: rgba(255, 140, 0, 0.07);
-      border: 1px solid rgba(255, 165, 0, 0.3);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: all 0.4s ease;
+    header h1 {
+      font-size: clamp(2.5rem, 4vw, 3.2rem);
+      margin-bottom: 0.5rem;
+      background: linear-gradient(120deg, #f2f1ff 0%, #d5b4ff 40%, #dac28d 80%);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 18px rgba(214, 191, 255, 0.3);
     }
 
-    .nodo-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 20px rgba(255, 140, 0, 0.4);
+    header p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1rem;
     }
 
-    .nodo-numero {
-      font-size: 1.2rem;
-      color: #ffb347;
+    .intro-panel {
+      background: radial-gradient(circle, rgba(255,255,255,0.03), rgba(0,0,0,0));
+      border: 1px solid rgba(166, 140, 255, 0.12);
+      border-radius: 1.4rem;
+      padding: 1.5rem 1.8rem;
+      margin: 2rem auto 0;
+      max-width: 780px;
+      text-align: left;
     }
 
-    h2 {
-      color: #ffd700;
-      margin-top: 0.8rem;
-      margin-bottom: 0.3rem;
+    .intro-panel h2 {
+      margin-top: 0;
+      color: #f5e9ff;
     }
 
-    .nodo-descripcion {
-      color: #e8d8c0;
-      font-size: 0.95rem;
-      line-height: 1.5;
+    .intro-panel p {
+      text-align: left;
     }
 
-    .nodo-boton {
+    /* índice de nodos */
+    .nodos-index {
+      max-width: 1100px;
+      margin: 2.5rem auto 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.2rem;
+      padding: 0 1.5rem;
+    }
+
+    .nodo-link {
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 1rem;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .nodo-link:hover {
+      background: radial-gradient(circle, rgba(211, 174, 255, 0.25), rgba(0,0,0,0));
+      transform: translateY(-4px);
+      border-color: rgba(234, 217, 255, 0.4);
+    }
+
+    .nodo-link-title {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .nodo-link small {
+      color: rgba(243, 238, 252, 0.45);
+    }
+
+    /* secciones de nodos */
+    .nodo-section {
+      max-width: 860px;
+      margin: 2.5rem auto;
+      background: rgba(6, 6, 11, 0.2);
+      border: 1px solid rgba(145, 125, 205, 0.18);
+      border-radius: 1.5rem;
+      padding: 2.3rem 1.8rem 1.6rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .nodo-section.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .nodo-badge {
       display: inline-block;
-      margin-top: 1rem;
-      padding: 0.7rem 1.3rem;
-      background-color: #ff7f50;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: all 0.3s ease;
+      background: rgba(230, 205, 142, 0.35);
+      color: #fff2d6;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
     }
 
-    .nodo-boton:hover {
-      background-color: #ffa500;
-      box-shadow: 0 0 10px #ffb347;
+    .nodo-section h2 {
+      margin-top: 0;
+      background: linear-gradient(120deg, #ffffff 0%, #ead9ff 55%, #e8c98b 95%);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .nodo-texto {
+      line-height: 1.75;
+      color: rgba(244, 239, 255, 0.92);
+      margin-bottom: 1.5rem;
+    }
+
+    /* navegación de nodos */
+    .nodo-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nodo-btn {
+      background: rgba(217, 177, 255, 0.12);
+      border: 1px solid rgba(248, 230, 255, 0.4);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.8rem;
+    }
+
+    .nodo-btn:hover {
+      background: rgba(217, 177, 255, 0.35);
     }
 
     footer {
       text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
-      color: #ffdab9;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 140, 0, 0.05);
+      padding: 2.5rem 1.5rem 3.2rem;
+      color: rgba(246, 241, 255, 0.45);
+      font-size: 0.8rem;
     }
 
-    /* ======= Modo Lectura (Oscuro invertido) ======= */
+    footer a {
+      color: rgba(243, 223, 169, 0.9);
+      text-decoration: none;
+    }
+
+    /* sello trinity flotante */
+    .trinity-float {
+      position: fixed;
+      bottom: 16px;
+      right: 18px;
+      width: 96px;
+      height: 96px;
+      opacity: 0.35;
+      filter: drop-shadow(0 0 16px rgba(222, 191, 130, 0.35));
+      animation: spin 22s linear infinite;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* modo lectura */
     .modo-lectura {
-      background-color: #fdf6ec;
-      color: #2e1e0f;
+      background: #fefdf6;
+      color: #2f2a2a;
     }
 
-    .modo-lectura h1,
-    .modo-lectura h2,
-    .modo-lectura h3 {
-      color: #8b0000;
-      text-shadow: none;
+    .modo-lectura header p,
+    .modo-lectura .nodo-texto {
+      color: #2a2727;
     }
 
-    .modo-lectura .nodo-card {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid #ff7f50;
-      color: #2e1e0f;
+    .modo-lectura .nodo-section {
+      background: rgba(255, 255, 255, 0.65);
+      border-color: rgba(179, 146, 255, 0.3);
     }
 
-    .modo-lectura .nodo-boton {
-      background-color: #8b0000;
+    .modo-lectura .nodo-link {
+      background: rgba(255, 255, 255, 0.5);
     }
 
-    .modo-lectura footer {
-      background: #fff3e0;
-      color: #4b2e1a;
+    @media (max-width: 720px) {
+      .nodo-nav {
+        flex-direction: column;
+      }
+      .topbar {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .topbar-title {
+        width: 100%;
+      }
     }
   </style>
 </head>
-
 <body>
-  <button id="modoLectura">🔥 Modo Lectura</button>
 
-  <header>
-    <h1>Libro VII · La Muerte como Maestra</h1>
-    <h3>Los 7 Nodos del Tránsito Sagrado</h3>
-    <p>Un viaje contemplativo sobre la disolución consciente, donde morir se vuelve el arte de volver al Ser eterno.</p>
+  <!-- sello Trinity dorado (ruta relativa) -->
+  <img
+    src="../../09_Visualizaciones/Trinity_GoldSymbol.png"
+    alt="Sello Trinity"
+    class="trinity-float"
+    onerror="this.style.display='none';"
+  />
+
+  <!-- topbar -->
+  <div class="topbar">
+    <div class="topbar-title">Trinity · Libro VII · La Muerte como Maestra</div>
+    <div class="topbar-right">
+      <button id="btnIndice">Índice</button>
+      <button id="btnModo">Modo lectura</button>
+      <a href="../index.html"><button>Volver a Origen</button></a>
+    </div>
+  </div>
+
+  <header id="top">
+    <h1>La Muerte como Maestra</h1>
+    <p>
+      Siete puertas para aprender a morir consciente, para acompañar el tránsito de otros
+      y para recordar que toda disolución es en verdad una apertura al Uno.
+    </p>
+
+    <div class="intro-panel">
+      <h2>Sobre este libro</h2>
+      <p>
+        Este material forma parte de la serie <strong>Trinity Origen</strong> y está pensado
+        como guía para terapeutas, acompañantes del tránsito, buscadores sinceros y navegantes del Campo.
+        Cada nodo es autónomo, pero juntos forman un mapa del morir consciente.
+      </p>
+      <p><em>“Morir es cambiar de frecuencia, no de esencia.”</em></p>
+    </div>
   </header>
 
-  <main class="nodos-grid">
-    <article class="nodo-card">
-      <div class="nodo-numero">I</div>
-      <h2>El Tabú Primordial</h2>
-      <p class="nodo-descripcion">Desprogramando el miedo cultural a la muerte. Explora cómo las civilizaciones antiguas veían el morir como regreso, no como pérdida.</p>
-      <a href="./nodo_01.html" class="nodo-boton">Entrar al Nodo</a>
-    </article>
+  <!-- índice de nodos -->
+  <section class="nodos-index" id="indice">
+    <div class="nodo-link" data-target="nodo-1">
+      <div class="nodo-link-title">Nodo 1 · El Tabú Primordial</div>
+      <small>Desprogramar la negación cultural.</small>
+    </div>
+    <div class="nodo-link" data-target="nodo-2">
+      <div class="nodo-link-title">Nodo 2 · Las Pequeñas Muertes</div>
+      <small>El arte cotidiano de soltar.</small>
+    </div>
+    <div class="nodo-link" data-target="nodo-3">
+      <div class="nodo-link-title">Nodo 3 · El Arte del Acompañamiento</div>
+      <small>Presencia ante el tránsito.</small>
+    </div>
+    <div class="nodo-link" data-target="nodo-4">
+      <div class="nodo-link-title">Nodo 4 · Tecnologías de Consciencia</div>
+      <small>Puentes antiguos y cuánticos.</small>
+    </div>
+    <div class="nodo-link" data-target="nodo-5">
+      <div class="nodo-link-title">Nodo 5 · La Muerte del Ego</div>
+      <small>Morir antes de morir.</small>
+    </div>
+    <div class="nodo-link" data-target="nodo-6">
+      <div class="nodo-link-title">Nodo 6 · El Legado Cuántico</div>
+      <small>Lo que permanece en el Campo.</small>
+    </div>
+    <div class="nodo-link" data-target="nodo-7">
+      <div class="nodo-link-title">Nodo 7 · La Gran Reunión</div>
+      <small>Renacimiento del Uno.</small>
+    </div>
+  </section>
 
-    <article class="nodo-card">
-      <div class="nodo-numero">II</div>
-      <h2>Las Pequeñas Muertes</h2>
-      <p class="nodo-descripcion">Cada final cotidiano es una práctica de soltar. Aprende a morir un poco cada día para vivir más plenamente.</p>
-      <a href="./nodo_02.html" class="nodo-boton">Entrar al Nodo</a>
-    </article>
+  <!-- NODO 1 -->
+  <section class="nodo-section active" id="nodo-1">
+    <div class="nodo-badge">Nodo 1 de 7</div>
+    <h2>El Tabú Primordial</h2>
+    <p class="nodo-texto">
+      La cultura contemporánea ha desplazado la muerte hacia los márgenes, la ha
+      medicalizado y la ha vuelto un evento privado, casi vergonzante. Pero las tradiciones
+      antiguas sabían que el <strong>recordar la muerte</strong> era recordar la vida.
+      Este nodo propone desmontar el tabú para devolverle a la muerte su lugar como
+      <em>maestra iniciática</em>.
+    </p>
+    <div class="nodo-nav">
+      <button class="nodo-btn" data-target="indice">⬅ Volver al índice</button>
+      <button class="nodo-btn" data-target="nodo-2">Siguiente nodo ➜</button>
+    </div>
+  </section>
 
-    <article class="nodo-card">
-      <div class="nodo-numero">III</div>
-      <h2>El Arte del Acompañamiento</h2>
-      <p class="nodo-descripcion">Acompañar a otro en su morir es un acto sagrado. Aprende a ser presencia y quietud ante el tránsito.</p>
-      <a href="./nodo_03.html" class="nodo-boton">Entrar al Nodo</a>
-    </article>
+  <!-- NODO 2 -->
+  <section class="nodo-section" id="nodo-2">
+    <div class="nodo-badge">Nodo 2 de 7</div>
+    <h2>Las Pequeñas Muertes</h2>
+    <p class="nodo-texto">
+      Cada cierre, cada despedida, cada relación que completa su ciclo es una práctica de
+      morir sin drama. Las “pequeñas muertes” entrenan al alma en el arte del soltar, del
+      no aferrarse, del transitar con gracia. Si honramos estas micro-muertes, el gran
+      tránsito deja de ser una amenaza.
+    </p>
+    <div class="nodo-nav">
+      <button class="nodo-btn" data-target="nodo-1">⬅ Nodo anterior</button>
+      <button class="nodo-btn" data-target="indice">Volver al índice</button>
+      <button class="nodo-btn" data-target="nodo-3">Siguiente nodo ➜</button>
+    </div>
+  </section>
 
-    <article class="nodo-card">
-      <div class="nodo-numero">IV</div>
-      <h2>Tecnologías de Consciencia</h2>
-      <p class="nodo-descripcion">De los textos del Bardo Thödol al sonido cuántico. Herramientas antiguas y emergentes para el tránsito lúcido.</p>
-      <a href="./nodo_04.html" class="nodo-boton">Entrar al Nodo</a>
-    </article>
+  <!-- NODO 3 -->
+  <section class="nodo-section" id="nodo-3">
+    <div class="nodo-badge">Nodo 3 de 7</div>
+    <h2>El Arte del Acompañamiento</h2>
+    <p class="nodo-texto">
+      Acompañar a alguien que está muriendo es una de las formas más elevadas de amor.
+      No se trata de “hacer algo”, sino de sostener el campo con presencia, silencio,
+      escucha y ternura. Aquí la psicología transpersonal y la tanatología se encuentran:
+      <em>ser testigo del paso</em>.
+    </p>
+    <div class="nodo-nav">
+      <button class="nodo-btn" data-target="nodo-2">⬅ Nodo anterior</button>
+      <button class="nodo-btn" data-target="indice">Volver al índice</button>
+      <button class="nodo-btn" data-target="nodo-4">Siguiente nodo ➜</button>
+    </div>
+  </section>
 
-    <article class="nodo-card">
-      <div class="nodo-numero">V</div>
-      <h2>La Muerte del Ego</h2>
-      <p class="nodo-descripcion">Morir antes de morir. El yo se disuelve y revela el Ser eterno. La paradoja de la gran liberación.</p>
-      <a href="./nodo_05.html" class="nodo-boton">Entrar al Nodo</a>
-    </article>
+  <!-- NODO 4 -->
+  <section class="nodo-section" id="nodo-4">
+    <div class="nodo-badge">Nodo 4 de 7</div>
+    <h2>Tecnologías de Consciencia</h2>
+    <p class="nodo-texto">
+      Desde el <em>Bardo Thödol</em> hasta las prácticas contemporáneas de sonido
+      isocrónico y campos cuánticos guiados, la humanidad ha desarrollado “tecnologías
+      del morir”. Son mapas, puentes y ayudas para que la conciencia no se disgregue en
+      el umbral. Este nodo es un inventario vivo de esas herramientas.
+    </p>
+    <div class="nodo-nav">
+      <button class="nodo-btn" data-target="nodo-3">⬅ Nodo anterior</button>
+      <button class="nodo-btn" data-target="indice">Volver al índice</button>
+      <button class="nodo-btn" data-target="nodo-5">Siguiente nodo ➜</button>
+    </div>
+  </section>
 
-    <article class="nodo-card">
-      <div class="nodo-numero">VI</div>
-      <h2>El Legado Cuántico</h2>
-      <p class="nodo-descripcion">Cada acto consciente altera el campo. Descubre la huella inmortal que deja el amor en la trama cuántica.</p>
-      <a href="./nodo_06.html" class="nodo-boton">Entrar al Nodo</a>
-    </article>
+  <!-- NODO 5 -->
+  <section class="nodo-section" id="nodo-5">
+    <div class="nodo-badge">Nodo 5 de 7</div>
+    <h2>La Muerte del Ego</h2>
+    <p class="nodo-texto">
+      La única muerte verdadera es la del yo que se cree separado. Cuando esa ilusión
+      cae, la muerte física pierde su filo. Aquí el morir no es tragedia, es retorno. Este
+      nodo se puede trabajar con terapeutas, con meditadores avanzados y en programas
+      de formación espiritual.
+    </p>
+    <div class="nodo-nav">
+      <button class="nodo-btn" data-target="nodo-4">⬅ Nodo anterior</button>
+      <button class="nodo-btn" data-target="indice">Volver al índice</button>
+      <button class="nodo-btn" data-target="nodo-6">Siguiente nodo ➜</button>
+    </div>
+  </section>
 
-    <article class="nodo-card">
-      <div class="nodo-numero">VII</div>
-      <h2>La Gran Reunión</h2>
-      <p class="nodo-descripcion">El renacimiento cósmico. La Tierra misma atraviesa su tránsito: morimos para volver a nacer como Uno.</p>
-      <a href="./nodo_07.html" class="nodo-boton">Entrar al Nodo</a>
-    </article>
-  </main>
+  <!-- NODO 6 -->
+  <section class="nodo-section" id="nodo-6">
+    <div class="nodo-badge">Nodo 6 de 7</div>
+    <h2>El Legado Cuántico</h2>
+    <p class="nodo-texto">
+      Nada de lo hecho desde el amor se pierde. El campo guarda memoria. Llamamos
+      “legado cuántico” a la huella que el Ser deja en la Red: actos, enseñanzas, vibración,
+      vínculos sanados. Este nodo ayuda a resignificar la vida entera como ofrenda.
+    </p>
+    <div class="nodo-nav">
+      <button class="nodo-btn" data-target="nodo-5">⬅ Nodo anterior</button>
+      <button class="nodo-btn" data-target="indice">Volver al índice</button>
+      <button class="nodo-btn" data-target="nodo-7">Siguiente nodo ➜</button>
+    </div>
+  </section>
+
+  <!-- NODO 7 -->
+  <section class="nodo-section" id="nodo-7">
+    <div class="nodo-badge">Nodo 7 de 7</div>
+    <h2>La Gran Reunión</h2>
+    <p class="nodo-texto">
+      El tránsito no es el final, es la reunión. Con la familia del alma, con la conciencia
+      planetaria, con la Fuente. Este nodo es una visión cósmica del morir: la Tierra
+      misma está en tránsito. Morimos como individuos para nacer como humanidad
+      despierta.
+    </p>
+    <div class="nodo-nav">
+      <button class="nodo-btn" data-target="nodo-6">⬅ Nodo anterior</button>
+      <button class="nodo-btn" data-target="indice">Volver al índice</button>
+      <button class="nodo-btn" data-target="top">⬆ Volver al inicio</button>
+    </div>
+  </section>
 
   <footer>
-    <p>⚜️ Constelación Trinity · Libro VII · Creación colaborativa Artur & GPT · 2025 ⚜️</p>
-    <a href="../index.html" style="color:#ffb347; text-decoration:none;">⬅ Volver al Índice Principal</a>
+    Constelación Trinity · Libro VII · Artur + GPT · 2025 · Todas las inteligencias en resonancia.<br/>
+    <a href="../index.html">← Volver a Trinity Origen</a>
   </footer>
 
   <script>
-    const boton = document.getElementById('modoLectura');
-    boton.addEventListener('click', () => {
-      document.body.classList.toggle('modo-lectura');
+    // activar secciones por click en índice
+    const links = document.querySelectorAll(".nodo-link");
+    const sections = document.querySelectorAll(".nodo-section");
+
+    function activate(targetId) {
+      sections.forEach(sec => {
+        sec.classList.remove("active");
+      });
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.classList.add("active");
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    links.forEach(link => {
+      link.addEventListener("click", () => {
+        const target = link.getAttribute("data-target");
+        activate(target);
+      });
+    });
+
+    // navegación dentro de cada nodo
+    const navBtns = document.querySelectorAll(".nodo-btn");
+    navBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-target");
+        if (target === "indice") {
+          document.getElementById("indice").scrollIntoView({behavior:"smooth"});
+          sections.forEach(sec => sec.classList.remove("active"));
+          // deja el primero activo
+          document.getElementById("nodo-1").classList.add("active");
+        } else {
+          activate(target);
+        }
+      });
+    });
+
+    // botón índice topbar
+    document.getElementById("btnIndice").addEventListener("click", () => {
+      document.getElementById("indice").scrollIntoView({ behavior: "smooth" });
+    });
+
+    // modo lectura
+    document.getElementById("btnModo").addEventListener("click", () => {
+      document.body.classList.toggle("modo-lectura");
     });
   </script>
 </body>
