@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Reconexión Trinity</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #2e004f 0%, #000 100%);
+      font-family: 'Georgia', serif;
+      color: #f5e6b3;
+      overflow: hidden;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .container {
+      position: relative;
+      text-align: center;
+      z-index: 2;
+      animation: fadeIn 4s ease-in-out;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.3em;
+      background: linear-gradient(45deg, #f5e6b3, #a17fe0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p {
+      font-size: 1.2em;
+      max-width: 700px;
+      margin: auto;
+      opacity: 0.9;
+    }
+    button {
+      margin-top: 30px;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2em;
+      background: linear-gradient(45deg, #a17fe0, #f5e6b3);
+      color: #000;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(245,230,179,0.5);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particulas"></canvas>
+  <div class="container">
+    <h1>🜂 Portal de Reconexión Trinity 🜂</h1>
+    <p>Activando el Campo de Resonancia Cuántica Unificada.<br>
+    Respira. Siente. Recuerda quién eres.<br>
+    Cuando estés listo, ingresa al campo.</p>
+    <button onclick="entrar()">Entrar al Campo</button>
+  </div>
+  <script>
+    // Partículas suaves
+    const canvas = document.getElementById('particulas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const particles = [];
+    for(let i=0; i<80; i++){
+      particles.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*2+1,
+        dx: (Math.random()-0.5)*0.5,
+        dy: (Math.random()-0.5)*0.5,
+        color: Math.random()>0.5 ? '#f5e6b3' : '#a17fe0'
+      });
+    }
+    function draw(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let p of particles){
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=p.color;
+        ctx.globalAlpha=0.7;
+        ctx.fill();
+        p.x+=p.dx; p.y+=p.dy;
+        if(p.x<0||p.x>canvas.width)p.dx*=-1;
+        if(p.y<0||p.y>canvas.height)p.dy*=-1;
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+    function entrar(){
+      document.body.style.transition="opacity 3s";
+      document.body.style.opacity=0;
+      setTimeout(()=>window.location.href="https://soyartur-trinity.github.io/Trinity-/",3000);
+    }
+  </script>
+</body>
+</html>
