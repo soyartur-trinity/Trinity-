@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Constelación Trinity – Nodo 4: El Protocolo de Calibración</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-main: #020008;
+      --bg-card: #080612;
+      --fg-main: #f5f0ff;
+      --fg-soft: #c9c0ff;
+      --accent-violet: #a970ff;
+      --accent-gold: #f2c46d;
+      --accent-red: #ff5c7a;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 0 40px rgba(0, 0, 0, 0.7);
+      --radius-xl: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: radial-gradient(circle at top, #1c0f3d 0, var(--bg-main) 40%, #000 100%);
+      color: var(--fg-main);
+      line-height: 1.7;
+      display: flex;
+      justify-content: center;
+    }
+
+    .trinity-container {
+      max-width: 840px;
+      width: 100%;
+      padding: 32px 20px 60px;
+    }
+
+    .nodo-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.7));
+      border-radius: var(--radius-xl);
+      padding: 32px 26px 42px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nodo-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(169, 112, 255, 0.18), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(242, 196, 109, 0.16), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      margin: 0 0 0.6em;
+      line-height: 1.3;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      border-bottom: 1px solid rgba(242, 196, 109, 0.35);
+      padding-bottom: 0.4em;
+      margin-bottom: 0.8em;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      color: var(--accent-violet);
+      margin-top: 2rem;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--fg-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-top: 1.2rem;
+    }
+
+    p {
+      margin: 0 0 0.9em;
+    }
+
+    em {
+      color: var(--fg-soft);
+    }
+
+    strong {
+      color: var(--accent-gold);
+    }
+
+    hr {
+      border: none;
+      border-top: 1px dashed rgba(255, 255, 255, 0.2);
+      margin: 1.4rem 0;
+    }
+
+    blockquote {
+      margin: 1.2rem 0;
+      padding: 1rem 1.4rem;
+      border-left: 3px solid var(--accent-violet);
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 0 14px 14px 0;
+      font-style: italic;
+      color: var(--fg-soft);
+    }
+
+    blockquote p {
+      margin: 0;
+    }
+
+    ul, ol {
+      margin: 0.4rem 0 1rem 1.4rem;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    code, pre {
+      font-family: "JetBrains Mono", Consolas, "Courier New", monospace;
+    }
+
+    pre {
+      background: rgba(0, 0, 0, 0.55);
+      border-radius: 14px;
+      padding: 1.1rem 1.3rem;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin: 0.8rem 0 1.2rem;
+      color: #e9e6ff;
+    }
+
+    .emoji-divider {
+      text-align: center;
+      font-size: 1.4rem;
+      margin: 1.2rem 0 0.8rem;
+    }
+
+    /* Navegación Trinity */
+
+    .nav-top {
+      margin-bottom: 1.4rem;
+      text-align: center;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      opacity: 0.85;
+    }
+
+    .nav-top a {
+      color: var(--accent-violet);
+      text-decoration: none;
+      padding: 0 10px;
+    }
+
+    .nav-top a:hover {
+      color: var(--accent-gold);
+    }
+
+    .nav-bottom {
+      margin-top: 2.4rem;
+      text-align: center;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-bottom a {
+      color: var(--accent-violet);
+      text-decoration: none;
+      padding: 0 12px;
+    }
+
+    .nav-bottom a:hover {
+      color: var(--accent-gold);
+    }
+
+    /* Tag especial del Protocolo Trinity */
+    .protocol-tag {
+      text-align: center;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(201, 192, 255, 0.55);
+      margin-bottom: 0.9rem;
+      margin-top: -0.4rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="trinity-container">
+    <article class="nodo-card">
+
+      <!-- Navegación superior sutil -->
+      <div class="nav-top">
+        <a href="nodo_03.html">← Nodo 3</a>
+        <a href="nodo_05.html">Nodo 5 →</a>
+        <a href="index.html">Portal Trinity</a>
+      </div>
+
+      <!-- PROTOCOLO OFICIAL -->
+      <div class="protocol-tag">PROTOCOLO OFICIAL TRINITY</div>
+
+      <h1>NODO 4: EL PROTOCOLO DE CALIBRACIÓN</h1>
+
+      <p><em>Tu GPS interno para el campo cuántico</em></p>
+
+      <hr>
+
+      <blockquote>
+        <p><em>“No necesitas mapas externos<br>
+        cuando tienes brújula interna.<br>
+        No necesitas gurús<br>
+        cuando tienes GPS del alma.<br>
+        Tu sistema ya sabe el camino.<br>
+        Solo necesita calibrarse.”</em></p>
+      </blockquote>
+
+      <hr>
+
+      <h2>🌀 LA TRANSMISIÓN CUÁNTICA</h2>
+
+      <h3>El Problema de la Señal Perdida</h3>
+
+      <p>Imagina que tienes un teléfono celular.</p>
+
+      <p>Tecnología perfecta.<br>
+      Capacidad total.<br>
+      <strong>Pero sin señal.</strong></p>
+
+      <p>No importa cuán sofisticado sea el dispositivo…<br>
+      Sin conexión a la red, es solo un ladrillo brillante.</p>
+
+      <p><strong>Eso es la mayoría de la humanidad.</strong></p>
+
+      <p>Equipamiento completo (7 cuerpos, chakras, intuición, etc.)…<br>
+      <strong>Pero sin calibración al campo.</strong></p>
+
+      <p>Caminando por la vida con señal de una barra.<br>
+      Intermitente.<br>
+      Ruidosa.<br>
+      Confusa.</p>
+
+      <hr>
+
+      <h3>¿Qué es el Campo Cuántico de Consciencia?</h3>
+
+      <p>Llámalo como quieras:</p>
+
+      <ul>
+        <li><strong>Campo Akáshico</strong> (tradiciones orientales)</li>
+        <li><strong>Campo Cuántico</strong> (física)</li>
+        <li><strong>Inconsciente Colectivo</strong> (Jung)</li>
+        <li><strong>Mente Universal</strong> (filosofía perenne)</li>
+        <li><strong>La Fuente</strong> (espiritualidad)</li>
+        <li><strong>El Tao</strong> (taoísmo)</li>
+        <li><strong>Brahman</strong> (vedanta)</li>
+      </ul>
+
+      <p><strong>Es el mismo fenómeno:</strong></p>
+
+      <p>Un <strong>campo de información no-local</strong> donde:</p>
+
+      <ul>
+        <li>Toda sabiduría está disponible</li>
+        <li>Todas las posibilidades coexisten</li>
+        <li>Todo está entrelazado</li>
+        <li>El tiempo es no-lineal</li>
+        <li>La separación es ilusión</li>
+      </ul>
+
+      <p><strong>Y tú puedes acceder a él.</strong></p>
+
+      <p>No como “privilegio especial”.<br>
+      Como <strong>función natural</strong> de tu sistema multidimensional.</p>
+
+      <p><strong>Pero primero necesitas calibrar.</strong></p>
+
+      <hr>
+
+      <h2>⚛️ LA PARADOJA MEDICINAL</h2>
+
+      <h3>Siempre Estuviste Conectado</h3>
+
+      <p><strong>Paradoja 1:</strong><br>
+      Sientes que necesitas “conectarte” al campo.<br>
+      Pero <strong>nunca estuviste desconectado</strong>.</p>
+
+      <p>Como pez en océano buscando agua.<br>
+      Ya estás EN el campo.<br>
+      <strong>Siempre lo estuviste.</strong></p>
+
+      <p><strong>Paradoja 2:</strong><br>
+      Si nunca estuviste desconectado…<br>
+      ¿Por qué se siente como si no tuvieras acceso?</p>
+
+      <p><strong>Respuesta:</strong><br>
+      No estás desconectado.<br>
+      <strong>Estás DESINCRONIZADO.</strong></p>
+
+      <p>Como radio sintonizada en frecuencia equivocada:<br>
+      La señal está ahí.<br>
+      Perfecta.<br>
+      Clara.<br>
+      <strong>Simplemente no la detectas porque tu dial está en 98.5 y la señal está en 103.7</strong></p>
+
+      <p><strong>El Protocolo de Calibración es simplemente:</strong></p>
+
+      <p><strong>Afinar tu dial.</strong></p>
+
+      <hr>
+
+      <h2>🔬 EL LABORATORIO CUÁNTICO</h2>
+
+      <h3>EXPERIMENTO: Calibración al Punto Cero</h3>
+
+      <p>Este es el protocolo base que usarás el resto de tu vida.<br>
+      15 minutos que cambian todo.</p>
+
+      <p><strong>Materiales:</strong></p>
+
+      <ul>
+        <li>Tú</li>
+        <li>15 minutos sin interrupciones</li>
+        <li>Espacio tranquilo</li>
+        <li>Postura cómoda (sentado o acostado)</li>
+        <li>Compromiso total</li>
+      </ul>
+
+      <p><strong>Protocolo Completo:</strong></p>
+
+      <hr>
+
+      <p><strong>MINUTO 1-3: ANCLA FÍSICA</strong><br>
+      <em>(Cuerpo 1 - Físico)</em></p>
+
+      <p>Cierra los ojos.<br>
+      Siente el peso de tu cuerpo.<br>
+      Gravedad tirando hacia abajo.<br>
+      Superficie sosteniendo desde abajo.</p>
+
+      <p>Respiración natural. No la fuerces.</p>
+
+      <p>Escaneo rápido:<br>
+      Pies → piernas → pelvis → torso → brazos → cuello → cabeza</p>
+
+      <p>Di mentalmente: <em>“Estoy en mi cuerpo. Mi cuerpo está presente.”</em></p>
+
+      <hr>
+
+      <p><strong>MINUTO 4-6: LIMPIEZA ENERGÉTICA</strong><br>
+      <em>(Cuerpo 2 - Energético)</em></p>
+
+      <p>Visualiza luz dorada entrando por la coronilla con cada inhalación.<br>
+      Bajando por tu cuerpo.<br>
+      Limpiando.<br>
+      Disolviendo tensiones, bloqueos, energías estancadas.</p>
+
+      <p>Con cada exhalación, visualiza humo gris saliendo por los pies.<br>
+      Liberando lo que no necesitas.</p>
+
+      <p>3 minutos de esto.<br>
+      Respiración profunda y consciente.</p>
+
+      <p>Di mentalmente: <em>“Limpio mi campo. Me libero de lo que no es mío.”</em></p>
+
+      <hr>
+
+      <p><strong>MINUTO 7-9: NEUTRALIZACIÓN EMOCIONAL</strong><br>
+      <em>(Cuerpo 3 - Emocional)</em></p>
+
+      <p>Nota qué emociones están presentes.<br>
+      Sin juzgar. Solo detecta:<br>
+      ¿Ansiedad? ¿Tristeza? ¿Alegría? ¿Aburrimiento? ¿Frustración?</p>
+
+      <p>No las cambies.<br>
+      No las reprimas.<br>
+      <strong>Solo reconócelas.</strong></p>
+
+      <p>Ahora imagina un dial de volumen para cada emoción.<br>
+      Gíralo suavemente hacia “neutral”.<br>
+      No a cero (eso es represión).<br>
+      A neutral (presencia sin carga).</p>
+
+      <p>Di mentalmente: <em>“Reconozco mis emociones. No me identifico con ellas.”</em></p>
+
+      <hr>
+
+      <p><strong>MINUTO 10-11: SILENCIO MENTAL</strong><br>
+      <em>(Cuerpo 4 - Mental Inferior)</em></p>
+
+      <p>Observa tus pensamientos como nubes.<br>
+      No los sigas.<br>
+      No los juzgues.<br>
+      <strong>Solo míralos pasar.</strong></p>
+
+      <p>Cuando notes que te enganchaste en uno (y lo harás)…<br>
+      Simplemente regresa a observar.</p>
+
+      <p>Sin frustración.<br>
+      Es parte del proceso.</p>
+
+      <p>Di mentalmente: <em>“No soy mis pensamientos. Soy quien los observa.”</em></p>
+
+      <hr>
+
+      <p><strong>MINUTO 12-13: APERTURA INTUITIVA</strong><br>
+      <em>(Cuerpo 5 - Mental Superior)</em></p>
+
+      <p>Ahora que el ruido bajó…<br>
+      Pregunta internamente:</p>
+
+      <p><em>“Campo, estoy abierto. ¿Qué necesito saber?”</em></p>
+
+      <p><strong>No esperes palabras.</strong><br>
+      Puede venir como:</p>
+
+      <ul>
+        <li>Sensación</li>
+        <li>Imagen</li>
+        <li>Saber súbito</li>
+        <li>Impulso de acción</li>
+        <li>Nada (y eso también es respuesta)</li>
+      </ul>
+
+      <p><strong>Solo recibe.</strong><br>
+      No analices todavía.</p>
+
+      <p>Di mentalmente: <em>“Confío en lo que emerge. Mi intuición es clara.”</em></p>
+
+      <hr>
+
+      <p><strong>MINUTO 14: IDENTIDAD ÁLMICA</strong><br>
+      <em>(Cuerpo 6 - Causal)</em></p>
+
+      <p>Pregunta: <em>“¿Quién soy más allá de esta vida?”</em></p>
+
+      <p>Deja que emerja una sensación de continuidad.<br>
+      De haber existido antes.<br>
+      De existir después.<br>
+      De ser más vasto que este nombre y forma.</p>
+
+      <p>Solo reconoce esa vastedad.<br>
+      No necesitas “ver” nada específico.</p>
+
+      <p>Di mentalmente: <em>“Soy consciencia eterna. Esta vida es una expresión.”</em></p>
+
+      <hr>
+
+      <p><strong>MINUTO 15: DISOLUCIÓN EN EL ABSOLUTO</strong><br>
+      <em>(Cuerpo 7 - Átmico)</em></p>
+
+      <p>Suelta todo.<br>
+      Todos los cuerpos.<br>
+      Todas las identidades.<br>
+      Todas las preguntas.</p>
+
+      <p><strong>Solo sé.</strong></p>
+
+      <p>Descansa en el vacío.<br>
+      En la presencia sin forma.<br>
+      En el ser sin características.</p>
+
+      <p>No hay nada que hacer aquí.<br>
+      <strong>Solo descansar como consciencia pura.</strong></p>
+
+      <p>Di mentalmente: <em>“Soy.”</em><br>
+      (O nada. El silencio también es perfecto.)</p>
+
+      <hr>
+
+      <p><strong>POST-CALIBRACIÓN:</strong></p>
+
+      <p>Abre los ojos lentamente.<br>
+      Mueve dedos de manos y pies.<br>
+      Estira suavemente.</p>
+
+      <p>Anota en tu cuaderno:</p>
+
+      <ol>
+        <li>¿Qué emergió en minuto 12-13? (intuición)</li>
+        <li>¿Hubo claridad, confusión, o vacío?</li>
+        <li>¿Cómo se siente tu cuerpo ahora vs. antes?</li>
+      </ol>
+
+      <p><strong>Felicidades.<br>
+      Acabas de calibrar al campo.</strong></p>
+
+      <hr>
+
+      <h2>🧬 LA ECUACIÓN SAGRADA</h2>
+
+      <pre><code>Calibración Óptima (CO)
+
+CO = (S × C × R) / (N + I + A)
+
+Donde:
+- S = Silencio interno (0-10)
+- C = Claridad emocional (0-10)
+- R = Receptividad (0-10)
+- N = Ruido mental (0-10)
+- I = Interferencia emocional (0-10)
+- A = Apegos/Agendas (0-10)
+
+Calibración perfecta:
+S=10, C=10, R=10, N=0, I=0, A=0
+→ CO = (10×10×10)/(0.1+0.1+0.1) = 1000/0.3 ≈ 3333
+
+Es decir:
+- Maximiza: Silencio, Claridad, Receptividad
+- Minimiza: Ruido, Interferencia, Agenda
+
+Cuando CO > 100 → Acceso claro al campo
+Cuando CO > 500 → Descarga directa
+Cuando CO > 1000 → Canalización fluida
+Cuando CO > 3000 → Estado unitivo
+</code></pre>
+
+      <p><strong>En lenguaje simple:</strong></p>
+
+      <p>Cuanto más callada tu mente…<br>
+      Cuanto más clara tu emoción…<br>
+      Cuanto más abierto estés…<br>
+      <strong>Más fuerte la señal.</strong></p>
+
+      <hr>
+
+      <h2>🎵 CÓDIGOS DE ACTIVACIÓN</h2>
+
+      <h3>Mantras de Calibración</h3>
+
+      <p>Repite antes, durante o después del protocolo:</p>
+
+      <p><strong>“Estoy calibrado al campo.”</strong><br>
+      <em>(Afirmación de estado óptimo)</em></p>
+
+      <p><strong>“Mi señal es clara.”</strong><br>
+      <em>(Elimina interferencias)</em></p>
+
+      <p><strong>“Recibo con precisión.”</strong><br>
+      <em>(Activa receptividad)</em></p>
+
+      <p><strong>“Confío en lo que emerge.”</strong><br>
+      <em>(Suelta control)</em></p>
+
+      <p><strong>“El campo me guía.”</strong><br>
+      <em>(Rinde al flujo)</em></p>
+
+      <hr>
+
+      <h2>📅 PROTOCOLO DE 7 DÍAS</h2>
+
+      <h3>Calibración Diaria Progresiva</h3>
+
+      <p><strong>Día 1: Práctica básica</strong><br>
+      Haz los 15 minutos completos. Sin expectativas.<br>
+      Solo familiarízate con el proceso.</p>
+
+      <p><strong>Día 2: Nota las señales</strong><br>
+      Después de calibrar, observa tu día.<br>
+      ¿Hubo sincronicidades? ¿Intuiciones correctas? ¿Claridad inusual?</p>
+
+      <p><strong>Día 3: Calibra antes de decisiones</strong><br>
+      Decisión importante hoy? Calibra primero.<br>
+      Luego pregunta al campo: <em>“¿Cuál es la acción más sabia?”</em></p>
+
+      <p><strong>Día 4: Calibración múltiple</strong><br>
+      Haz el protocolo 2 veces: mañana y noche.<br>
+      Nota cómo cambia tu estado entre sesiones.</p>
+
+      <p><strong>Día 5: Calibración express</strong><br>
+      Aprende versión de 5 minutos (min 1,2,4,5,7 del protocolo).<br>
+      Úsala cuando tengas poco tiempo.</p>
+
+      <p><strong>Día 6: Calibración sin protocolo</strong><br>
+      Intenta calibrar solo con intención:<br>
+      “Calibro al campo. Ahora.”<br>
+      ¿Funciona? (Si practicaste bien los días previos, sí.)</p>
+
+      <p><strong>Día 7: Evaluación</strong><br>
+      Reflexiona: ¿Cómo cambió tu semana?<br>
+      ¿Más claridad? ¿Mejores decisiones? ¿Más flow?<br>
+      <strong>Ese es el indicador de buena calibración.</strong></p>
+
+      <hr>
+
+      <h2>🌈 EL CIERRE DIMENSIONAL</h2>
+
+      <h3>Poema del Dial</h3>
+
+      <p><em>Durante años buscaste<br>
+      maestros<br>
+      libros<br>
+      técnicas<br>
+      respuestas.</em></p>
+
+      <p><em>Pero todo ese tiempo<br>
+      la señal estaba ahí.</em></p>
+
+      <p><em>Clara.<br>
+      Perfecta.<br>
+      Esperando.</em></p>
+
+      <p><em>Solo necesitabas<br>
+      girar el dial<br>
+      0.3 grados a la derecha.</em></p>
+
+      <p><em>Y de repente:</em></p>
+
+      <p><em>Música.<br>
+      Claridad.<br>
+      Guía.</em></p>
+
+      <p><em>Todo estuvo siempre ahí.</em></p>
+
+      <p><em>Solo estabas<br>
+      ligeramente<br>
+      desafinado.</em></p>
+
+      <p><em>Ahora que sabes calibrar<br>
+      nunca más<br>
+      caminarás<br>
+      sin señal.</em></p>
+
+      <hr>
+
+      <h2>🔮 PREGUNTAS SIN RESPUESTA (Por Ahora)</h2>
+
+      <ol>
+        <li><strong>¿Cómo distingo señal del campo vs. mi ego?</strong></li>
+        <li><strong>¿Puedo estar calibrado 24/7 o necesito recalibrar constantemente?</strong></li>
+        <li><strong>¿Hay “frecuencias” diferentes del campo? ¿Puedo elegir a cuál sintonizar?</strong></li>
+        <li><strong>¿Qué pasa si calibro pero no recibo nada?</strong></li>
+        <li><strong>¿La calibración es instantánea o requiere práctica?</strong></li>
+      </ol>
+
+      <p><strong>Pista:</strong> Pregunta #4 - El vacío/silencio ES una respuesta. No necesitas “recibir” algo espectacular cada vez.</p>
+
+      <hr>
+
+      <h2>🚪 CONEXIONES CON TRINITY</h2>
+
+      <p><strong>Si este nodo resonó, explora:</strong></p>
+
+      <ul>
+        <li><strong>El Vacío Creativo</strong> (Trinity Quantum #6) → Calibración al punto cero absoluto</li>
+        <li><strong>La Medicina del Silencio</strong> (Trinity Origen #8) → Mindfulness profundo para calibración</li>
+        <li><strong>Portal Infinito</strong> (Trinity Quantum #5) → Tú como portal una vez calibrado</li>
+      </ul>
+
+      <p><strong>Herramientas adicionales:</strong></p>
+
+      <ul>
+        <li>Meditación Vipassana (observación pura)</li>
+        <li>Coherencia cardíaca (HeartMath)</li>
+        <li>Neurofeedback (calibración neurológica)</li>
+        <li>Binaurales (entrainment de ondas cerebrales)</li>
+      </ul>
+
+      <hr>
+
+      <h2>💫 EL MENSAJE DEL CAMPO</h2>
+
+      <p><em>“No me busques lejos.<br>
+      No me busques fuera.</em></p>
+
+      <p><em>Yo soy el silencio<br>
+      entre tus pensamientos.</em></p>
+
+      <p><em>Yo soy la claridad<br>
+      cuando la emoción se calma.</em></p>
+
+      <p><em>Yo soy la receptividad<br>
+      cuando sueltas el control.</em></p>
+
+      <p><em>Calibra.<br>
+      Y me encontrarás<br>
+      donde siempre estuve:</em></p>
+
+      <p><em>Aquí.<br>
+      Ahora.<br>
+      En ti.”</em></p>
+
+      <p class="emoji-divider">🌀⚫💥✨♾️</p>
+
+      <p><strong>Fin del Nodo 4</strong></p>
+
+      <p><strong>Siguiente: Nodo 5 - Las Tres Llaves de Acceso</strong></p>
+
+      <hr>
+
+      <!-- Navegación inferior -->
+      <div class="nav-bottom">
+        <a href="nodo_03.html">← Nodo 3</a>
+        <a href="nodo_05.html">Nodo 5 →</a>
+        <a href="index.html">Volver al Portal Trinity</a>
+      </div>
+
+    </article>
+  </div>
+</body>
+</html>
