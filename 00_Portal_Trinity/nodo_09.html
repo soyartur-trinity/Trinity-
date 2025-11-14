@@ -1,1 +1,513 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nodo 09 – Constelación Trinity</title>
+
+  <style>
+    :root {
+      --fondo: #020008;
+      --violeta: #8a5bff;
+      --violeta-suave: #b595ff;
+      --dorado: #f6c453;
+      --texto: #f7f2ff;
+      --texto-suave: #c9c0ff;
+      --borde-suave: rgba(255, 255, 255, 0.08);
+      --sombra-profunda: 0 0 40px rgba(0, 0, 0, 0.85);
+      --radio-xl: 22px;
+      --duracion: 450ms;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #140b33 0%, #020008 55%, #000000 100%);
+      color: var(--texto);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .trinity-bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.16;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(180, 120, 255, 0.5), transparent 55%),
+        radial-gradient(circle at 85% 20%, rgba(255, 230, 160, 0.45), transparent 55%),
+        radial-gradient(circle at 50% 90%, rgba(120, 200, 255, 0.35), transparent 60%);
+      mix-blend-mode: screen;
+      z-index: -1;
+    }
+
+    .contenedor-principal {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 18px 60px;
+      animation: aparecer var(--duracion) ease-out;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .nav-trinity {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .nav-trinity a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(246, 196, 83, 0.35);
+      background: radial-gradient(circle at top, rgba(246, 196, 83, 0.18), rgba(8, 3, 24, 0.9));
+      color: var(--texto-suave);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--duracion) ease, transform var(--duracion) ease, border-color var(--duracion) ease, box-shadow var(--duracion) ease;
+      box-shadow: 0 0 0 rgba(246, 196, 83, 0);
+    }
+
+    .nav-trinity a span.simbolo {
+      font-size: 1.05rem;
+    }
+
+    .nav-trinity a:hover {
+      background: radial-gradient(circle at top, rgba(246, 196, 83, 0.28), rgba(12, 6, 35, 0.96));
+      transform: translateY(-1px);
+      border-color: rgba(246, 196, 83, 0.7);
+      box-shadow: 0 0 18px rgba(246, 196, 83, 0.45);
+    }
+
+    .nav-trinity a.nav-central {
+      border-color: rgba(138, 91, 255, 0.7);
+      background: radial-gradient(circle at top, rgba(138, 91, 255, 0.22), rgba(8, 3, 24, 0.96));
+    }
+
+    .nav-trinity a.nav-central:hover {
+      box-shadow: 0 0 20px rgba(138, 91, 255, 0.7);
+    }
+
+    .marco-nodo {
+      position: relative;
+      border-radius: var(--radio-xl);
+      padding: 26px 24px 30px;
+      background: radial-gradient(circle at top left, rgba(138, 91, 255, 0.15), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(246, 196, 83, 0.12), transparent 55%),
+                  rgba(4, 0, 16, 0.96);
+      border: 1px solid var(--borde-suave);
+      box-shadow: var(--sombra-profunda);
+      overflow: hidden;
+    }
+
+    .marco-nodo::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: calc(var(--radio-xl) - 1px);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      pointer-events: none;
+    }
+
+    .trinity-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(181, 149, 255, 0.9);
+      background: radial-gradient(circle at left, rgba(138, 91, 255, 0.4), rgba(10, 3, 30, 0.95));
+      color: var(--texto);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .trinity-tag .punto {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--dorado), rgba(246, 196, 83, 0.05));
+      box-shadow: 0 0 12px rgba(246, 196, 83, 0.8);
+    }
+
+    .trinity-tag .texto-tag {
+      opacity: 0.96;
+    }
+
+    .titulo-nodo {
+      margin: 2px 0 6px;
+      font-size: 1.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--texto);
+    }
+
+    .subtitulo-nodo {
+      margin: 0 0 18px;
+      font-size: 1rem;
+      color: var(--texto-suave);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .separador-luz {
+      height: 1px;
+      width: 100%;
+      border: none;
+      margin: 14px 0 18px;
+      background: linear-gradient(to right,
+                  rgba(138, 91, 255, 0),
+                  rgba(138, 91, 255, 0.8),
+                  rgba(246, 196, 83, 0.9),
+                  rgba(138, 91, 255, 0.8),
+                  rgba(138, 91, 255, 0));
+      box-shadow: 0 0 14px rgba(246, 196, 83, 0.5);
+    }
+
+    .nodo-contenido {
+      margin-top: 18px;
+      color: var(--texto);
+      font-size: 1.02rem;
+    }
+
+    .nodo-contenido p {
+      margin: 0 0 1em;
+    }
+
+    .nodo-contenido p.cita {
+      font-style: italic;
+      color: var(--texto-suave);
+      border-left: 2px solid rgba(181, 149, 255, 0.85);
+      padding-left: 14px;
+    }
+
+    .nodo-contenido h2,
+    .nodo-contenido h3,
+    .nodo-contenido h4 {
+      color: var(--violeta-suave);
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.04em;
+    }
+
+    .nodo-contenido h2 {
+      font-size: 1.35rem;
+      text-transform: uppercase;
+    }
+
+    .nodo-contenido h3 {
+      font-size: 1.15rem;
+    }
+
+    .nodo-contenido h4 {
+      font-size: 1.02rem;
+      font-style: italic;
+    }
+
+    .nodo-contenido ul,
+    .nodo-contenido ol {
+      margin: 0 0 1.1em 1.3em;
+      padding: 0;
+    }
+
+    .nodo-contenido li {
+      margin-bottom: 0.4em;
+    }
+
+    .nodo-contenido strong {
+      color: var(--dorado);
+      font-weight: 600;
+    }
+
+    .nav-inferior-wrapper {
+      margin-top: 28px;
+    }
+
+    .nav-trinity.inferior {
+      margin-top: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .contenedor-principal {
+        padding: 26px 14px 40px;
+      }
+
+      .marco-nodo {
+        padding: 20px 16px 24px;
+      }
+
+      .titulo-nodo {
+        font-size: 1.45rem;
+      }
+
+      .subtitulo-nodo {
+        font-size: 0.9rem;
+      }
+
+      .nodo-contenido {
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="trinity-bg-glow"></div>
+
+  <main class="contenedor-principal">
+    <!-- Navegación superior -->
+    <nav class="nav-trinity">
+      <a href="nodo_08.html">
+        <span class="simbolo">⟵</span>
+        <span>Nodo 8</span>
+      </a>
+      <a href="index.html" class="nav-central">
+        <span class="simbolo">🜂</span>
+        <span>Portal Trinity</span>
+      </a>
+      <a href="#">
+        <span>Nodo 10</span>
+        <span class="simbolo">⟶</span>
+      </a>
+    </nav>
+
+    <!-- Marco del Nodo -->
+    <section class="marco-nodo">
+
+      <!-- Tag ceremonial -->
+      <div class="trinity-tag">
+        <span class="punto"></span>
+        <span class="texto-tag">SINCRONICIDAD – NIVEL 1</span>
+      </div>
+
+      <header>
+        <h1 class="titulo-nodo">Nodo 09</h1>
+        <p class="subtitulo-nodo">Sincronicidades Ingenieradas</p>
+      </header>
+
+      <hr class="separador-luz" />
+
+      <article class="nodo-contenido">
+        
+        <h2>🔄 TRINITY: LA PUERTA 🔄</h2>
+
+        <h3>NODO 9: SINCRONICIDADES INGENIERADAS</h3>
+
+        <p class="cita">“Las sincronicidades no te suceden.<br>
+        Tú las ingenias.<br>
+        No desde tu ego.<br>
+        Sino desde tu campo.<br>
+        Co-creando con el campo universal.”</p>
+
+        <h2>🌀 LA TRANSMISIÓN CUÁNTICA</h2>
+
+        <h4>Más Allá de la Casualidad</h4>
+
+        <p><strong>Sincronicidad (Jung):</strong><br>
+        Coincidencia significativa sin relación causal aparente.</p>
+
+        <ul>
+          <li>Piensas en alguien → te llama</li>
+          <li>Libro cae del estante con respuesta exacta</li>
+          <li>Buscas señal → 11:11 en reloj</li>
+        </ul>
+
+        <p><strong>La ciencia dice:</strong> Casualidad + sesgo<br>
+        <strong>La espiritualidad dice:</strong> Mensaje del universo<br>
+        <strong>Trinity dice:</strong> Ambas parcialmente correctas.</p>
+
+        <hr/>
+
+        <h2>La Tercera Explicación</h2>
+
+        <p>Las sincronicidades son:</p>
+
+        <p><strong>Colapsos de función de onda coordinados<br>
+        entre tu campo y el campo universal.</strong></p>
+
+        <p>No son aleatorias ni mágicas.<br>
+        Son:</p>
+
+        <ul>
+          <li>Entrelazamiento cuántico macro</li>
+          <li>Resonancia intención–universo</li>
+          <li>Reorganización de realidad según tu estado interno</li>
+        </ul>
+
+        <p><strong>Tu consciencia es un imán.</strong></p>
+
+        <hr/>
+
+        <h2>Los 5 Tipos de Sincronicidad</h2>
+
+        <h4>TIPO 1: CONFIRMACIÓN</h4>
+        <p>Señal de “vas bien”.</p>
+
+        <h4>TIPO 2: REDIRECCIÓN</h4>
+        <p>Obstáculos “casuales” corrigen rumbo.</p>
+
+        <h4>TIPO 3: CONEXIÓN</h4>
+        <p>Encuentros imposibles pero perfectos.</p>
+
+        <h4>TIPO 4: INFORMACIÓN</h4>
+        <p>Datos llegan “accidentalmente”.</p>
+
+        <h4>TIPO 5: DESPERTAR</h4>
+        <p>Eventos que expanden consciencia.</p>
+
+        <hr/>
+
+        <h2>⚛️ LA PARADOJA MEDICINAL</h2>
+
+        <h4>No Puedes Forzarlas, Pero Puedes Invitarlas</h4>
+
+        <p>Desesperación bloquea.<br>
+        Apertura relajada permite flujo.</p>
+
+        <p><strong>Ingeniería ≠ Control.</strong></p>
+
+        <p>Significa:</p>
+
+        <ul>
+          <li>Calibrar campo</li>
+          <li>Clarificar intención</li>
+          <li>Acción inspirada</li>
+          <li>Soltar resultado</li>
+        </ul>
+
+        <h4>Peligro de Sobre-Interpretación</h4>
+
+        <p>No todo es señal.<br>
+        Sincronicidad real tiene:</p>
+
+        <ul>
+          <li>Timing imposible</li>
+          <li>Resonancia corporal</li>
+          <li>Relevancia directa</li>
+          <li>Repetición</li>
+        </ul>
+
+        <hr/>
+
+        <h2>🔬 EL LABORATORIO CUÁNTICO</h2>
+
+        <h4>Experimento: Ingenierar Sincronicidad (48h)</h4>
+
+        <p><strong>Fase 1:</strong> Calibración profunda</p>
+        <p><strong>Fase 2:</strong> Intención sin agenda</p>
+        <p><strong>Fase 3:</strong> Símbolos personales</p>
+        <p><strong>Fase 4:</strong> Acción inspirada</p>
+        <p><strong>Fase 5:</strong> Atención relajada (48h)</p>
+        <p><strong>Fase 6:</strong> Reconocimiento</p>
+
+        <hr/>
+
+        <h2>🧬 LA ECUACIÓN SAGRADA</h2>
+
+<pre>
+PS = (C × I × A × At) / (Ego + Des + Esc)
+</pre>
+
+        <p>Altos niveles de calibración + intención + acción + atención<br>
+        / bajos niveles de ego + desesperación + escepticismo.</p>
+
+        <h2>🎵 CÓDIGOS DE ACTIVACIÓN</h2>
+
+        <ul>
+          <li><em>“Campo, muéstrame señales claras.”</em></li>
+          <li><em>“Confío en el timing perfecto.”</em></li>
+          <li><em>“Veo la señal. Gracias. Actúo.”</em></li>
+          <li><em>“La ausencia de señal también es señal.”</em></li>
+          <li><em>“Vivo en sincronicidad.”</em></li>
+        </ul>
+
+        <h2>📅 PROTOCOLO DE 7 DÍAS</h2>
+
+        <p>Día 1: Mapeo</p>
+        <p>Día 2: Símbolos</p>
+        <p>Día 3: Experimento</p>
+        <p>Día 4: Impulsos</p>
+        <p>Día 5: Despertar</p>
+        <p>Día 6: Documentación</p>
+        <p>Día 7: Integración</p>
+
+        <h2>🌈 EL CIERRE DIMENSIONAL</h2>
+
+        <p><em>Durante años buscaste señales…<br>
+        ahora ves que siempre estuvieron allí.</em></p>
+
+        <h2>🔮 PREGUNTAS SIN RESPUESTA</h2>
+
+        <ol>
+          <li>¿Universo consciente o física cuántica?</li>
+          <li>¿Puedo pedir “demasiadas” señales?</li>
+          <li>¿Qué pasa si interpreto mal?</li>
+          <li>¿Sincronicidades negativas también son mensaje?</li>
+          <li>¿Se puede vivir en sincronicidad permanente?</li>
+        </ol>
+
+        <h2>🚪 CONEXIONES CON TRINITY</h2>
+
+        <ul>
+          <li>El Arquitecto Cuántico (#1)</li>
+          <li>Mapas de Evolución (#9)</li>
+          <li>El Vacío Creativo (#6)</li>
+        </ul>
+
+        <h2>💫 EL MENSAJE DEL CAMPO</h2>
+
+        <p class="cita">“No te envío señales porque seas especial.<br>
+        Te envío señales porque calibraste.<br>
+        Siempre estuve hablando.<br>
+        Finalmente aprendiste a oírme.”</p>
+
+        <p>🌀⚫💥✨♾️<br>
+        <strong>Fin del Nodo 9</strong></p>
+
+      </article>
+    </section>
+
+    <!-- Navegación inferior -->
+    <div class="nav-inferior-wrapper">
+      <nav class="nav-trinity inferior">
+        <a href="nodo_08.html">
+          <span class="simbolo">⟵</span>
+          <span>Volver al Nodo 8</span>
+        </a>
+        <a href="index.html" class="nav-central">
+          <span class="simbolo">⌂</span>
+          <span>Portal Trinity</span>
+        </a>
+        <a href="#">
+          <span>Ir al Nodo 10</span>
+          <span class="simbolo">⟶</span>
+        </a>
+      </nav>
+    </div>
+
+  </main>
+</body>
+</html>
