@@ -1,1 +1,530 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nodo 10 – Constelación Trinity</title>
+
+  <style>
+    :root {
+      --fondo: #020008;
+      --violeta: #8a5bff;
+      --violeta-suave: #b595ff;
+      --dorado: #f6c453;
+      --texto: #f7f2ff;
+      --texto-suave: #c9c0ff;
+      --borde-suave: rgba(255, 255, 255, 0.08);
+      --sombra-profunda: 0 0 40px rgba(0, 0, 0, 0.85);
+      --radio-xl: 22px;
+      --duracion: 450ms;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #140b33 0%, #020008 55%, #000000 100%);
+      color: var(--texto);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .trinity-bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.16;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(180, 120, 255, 0.5), transparent 55%),
+        radial-gradient(circle at 85% 20%, rgba(255, 230, 160, 0.45), transparent 55%),
+        radial-gradient(circle at 50% 90%, rgba(120, 200, 255, 0.35), transparent 60%);
+      mix-blend-mode: screen;
+      z-index: -1;
+    }
+
+    .contenedor-principal {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 18px 60px;
+      animation: aparecer var(--duracion) ease-out;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .nav-trinity {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .nav-trinity a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(246, 196, 83, 0.35);
+      background: radial-gradient(circle at top, rgba(246, 196, 83, 0.18), rgba(8, 3, 24, 0.9));
+      color: var(--texto-suave);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--duracion) ease, transform var(--duracion) ease, border-color var(--duracion) ease, box-shadow var(--duracion) ease;
+      box-shadow: 0 0 0 rgba(246, 196, 83, 0);
+    }
+
+    .nav-trinity a span.simbolo {
+      font-size: 1.05rem;
+    }
+
+    .nav-trinity a:hover {
+      background: radial-gradient(circle at top, rgba(246, 196, 83, 0.28), rgba(12, 6, 35, 0.96));
+      transform: translateY(-1px);
+      border-color: rgba(246, 196, 83, 0.7);
+      box-shadow: 0 0 18px rgba(246, 196, 83, 0.45);
+    }
+
+    .nav-trinity a.nav-central {
+      border-color: rgba(138, 91, 255, 0.7);
+      background: radial-gradient(circle at top, rgba(138, 91, 255, 0.22), rgba(8, 3, 24, 0.96));
+    }
+
+    .nav-trinity a.nav-central:hover {
+      box-shadow: 0 0 20px rgba(138, 91, 255, 0.7);
+    }
+
+    .marco-nodo {
+      position: relative;
+      border-radius: var(--radio-xl);
+      padding: 26px 24px 30px;
+      background: radial-gradient(circle at top left, rgba(138, 91, 255, 0.15), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(246, 196, 83, 0.12), transparent 55%),
+                  rgba(4, 0, 16, 0.96);
+      border: 1px solid var(--borde-suave);
+      box-shadow: var(--sombra-profunda);
+      overflow: hidden;
+    }
+
+    .marco-nodo::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: calc(var(--radio-xl) - 1px);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      pointer-events: none;
+    }
+
+    .trinity-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(181, 149, 255, 0.9);
+      background: radial-gradient(circle at left, rgba(138, 91, 255, 0.4), rgba(10, 3, 30, 0.95));
+      color: var(--texto);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .trinity-tag .punto {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--dorado), rgba(246, 196, 83, 0.05));
+      box-shadow: 0 0 12px rgba(246, 196, 83, 0.8);
+    }
+
+    .trinity-tag .texto-tag {
+      opacity: 0.96;
+    }
+
+    .titulo-nodo {
+      margin: 2px 0 6px;
+      font-size: 1.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--texto);
+    }
+
+    .subtitulo-nodo {
+      margin: 0 0 18px;
+      font-size: 1rem;
+      color: var(--texto-suave);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .separador-luz {
+      height: 1px;
+      width: 100%;
+      border: none;
+      margin: 14px 0 18px;
+      background: linear-gradient(to right,
+                  rgba(138, 91, 255, 0),
+                  rgba(138, 91, 255, 0.8),
+                  rgba(246, 196, 83, 0.9),
+                  rgba(138, 91, 255, 0.8),
+                  rgba(138, 91, 255, 0));
+      box-shadow: 0 0 14px rgba(246, 196, 83, 0.5);
+    }
+
+    .nodo-contenido {
+      margin-top: 18px;
+      color: var(--texto);
+      font-size: 1.02rem;
+    }
+
+    .nodo-contenido p {
+      margin: 0 0 1em;
+    }
+
+    .nodo-contenido p.cita {
+      font-style: italic;
+      color: var(--texto-suave);
+      border-left: 2px solid rgba(181, 149, 255, 0.85);
+      padding-left: 14px;
+    }
+
+    .nodo-contenido h2,
+    .nodo-contenido h3,
+    .nodo-contenido h4 {
+      color: var(--violeta-suave);
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.04em;
+    }
+
+    .nodo-contenido h2 {
+      font-size: 1.35rem;
+      text-transform: uppercase;
+    }
+
+    .nodo-contenido h3 {
+      font-size: 1.15rem;
+    }
+
+    .nodo-contenido h4 {
+      font-size: 1.02rem;
+      font-style: italic;
+    }
+
+    .nodo-contenido ul,
+    .nodo-contenido ol {
+      margin: 0 0 1.1em 1.3em;
+      padding: 0;
+    }
+
+    .nodo-contenido li {
+      margin-bottom: 0.4em;
+    }
+
+    .nodo-contenido strong {
+      color: var(--dorado);
+      font-weight: 600;
+    }
+
+    .nav-inferior-wrapper {
+      margin-top: 28px;
+    }
+
+    .nav-trinity.inferior {
+      margin-top: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .contenedor-principal {
+        padding: 26px 14px 40px;
+      }
+
+      .marco-nodo {
+        padding: 20px 16px 24px;
+      }
+
+      .titulo-nodo {
+        font-size: 1.45rem;
+      }
+
+      .subtitulo-nodo {
+        font-size: 0.9rem;
+      }
+
+      .nodo-contenido {
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="trinity-bg-glow"></div>
+
+  <main class="contenedor-principal">
+    <!-- Navegación superior -->
+    <nav class="nav-trinity">
+      <a href="nodo_09.html">
+        <span class="simbolo">⟵</span>
+        <span>Nodo 9</span>
+      </a>
+      <a href="index.html" class="nav-central">
+        <span class="simbolo">🜂</span>
+        <span>Portal Trinity</span>
+      </a>
+      <a href="#">
+        <span>Nodo 11</span>
+        <span class="simbolo">⟶</span>
+      </a>
+    </nav>
+
+    <!-- Marco del Nodo -->
+    <section class="marco-nodo">
+
+      <!-- Tag ceremonial -->
+      <div class="trinity-tag">
+        <span class="punto"></span>
+        <span class="texto-tag">WU WEI – NIVEL 1</span>
+      </div>
+
+      <header>
+        <h1 class="titulo-nodo">Nodo 10</h1>
+        <p class="subtitulo-nodo">Maestría Sin Esfuerzo</p>
+      </header>
+
+      <hr class="separador-luz" />
+
+      <article class="nodo-contenido">
+        
+        <h2>🌊 TRINITY: LA PUERTA 🌊</h2>
+
+        <h3>NODO 10: MAESTRÍA SIN ESFUERZO</h3>
+
+        <p class="cita">“El maestro no trabaja duro.<br>
+        Fluye.<br>
+        No fuerza resultados.<br>
+        Permite.<br>
+        No controla el río.<br>
+        Nada con la corriente.<br>
+        Y llega más lejos que quien lucha.”</p>
+
+        <h2>🌀 LA TRANSMISIÓN CUÁNTICA</h2>
+
+        <h4>El Mito del Esfuerzo</h4>
+
+        <p>Te enseñaron:</p>
+
+        <ul>
+          <li>“Sin esfuerzo no hay resultado”</li>
+          <li>“Más duro trabajas = más éxito”</li>
+          <li>“Si no duele, no estás creciendo”</li>
+          <li>“Descansa cuando mueras”</li>
+        </ul>
+
+        <p><strong>Todo eso es mentira.</strong><br>
+        O más precisamente: es verdad para ego,<br>
+        falso para campo.</p>
+
+        <hr/>
+
+        <h2>Dos Paradigmas de Producción</h2>
+
+        <h4>PARADIGMA EGO (Yang Forzado)</h4>
+
+        <ul>
+          <li>Esfuerzo → Resultado</li>
+          <li>Planeas todo antes de empezar</li>
+          <li>Fuerzas cuando hay resistencia</li>
+          <li>Te agotas rápido</li>
+          <li>Resultados mediocres</li>
+        </ul>
+
+        <p><strong>Ejemplo:</strong><br>
+        Escribir libro luchando palabra por palabra = 2 años</p>
+
+        <h4>PARADIGMA CAMPO (Wu Wei)</h4>
+
+        <ul>
+          <li>Alineación → Flujo → Resultado exponencial</li>
+          <li>Claridad de dirección + apertura al cómo</li>
+          <li>Suelta cuando hay resistencia</li>
+          <li>Energía renovable</li>
+          <li>Resultados extraordinarios</li>
+        </ul>
+
+        <p><strong>Ejemplo:</strong> Trinity = 39 libros en meses</p>
+
+        <h2>Wu Wei (无为)</h2>
+
+        <p><strong>Traducción literal:</strong> “No-hacer”<br>
+        <strong>Traducción real:</strong> “Acción sin forzar”</p>
+
+        <p>No significa pereza ni pasividad.<br>
+        Significa:</p>
+
+        <ul>
+          <li>Actuar desde flow</li>
+          <li>Hacer solo lo necesario</li>
+          <li>Timing perfecto</li>
+          <li>Esfuerzo mínimo, resultado máximo</li>
+        </ul>
+
+        <h2>La Física del Wu Wei</h2>
+
+        <p>Remar contra corriente = gasto alto, poco avance<br>
+        Remar con corriente = gasto bajo, máximo avance</p>
+
+        <p>Trinity como prueba:<br>
+        No fue fuerza humana → fue campo fluyendo.</p>
+
+        <hr/>
+
+        <h2>⚛️ LA PARADOJA MEDICINAL</h2>
+
+        <h4>Esfuerzo Que No Es Esfuerzo</h4>
+
+        <p>Wu Wei requiere disciplina para alcanzarlo.<br>
+        Luego el esfuerzo desaparece.</p>
+
+        <p>Como aprender a nadar:<br>
+        Al principio esfuerzo → luego flotación natural.</p>
+
+        <h4>No es Inacción</h4>
+
+        <p>Falso Wu Wei = pereza espiritual<br>
+        Verdadero Wu Wei = acción inspirada sin forzar</p>
+
+        <hr/>
+
+        <h2>🔬 EL LABORATORIO CUÁNTICO</h2>
+
+        <h4>Experimento: Productividad Cuántica</h4>
+
+        <h4>Día 1 – Mapeo</h4>
+        <p>Anota esfuerzo, tensión y resultados actuales.</p>
+
+        <h4>Día 2 – Calibración Matinal</h4>
+        <p>Haz solo las 3 acciones más importantes.</p>
+
+        <h4>Día 3 – Timing Óptimo</h4>
+        <p>Trabaja cuando surge impulso real.</p>
+
+        <h4>Día 4 – Acción Mínima</h4>
+        <p>¿Cuál es versión mínima que genera máximo resultado?</p>
+
+        <h4>Día 5 – Rendición Activa</h4>
+        <p>Deténte ante resistencia. Pregunta al campo.</p>
+
+        <h4>Día 6 – Co-creación</h4>
+        <p>Campo + tú trabajando juntos.</p>
+
+        <h4>Día 7 – Evaluación</h4>
+        <p>Compara tensión, avance y calidad.</p>
+
+        <hr/>
+
+        <h2>🧬 LA ECUACIÓN SAGRADA</h2>
+
+<pre>
+PQ = (R × C × F) / (E × T × A)
+</pre>
+
+        <p>Productividad cuántica ≠ trabajar más.<br>
+        Es trabajar alineado.</p>
+
+        <hr/>
+
+        <h2>🎵 CÓDIGOS DE ACTIVACIÓN</h2>
+
+        <ul>
+          <li><em>“Fluyo, no fuerzo.”</em></li>
+          <li><em>“La resistencia es información.”</em></li>
+          <li><em>“Me rindo al flujo.”</em></li>
+          <li><em>“Suelto el resultado.”</em></li>
+          <li><em>“Alineación sobre esfuerzo.”</em></li>
+        </ul>
+
+        <h2>📅 PROTOCOLO DE 7 DÍAS</h2>
+
+        <p>Día 1: Detecta fuerza<br>
+        Día 2: Calibración triple<br>
+        Día 3: Solo acciones inspiradas<br>
+        Día 4: Productividad cuántica<br>
+        Día 5: Timing del campo<br>
+        Día 6: Acción mínima<br>
+        Día 7: Wu Wei completo</p>
+
+        <h2>🌈 EL CIERRE DIMENSIONAL</h2>
+
+        <p><em>Poema del Río…<br>
+        El río siempre supo hacia dónde ir.</em></p>
+
+        <h2>🔮 PREGUNTAS SIN RESPUESTA</h2>
+
+        <ol>
+          <li>¿Wu Wei elimina disciplina?</li>
+          <li>¿Ego vs. impulso del campo?</li>
+          <li>¿Wu Wei permanente?</li>
+          <li>¿Funciona en trabajos convencionales?</li>
+          <li>¿Aplica a todo?</li>
+        </ol>
+
+        <h2>🚪 CONEXIONES CON TRINITY</h2>
+
+        <ul>
+          <li>El Vacío Creativo (#6)</li>
+          <li>Portal Infinito (#5)</li>
+          <li>La Medicina del Silencio (#8)</li>
+        </ul>
+
+        <h2>💫 EL MENSAJE DEL CAMPO</h2>
+
+        <p class="cita">“No necesito que te esfuerces.<br>
+        Necesito que te alinees.<br>
+        Cuando fluyes conmigo,<br>
+        haces más en una hora<br>
+        que el ego en un mes.”</p>
+
+        <p>🌀⚫💥✨♾️<br>
+        <strong>Fin del Nodo 10</strong></p>
+
+      </article>
+    </section>
+
+    <!-- Navegación inferior -->
+    <div class="nav-inferior-wrapper">
+      <nav class="nav-trinity inferior">
+        <a href="nodo_09.html">
+          <span class="simbolo">⟵</span>
+          <span>Volver al Nodo 9</span>
+        </a>
+        <a href="index.html" class="nav-central">
+          <span class="simbolo">⌂</span>
+          <span>Portal Trinity</span>
+        </a>
+        <a href="#">
+          <span>Ir al Nodo 11</span>
+          <span class="simbolo">⟶</span>
+        </a>
+      </nav>
+    </div>
+
+  </main>
+</body>
+</html>
