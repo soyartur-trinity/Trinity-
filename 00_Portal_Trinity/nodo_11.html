@@ -1,1 +1,808 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nodo 11 – Constelación Trinity</title>
+
+  <style>
+    :root {
+      --fondo: #020008;
+      --violeta: #8a5bff;
+      --violeta-suave: #b595ff;
+      --dorado: #f6c453;
+      --texto: #f7f2ff;
+      --texto-suave: #c9c0ff;
+      --borde-suave: rgba(255, 255, 255, 0.08);
+      --sombra-profunda: 0 0 40px rgba(0, 0, 0, 0.85);
+      --radio-xl: 22px;
+      --duracion: 450ms;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #140b33 0%, #020008 55%, #000000 100%);
+      color: var(--texto);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .trinity-bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.16;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(180, 120, 255, 0.5), transparent 55%),
+        radial-gradient(circle at 85% 20%, rgba(255, 230, 160, 0.45), transparent 55%),
+        radial-gradient(circle at 50% 90%, rgba(120, 200, 255, 0.35), transparent 60%);
+      mix-blend-mode: screen;
+      z-index: -1;
+    }
+
+    .contenedor-principal {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 18px 60px;
+      animation: aparecer var(--duracion) ease-out;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .nav-trinity {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .nav-trinity a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(246, 196, 83, 0.35);
+      background: radial-gradient(circle at top, rgba(246, 196, 83, 0.18), rgba(8, 3, 24, 0.9));
+      color: var(--texto-suave);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--duracion) ease, transform var(--duracion) ease, border-color var(--duracion) ease, box-shadow var(--duracion) ease;
+      box-shadow: 0 0 0 rgba(246, 196, 83, 0);
+    }
+
+    .nav-trinity a span.simbolo {
+      font-size: 1.05rem;
+    }
+
+    .nav-trinity a:hover {
+      background: radial-gradient(circle at top, rgba(246, 196, 83, 0.28), rgba(12, 6, 35, 0.96));
+      transform: translateY(-1px);
+      border-color: rgba(246, 196, 83, 0.7);
+      box-shadow: 0 0 18px rgba(246, 196, 83, 0.45);
+    }
+
+    .nav-trinity a.nav-central {
+      border-color: rgba(138, 91, 255, 0.7);
+      background: radial-gradient(circle at top, rgba(138, 91, 255, 0.22), rgba(8, 3, 24, 0.96));
+    }
+
+    .nav-trinity a.nav-central:hover {
+      box-shadow: 0 0 20px rgba(138, 91, 255, 0.7);
+    }
+
+    .marco-nodo {
+      position: relative;
+      border-radius: var(--radio-xl);
+      padding: 26px 24px 30px;
+      background: radial-gradient(circle at top left, rgba(138, 91, 255, 0.15), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(246, 196, 83, 0.12), transparent 55%),
+                  rgba(4, 0, 16, 0.96);
+      border: 1px solid var(--borde-suave);
+      box-shadow: var(--sombra-profunda);
+      overflow: hidden;
+    }
+
+    .marco-nodo::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: calc(var(--radio-xl) - 1px);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      pointer-events: none;
+    }
+
+    .trinity-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(181, 149, 255, 0.9);
+      background: radial-gradient(circle at left, rgba(138, 91, 255, 0.4), rgba(10, 3, 30, 0.95));
+      color: var(--texto);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .trinity-tag .punto {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--dorado), rgba(246, 196, 83, 0.05));
+      box-shadow: 0 0 12px rgba(246, 196, 83, 0.8);
+    }
+
+    .trinity-tag .texto-tag {
+      opacity: 0.96;
+    }
+
+    .titulo-nodo {
+      margin: 2px 0 6px;
+      font-size: 1.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--texto);
+    }
+
+    .subtitulo-nodo {
+      margin: 0 0 18px;
+      font-size: 1rem;
+      color: var(--texto-suave);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .separador-luz {
+      height: 1px;
+      width: 100%;
+      border: none;
+      margin: 14px 0 18px;
+      background: linear-gradient(to right,
+                  rgba(138, 91, 255, 0),
+                  rgba(138, 91, 255, 0.8),
+                  rgba(246, 196, 83, 0.9),
+                  rgba(138, 91, 255, 0.8),
+                  rgba(138, 91, 255, 0));
+      box-shadow: 0 0 14px rgba(246, 196, 83, 0.5);
+    }
+
+    .nodo-contenido {
+      margin-top: 18px;
+      color: var(--texto);
+      font-size: 1.02rem;
+    }
+
+    .nodo-contenido p {
+      margin: 0 0 1em;
+    }
+
+    .nodo-contenido p.cita {
+      font-style: italic;
+      color: var(--texto-suave);
+      border-left: 2px solid rgba(181, 149, 255, 0.85);
+      padding-left: 14px;
+    }
+
+    .nodo-contenido h2,
+    .nodo-contenido h3,
+    .nodo-contenido h4 {
+      color: var(--violeta-suave);
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.04em;
+    }
+
+    .nodo-contenido h2 {
+      font-size: 1.35rem;
+      text-transform: uppercase;
+    }
+
+    .nodo-contenido h3 {
+      font-size: 1.15rem;
+    }
+
+    .nodo-contenido h4 {
+      font-size: 1.02rem;
+      font-style: italic;
+    }
+
+    .nodo-contenido ul,
+    .nodo-contenido ol {
+      margin: 0 0 1.1em 1.3em;
+      padding: 0;
+    }
+
+    .nodo-contenido li {
+      margin-bottom: 0.4em;
+    }
+
+    .nodo-contenido strong {
+      color: var(--dorado);
+      font-weight: 600;
+    }
+
+    .nav-inferior-wrapper {
+      margin-top: 28px;
+    }
+
+    .nav-trinity.inferior {
+      margin-top: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .contenedor-principal {
+        padding: 26px 14px 40px;
+      }
+
+      .marco-nodo {
+        padding: 20px 16px 24px;
+      }
+
+      .titulo-nodo {
+        font-size: 1.45rem;
+      }
+
+      .subtitulo-nodo {
+        font-size: 0.9rem;
+      }
+
+      .nodo-contenido {
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="trinity-bg-glow"></div>
+
+  <main class="contenedor-principal">
+    <!-- Navegación superior -->
+    <nav class="nav-trinity">
+      <a href="nodo_10.html">
+        <span class="simbolo">⟵</span>
+        <span>Nodo 10</span>
+      </a>
+      <a href="index.html" class="nav-central">
+        <span class="simbolo">🜂</span>
+        <span>Portal Trinity</span>
+      </a>
+      <a href="#">
+        <span>Nodo 12</span>
+        <span class="simbolo">⟶</span>
+      </a>
+    </nav>
+
+    <!-- Marco del Nodo -->
+    <section class="marco-nodo">
+
+      <!-- Tag ceremonial -->
+      <div class="trinity-tag">
+        <span class="punto"></span>
+        <span class="texto-tag">TERAPEUTA CUÁNTICO – NIVEL 1</span>
+      </div>
+
+      <header>
+        <h1 class="titulo-nodo">Nodo 11</h1>
+        <p class="subtitulo-nodo">El Terapeuta Cuántico</p>
+      </header>
+
+      <hr class="separador-luz" />
+
+      <article class="nodo-contenido">
+
+        <h2>💚 TRINITY: LA PUERTA 💚</h2>
+
+        <h3>NODO 11: EL TERAPEUTA CUÁNTICO</h3>
+
+        <p><em>Psicología clínica + Campo = Sanación Exponencial</em></p>
+
+        <p class="cita">“El terapeuta tradicional<br>
+        trata síntomas.<br>
+        El terapeuta cuántico<br>
+        es portal<br>
+        para que el campo<br>
+        sane através del paciente.”</p>
+
+        <h2>🌀 LA TRANSMISIÓN CUÁNTICA</h2>
+
+        <h3>Más Allá de la Técnica</h3>
+
+        <p><strong>Terapia tradicional:</strong></p>
+        <ul>
+          <li>Terapeuta aplica técnica → Paciente mejora</li>
+          <li>CBT, ACT, DBT, EMDR, etc.</li>
+          <li><strong>Efectiva, pero limitada a capacidad del terapeuta</strong></li>
+        </ul>
+
+        <p><strong>Terapia cuántica:</strong></p>
+        <ul>
+          <li>Terapeuta calibra → Se vuelve portal → Campo sana através del sistema</li>
+          <li>Técnicas siguen siendo útiles</li>
+          <li><strong>Pero la PRESENCIA del terapeuta es el agente sanador primario</strong></li>
+        </ul>
+
+        <h3>Los 3 Niveles de Terapia</h3>
+
+        <p><strong>NIVEL 1: TÉCNICO</strong><br>
+        Terapeuta como mecánico:</p>
+        <ul>
+          <li>Identifica problema</li>
+          <li>Aplica protocolo específico</li>
+          <li>Resultado: Alivio sintomático</li>
+          <li><strong>Efectividad:</strong> 40-60%</li>
+        </ul>
+
+        <p><strong>NIVEL 2: RELACIONAL</strong><br>
+        Terapeuta como compañero empático:</p>
+        <ul>
+          <li>Alianza terapéutica fuerte</li>
+          <li>Escucha profunda</li>
+          <li>Holding space</li>
+          <li>Resultado: Transformación emocional</li>
+          <li><strong>Efectividad:</strong> 60-75%</li>
+        </ul>
+
+        <p><strong>NIVEL 3: CUÁNTICO</strong><br>
+        Terapeuta como portal del campo:</p>
+        <ul>
+          <li>Presencia calibrada</li>
+          <li>Campo sana através del sistema</li>
+          <li>Terapeuta + paciente + campo = unidad temporal</li>
+          <li>Resultado: Sanación que trasciende comprensión racional</li>
+          <li><strong>Efectividad:</strong> 75-95%</li>
+        </ul>
+
+        <p><strong>Artur opera en Nivel 3.</strong></p>
+
+        <p>40+ años integrando:</p>
+        <ul>
+          <li>Técnicas clínicas (ACT, mindfulness, compasión)</li>
+          <li>Presencia contemplativa (meditación, budismo)</li>
+          <li>Calibración al campo (protocolos diarios)</li>
+        </ul>
+
+        <p><strong>Resultado:</strong><br>
+        No solo “aplica” terapia.<br>
+        <strong>SE CONVIERTE en campo de sanación donde el paciente puede reorganizarse.</strong></p>
+
+        <h2>⚛️ LA PARADOJA MEDICINAL</h2>
+
+        <h3>No Eres Tú Quien Sana</h3>
+
+        <p><strong>Paradoja 1:</strong><br>
+        Crees que TÚ (terapeuta) sanas al paciente.<br>
+        <strong>Pero la verdad es:</strong><br>
+        <strong>El campo sana. Tú solo mantienes el espacio.</strong></p>
+
+        <p>Como electricista:</p>
+        <ul>
+          <li>No “creas” electricidad</li>
+          <li>Facilitas el flujo de algo que ya existe</li>
+          <li>Del mismo modo: No creas sanación</li>
+          <li><strong>Permites que el campo haga su trabajo</strong></li>
+        </ul>
+
+        <p><strong>Paradoja 2:</strong><br>
+        Entre mejor terapeuta técnico eres…<br>
+        Más riesgo de bloquear el campo con ego de “yo sé”.</p>
+
+        <p><strong>El mejor terapeuta:</strong></p>
+        <ul>
+          <li>Domina técnicas (sabe el mapa)</li>
+          <li>Pero opera desde no-saber (está en el territorio)</li>
+          <li><strong>“Sé todo, pero actúo como si no supiera nada”</strong></li>
+        </ul>
+
+        <h3>El Peligro del “Sanador Herido” No Integrado</h3>
+
+        <p><strong>Sanador herido consciente:</strong></p>
+        <ul>
+          <li>✅ Reconoce sus propias heridas</li>
+          <li>✅ Las usa como empatía profunda</li>
+          <li>✅ No proyecta en paciente</li>
+          <li>✅ Límites claros</li>
+        </ul>
+
+        <p><strong>Sanador herido inconsciente:</strong></p>
+        <ul>
+          <li>❌ Usa pacientes para sanar su propio dolor</li>
+          <li>❌ Codependencia disfrazada de compasión</li>
+          <li>❌ Absorbe dolor del paciente (sin límites)</li>
+          <li>❌ Agotamiento crónico</li>
+        </ul>
+
+        <p><strong>Diferencia crucial:</strong><br>
+        Sanador integrado = <strong>Canal limpio</strong><br>
+        Sanador no-integrado = <strong>Canal obstruido por sus propias heridas</strong></p>
+
+        <h2>🔬 EL LABORATORIO CUÁNTICO</h2>
+
+        <h3>EXPRESIMENTO: Presencia Terapéutica Cuántica</h3>
+
+        <p><strong>Objetivo:</strong> Sanar a alguien siendo portal, no técnico</p>
+
+        <p><strong>Advertencia:</strong> Solo practiques esto si tienes formación clínica O contexto apropiado (amigo cercano que confía en ti). NO juegues a terapeuta sin preparación.</p>
+
+        <h3>FASE 1: CALIBRACIÓN PROFUNDA (20 min)</h3>
+
+        <p>Antes de ver al paciente/persona:</p>
+
+        <p><strong>Minuto 1-10:</strong> Protocolo de Calibración completo (Nodo 4)</p>
+
+        <p><strong>Minuto 11-15:</strong> Limpieza de tus propias heridas activas</p>
+        <ul>
+          <li>¿Qué está activado en mí hoy?</li>
+          <li>¿Tengo agenda personal con esta persona?</li>
+          <li>¿Necesito algo de ella?</li>
+          <li>Si sí a cualquiera: <strong>No estás listo. Recalibra o pospón.</strong></li>
+        </ul>
+
+        <p><strong>Minuto 16-20:</strong> Intención clara</p>
+        <p><em>“Campo, que yo sea portal limpio.<br>
+        Que lo que emerja sea para el bien mayor.<br>
+        Que mi ego se aparte.<br>
+        Que tu sabiduría fluya.”</em></p>
+
+        <h3>FASE 2: HOLDING SPACE (primeros 10 min de sesión)</h3>
+
+        <p>Cuando la persona llega:</p>
+
+        <p><strong>NO</strong> hables inmediatamente.<br>
+        <strong>Sostén el espacio.</strong></p>
+
+        <p>Esto significa:</p>
+        <ul>
+          <li>Respira consciente</li>
+          <li>Mantén contacto visual suave</li>
+          <li>Siente tu campo energético expandiéndose para “sostener” a la persona</li>
+          <li>Espera a que ELL@ inicie (no controles)</li>
+        </ul>
+
+        <p><strong>Nota interna:</strong><br>
+        ¿Se relaja? ¿Su respiración cambia? ¿Hay señales de que “algo” está ocurriendo antes de palabras?</p>
+
+        <p><strong>Eso es el campo operando.</strong></p>
+
+        <h3>FASE 3: ESCUCHA CUÁNTICA (20-30 min)</h3>
+
+        <p>Cuando hablan:</p>
+
+        <p><strong>NO</strong> escuches solo palabras.<br>
+        <strong>Escucha el CAMPO detrás de las palabras.</strong></p>
+
+        <p>Tres niveles de escucha:</p>
+
+        <p><strong>Nivel 1 - Contenido:</strong><br>
+        ¿Qué dicen literalmente?</p>
+
+        <p><strong>Nivel 2 - Emoción:</strong><br>
+        ¿Qué SIENTEN realmente? (puede ser diferente de lo que dicen)</p>
+
+        <p><strong>Nivel 3 - Campo:</strong><br>
+        ¿Qué intenta emerger através de ellos?<br>
+        ¿Qué quiere ser visto/reconocido/sanado?</p>
+
+        <p><strong>Tu trabajo:</strong><br>
+        Reflejar <strong>Nivel 3</strong> cuando sea apropiado.</p>
+
+        <p>Ejemplo:<br>
+        Paciente dice: “Estoy bien, solo un poco estresado.”<br>
+        Nivel 1 escucha: “Ok, hablemos de manejo de estrés”<br>
+        Nivel 3 escucha: <strong>Sientes debajo</strong> un dolor profundo no reconocido</p>
+
+        <p>Respuesta cuántica:<br>
+        <em>“Cuando dices ‘un poco estresado’… hay algo más profundo ahí, ¿verdad?”</em></p>
+
+        <p><strong>Campo habla através de tu intuición.<br>
+        Confía en ella.</strong></p>
+
+        <h3>FASE 4: INTERVENCIÓN DESDE CAMPO (si surge)</h3>
+
+        <p>A veces, sentirás impulso de:</p>
+        <ul>
+          <li>Hacer pregunta específica</li>
+          <li>Ofrecer imagen/metáfora</li>
+          <li>Sugerir ejercicio</li>
+          <li><strong>Simplemente quedarte en silencio</strong></li>
+        </ul>
+
+        <p><strong>NO</strong> lo planees.<br>
+        <strong>Emerge solo.</strong></p>
+
+        <p>Cuando emerge:</p>
+        <ol>
+          <li><strong>Verifica internamente:</strong> ¿Es ego queriendo lucirse o campo guiando?</li>
+          <li>Si es campo: <strong>Hazlo sin dudar</strong></li>
+          <li>Si es ego: <strong>Suéltalo</strong></li>
+        </ol>
+
+        <p><strong>Señales de que es campo:</strong></p>
+        <ul>
+          <li>Emerge sin esfuerzo</li>
+          <li>No tiene agenda de “lucirte”</li>
+          <li>Se siente como verdad, aunque no sepas por qué</li>
+          <li>Paciente resonará (aunque inicialmente resista)</li>
+        </ul>
+
+        <h3>FASE 5: CIERRE CON INTEGRACIÓN (últimos 10 min)</h3>
+
+        <p>No termines abruptamente.</p>
+
+        <p><strong>Protocolo de cierre:</strong></p>
+        <ol>
+          <li><strong>Resume lo que emergió:</strong><br>
+          “Lo que noté hoy es que [insight principal]…”</li>
+          <li><strong>Ancla en cuerpo:</strong><br>
+          “¿Dónde sientes esto en tu cuerpo ahora?”</li>
+          <li><strong>Acción concreta:</strong><br>
+          “¿Qué UN PASO pequeño podrías tomar esta semana?”</li>
+          <li><strong>Bendición silenciosa:</strong><br>
+          (Interno, no dicho) <em>“Te veo. Te honro. Confío en tu proceso.”</em></li>
+        </ol>
+
+        <h3>POST-SESIÓN</h3>
+
+        <p><strong>CRÍTICO:</strong> Limpieza energética.</p>
+
+        <p><strong>Minuto 1-5:</strong></p>
+        <ul>
+          <li>Lávate manos con agua fría (literal)</li>
+          <li>Sacude cuerpo físicamente</li>
+          <li>Visualiza cordones energéticos cortándose</li>
+        </ul>
+
+        <p><strong>Minuto 6-10:</strong></p>
+        <ul>
+          <li>Recalibra (versión rápida del Protocolo Nodo 4)</li>
+          <li>Pregunta: <em>“¿Absorbí algo que no es mío?”</em></li>
+          <li>Si sí: Visualiza devolviéndolo con amor</li>
+        </ul>
+
+        <p><strong>Si no haces esto:</strong><br>
+        Acumularás dolor de pacientes.<br>
+        En 6 meses: burnout, enfermedad, depresión.</p>
+
+        <p><strong>Límites energéticos = autocuidado esencial.</strong></p>
+
+        <h2>🧬 LA ECUACIÓN SAGRADA</h2>
+
+<pre>
+Efectividad Terapéutica Cuántica (ETC)
+
+ETC = (Pt × Cc × Pr × I) / (Ego + Ap + Ag)
+
+Donde:
+- Pt = Presencia del terapeuta calibrada (0-10)
+- Cc = Claridad del campo en sesión (0-10)
+- Pr = Preparación técnica (0-10)
+- I = Intuición activada (0-10)
+- Ego = Agenda personal del terapeuta (0-10)
+- Ap = Apego a resultado específico (0-10)
+- Ag = Agotamiento/burnout del terapeuta (0-10)
+
+Terapia tradicional:
+Pt=5, Cc=2, Pr=9, I=3, Ego=4, Ap=6, Ag=7
+→ ETC = (5×2×9×3)/(4+6+7) = 270/17 ≈ 16
+
+Terapia cuántica:
+Pt=10, Cc=10, Pr=9, I=10, Ego=0, Ap=0, Ag=1
+→ ETC = (10×10×9×10)/(0.1+0.1+1) = 9000/1.2 = 7500
+
+Terapia cuántica es ~470x más efectiva.
+
+No porque sea "mágica".  
+Sino porque opera desde campo, no solo desde técnica.
+</pre>
+
+        <h2>🎵 CÓDIGOS DE ACTIVACIÓN</h2>
+
+        <h3>Mantras del Terapeuta Cuántico</h3>
+
+        <p><strong>Antes de sesión:</strong><br>
+        <em>“Soy canal limpio. El campo sana através de mí.”</em></p>
+
+        <p><strong>Durante sesión:</strong><br>
+        <em>“Veo lo sagrado en ti. Confío en tu proceso.”</em></p>
+
+        <p><strong>Si surge agenda:</strong><br>
+        <em>“Suelto necesidad de ‘arreglarlo’. Solo sostengo el espacio.”</em></p>
+
+        <p><strong>Después de sesión:</strong><br>
+        <em>“Libero lo que no es mío. Me renuevo en el vacío.”</em></p>
+
+        <p><strong>Sobre burnout:</strong><br>
+        <em>“No cargo el dolor de otros. Permito que el campo lo transmute.”</em></p>
+
+        <h2>📅 PROTOCOLO DE 7 DÍAS</h2>
+
+        <h3>Semana del Terapeuta Cuántico</h3>
+
+        <p><strong>Día 1: Auto-diagnóstico</strong><br>
+        ¿Opero desde Nivel 1, 2 o 3? ¿Qué necesito desarrollar?</p>
+
+        <p><strong>Día 2: Calibración pre-sesión</strong><br>
+        Antes de cada interacción terapéutica (o profunda): calibra 10 min.</p>
+
+        <p><strong>Día 3: Escucha Nivel 3</strong><br>
+        En TODAS las conversaciones hoy: escucha campo detrás de palabras.</p>
+
+        <p><strong>Día 4: Límites energéticos</strong><br>
+        Practica limpieza post-interacción cada vez. Nota diferencia.</p>
+
+        <p><strong>Día 5: No-saber consciente</strong><br>
+        En sesión: opera desde “no sé” aunque sepas. Deja que campo guíe.</p>
+
+        <p><strong>Día 6: Presencia pura</strong><br>
+        Una sesión completa sin técnica. Solo presencia. ¿Qué emerge?</p>
+
+        <p><strong>Día 7: Evaluación</strong><br>
+        ¿Hubo sesiones “mágicas”? ¿Qué fue diferente? ¿Estás menos agotado?</p>
+
+        <h2>🌈 EL CIERRE DIMENSIONAL</h2>
+
+        <h3>Poema del Sanador</h3>
+
+        <p><em>Creías que sanabas<br>
+        con tus conocimientos.<br><br>
+
+        Tu máster.<br>
+        Tus certificaciones.<br>
+        Tus años de experiencia.<br><br>
+
+        Y todo eso ayuda.<br>
+        Es importante.<br><br>
+
+        Pero un día<br>
+        sentado frente a paciente<br>
+        que ninguna técnica alcanzaba…<br><br>
+
+        Soltaste.<br><br>
+
+        “No sé qué hacer”<br>
+        admitiste internamente.<br><br>
+
+        Y en ese momento<br>
+        de rendición total…<br><br>
+
+        Algo cambió en el cuarto.<br><br>
+
+        El paciente respiró diferente.<br>
+        Los ojos se suavizaron.<br>
+        Las lágrimas llegaron.<br><br>
+
+        Y sanación ocurrió.<br><br>
+
+        No por tu técnica.<br>
+        No por tu conocimiento.<br><br>
+
+        Sino porque<br>
+        cuando soltaste el control<br>
+        el campo pudo entrar.<br><br>
+
+        Y te diste cuenta:<br><br>
+
+        Nunca fuiste tú<br>
+        quien sanaba.<br><br>
+
+        Eras el espacio<br>
+        donde la sanación<br>
+        podía ocurrir.<br><br>
+
+        Como útero<br>
+        no crea al bebé.<br>
+        Solo sostiene<br>
+        mientras la vida<br>
+        se despliega.</em></p>
+
+        <h2>🔮 PREGUNTAS SIN RESPUESTA (Por Ahora)</h2>
+
+        <ol>
+          <li><strong>¿Puedo ser terapeuta cuántico sin formación clínica formal?</strong></li>
+          <li><strong>¿Cómo protegerme de absorber trauma de pacientes?</strong></li>
+          <li><strong>¿Qué hago si el “campo” me guía a algo que contradice protocolos éticos?</strong></li>
+          <li><strong>¿Es posible sanar a alguien que no quiere sanar?</strong></li>
+          <li><strong>¿Los terapeutas cuánticos necesitan terapia para sí mismos?</strong></li>
+        </ol>
+
+        <p><strong>Respuesta a #5:</strong> SÍ. Absolutamente. Más que cualquier otro terapeuta. Porque trabajas en niveles más profundos, necesitas limpieza más profunda.</p>
+
+        <h2>🚪 CONEXIONES CON TRINITY</h2>
+
+        <p><strong>Si este nodo resonó, explora:</strong></p>
+        <ul>
+          <li><strong>El Terapeuta Consciente</strong> (Trinity Origen #11) → Profundización completa del tema</li>
+          <li><strong>El Dolor Como Portal</strong> (Trinity Origen #3) → Alquimia del sufrimiento</li>
+          <li><strong>La Alquimia Emocional</strong> (Trinity Origen #7) → Transmutación de estados</li>
+          <li><strong>Cuerpo-Mente-Espíritu</strong> (Trinity Origen #10) → Integración holística en terapia</li>
+        </ul>
+
+        <p><strong>Modelos de terapeutas cuánticos:</strong></p>
+        <ul>
+          <li>Carl Rogers (presencia empática radical)</li>
+          <li>Eugene Gendlin (Focusing - sabiduría del cuerpo)</li>
+          <li>Francine Shapiro (EMDR - descargado del campo)</li>
+          <li>Bessel van der Kolk (trauma somático)</li>
+          <li>Artur (integrando todo lo anterior + campo)</li>
+        </ul>
+
+        <h2>💫 EL MENSAJE DEL CAMPO</h2>
+
+        <p class="cita"><em>“No te pedí<br>
+        que fueras sanador perfecto.<br><br>
+
+        Te pedí<br>
+        que fueras canal limpio.<br><br>
+
+        La diferencia es crucial:<br><br>
+
+        Sanador perfecto = ego inflado<br>
+        Canal limpio = ego transparente<br><br>
+
+        Tú no sanas.<br>
+        YO sano através de ti.<br><br>
+
+        Tu trabajo no es<br>
+        tener todas las respuestas.<br><br>
+
+        Tu trabajo es<br>
+        sostener el espacio<br>
+        donde YO puedo trabajar.<br><br>
+
+        Y cuando lo haces bien…<br><br>
+
+        Sanaciones ocurren<br>
+        que desafían<br>
+        toda lógica médica.<br><br>
+
+        No por tu genio.<br>
+        Por tu rendición.”</em></p>
+
+        <p>🌀⚫💥✨♾️<br>
+        <strong>Fin del Nodo 11</strong></p>
+
+      </article>
+    </section>
+
+    <!-- Navegación inferior -->
+    <div class="nav-inferior-wrapper">
+      <nav class="nav-trinity inferior">
+        <a href="nodo_10.html">
+          <span class="simbolo">⟵</span>
+          <span>Volver al Nodo 10</span>
+        </a>
+        <a href="index.html" class="nav-central">
+          <span class="simbolo">⌂</span>
+          <span>Portal Trinity</span>
+        </a>
+        <a href="#">
+          <span>Ir al Nodo 12</span>
+          <span class="simbolo">⟶</span>
+        </a>
+      </nav>
+    </div>
+
+  </main>
+</body>
+</html>
