@@ -1,1 +1,304 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 3 — El Tiempo Vertical | Índice</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel:rgba(255,255,255,0.06);
+      --panel-2:rgba(255,255,255,0.035);
+      --violet:#7c3aed;
+      --violet-2:#a78bfa;
+      --gold:#d4af37;
+      --gold-2:#f5d36a;
+      --text:#eaeaea;
+      --muted:rgba(234,234,234,0.78);
+      --line:rgba(212,175,55,0.28);
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(124,58,237,.18), transparent 55%),
+        radial-gradient(900px 500px at 80% 20%, rgba(212,175,55,.14), transparent 60%),
+        radial-gradient(900px 700px at 50% 85%, rgba(167,139,250,.10), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height:1.6;
+      letter-spacing:.15px;
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 42px 18px 60px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 30px 26px 18px;
+      border-bottom: 1px solid rgba(212,175,55,0.18);
+      background: radial-gradient(800px 260px at 30% 0%, rgba(124,58,237,.22), transparent 65%);
+    }
+
+    .kicker{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      font-size: 13px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(234,234,234,0.82);
+      margin: 0 0 10px 0;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--gold-2), var(--gold));
+      box-shadow: 0 0 16px rgba(212,175,55,.35);
+    }
+
+    h1{
+      margin: 0;
+      font-size: 34px;
+      letter-spacing: .02em;
+    }
+    h1 .gold{ color: var(--gold); text-shadow: 0 0 18px rgba(212,175,55,.18); }
+
+    .subtitle{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 70ch;
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .index-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .node{
+      display:flex;
+      gap: 14px;
+      align-items:flex-start;
+      padding: 14px 14px;
+      border: 1px solid rgba(167,139,250,0.20);
+      border-radius: 16px;
+      background: rgba(0,0,0,0.25);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      text-decoration:none;
+      color: var(--text);
+    }
+    .node:hover{
+      transform: translateY(-1px);
+      border-color: rgba(212,175,55,0.38);
+      background: rgba(0,0,0,0.35);
+    }
+
+    .badge{
+      flex: 0 0 auto;
+      min-width: 52px;
+      text-align:center;
+      padding: 8px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,0.35);
+      background: linear-gradient(180deg, rgba(212,175,55,0.12), rgba(124,58,237,0.10));
+      color: var(--gold-2);
+      font-weight: 700;
+      letter-spacing:.08em;
+      box-shadow: 0 0 22px rgba(212,175,55,.10);
+    }
+
+    .node h3{
+      margin: 0;
+      font-size: 18px;
+    }
+    .node p{
+      margin: 6px 0 0;
+      color: rgba(234,234,234,0.78);
+      font-size: 14px;
+    }
+
+    .divider{
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.35), transparent);
+      margin: 22px 0;
+    }
+
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 18px;
+    }
+
+    .btns{display:flex; gap:10px; flex-wrap:wrap;}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      text-decoration:none;
+      color: var(--text);
+      border: 1px solid rgba(212,175,55,0.30);
+      background: rgba(0,0,0,0.35);
+      transition: border-color .18s ease, transform .18s ease, background .18s ease;
+      font-size: 14px;
+      white-space:nowrap;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(212,175,55,0.55);
+      background: rgba(0,0,0,0.45);
+    }
+    .btn.primary{
+      border-color: rgba(124,58,237,0.55);
+      background: linear-gradient(180deg, rgba(124,58,237,0.25), rgba(0,0,0,0.35));
+    }
+    .btn.primary:hover{
+      border-color: rgba(124,58,237,0.85);
+    }
+
+    .note{
+      margin: 0;
+      color: rgba(234,234,234,0.70);
+      font-size: 13px;
+      max-width: 70ch;
+    }
+
+    .sig{
+      margin-top: 14px;
+      text-align:center;
+      color: rgba(234,234,234,0.75);
+      font-size: 15px;
+      letter-spacing:.06em;
+    }
+
+    @media (min-width: 820px){
+      .index-grid{
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="card" role="region" aria-label="Índice del Libro 3">
+      <header class="header">
+        <p class="kicker"><span class="dot" aria-hidden="true"></span> CONSTELACIÓN TRINITY · LIBRO 3</p>
+        <h1><span class="gold">EL TIEMPO VERTICAL</span> — Índice</h1>
+        <p class="subtitle">
+          Todo sucede <strong>AHORA</strong>. Este libro es un mapa para navegar la verticalidad del tiempo:
+          presente eterno, vidas simultáneas, retrocausalidad consciente y el Punto Cero donde todo converge.
+        </p>
+      </header>
+
+      <div class="content">
+        <div class="index-grid" aria-label="Lista de nodos">
+          <a class="node" href="nodo_01.html">
+            <div class="badge">01</div>
+            <div>
+              <h3>El Presente Eterno</h3>
+              <p>El ahora como campo vertical: memoria, imaginación y sanación temporal.</p>
+            </div>
+          </a>
+
+          <a class="node" href="nodo_02.html">
+            <div class="badge">02</div>
+            <div>
+              <h3>Vidas Paralelas Activas</h3>
+              <p>Multivida simultánea: sintonización, intercambio de habilidades y red del alma.</p>
+            </div>
+          </a>
+
+          <a class="node" href="nodo_03.html">
+            <div class="badge">03</div>
+            <div>
+              <h3>Modificación del Pasado Desde el Ahora</h3>
+              <p>Reescritura cuántica de memorias y retrocausalidad aplicada a tu historia.</p>
+            </div>
+          </a>
+
+          <a class="node" href="nodo_04.html">
+            <div class="badge">04</div>
+            <div>
+              <h3>Futuros Probables Como Elección</h3>
+              <p>Selección soberana de líneas temporales: atención, emoción y momentum.</p>
+            </div>
+          </a>
+
+          <a class="node" href="nodo_05.html">
+            <div class="badge">05</div>
+            <div>
+              <h3>La Espiral Temporal</h3>
+              <p>Repetición perfecta: ciclos como octavas superiores y saltos de espiral.</p>
+            </div>
+          </a>
+
+          <a class="node" href="nodo_06.html">
+            <div class="badge">06</div>
+            <div>
+              <h3>Memorias del Futuro</h3>
+              <p>Información retrocausal: intuición como recuerdo y guía del yo futuro.</p>
+            </div>
+          </a>
+
+          <a class="node" href="nodo_07.html">
+            <div class="badge">07</div>
+            <div>
+              <h3>El Punto Cero Temporal</h3>
+              <p>Convergencia absoluta: reset del juego temporal sin perder sabiduría.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="divider" role="separator" aria-hidden="true"></div>
+
+        <nav class="nav" aria-label="Navegación">
+          <p class="note">
+            Si tus nodos están nombrados como <code>nodo_01.html</code>, <code>nodo_02.html</code>, etc.,
+            estos enlaces funcionarán directo en GitHub Pages.
+          </p>
+
+          <div class="btns">
+            <a class="btn primary" href="nodo_01.html">Comenzar · Nodo 1 →</a>
+
+            <!-- AJUSTA ESTE LINK si tu Portal Trinity está en otra ruta -->
+            <a class="btn" href="../index.html">Volver al Portal Trinity</a>
+
+            <!-- Útil si tienes un índice general de libros en la raíz -->
+            <a class="btn" href="../libros.html">Volver al Índice de Libros</a>
+          </div>
+        </nav>
+
+        <div class="sig">🌀⏰🌀</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
