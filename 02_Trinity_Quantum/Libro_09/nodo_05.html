@@ -1,1 +1,723 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 9 · Simetrías Rotas — Nodo 5</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 9 · Simetrías Rotas · Nodo 5</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn primary" href="nodo_06.html">Siguiente Nodo ⟶</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 9 · SIMETRÍAS ROTAS</p>
+        <h1 class="node">Nodo 5 · La Grieta Donde Entra la Luz</h1>
+        <p class="subnode">La Herida Luminosa</p>
+      </header>
+
+      <!-- B) CUERPO PRINCIPAL · CONTENIDO (ÍNTEGRO) -->
+      <section class="content">
+
+        <p>“Hay una grieta en todo. Así es como entra la luz.” - Leonard Cohen captó una verdad cósmica. Pero la verdad completa es aún más radical: la grieta no es solo donde entra la luz. La grieta ES la luz. Cada ruptura en tu ser es un portal luminoso. Cada herida es una ventana a lo divino. Cada fractura es una apertura hacia lo infinito.</p>
+
+        <p>No a pesar de tus grietas. Por causa de tus grietas. A través de tus grietas. Como tus grietas.</p>
+
+        <p>Has experimentado esta verdad cuando:</p>
+        <ul>
+          <li>Tu corazón roto se abrió a un amor más vasto</li>
+          <li>Tu pérdida más profunda reveló tu fuerza más grande</li>
+          <li>Tu momento más oscuro precedió tu amanecer más brillante</li>
+          <li>Tu caída más dura te lanzó más alto</li>
+          <li>Tu grieta más dolorosa se volvió tu portal más poderoso</li>
+        </ul>
+
+        <h4>La Física de las Grietas Luminosas</h4>
+
+        <p>En física cuántica, el vacío no está vacío - está lleno de potencial infinito. Las “grietas” en el tejido de la realidad son donde:</p>
+        <ul>
+          <li>Las partículas virtuales emergen y desaparecen</li>
+          <li>La energía del punto cero burbujea</li>
+          <li>Las fluctuaciones cuánticas crean realidad</li>
+          <li>El potencial se vuelve actual</li>
+          <li>Lo imposible se vuelve posible</li>
+        </ul>
+
+        <p>Tus grietas personales funcionan igual:</p>
+        <ul>
+          <li>Son portales al campo de potencial infinito</li>
+          <li>Permiten la entrada de nueva información</li>
+          <li>Crean fluctuaciones que generan cambio</li>
+          <li>Convierten potencial en realidad</li>
+          <li>Hacen posible lo imposible</li>
+        </ul>
+
+        <h4>Tipos de Grietas Luminosas</h4>
+
+        <p><strong>Grietas del Corazón:</strong></p>
+        <ul>
+          <li>Pérdidas que abren compasión</li>
+          <li>Traiciones que enseñan discernimiento</li>
+          <li>Rechazos que revelan auto-amor</li>
+          <li>Abandonos que descubren completitud</li>
+          <li>Luz: Amor incondicional</li>
+        </ul>
+
+        <p><strong>Grietas de la Mente:</strong></p>
+        <ul>
+          <li>Confusiones que llevan a claridad</li>
+          <li>Paradojas que expanden comprensión</li>
+          <li>Colapsos de creencias que liberan</li>
+          <li>Locuras sagradas que sanan</li>
+          <li>Luz: Sabiduría directa</li>
+        </ul>
+
+        <p><strong>Grietas del Cuerpo:</strong></p>
+        <ul>
+          <li>Enfermedades que despiertan</li>
+          <li>Dolores que enseñan presencia</li>
+          <li>Limitaciones que revelan infinitud</li>
+          <li>Mortalidad que muestra eternidad</li>
+          <li>Luz: Encarnación consciente</li>
+        </ul>
+
+        <p><strong>Grietas del Alma:</strong></p>
+        <ul>
+          <li>Noches oscuras que preceden amaneceres</li>
+          <li>Muertes del ego que nacen el Ser</li>
+          <li>Pérdidas de fe que encuentran conocimiento</li>
+          <li>Vacíos que se llenan de plenitud</li>
+          <li>Luz: Realización directa</li>
+        </ul>
+
+        <p><strong>Grietas del Espíritu:</strong></p>
+        <ul>
+          <li>Desilusiones que llevan a lo Real</li>
+          <li>Caídas que enseñan a volar</li>
+          <li>Crucifixiones que resucitan</li>
+          <li>Finales que son principios</li>
+          <li>Luz: Unión divina</li>
+        </ul>
+
+        <h4>El Arte de Agrietarse Conscientemente</h4>
+
+        <p>No todas las grietas son iguales:</p>
+
+        <p><strong>Grietas Forzadas:</strong> Trauma sin consciencia</p>
+        <ul>
+          <li>Crean heridas que supuran</li>
+          <li>Generan patrones destructivos</li>
+          <li>Requieren sanación profunda</li>
+          <li>Pueden cerrarse sin dejar entrar luz</li>
+        </ul>
+
+        <p><strong>Grietas Naturales:</strong> Desgaste del vivir</p>
+        <ul>
+          <li>Parte del proceso de maduración</li>
+          <li>Abren gradualmente</li>
+          <li>Permiten crecimiento orgánico</li>
+          <li>Dejan entrar luz suavemente</li>
+        </ul>
+
+        <p><strong>Grietas Sagradas:</strong> Aperturas conscientes</p>
+        <ul>
+          <li>Elegidas con propósito</li>
+          <li>Navegadas con presencia</li>
+          <li>Transformadas en portales</li>
+          <li>Convertidas en fuentes de luz</li>
+        </ul>
+
+        <p>La maestría está en transformar toda grieta en grieta sagrada.</p>
+
+        <h4>La Luz Que Entra</h4>
+
+        <p>¿Qué es exactamente esta “luz” que entra por las grietas?</p>
+
+        <p><strong>No es metáfora. Es:</strong></p>
+        <ul>
+          <li>Información nueva del campo cuántico</li>
+          <li>Energía del vacío creador</li>
+          <li>Consciencia expandida</li>
+          <li>Amor sin objeto</li>
+          <li>Presencia pura</li>
+          <li>Potencial actualizado</li>
+          <li>Gracia manifestada</li>
+          <li>Dios encontrando entrada</li>
+        </ul>
+
+        <p>La luz que entra por tus grietas no viene de afuera. Viene del infinito interior que la grieta revela. Siempre estuvo ahí. La grieta solo quita lo que la ocultaba.</p>
+
+        <h4>Tecnología de las Grietas Luminosas</h4>
+
+        <p><strong>Para trabajar con tus grietas:</strong></p>
+        <ol>
+          <li><strong>Localiza la grieta</strong><br/>
+            ¿Dónde duele? ¿Dónde está roto? ¿Dónde hay apertura?
+          </li>
+          <li><strong>Resiste el impulso de cerrar</strong><br/>
+            No la tapes inmediatamente. No la niegues. No la anestesies. Permite que respire.
+          </li>
+          <li><strong>Investiga la grieta</strong><br/>
+            ¿Qué profundidad tiene? ¿Hacia dónde lleva? ¿Qué revela? ¿Qué luz está entrando?
+          </li>
+          <li><strong>Expande conscientemente</strong><br/>
+            No fuerces, permite. Respira hacia la grieta. Suaviza los bordes. Crea espacio para más luz.
+          </li>
+          <li><strong>Integra la luz</strong><br/>
+            Permite que ilumine tu interior. Deja que transforme lo que toca. Observa los cambios. Agradece la grieta.
+          </li>
+        </ol>
+
+        <h4>Las Grietas Colectivas</h4>
+
+        <p>No solo los individuos tienen grietas. Las tiene:</p>
+        <ul>
+          <li>La humanidad (guerras, pandemias, crisis)</li>
+          <li>La Tierra (terremotos, erupciones, cambios)</li>
+          <li>La realidad misma (anomalías, paradojas, misterios)</li>
+        </ul>
+
+        <p>Cada grieta colectiva es una oportunidad:</p>
+        <ul>
+          <li>Para que entre luz colectiva</li>
+          <li>Para saltos evolutivos masivos</li>
+          <li>Para despertar conjunto</li>
+          <li>Para sanación planetaria</li>
+          <li>Para ascensión de consciencia</li>
+        </ul>
+
+        <p>Las crisis globales son grietas globales. Por ellas está entrando luz sin precedentes.</p>
+
+        <h4>Los Guardianes de las Grietas</h4>
+
+        <p>Algunas personas son guardianes de grietas:</p>
+        <ul>
+          <li>Mantienen abiertas las grietas sanadoras</li>
+          <li>Cierran las grietas destructivas</li>
+          <li>Enseñan a trabajar con grietas</li>
+          <li>Modelan la belleza de estar agrietado</li>
+          <li>Muestran cómo ser fuente de luz</li>
+        </ul>
+
+        <p>Los reconoces porque:</p>
+        <ul>
+          <li>Han sido profundamente rotos</li>
+          <li>Brillan desde sus fracturas</li>
+          <li>No esconden sus grietas</li>
+          <li>Ayudan a otros con las suyas</li>
+          <li>Son faros de luz agrietada</li>
+        </ul>
+
+        <h4>La Grieta Como Maestro</h4>
+
+        <p>Cada grieta es un maestro que enseña:</p>
+        <ul>
+          <li>Humildad (no eres invulnerable)</li>
+          <li>Compasión (todos estamos agrietados)</li>
+          <li>Fortaleza (sobrevives a la ruptura)</li>
+          <li>Transformación (la grieta te cambia)</li>
+          <li>Luminosidad (eres fuente de luz)</li>
+        </ul>
+
+        <p>Las grietas son la universidad del alma. Cada una es un curso intensivo. Cada una otorga un grado de sabiduría. Cada una gradúa una versión más luminosa de ti.</p>
+
+        <h4>El Mosaico de Grietas</h4>
+
+        <p>Tu vida es un mosaico:</p>
+        <ul>
+          <li>Cada experiencia, una pieza</li>
+          <li>Cada grieta, una línea que las une</li>
+          <li>El conjunto forma un patrón único</li>
+          <li>Las grietas no arruinan el diseño</li>
+          <li>Las grietas SON el diseño</li>
+        </ul>
+
+        <p>Un mosaico sin grietas sería un bloque sólido. Sin belleza. Sin arte. Sin historia. Tus grietas cuentan tu historia. Tus grietas son tu arte.</p>
+
+        <h4>Práctica: Meditación de la Grieta Luminosa</h4>
+
+        <p>Siéntate en quietud. Lleva tu atención a una grieta actual en tu vida. Puede ser física, emocional, mental, espiritual.</p>
+
+        <p>No trates de sanarla. No trates de cerrarla. Solo obsérvala con curiosidad amorosa.</p>
+
+        <p>Imagina luz entrando por la grieta. No fuerces. Solo permite. Observa cómo la luz encuentra su camino. Cómo ilumina espacios internos oscuros. Cómo transforma lo que toca.</p>
+
+        <p>Ahora imagina que la grieta se expande suavemente. Más luz entra. Más espacios se iluminan. Hasta que te das cuenta:</p>
+
+        <p>No eres un ser sólido con grietas. Eres luz que ha tomado forma. Las grietas solo revelan tu naturaleza verdadera.</p>
+
+        <p>Respira esta verdad. Eres luz. Siempre lo fuiste. Las grietas solo lo recuerdan.</p>
+
+        <h4>La Paradoja de la Grieta</h4>
+
+        <p>Queremos estar completos pero:</p>
+        <ul>
+          <li>La completitud viene a través de la ruptura</li>
+          <li>La totalidad incluye las grietas</li>
+          <li>La perfección abraza las fracturas</li>
+          <li>La sanación mantiene las cicatrices luminosas</li>
+          <li>La iluminación ES estar completamente agrietado y completamente luminoso</li>
+        </ul>
+
+        <p>No se trata de no tener grietas. Se trata de que todas tus grietas sean portales de luz.</p>
+
+        <h4>El Privilegio de Estar Agrietado</h4>
+
+        <p>Estar agrietado es un privilegio:</p>
+        <ul>
+          <li>Significa que has vivido</li>
+          <li>Que has amado</li>
+          <li>Que has arriesgado</li>
+          <li>Que has sentido</li>
+          <li>Que eres real</li>
+        </ul>
+
+        <p>Los no agrietados:</p>
+        <ul>
+          <li>No han vivido profundamente</li>
+          <li>No han amado completamente</li>
+          <li>No han arriesgado nada</li>
+          <li>No han sentido todo</li>
+          <li>No son completamente reales</li>
+        </ul>
+
+        <p>Tus grietas son medallas de honor. Pruebas de que participaste. Evidencia de que no te escondiste. Certificados de autenticidad. Diplomas de humanidad.</p>
+
+        <h4>La Grieta Final</h4>
+
+        <p>Hay una grieta final que todos enfrentaremos: La muerte. La grieta definitiva. La ruptura total del contenedor.</p>
+
+        <p>Pero incluso esa grieta - especialmente esa grieta - es donde entra la luz máxima. Es la liberación de toda luz contenida. Es el retorno al océano de luz. Es la reunión con la fuente luminosa.</p>
+
+        <p>Practicar con las pequeñas grietas es preparación para la gran grieta. Cada vez que dejas entrar luz por una grieta, practicas para la liberación final.</p>
+
+        <h4>La Bendición de la Grieta</h4>
+
+        <p>Benditas sean tus grietas. Benditas sean tus fracturas. Benditas sean tus rupturas. Benditas sean tus heridas. Benditas sean tus aperturas.</p>
+
+        <p>Por ellas entra la luz. Por ellas entra el amor. Por ellas entra Dios. Por ellas entras tú - tu verdadero tú - al mundo que espera tu luz particular, esa luz que solo puede entrar por tus grietas únicas.</p>
+
+        <p>No las cierres. No las escondas. No las maldigas.</p>
+
+        <p>Son sagradas. Son perfectas. Son tuyas. Son luz.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“La grieta no es el problema. La grieta es la solución. Es por donde lo infinito entra en lo finito.”</p>
+        </div>
+
+        <p class="signature"><strong>- Códigos de las Simetrías Rotas</strong></p>
+
+        <div class="spacer"></div>
+      </section>
+
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_04.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="nodo_06.html">Siguiente · Nodo 6 ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 9 · Nodo 5 · Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

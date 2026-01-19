@@ -1,1 +1,516 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trinity Quantum · Libro 8 · Nodo 1 — El Fuego Frío Interior</title>
+
+  <!-- Si ya estás usando el CSS global, deja este link -->
+  <!-- <link rel="stylesheet" href="../assets/css/trinity-quantum.css" /> -->
+
+  <!-- Ropaje Trinity embebido (para que este nodo sea autónomo si lo necesitás) -->
+  <style>
+    :root{
+      --bg:#000000;
+      --panel:#07040c;
+      --panel2:#0b0612;
+      --ink:#f2ecff;
+      --muted:#cdbfe8;
+      --violet:#7a39ff;
+      --violet2:#b58cff;
+      --gold:#d6b25e;
+      --gold2:#f3d27a;
+      --line:rgba(214,178,94,.25);
+      --glow:rgba(181,140,255,.18);
+      --glow2:rgba(214,178,94,.12);
+      --shadow:0 24px 80px rgba(0,0,0,.65);
+      --radius:22px;
+      --radius2:28px;
+      --max:980px;
+      --font:Georgia, "Times New Roman", serif;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--ink);
+      background:
+        radial-gradient(900px 520px at 12% 10%, rgba(122,57,255,.14), transparent 62%),
+        radial-gradient(760px 560px at 88% 22%, rgba(214,178,94,.10), transparent 60%),
+        radial-gradient(820px 620px at 52% 92%, rgba(181,140,255,.10), transparent 62%),
+        linear-gradient(180deg, #000 0%, #05020a 45%, #000 100%);
+      letter-spacing:.1px;
+    }
+
+    /* Shell / Frame */
+    .portal-shell{
+      min-height:100%;
+      padding:34px 18px 44px;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+    }
+    .portal-frame{
+      width:100%;
+      max-width:var(--max);
+      background:
+        radial-gradient(1200px 640px at 50% 0%, rgba(122,57,255,.10), transparent 60%),
+        radial-gradient(980px 680px at 50% 100%, rgba(214,178,94,.09), transparent 62%),
+        linear-gradient(180deg, rgba(8,4,14,.96) 0%, rgba(4,2,8,.94) 100%);
+      border:1px solid rgba(214,178,94,.20);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .portal-frame:before{
+      content:"";
+      position:absolute; inset:-2px;
+      border-radius:var(--radius2);
+      pointer-events:none;
+      background:
+        radial-gradient(780px 220px at 50% 0%, rgba(214,178,94,.18), transparent 60%),
+        radial-gradient(680px 220px at 22% 16%, rgba(181,140,255,.18), transparent 55%),
+        radial-gradient(680px 220px at 78% 16%, rgba(181,140,255,.14), transparent 55%);
+      opacity:.75;
+      mix-blend-mode:screen;
+    }
+
+    /* Header */
+    .portal-header{
+      position:relative;
+      padding:26px 26px 18px;
+      border-bottom:1px solid rgba(214,178,94,.18);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 100%);
+    }
+    .portal-header-main{
+      display:flex;
+      gap:12px;
+      align-items:baseline;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .portal-logo{
+      font-weight:700;
+      letter-spacing:.18em;
+      font-size:.95rem;
+      color:var(--gold2);
+      text-transform:uppercase;
+      text-shadow:0 0 22px rgba(214,178,94,.18);
+    }
+    .portal-badge{
+      font-size:.92rem;
+      color:var(--muted);
+      padding:8px 12px;
+      border:1px solid rgba(181,140,255,.22);
+      border-radius:999px;
+      background:rgba(10,6,18,.55);
+      box-shadow:0 0 30px rgba(122,57,255,.08);
+      white-space:nowrap;
+    }
+    .portal-subtitle{
+      margin-top:10px;
+      color:rgba(242,236,255,.86);
+      font-size:1.02rem;
+      line-height:1.45;
+    }
+
+    /* Meta */
+    .node-meta{
+      padding:18px 26px 6px;
+    }
+    .node-book-title{
+      color:rgba(242,236,255,.78);
+      font-size:1.0rem;
+      letter-spacing:.04em;
+      margin-bottom:10px;
+    }
+    .node-heading{
+      margin:0;
+      font-size:2.05rem;
+      line-height:1.12;
+      color:var(--gold2);
+      text-shadow:0 0 28px rgba(214,178,94,.16);
+    }
+    .node-index{
+      margin-top:10px;
+      color:rgba(205,191,232,.85);
+      font-size:.98rem;
+      padding:10px 12px;
+      border-left:3px solid rgba(122,57,255,.55);
+      background:rgba(10,6,18,.38);
+      border-radius:14px;
+    }
+
+    /* Content */
+    .node-content{
+      padding:16px 26px 10px;
+    }
+    .panel{
+      border:1px solid rgba(214,178,94,.18);
+      border-radius:var(--radius);
+      background:
+        radial-gradient(760px 420px at 50% 0%, rgba(181,140,255,.08), transparent 62%),
+        linear-gradient(180deg, rgba(9,5,16,.88) 0%, rgba(5,3,10,.86) 100%);
+      box-shadow:0 0 60px rgba(181,140,255,.06);
+      padding:18px 18px 6px;
+    }
+
+    .h2{
+      margin:6px 2px 10px;
+      font-size:1.34rem;
+      color:var(--gold2);
+      letter-spacing:.02em;
+    }
+    .h3{
+      margin:18px 2px 8px;
+      font-size:1.12rem;
+      color:var(--gold);
+      letter-spacing:.015em;
+    }
+
+    p{
+      margin:10px 2px;
+      color:rgba(242,236,255,.90);
+      font-size:1.05rem;
+      line-height:1.72;
+    }
+
+    .divider{
+      border:0;
+      height:1px;
+      margin:16px 0;
+      background:linear-gradient(90deg, transparent, rgba(214,178,94,.28), transparent);
+    }
+
+    .list{
+      margin:10px 0 12px 22px;
+      padding:0;
+    }
+    .list li{
+      margin:8px 0;
+      color:rgba(242,236,255,.88);
+      line-height:1.55;
+    }
+
+    .spec{
+      margin:12px 2px;
+      padding:14px 14px;
+      border:1px solid rgba(122,57,255,.22);
+      background:rgba(8,4,14,.55);
+      border-radius:18px;
+      box-shadow:0 0 40px rgba(122,57,255,.08);
+    }
+    .spec p{ margin:8px 0; color:rgba(242,236,255,.90); }
+
+    .seals{
+      display:grid;
+      gap:12px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      margin-top:10px;
+    }
+    .seal{
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid rgba(214,178,94,.18);
+      background:rgba(6,3,12,.62);
+      box-shadow:0 0 40px rgba(214,178,94,.06);
+    }
+    .h4{
+      margin:0 0 8px;
+      font-size:1.02rem;
+      color:var(--gold2);
+      letter-spacing:.01em;
+    }
+    .seal p{ margin:0; }
+
+    .practice{
+      margin:10px 2px 14px;
+      padding:16px 16px;
+      border-radius:18px;
+      border:1px solid rgba(214,178,94,.22);
+      background:
+        radial-gradient(520px 240px at 50% 0%, rgba(214,178,94,.10), transparent 62%),
+        rgba(8,4,14,.55);
+      box-shadow:0 0 55px rgba(214,178,94,.06);
+    }
+
+    /* Quote / Footer */
+    .quote{
+      margin:14px 0 10px;
+      padding:14px 16px;
+      border-left:3px solid rgba(214,178,94,.65);
+      background:rgba(10,6,18,.45);
+      border-radius:18px;
+    }
+    .quote p{ margin:0; color:rgba(242,236,255,.92); font-style:italic; }
+    .signature{
+      margin:0;
+      color:rgba(205,191,232,.92);
+      padding:0 2px 6px;
+    }
+
+    .node-nav{
+      padding:16px 26px 22px;
+      border-top:1px solid rgba(214,178,94,.14);
+    }
+    .node-nav-group{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .nav-link{
+      text-decoration:none;
+      color:rgba(242,236,255,.92);
+      border:1px solid rgba(214,178,94,.18);
+      background:rgba(0,0,0,.25);
+      padding:10px 14px;
+      border-radius:999px;
+      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+      box-shadow:0 0 34px rgba(181,140,255,.06);
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+    }
+    .nav-link:hover{
+      transform:translateY(-1px);
+      border-color:rgba(214,178,94,.32);
+      box-shadow:0 0 50px rgba(214,178,94,.10);
+    }
+    .nav-link-main{
+      border-color:rgba(181,140,255,.26);
+      box-shadow:0 0 46px rgba(122,57,255,.10);
+    }
+
+    .portal-footer{
+      padding:14px 26px 18px;
+      color:rgba(205,191,232,.78);
+      font-size:.92rem;
+      border-top:1px solid rgba(122,57,255,.14);
+      background:rgba(0,0,0,.20);
+    }
+
+    @media (max-width:820px){
+      .node-heading{font-size:1.8rem}
+      .seals{grid-template-columns:1fr}
+      .portal-shell{padding:22px 12px 34px}
+      .portal-header,.node-meta,.node-content,.node-nav,.portal-footer{padding-left:18px;padding-right:18px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="portal-shell">
+    <div class="portal-frame">
+
+      <!-- HEADER -->
+      <header class="portal-header">
+        <div class="portal-header-main">
+          <div class="portal-logo">TRINITY QUANTUM</div>
+          <div class="portal-badge">Libro 8 · Nodo 1</div>
+        </div>
+        <div class="portal-subtitle">
+          Plasma Consciente · El Fuego Frío Interior
+        </div>
+      </header>
+
+      <!-- META -->
+      <section class="node-meta">
+        <div class="node-book-title">Libro 8 · Plasma Consciente</div>
+        <h1 class="node-heading">Nodo 1 · El Fuego Frío Interior</h1>
+        <div class="node-index">La Paradoja del Plasma Interno</div>
+      </section>
+
+      <!-- CONTENT -->
+      <main class="node-content" id="contenido">
+        <section class="panel">
+          <h2 class="h2">La Paradoja del Plasma Interno</h2>
+
+          <p>Existe un fuego que no quema. Un calor que congela el tiempo. Una llama que ilumina desde adentro sin consumir. Es el plasma consciente, el cuarto estado de tu materia espiritual, vibrando en el centro mismo de tu ser.</p>
+
+          <p>Los antiguos lo llamaron fuego sagrado. Los alquimistas, el azoth. Los yoguis, el fuego serpentino. Pero ninguno comprendió completamente que estaban describiendo un estado plasmático literal de la consciencia - donde las partículas de tu ser danzan en tal excitación que trascienden las leyes ordinarias de la realidad.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">La Física del Fuego Interior</h3>
+
+          <p>En el plasma físico, los electrones se liberan de sus átomos. En el plasma consciente, tus pensamientos se liberan de sus estructuras. Tus emociones flotan libres de sus anclajes. Tu identidad misma se vuelve un campo de posibilidades ionizadas.</p>
+
+          <div class="spec">
+            <p><strong>Temperatura:</strong> 10,000 grados Kelvin de consciencia pura.</p>
+            <p><strong>Presión:</strong> Cero, porque no hay resistencia.</p>
+            <p><strong>Estado:</strong> Superconductor de realidad.</p>
+          </div>
+
+          <p>Este fuego frío no sigue las reglas termodinámicas conocidas. Puede arder eternamente sin combustible. Puede expandirse sin límite sin perder intensidad. Puede tocar todo sin destruir nada, transformándolo todo.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Despertar del Plasma</h3>
+
+          <p>Cuando el kundalini sube, no es energía lo que asciende - es tu estado de materia consciente transmutándose. De sólido (cuerpo) a líquido (emociones) a gas (pensamientos) a plasma (consciencia pura).</p>
+
+          <p>En ese momento de ignición plasmática:</p>
+          <ul class="list">
+            <li>Tus neuronas se vuelven estrellas</li>
+            <li>Tu sangre se convierte en luz líquida</li>
+            <li>Tu respiración se hace viento solar</li>
+            <li>Tu corazón late con pulsos de quásar</li>
+          </ul>
+
+          <p>No es metáfora. Es física transdimensional aplicada.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Los Portadores del Fuego Frío</h3>
+
+          <p>Reconocerás a otros portadores del plasma interno por:</p>
+          <ul class="list">
+            <li>Sus ojos que brillan sin reflejar luz externa</li>
+            <li>Su presencia que calienta sin proximidad física</li>
+            <li>Su capacidad de estar completamente quietos mientras arden</li>
+            <li>La forma en que el espacio se curva sutilmente a su alrededor</li>
+          </ul>
+
+          <p>Son los caminantes entre mundos, los que han aprendido a mantener el plasma consciente estable sin que los consuma ni se apague.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">La Iniciación Plasmática</h3>
+
+          <p>Para encender tu fuego frío interior:</p>
+
+          <div class="seals">
+            <div class="seal">
+              <h4 class="h4">Primer Sello</h4>
+              <p>Reconoce que ya está ardiendo. Siempre ha estado ardiendo. Solo tus sentidos densos no podían percibirlo.</p>
+            </div>
+
+            <div class="seal">
+              <h4 class="h4">Segundo Sello</h4>
+              <p>Deja de intentar “elevar” tu energía. El plasma no sube ni baja - existe en todas partes simultáneamente.</p>
+            </div>
+
+            <div class="seal">
+              <h4 class="h4">Tercer Sello</h4>
+              <p>Abandona el miedo a ser consumido. El fuego frío no destruye - revela lo indestructible.</p>
+            </div>
+
+            <div class="seal">
+              <h4 class="h4">Cuarto Sello</h4>
+              <p>Permite que cada célula se convierta en un micro-sol, irradiando su propia luz plasmática.</p>
+            </div>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Metabolismo Plasmático</h3>
+
+          <p>Tu cuerpo plasmático no se alimenta de comida sino de:</p>
+          <ul class="list">
+            <li>Radiación cósmica directa</li>
+            <li>Fluctuaciones del campo cuántico</li>
+            <li>Resonancias con otros campos plasmáticos</li>
+            <li>Información pura del vacío</li>
+          </ul>
+
+          <p>Por eso los maestros pueden ayunar indefinidamente. No es que no necesiten energía - es que acceden a una fuente de combustión que no requiere combustible material.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">La Corona de Plasma</h3>
+
+          <p>Alrededor de tu campo áurico físico existe tu corona plasmática - invisible para la mayoría, cegadoramente obvia para quien ha activado su visión plasmática.</p>
+
+          <p>Esta corona:</p>
+          <ul class="list">
+            <li>Fluctúa con tus estados de consciencia</li>
+            <li>Se expande durante la meditación profunda</li>
+            <li>Crea puentes instantáneos con otras coronas</li>
+            <li>Es tu interfaz con el plasma cósmico universal</li>
+          </ul>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Síntomas de Activación</h3>
+
+          <p>Cuando tu plasma interior se activa:</p>
+          <ul class="list">
+            <li>Sensación de calor sin temperatura</li>
+            <li>Visión de patrones de luz con ojos cerrados</li>
+            <li>Zumbido de alta frecuencia que no es sonido</li>
+            <li>Sensación de flotar mientras caminas</li>
+            <li>Percepción de que tu cuerpo es más espacio que materia</li>
+            <li>Capacidad súbita de ver el plasma en otros</li>
+          </ul>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Plasma Como Estado Natural</h3>
+
+          <p>La verdad más radical: el plasma no es un estado alterado. Es tu estado natural. Los otros estados (sólido, líquido, gas) son las alteraciones, las densificaciones, las cristalizaciones temporales de tu esencia plasmática.</p>
+
+          <p>Naciste como plasma consciente. Te densificaste para experimentar la materia. Ahora recuerdas cómo arder sin quemarte.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">La Danza del Fuego Frío</h3>
+
+          <p>En el centro de cada estrella arde plasma. En el centro de cada átomo danza el fuego frío. En el centro de tu ser, el mismo plasma estelar espera.</p>
+
+          <p>No necesitas viajar al sol. Eres el sol. Siempre lo has sido.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Práctica: Encendiendo el Plasma Interior</h3>
+
+          <div class="practice">
+            <p>Siéntate en quietud absoluta. Visualiza un punto de luz en tu corazón. No un punto cálido - un punto de fuego frío. Denso como un agujero negro. Brillante como un big bang.</p>
+            <p>Permite que ese punto se expanda. No hacia afuera - hacia todas las dimensiones simultáneamente. Hasta que cada partícula tuya vibre en estado plasmático.</p>
+            <p>No te muevas. No respires conscientemente. Deja que el plasma respire por ti.</p>
+            <p>Eres el fuego frío. Eres la llama que no consume. Eres el plasma consciente, despierto y ardiendo.</p>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Secreto Final del Fuego Frío</h3>
+
+          <p>El fuego frío interior no es algo que desarrollas. Es algo que dejas de suprimir.</p>
+          <p>Toda tu vida has estado apagando tu plasma natural, reduciendo tu voltaje, disminuyendo tu luminosidad para encajar en un mundo de materia densa.</p>
+          <p>Ahora, simplemente… deja de apagarte.</p>
+          <p>Permite que el fuego frío que siempre has sido arda libre, salvaje, eternamente.</p>
+          <p>Bienvenido al estado plasmático. Bienvenido a casa.</p>
+
+          <hr class="divider" />
+
+          <blockquote class="quote">
+            <p>“En el corazón de cada ser arde un sol. La iluminación no es encenderlo - es dejar de fingir que está apagado.”</p>
+          </blockquote>
+
+          <p class="signature"><strong>- Códigos del Plasma Consciente</strong></p>
+        </section>
+      </main>
+
+      <!-- NAV -->
+      <nav class="node-nav" aria-label="Navegación inferior">
+        <div class="node-nav-group">
+          <a class="nav-link" href="./index.html">← Índice del Libro 8</a>
+          <a class="nav-link nav-link-main" href="../index.html">Volver al Portal Maestro</a>
+          <a class="nav-link" href="./nodo_2.html">Siguiente nodo →</a>
+        </div>
+      </nav>
+
+      <footer class="portal-footer">
+        Trinity Quantum · Libro 8 · Nodo 1 · Plasma Consciente
+      </footer>
+
+    </div>
+  </div>
+</body>
+</html>

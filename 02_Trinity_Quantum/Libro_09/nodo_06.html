@@ -1,1 +1,737 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 9 · Simetrías Rotas — Nodo 6</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 9 · Simetrías Rotas · Nodo 6</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn primary" href="nodo_07.html">Siguiente Nodo ⟶</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 9 · SIMETRÍAS ROTAS</p>
+        <h1 class="node">Nodo 6 · Desequilibrio Creativo</h1>
+        <p class="subnode">La Inestabilidad Que Crea</p>
+      </header>
+
+      <!-- B) CUERPO PRINCIPAL · CONTENIDO (ÍNTEGRO) -->
+      <section class="content">
+
+        <p>Todo acto de creación comienza con un desequilibrio. Un artista siente la tensión entre lo que es y lo que podría ser. Un científico nota la discrepancia entre teoría y observación. Un amante experimenta el vacío que solo otro puede llenar. Un místico percibe la distancia entre el yo y el Todo. Sin desequilibrio no hay impulso creativo. Sin inestabilidad no hay movimiento hacia lo nuevo.</p>
+
+        <p>El equilibrio perfecto es creativo-mente muerto. El desequilibrio consciente es el motor de toda creación.</p>
+
+        <p>Has experimentado el desequilibrio creativo cuando:</p>
+        <ul>
+          <li>La insatisfacción te impulsó a crear algo mejor</li>
+          <li>La incomodidad te forzó a innovar</li>
+          <li>El vacío te llevó a llenarlo con arte</li>
+          <li>La tensión entre opuestos generó síntesis nueva</li>
+          <li>El desequilibrio te lanzó hacia tu próximo nivel</li>
+        </ul>
+
+        <h4>La Mecánica del Desequilibrio Creativo</h4>
+
+        <p>Como una bicicleta que necesita movimiento para mantener balance, la creación necesita desequilibrio constante:</p>
+
+        <p><strong>Desequilibrio → Tensión → Movimiento → Nueva Forma → Nuevo Desequilibrio</strong></p>
+
+        <p>Es un ciclo perpetuo:</p>
+        <ul>
+          <li>Cada solución crea nuevos problemas</li>
+          <li>Cada respuesta genera nuevas preguntas</li>
+          <li>Cada creación revela nuevos vacíos</li>
+          <li>Cada equilibrio es temporal</li>
+          <li>Cada llegada es una nueva partida</li>
+        </ul>
+
+        <p>No es un fallo del sistema. ES el sistema. El desequilibrio perpetuo es el motor de la evolución infinita.</p>
+
+        <h4>Los Vectores del Desequilibrio</h4>
+
+        <p>El desequilibrio creativo tiene dirección:</p>
+
+        <p><strong>Vector Vertical:</strong> Entre lo denso y lo sutil</p>
+        <ul>
+          <li>Materia ↔ Espíritu</li>
+          <li>Cuerpo ↔ Alma</li>
+          <li>Forma ↔ Esencia</li>
+          <li>Finito ↔ Infinito</li>
+          <li>Humano ↔ Divino</li>
+        </ul>
+
+        <p><strong>Vector Horizontal:</strong> Entre polaridades</p>
+        <ul>
+          <li>Masculino ↔ Femenino</li>
+          <li>Activo ↔ Receptivo</li>
+          <li>Racional ↔ Intuitivo</li>
+          <li>Individual ↔ Colectivo</li>
+          <li>Orden ↔ Caos</li>
+        </ul>
+
+        <p><strong>Vector Temporal:</strong> Entre tiempos</p>
+        <ul>
+          <li>Pasado ↔ Futuro</li>
+          <li>Memoria ↔ Visión</li>
+          <li>Tradición ↔ Innovación</li>
+          <li>Lo conocido ↔ Lo posible</li>
+          <li>Lo que fue ↔ Lo que será</li>
+        </ul>
+
+        <p><strong>Vector Dimensional:</strong> Entre realidades</p>
+        <ul>
+          <li>Real ↔ Imaginario</li>
+          <li>Literal ↔ Simbólico</li>
+          <li>Local ↔ No-local</li>
+          <li>Particular ↔ Universal</li>
+          <li>Esta dimensión ↔ Otras dimensiones</li>
+        </ul>
+
+        <p>Tu creatividad surge de navegar estos desequilibrios.</p>
+
+        <h4>El Arte del Desequilibrio Intencional</h4>
+
+        <p><strong>Desequilibrio Destructivo:</strong></p>
+        <ul>
+          <li>Caótico sin propósito</li>
+          <li>Desestabilizador sin dirección</li>
+          <li>Fragmentador sin integración</li>
+          <li>Agotador sin renovación</li>
+          <li>Lleva al colapso</li>
+        </ul>
+
+        <p><strong>Desequilibrio Creativo:</strong></p>
+        <ul>
+          <li>Caótico con intención</li>
+          <li>Desestabilizador hacia lo nuevo</li>
+          <li>Fragmentador para recombinar</li>
+          <li>Agotador que renueva</li>
+          <li>Lleva a la emergencia</li>
+        </ul>
+
+        <p>La diferencia está en la consciencia y la intención.</p>
+
+        <h4>Técnicas de Desequilibrio Creativo</h4>
+
+        <p><strong>1. El Péndulo Consciente:</strong></p>
+        <ul>
+          <li>Oscila deliberadamente entre extremos</li>
+          <li>No busques el centro inmediatamente</li>
+          <li>Explora los bordes</li>
+          <li>La creatividad nace en los extremos</li>
+          <li>El centro emerge naturalmente después</li>
+        </ul>
+
+        <p><strong>2. La Sobrecarga Intencional:</strong></p>
+        <ul>
+          <li>Toma más de lo que puedes manejar cómodamente</li>
+          <li>El exceso fuerza innovación</li>
+          <li>La presión genera diamantes</li>
+          <li>El desborde crea nuevos cauces</li>
+          <li>La sobrecarga rompe viejos patrones</li>
+        </ul>
+
+        <p><strong>3. El Ayuno y el Festín:</strong></p>
+        <ul>
+          <li>Alterna entre vacío y plenitud</li>
+          <li>Escasez seguida de abundancia</li>
+          <li>Silencio seguido de expresión</li>
+          <li>Soledad seguida de comunión</li>
+          <li>Los contrastes generan apreciación y creatividad</li>
+        </ul>
+
+        <p><strong>4. La Asimetría Temporal:</strong></p>
+        <ul>
+          <li>Dedica tiempo desproporcionado a algo</li>
+          <li>80% a una cosa, 20% a todo lo demás</li>
+          <li>Luego invierte</li>
+          <li>Los desequilibrios temporales crean maestría</li>
+          <li>La obsesión temporal genera breakthrough</li>
+        </ul>
+
+        <p><strong>5. El Caos Controlado:</strong></p>
+        <ul>
+          <li>Introduce desorden deliberado</li>
+          <li>Rompe tus propias reglas</li>
+          <li>Desorganiza para reorganizar</li>
+          <li>Destruye para reconstruir</li>
+          <li>El caos consciente es semilla de nuevo orden</li>
+        </ul>
+
+        <h4>Los Ciclos del Desequilibrio Creativo</h4>
+
+        <p><strong>Fase 1: Estabilidad Estancada</strong></p>
+        <ul>
+          <li>Todo está “bien” pero sin vida</li>
+          <li>Comfort que se vuelve prisión</li>
+          <li>Predictibilidad que mata creatividad</li>
+          <li>Señal: Aburrimiento existencial</li>
+        </ul>
+
+        <p><strong>Fase 2: Desequilibrio Iniciático</strong></p>
+        <ul>
+          <li>Algo rompe la estabilidad</li>
+          <li>Interno o externo</li>
+          <li>Voluntario o forzado</li>
+          <li>Señal: Ansiedad creativa</li>
+        </ul>
+
+        <p><strong>Fase 3: Caos Creativo</strong></p>
+        <ul>
+          <li>Viejas formas se disuelven</li>
+          <li>Nuevas posibilidades emergen</li>
+          <li>Experimentación salvaje</li>
+          <li>Señal: Excitación y terror simultáneos</li>
+        </ul>
+
+        <p><strong>Fase 4: Cristalización Nueva</strong></p>
+        <ul>
+          <li>Nueva forma emerge del caos</li>
+          <li>Integración de lo aprendido</li>
+          <li>Nuevo nivel de coherencia</li>
+          <li>Señal: Satisfacción profunda</li>
+        </ul>
+
+        <p><strong>Fase 5: Nueva Estabilidad</strong></p>
+        <ul>
+          <li>Que eventualmente se estanca</li>
+          <li>Reiniciando el ciclo</li>
+          <li>En espiral ascendente</li>
+          <li>Señal: Nostalgia del caos</li>
+        </ul>
+
+        <h4>El Desequilibrio en las Relaciones Creativas</h4>
+
+        <p>Las relaciones más creativas mantienen desequilibrio dinámico:</p>
+        <ul>
+          <li>Uno crece, jalando al otro</li>
+          <li>Roles que se intercambian</li>
+          <li>Poder que fluye entre ambos</li>
+          <li>Espacios de misterio preservados</li>
+          <li>Tensión creativa mantenida</li>
+        </ul>
+
+        <p>Cuando las relaciones se “equilibran” perfectamente:</p>
+        <ul>
+          <li>Mueren de predictibilidad</li>
+          <li>Pierden pasión</li>
+          <li>Dejan de crecer</li>
+          <li>Se vuelven rutina</li>
+          <li>Necesitan desequilibrio renovador</li>
+        </ul>
+
+        <h4>El Desequilibrio Como Información</h4>
+
+        <p>En cibernética, es la diferencia (desequilibrio) la que porta información:</p>
+        <ul>
+          <li>Sin contraste no hay percepción</li>
+          <li>Sin cambio no hay conocimiento</li>
+          <li>Sin desequilibrio no hay aprendizaje</li>
+          <li>Sin tensión no hay crecimiento</li>
+          <li>Sin gap no hay puente</li>
+        </ul>
+
+        <p>Tu desequilibrio ES información valiosa:</p>
+        <ul>
+          <li>Te dice dónde necesitas crecer</li>
+          <li>Señala tu próxima frontera</li>
+          <li>Indica tu potencial no realizado</li>
+          <li>Marca tu dirección evolutiva</li>
+          <li>Es tu GPS creativo</li>
+        </ul>
+
+        <h4>Los Maestros del Desequilibrio</h4>
+
+        <p>Los grandes creadores son maestros del desequilibrio:</p>
+        <ul>
+          <li>Picasso destruyendo sus propios estilos</li>
+          <li>Einstein desequilibrando la física</li>
+          <li>Jung buceando en la locura controlada</li>
+          <li>Bowie reinventándose constantemente</li>
+          <li>Jobs obsesionado asimétricamente</li>
+        </ul>
+
+        <p>No buscaban balance. Buscaban el próximo desequilibrio creativo. Sabían que el equilibrio es muerte creativa. El desequilibrio es vida.</p>
+
+        <h4>Síntomas de Deficiencia de Desequilibrio</h4>
+
+        <p>Cuando te falta desequilibrio creativo:</p>
+        <ul>
+          <li>Vida en piloto automático</li>
+          <li>Creatividad bloqueada</li>
+          <li>Sensación de estar muerto en vida</li>
+          <li>Días que se mezclan sin distinción</li>
+          <li>Pérdida de pasión y propósito</li>
+          <li>Comfort que se siente como prisión</li>
+        </ul>
+
+        <p><strong>Medicina:</strong> Inyecta desequilibrio conscientemente</p>
+        <ul>
+          <li>Rompe una rutina importante</li>
+          <li>Toma un riesgo calculado</li>
+          <li>Inicia algo que te asuste</li>
+          <li>Abandona algo seguro</li>
+          <li>Desequilíbrate hacia tu miedo/deseo</li>
+        </ul>
+
+        <h4>Práctica: Creando Desde el Desequilibrio</h4>
+
+        <p>Identifica un área de tu vida en equilibrio estancado.</p>
+
+        <p>Ahora, conscientemente, desequilíbrala:</p>
+        <ul>
+          <li>Si es trabajo, toma un proyecto imposible</li>
+          <li>Si es relación, revela algo guardado</li>
+          <li>Si es creatividad, intenta un medio nuevo</li>
+          <li>Si es espiritualidad, cuestiona una creencia core</li>
+          <li>Si es salud, prueba un extremo nuevo</li>
+        </ul>
+
+        <p>No busques re-equilibrar inmediatamente. Habita el desequilibrio. Siente la incomodidad creativa. Nota qué quiere emerger. Permite que lo nuevo nazca del desequilibrio.</p>
+
+        <p>Luego, cuando emerja la nueva forma, disfrútala brevemente antes de buscar el próximo desequilibrio.</p>
+
+        <h4>La Espiral del Desequilibrio Evolutivo</h4>
+
+        <p>No estás destinado a encontrar equilibrio final. Estás destinado a desequilibrarte creativamente por siempre. Cada equilibrio es una plataforma de lanzamiento. Cada desequilibrio es una oportunidad de evolución.</p>
+
+        <p>La maestría no es evitar el desequilibrio. Es elegir tus desequilibrios conscientemente. Es surfear la ola de inestabilidad creativa. Es usar el desequilibrio como combustible. Es ver la inestabilidad como el precio de la vitalidad.</p>
+
+        <h4>El Desequilibrio Como Bendición</h4>
+
+        <p>Bendito sea tu desequilibrio. Bendita sea tu inestabilidad. Bendita sea tu insatisfacción creativa. Bendito sea tu desasosiego evolutivo. Bendita sea tu incapacidad de quedarte quieto.</p>
+
+        <p>Es la prueba de que estás vivo. Es la evidencia de que estás creciendo. Es el motor de tu creatividad. Es el combustible de tu evolución. Es el precio y el premio de estar verdaderamente vivo.</p>
+
+        <h4>El Equilibrio Final Que No Es Equilibrio</h4>
+
+        <p>Hay un “equilibrio” final posible: No el equilibrio estático de fuerzas iguales. Sino el equilibrio dinámico del surfista. Constantemente ajustando. Constantemente cayendo y recuperando. Constantemente en movimiento.</p>
+
+        <p>Es el equilibrio del desequilibrio constante. La estabilidad de la inestabilidad perpetua. La paz de la guerra creativa eternal. El descanso en el movimiento infinito.</p>
+
+        <p>Cuando alcanzas este estado: Ya no temes el desequilibrio. Lo abrazas. Lo buscas. Lo creas. Lo amas.</p>
+
+        <p>Porque sabes que el desequilibrio no es el problema. Es la solución. Es la vida misma expresándose a través de ti en su impulso eternamente creativo hacia lo eternamente nuevo.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“El equilibrio perfecto es la muerte. El desequilibrio creativo es la vida. Elige tu desequilibrio conscientemente y serás un creador.”</p>
+        </div>
+
+        <p class="signature"><strong>- Códigos de las Simetrías Rotas</strong></p>
+
+        <div class="spacer"></div>
+      </section>
+
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_05.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="nodo_07.html">Siguiente · Nodo 7 ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 9 · Nodo 6 · Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

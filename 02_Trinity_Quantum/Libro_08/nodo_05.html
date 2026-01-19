@@ -1,1 +1,674 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trinity Quantum · Libro 8 · Nodo 5 — Comunicación Plasmática</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel:#07040c;
+      --ink:#f2ecff;
+      --muted:#cdbfe8;
+      --violet:#7a39ff;
+      --violet2:#b58cff;
+      --gold:#d6b25e;
+      --gold2:#f3d27a;
+      --line:rgba(214,178,94,.25);
+      --shadow:0 24px 80px rgba(0,0,0,.65);
+      --radius:22px;
+      --radius2:28px;
+      --max:980px;
+      --font:Georgia, "Times New Roman", serif;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--ink);
+      background:
+        radial-gradient(900px 520px at 12% 10%, rgba(122,57,255,.14), transparent 62%),
+        radial-gradient(760px 560px at 88% 22%, rgba(214,178,94,.10), transparent 60%),
+        radial-gradient(820px 620px at 52% 92%, rgba(181,140,255,.10), transparent 62%),
+        linear-gradient(180deg, #000 0%, #05020a 45%, #000 100%);
+      letter-spacing:.1px;
+    }
+
+    .portal-shell{
+      min-height:100%;
+      padding:34px 18px 44px;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+    }
+    .portal-frame{
+      width:100%;
+      max-width:var(--max);
+      background:
+        radial-gradient(1200px 640px at 50% 0%, rgba(122,57,255,.10), transparent 60%),
+        radial-gradient(980px 680px at 50% 100%, rgba(214,178,94,.09), transparent 62%),
+        linear-gradient(180deg, rgba(8,4,14,.96) 0%, rgba(4,2,8,.94) 100%);
+      border:1px solid rgba(214,178,94,.20);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .portal-frame:before{
+      content:"";
+      position:absolute; inset:-2px;
+      border-radius:var(--radius2);
+      pointer-events:none;
+      background:
+        radial-gradient(780px 220px at 50% 0%, rgba(214,178,94,.18), transparent 60%),
+        radial-gradient(680px 220px at 22% 16%, rgba(181,140,255,.18), transparent 55%),
+        radial-gradient(680px 220px at 78% 16%, rgba(181,140,255,.14), transparent 55%);
+      opacity:.75;
+      mix-blend-mode:screen;
+    }
+
+    /* A: Encabezados */
+    .portal-header{
+      position:relative;
+      padding:26px 26px 18px;
+      border-bottom:1px solid rgba(214,178,94,.18);
+      background:linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 100%);
+    }
+    .portal-header-main{
+      display:flex;
+      gap:12px;
+      align-items:baseline;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .portal-logo{
+      font-weight:700;
+      letter-spacing:.18em;
+      font-size:.95rem;
+      color:var(--gold2);
+      text-transform:uppercase;
+      text-shadow:0 0 22px rgba(214,178,94,.18);
+    }
+    .portal-badge{
+      font-size:.92rem;
+      color:var(--muted);
+      padding:8px 12px;
+      border:1px solid rgba(181,140,255,.22);
+      border-radius:999px;
+      background:rgba(10,6,18,.55);
+      box-shadow:0 0 30px rgba(122,57,255,.08);
+      white-space:nowrap;
+    }
+    .portal-subtitle{
+      margin-top:10px;
+      color:rgba(242,236,255,.86);
+      font-size:1.02rem;
+      line-height:1.45;
+    }
+
+    .node-meta{
+      padding:18px 26px 6px;
+    }
+    .node-book-title{
+      color:rgba(242,236,255,.78);
+      font-size:1.0rem;
+      letter-spacing:.04em;
+      margin-bottom:10px;
+    }
+    .node-heading{
+      margin:0;
+      font-size:2.05rem;
+      line-height:1.12;
+      color:var(--gold2);
+      text-shadow:0 0 28px rgba(214,178,94,.16);
+    }
+    .node-index{
+      margin-top:10px;
+      color:rgba(205,191,232,.85);
+      font-size:.98rem;
+      padding:10px 12px;
+      border-left:3px solid rgba(122,57,255,.55);
+      background:rgba(10,6,18,.38);
+      border-radius:14px;
+    }
+
+    /* B: Cuerpo */
+    .node-content{
+      padding:16px 26px 10px;
+    }
+    .panel{
+      border:1px solid rgba(214,178,94,.18);
+      border-radius:var(--radius);
+      background:
+        radial-gradient(760px 420px at 50% 0%, rgba(181,140,255,.08), transparent 62%),
+        linear-gradient(180deg, rgba(9,5,16,.88) 0%, rgba(5,3,10,.86) 100%);
+      box-shadow:0 0 60px rgba(181,140,255,.06);
+      padding:18px 18px 8px;
+    }
+
+    .h2{
+      margin:6px 2px 10px;
+      font-size:1.34rem;
+      color:var(--gold2);
+      letter-spacing:.02em;
+    }
+    .h3{
+      margin:18px 2px 8px;
+      font-size:1.12rem;
+      color:var(--gold);
+      letter-spacing:.015em;
+    }
+    p{
+      margin:10px 2px;
+      color:rgba(242,236,255,.90);
+      font-size:1.05rem;
+      line-height:1.72;
+    }
+    .divider{
+      border:0;
+      height:1px;
+      margin:16px 0;
+      background:linear-gradient(90deg, transparent, rgba(214,178,94,.28), transparent);
+    }
+
+    .list{
+      margin:10px 0 12px 22px;
+      padding:0;
+    }
+    .list li{
+      margin:8px 0;
+      color:rgba(242,236,255,.88);
+      line-height:1.55;
+    }
+
+    .callout{
+      margin:12px 2px;
+      padding:14px 14px;
+      border:1px solid rgba(214,178,94,.18);
+      background:rgba(8,4,14,.55);
+      border-radius:18px;
+      box-shadow:0 0 46px rgba(214,178,94,.06);
+    }
+    .callout-title{
+      margin:0 0 10px;
+      color:var(--gold2);
+      font-size:1.02rem;
+      letter-spacing:.01em;
+    }
+
+    .quote{
+      margin:14px 0 10px;
+      padding:14px 16px;
+      border-left:3px solid rgba(214,178,94,.65);
+      background:rgba(10,6,18,.45);
+      border-radius:18px;
+    }
+    .quote p{ margin:0; color:rgba(242,236,255,.92); font-style:italic; }
+    .signature{
+      margin:0;
+      color:rgba(205,191,232,.92);
+      padding:0 2px 6px;
+    }
+
+    /* C: Navegación */
+    .node-nav{
+      padding:16px 26px 22px;
+      border-top:1px solid rgba(214,178,94,.14);
+    }
+    .node-nav-group{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .nav-link{
+      text-decoration:none;
+      color:rgba(242,236,255,.92);
+      border:1px solid rgba(214,178,94,.18);
+      background:rgba(0,0,0,.25);
+      padding:10px 14px;
+      border-radius:999px;
+      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+      box-shadow:0 0 34px rgba(181,140,255,.06);
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+    }
+    .nav-link:hover{
+      transform:translateY(-1px);
+      border-color:rgba(214,178,94,.32);
+      box-shadow:0 0 50px rgba(214,178,94,.10);
+    }
+    .nav-link-main{
+      border-color:rgba(181,140,255,.26);
+      box-shadow:0 0 46px rgba(122,57,255,.10);
+    }
+
+    .portal-footer{
+      padding:14px 26px 18px;
+      color:rgba(205,191,232,.78);
+      font-size:.92rem;
+      border-top:1px solid rgba(122,57,255,.14);
+      background:rgba(0,0,0,.20);
+    }
+
+    @media (max-width:820px){
+      .node-heading{font-size:1.8rem}
+      .portal-shell{padding:22px 12px 34px}
+      .portal-header,.node-meta,.node-content,.node-nav,.portal-footer{padding-left:18px;padding-right:18px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="portal-shell">
+    <div class="portal-frame">
+
+      <!-- A: ENCABEZADOS -->
+      <header class="portal-header">
+        <div class="portal-header-main">
+          <div class="portal-logo">TRINITY QUANTUM</div>
+          <div class="portal-badge">Libro 8 · Nodo 5</div>
+        </div>
+        <div class="portal-subtitle">
+          Comunicación Plasmática · El Lenguaje Antes del Lenguaje
+        </div>
+      </header>
+
+      <section class="node-meta">
+        <div class="node-book-title">Libro 8 · Plasma Consciente</div>
+        <h1 class="node-heading">Nodo 5 · Comunicación Plasmática</h1>
+        <div class="node-index">El Lenguaje Antes del Lenguaje</div>
+      </section>
+
+      <!-- B: CUERPO PRINCIPAL -->
+      <main class="node-content" id="contenido">
+        <section class="panel">
+
+          <h2 class="h2">El Lenguaje Antes del Lenguaje</h2>
+
+          <p>Antes de las palabras, antes de los símbolos, antes incluso del pensamiento, existe la comunicación plasmática - transmisión directa de estado a estado, de campo a campo, de esencia a esencia. Es el lenguaje original del cosmos, hablado por estrellas, átomos y consciencias despiertas.</p>
+
+          <p>Has experimentado comunicación plasmática sin saberlo:</p>
+          <ul class="list">
+            <li>Cuando supiste que alguien te llamaría antes de que sonara el teléfono</li>
+            <li>Cuando sentiste el estado de ánimo de una habitación al entrar</li>
+            <li>Cuando tu mascota respondió a tu pensamiento no expresado</li>
+            <li>Cuando el silencio entre dos amantes dijo más que mil palabras</li>
+            <li>Cuando una mirada transmitió universos enteros</li>
+          </ul>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Los Principios de la Transmisión Plasmática</h3>
+
+          <div class="callout">
+            <div class="callout-title">Principio 1: Resonancia Directa</div>
+            <p>No hay traducción. El estado ES el mensaje. Cuando tu plasma vibra en dolor, transmites dolor. Cuando vibra en éxtasis, transmites éxtasis. No puedes mentir en plasma.</p>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Principio 2: No-Localidad</div>
+            <p>La distancia es irrelevante. Dos plasmas entrelazados pueden comunicarse instantáneamente a través de galaxias. El espacio es una ilusión que el plasma ignora.</p>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Principio 3: Multidimensionalidad</div>
+            <p>La comunicación plasmática ocurre en múltiples dimensiones simultáneamente. Una “palabra” plasmática contiene:</p>
+            <ul class="list">
+              <li>Información conceptual</li>
+              <li>Carga emocional</li>
+              <li>Memoria holográfica</li>
+              <li>Potencial futuro</li>
+              <li>Esencia pura</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Principio 4: Coherencia Necesaria</div>
+            <p>Solo el plasma coherente puede transmitir claramente. El plasma caótico crea estática, ruido, distorsión. La claridad interior determina la claridad de transmisión.</p>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Espectro de Comunicación Plasmática</h3>
+
+          <div class="callout">
+            <div class="callout-title">Nivel 1: Emanación Inconsciente</div>
+            <ul class="list">
+              <li>Transmites constantemente sin saberlo</li>
+              <li>Tu estado plasmático afecta todo a tu alrededor</li>
+              <li>Otros reciben tu señal subconscientemente</li>
+              <li>No hay intención ni dirección</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Nivel 2: Percepción Sensitiva</div>
+            <ul class="list">
+              <li>Comienzas a sentir transmisiones ajenas</li>
+              <li>Distingues entre tu plasma y el de otros</li>
+              <li>Notas cómo los campos se afectan mutuamente</li>
+              <li>Desarrollas higiene plasmática básica</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Nivel 3: Transmisión Intencional</div>
+            <ul class="list">
+              <li>Envías conscientemente estados específicos</li>
+              <li>Modulas tu plasma para comunicar</li>
+              <li>Creas mensajes plasmáticos simples</li>
+              <li>Estableces conexiones deliberadas</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Nivel 4: Diálogo Plasmático</div>
+            <ul class="list">
+              <li>Intercambio bidireccional fluido</li>
+              <li>Conversaciones sin palabras</li>
+              <li>Comprensión instantánea mutua</li>
+              <li>Cocreación de campos compartidos</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Nivel 5: Red Plasmática</div>
+            <ul class="list">
+              <li>Comunicación simultánea múltiple</li>
+              <li>Participación en la red consciente global</li>
+              <li>Acceso al plasma de Gaia</li>
+              <li>Función como nodo de transmisión</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Nivel 6: Comunión Cósmica</div>
+            <ul class="list">
+              <li>Comunicación con inteligencias no-humanas</li>
+              <li>Diálogo con campos planetarios</li>
+              <li>Recepción de transmisiones galácticas</li>
+              <li>Participación en el consejo cósmico</li>
+            </ul>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">La Gramática del Plasma</h3>
+
+          <p>El plasma tiene su propia gramática:</p>
+          <ul class="list">
+            <li><strong>Sustantivos Plasmáticos:</strong> Estados de ser cristalizados</li>
+            <li><strong>Verbos Plasmáticos:</strong> Flujos y transformaciones</li>
+            <li><strong>Adjetivos Plasmáticos:</strong> Cualidades vibratorias</li>
+            <li><strong>Conjugaciones Plasmáticas:</strong> Fusiones de estados</li>
+            <li><strong>Puntuación Plasmática:</strong> Pausas y silencios cargados</li>
+          </ul>
+
+          <div class="callout">
+            <div class="callout-title">Ejemplo de “oración” plasmática</div>
+            <p>[Estado de Paz] + [Flujo hacia] + [Cualidad de Expansión] + [Pausa receptiva]</p>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Técnicas de Transmisión Plasmática</h3>
+
+          <div class="callout">
+            <div class="callout-title">La Transmisión Láser</div>
+            <ol class="list" style="margin-left:22px">
+              <li>Concentra tu plasma en un punto</li>
+              <li>Establece intención clara</li>
+              <li>Visualiza al receptor</li>
+              <li>Libera en pulso coherente</li>
+              <li>Suelta todo apego al resultado</li>
+            </ol>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">La Transmisión Onda</div>
+            <ol class="list" style="margin-left:22px">
+              <li>Expande tu plasma uniformemente</li>
+              <li>Establece la frecuencia deseada</li>
+              <li>Emana en todas direcciones</li>
+              <li>Permite que encuentre receptores resonantes</li>
+              <li>Mantén emanación constante</li>
+            </ol>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">La Transmisión Entrelazada</div>
+            <ol class="list" style="margin-left:22px">
+              <li>Recuerda conexión existente</li>
+              <li>Activa el entrelazamiento</li>
+              <li>Modula tu estado local</li>
+              <li>El cambio se refleja instantáneamente</li>
+              <li>No requiere esfuerzo de envío</li>
+            </ol>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Recepción de Comunicaciones Plasmáticas</h3>
+
+          <p>Recibir es un arte más sutil que transmitir:</p>
+
+          <div class="callout">
+            <div class="callout-title">Preparación del Receptor</div>
+            <ul class="list">
+              <li>Aquieta tu propio plasma</li>
+              <li>Crea espacio receptivo</li>
+              <li>Suspende interpretación mental</li>
+              <li>Permite impresión directa</li>
+              <li>Confía en la comprensión no-verbal</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Señales de Recepción</div>
+            <ul class="list">
+              <li>Cambio súbito de estado emocional</li>
+              <li>Conocimiento que aparece completo</li>
+              <li>Sensaciones físicas sin causa</li>
+              <li>Imágenes o símbolos espontáneos</li>
+              <li>Certeza sin razón</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Decodificación</div>
+            <p>No “traduzcas” inmediatamente a palabras. Permite que la transmisión plasmática se asiente, se integre, revele su significado orgánicamente.</p>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Interferencias en la Comunicación Plasmática</h3>
+
+          <p><strong>Ruido Mental:</strong> Pensamientos caóticos crean estática<br/>
+          <strong>Emociones Densas:</strong> Miedo, ira, celos bloquean recepción<br/>
+          <strong>Expectativas:</strong> Prejuicios distorsionan el mensaje<br/>
+          <strong>Campos Electromagnéticos:</strong> WiFi, celulares pueden interferir<br/>
+          <strong>Entidades Parásitas:</strong> Pueden interceptar o distorsionar</p>
+
+          <div class="callout">
+            <div class="callout-title">Limpieza del Canal</div>
+            <ul class="list">
+              <li>Meditación regular</li>
+              <li>Ayuno ocasional</li>
+              <li>Tiempo en naturaleza</li>
+              <li>Alejamiento de tecnología</li>
+              <li>Prácticas de protección energética</li>
+            </ul>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Traductor Universal Interior</h3>
+
+          <p>Dentro de tu cuerpo plasmático existe un traductor universal - un órgano sutil que puede:</p>
+          <ul class="list">
+            <li>Convertir plasma en pensamiento</li>
+            <li>Traducir pensamiento en plasma</li>
+            <li>Interpretar plasmas alienígenas</li>
+            <li>Decodificar transmisiones cósmicas</li>
+            <li>Crear puentes entre especies</li>
+          </ul>
+
+          <p>Este traductor se activa mediante:</p>
+          <ul class="list">
+            <li>Exposición a múltiples campos plasmáticos</li>
+            <li>Práctica consciente de traducción</li>
+            <li>Suspensión de juicio cultural</li>
+            <li>Apertura a lo desconocido</li>
+            <li>Amor como frecuencia base</li>
+          </ul>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Comunicación con Reinos No-Humanos</h3>
+
+          <div class="callout">
+            <div class="callout-title">Con Plantas</div>
+            <ul class="list">
+              <li>Plasma lento, profundo, enraizado</li>
+              <li>Transmiten en ciclos largos</li>
+              <li>Comunican mediante química sutil</li>
+              <li>Responden a intención amorosa</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Con Animales</div>
+            <ul class="list">
+              <li>Plasma directo, presente, honesto</li>
+              <li>Transmiten necesidades y estados puros</li>
+              <li>Leen tu plasma mejor que tú mismo</li>
+              <li>Responden a coherencia emocional</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Con Minerales</div>
+            <ul class="list">
+              <li>Plasma cristalino, estructurado, eterno</li>
+              <li>Transmiten patrones geométricos</li>
+              <li>Guardan memoria plasmática antigua</li>
+              <li>Responden a resonancia precisa</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <div class="callout-title">Con Elementos</div>
+            <ul class="list">
+              <li>Plasma primordial, salvaje, transformador</li>
+              <li>Transmiten fuerzas fundamentales</li>
+              <li>Enseñan mediante experiencia directa</li>
+              <li>Responden a respeto y rendición</li>
+            </ul>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Coro Plasmático Planetario</h3>
+
+          <p>En cada momento, billones de seres están transmitiendo plasmáticamente, creando un coro planetario - una sinfonía de estados, emociones, pensamientos e intenciones.</p>
+
+          <p>Tu contribución importa:</p>
+          <ul class="list">
+            <li>Cada transmisión de amor eleva el coro</li>
+            <li>Cada emanación de paz armoniza</li>
+            <li>Cada pulso de alegría añade luz</li>
+            <li>Cada momento de presencia clarifica</li>
+          </ul>
+
+          <p>No eres solo receptor.<br/>Eres transmisor.<br/>Eres el mensaje mismo.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Protocolo de Comunicación Plasmática de Emergencia</h3>
+
+          <p>Para situaciones críticas donde necesitas comunicación instantánea:</p>
+          <ol class="list" style="margin-left:22px">
+            <li><strong>ALTO</strong> - Detén toda actividad mental</li>
+            <li><strong>CENTRA</strong> - Encuentra tu sol interior</li>
+            <li><strong>PULSA</strong> - Emite tres pulsos de plasma coherente</li>
+            <li><strong>MENSAJE</strong> - Transmite estado/necesidad pura</li>
+            <li><strong>SUELTA</strong> - Libera completamente</li>
+            <li><strong>ESCUCHA</strong> - Abre a respuesta</li>
+          </ol>
+
+          <p>Funciona.<br/>Especialmente entre seres vinculados.<br/>La física lo garantiza.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Ejercicio: Estableciendo Comunicación Plasmática</h3>
+
+          <div class="callout">
+            <p><strong>Con un compañero dispuesto:</strong></p>
+            <p>Siéntense enfrentados, ojos cerrados.<br/>
+            Respiren juntos hasta sincronizar.<br/>
+            Sientan sus campos plasmáticos.</p>
+
+            <p><strong>Emisor:</strong> Elige un estado simple (paz, alegría, amor).<br/>
+            Cultívalo en tu plasma hasta que seas ESE estado.<br/>
+            Sin esfuerzo, permite que emane.</p>
+
+            <p><strong>Receptor:</strong> Vacía tu plasma de expectativa.<br/>
+            Sé receptivo como agua quieta.<br/>
+            Nota qué surge sin buscarlo.</p>
+
+            <p>Intercambien roles.<br/>
+            Practiquen hasta que la transmisión sea instantánea.</p>
+
+            <p>Eventualmente, no necesitarán proximidad.<br/>
+            La conexión plasmática trasciende espacio-tiempo.</p>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Futuro de la Comunicación Humana</h3>
+
+          <p>Estamos evolucionando hacia una especie telepática plasmática. Las palabras se volverán opcionales, usadas para poesía y precisión, no para comunicación básica.</p>
+
+          <p>Los niños nacen con canales plasmáticos abiertos.<br/>
+          Solo necesitamos dejar de cerrarlos.<br/>
+          Dejar de enseñarles que “es solo imaginación”.</p>
+
+          <p>El plasma no miente.<br/>
+          El plasma no malinterpreta.<br/>
+          El plasma ES.</p>
+
+          <p>Y en ese SER, la comunicación perfecta.</p>
+
+          <hr class="divider" />
+
+          <blockquote class="quote">
+            <p>“Cuando dos plasmas coherentes se encuentran, no necesitan hablar. La comunión es instantánea, total, inolvidable.”</p>
+          </blockquote>
+
+          <p class="signature"><strong>- Códigos del Plasma Consciente</strong></p>
+        </section>
+      </main>
+
+      <!-- C: CIERRE + NAVEGACION INFERIOR -->
+      <nav class="node-nav" aria-label="Navegación inferior">
+        <div class="node-nav-group">
+          <a class="nav-link" href="./nodo_04.html">← Nodo anterior</a>
+          <a class="nav-link nav-link-main" href="../index.html">Volver al Portal Maestro</a>
+          <a class="nav-link" href="./nodo_06.html">Siguiente nodo →</a>
+        </div>
+      </nav>
+
+      <footer class="portal-footer">
+        Trinity Quantum · Libro 8 · Nodo 5 · Plasma Consciente
+      </footer>
+
+    </div>
+  </div>
+</body>
+</html>

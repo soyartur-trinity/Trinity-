@@ -1,1 +1,826 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 9 · Simetrías Rotas — Nodo 4</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0 (mismo ropaje que nodos anteriores)
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{
+      color: inherit;
+      text-decoration:none;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: var(--gold2);
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 9 · Simetrías Rotas · Nodo 4</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn primary" href="nodo_05.html">Siguiente Nodo ⟶</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 9 · SIMETRÍAS ROTAS</p>
+        <h1 class="node">Nodo 4 · Imperfección Sagrada</h1>
+        <p class="subnode">El Wabi-Sabi del Alma</p>
+      </header>
+
+      <!-- B) CUERPO PRINCIPAL · CONTENIDO (ÍNTEGRO) -->
+      <section class="content">
+
+        <p>En Japón existe una estética llamada wabi-sabi - la belleza de la imperfección, la impermanencia, lo incompleto. Pero lo que los japoneses descubrieron en el arte, el universo lo practica en cada átomo: la imperfección no es un error a corregir. Es la firma de lo sagrado. Es la prueba de que algo está vivo. Es el portal por donde entra el misterio.</p>
+
+        <p>Tu búsqueda de perfección es la prisión. Tu imperfección es la llave.</p>
+
+        <p>Has experimentado la imperfección sagrada cuando:</p>
+        <ul>
+          <li>Tu vulnerabilidad conectó más que tu fortaleza</li>
+          <li>Tu error llevó a un descubrimiento mayor</li>
+          <li>Tu debilidad se convirtió en tu medicina</li>
+          <li>Tu herida se volvió tu don para otros</li>
+          <li>Tu fracaso reveló tu verdadero camino</li>
+        </ul>
+
+        <h4>La Geometría de lo Imperfecto</h4>
+
+        <p>La naturaleza nunca crea perfección geométrica:</p>
+        <ul>
+          <li>No hay círculos perfectos en la naturaleza</li>
+          <li>No hay líneas perfectamente rectas</li>
+          <li>No hay simetría absoluta</li>
+          <li>No hay repetición exacta</li>
+          <li>No hay ángulos perfectos</li>
+        </ul>
+
+        <p>Y sin embargo… o precisamente por eso:</p>
+        <ul>
+          <li>Cada flor es una obra maestra</li>
+          <li>Cada árbol es una escultura única</li>
+          <li>Cada rostro es irreemplazablemente bello</li>
+          <li>Cada montaña es sagrada</li>
+          <li>Cada río encuentra su camino perfecto</li>
+        </ul>
+
+        <p>La imperfección es el sello de autenticidad de la vida.</p>
+
+        <h4>Los Tipos de Imperfección Sagrada</h4>
+
+        <p><strong>Imperfección Original:</strong></p>
+        <ul>
+          <li>La que traes de nacimiento</li>
+          <li>Tu configuración única</li>
+          <li>Tus “defectos” de fábrica</li>
+          <li>Lo que te hace irreemplazable</li>
+          <li>Tu firma cósmica</li>
+        </ul>
+
+        <p><strong>Imperfección Adquirida:</strong></p>
+        <ul>
+          <li>Las cicatrices de la vida</li>
+          <li>Las marcas del tiempo</li>
+          <li>Los rastros de tus batallas</li>
+          <li>Las huellas de tu viaje</li>
+          <li>Tu historia escrita en ti</li>
+        </ul>
+
+        <p><strong>Imperfección Cultivada:</strong></p>
+        <ul>
+          <li>La que eliges conscientemente</li>
+          <li>El arte de no pulir demasiado</li>
+          <li>La sabiduría de dejar espacios</li>
+          <li>El coraje de mostrarte incompleto</li>
+          <li>La gracia de la imperfección intencional</li>
+        </ul>
+
+        <h4>La Perfección Como Muerte</h4>
+
+        <p>La perfección es:</p>
+        <ul>
+          <li>El fin del crecimiento</li>
+          <li>El cese del movimiento</li>
+          <li>La parálisis de la creatividad</li>
+          <li>La tumba de la espontaneidad</li>
+          <li>La muerte de la sorpresa</li>
+        </ul>
+
+        <p>Cuando algo alcanza “perfección”:</p>
+        <ul>
+          <li>Ya no puede evolucionar</li>
+          <li>Ya no puede aprender</li>
+          <li>Ya no puede amar (el amor requiere vulnerabilidad)</li>
+          <li>Ya no puede conectar (la conexión requiere grietas)</li>
+          <li>Ya no puede vivir (la vida ES imperfección en movimiento)</li>
+        </ul>
+
+        <p>Tu imperfección es la prueba de que estás vivo. Tu incompletitud es la evidencia de que sigues creciendo. Tus grietas son por donde respiras.</p>
+
+        <h4>La Función de la Imperfección</h4>
+
+        <p>La imperfección tiene funciones sagradas:</p>
+
+        <p><strong>Crea Conexión:</strong></p>
+        <ul>
+          <li>La perfección intimida</li>
+          <li>La imperfección invita</li>
+          <li>Nos reconocemos en las grietas ajenas</li>
+          <li>Nos amamos por las vulnerabilidades compartidas</li>
+        </ul>
+
+        <p><strong>Permite Evolución:</strong></p>
+        <ul>
+          <li>Los errores son mutaciones</li>
+          <li>Las fallas son oportunidades</li>
+          <li>Los defectos son potenciales</li>
+          <li>Las grietas son donde crece lo nuevo</li>
+        </ul>
+
+        <p><strong>Genera Belleza:</strong></p>
+        <ul>
+          <li>La asimetría crea interés</li>
+          <li>La irregularidad crea carácter</li>
+          <li>La imperfección crea autenticidad</li>
+          <li>La vulnerabilidad crea belleza real</li>
+        </ul>
+
+        <p><strong>Invita lo Divino:</strong></p>
+        <ul>
+          <li>Por las grietas entra la luz (Rumi)</li>
+          <li>Por las heridas entra la gracia</li>
+          <li>Por la vulnerabilidad entra el amor</li>
+          <li>Por la imperfección entra Dios</li>
+        </ul>
+
+        <h4>El Perfeccionismo Como Violencia</h4>
+
+        <p>El perfeccionismo es una forma de violencia:</p>
+        <ul>
+          <li>Contra ti mismo</li>
+          <li>Contra tu naturaleza</li>
+          <li>Contra el proceso de la vida</li>
+          <li>Contra la belleza de lo real</li>
+          <li>Contra lo sagrado de lo imperfecto</li>
+        </ul>
+
+        <p>Cada vez que rechazas tu imperfección:</p>
+        <ul>
+          <li>Rechazas tu humanidad</li>
+          <li>Rechazas tu unicidad</li>
+          <li>Rechazas tu medicina</li>
+          <li>Rechazas tu regalo al mundo</li>
+          <li>Rechazas lo divino en ti</li>
+        </ul>
+
+        <h4>Las Grietas de Oro</h4>
+
+        <p>En el Kintsugi japonés, las cerámicas rotas se reparan con oro, haciendo las grietas parte de la belleza. Tu vida practica Kintsugi constantemente:</p>
+        <ul>
+          <li>Cada herida sanada te hace más fuerte</li>
+          <li>Cada error integrado te hace más sabio</li>
+          <li>Cada pérdida procesada te hace más compasivo</li>
+          <li>Cada imperfección aceptada te hace más bello</li>
+          <li>Cada grieta llena de oro te hace más valioso</li>
+        </ul>
+
+        <p>No escondas tus reparaciones. Muestra tu oro. Tus grietas doradas son tu tesoro.</p>
+
+        <h4>La Imperfección Como Originalidad</h4>
+
+        <p>Tu imperfección es tu copyright universal:</p>
+        <ul>
+          <li>Nadie puede ser imperfecto exactamente como tú</li>
+          <li>Tus defectos son tu firma inimitable</li>
+          <li>Tus grietas son tu patrón único</li>
+          <li>Tus errores son tu camino original</li>
+          <li>Tu imperfección es tu perfección particular</li>
+        </ul>
+
+        <p>Cuando intentas ser perfecto, te vuelves genérico. Cuando abrazas tu imperfección, te vuelves original. Irremplazable. Necesario. Sagrado.</p>
+
+        <h4>Los Maestros de la Imperfección</h4>
+
+        <p>Los verdaderos maestros no son perfectos:</p>
+        <ul>
+          <li>Son perfectamente imperfectos</li>
+          <li>Muestran sus grietas con gracia</li>
+          <li>Enseñan desde sus heridas</li>
+          <li>Comparten sus errores como regalos</li>
+          <li>Modelan la imperfección sagrada</li>
+        </ul>
+
+        <p>Desconfía del maestro “perfecto”. Confía en el que muestra sus grietas doradas. Aprende del que abraza su imperfección. Sigue al que danza con sus defectos.</p>
+
+        <h4>Tecnología de la Imperfección Sagrada</h4>
+
+        <p><strong>Para sacralizar tu imperfección:</strong></p>
+        <ol>
+          <li><strong>Mapea tus imperfecciones</strong><br/>
+            Lista tus “defectos”. Identifica tus grietas. Reconoce tus incompletitudes.
+          </li>
+          <li><strong>Busca el oro en cada grieta</strong><br/>
+            ¿Qué don esconde cada defecto? ¿Qué medicina porta cada herida? ¿Qué belleza revela cada imperfección?
+          </li>
+          <li><strong>Practica exposición vulnerable</strong><br/>
+            Muestra una imperfección conscientemente. Comparte una grieta con amor. Revela una incompletitud sin disculpa.
+          </li>
+          <li><strong>Celebra las imperfecciones ajenas</strong><br/>
+            Busca la belleza en los defectos de otros. Agradece las grietas que te permiten conectar. Honra las imperfecciones que hacen único a cada ser.
+          </li>
+          <li><strong>Cultiva imperfección intencional</strong><br/>
+            Deja algo sin terminar a propósito. Permite un error consciente. Crea con imperfección deliberada.
+          </li>
+        </ol>
+
+        <h4>La Imperfección del Universo</h4>
+
+        <p>El universo mismo es gloriosamente imperfecto:</p>
+        <ul>
+          <li>La distribución de materia es irregular</li>
+          <li>Las órbitas planetarias son elípticas, no circulares</li>
+          <li>Las galaxias son asimétricas</li>
+          <li>El fondo cósmico de microondas tiene variaciones</li>
+          <li>La expansión del universo es desigual</li>
+        </ul>
+
+        <p>Si el universo fuera perfecto, no existiríamos. Somos hijos de la imperfección cósmica. Herederos de las asimetrías primordiales. Descendientes de los errores divinos.</p>
+
+        <h4>La Paradoja de la Imperfección Perfecta</h4>
+
+        <p>La paradoja última: tu imperfección ES tu perfección.</p>
+
+        <ul>
+          <li>Eres perfectamente imperfecto para tu propósito</li>
+          <li>Tus defectos son perfectos para tu misión</li>
+          <li>Tus grietas están perfectamente ubicadas</li>
+          <li>Tus errores ocurren en tiempo perfecto</li>
+          <li>Tu imperfección es perfecta para tu evolución</li>
+        </ul>
+
+        <p>No necesitas ser perfecto. Necesitas ser perfectamente tú. Con todas tus grietas. Con todos tus defectos. Con toda tu gloriosa imperfección.</p>
+
+        <h4>Práctica: Ceremonia de Imperfección Sagrada</h4>
+
+        <p>Toma algo que consideras un defecto tuyo. Siéntate con él en meditación.</p>
+
+        <p>No trates de cambiarlo. No trates de aceptarlo. Solo obsérvalo con curiosidad sagrada.</p>
+
+        <p>Pregúntale:</p>
+        <ul>
+          <li>¿Qué medicina traes?</li>
+          <li>¿Qué enseñas?</li>
+          <li>¿A quién sirves?</li>
+          <li>¿Qué belleza ocultas?</li>
+          <li>¿Qué portal eres?</li>
+        </ul>
+
+        <p>Escucha sin juzgar. Tu imperfección tiene sabiduría. Tu defecto tiene propósito. Tu grieta tiene función sagrada.</p>
+
+        <p>Cuando termines, agradece. Agradece a tu imperfección por hacerte humano. Por hacerte único. Por hacerte real. Por hacerte sagrado.</p>
+
+        <h4>El Permiso de Ser Imperfecto</h4>
+
+        <p>Te doy permiso:</p>
+        <ul>
+          <li>Para ser gloriosamente imperfecto</li>
+          <li>Para mostrar tus grietas</li>
+          <li>Para celebrar tus defectos</li>
+          <li>Para amar tus incompletitudes</li>
+          <li>Para ser un trabajo en progreso eterno</li>
+        </ul>
+
+        <p>Te doy permiso:</p>
+        <ul>
+          <li>Para fallar espectacularmente</li>
+          <li>Para equivocarte con gracia</li>
+          <li>Para no saber con dignidad</li>
+          <li>Para estar roto con belleza</li>
+          <li>Para ser humano con orgullo</li>
+        </ul>
+
+        <p>Te doy permiso:</p>
+        <ul>
+          <li>Para dejar de pulirte</li>
+          <li>Para dejar de arreglarte</li>
+          <li>Para dejar de completarte</li>
+          <li>Para dejar de perfeccionarte</li>
+          <li>Para ser, simplemente, magníficamente, imperfectamente tú</li>
+        </ul>
+
+        <h4>La Comunidad de los Imperfectos</h4>
+
+        <p>Existe una hermandad secreta: Los que han abrazado su imperfección. Los que muestran sus grietas con orgullo. Los que danzan con sus defectos. Los que celebran su incompletitud.</p>
+
+        <p>Se reconocen por:</p>
+        <ul>
+          <li>La luz que sale de sus grietas</li>
+          <li>La belleza de sus cicatrices</li>
+          <li>La gracia de sus tropiezos</li>
+          <li>El oro de sus reparaciones</li>
+          <li>La paz de su imperfección aceptada</li>
+        </ul>
+
+        <p>Cuando te unes a esta hermandad:</p>
+        <ul>
+          <li>Dejas de competir por perfección</li>
+          <li>Empiezas a compartir imperfección</li>
+          <li>Dejas de esconder</li>
+          <li>Empiezas a revelar</li>
+          <li>Dejas de pretender</li>
+          <li>Empiezas a ser</li>
+        </ul>
+
+        <h4>La Imperfección Como Medicina</h4>
+
+        <p>Tu imperfección específica es medicina específica:</p>
+        <ul>
+          <li>Tu hipersensibilidad sana la insensibilidad del mundo</li>
+          <li>Tu lentitud sana la prisa colectiva</li>
+          <li>Tu caos sana la rigidez excesiva</li>
+          <li>Tu intensidad sana la apatía general</li>
+          <li>Tu rareza sana la normalidad tóxica</li>
+        </ul>
+
+        <p>No eres imperfecto por accidente. Eres imperfecto por diseño. Tu imperfección particular es exactamente la medicina que el mundo necesita.</p>
+
+        <h4>El Arte de la Imperfección</h4>
+
+        <p>Crear desde la imperfección es el arte supremo:</p>
+        <ul>
+          <li>No esperes estar listo (nunca lo estarás perfectamente)</li>
+          <li>No esperes ser perfecto (mata la creatividad)</li>
+          <li>No esperes condiciones ideales (no existen)</li>
+          <li>No esperes inspiración perfecta (viene trabajando)</li>
+          <li>No esperes el momento perfecto (el momento es ahora, imperfecto)</li>
+        </ul>
+
+        <p>Crea imperfectamente. Ama imperfectamente. Vive imperfectamente. Pero hazlo completamente. Hazlo auténticamente. Hazlo con todo tu ser imperfecto.</p>
+
+        <h4>La Evolución de la Imperfección</h4>
+
+        <p>Tu imperfección no es estática. Evoluciona:</p>
+        <ul>
+          <li>Viejas imperfecciones se integran</li>
+          <li>Nuevas imperfecciones emergen</li>
+          <li>Algunas se transforman en fortalezas</li>
+          <li>Otras revelan su propósito</li>
+          <li>Todas contribuyen a tu totalidad</li>
+        </ul>
+
+        <p>No se trata de volverse perfecto. Se trata de volverse más auténticamente imperfecto. Más creativamente defectuoso. Más bellamente incompleto.</p>
+
+        <h4>El Regalo de la Imperfección al Mundo</h4>
+
+        <p>Tu imperfección es tu regalo al mundo porque:</p>
+        <ul>
+          <li>Da permiso a otros para ser imperfectos</li>
+          <li>Crea espacio para la autenticidad</li>
+          <li>Reduce la presión de perfección</li>
+          <li>Aumenta la compasión</li>
+          <li>Humaniza lo divino</li>
+          <li>Diviniza lo humano</li>
+        </ul>
+
+        <p>Cuando escondes tu imperfección:</p>
+        <ul>
+          <li>Robas al mundo tu medicina</li>
+          <li>Perpetúas la tiranía de la perfección</li>
+          <li>Niegas tu humanidad</li>
+          <li>Rechazas tu divinidad</li>
+          <li>Traicionas tu verdad</li>
+        </ul>
+
+        <h4>La Oración de la Imperfección Sagrada</h4>
+
+        <p>“Soy perfectamente imperfecto. Mis grietas son mis portales. Mis defectos son mis dones. Mis errores son mis maestros. Mi incompletitud es mi camino.</p>
+
+        <p>No pido ser perfecto. Pido ser auténtico. No pido ser completo. Pido ser real. No pido ser sin defectos. Pido ser sin máscaras.</p>
+
+        <p>Celebro mi imperfección sagrada. Honro mis grietas doradas. Abrazo mi incompletitud divina. Agradezco mis defectos perfectos. Soy la imperfección que el universo necesitaba.</p>
+
+        <p>Y así es. Y así soy. Y así será.”</p>
+
+        <h4>El Final Que No Es Final</h4>
+
+        <p>Este nodo sobre la imperfección sagrada está, apropiadamente, incompleto. Tiene grietas. Tiene espacios. Tiene imperfecciones.</p>
+
+        <p>Y en esa incompletitud, en esas grietas, en esas imperfecciones, está su perfección.</p>
+
+        <p>Como la tuya.</p>
+
+        <p>No necesitas ser perfecto. Ya eres sagrado. Tal como eres. Especialmente como eres. Únicamente como eres.</p>
+
+        <p>Imperfectamente. Gloriosamente. Sagradamente. Tú.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“La perfección es la máscara. La imperfección es el rostro de Dios.”</p>
+        </div>
+
+        <p class="signature"><strong>- Códigos de las Simetrías Rotas</strong></p>
+
+        <div class="spacer"></div>
+      </section>
+
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_03.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="nodo_05.html">Siguiente · Nodo 5 ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 9 · Nodo 4 · Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

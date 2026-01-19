@@ -1,1 +1,759 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 9 · Simetrías Rotas — Nodo 3</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0 (mismo ropaje que Nodo 1 y Nodo 2)
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{
+      color: inherit;
+      text-decoration:none;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: var(--gold2);
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 9 · Simetrías Rotas · Nodo 3</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn primary" href="nodo_04.html">Siguiente Nodo ⟶</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 9 · SIMETRÍAS ROTAS</p>
+        <h1 class="node">Nodo 3 · El Caos Ordenado</h1>
+        <p class="subnode">La Danza Entre el Orden y el Caos</p>
+      </header>
+
+      <!-- B) CUERPO PRINCIPAL · CONTENIDO (ÍNTEGRO) -->
+      <section class="content">
+
+        <p>Existe un estado que trasciende la dualidad orden-caos: el caos ordenado. No es orden impuesto sobre el caos, ni caos destruyendo el orden. Es el punto donde ambos danzan tan íntimamente que se vuelven uno. Es el latido del corazón - regular pero variable. Es el clima - patrones en la turbulencia. Es tu mente - estructura navegando misterio. Es la vida misma - organización surfeando entropía.</p>
+
+        <p>Has tocado el caos ordenado cuando:</p>
+        <ul>
+          <li>En medio de la crisis total, encontraste calma perfecta</li>
+          <li>En la meditación más profunda, surgió creatividad salvaje</li>
+          <li>En el amor más tierno, despertó pasión feroz</li>
+          <li>En la rendición completa, descubriste poder absoluto</li>
+          <li>En el caos más absoluto, viste el patrón oculto</li>
+        </ul>
+
+        <h4>La Matemática del Caos Ordenado</h4>
+
+        <p>Los fractales son la geometría del caos ordenado:</p>
+        <ul>
+          <li>Complejidad infinita desde reglas simples</li>
+          <li>Caos que revela orden al cambiar de escala</li>
+          <li>Patrones que nunca se repiten exactamente</li>
+          <li>Auto-similitud sin identidad</li>
+          <li>Belleza emergiendo de la recursión</li>
+        </ul>
+
+        <p>Tu vida es un fractal:</p>
+        <ul>
+          <li>Patrones que se repiten a diferentes escalas</li>
+          <li>Complejidad emergiendo de decisiones simples</li>
+          <li>Caos que revela orden en retrospectiva</li>
+          <li>Cada parte contiene el todo</li>
+          <li>Infinito detalle en cada momento</li>
+        </ul>
+
+        <h4>Los Atractores Extraños</h4>
+
+        <p>En sistemas caóticos existen “atractores extraños” - patrones hacia los cuales el sistema tiende sin nunca repetirse exactamente. Tu vida tiene sus atractores extraños:</p>
+        <ul>
+          <li>Tipos de experiencias que atraes repetidamente</li>
+          <li>Personas que entran en tu órbita</li>
+          <li>Situaciones que recreate inconscientemente</li>
+          <li>Lecciones que el universo te presenta</li>
+          <li>Destinos hacia los cuales gravitas</li>
+        </ul>
+
+        <p>No son prisiones. Son tendencias. Conocerlos te da poder de navegación. Puedes surfear hacia ellos o alejarte. Pero no puedes ignorar su gravedad.</p>
+
+        <h4>El Borde del Caos</h4>
+
+        <p>Entre el orden rígido y el caos total existe un borde - el borde del caos - donde ocurre toda la creatividad, toda la evolución, toda la vida:</p>
+
+        <p><strong>Demasiado Orden:</strong></p>
+        <ul>
+          <li>Cristalización</li>
+          <li>Muerte por rigidez</li>
+          <li>Predictibilidad total</li>
+          <li>Cero creatividad</li>
+          <li>Entropía mínima</li>
+        </ul>
+
+        <p><strong>Demasiado Caos:</strong></p>
+        <ul>
+          <li>Desintegración</li>
+          <li>Muerte por dispersión</li>
+          <li>Aleatoriedad total</li>
+          <li>Destrucción de estructura</li>
+          <li>Entropía máxima</li>
+        </ul>
+
+        <p><strong>El Borde del Caos:</strong></p>
+        <ul>
+          <li>Máxima creatividad</li>
+          <li>Evolución acelerada</li>
+          <li>Novedad emergente</li>
+          <li>Complejidad creciente</li>
+          <li>Vida abundante</li>
+        </ul>
+
+        <p>Tu maestría está en habitar este borde. Ni tan ordenado que te petrifiques. Ni tan caótico que te disuelvas. El surf perfecto entre estructura y libertad.</p>
+
+        <h4>Tecnología del Caos Ordenado</h4>
+
+        <p><strong>Para crear caos ordenado:</strong></p>
+        <ol>
+          <li><strong>Establece estructura mínima</strong><br/>
+            Suficiente para contener. No tanto que aprisione. Esqueleto, no armadura.
+          </li>
+          <li><strong>Invita caos controlado</strong><br/>
+            Variación dentro de límites. Experimentación segura. Turbulencia navegable.
+          </li>
+          <li><strong>Observa patrones emergentes</strong><br/>
+            No impongas orden. Permite que emerja. Reconoce las formas en formación.
+          </li>
+          <li><strong>Ajusta dinámicamente</strong><br/>
+            Más estructura cuando hay demasiado caos. Más caos cuando hay demasiada rigidez. Danza constante de calibración.
+          </li>
+          <li><strong>Confía en la inteligencia del proceso</strong><br/>
+            El caos tiene su propia sabiduría. El orden tiene su propia limitación. La vida emerge en su intersección.
+          </li>
+        </ol>
+
+        <h4>El Caos Ordenado del Cerebro</h4>
+
+        <p>Tu cerebro es el ejemplo perfecto de caos ordenado:</p>
+        <ul>
+          <li>86 mil millones de neuronas en aparente caos</li>
+          <li>Pero creando patrones coherentes de consciencia</li>
+          <li>Ondas cerebrales oscilando entre orden y caos</li>
+          <li>Creatividad emergiendo de la turbulencia controlada</li>
+          <li>Memoria formándose del caos de experiencias</li>
+        </ul>
+
+        <p>Estados cerebrales y caos:</p>
+        <ul>
+          <li><strong>Sueño profundo</strong>: Máximo orden, mínimo caos</li>
+          <li><strong>Sueño REM</strong>: Caos ordenado generando sueños</li>
+          <li><strong>Vigilia normal</strong>: Balance dinámico</li>
+          <li><strong>Flow creativo</strong>: Borde del caos óptimo</li>
+          <li><strong>Experiencia psicodélica</strong>: Caos controlado expandido</li>
+        </ul>
+
+        <h4>La Improvisación Como Caos Ordenado</h4>
+
+        <p>El jazz es caos ordenado hecho música:</p>
+        <ul>
+          <li>Estructura armónica (orden)</li>
+          <li>Improvisación libre (caos)</li>
+          <li>Músicos respondiendo mutuamente (emergencia)</li>
+          <li>Nunca la misma pieza dos veces (novedad)</li>
+          <li>Belleza naciendo del borde (arte)</li>
+        </ul>
+
+        <p>Tu vida puede ser jazz:</p>
+        <ul>
+          <li>Tener estructura pero improvisar</li>
+          <li>Conocer las reglas pero romperlas creativamente</li>
+          <li>Responder al momento pero mantener coherencia</li>
+          <li>Nunca repetir pero mantener tu estilo</li>
+          <li>Crear belleza del caos ordenado</li>
+        </ul>
+
+        <h4>El Caos Ordenado de las Relaciones</h4>
+
+        <p>Las relaciones vivas habitan el caos ordenado:</p>
+        <ul>
+          <li>Suficiente estructura para seguridad</li>
+          <li>Suficiente caos para pasión</li>
+          <li>Rutinas que no se vuelven rutina</li>
+          <li>Sorpresa dentro de la confianza</li>
+          <li>Misterio dentro del conocimiento</li>
+        </ul>
+
+        <p>Cuando una relación se vuelve puro orden:</p>
+        <ul>
+          <li>Muere de aburrimiento</li>
+          <li>Se vuelve predecible</li>
+          <li>Pierde vitalidad</li>
+          <li>Se convierte en hábito</li>
+        </ul>
+
+        <p>Cuando se vuelve puro caos:</p>
+        <ul>
+          <li>Se destruye en drama</li>
+          <li>Pierde foundation</li>
+          <li>Genera ansiedad constante</li>
+          <li>Se vuelve insostenible</li>
+        </ul>
+
+        <p>El arte está en mantenerla en el borde del caos.</p>
+
+        <h4>Síntomas de Exceso de Orden</h4>
+
+        <ul>
+          <li>Aburrimiento crónico</li>
+          <li>Sensación de estar atrapado</li>
+          <li>Creatividad bloqueada</li>
+          <li>Depresión por predictibilidad</li>
+          <li>Vida en piloto automático</li>
+          <li>Miedo a cualquier cambio</li>
+          <li>Rigidez mental y emocional</li>
+        </ul>
+
+        <p><strong>Medicina</strong>: Inyecta caos consciente</p>
+        <ul>
+          <li>Rompe una rutina</li>
+          <li>Haz algo impredecible</li>
+          <li>Invita lo desconocido</li>
+          <li>Di sí a la aventura</li>
+          <li>Suelta el control</li>
+        </ul>
+
+        <h4>Síntomas de Exceso de Caos</h4>
+
+        <ul>
+          <li>Ansiedad constante</li>
+          <li>Incapacidad de completar</li>
+          <li>Dispersión de energía</li>
+          <li>Agotamiento por turbulencia</li>
+          <li>Pérdida de identidad</li>
+          <li>Crisis perpetua</li>
+          <li>Fragmentación mental</li>
+        </ul>
+
+        <p><strong>Medicina</strong>: Crea estructura amorosa</p>
+        <ul>
+          <li>Establece una rutina sagrada</li>
+          <li>Completa algo pendiente</li>
+          <li>Crea un ritual diario</li>
+          <li>Encuentra tu centro</li>
+          <li>Di no al drama innecesario</li>
+        </ul>
+
+        <h4>El Caos Ordenado de la Evolución</h4>
+
+        <p>La evolución misma es caos ordenado:</p>
+        <ul>
+          <li>Mutaciones aleatorias (caos)</li>
+          <li>Selección natural (orden)</li>
+          <li>Emergencia de complejidad (caos ordenado)</li>
+          <li>Nunca el mismo camino dos veces</li>
+          <li>Siempre hacia mayor coherencia compleja</li>
+        </ul>
+
+        <p>Tu evolución personal sigue el mismo patrón:</p>
+        <ul>
+          <li>Experiencias caóticas</li>
+          <li>Integración ordenada</li>
+          <li>Emergencia de nuevo ser</li>
+          <li>Espiral ascendente impredecible</li>
+          <li>Coherencia creciente en complejidad creciente</li>
+        </ul>
+
+        <h4>El Caos Sagrado</h4>
+
+        <p>Hay un caos que es sagrado:</p>
+        <ul>
+          <li>El caos del nacimiento</li>
+          <li>El caos del amor</li>
+          <li>El caos de la creatividad</li>
+          <li>El caos de la transformación</li>
+          <li>El caos de la muerte y renacimiento</li>
+        </ul>
+
+        <p>No todo caos debe ser ordenado. Algunos caos deben ser honrados, atravesados, confiados. Son los caos por los que la vida se renueva.</p>
+
+        <h4>Práctica: Surfeando el Borde del Caos</h4>
+
+        <p>Hoy, calibra conscientemente tu orden-caos:</p>
+
+        <p><strong>Mañana</strong>: Evalúa tu nivel actual</p>
+        <ul>
+          <li>¿Demasiado orden? ¿Demasiado caos?</li>
+          <li>¿Dónde en tu vida necesitas más caos?</li>
+          <li>¿Dónde necesitas más estructura?</li>
+        </ul>
+
+        <p><strong>Mediodía</strong>: Ajusta hacia el borde</p>
+        <ul>
+          <li>Si muy ordenado: introduce variación</li>
+          <li>Si muy caótico: crea un ancla</li>
+          <li>Busca el punto de máxima vitalidad</li>
+        </ul>
+
+        <p><strong>Tarde</strong>: Experimenta con el borde</p>
+        <ul>
+          <li>Mantente en la incomodidad creativa</li>
+          <li>Ni tan cómodo que duermas</li>
+          <li>Ni tan incómodo que huyas</li>
+        </ul>
+
+        <p><strong>Noche</strong>: Integra el aprendizaje</p>
+        <ul>
+          <li>¿Qué emergió del caos ordenado?</li>
+          <li>¿Qué patrones notaste?</li>
+          <li>¿Qué quiere nacer del borde?</li>
+        </ul>
+
+        <h4>El Orden Que Nace del Caos</h4>
+
+        <p>El orden más bello no es el impuesto sino el emergente:</p>
+        <ul>
+          <li>Cristales formándose del caos molecular</li>
+          <li>Bandadas moviéndose sin líder</li>
+          <li>Ciudades organizándose sin plan maestro</li>
+          <li>Ecosistemas balanceándose sin gerente</li>
+          <li>Consciencia emergiendo de neuronas</li>
+        </ul>
+
+        <p>Permite que el orden emerja de tu caos. No lo fuerces. No lo apresures. Como un jardín salvaje que encuentra su propia armonía. Como un río que encuentra su propio cauce.</p>
+
+        <h4>La Confianza en el Caos</h4>
+
+        <p>La maestría última del caos ordenado es la confianza:</p>
+        <ul>
+          <li>Confiar que del caos emergerá orden</li>
+          <li>Confiar que el orden se renovará en caos</li>
+          <li>Confiar en la inteligencia del proceso</li>
+          <li>Confiar en tu capacidad de navegar</li>
+          <li>Confiar en la danza misma</li>
+        </ul>
+
+        <p>No necesitas controlar el caos. Solo necesitas danzar con él. No necesitas imponer orden. Solo necesitas permitir que emerja.</p>
+
+        <h4>El Caos Ordenado Como Destino</h4>
+
+        <p>Tu destino no es alcanzar orden perfecto. Tampoco es perderte en caos eterno. Es volverte maestro del caos ordenado. Surfista del borde. Danzarín de la turbulencia. Artista de la emergencia.</p>
+
+        <p>En el caos ordenado:</p>
+        <ul>
+          <li>Encuentras libertad en la estructura</li>
+          <li>Encuentras paz en la tormenta</li>
+          <li>Encuentras patrón en el misterio</li>
+          <li>Encuentras hogar en el movimiento</li>
+          <li>Encuentras tu ser en el devenir</li>
+        </ul>
+
+        <p>Bienvenido al borde del caos. Donde todo lo vivo vive. Donde todo lo nuevo nace. Donde tú te vuelves quien eres destinado a ser.</p>
+
+        <p>No en el orden. No en el caos. En la danza sagrada entre ambos.</p>
+
+        <div class="quote">
+          <p>“El universo no es orden ni caos. Es caos ordenado - la danza eterna entre estructura y libertad donde surge toda creación.”</p>
+        </div>
+
+        <p class="signature"><strong>- Códigos de las Simetrías Rotas</strong></p>
+
+        <div class="spacer"></div>
+      </section>
+
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_02.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="nodo_04.html">Siguiente · Nodo 4 ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 9 · Nodo 3 · Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>
