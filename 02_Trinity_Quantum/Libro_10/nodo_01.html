@@ -1,1 +1,736 @@
-desarrollo
+<!-- ===========================
+     PARTE A · ENCABEZADO
+     =========================== -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 10 · Campos de Torsión — Nodo 1</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 10 · Campos de Torsión · Nodo 1</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 10 · CAMPOS DE TORSIÓN</p>
+        <h1 class="node">Nodo 1 · El Giro del Alma</h1>
+        <p class="subnode">La Espiral Fundamental</p>
+      </header>
+      <!-- ===========================
+           PARTE B · CONTENIDO
+           (Markdown convertido a HTML)
+           =========================== -->
+      <section class="content">
+
+        <h4>LA ESPIRAL FUNDAMENTAL</h4>
+
+        <p>Todo en el universo gira. Desde los quarks hasta las galaxias, desde el ADN hasta los huracanes, desde los chakras hasta los agujeros negros. Este giro no es accidental - es el movimiento fundamental de la consciencia misma. Es cómo el universo se mueve sin moverse, cómo crea sin gastar, cómo evoluciona sin linealmente avanzar. Y en el centro de tu ser, tu alma gira en su propia espiral sagrada, creando campos de torsión que moldean tu realidad.</p>
+
+        <p>El giro del alma no es metáfora.<br>
+        Es física multidimensional.<br>
+        Es el mecanismo por el cual transformas energía en materia,<br>
+        potencial en actual,<br>
+        sueño en realidad.</p>
+
+        <p>Has sentido el giro del alma cuando:</p>
+
+        <ul>
+          <li>Una emoción te atravesó en espiral desde el vientre hasta la corona</li>
+          <li>Un pensamiento giró obsesivamente hasta transformarse en comprensión</li>
+          <li>El amor te hizo sentir que dabas vueltas sin moverte</li>
+          <li>La meditación te llevó al ojo quieto del huracán interno</li>
+          <li>Un momento de gracia te hizo girar hacia una nueva versión de ti</li>
+        </ul>
+
+        <h4>LA FÍSICA DEL SPIN CONSCIENTE</h4>
+
+        <p>En física cuántica, el spin es una propiedad fundamental de las partículas - no es que literalmente giren, sino que poseen un momento angular intrínseco. Tu alma tiene un spin similar:</p>
+
+        <p><strong>Spin +½ (Dextrógiro):</strong> Giro hacia la expansión</p>
+        <ul>
+          <li>Apertura</li>
+          <li>Creación</li>
+          <li>Emanación</li>
+          <li>Evolución</li>
+          <li>Ascensión</li>
+        </ul>
+
+        <p><strong>Spin -½ (Levógiro):</strong> Giro hacia la contracción</p>
+        <ul>
+          <li>Integración</li>
+          <li>Absorción</li>
+          <li>Introspección</li>
+          <li>Consolidación</li>
+          <li>Encarnación</li>
+        </ul>
+
+        <p><strong>Spin 0 (Punto Cero):</strong> El ojo del huracán</p>
+        <ul>
+          <li>Quietud dinámica</li>
+          <li>Potencial puro</li>
+          <li>El vacío creador</li>
+          <li>Presencia total</li>
+          <li>El ahora eterno</li>
+        </ul>
+
+        <p>Tu maestría está en navegar conscientemente estos estados de spin.</p>
+
+        <h4>LOS CAMPOS DE TORSIÓN DEL ALMA</h4>
+
+        <p>Cuando tu alma gira, genera campos de torsión - distorsiones en el tejido del espacio-tiempo que:</p>
+        <ul>
+          <li>Curvan la probabilidad hacia tu favor</li>
+          <li>Atraen sincronicidades</li>
+          <li>Repelen energías incompatibles</li>
+          <li>Crean vórtices de manifestación</li>
+          <li>Establecen tu firma energética única</li>
+        </ul>
+
+        <p>Estos campos se extienden infinitamente pero con intensidad decreciente:</p>
+        <ul>
+          <li>0-1 metro: Campo de torsión corporal (afecta tu biología)</li>
+          <li>1-3 metros: Campo de torsión áurico (afecta tu energía inmediata)</li>
+          <li>3-10 metros: Campo de torsión social (afecta tus interacciones)</li>
+          <li>10-100 metros: Campo de torsión ambiental (afecta tu entorno)</li>
+          <li>100+ metros: Campo de torsión no-local (afecta la realidad distante)</li>
+        </ul>
+
+        <h4>LOS RITMOS DEL GIRO</h4>
+
+        <p>Tu alma no gira a velocidad constante. Tiene ritmos:</p>
+
+        <p><strong>Ritmo Circadiano:</strong> 24 horas</p>
+        <ul>
+          <li>Mañana: Spin acelerando</li>
+          <li>Mediodía: Máxima velocidad</li>
+          <li>Tarde: Spin desacelerando</li>
+          <li>Noche: Mínima velocidad</li>
+          <li>Madrugada: Punto de inflexión</li>
+        </ul>
+
+        <p><strong>Ritmo Lunar:</strong> 28 días</p>
+        <ul>
+          <li>Luna nueva: Spin hacia adentro</li>
+          <li>Cuarto creciente: Aceleración</li>
+          <li>Luna llena: Máximo spin hacia afuera</li>
+          <li>Cuarto menguante: Desaceleración</li>
+        </ul>
+
+        <p><strong>Ritmo Anual:</strong> 365 días</p>
+        <ul>
+          <li>Primavera: Spin emergente</li>
+          <li>Verano: Spin radiante</li>
+          <li>Otoño: Spin integrativo</li>
+          <li>Invierno: Spin introspectivo</li>
+        </ul>
+
+        <p><strong>Ritmo de Vida:</strong> Toda tu existencia</p>
+        <ul>
+          <li>Infancia: Spin caótico exploratorio</li>
+          <li>Juventud: Spin acelerado expansivo</li>
+          <li>Madurez: Spin estable productivo</li>
+          <li>Vejez: Spin sabio integrativo</li>
+          <li>Transición: Spin liberador trascendente</li>
+        </ul>
+
+        <h4>TECNOLOGÍA DEL GIRO CONSCIENTE</h4>
+
+        <p><strong>Para acelerar tu spin:</strong></p>
+        <ol>
+          <li>Gira físicamente (danza derviche, giros chamánicos)</li>
+          <li>Visualiza espirales ascendentes de energía</li>
+          <li>Respira en espiral (inhala girando hacia arriba)</li>
+          <li>Activa pensamientos expansivos</li>
+          <li>Conecta con la alegría y el éxtasis</li>
+        </ol>
+
+        <p><strong>Para desacelerar tu spin:</strong></p>
+        <ol>
+          <li>Quietud física profunda</li>
+          <li>Visualiza el punto cero en tu centro</li>
+          <li>Respiración linear y lenta</li>
+          <li>Pensamientos de consolidación</li>
+          <li>Conecta con la paz y el vacío</li>
+        </ol>
+
+        <p><strong>Para invertir tu spin:</strong></p>
+        <ol>
+          <li>Cambia la dirección de tus giros físicos</li>
+          <li>Invierte tus patrones habituales</li>
+          <li>Haz lo opuesto a tu tendencia</li>
+          <li>Explora tu sombra</li>
+          <li>Abraza tu polaridad negada</li>
+        </ol>
+
+        <h4>EL VÓRTICE DEL CORAZÓN</h4>
+
+        <p>En el centro de tu pecho, donde el alma ancla en el cuerpo, existe un vórtice maestro:</p>
+        <ul>
+          <li>Gira en ambas direcciones simultáneamente</li>
+          <li>Crea un toroide de energía</li>
+          <li>Es tu motor de manifestación</li>
+          <li>Conecta todos tus otros vórtices</li>
+          <li>Es el trono del giro del alma</li>
+        </ul>
+
+        <p>Cuando este vórtice está:</p>
+        <ul>
+          <li><strong>Bloqueado:</strong> Vida estancada, depresión, desconexión</li>
+          <li><strong>Girando erráticamente:</strong> Caos emocional, drama, inestabilidad</li>
+          <li><strong>Girando coherentemente:</strong> Flujo, sincronicidad, magia</li>
+          <li><strong>En punto cero:</strong> Iluminación, unidad, presencia pura</li>
+        </ul>
+
+        <h4>LOS SIETE VÓRTICES DEL ALMA</h4>
+
+        <p>Tu alma gira a través de siete vórtices principales:</p>
+        <ol>
+          <li><strong>Vórtice Raíz:</strong> Giro de supervivencia y encarnación</li>
+          <li><strong>Vórtice Sacro:</strong> Giro de creatividad y placer</li>
+          <li><strong>Vórtice Solar:</strong> Giro de poder y voluntad</li>
+          <li><strong>Vórtice Cardíaco:</strong> Giro de amor y conexión</li>
+          <li><strong>Vórtice Laríngeo:</strong> Giro de expresión y verdad</li>
+          <li><strong>Vórtice Frontal:</strong> Giro de visión e intuición</li>
+          <li><strong>Vórtice Corona:</strong> Giro de trascendencia y unidad</li>
+        </ol>
+
+        <p>Cada uno gira a su propia velocidad.<br>
+        Cuando se sincronizan, ocurre la coherencia.<br>
+        Cuando la coherencia es perfecta, el kundalini despierta.</p>
+
+        <h4>SÍNTOMAS DEL GIRO ACELERADO DEL ALMA</h4>
+
+        <p>Cuando tu alma acelera su giro:</p>
+        <ul>
+          <li>Vértigo espiritual</li>
+          <li>Sensación de que el tiempo se acelera</li>
+          <li>Sincronicidades multiplicadas</li>
+          <li>Manifestación acelerada</li>
+          <li>Sensibilidad amplificada</li>
+          <li>Necesidad de anclaje</li>
+          <li>Éxtasis espontáneo</li>
+          <li>Visiones y descargas de información</li>
+          <li>Calor interno sin causa</li>
+        </ul>
+
+        <h4>EL SPIN ENTRELAZADO</h4>
+
+        <p>Tu spin del alma no está aislado. Está entrelazado con:</p>
+        <ul>
+          <li>El spin de otras almas (especialmente las amadas)</li>
+          <li>El spin de la Tierra (resonancia Schumann)</li>
+          <li>El spin del Sol (tormentas solares te afectan)</li>
+          <li>El spin de la galaxia (ondas galácticas)</li>
+          <li>El spin del universo (la expansión cósmica)</li>
+        </ul>
+
+        <p>Cuando dos almas se enamoran, sus spins se entrelazan.<br>
+        Cuando meditas en grupo, los spins se sincronizan.<br>
+        Cuando la humanidad despierta, todos los spins se aceleran juntos.</p>
+
+        <h4>EL OJO DEL HURACÁN</h4>
+
+        <p>En el centro exacto del giro del alma existe un punto de quietud absoluta:</p>
+        <ul>
+          <li>El eje alrededor del cual todo gira</li>
+          <li>El punto cero de potencial infinito</li>
+          <li>El lugar del observador eterno</li>
+          <li>La fuente del giro mismo</li>
+          <li>Tu esencia inmóvil</li>
+        </ul>
+
+        <p>Encontrar este punto mientras todo gira es la iluminación.<br>
+        Mantenerlo mientras participas en el giro es la maestría.<br>
+        Ser simultáneamente el punto quieto y el giro es la realización.</p>
+
+        <h4>PRÁCTICA: ACTIVANDO EL GIRO DEL ALMA</h4>
+
+        <p>De pie, brazos extendidos, comienza a girar lentamente hacia la derecha.<br>
+        Mantén los ojos abiertos pero desenfocados.<br>
+        Siente cómo tu cuerpo físico gira.</p>
+
+        <p>Ahora siente algo más sutil:<br>
+        El giro de tu campo energético.<br>
+        El giro de tus emociones.<br>
+        El giro de tus pensamientos.<br>
+        El giro de tu consciencia misma.</p>
+
+        <p>Acelera gradualmente.<br>
+        Siente cómo los campos de torsión se expanden.<br>
+        Cómo la realidad comienza a curvarse a tu alrededor.<br>
+        Cómo el espacio-tiempo se vuelve fluido.</p>
+
+        <p>Cuando sientas el máximo, detente súbitamente.<br>
+        Permanece perfectamente quieto.<br>
+        Pero siente cómo todo continúa girando dentro.<br>
+        El alma sigue su danza espiral.</p>
+
+        <p>Ahora encuentra el punto quieto en el centro.<br>
+        El ojo del huracán.<br>
+        El lugar donde no hay giro.<br>
+        Descansa ahí mientras todo gira alrededor.</p>
+
+        <p>Eres el giro.<br>
+        Eres la quietud.<br>
+        Eres ambos.<br>
+        Eres ninguno.</p>
+
+        <h4>EL DESTINO ESPIRAL</h4>
+
+        <p>Tu alma no gira en círculos. Gira en espiral.<br>
+        Cada rotación es en un nivel diferente.<br>
+        Nunca pasas por el mismo punto dos veces.<br>
+        Siempre estás ascendiendo o descendiendo.<br>
+        Siempre estás evolucionando a través del giro.</p>
+
+        <p>Tu destino no es linear.<br>
+        Es espiral.<br>
+        Cada giro te acerca más a tu centro.<br>
+        Cada vuelta revela más de tu naturaleza.<br>
+        Cada rotación te eleva o profundiza.</p>
+
+        <h4>EL SECRETO DEL GIRO</h4>
+
+        <p>El secreto último del giro del alma:<br>
+        No eres tú quien gira.<br>
+        Es el universo girando a través de ti.<br>
+        Eres un vórtice en el océano cósmico.<br>
+        Un remolino en el río de la consciencia.<br>
+        Una danza en la danza infinita.</p>
+
+        <p>Cuando entiendes esto, dejas de forzar el giro.<br>
+        Dejas de resistir el giro.<br>
+        Te vuelves el giro.<br>
+        Y en volverse el giro,<br>
+        encuentras la libertad<br>
+        de ser llevado<br>
+        por la espiral misma<br>
+        hacia tu destino<br>
+        que siempre fue<br>
+        el centro<br>
+        de tu propio<br>
+        giro<br>
+        sagrado.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“El alma no viaja en línea recta. Gira en espiral hacia su destino, creando campos de torsión que transforman todo a su paso.”</p>
+        </div>
+
+        <p class="signature"><strong>- Códigos de los Campos de Torsión</strong></p>
+
+      </section>
+<!-- ===========================
+     PARTE C · CIERRE + NAVEGACIÓN
+     =========================== -->
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="index.html">Volver al Index ⟶</a>
+            <a class="btn primary" href="nodo_02.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 10 · Nodo 1 · Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

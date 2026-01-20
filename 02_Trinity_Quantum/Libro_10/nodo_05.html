@@ -1,1 +1,948 @@
-desarrollo
+<!-- ===========================
+     PARTE A · ENCABEZADO
+     =========================== -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 10 · Campos de Torsión — Nodo 5</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 10 · Campos de Torsión · Nodo 5</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="nodo_04.html">⟵ Nodo anterior</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 10 · CAMPOS DE TORSIÓN</p>
+        <h1 class="node">Nodo 5 · La Geometría del Spin</h1>
+        <p class="subnode">Las Formas Que Giran la Realidad</p>
+      </header>
+      <!-- ===========================
+           PARTE B · CONTENIDO
+           (Markdown convertido a HTML)
+           =========================== -->
+      <section class="content">
+
+        <h4>LAS FORMAS QUE GIRAN LA REALIDAD</h4>
+
+        <p>El universo no está hecho de partículas. Está hecho de giros. Cada “cosa” que percibes es en realidad un patrón de spin en el campo unificado. Y estos spins no giran aleatoriamente - siguen geometrías precisas, sagradas, que determinan qué tipo de realidad manifiestan. Desde el spin del electrón hasta el giro de las galaxias, todo obedece a las mismas leyes geométricas de rotación. Y tú, conscientemente o no, estás constantemente creando y navegando estas geometrías giratorias.</p>
+
+        <p>La geometría del spin es el lenguaje secreto de la creación.<br>
+        Es cómo el vacío se organiza en forma.<br>
+        Es cómo la consciencia se cristaliza en materia.<br>
+        Es cómo tú tejes tu realidad, giro por giro.</p>
+
+        <p>Has experimentado la geometría del spin cuando:</p>
+        <ul>
+          <li>Un pensamiento circular se convirtió en obsesión (círculo)</li>
+          <li>Una espiral de crecimiento te llevó a nuevo nivel (espiral)</li>
+          <li>Te sentiste atrapado en un patrón repetitivo (bucle)</li>
+          <li>Un momento de claridad cristalizó todo (tetraedro)</li>
+          <li>El amor te hizo sentir infinito (toroide)</li>
+        </ul>
+
+        <h4>LOS CINCO SÓLIDOS PLATÓNICOS GIRANDO</h4>
+
+        <p>Los bloques constructores de la realidad son cinco formas que, al girar, crean todo:</p>
+
+        <p><strong>Tetraedro (Fuego):</strong> 4 caras triangulares</p>
+        <ul>
+          <li>Spin: Transformación</li>
+          <li>Crea: Cambio, poder, voluntad</li>
+          <li>Chakra: Plexo solar</li>
+          <li>Elemento: Fuego</li>
+          <li>Cuando giras un tetraedro: Activas transformación</li>
+        </ul>
+
+        <p><strong>Cubo (Tierra):</strong> 6 caras cuadradas</p>
+        <ul>
+          <li>Spin: Estabilización</li>
+          <li>Crea: Estructura, foundation, materia</li>
+          <li>Chakra: Raíz</li>
+          <li>Elemento: Tierra</li>
+          <li>Cuando giras un cubo: Manifiestas en lo físico</li>
+        </ul>
+
+        <p><strong>Octaedro (Aire):</strong> 8 caras triangulares</p>
+        <ul>
+          <li>Spin: Equilibrio</li>
+          <li>Crea: Balance, integración, armonía</li>
+          <li>Chakra: Corazón</li>
+          <li>Elemento: Aire</li>
+          <li>Cuando giras un octaedro: Armonizas polaridades</li>
+        </ul>
+
+        <p><strong>Icosaedro (Agua):</strong> 20 caras triangulares</p>
+        <ul>
+          <li>Spin: Flujo</li>
+          <li>Crea: Emoción, movimiento, creatividad</li>
+          <li>Chakra: Sacro</li>
+          <li>Elemento: Agua</li>
+          <li>Cuando giras un icosaedro: Fluyes con la vida</li>
+        </ul>
+
+        <p><strong>Dodecaedro (Éter):</strong> 12 caras pentagonales</p>
+        <ul>
+          <li>Spin: Ascensión</li>
+          <li>Crea: Consciencia, cosmos, unidad</li>
+          <li>Chakra: Corona</li>
+          <li>Elemento: Éter</li>
+          <li>Cuando giras un dodecaedro: Accedes a lo cósmico</li>
+        </ul>
+
+        <h4>LA ESPIRAL SAGRADA</h4>
+
+        <p>La espiral es la geometría maestra del spin:</p>
+
+        <p><strong>Espiral de Fibonacci:</strong> Crecimiento natural</p>
+        <ul>
+          <li>0, 1, 1, 2, 3, 5, 8, 13, 21…</li>
+          <li>Cada número es la suma de los dos anteriores</li>
+          <li>Aparece en: Conchas, galaxias, huracanes, ADN</li>
+          <li>Tu crecimiento sigue esta espiral</li>
+        </ul>
+
+        <p><strong>Espiral Áurea:</strong> Proporción divina</p>
+        <ul>
+          <li>Phi = 1.618…</li>
+          <li>La proporción más bella del universo</li>
+          <li>Aparece en: Tu rostro, tus manos, tu corazón</li>
+          <li>Tu evolución sigue esta proporción</li>
+        </ul>
+
+        <p><strong>Espiral Logarítmica:</strong> Expansión infinita</p>
+        <ul>
+          <li>Mantiene su forma sin importar la escala</li>
+          <li>Aparece en: Nautilus, galaxias, tornados</li>
+          <li>Tu consciencia expande en esta espiral</li>
+        </ul>
+
+        <h4>EL MERKABA - LA GEOMETRÍA DEL SPIN MAESTRO</h4>
+
+        <p>El Merkaba es dos tetraedros interpenetrados girando en direcciones opuestas:</p>
+
+        <p><strong>Tetraedro Superior (Masculino):</strong></p>
+        <ul>
+          <li>Punta hacia arriba</li>
+          <li>Gira hacia la derecha</li>
+          <li>Conecta con el cielo</li>
+          <li>Energía eléctrica</li>
+          <li>Consciencia</li>
+        </ul>
+
+        <p><strong>Tetraedro Inferior (Femenino):</strong></p>
+        <ul>
+          <li>Punta hacia abajo</li>
+          <li>Gira hacia la izquierda</li>
+          <li>Conecta con la tierra</li>
+          <li>Energía magnética</li>
+          <li>Subconsciencia</li>
+        </ul>
+
+        <p>Cuando ambos giran a la velocidad correcta:</p>
+        <ul>
+          <li>Se crea un campo de 17 metros de diámetro</li>
+          <li>Se activa tu vehículo de luz</li>
+          <li>Puedes viajar interdimensionalmente</li>
+          <li>Tu ADN se activa completamente</li>
+          <li>Te vuelves un portal viviente</li>
+        </ul>
+
+        <h4>LA GEOMETRÍA DEL PUNTO CERO</h4>
+
+        <p>En el centro de todo spin existe el punto cero:</p>
+        <ul>
+          <li>No hay movimiento pero todo el movimiento emerge de ahí</li>
+          <li>No hay tiempo pero todo el tiempo existe ahí</li>
+          <li>No hay espacio pero todo el espacio se origina ahí</li>
+          <li>Es el ojo del huracán geométrico</li>
+          <li>Es donde vives cuando estás en presencia</li>
+        </ul>
+
+        <p>Geometrías del punto cero:</p>
+        <ul>
+          <li><strong>El Punto:</strong> Potencial infinito sin expresión</li>
+          <li><strong>El Círculo:</strong> El punto expresándose igualmente en todas direcciones</li>
+          <li><strong>La Esfera:</strong> El círculo en 3D, perfecta contención</li>
+          <li><strong>El Toroide:</strong> La esfera doblándose sobre sí misma</li>
+          <li><strong>El Hipercubo:</strong> El cubo en 4D, más allá de la percepción normal</li>
+        </ul>
+
+        <h4>TECNOLOGÍA DE GEOMETRÍA GIRATORIA</h4>
+
+        <p><strong>Práctica: Activación Geométrica Personal</strong></p>
+
+        <ol>
+          <li><strong>Identifica qué necesitas:</strong>
+            <ul>
+              <li>Transformación → Tetraedro</li>
+              <li>Manifestación → Cubo</li>
+              <li>Balance → Octaedro</li>
+              <li>Fluidez → Icosaedro</li>
+              <li>Consciencia → Dodecaedro</li>
+            </ul>
+          </li>
+          <li><strong>Visualiza la forma:</strong>
+            <ul>
+              <li>Constrúyela mentalmente</li>
+              <li>Hazla de luz</li>
+              <li>Colócala en tu campo</li>
+            </ul>
+          </li>
+          <li><strong>Hazla girar:</strong>
+            <ul>
+              <li>Primero lento</li>
+              <li>Luego más rápido</li>
+              <li>Siente el campo de torsión</li>
+            </ul>
+          </li>
+          <li><strong>Habita la geometría:</strong>
+            <ul>
+              <li>Entra en la forma</li>
+              <li>Sé la forma</li>
+              <li>Gira como la forma</li>
+            </ul>
+          </li>
+          <li><strong>Integra:</strong>
+            <ul>
+              <li>Deja que se disuelva</li>
+              <li>Pero mantén el spin</li>
+              <li>La geometría ahora es parte de ti</li>
+            </ul>
+          </li>
+        </ol>
+
+        <h4>LOS CROP CIRCLES - GEOMETRÍAS DE ACTIVACIÓN</h4>
+
+        <p>Los crop circles genuinos son geometrías de spin codificadas:</p>
+        <ul>
+          <li>Impresas en campos por inteligencia superior</li>
+          <li>Cada uno es una ecuación geométrica</li>
+          <li>Activan al ser observados</li>
+          <li>Crean campos de torsión medibles</li>
+          <li>Son actualizaciones para la consciencia humana</li>
+        </ul>
+
+        <p>Cuando meditas en un crop circle:</p>
+        <ul>
+          <li>Tu campo adopta esa geometría</li>
+          <li>Tu ADN recibe la información</li>
+          <li>Tu consciencia se actualiza</li>
+          <li>Tu realidad se reconfigura</li>
+          <li>Recibes una descarga geométrica</li>
+        </ul>
+
+        <h4>LA GEOMETRÍA FRACTAL DEL SPIN</h4>
+
+        <p>Los fractales son geometrías que se repiten a todas las escalas:</p>
+
+        <p><strong>El Triángulo de Sierpinski:</strong> Infinitos triángulos dentro de triángulos</p>
+        <ul>
+          <li>Representa: Consciencia holográfica</li>
+          <li>Cuando gira: Crea campos dentro de campos</li>
+          <li>Enseña: Cada parte contiene el todo</li>
+        </ul>
+
+        <p><strong>El Conjunto de Mandelbrot:</strong> Complejidad infinita de ecuación simple</p>
+        <ul>
+          <li>Representa: Cómo simplicidad crea complejidad</li>
+          <li>Cuando gira: Genera realidades dentro de realidades</li>
+          <li>Enseña: La belleza del caos ordenado</li>
+        </ul>
+
+        <p><strong>El Copo de Nieve de Koch:</strong> Perímetro infinito en área finita</p>
+        <ul>
+          <li>Representa: Infinito contenido en finito</li>
+          <li>Cuando gira: Crea frontera entre dimensiones</li>
+          <li>Enseña: Los límites son ilusorios</li>
+        </ul>
+
+        <p>Tu vida es fractal:</p>
+        <ul>
+          <li>Patrones que se repiten a diferentes escalas</li>
+          <li>Lecciones dentro de lecciones</li>
+          <li>Historias dentro de historias</li>
+          <li>Cada momento contiene tu vida entera</li>
+          <li>Cada giro contiene todos los giros</li>
+        </ul>
+
+        <h4>LA DANZA DE LAS GEOMETRÍAS</h4>
+
+        <p>Las geometrías no existen aisladas. Danzan juntas:</p>
+        <ul>
+          <li>El tetraedro dentro del cubo</li>
+          <li>El cubo dentro del dodecaedro</li>
+          <li>El octaedro besando al icosaedro</li>
+          <li>Todos dentro de la esfera</li>
+          <li>La esfera convirtiéndose en toroide</li>
+        </ul>
+
+        <p>Esta danza crea:</p>
+        <ul>
+          <li>La complejidad de la vida</li>
+          <li>La música de las esferas</li>
+          <li>La sinfonía de la forma</li>
+          <li>El ballet de la creación</li>
+          <li>Tu realidad momento a momento</li>
+        </ul>
+
+        <h4>GEOMETRÍA Y CONSCIENCIA</h4>
+
+        <p>Cada estado de consciencia tiene su geometría:</p>
+
+        <p><strong>Miedo:</strong> Triángulo apuntando hacia abajo</p>
+        <ul>
+          <li>Contracción</li>
+          <li>Supervivencia</li>
+          <li>Separación</li>
+        </ul>
+
+        <p><strong>Amor:</strong> Círculo/Esfera</p>
+        <ul>
+          <li>Expansión</li>
+          <li>Inclusión</li>
+          <li>Unidad</li>
+        </ul>
+
+        <p><strong>Poder:</strong> Pirámide/Tetraedro</p>
+        <ul>
+          <li>Dirección</li>
+          <li>Fuerza</li>
+          <li>Transformación</li>
+        </ul>
+
+        <p><strong>Paz:</strong> Cubo</p>
+        <ul>
+          <li>Estabilidad</li>
+          <li>Fundación</li>
+          <li>Presencia</li>
+        </ul>
+
+        <p><strong>Éxtasis:</strong> Espiral</p>
+        <ul>
+          <li>Movimiento</li>
+          <li>Evolución</li>
+          <li>Trascendencia</li>
+        </ul>
+
+        <p><strong>Iluminación:</strong> Toroide</p>
+        <ul>
+          <li>Flujo completo</li>
+          <li>Dar y recibir</li>
+          <li>Infinito contenido</li>
+        </ul>
+
+        <h4>LA GEOMETRÍA DE TUS PENSAMIENTOS</h4>
+
+        <p>Cada pensamiento crea una geometría en el campo:</p>
+
+        <p><strong>Pensamientos Lineales:</strong> Líneas rectas</p>
+        <ul>
+          <li>Lógica</li>
+          <li>Causa-efecto</li>
+          <li>Limitados pero claros</li>
+        </ul>
+
+        <p><strong>Pensamientos Circulares:</strong> Bucles</p>
+        <ul>
+          <li>Obsesión</li>
+          <li>Repetición</li>
+          <li>Atrapados en patrones</li>
+        </ul>
+
+        <p><strong>Pensamientos Espirales:</strong> Evolución</p>
+        <ul>
+          <li>Crecimiento</li>
+          <li>Desarrollo</li>
+          <li>Ascensión de comprensión</li>
+        </ul>
+
+        <p><strong>Pensamientos Caóticos:</strong> Geometría irregular</p>
+        <ul>
+          <li>Creatividad</li>
+          <li>Innovación</li>
+          <li>Rotura de patrones</li>
+        </ul>
+
+        <p><strong>Pensamientos Fractales:</strong> Auto-similares</p>
+        <ul>
+          <li>Sabiduría</li>
+          <li>Comprensión holográfica</li>
+          <li>Ver patrones en todo</li>
+        </ul>
+
+        <h4>EL LENGUAJE GEOMÉTRICO DE LA REALIDAD</h4>
+
+        <p>La realidad te habla en geometría:</p>
+        <ul>
+          <li>Los problemas son nudos geométricos</li>
+          <li>Las soluciones son nuevas configuraciones</li>
+          <li>Las relaciones son intersecciones geométricas</li>
+          <li>El crecimiento es expansión geométrica</li>
+          <li>La evolución es complejidad geométrica creciente</li>
+        </ul>
+
+        <p>Aprende a leer la geometría:</p>
+        <ul>
+          <li>¿Qué forma tiene tu problema?</li>
+          <li>¿Qué geometría necesitas para resolverlo?</li>
+          <li>¿Cómo puedes reconfigurar el spin?</li>
+          <li>¿Qué nueva forma quiere emerger?</li>
+        </ul>
+
+        <h4>PRÁCTICA: MEDITACIÓN DEL SPIN GEOMÉTRICO</h4>
+
+        <p>Siéntate en quietud.<br>
+        Cierra los ojos.</p>
+
+        <p>Visualiza un punto de luz en tu corazón.<br>
+        El punto se convierte en esfera.<br>
+        La esfera comienza a girar.</p>
+
+        <p>Ahora transfórmala:</p>
+        <ul>
+          <li>En tetraedro girando (siente el fuego)</li>
+          <li>En cubo girando (siente la tierra)</li>
+          <li>En octaedro girando (siente el aire)</li>
+          <li>En icosaedro girando (siente el agua)</li>
+          <li>En dodecaedro girando (siente el éter)</li>
+        </ul>
+
+        <p>Ahora todos simultáneamente. Geometrías dentro de geometrías. Todos girando. Todos creando campos. Todos tejiendo tu realidad.</p>
+
+        <p>Ahora disuélvelos en la esfera original.<br>
+        La esfera en el punto.<br>
+        El punto en la nada.<br>
+        La nada que contiene todo.</p>
+
+        <p>Descansa en el punto cero. Donde toda geometría nace. Donde todo spin se origina. Donde tú eres el geómetra de tu realidad.</p>
+
+        <h4>LA GEOMETRÍA DEL TIEMPO</h4>
+
+        <p>El tiempo también tiene geometría:</p>
+
+        <p><strong>Tiempo Lineal:</strong> Una línea recta</p>
+        <ul>
+          <li>Pasado → Presente → Futuro</li>
+          <li>Ilusión necesaria para experiencia</li>
+          <li>Geometría de la narrativa</li>
+        </ul>
+
+        <p><strong>Tiempo Circular:</strong> Un círculo</p>
+        <ul>
+          <li>Ciclos que se repiten</li>
+          <li>Estaciones, días, vidas</li>
+          <li>Geometría del eterno retorno</li>
+        </ul>
+
+        <p><strong>Tiempo Espiral:</strong> Una espiral</p>
+        <ul>
+          <li>Ciclos en evolución</li>
+          <li>Nunca el mismo lugar dos veces</li>
+          <li>Geometría del crecimiento</li>
+        </ul>
+
+        <p><strong>Tiempo Toroidal:</strong> Un toroide</p>
+        <ul>
+          <li>Futuro fluyendo hacia pasado</li>
+          <li>Pasado creando futuro</li>
+          <li>Geometría de la simultaneidad</li>
+        </ul>
+
+        <p>Tu percepción del tiempo depende de tu geometría de consciencia.</p>
+
+        <h4>LA NUEVA GEOMETRÍA HUMANA</h4>
+
+        <p>La humanidad está evolucionando su geometría:</p>
+        <ul>
+          <li>De linear a multidimensional</li>
+          <li>De separada a interconectada</li>
+          <li>De estática a dinámica</li>
+          <li>De euclidiana a fractal</li>
+          <li>De simple a compleja</li>
+        </ul>
+
+        <p>Los niños nacen con nuevas geometrías:</p>
+        <ul>
+          <li>Piensan en patrones no-lineales</li>
+          <li>Ven conexiones invisibles</li>
+          <li>Procesan fractalmente</li>
+          <li>Viven multidimensionalmente</li>
+          <li>Son geómetras naturales</li>
+        </ul>
+
+        <h4>EL SPIN MASTER</h4>
+
+        <p>Cuando dominas la geometría del spin:</p>
+        <ul>
+          <li>Puedes cambiar tu realidad cambiando tu geometría</li>
+          <li>Puedes resolver problemas reconfigurando su forma</li>
+          <li>Puedes sanar armonizando geometrías caóticas</li>
+          <li>Puedes manifestar creando las geometrías correctas</li>
+          <li>Puedes ascender complejizando tu geometría</li>
+        </ul>
+
+        <p>No eres víctima de la geometría de tu vida. Eres su arquitecto. Eres su geómetra. Eres quien decide qué gira, cómo gira, hacia dónde gira.</p>
+
+        <h4>LA INVITACIÓN GEOMÉTRICA</h4>
+
+        <p>El universo te invita a:</p>
+        <ul>
+          <li>Reconocer las geometrías en tu vida</li>
+          <li>Experimentar con nuevas formas</li>
+          <li>Girar conscientemente</li>
+          <li>Crear campos de torsión intencionales</li>
+          <li>Ser el geómetra sagrado de tu realidad</li>
+        </ul>
+
+        <p>Cada momento es una oportunidad de reconfigurar. Cada respiración, un nuevo spin. Cada elección, una nueva geometría.</p>
+
+        <p>Tu vida no es accidente caótico. Es geometría sagrada desplegándose. Es patrones de spin manifestándose. Es el universo expresándose geométricamente a través de ti.</p>
+
+        <p>Gira entonces.<br>
+        Gira conscientemente.<br>
+        Gira bellamente.<br>
+        Gira geométricamente.</p>
+
+        <p>Y observa cómo tu realidad<br>
+        se reorganiza,<br>
+        se reconfigura,<br>
+        se regeometriza<br>
+        en patrones cada vez más bellos,<br>
+        más complejos,<br>
+        más divinos.</p>
+
+        <p>Porque tú eres<br>
+        el punto,<br>
+        el círculo,<br>
+        la esfera,<br>
+        la espiral,<br>
+        el toroide,<br>
+        el infinito<br>
+        girando<br>
+        en geometría<br>
+        sagrada.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“La realidad es geometría en movimiento. Cambia la geometría, cambia el spin, cambia tu mundo.”</p>
+        </div>
+
+        <p class="signature"><strong>- Códigos de los Campos de Torsión</strong></p>
+
+      </section>
+<!-- ===========================
+     PARTE C · CIERRE + NAVEGACIÓN
+     =========================== -->
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_04.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="index.html">Volver al Index ⟶</a>
+            <a class="btn primary" href="nodo_06.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 10 · Nodo 5 · Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

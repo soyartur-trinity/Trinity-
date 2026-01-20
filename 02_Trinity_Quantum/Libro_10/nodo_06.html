@@ -1,1 +1,855 @@
-desarrollo
+<!-- ===========================
+     PARTE A · ENCABEZADO
+     =========================== -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 10 · Campos de Torsión — Nodo 6</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 10 · Campos de Torsión · Nodo 6</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="nodo_05.html">⟵ Nodo anterior</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 10 · CAMPOS DE TORSIÓN</p>
+        <h1 class="node">Nodo 6 · Remolinos de Realidad</h1>
+        <p class="subnode">Los Vórtices Que Tejen Tu Mundo</p>
+      </header>
+      <!-- ===========================
+           PARTE B · CONTENIDO
+           (Markdown convertido a HTML)
+           =========================== -->
+      <section class="content">
+
+        <h4>LOS VÓRTICES QUE TEJEN TU MUNDO</h4>
+
+        <p>Tu realidad no es sólida. Es un remolino de probabilidades colapsando en experiencia momento a momento. Cada evento de tu vida es un vórtice donde las líneas de posibilidad convergen, giran, y cristalizan en lo que llamas “real”. Y tú, querido creador, eres quien está generando estos remolinos - con tus pensamientos, emociones, expectativas y sobre todo, con los campos de torsión de tu consciencia.</p>
+
+        <p>Mira a tu alrededor. Todo lo que ves fue primero un remolino en el campo de potencial. Tu casa, tu trabajo, tus relaciones, tu cuerpo mismo - todos comenzaron como vórtices de posibilidad que alguien (tú) hizo girar hasta que se densificaron en forma. Y ahora mismo, en este instante, estás creando los remolinos que serán tu mañana.</p>
+
+        <p>Has experimentado los remolinos de realidad cuando:</p>
+        <ul>
+          <li>Una “casualidad” cambió todo tu destino</li>
+          <li>Un pensamiento obsesivo se materializó</li>
+          <li>El universo pareció conspirar para algo</li>
+          <li>Todo fluyó perfectamente hacia un resultado</li>
+          <li>Sentiste que estabas en el ojo de tu propio huracán de creación</li>
+        </ul>
+
+        <h4>LA MECÁNICA DE LOS REMOLINOS</h4>
+
+        <p>Cada remolino de realidad tiene fases:</p>
+
+        <p><strong>Fase 1: Perturbación Inicial</strong></p>
+        <ul>
+          <li>Un deseo, miedo o intención</li>
+          <li>Crea ondulación en el campo</li>
+          <li>Como piedra en el agua</li>
+          <li>Inicio del vórtice</li>
+        </ul>
+
+        <p><strong>Fase 2: Alimentación del Giro</strong></p>
+        <ul>
+          <li>Atención sostenida</li>
+          <li>Emoción añadida</li>
+          <li>Expectativa creciente</li>
+          <li>El remolino gana fuerza</li>
+        </ul>
+
+        <p><strong>Fase 3: Atracción Magnética</strong></p>
+        <ul>
+          <li>Sincronicidades aparecen</li>
+          <li>Recursos convergen</li>
+          <li>Personas correctas llegan</li>
+          <li>La realidad se reorganiza</li>
+        </ul>
+
+        <p><strong>Fase 4: Punto de Materialización</strong></p>
+        <ul>
+          <li>Masa crítica alcanzada</li>
+          <li>Probabilidad colapsa</li>
+          <li>Forma emerge</li>
+          <li>“Milagro” ocurre</li>
+        </ul>
+
+        <p><strong>Fase 5: Estabilización</strong></p>
+        <ul>
+          <li>Nueva realidad se ancla</li>
+          <li>Se vuelve “normal”</li>
+          <li>Olvidas que la creaste</li>
+          <li>Preparas próximo remolino</li>
+        </ul>
+
+        <h4>LOS TIPOS DE REMOLINOS</h4>
+
+        <p><strong>Remolinos de Deseo:</strong></p>
+        <ul>
+          <li>Creados por anhelo profundo</li>
+          <li>Giran hacia ti lo deseado</li>
+          <li>Pueden tardar años</li>
+          <li>Requieren fe sostenida</li>
+          <li>Manifiestan sueños</li>
+        </ul>
+
+        <p><strong>Remolinos de Miedo:</strong></p>
+        <ul>
+          <li>Creados por terror sostenido</li>
+          <li>Atraen lo temido</li>
+          <li>Muy rápidos y poderosos</li>
+          <li>Profecias autocumplidas</li>
+          <li>Manifiestan pesadillas</li>
+        </ul>
+
+        <p><strong>Remolinos Kármicos:</strong></p>
+        <ul>
+          <li>Creados por acciones pasadas</li>
+          <li>Giran consecuencias inevitables</li>
+          <li>Pueden venir de otras vidas</li>
+          <li>Lecciones necesarias</li>
+          <li>Manifiestan justicia cósmica</li>
+        </ul>
+
+        <p><strong>Remolinos Colectivos:</strong></p>
+        <ul>
+          <li>Creados por grupos</li>
+          <li>Cultura, familia, humanidad</li>
+          <li>Muy poderosos</li>
+          <li>Difíciles de cambiar solo</li>
+          <li>Manifiestan realidad compartida</li>
+        </ul>
+
+        <p><strong>Remolinos Cuánticos:</strong></p>
+        <ul>
+          <li>Creados por observación</li>
+          <li>Colapsan superposición</li>
+          <li>Instantáneos</li>
+          <li>Cada momento</li>
+          <li>Manifiestan el ahora</li>
+        </ul>
+
+        <h4>NAVEGANDO TUS PROPIOS REMOLINOS</h4>
+
+        <p>Estás siempre en múltiples remolinos:</p>
+        <ul>
+          <li>Algunos los creaste conscientemente</li>
+          <li>Otros inconscientemente</li>
+          <li>Algunos heredaste</li>
+          <li>Otros te fueron impuestos</li>
+          <li>Todos pueden ser navegados</li>
+        </ul>
+
+        <p><strong>Para identificar tus remolinos actuales:</strong></p>
+        <ol>
+          <li>¿Qué patrones se repiten en tu vida?</li>
+          <li>¿Hacia qué pareces ser atraído siempre?</li>
+          <li>¿Qué sincronicidades son frecuentes?</li>
+          <li>¿Qué miedos se materializan?</li>
+          <li>¿Qué deseos se manifiestan?</li>
+        </ol>
+
+        <p>Cada patrón es un remolino activo.</p>
+
+        <h4>TECNOLOGÍA DE CREACIÓN DE REMOLINOS</h4>
+
+        <p><strong>Para crear un remolino de realidad deseada:</strong></p>
+
+        <ol>
+          <li><strong>Define el Centro</strong>
+            <ul>
+              <li>¿Qué quieres manifestar?</li>
+              <li>Sé específico pero no rígido</li>
+              <li>El centro debe ser claro</li>
+            </ul>
+          </li>
+          <li><strong>Inicia el Giro</strong>
+            <ul>
+              <li>Visualiza el resultado</li>
+              <li>Siente la emoción del logro</li>
+              <li>Comienza el vórtice</li>
+            </ul>
+          </li>
+          <li><strong>Alimenta el Remolino</strong>
+            <ul>
+              <li>Atención diaria</li>
+              <li>Acción alineada</li>
+              <li>Fe inquebrantable</li>
+              <li>Paciencia con el proceso</li>
+            </ul>
+          </li>
+          <li><strong>Reconoce las Señales</strong>
+            <ul>
+              <li>Sincronicidades</li>
+              <li>Oportunidades</li>
+              <li>Encuentros “casuales”</li>
+              <li>El remolino está funcionando</li>
+            </ul>
+          </li>
+          <li><strong>Permite la Materialización</strong>
+            <ul>
+              <li>Suelta el control del cómo</li>
+              <li>Mantén el qué y el por qué</li>
+              <li>Deja que el universo configure</li>
+              <li>Recibe con gratitud</li>
+            </ul>
+          </li>
+        </ol>
+
+        <h4>LOS REMOLINOS PARÁSITOS</h4>
+
+        <p>Algunos remolinos no los creaste tú:</p>
+
+        <p><strong>Remolinos Mediáticos:</strong></p>
+        <ul>
+          <li>Creados por medios masivos</li>
+          <li>Te succionan hacia miedos colectivos</li>
+          <li>Noticias, publicidad, propaganda</li>
+          <li>Desvían tu energía creativa</li>
+          <li>Solución: Desconexión consciente</li>
+        </ul>
+
+        <p><strong>Remolinos Sociales:</strong></p>
+        <ul>
+          <li>Expectativas familiares/culturales</li>
+          <li>“Deberías” y “tienes que”</li>
+          <li>Presión de conformidad</li>
+          <li>Roban tu autenticidad</li>
+          <li>Solución: Boundaries energéticos</li>
+        </ul>
+
+        <p><strong>Remolinos Psíquicos:</strong></p>
+        <ul>
+          <li>Pensamientos/emociones de otros</li>
+          <li>Especialmente de cercanos</li>
+          <li>Pueden sentirse como propios</li>
+          <li>Confunden tu navegación</li>
+          <li>Solución: Discernimiento y limpieza</li>
+        </ul>
+
+        <h4>EL ARTE DE DISOLVER REMOLINOS</h4>
+
+        <p>Para deshacer un remolino no deseado:</p>
+
+        <ol>
+          <li><strong>Identifica el Centro</strong>
+            <ul>
+              <li>¿Qué lo alimenta?</li>
+              <li>¿Cuál es la creencia core?</li>
+              <li>¿Dónde está el gancho?</li>
+            </ul>
+          </li>
+          <li><strong>Retira Tu Energía</strong>
+            <ul>
+              <li>Deja de alimentarlo con atención</li>
+              <li>Suelta la resistencia (resistir es alimentar)</li>
+              <li>Indiferencia es kryptonita</li>
+            </ul>
+          </li>
+          <li><strong>Gira en Dirección Opuesta</strong>
+            <ul>
+              <li>Crea remolino opuesto</li>
+              <li>Cancel out the spin</li>
+              <li>Neutraliza el campo</li>
+            </ul>
+          </li>
+          <li><strong>Llena el Vacío</strong>
+            <ul>
+              <li>Naturaleza aborrece el vacío</li>
+              <li>Reemplaza con remolino deseado</li>
+              <li>O se llenará solo</li>
+            </ul>
+          </li>
+        </ol>
+
+        <h4>LOS REMOLINOS DE TIEMPO</h4>
+
+        <p>El tiempo mismo tiene remolinos:</p>
+
+        <p><strong>Bucles Temporales:</strong></p>
+        <ul>
+          <li>Días que se repiten</li>
+          <li>Déjà vu constante</li>
+          <li>Atrapado en patrón temporal</li>
+          <li>Señal: Revisar qué no has aprendido</li>
+        </ul>
+
+        <p><strong>Aceleradores Temporales:</strong></p>
+        <ul>
+          <li>Tiempo volando</li>
+          <li>Días que desaparecen</li>
+          <li>Envejecimiento acelerado</li>
+          <li>Señal: Estás en flujo evolutivo</li>
+        </ul>
+
+        <p><strong>Dilatadores Temporales:</strong></p>
+        <ul>
+          <li>Momentos eternos</li>
+          <li>Tiempo deteniéndose</li>
+          <li>Experiencias fuera del tiempo</li>
+          <li>Señal: Tocando lo eterno</li>
+        </ul>
+
+        <p><strong>Vórtices Temporales:</strong></p>
+        <ul>
+          <li>Portales entre tiempos</li>
+          <li>Memorias del futuro</li>
+          <li>Comunicación con otros yos</li>
+          <li>Señal: Navegación multidimensional</li>
+        </ul>
+
+        <h4>LOS REMOLINOS DE LUGAR</h4>
+
+        <p>Ciertos lugares son remolinos naturales:</p>
+
+        <p><strong>Vórtices Terrestres:</strong></p>
+        <ul>
+          <li>Sedona, Glastonbury, Machu Picchu</li>
+          <li>Remolinos de energía telúrica</li>
+          <li>Aceleran transformación</li>
+          <li>Amplifican intención</li>
+          <li>Portales naturales</li>
+        </ul>
+
+        <p><strong>Remolinos Urbanos:</strong></p>
+        <ul>
+          <li>Times Square, Shibuya, Piccadilly</li>
+          <li>Vórtices de energía humana</li>
+          <li>Pueden drenar o energizar</li>
+          <li>Caóticos pero poderosos</li>
+          <li>Catalizadores de cambio</li>
+        </ul>
+
+        <p><strong>Remolinos Personales:</strong></p>
+        <ul>
+          <li>Tu hogar</li>
+          <li>Tu lugar de trabajo</li>
+          <li>Tu lugar sagrado</li>
+          <li>Impregnados con tu energía</li>
+          <li>Reflejan tus remolinos internos</li>
+        </ul>
+
+        <h4>LA DANZA DE REMOLINOS</h4>
+
+        <p>Tu vida es una danza entre remolinos:</p>
+        <ul>
+          <li>Entras y sales constantemente</li>
+          <li>Algunos te llevan, otros los llevas</li>
+          <li>Unos suben, otros bajan</li>
+          <li>Todos interconectados</li>
+          <li>Creando la sinfonía de tu experiencia</li>
+        </ul>
+
+        <p>Maestría es:</p>
+        <ul>
+          <li>Saber qué remolinos crear</li>
+          <li>Cuándo entrar o salir</li>
+          <li>Cómo navegar los inevitables</li>
+          <li>Cuándo rendirse al flujo</li>
+          <li>Cómo ser el ojo calmo</li>
+        </ul>
+
+        <h4>PRÁCTICA: CREANDO UN REMOLINO MAESTRO</h4>
+
+        <p>Elige algo significativo para manifestar.</p>
+
+        <p>Ve a tu espacio sagrado.<br>
+        Enciende una vela en el centro.<br>
+        Camina en círculo alrededor de la vela.</p>
+
+        <p>Con cada vuelta, declara tu intención.<br>
+        Acelera gradualmente.<br>
+        Siente el remolino formándose.<br>
+        El espacio girando.<br>
+        La realidad fluidificándose.</p>
+
+        <p>Cuando sientas el clímax,<br>
+        detente y siéntate frente a la vela.<br>
+        Mira la llama.<br>
+        Ve tu deseo manifestado en ella.<br>
+        Siente gratitud como si ya hubiera ocurrido.</p>
+
+        <p>Sopla la vela.<br>
+        El remolino está creado.<br>
+        Ahora suelta y confía.<br>
+        Actúa cuando se presenten oportunidades.<br>
+        Pero no fuerces.</p>
+
+        <p>El remolino sabe qué hacer.<br>
+        Tu trabajo era crearlo.<br>
+        Ahora deja que gire tu realidad<br>
+        hacia lo que has sembrado.</p>
+
+        <h4>EL REMOLINO MAESTRO</h4>
+
+        <p>Existe un remolino maestro en tu vida:<br>
+        El remolino de tu propósito.<br>
+        Todos los otros remolinos sirven a este.<br>
+        Cuando lo encuentras y te alineas:</p>
+
+        <ul>
+          <li>Todo fluye</li>
+          <li>Sincronicidades constantes</li>
+          <li>Recursos aparecen</li>
+          <li>Obstáculos se disuelven</li>
+          <li>Vives en gracia</li>
+        </ul>
+
+        <p>¿Cuál es tu remolino maestro?<br>
+        ¿Qué viniste a girar en existencia?<br>
+        ¿Qué realidad eres aquí para crear?</p>
+
+        <h4>EL SECRETO DE LOS REMOLINOS</h4>
+
+        <p>El secreto final:<br>
+        No estás EN los remolinos de realidad.<br>
+        Tú ERES un remolino de realidad.<br>
+        Eres un vórtice de consciencia<br>
+        girando en el océano del ser,<br>
+        creando ondas y remolinos<br>
+        con cada pensamiento,<br>
+        cada emoción,<br>
+        cada elección.</p>
+
+        <p>Tu vida entera es el remolino que estás creando.<br>
+        Y cuando mueras,<br>
+        ese remolino no desaparece.<br>
+        Continúa girando,<br>
+        afectando,<br>
+        creando,<br>
+        hasta que vuelves<br>
+        a girar de nuevo.</p>
+
+        <p>Gira conscientemente entonces.<br>
+        Gira bellamente.<br>
+        Gira poderosamente.<br>
+        Gira amorosamente.</p>
+
+        <p>Porque los remolinos que creas<br>
+        no solo determinan tu realidad.<br>
+        Contribuyen al gran remolino<br>
+        de la evolución misma.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“La realidad es el lugar donde los remolinos de consciencia se encuentran, danzan y cristalizan en experiencia.”</p>
+        </div>
+
+        <p class="signature"><strong>- Códigos de los Campos de Torsión</strong></p>
+
+      </section>
+<!-- ===========================
+     PARTE C · CIERRE + NAVEGACIÓN
+     =========================== -->
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_05.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="index.html">Volver al Index ⟶</a>
+            <a class="btn primary" href="nodo_07.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 10 · Nodo 6 · Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

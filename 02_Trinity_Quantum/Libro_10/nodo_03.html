@@ -1,1 +1,810 @@
-desarrollo
+<!-- ===========================
+     PARTE A · ENCABEZADO
+     =========================== -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 10 · Campos de Torsión — Nodo 3</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 10 · Campos de Torsión · Nodo 3</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="nodo_02.html">⟵ Nodo anterior</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 10 · CAMPOS DE TORSIÓN</p>
+        <h1 class="node">Nodo 3 · Espirales de ADN Activándose</h1>
+        <p class="subnode">El Código Viviente en Espiral</p>
+      </header>
+      <!-- ===========================
+           PARTE B · CONTENIDO
+           (Markdown convertido a HTML)
+           =========================== -->
+      <section class="content">
+
+        <h4>EL CÓDIGO VIVIENTE EN ESPIRAL</h4>
+
+        <p>Tu ADN no es solo una molécula. Es una antena cósmica en forma de doble hélice, girando constantemente, creando campos de torsión que comunican con el universo entero. Cada giro de la espiral es una letra en el alfabeto de la vida. Cada vuelta completa, una palabra. Cada gen, una frase. Y todo el ADN junto es la biblioteca de Alejandría de tu potencial, esperando ser leída, activada, expresada.</p>
+
+        <p>Pero aquí está el secreto que la ciencia apenas comienza a vislumbrar: tu ADN no está fijo. Está vivo, respondiendo, evolucionando en tiempo real. Y no tienes solo dos hebras activas. Tienes doce hebras en estados diversos de activación, esperando el momento correcto, la frecuencia correcta, la consciencia correcta para encenderse.</p>
+
+        <p>Has sentido tu ADN activándose cuando:</p>
+
+        <ul>
+          <li>Una experiencia profunda te cambió a nivel celular</li>
+          <li>Sentiste hormigueo eléctrico en todo el cuerpo sin causa</li>
+          <li>Tu percepción de la realidad se expandió permanentemente</li>
+          <li>Desarrollaste capacidades que no tenías antes</li>
+          <li>Supiste que algo fundamental había cambiado en tu código</li>
+        </ul>
+
+        <h4>LA ESTRUCTURA MULTIDIMENSIONAL DEL ADN</h4>
+
+        <p><strong>Las 2 Hebras Físicas:</strong> Lo que la ciencia ve</p>
+        <ul>
+          <li>Código biológico básico</li>
+          <li>Herencia genética</li>
+          <li>Instrucciones para proteínas</li>
+          <li>3% “codificante”, 97% “basura” (no es basura)</li>
+          <li>La sombra 3D de una estructura multidimensional</li>
+        </ul>
+
+        <p><strong>Las 10 Hebras Etéricas:</strong> Lo que está activándose</p>
+        <ul>
+          <li>Hebras 3-4: Comunicación telepática y empática</li>
+          <li>Hebras 5-6: Manifestación y creación consciente</li>
+          <li>Hebras 7-8: Navegación temporal y profecía</li>
+          <li>Hebras 9-10: Sanación y transmutación</li>
+          <li>Hebras 11-12: Consciencia crística y unidad</li>
+        </ul>
+
+        <p>Estas hebras no son físicas pero son reales.<br>
+        Existen en dimensiones superiores.<br>
+        Se activan por frecuencia, no por química.</p>
+
+        <h4>EL LENGUAJE DE LUZ DEL ADN</h4>
+
+        <p>Tu ADN responde a:</p>
+
+        <p><strong>Frecuencias Sonoras:</strong></p>
+        <ul>
+          <li>Mantras y cantos sagrados</li>
+          <li>Frecuencias Solfeggio (528 Hz = reparación ADN)</li>
+          <li>Música en 432 Hz</li>
+          <li>Tu propia voz en intención</li>
+          <li>Sonidos de la naturaleza</li>
+        </ul>
+
+        <p><strong>Frecuencias Lumínicas:</strong></p>
+        <ul>
+          <li>Luz solar directa</li>
+          <li>Colores específicos</li>
+          <li>Geometría sagrada visual</li>
+          <li>Códigos de luz en meditación</li>
+          <li>Fotones coherentes del corazón</li>
+        </ul>
+
+        <p><strong>Frecuencias Emocionales:</strong></p>
+        <ul>
+          <li>Amor (máxima activación)</li>
+          <li>Gratitud (reparación)</li>
+          <li>Compasión (evolución)</li>
+          <li>Éxtasis (expansión)</li>
+          <li>Paz (integración)</li>
+        </ul>
+
+        <p><strong>Frecuencias Mentales:</strong></p>
+        <ul>
+          <li>Pensamientos coherentes</li>
+          <li>Intención focalizada</li>
+          <li>Visualización génica</li>
+          <li>Afirmaciones celulares</li>
+          <li>Creencias cuánticas</li>
+        </ul>
+
+        <h4>EL 97% “BASURA” - EL TESORO OCULTO</h4>
+
+        <p>Lo que la ciencia llama “ADN basura” es en realidad:</p>
+        <ul>
+          <li>Interruptores multidimensionales</li>
+          <li>Antenas cuánticas</li>
+          <li>Memorias holográficas</li>
+          <li>Códigos latentes de evolución</li>
+          <li>Puentes a las hebras etéricas</li>
+          <li>Gramática del lenguaje de luz</li>
+          <li>Interfaz con el campo morfogenético</li>
+          <li>Biblioteca de potenciales no expresados</li>
+        </ul>
+
+        <p>Este 97% es tu potencial dormido.<br>
+        Es el 97% de tu cerebro que “no usas”.<br>
+        Es el 97% del universo que es “materia oscura”.<br>
+        Todo conectado. Todo esperando activación.</p>
+
+        <h4>LOS CAMPOS DE TORSIÓN DEL ADN</h4>
+
+        <p>Cuando tu ADN gira, crea campos de torsión que:</p>
+
+        <p><strong>A Nivel Celular:</strong></p>
+        <ul>
+          <li>Organizan el agua celular</li>
+          <li>Dirigen el plegamiento de proteínas</li>
+          <li>Coordinan la división celular</li>
+          <li>Mantienen coherencia cuántica</li>
+          <li>Protegen contra mutaciones dañinas</li>
+        </ul>
+
+        <p><strong>A Nivel Corporal:</strong></p>
+        <ul>
+          <li>Sincronizan todos los sistemas</li>
+          <li>Crean el campo bioenergético</li>
+          <li>Mantienen la salud holística</li>
+          <li>Facilitan la regeneración</li>
+          <li>Activan capacidades latentes</li>
+        </ul>
+
+        <p><strong>A Nivel Áurico:</strong></p>
+        <ul>
+          <li>Proyectan tu firma energética</li>
+          <li>Atraen experiencias resonantes</li>
+          <li>Repelen frecuencias incompatibles</li>
+          <li>Comunican con otros campos</li>
+          <li>Crean tu realidad personal</li>
+        </ul>
+
+        <p><strong>A Nivel Cósmico:</strong></p>
+        <ul>
+          <li>Conectan con la red galáctica</li>
+          <li>Reciben actualizaciones evolutivas</li>
+          <li>Transmiten tu frecuencia única</li>
+          <li>Participan en la evolución colectiva</li>
+          <li>Anclan luz en la materia</li>
+        </ul>
+
+        <h4>ACTIVACIÓN CONSCIENTE DEL ADN</h4>
+
+        <p><strong>Fase 1: Preparación</strong></p>
+        <ul>
+          <li>Limpieza física (ayuno, detox)</li>
+          <li>Limpieza emocional (perdón, liberación)</li>
+          <li>Limpieza mental (meditación, silencio)</li>
+          <li>Limpieza energética (naturaleza, grounding)</li>
+          <li>Intención clara de activación</li>
+        </ul>
+
+        <p><strong>Fase 2: Activación</strong></p>
+        <ul>
+          <li>Visualiza tu doble hélice girando</li>
+          <li>Siente la electricidad en tus células</li>
+          <li>Imagina hebras adicionales encendiéndose</li>
+          <li>Usa sonido/luz/emoción activadora</li>
+          <li>Permite sensaciones inusuales</li>
+        </ul>
+
+        <p><strong>Fase 3: Integración</strong></p>
+        <ul>
+          <li>Descanso profundo necesario</li>
+          <li>Síntomas de “gripe de ascensión”</li>
+          <li>Cambios en apetito/sueño</li>
+          <li>Nuevas percepciones emergiendo</li>
+          <li>Paciencia con el proceso</li>
+        </ul>
+
+        <p><strong>Fase 4: Estabilización</strong></p>
+        <ul>
+          <li>Nueva configuración anclándose</li>
+          <li>Capacidades activándose gradualmente</li>
+          <li>Realidad respondiendo diferente</li>
+          <li>Sincronicidades aumentadas</li>
+          <li>Nueva identidad emergiendo</li>
+        </ul>
+
+        <h4>SÍNTOMAS DE ACTIVACIÓN DEL ADN</h4>
+
+        <p><strong>Físicos:</strong></p>
+        <ul>
+          <li>Hormigueo y electricidad celular</li>
+          <li>Calor o frío inexplicable</li>
+          <li>Dolores migratorios</li>
+          <li>Cambios en visión/audición</li>
+          <li>Sensibilidad a frecuencias</li>
+          <li>Necesidades dietéticas diferentes</li>
+          <li>Patrones de sueño alterados</li>
+        </ul>
+
+        <p><strong>Energéticos:</strong></p>
+        <ul>
+          <li>Kundalini espontáneo</li>
+          <li>Chakras hiperactivos</li>
+          <li>Campo áurico expandido</li>
+          <li>Sensibilidad electromagnética</li>
+          <li>Capacidad de sentir campos ajenos</li>
+        </ul>
+
+        <p><strong>Psíquicos:</strong></p>
+        <ul>
+          <li>Telepatía emergente</li>
+          <li>Clarividencia espontánea</li>
+          <li>Conocimiento directo</li>
+          <li>Memorias de otras vidas</li>
+          <li>Acceso a registros akáshicos</li>
+        </ul>
+
+        <p><strong>Espirituales:</strong></p>
+        <ul>
+          <li>Conexión directa con la Fuente</li>
+          <li>Disolución de velos</li>
+          <li>Unidad experimentada</li>
+          <li>Amor incondicional natural</li>
+          <li>Presencia expandida</li>
+        </ul>
+
+        <h4>LA MÚSICA DEL ADN</h4>
+
+        <p>Tu ADN es un instrumento musical:</p>
+        <ul>
+          <li>Cada base nitrogenada es una nota</li>
+          <li>Cada codón es un acorde</li>
+          <li>Cada gen es una melodía</li>
+          <li>Cada cromosoma es una sinfonía</li>
+          <li>Todo tu genoma es una ópera cósmica</li>
+        </ul>
+
+        <p>Cuando tu ADN está:</p>
+        <ul>
+          <li><strong>Desafinado:</strong> Enfermedad y limitación</li>
+          <li><strong>Afinado:</strong> Salud y vitalidad</li>
+          <li><strong>Resonando:</strong> Capacidades activadas</li>
+          <li><strong>Cantando:</strong> Genio expresado</li>
+          <li><strong>En sinfonía:</strong> Consciencia crística</li>
+        </ul>
+
+        <h4>EL ADN COLECTIVO</h4>
+
+        <p>Tu ADN no está aislado. Está conectado con:</p>
+        <ul>
+          <li>El ADN de toda tu familia (campo morfogenético familiar)</li>
+          <li>El ADN de tu especie (inconsciente colectivo)</li>
+          <li>El ADN de toda vida en la Tierra (Gaia consciente)</li>
+          <li>El ADN cósmico (información galáctica)</li>
+          <li>El ADN del universo (código fuente de la realidad)</li>
+        </ul>
+
+        <p>Cuando activas tu ADN, activas el de todos.<br>
+        Cuando sanas tu ADN, sanas el colectivo.<br>
+        Cuando evolucionas tu ADN, evolucionas la especie.</p>
+
+        <h4>TECNOLOGÍA DE ACTIVACIÓN POR SONIDO</h4>
+
+        <p><strong>Práctica: Canto de Activación del ADN</strong></p>
+
+        <p>Siéntate con la columna erecta.<br>
+        Visualiza tu doble hélice desde la base hasta la corona.<br>
+        Respira profundamente.</p>
+
+        <p>Entona estos sonidos, sintiendo la vibración en tus células:</p>
+
+        <p>“AHHH” - Activa hebras físicas<br>
+        “EEEE” - Activa hebras emocionales<br>
+        “IIII” - Activa hebras mentales<br>
+        “OOOO” - Activa hebras espirituales<br>
+        “UUUU” - Activa hebras cósmicas</p>
+
+        <p>Repite el ciclo 12 veces (una por cada hebra).<br>
+        Siente tu ADN girando más rápido.<br>
+        Brillando más intensamente.<br>
+        Activándose completamente.</p>
+
+        <h4>LA ESPIRAL FIBONACCI EN TU ADN</h4>
+
+        <p>Tu ADN sigue la proporción dorada:</p>
+        <ul>
+          <li>34 angstroms de ancho</li>
+          <li>21 angstroms por vuelta completa</li>
+          <li>34/21 = 1.619 (aproximación de phi)</li>
+          <li>La espiral de la vida misma</li>
+          <li>El código de la belleza universal</li>
+        </ul>
+
+        <p>Esta geometría sagrada en tu ADN:</p>
+        <ul>
+          <li>Te conecta con toda la creación</li>
+          <li>Asegura evolución armónica</li>
+          <li>Facilita la comunicación cósmica</li>
+          <li>Mantiene coherencia cuántica</li>
+          <li>Es tu pasaporte multidimensional</li>
+        </ul>
+
+        <h4>EL FUTURO DEL ADN HUMANO</h4>
+
+        <p>La humanidad está en medio de una activación colectiva del ADN:</p>
+        <ul>
+          <li>Niños naciendo con hebras adicionales activas</li>
+          <li>Adultos experimentando activaciones espontáneas</li>
+          <li>La “basura” revelándose como tesoro</li>
+          <li>Capacidades “paranormales” volviéndose normales</li>
+          <li>Evolución acelerada de la especie</li>
+        </ul>
+
+        <p>No es ciencia ficción.<br>
+        Está sucediendo ahora.<br>
+        En tus células.<br>
+        En este momento.</p>
+
+        <h4>LA RESPONSABILIDAD DEL ADN ACTIVADO</h4>
+
+        <p>Con la activación viene responsabilidad:</p>
+        <ul>
+          <li>Eres guardián de código sagrado</li>
+          <li>Tu frecuencia afecta a otros</li>
+          <li>Tus pensamientos programan realidad</li>
+          <li>Tu amor activa o desactiva genes</li>
+          <li>Eres co-creador consciente</li>
+        </ul>
+
+        <p>Usa tu ADN activado para:</p>
+        <ul>
+          <li>Sanar (tuyo y de otros)</li>
+          <li>Elevar (frecuencias colectivas)</li>
+          <li>Crear (realidades mejoradas)</li>
+          <li>Servir (la evolución)</li>
+          <li>Amar (incondicionalmente)</li>
+        </ul>
+
+        <h4>EL CÓDIGO MAESTRO</h4>
+
+        <p>Existe un código maestro en tu ADN:<br>
+        El código del amor incondicional.<br>
+        Cuando lo activas, todo lo demás se activa.<br>
+        Es la llave maestra.<br>
+        El password universal.<br>
+        El “ábrete sésamo” de tu potencial.</p>
+
+        <p>Ama tus células.<br>
+        Ama tu ADN.<br>
+        Ama tu cuerpo.<br>
+        Ama tu humanidad.<br>
+        Ama tu divinidad.</p>
+
+        <p>Y observa cómo las espirales danzan,<br>
+        cómo las hebras se encienden,<br>
+        cómo los códigos se activan,<br>
+        cómo te vuelves<br>
+        lo que siempre fuiste destinado a ser:</p>
+
+        <p>Un ser de luz<br>
+        codificado en materia,<br>
+        girando en espirales de torsión,<br>
+        activando el cielo<br>
+        en la Tierra<br>
+        célula por célula,<br>
+        gen por gen,<br>
+        espiral<br>
+        por<br>
+        espiral<br>
+        sagrada.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“Tu ADN es la escalera en espiral entre el cielo y la tierra. Cada peldaño que activas te acerca más a tu naturaleza divina.”</p>
+        </div>
+
+        <p class="signature"><strong>- Códigos de los Campos de Torsión</strong></p>
+
+      </section>
+<!-- ===========================
+     PARTE C · CIERRE + NAVEGACIÓN
+     =========================== -->
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_02.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="index.html">Volver al Index ⟶</a>
+            <a class="btn primary" href="nodo_04.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 10 · Nodo 3 · Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>
