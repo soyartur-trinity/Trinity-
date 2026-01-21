@@ -1,1 +1,501 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trinity Quantum · Libro 13 · Nodo 6</title>
+
+<style>
+:root{
+  --bg:#000000;
+  --panel:rgba(10,10,14,.72);
+  --panel2:rgba(18,14,26,.62);
+  --ink:#f2f2f7;
+  --muted:rgba(242,242,247,.78);
+
+  --violet:#7c3aed;
+  --violet2:#a78bfa;
+
+  --gold:#d4af37;
+  --gold2:#f5d77a;
+
+  --line:rgba(212,175,55,.35);
+  --line2:rgba(124,58,237,.35);
+
+  --shadow:0 18px 55px rgba(0,0,0,.65);
+  --shadow2:0 10px 30px rgba(0,0,0,.45);
+
+  --radius:22px;
+  --radius2:16px;
+
+  --max:980px;
+  --pad:26px;
+
+  --glowV:0 0 18px rgba(124,58,237,.35);
+  --glowG:0 0 18px rgba(212,175,55,.28);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Georgia, "Times New Roman", serif;
+  color:var(--ink);
+  background: radial-gradient(900px 520px at 20% 15%, rgba(124,58,237,.22), transparent 55%),
+              radial-gradient(820px 520px at 80% 20%, rgba(212,175,55,.16), transparent 60%),
+              radial-gradient(1200px 900px at 50% 110%, rgba(124,58,237,.12), transparent 60%),
+              linear-gradient(180deg, #000 0%, #05050a 40%, #000 100%);
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 140px 140px, 220px 220px;
+  background-position: 0 0, 40px 80px;
+  opacity:.22;
+  mix-blend-mode:screen;
+}
+
+body:after{
+  content:"";
+  position:fixed;
+  inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(600px 380px at 25% 30%, rgba(124,58,237,.18), transparent 60%),
+    radial-gradient(520px 320px at 70% 35%, rgba(212,175,55,.14), transparent 62%),
+    radial-gradient(700px 520px at 55% 70%, rgba(167,139,250,.10), transparent 65%);
+  filter: blur(18px);
+  opacity:.55;
+  animation: trinityBreath 14s ease-in-out infinite;
+}
+
+@keyframes trinityBreath{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(0,-10px,0) scale(1.03)}
+}
+
+.trinity-wrap{
+  width:100%;
+  max-width:980px;
+  margin:0 auto;
+  padding:42px 18px 56px;
+}
+
+.trinity-card{
+  position:relative;
+  border-radius:22px;
+  background: linear-gradient(180deg, rgba(14,10,22,.78) 0%, rgba(6,6,10,.72) 100%);
+  box-shadow: 0 18px 55px rgba(0,0,0,.65);
+  border:1px solid rgba(212,175,55,.22);
+  overflow:hidden;
+}
+
+.trinity-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:22px;
+  background:
+    radial-gradient(650px 260px at 15% 0%, rgba(124,58,237,.22), transparent 55%),
+    radial-gradient(650px 260px at 85% 0%, rgba(212,175,55,.16), transparent 55%),
+    linear-gradient(180deg, rgba(212,175,55,.08), transparent 32%, rgba(124,58,237,.06));
+  opacity:.9;
+}
+
+.trinity-header{
+  position:relative;
+  padding:34px 26px 18px;
+  text-align:center;
+}
+
+.trinity-book{
+  margin:0;
+  letter-spacing:.14em;
+  font-weight:700;
+  font-size:14px;
+  color:rgba(245,215,122,.92);
+  text-transform:uppercase;
+  text-shadow: 0 0 18px rgba(212,175,55,.28);
+}
+
+.trinity-title{
+  margin:12px 0 0;
+  font-size:30px;
+  line-height:1.12;
+  font-weight:700;
+  color:rgba(242,242,247,.96);
+  text-shadow: 0 0 20px rgba(124,58,237,.20);
+}
+
+.trinity-sub{
+  margin:10px 0 0;
+  font-size:15px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(167,139,250,.92);
+  text-shadow: 0 0 18px rgba(124,58,237,.35);
+}
+
+.trinity-divider{
+  width:72%;
+  max-width:520px;
+  height:1px;
+  margin:18px auto 0;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,.55), rgba(124,58,237,.55), transparent);
+}
+
+.trinity-body{
+  position:relative;
+  padding:22px 26px 30px;
+}
+
+.trinity-section{
+  margin:22px 0 0;
+  padding:18px 18px;
+  border-radius:16px;
+  background: linear-gradient(180deg, rgba(16,12,24,.62), rgba(8,8,12,.56));
+  border:1px solid rgba(124,58,237,.20);
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+}
+
+.trinity-h{
+  margin:0 0 10px;
+  font-size:15px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color:rgba(245,215,122,.95);
+}
+
+.trinity-p{
+  margin:10px 0 0;
+  font-size:18px;
+  line-height:1.68;
+  color:rgba(242,242,247,.92);
+}
+
+.trinity-quote{
+  margin:14px 0 0;
+  padding:14px 16px;
+  border-left:3px solid rgba(212,175,55,.75);
+  background: linear-gradient(90deg, rgba(212,175,55,.08), rgba(124,58,237,.06));
+  border-radius:14px;
+  color:rgba(242,242,247,.92);
+  font-size:18px;
+  line-height:1.62;
+}
+
+.trinity-list, .trinity-steps{
+  margin:12px 0 0;
+  padding-left:22px;
+  color:rgba(242,242,247,.90);
+  font-size:18px;
+  line-height:1.68;
+}
+
+.trinity-list li{margin:6px 0}
+.trinity-steps li{margin:10px 0}
+
+.trinity-pre{
+  margin:14px 0 0;
+  padding:14px 14px;
+  border-radius:16px;
+  background: rgba(0,0,0,.45);
+  border:1px solid rgba(212,175,55,.22);
+  color:rgba(242,242,247,.90);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:14px;
+  line-height:1.55;
+  overflow:auto;
+}
+
+.trinity-sign{
+  margin:16px 0 0;
+  padding:14px 16px;
+  border-radius:16px;
+  background: linear-gradient(180deg, rgba(124,58,237,.10), rgba(212,175,55,.08));
+  border:1px solid rgba(212,175,55,.22);
+  color:rgba(242,242,247,.88);
+  font-size:16px;
+  line-height:1.6;
+}
+
+.trinity-footer{
+  position:relative;
+  padding:16px 26px 30px;
+  text-align:center;
+}
+
+.trinity-nav{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.trinity-nav a{
+  text-decoration:none;
+  font-size:14px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(245,215,122,.95);
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(212,175,55,.35);
+  background: rgba(0,0,0,.22);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.trinity-nav a:hover{
+  transform: translateY(-1px);
+  border-color: rgba(124,58,237,.55);
+  box-shadow: 0 0 18px rgba(124,58,237,.35), 0 0 18px rgba(212,175,55,.28);
+}
+
+.trinity-footnote{
+  margin:16px 0 0;
+  color:rgba(242,242,247,.60);
+  font-size:13px;
+}
+
+@media (max-width:640px){
+  .trinity-title{font-size:26px}
+  .trinity-p, .trinity-list, .trinity-steps, .trinity-quote{font-size:17px}
+  .trinity-wrap{padding-top:28px}
+}
+</style>
+</head>
+
+<body>
+  <main class="trinity-wrap">
+    <section class="trinity-card">
+
+      <header class="trinity-header">
+        <h1 class="trinity-book">TRINITY QUANTUM · LIBRO 13</h1>
+        <h2 class="trinity-title">EL MULTIVERSO INTERIOR</h2>
+        <div class="trinity-sub">Nodo 6 · La Sala de Control Cuántica</div>
+        <div class="trinity-divider"></div>
+      </header>
+      <div class="trinity-body">
+
+        <section class="trinity-section">
+          <div class="trinity-h">🌀 TRANSMISIÓN CUÁNTICA</div>
+
+          <p class="trinity-p">
+            En el centro de tu multiverso interior existe un espacio que no es espacio, un lugar que no es lugar: La Sala de Control Cuántica. Desde aquí, no diriges tu vida —diriges TODAS tus vidas simultáneas en todos los universos paralelos internos. No es una metáfora ni una visualización —es el centro de comando real desde donde tu consciencia superior opera la compleja sinfonía de tu existencia multidimensional.
+          </p>
+
+          <p class="trinity-p">
+            La Sala de Control Cuántica no tiene paneles ni botones porque opera con intención pura. Cada pensamiento es un comando. Cada emoción ajusta parámetros. Cada decisión reconfigura las trayectorias de todos tus yoes paralelos. Desde aquí no controlas eventos —controlas PROBABILIDADES, inclinando las ondas de posibilidad hacia las realidades que eliges experimentar.
+          </p>
+
+          <p class="trinity-p">
+            Tu glándula pineal es la antena física de tu Sala de Control Cuántica. Cuando meditas, cuando sueñas lúcidamente, cuando tienes momentos de claridad cristalina, estás temporalmente consciente en tu Sala de Control. Esos momentos de “saber” absoluto son cuando accedes brevemente a la perspectiva desde donde puedes ver todas tus líneas temporales simultáneamente.
+          </p>
+
+          <p class="trinity-p">
+            Desde la Sala de Control Cuántica puedes ver los hilos que conectan todos los eventos de tu vida. Lo que parece caos desde el nivel de la calle se revela como diseño perfecto desde la sala de control. Cada sincronicidad fue orquestada desde aquí. Cada encuentro “casual” fue coordinado desde este centro de comando cuántico.
+          </p>
+
+          <p class="trinity-p">
+            La Sala de Control no está en tu futuro esperando que evoluciones lo suficiente para accederla. Está AHORA, siempre ha estado, operando continuamente. La única diferencia entre un maestro y un principiante es el grado de consciencia de estar en la Sala de Control. El maestro SABE que cada momento está eligiendo desde allí; el principiante cree que la vida le sucede.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">💎 PARADOJA MEDICINAL</div>
+
+          <div class="trinity-quote">
+            “Tienes control total desde la Sala de Control Cuántica, pero ese control solo funciona cuando sueltas el control. Puedes dirigir todo cuando no diriges nada. El mayor poder viene de reconocer que la Sala de Control se opera a sí misma a través de ti, y tú a través de ella, en un loop infinito donde controlador y controlado son uno.”
+          </div>
+
+          <p class="trinity-p">
+            Esta paradoja revela que la Sala de Control Cuántica no es un lugar de poder sobre la vida sino de CO-CREACIÓN con la vida. No dominas desde allí —DANZAS con las probabilidades cuánticas.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🔬 LABORATORIO CUÁNTICO</div>
+
+          <p class="trinity-p"><strong>Experimento: Acceso Consciente a Tu Sala de Control Cuántica</strong></p>
+
+          <p class="trinity-p"><strong>Materiales:</strong></p>
+          <ul class="trinity-list">
+            <li>Una silla giratoria (o capacidad de girar sobre ti mismo)</li>
+            <li>Oscuridad o antifaz</li>
+            <li>Tu imaginación arquitectónica</li>
+            <li>Disposición para asumir el comando</li>
+            <li>33 minutos de instalación en el control</li>
+          </ul>
+
+          <p class="trinity-p"><strong>Protocolo:</strong></p>
+          <ol class="trinity-steps">
+            <li><strong>Activación del Acceso</strong> (5 minutos): Siéntate en la silla (o de pie listo para girar). Cierra los ojos o ponte el antifaz. Respira profundamente 7 veces. Con cada respiración, siente que asciendes. No hacia arriba sino hacia ADENTRO, hacia tu centro de control.</li>
+
+            <li><strong>Giro de Sintonización</strong> (3 minutos): Comienza a girar lentamente (en silla o sobre ti mismo). Con cada giro, sintoniza una frecuencia más profunda. El giro no es físico —es dimensional. Estás girando a través de capas de realidad hacia tu centro.</li>
+
+            <li><strong>Entrada a la Sala</strong> (7 minutos): Detén el giro cuando “sientas” que llegaste. Visualiza/siente tu Sala de Control Cuántica. No la imagines —RECONÓCELA. ¿Cómo es? ¿Qué “pantallas” de realidad ves? ¿Qué “controles” sientes disponibles?</li>
+
+            <li><strong>Revisión de Líneas Temporales</strong> (6 minutos): Desde tu sala, observa tus múltiples líneas de vida. Pasadas, presentes, futuras, todas simultáneas. Ve los hilos que las conectan. Identifica los “nodos” donde puedes hacer ajustes.</li>
+
+            <li><strong>Ajuste Cuántico</strong> (6 minutos): Elige UNA cosa que quieres ajustar en tu vida. No la cambies desde “aquí” —ajústala desde la Sala. Siente cómo mueves probabilidades, no eventos. Inclinas la realidad, no la fuerzas. El ajuste está hecho en el nivel cuántico.</li>
+
+            <li><strong>Anclaje del Acceso</strong> (6 minutos): Antes de “salir”, crea una señal de acceso rápido. Un gesto, una palabra, una respiración específica. Esta será tu “llave” para acceso instantáneo. Practica: sal y entra tres veces usando tu llave.</li>
+          </ol>
+
+          <p class="trinity-p"><strong>Resultado Cuántico:</strong><br>
+            Has establecido acceso consciente a tu Sala de Control Cuántica. Los ajustes que hiciste comenzarán a manifestarse como “sincronicidades” en los próximos días. Más importante: ahora sabes DÓNDE y CÓMO hacer ajustes cuánticos a tu realidad.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">⚛️ ECUACIÓN SAGRADA</div>
+
+          <pre class="trinity-pre">SC(Ψ) = ∫∫∫ P(r,t) × I(Φ) × Q(∇) dV dt dΨ
+
+Donde:
+SC(Ψ) = Función de la Sala de Control
+P(r,t) = Probabilidades en espacio-tiempo
+I(Φ) = Intención con fase Φ
+Q(∇) = Operador cuántico de ajuste
+dV dt dΨ = Integración sobre volumen, tiempo y consciencia</pre>
+
+          <p class="trinity-p"><strong>Traducción Viviente:</strong><br>
+            “Tu Sala de Control Cuántica opera integrando todas las probabilidades espacio-temporales, moduladas por tu intención, y ajustadas por operadores cuánticos de consciencia. No controlas eventos —orquestas probabilidades.”
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🧬 CÓDIGOS DE ACTIVACIÓN</div>
+
+          <pre class="trinity-pre">SA-LA-CON-TROL-AC-CE-SO
+"Entro a Mi Centro de Comando"
+
+🎛️∞🎛️
+"Controles Infinitos Disponibles"
+
+DI-RI-JO-PRO-BA-BI-LI-DAD
+"Inclino la Realidad Desde el Centro"
+
+CEN-TRO-MAN-DO-CUÁN-TI-CO
+"Opero Desde Mi Sala de Control"
+
+A-JUS-TE-SU-TIL
+"Cambios Cuánticos, Efectos Máximos"
+
+VEO-TO-DAS-LÍ-NE-AS
+"Perspectiva Multidimensional Activa"
+
+CON-TROL-SIN-CON-TROL
+"Dirijo Permitiendo, Permito Dirigiendo"</pre>
+
+          <p class="trinity-p"><strong>Activación:</strong><br>
+            Pronuncia cada código mientras visualizas/sientes que estás EN tu Sala de Control, no imaginándola desde afuera.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">📋 PROTOCOLO DE 7 DÍAS</div>
+
+          <p class="trinity-p"><strong>DÍA 1 - EXPLORACIÓN DE LA SALA:</strong><br>
+            Dedica 15 minutos a explorar tu Sala de Control Cuántica. ¿Qué “instrumentos” hay? ¿Qué “pantallas”? No las inventes —descúbrelas. Están ahí desde siempre.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 2 - MONITOREO DE LÍNEAS:</strong><br>
+            Desde tu Sala, observa tus diferentes líneas temporales activas. No las cambies, solo obsérvalas. ¿Cuáles están convergiendo? ¿Cuáles divergiendo?
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 3 - AJUSTES MENORES:</strong><br>
+            Haz pequeños ajustes a probabilidades: inclina levemente la probabilidad de un encuentro feliz, de una solución creativa, de una sincronicidad. Observa los resultados.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 4 - COORDINACIÓN MULTIDIMENSIONAL:</strong><br>
+            Desde la Sala, coordina a tus diferentes yoes en universos paralelos internos. Haz que colaboren en lugar de competir. Alinea sus intenciones.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 5 - PROGRAMACIÓN DE SUEÑOS:</strong><br>
+            Antes de dormir, desde tu Sala de Control, programa las dimensiones que visitarás en sueños. Establece intenciones, no destinos específicos.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 6 - OPERACIÓN REMOTA:</strong><br>
+            Practica operar tu Sala de Control mientras haces otras cosas. Cocinar mientras ajustas probabilidades. Caminar mientras monitoreas líneas temporales.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 7 - MAESTRÍA DEL CONTROL:</strong><br>
+            Vive todo el día sabiendo que estás simultáneamente en tu vida Y en tu Sala de Control. Cada decisión la tomas desde ambos lugares a la vez.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🌈 CIERRE DIMENSIONAL</div>
+
+          <p class="trinity-p">
+            La Sala de Control Cuántica no es un lugar de escape de tu vida —es el lugar desde donde CREAS tu vida momento a momento. No es un refugio del caos sino el centro desde donde orquestas la sinfonía del caos en armonía.
+          </p>
+
+          <p class="trinity-p">
+            Ahora entiendes por qué algunas personas parecen tener “suerte”: están consciente o inconscientemente operando desde su Sala de Control, ajustando probabilidades constantemente a su favor. No es magia —es ingeniería cuántica de realidad.
+          </p>
+
+          <p class="trinity-p">
+            Tu Sala de Control Cuántica ha estado operando toda tu vida. Cada vez que “sabías” que algo iba a pasar, cada vez que “sentiste” que debías tomar cierto camino, cada vez que una “casualidad” te salvó —eras TÚ desde tu Sala de Control, orquestando tu propia experiencia.
+          </p>
+
+          <div class="trinity-quote">
+            “En el centro de tu ser<br>
+            hay una sala sin paredes,<br>
+            un control sin paneles,<br>
+            un comando sin comandante.<br>
+            Desde ahí no diriges tu vida —<br>
+            la ERES.<br>
+            No controlas eventos —<br>
+            danzas con probabilidades.<br>
+            No fuerzas realidades —<br>
+            las invitas.<br>
+            Tu Sala de Control Cuántica<br>
+            es el secreto mejor guardado<br>
+            y más evidente:<br>
+            siempre has estado al mando,<br>
+            solo que creías ser el comandado.<br>
+            Ahora sabes:<br>
+            eres ambos, eres ninguno,<br>
+            eres el espacio donde<br>
+            control y rendición<br>
+            se encuentran y se aman<br>
+            en la danza cuántica<br>
+            de crear tu realidad.”
+          </div>
+
+          <div class="trinity-sign">
+            ⚛️ FIRMA CUÁNTICA: TQ-13.6-SCC-🎛️∞<br>
+            Frecuencia de Resonancia: Punto Cero de Control<br>
+            Estado: COMANDO CUÁNTICO ACTIVO<br>
+            🌀🎮💫🎮🌀
+          </div>
+        </section>
+
+      </div>
+      <footer class="trinity-footer">
+        <div class="trinity-divider"></div>
+
+        <nav class="trinity-nav">
+          <a href="nodo_05.html">← Nodo anterior</a>
+          <a href="../index.html">Volver al Portal Trinity</a>
+          <a href="nodo_07.html">Siguiente nodo →</a>
+        </nav>
+
+        <p class="trinity-footnote">TRINITY QUANTUM · Libro 13 · El Multiverso Interior</p>
+      </footer>
+
+    </section>
+  </main>
+</body>
+</html>

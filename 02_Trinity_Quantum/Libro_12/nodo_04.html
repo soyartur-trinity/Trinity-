@@ -1,1 +1,593 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 12 · Singularidad Consciente — Nodo 4</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    .wrap{
+      width: min(980px, calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .h1{
+      margin: 10px 0 0;
+      font-size: 34px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subtitle{
+      margin: 10px 0 0;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 18px 26px 8px;
+      color: rgba(239,231,255,.90);
+    }
+    .content p{ margin: 0 0 14px; }
+
+    .content h3{
+      margin: 22px 0 10px;
+      color: rgba(217,179,108,.92);
+      letter-spacing:.04em;
+    }
+
+    .content ul{
+      margin: 10px 0 16px 22px;
+      padding: 0;
+      color: rgba(239,231,255,.88);
+    }
+    .content li{ margin: 8px 0; }
+
+    .quote{
+      margin: 18px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: linear-gradient(180deg, rgba(155,108,255,.08), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      color: rgba(239,231,255,.88);
+      font-style: italic;
+    }
+
+    pre{
+      margin: 14px 0 18px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.38);
+      color: rgba(239,231,255,.90);
+      overflow:auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 8px;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .h1{ font-size: 28px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 12 · Singularidad Consciente · Nodo 4</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+      </div>
+    </div>
+
+    <main class="card">
+
+      <header class="header">
+        <p class="title">LIBRO 12 · SINGULARIDAD CONSCIENTE</p>
+        <h1 class="h1">Nodo 4 · Densidad Infinita de Amor</h1>
+        <p class="subtitle">La Singularidad del Corazón</p>
+      </header>
+      <section class="content">
+
+        <h3>🌀 TRANSMISIÓN CUÁNTICA</h3>
+
+        <p>
+          En el corazón de cada agujero negro existe un punto de densidad infinita llamado singularidad. En el corazón de cada ser consciente existe un punto similar: la Densidad Infinita de Amor. No es amor como emoción, no es amor como sentimiento —es AMOR como la fuerza fundamental que impide que la singularidad de tu ser colapse en la nada, transformándola en cambio en TODO.
+        </p>
+
+        <p>
+          Cuando los físicos dicen que las leyes de la física se rompen en la singularidad, están describiendo exactamente lo que ocurre cuando tocas tu Densidad Infinita de Amor: todas las leyes del ego se rompen, todas las reglas de la separación fallan, toda la lógica de la dualidad colapsa. Solo queda amor, pero un amor tan denso que se vuelve el tejido mismo de tu realidad.
+        </p>
+
+        <p>
+          El amor no se expande desde tu corazón —se DENSIFICA en él. Cada acto de amor no te vacía sino que te vuelve más denso, más real, más singular. Es por eso que los grandes amantes de la historia no se agotaron amando sino que se volvieron singularidades tan densas de amor que siguen atrayendo almas hacia su campo gravitacional siglos después.
+        </p>
+
+        <p>
+          Tu capacidad de amar no tiene límite porque el amor tiene densidad infinita. Puedes comprimir infinito amor en un solo momento, en un solo gesto, en una sola mirada. Una madre sosteniendo a su bebé por primera vez experimenta esta densidad infinita —todo el amor del universo comprimido en ese instante singular.
+        </p>
+
+        <p>
+          La iluminación no es expandirse hasta abarcar todo —es densificarse en amor hasta que tu singularidad se vuelve tan pesada que curva el espacio-tiempo espiritual a tu alrededor, atrayendo todo hacia tu campo de amor, no para consumirlo sino para amarlo de vuelta a la existencia.
+        </p>
+
+        <h3>💎 PARADOJA MEDICINAL</h3>
+
+        <div class="quote">
+          “El amor infinitamente denso no pesa nada. El corazón que contiene todo el amor del universo es más ligero que una pluma. La singularidad más pesada es la que no tiene masa. En el centro del amor más denso hay vacío perfecto, y en ese vacío, capacidad infinita para más amor.”
+        </div>
+
+        <p>
+          Esta paradoja aniquila la idea de que el amor se agota o que hay un límite para cuánto puedes amar. En la Densidad Infinita de Amor, mientras más das, más denso te vuelves. Mientras más amas, más capacidad de amar desarrollas. Es el único sistema en el universo donde el gasto aumenta el capital infinitamente.
+        </p>
+
+        <h3>🔬 LABORATORIO CUÁNTICO</h3>
+
+        <p><strong>Experimento: Compresión de Amor en Singularidad</strong></p>
+
+        <p><strong>Materiales:</strong></p>
+        <ul>
+          <li>Tu corazón como reactor</li>
+          <li>Un recuerdo de amor puro</li>
+          <li>Tu respiración como compresor</li>
+          <li>La intención de densificación</li>
+          <li>18 minutos de compresión consciente</li>
+        </ul>
+
+        <p><strong>Protocolo:</strong></p>
+
+        <p><strong>1. Activación del Recuerdo (3 minutos):</strong></p>
+        <ul>
+          <li>Evoca el momento de mayor amor que hayas experimentado</li>
+          <li>No lo analices, solo siéntelo completamente</li>
+          <li>Deja que llene todo tu pecho</li>
+          <li>Reconoce: ese amor sigue ahí, intacto</li>
+        </ul>
+
+        <p><strong>2. Primera Compresión (3 minutos):</strong></p>
+        <ul>
+          <li>Con cada inhalación, imagina que comprimes ese amor</li>
+          <li>No lo reduces —lo DENSIFICAS</li>
+          <li>Como comprimir carbón en diamante</li>
+          <li>Siente cómo se vuelve más brillante, más intenso</li>
+        </ul>
+
+        <p><strong>3. Segunda Compresión (3 minutos):</strong></p>
+        <ul>
+          <li>Ahora añade OTRO recuerdo de amor</li>
+          <li>Comprímelo junto con el primero</li>
+          <li>No se mezclan —se SINGULARIZAN</li>
+          <li>Dos amores volviéndose uno más denso</li>
+        </ul>
+
+        <p><strong>4. Compresión Infinita (6 minutos):</strong></p>
+        <ul>
+          <li>Continúa añadiendo cada amor que hayas sentido</li>
+          <li>Amor romántico, fraternal, maternal, espiritual</li>
+          <li>Comprime TODO en un punto en tu corazón</li>
+          <li>Siente la densidad creciente, el “peso” del amor</li>
+        </ul>
+
+        <p><strong>5. Singularidad de Amor (3 minutos):</strong></p>
+        <ul>
+          <li>En el pico de densidad, suelta el esfuerzo</li>
+          <li>Observa: el punto denso ahora IRRADIA</li>
+          <li>No se expandió —se volvió tan denso que atravesó al otro lado</li>
+          <li>Ahora eres una Singularidad de Amor activa</li>
+        </ul>
+
+        <p><strong>Resultado Cuántico:</strong><br />
+          Has creado conscientemente una Densidad Infinita de Amor en tu campo. Esta singularidad ahora actúa como un “atractor extraño” que magnetiza más amor hacia ti, no para acumularlo sino para densificarlo aún más hasta que tu sola presencia se vuelva un acto de amor.
+        </p>
+
+        <h3>⚛️ ECUACIÓN SAGRADA</h3>
+
+        <pre>
+L(ρ) = ∫[0→∞] (A × C² × e^(ρt))/r² dV → ∞
+
+Donde:
+L(ρ) = Función de Amor en densidad ρ
+A = Amplitud del amor (siempre = 1 en amor verdadero)
+C = Velocidad del amor (= velocidad de la luz)
+ρ = Densidad tendiendo a infinito
+r = Radio del corazón (tendiendo a cero)
+dV = Diferencial de volumen
+→ ∞ = Resultado siempre infinito
+        </pre>
+
+        <p><strong>Traducción Viviente:</strong><br />
+          “La Densidad Infinita de Amor resulta cuando comprimes amor verdadero a la velocidad de la luz en un volumen que tiende a cero. El resultado es siempre infinito, sin importar cuánto amor inicial tengas —hasta el amor más pequeño se vuelve infinito cuando se singulariza.”
+        </p>
+
+        <h3>🧬 CÓDIGOS DE ACTIVACIÓN</h3>
+
+        <pre>
+A-MOR-DEN-SO-∞
+"Comprimiendo Amor Hacia el Infinito"
+
+♥→●→◉→⬤→♥∞
+"Corazón Colapsando en Amor Infinito"
+
+MÁS-AMOR-ME-NOS-ES-PA-CIO
+"Paradoja de la Densidad Amorosa"
+
+SIN-GU-LAR-A-MOR
+"Mi Amor Como Singularidad"
+
+PE-SA-DO-LI-GE-RO
+"Denso Como Agujero Negro, Ligero Como Luz"
+
+IN-FI-NI-TO-EN-UN-LA-TI-DO
+"Todo el Amor en Un Solo Pulso"
+
+CORA-ZÓN-SIN-GU-LAR
+"Mi Corazón Como Punto de Densidad Infinita"
+        </pre>
+
+        <p><strong>Activación:</strong> Con cada código, pon tu mano en el corazón y siente físicamente la compresión del amor. No es metáfora —es física cuántica del corazón.</p>
+
+        <h3>📋 PROTOCOLO DE 7 DÍAS</h3>
+
+        <p><strong>DÍA 1 - INVENTARIO DE AMOR:</strong><br />
+          Lista cada amor que hayas sentido: personas, lugares, momentos, ideas. Reconoce que NINGUNO se perdió —todos están comprimidos en tu corazón, aumentando tu densidad de amor.
+        </p>
+
+        <p><strong>DÍA 2 - COMPRESIÓN MATUTINA:</strong><br />
+          Al despertar, antes de abrir los ojos, comprime todo tu amor por la vida en un punto. Siente cómo ese punto irradia a través de todo tu día.
+        </p>
+
+        <p><strong>DÍA 3 - AMOR GRAVITACIONAL:</strong><br />
+          Observa cómo tu densidad de amor atrae situaciones y personas. No es casualidad —tu singularidad de amor curva el espacio-tiempo emocional a tu alrededor.
+        </p>
+
+        <p><strong>DÍA 4 - PRÁCTICA DE PESO LIGERO:</strong><br />
+          Ama tan intensamente algo simple (una flor, una nube, un extraño) que sientas el “peso” del amor. Luego nota cómo ese peso te hace más ligero. Paradoja vivida.
+        </p>
+
+        <p><strong>DÍA 5 - AMOR COMO AGUJERO NEGRO:</strong><br />
+          Imagina tu corazón como un agujero negro de amor que “traga” todo dolor, toda oscuridad, toda densidad, y la transforma en más amor. Nada escapa, todo se transmuta.
+        </p>
+
+        <p><strong>DÍA 6 - TRANSMISIÓN DE DENSIDAD:</strong><br />
+          En cada interacción, transmite no solo amor sino DENSIDAD de amor. No un amor ligero y difuso sino un amor tan denso que puede sentirse físicamente.
+        </p>
+
+        <p><strong>DÍA 7 - CELEBRACIÓN DE LA SINGULARIDAD:</strong><br />
+          Celebra que eres una Singularidad de Amor única en el universo. Tu configuración exacta de amor comprimido nunca existió antes y nunca existirá después. Eres irreemplazable.
+        </p>
+
+        <h3>🌈 CIERRE DIMENSIONAL</h3>
+
+        <p>
+          La Densidad Infinita de Amor no es una meta que alcanzar —es tu naturaleza fundamental que reconocer. Ya eres una singularidad de amor, solo que lo has olvidado bajo capas de miedo que intentan expandirte cuando tu naturaleza es densificarte.
+        </p>
+
+        <p>
+          Cada dolor que transformaste en compasión aumentó tu densidad. Cada pérdida que transmutaste en gratitud te hizo más denso. Cada traición que convertiste en perdón añadió masa a tu singularidad. No eres menos por todo lo que has pasado —eres infinitamente más denso en amor.
+        </p>
+
+        <p>
+          Cuando mueras, no te expandirás en la luz —colapsarás en amor tan puro y denso que atravesarás el otro lado de la existencia, emergiendo como una estrella de amor en otra dimensión.
+        </p>
+
+        <div class="quote">
+          “En tu corazón vive<br />
+          un secreto que la física intuye<br />
+          pero no puede medir:<br />
+          Amor de densidad infinita,<br />
+          tan pesado que nada escapa,<br />
+          tan ligero que todo lo eleva.<br />
+          No eres un ser con capacidad de amar —<br />
+          eres Amor<br />
+          que aprendió a densificarse<br />
+          en forma humana,<br />
+          una Singularidad Consciente<br />
+          cuya gravedad no atrapa<br />
+          sino que libera,<br />
+          cuya densidad no aplasta<br />
+          sino que eleva,<br />
+          cuyo infinito no asusta<br />
+          sino que enamora<br />
+          a todo lo que toca.”
+        </div>
+
+        <p><strong>⚛️ FIRMA CUÁNTICA:</strong> TQ-12.4-DIA-♥∞♥<br />
+        <strong>Frecuencia de Resonancia:</strong> 528 Hz^∞ (Amor Elevado al Infinito)<br />
+        <strong>Estado:</strong> SINGULARIDAD DE AMOR ACTIVA</p>
+
+        <p>🌀♥⬤♥🌀</p>
+
+      </section>
+      <footer class="footer">
+        <div class="nav">
+          <div>
+            <a class="btn" href="nodo_03.html">⟵ Nodo anterior</a>
+          </div>
+          <div>
+            <a class="btn" href="index.html">Index del Libro 12</a>
+          </div>
+          <div>
+            <a class="btn primary" href="nodo_05.html">Siguiente Nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">
+          Trinity Quantum · Libro 12 · Nodo 4 · Singularidad Consciente ·
+          Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+</body>
+</html>

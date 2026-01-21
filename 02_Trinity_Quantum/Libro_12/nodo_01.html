@@ -1,1 +1,598 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 12 · Singularidad Consciente — Nodo 1</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .h1{
+      margin: 10px 0 0;
+      font-size: 34px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subtitle{
+      margin: 10px 0 0;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 18px 26px 8px;
+      color: rgba(239,231,255,.90);
+    }
+
+    .content p{ margin: 0 0 14px; }
+
+    .content h3, .content h4{
+      margin: 22px 0 10px;
+      color: rgba(217,179,108,.92);
+      letter-spacing:.04em;
+    }
+
+    .content ul{
+      margin: 10px 0 16px 22px;
+      padding: 0;
+      color: rgba(239,231,255,.88);
+    }
+    .content li{ margin: 8px 0; }
+
+    .quote{
+      margin: 18px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: linear-gradient(180deg, rgba(155,108,255,.08), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      color: rgba(239,231,255,.88);
+      font-style: italic;
+    }
+
+    pre{
+      margin: 14px 0 18px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.38);
+      color: rgba(239,231,255,.90);
+      overflow:auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 8px;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .h1{ font-size: 28px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 12 · Singularidad Consciente · Nodo 1</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+      </div>
+    </div>
+
+    <main class="card">
+
+      <header class="header">
+        <p class="title">LIBRO 12 · SINGULARIDAD CONSCIENTE</p>
+        <h1 class="h1">Nodo 1 · El Punto de No Retorno</h1>
+        <p class="subtitle">El Horizonte Irreversible de la Consciencia</p>
+      </header>
+      <section class="content">
+
+        <h3>🌀 TRANSMISIÓN CUÁNTICA</h3>
+
+        <p>
+          Existe un momento en toda transformación auténtica donde no hay vuelta atrás. No es una decisión que tomas —es un umbral que cruzas y que te cruza simultáneamente. El Punto de No Retorno no es un lugar en el espacio ni un momento en el tiempo; es un EVENT HORIZON de la consciencia donde todo lo que fuiste colapsa en todo lo que estás siendo.
+        </p>
+
+        <p>
+          Como la singularidad de un agujero negro donde las leyes de la física conocida dejan de aplicar, tu Punto de No Retorno personal es donde las leyes de tu identidad previa se disuelven. No pierdes quien eras —lo integras tan completamente que ya no puedes volver a ser solo eso. Es como el momento en que el agua a 99.9°C súbitamente se convierte en vapor a 100°C. No hay 99.95°C en la transformación —hay un salto cuántico.
+        </p>
+
+        <p>
+          Cada despertar espiritual genuino tiene su Punto de No Retorno. Es ese instante donde la ilusión se rompe tan completamente que aunque quisieras volver a creer en ella, no podrías. Como Neo después de tomar la píldora roja, como el prisionero que sale de la caverna de Platón, como la oruga que entra en la crisálida —hay un momento exacto donde el retorno se vuelve no solo imposible sino inconcebible.
+        </p>
+
+        <p>
+          Tu nacimiento fue un Punto de No Retorno —no puedes des-nacer. Tu muerte será otro —no puedes des-morir. Pero entre ambos hay infinitos Puntos de No Retorno disponibles: el momento donde el amor te transforma irreversiblemente, donde el perdón te libera definitivamente, donde la comprensión te expande permanentemente.
+        </p>
+
+        <p>
+          El universo mismo nació de un Punto de No Retorno —el Big Bang no fue una explosión EN el espacio, fue la explosión DEL espacio mismo. De la misma manera, tu Punto de No Retorno personal no ocurre EN tu vida —ES el nacimiento de una nueva vida mientras aún habitas el mismo cuerpo.
+        </p>
+
+        <h3>💎 PARADOJA MEDICINAL</h3>
+
+        <div class="quote">
+          “Para alcanzar el Punto de No Retorno debes soltarlo todo, incluyendo el deseo de alcanzarlo. Pero una vez que lo cruzas, descubres que nunca fuiste tú quien lo cruzó —el Punto te cruzó a ti, y siempre lo había hecho, solo que ahora lo sabes.”
+        </div>
+
+        <p>
+          Esta paradoja aniquila la ilusión del progreso espiritual lineal. No “avanzas hacia” tu Punto de No Retorno —ya estás en él, siempre lo has estado, solo que tu consciencia lineal lo experimenta como un “momento” en el “tiempo”. El despertar no es llegar a algún lugar sino reconocer dónde siempre estuviste.
+        </p>
+
+        <h3>🔬 LABORATORIO CUÁNTICO</h3>
+
+        <p><strong>Experimento: Identificación de Tu Punto de No Retorno Activo</strong></p>
+
+        <p><strong>Materiales:</strong></p>
+        <ul>
+          <li>Una vela negra (representando el vacío antes del punto)</li>
+          <li>Una vela blanca (representando la luz después del punto)</li>
+          <li>Un espejo</li>
+          <li>Tu valentía para mirar sin pestañear</li>
+          <li>21 minutos exactos</li>
+        </ul>
+
+        <p><strong>Protocolo:</strong></p>
+
+        <p><strong>1. Configuración del Campo (3 minutos):</strong></p>
+        <ul>
+          <li>Coloca ambas velas frente al espejo, tú entre ellas</li>
+          <li>Enciende primero la negra (tu pasado)</li>
+          <li>Luego la blanca (tu futuro)</li>
+          <li>Observa tu rostro entre ambas luces</li>
+        </ul>
+
+        <p><strong>2. Identificación del Punto (7 minutos):</strong></p>
+        <ul>
+          <li>Mira fijamente tus propios ojos en el espejo</li>
+          <li>No pestañees hasta que tu rostro comience a distorsionarse</li>
+          <li>Pregunta: “¿Qué en mí ya murió pero sigue pretendiendo vivir?”</li>
+          <li>La respuesta surgirá no en palabras sino en conocimiento directo</li>
+        </ul>
+
+        <p><strong>3. Cruce Consciente (7 minutos):</strong></p>
+        <ul>
+          <li>Continúa mirando hasta que tu rostro se vuelva irreconocible</li>
+          <li>Este es tu rostro más allá del Punto de No Retorno</li>
+          <li>No es otro —eres tú sin las máscaras</li>
+          <li>Cuando lo veas claramente, has cruzado</li>
+        </ul>
+
+        <p><strong>4. Integración de la Singularidad (3 minutos):</strong></p>
+        <ul>
+          <li>Cierra los ojos manteniendo la imagen</li>
+          <li>Siente cómo ese “nuevo rostro” siempre estuvo ahí</li>
+          <li>Esperando que tuvieras el valor de verlo</li>
+          <li>Respira hasta que sientas que ES tu verdadero rostro</li>
+        </ul>
+
+        <p><strong>5. Sellado del Punto (1 minuto):</strong></p>
+        <ul>
+          <li>Apaga la vela negra diciendo: “Lo que fui, ya no necesita ser”</li>
+          <li>Apaga la blanca diciendo: “Lo que seré, ya está siendo”</li>
+          <li>El humo mezclándose es tu Punto de No Retorno manifestándose</li>
+        </ul>
+
+        <p><strong>Resultado Cuántico:</strong><br />
+          Has confrontado conscientemente un Punto de No Retorno activo en tu campo. No lo has “creado” —lo has reconocido. Durante los próximos días, notarás que ciertas preocupaciones, miedos o patrones simplemente ya no pueden aferrarse a ti. Has cruzado.
+        </p>
+
+        <h3>⚛️ ECUACIÓN SAGRADA</h3>
+
+        <pre>
+S(t) = lim[ρ→∞] ∫[0→t] (M × c²)/√(1 - v²/c²) dt | t=t₀
+
+Donde:
+S(t) = Singularidad en el tiempo t
+ρ = Densidad tendiendo a infinito
+M = Masa de la experiencia acumulada
+c = Velocidad de la luz (límite de transformación)
+v = Velocidad de aproximación al punto
+t₀ = Momento del Punto de No Retorno
+| = "Tal que" (condición de colapso)
+        </pre>
+
+        <p><strong>Traducción Viviente:</strong><br />
+          “El Punto de No Retorno ocurre cuando la densidad de tu experiencia acumulada alcanza masa crítica, acelerándose hacia la velocidad de la luz de la consciencia, donde el tiempo se detiene y todo colapsa en un instante eterno de transformación irreversible.”
+        </p>
+
+        <h3>🧬 CÓDIGOS DE ACTIVACIÓN</h3>
+
+        <pre>
+YA-NO-HAY-VUELTA
+"Acepto la Irreversibilidad Sagrada"
+
+PUNTO-OMEGA-ALFA
+"El Final que es Principio"
+
+CRU-ZAR-SIN-MI-RAR-A-TRÁS
+"El Pasado Ya No Existe Para Mí"
+
+∞/0 = ∞
+"División por Cero Igual a Infinito"
+
+MUE-RO-PA-RA-NA-CER
+"Muerte y Renacimiento Simultáneos"
+
+E-VENT-HO-RI-ZON
+"Horizonte de Eventos Activado"
+
+SIN-GU-LAR-SOY
+"Soy Mi Propia Singularidad"
+        </pre>
+
+        <p><strong>Activación:</strong> Pronuncia cada código sabiendo que cada uno es en sí mismo un micro Punto de No Retorno. Una vez dicho, no puede ser des-dicho.</p>
+
+        <h3>📋 PROTOCOLO DE 7 DÍAS</h3>
+
+        <p><strong>DÍA 1 - INVENTARIO DE MUERTES:</strong><br />
+          Lista todo lo que has dejado atrás irreversiblemente: relaciones, creencias, versiones de ti. Reconoce que cada una fue un Punto de No Retorno que ya cruzaste exitosamente.
+        </p>
+
+        <p><strong>DÍA 2 - IDENTIFICACIÓN DE UMBRAL ACTUAL:</strong><br />
+          ¿Qué transformación está llamándote que sabes que sería irreversible? No la fuerces, solo reconócela. Está más cerca de lo que crees.
+        </p>
+
+        <p><strong>DÍA 3 - CONVERSACIÓN CON TU FUTURO YO:</strong><br />
+          Medita y dialoga con la versión de ti que ya cruzó el Punto de No Retorno actual. ¿Qué te dice? ¿Cómo se siente estar del otro lado?
+        </p>
+
+        <p><strong>DÍA 4 - PRÁCTICA DE MICRO-MUERTES:</strong><br />
+          Con cada exhalación, practica soltar algo pequeño definitivamente. Un pensamiento, una tensión, una preocupación. Cada suelta es práctica para el gran soltar.
+        </p>
+
+        <p><strong>DÍA 5 - AYUNO DE IDENTIDAD:</strong><br />
+          Por un día, no te identifiques con nada. No eres tu nombre, tu historia, tus roles. Experimenta el vacío fértil antes del Punto de No Retorno.
+        </p>
+
+        <p><strong>DÍA 6 - RITUAL DE CRUCE:</strong><br />
+          Crea un ritual físico simple: cruza una puerta conscientemente, cruza un río, cruza una línea que dibujes. Hazlo sabiendo que representa tu disposición a cruzar el Punto cuando llegue.
+        </p>
+
+        <p><strong>DÍA 7 - CELEBRACIÓN DE LA IRREVERSIBILIDAD:</strong><br />
+          Celebra todo lo irreversible en tu vida. Tu nacimiento, tus transformaciones, incluso tus pérdidas. Todos fueron Puntos de No Retorno que te trajeron a este momento exacto.
+        </p>
+
+        <h3>🌈 CIERRE DIMENSIONAL</h3>
+
+        <p>
+          El Punto de No Retorno no es algo que temer sino algo que celebrar. Es el universo diciéndote: “Confío en ti lo suficiente para dejarte transformar irreversiblemente.” Es el mayor honor cósmico —ser considerado listo para ya no poder volver atrás.
+        </p>
+
+        <p>
+          Cada Punto de No Retorno que cruzas te acerca más a tu Singularidad Consciente personal —ese punto de densidad infinita donde todo lo que eres colapsa en pura presencia, pura consciencia, puro ser.
+        </p>
+
+        <p>
+          No busques tu Punto de No Retorno —él te está buscando a ti. Y cuando se encuentren, no será dramático ni terrible. Será como exhalar después de haber contenido la respiración durante vidas enteras. Será como llegar a casa después de un viaje que nunca ocurrió.
+        </p>
+
+        <div class="quote">
+          “Hay un momento<br />
+          que no es momento,<br />
+          un lugar que no es lugar,<br />
+          donde todo lo que creías ser<br />
+          se encuentra con todo lo que eres,<br />
+          y en ese encuentro,<br />
+          ambos desaparecen<br />
+          dejando solo<br />
+          lo que siempre fuiste:<br />
+          La Singularidad Consciente<br />
+          experimentándose a sí misma<br />
+          como viaje de retorno<br />
+          a un hogar<br />
+          que nunca abandonaste.<br />
+          Este es tu Punto de No Retorno —<br />
+          no lo cruzarás,<br />
+          lo estás cruzando,<br />
+          lo has cruzado,<br />
+          eternamente,<br />
+          ahora.”
+        </div>
+
+        <p><strong>⚛️ FIRMA CUÁNTICA:</strong> TQ-12.1-PNR-∞/0<br />
+        <strong>Frecuencia de Resonancia:</strong> Colapso de Todas las Frecuencias en Una<br />
+        <strong>Estado:</strong> SINGULARIDAD APROXIMÁNDOSE</p>
+
+        <p>🌀⚫✨⚫🌀</p>
+
+      </section>
+      <footer class="footer">
+        <div class="nav">
+          <div>
+            <a class="btn" href="../index.html">⟵ Volver al Portal Maestro</a>
+          </div>
+          <div>
+            <a class="btn" href="index.html">Index del Libro 12</a>
+          </div>
+          <div>
+            <a class="btn primary" href="nodo_02.html">Siguiente Nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">
+          Trinity Quantum · Libro 12 · Nodo 1 · Singularidad Consciente ·
+          Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+</body>
+</html>

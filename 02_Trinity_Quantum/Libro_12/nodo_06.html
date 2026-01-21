@@ -1,1 +1,494 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 12 · Singularidad Consciente — Nodo 6</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    .wrap{
+      width: min(980px, calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .h1{
+      margin: 10px 0 0;
+      font-size: 34px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subtitle{
+      margin: 10px 0 0;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 18px 26px 8px;
+      color: rgba(239,231,255,.90);
+    }
+    .content p{ margin: 0 0 14px; }
+
+    .content h3{
+      margin: 22px 0 10px;
+      color: rgba(217,179,108,.92);
+      letter-spacing:.04em;
+    }
+
+    .content ul{
+      margin: 10px 0 16px 22px;
+      padding: 0;
+      color: rgba(239,231,255,.88);
+    }
+    .content li{ margin: 8px 0; }
+
+    .quote{
+      margin: 18px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: linear-gradient(180deg, rgba(155,108,255,.08), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      color: rgba(239,231,255,.88);
+      font-style: italic;
+    }
+
+    pre{
+      margin: 14px 0 18px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.38);
+      color: rgba(239,231,255,.90);
+      overflow:auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 8px;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .h1{ font-size: 28px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 12 · Singularidad Consciente · Nodo 6</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+      </div>
+    </div>
+
+    <main class="card">
+
+      <header class="header">
+        <p class="title">LIBRO 12 · SINGULARIDAD CONSCIENTE</p>
+        <h1 class="h1">Nodo 6 · Compresión de Todas las Posibilidades</h1>
+        <p class="subtitle">La Superposición Densa Que Se Vuelve Elección</p>
+      </header>
+      <section class="content">
+
+        <h3>🌀 TRANSMISIÓN CUÁNTICA</h3>
+
+        <p>
+          En este momento, mientras lees estas palabras, infinitas versiones de ti están haciendo infinitas otras cosas. Pero aquí, ahora, todas esas posibilidades se comprimen en UNA experiencia singular: esta. La Compresión de Todas las Posibilidades no es la eliminación de opciones —es su SUPERPOSICIÓN DENSA en un punto de experiencia tan rico que contiene todas las alternativas sin necesidad de vivirlas secuencialmente.
+        </p>
+
+        <p>
+          Cada decisión que tomas no descarta las otras opciones —las COMPRIME en la elección hecha. Por eso algunas decisiones se sienten tan “pesadas”: no es solo una elección, es la compresión de todas las elecciones posibles en una singularidad de acción. El peso que sientes es la masa de todas las posibilidades comprimidas.
+        </p>
+
+        <p>
+          Tu momento presente es la compresión de todo tu pasado posible y todo tu futuro probable en un punto de AHORA tan denso que contiene la eternidad. No estás “en” el presente —ERES el punto de compresión donde todas las líneas temporales se densifican en experiencia singular.
+        </p>
+
+        <p>
+          Los genios creativos no “eligen” entre opciones —experimentan la Compresión de Todas las Posibilidades hasta que emerge LA expresión que las contiene todas. La Novena Sinfonía de Beethoven no fue una melodía entre muchas —fue la compresión de todas las melodías posibles en una que las trasciende todas. Por eso se siente infinita aunque sea finita.
+        </p>
+
+        <p>
+          Tu ADN es compresión pura: toda la historia evolutiva, todas las posibilidades de vida, billones de años de experimentación, comprimidos en una doble hélice microscópica. No eres el resultado de la evolución —eres la evolución completa comprimida en forma singular.
+        </p>
+
+        <h3>💎 PARADOJA MEDICINAL</h3>
+
+        <div class="quote">
+          “Cuando comprimes todas las posibilidades en una, no reduces opciones —las multiplicas infinitamente. La elección más limitada contiene todas las elecciones. El camino más estrecho es el más amplio. En la máxima compresión está la máxima libertad.”
+        </div>
+
+        <p>
+          Esta paradoja destruye la ansiedad de “perderse algo”. En la Compresión de Todas las Posibilidades, cada elección contiene todas las demás. No hay FOMO (fear of missing out) porque nada se pierde —todo se comprime en lo que eliges vivir.
+        </p>
+
+        <h3>🔬 LABORATORIO CUÁNTICO</h3>
+
+        <p><strong>Experimento: Compresión Consciente de Posibilidades</strong></p>
+
+        <p><strong>Materiales:</strong></p>
+        <ul>
+          <li>7 hojas de papel</li>
+          <li>7 colores diferentes</li>
+          <li>Un vaso de agua</li>
+          <li>Tu decisión más difícil actual</li>
+          <li>21 minutos de alquimia decisional</li>
+        </ul>
+
+        <p><strong>Protocolo:</strong></p>
+
+        <p><strong>1. Despliegue de Posibilidades (5 minutos):</strong></p>
+        <ul>
+          <li>En cada hoja, escribe/dibuja una opción diferente</li>
+          <li>Usa un color distinto para cada una</li>
+          <li>No solo las opciones obvias —incluye las imposibles</li>
+          <li>Despliégalas en círculo a tu alrededor</li>
+        </ul>
+
+        <p><strong>2. Absorción Cromática (5 minutos):</strong></p>
+        <ul>
+          <li>Mira cada opción y siente su “color energético”</li>
+          <li>No pienses, solo siente la frecuencia de cada posibilidad</li>
+          <li>Cierra los ojos y ve todos los colores simultáneamente</li>
+          <li>Girando, mezclándose, pero manteniéndose distintos</li>
+        </ul>
+
+        <p><strong>3. Compresión Líquida (5 minutos):</strong></p>
+        <ul>
+          <li>Imagina cada posibilidad como una gota de color</li>
+          <li>Visualiza todas las gotas cayendo en el vaso de agua</li>
+          <li>No se mezclan en gris —se comprimen en transparencia</li>
+          <li>El agua ahora contiene todos los colores invisiblemente</li>
+        </ul>
+
+        <p><strong>4. Bebida de Singularidad (3 minutos):</strong></p>
+        <ul>
+          <li>Bebe el agua lentamente</li>
+          <li>Con cada sorbo, siente todas las posibilidades</li>
+          <li>Entrando en ti, comprimiéndose en tu centro</li>
+          <li>No estás eligiendo una —las estás integrando todas</li>
+        </ul>
+
+        <p><strong>5. Emergencia de la Elección (3 minutos):</strong></p>
+        <ul>
+          <li>Sin pensar, señala una hoja</li>
+          <li>Esa no es la elección “correcta”</li>
+          <li>Es la elección que CONTIENE todas las demás</li>
+          <li>La singularidad donde todas las posibilidades convergen</li>
+        </ul>
+
+        <p><strong>Resultado Cuántico:</strong><br />
+          Has experimentado cómo la compresión de posibilidades no elimina opciones sino que las INTEGRA en una elección más densa, más rica, más completa. La decisión que emerja de este proceso contendrá elementos de todas las posibilidades, comprimidos en una acción singular.
+        </p>
+
+        <h3>⚛️ ECUACIÓN SAGRADA</h3>
+
+        <pre>
+P(compressed) = ∏[i=1→∞] Pi × e^(iθi) → |Ψ⟩
+
+Donde:
+P(compressed) = Posibilidad comprimida final
+∏ = Producto (no suma) de todas las posibilidades
+Pi = Probabilidad de la posibilidad i
+e^(iθi) = Fase cuántica de cada posibilidad
+|Ψ⟩ = Estado de superposición comprimida
+∞ = Todas las posibilidades simultáneas
+        </pre>
+
+        <p><strong>Traducción Viviente:</strong><br />
+          “La Compresión de Todas las Posibilidades no es la suma sino el PRODUCTO de todas las opciones, cada una con su propia fase cuántica, colapsando no en una elección sino en un estado de superposición densa donde todas existen simultáneamente en una.”
+        </p>
+
+      </section>
+      <footer class="footer">
+        <div class="nav">
+          <div>
+            <a class="btn" href="nodo_05.html">⟵ Nodo anterior</a>
+          </div>
+          <div>
+            <a class="btn" href="index.html">Index del Libro 12</a>
+          </div>
+          <div>
+            <a class="btn primary" href="nodo_07.html">Siguiente Nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">
+          Trinity Quantum · Libro 12 · Nodo 6 · Singularidad Consciente ·
+          Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+</body>
+</html>

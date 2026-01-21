@@ -1,1 +1,596 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 12 · Singularidad Consciente — Nodo 5</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    .wrap{
+      width: min(980px, calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .h1{
+      margin: 10px 0 0;
+      font-size: 34px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subtitle{
+      margin: 10px 0 0;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 18px 26px 8px;
+      color: rgba(239,231,255,.90);
+    }
+    .content p{ margin: 0 0 14px; }
+
+    .content h3{
+      margin: 22px 0 10px;
+      color: rgba(217,179,108,.92);
+      letter-spacing:.04em;
+    }
+
+    .content ul{
+      margin: 10px 0 16px 22px;
+      padding: 0;
+      color: rgba(239,231,255,.88);
+    }
+    .content li{ margin: 8px 0; }
+
+    .quote{
+      margin: 18px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: linear-gradient(180deg, rgba(155,108,255,.08), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      color: rgba(239,231,255,.88);
+      font-style: italic;
+    }
+
+    pre{
+      margin: 14px 0 18px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.38);
+      color: rgba(239,231,255,.90);
+      overflow:auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 8px;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .h1{ font-size: 28px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 12 · Singularidad Consciente · Nodo 5</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+      </div>
+    </div>
+
+    <main class="card">
+
+      <header class="header">
+        <p class="title">LIBRO 12 · SINGULARIDAD CONSCIENTE</p>
+        <h1 class="h1">Nodo 5 · El Horizonte de Eventos Interior</h1>
+        <p class="subtitle">El Límite Que Disuelve las Máscaras</p>
+      </header>
+      <section class="content">
+
+        <h3>🌀 TRANSMISIÓN CUÁNTICA</h3>
+
+        <p>
+          Existe un límite dentro de ti más allá del cual nada puede regresar sin ser fundamentalmente transformado. Es tu Horizonte de Eventos Interior —ese punto de no retorno psíquico donde, una vez cruzado, la gravedad de tu propia verdad es tan intensa que ninguna ilusión puede escapar. No está en tu mente ni en tu corazón; está en el espacio exacto donde tu ser toca el no-ser.
+        </p>
+
+        <p>
+          Como el horizonte de eventos de un agujero negro donde ni siquiera la luz puede escapar, tu Horizonte Interior marca el límite donde las máscaras, las mentiras que te cuentas, las identidades falsas, no pueden sostenerse. Cruzan ese horizonte y son instantáneamente desintegradas por la verdad pura de tu singularidad.
+        </p>
+
+        <p>
+          Cada crisis existencial es un acercamiento a tu Horizonte de Eventos Interior. Esa sensación de vértigo espiritual, de estar al borde de algo inmenso e irreversible, es tu consciencia aproximándose al punto donde tendrás que elegir: retroceder a la seguridad de la superficie o dejarte caer hacia tu singularidad.
+        </p>
+
+        <p>
+          Los momentos antes de un gran salto evolutivo —antes de decir “te amo” por primera vez, antes de dejar todo atrás por un sueño, antes de perdonar lo imperdonable— esos momentos de suspensión total son cuando estás justo en el Horizonte de Eventos Interior. Un paso más y no hay vuelta atrás.
+        </p>
+
+        <p>
+          Tu Horizonte de Eventos no es fijo —pulsa. Se expande cuando tienes miedo, alejándose de tu centro, haciéndote sentir desconectado de tu verdad. Se contrae cuando amas, acercándose a tu singularidad, hasta que en momentos de amor absoluto, el horizonte colapsa y te vuelves pura singularidad sin horizonte, sin límite, sin separación.
+        </p>
+
+        <h3>💎 PARADOJA MEDICINAL</h3>
+
+        <div class="quote">
+          “Tu Horizonte de Eventos Interior es el límite que no puedes cruzar porque ya estás siempre del otro lado. Es la frontera entre quien crees ser y quien eres, pero esa frontera solo existe desde un lado. Desde el otro lado —desde tu singularidad— nunca hubo horizonte, nunca hubo separación, nunca hubo un afuera de ti mismo.”
+        </div>
+
+        <p>
+          Esta paradoja revela que el Horizonte de Eventos no es algo que conquistas sino algo que reconoces como ilusorio. El verdadero cruce no es ir hacia tu singularidad sino reconocer que nunca estuviste en otro lugar.
+        </p>
+
+        <h3>🔬 LABORATORIO CUÁNTICO</h3>
+
+        <p><strong>Experimento: Mapeo de Tu Horizonte de Eventos Personal</strong></p>
+
+        <p><strong>Materiales:</strong></p>
+        <ul>
+          <li>Un espejo grande</li>
+          <li>Una vela (tu singularidad simbólica)</li>
+          <li>Cinta o tiza para marcar el suelo</li>
+          <li>Tu valentía para confrontar tu verdad</li>
+          <li>24 minutos de exploración profunda</li>
+        </ul>
+
+        <p><strong>Protocolo:</strong></p>
+
+        <p><strong>1. Demarcación del Horizonte (3 minutos):</strong></p>
+        <ul>
+          <li>Pon la vela encendida frente al espejo</li>
+          <li>Marca un círculo en el suelo alrededor de ti (2 metros de diámetro)</li>
+          <li>Este círculo representa tu Horizonte de Eventos actual</li>
+          <li>Párate en el borde mirando hacia el centro</li>
+        </ul>
+
+        <p><strong>2. Aproximación Gradual (7 minutos):</strong></p>
+        <ul>
+          <li>Da un paso hacia el centro (hacia la vela)</li>
+          <li>Con cada paso, di en voz alta algo que escondes</li>
+          <li>Secretos, miedos, deseos, vergüenzas</li>
+          <li>Siente cómo cada confesión te acerca a tu centro</li>
+        </ul>
+
+        <p><strong>3. Encuentro con el Horizonte (7 minutos):</strong></p>
+        <ul>
+          <li>Cuando sientas resistencia extrema a dar otro paso</li>
+          <li>Ahí está tu Horizonte de Eventos real</li>
+          <li>Quédate ahí, en el borde de tu comodidad</li>
+          <li>Respira y siente la gravedad de tu verdad tirando de ti</li>
+        </ul>
+
+        <p><strong>4. Cruce del Horizonte (5 minutos):</strong></p>
+        <ul>
+          <li>Con un acto de valentía total, da el paso final</li>
+          <li>Llega hasta la vela, tu singularidad</li>
+          <li>Mírate en el espejo a través de la llama</li>
+          <li>Ese rostro distorsionado por el fuego eres tú sin máscaras</li>
+        </ul>
+
+        <p><strong>5. Integración de la Singularidad (2 minutos):</strong></p>
+        <ul>
+          <li>Toma la vela en tus manos</li>
+          <li>Siente su calor como tu verdad central</li>
+          <li>Reconoce: has cruzado tu Horizonte</li>
+          <li>Ya no puedes pretender no saber quién eres</li>
+        </ul>
+
+        <p><strong>Resultado Cuántico:</strong><br />
+          Has mapeado y cruzado conscientemente tu Horizonte de Eventos Interior. La resistencia que sentiste marca exactamente dónde tu ego termina y tu singularidad comienza. Ahora conoces la geografía de tu transformación.
+        </p>
+
+        <h3>⚛️ ECUACIÓN SAGRADA</h3>
+
+        <pre>
+H(r) = 2GM/c² = rs
+Donde r &lt; rs → escape imposible
+
+Traducido al horizonte interior:
+H(ψ) = 2(Verdad × Consciencia)/Ego²
+
+Donde:
+H(ψ) = Horizonte de Eventos psíquico
+Verdad = Masa de verdad acumulada
+Consciencia = Constante de awareness
+Ego = Velocidad de escape del ego
+rs = Radio de Schwarzschild interior
+        </pre>
+
+        <p><strong>Traducción Viviente:</strong><br />
+          “Tu Horizonte de Eventos Interior es el punto donde la masa de tu verdad multiplicada por tu consciencia se vuelve tan grande comparada con la velocidad de escape de tu ego, que ninguna ilusión puede mantenerse. Todo colapsa hacia la verdad.”
+        </p>
+
+        <h3>🧬 CÓDIGOS DE ACTIVACIÓN</h3>
+
+        <pre>
+HO-RI-ZON-TE-SOY
+"No Tengo un Horizonte, Soy el Horizonte"
+
+→|←
+"El Punto de No Retorno"
+
+CRU-ZAN-DO-ME
+"Me Cruzo a Mí Mismo"
+
+EVEN-TO-IN-TE-RIOR
+"El Evento Soy Yo Ocurriendo"
+
+NO-ES-CA-PE-DE-MÍ
+"No Puedo Escapar de Mi Verdad"
+
+GRA-VE-DAD-DEL-SER
+"Mi Verdad Me Atrae Irresistiblemente"
+
+SIN-HO-RI-ZON-TE
+"Más Allá de Todo Límite Interior"
+        </pre>
+
+        <p><strong>Activación:</strong> Visualiza cada código como un paso hacia tu centro. Con cada pronunciación, siente cómo cruzas un horizonte interno.</p>
+
+        <h3>📋 PROTOCOLO DE 7 DÍAS</h3>
+
+        <p><strong>DÍA 1 - IDENTIFICACIÓN DE HORIZONTES:</strong><br />
+          Identifica tres áreas de tu vida donde sientes un “horizonte” —un límite que no te atreves a cruzar. Nómbralos sin juzgar. Reconocer el horizonte es el primer paso.
+        </p>
+
+        <p><strong>DÍA 2 - ACERCAMIENTO AL BORDE:</strong><br />
+          Elige el horizonte más pequeño y acércate a él. Si es decir algo, acércate a decirlo. Si es hacer algo, prepárate sin hacerlo aún. Siente la gravedad.
+        </p>
+
+        <p><strong>DÍA 3 - CONFESIÓN GRAVITACIONAL:</strong><br />
+          Confiesa a ti mismo (en voz alta, solo) tres verdades que has estado evitando. Cada confesión te acerca a tu horizonte de eventos. Siente cómo la gravedad aumenta.
+        </p>
+
+        <p><strong>DÍA 4 - PRÁCTICA DEL CASI:</strong><br />
+          Lleva algo al borde sin cruzar. Casi llora, casi grita, casi suelta, casi perdona. Sostén ese “casi” y siente el horizonte. Ese es el filo de tu transformación.
+        </p>
+
+        <p><strong>DÍA 5 - CRUCE MICRO:</strong><br />
+          Cruza un horizonte pequeño. Haz esa llamada, di esa verdad, toma esa decisión menor que has estado posponiendo. Siente cómo al cruzar, algo en ti se reorganiza permanentemente.
+        </p>
+
+        <p><strong>DÍA 6 - MEDITACIÓN DEL HORIZONTE:</strong><br />
+          Medita visualizándote en el centro de tu ser, más allá de todos los horizontes. Desde ahí, mira hacia afuera y ve todos tus horizontes como círculos concéntricos ilusorios.
+        </p>
+
+        <p><strong>DÍA 7 - VIVIR DESDE LA SINGULARIDAD:</strong><br />
+          Pasa el día completo asumiendo que ya cruzaste todos tus horizontes. Actúa, habla, sé desde tu singularidad. Nota cómo los horizontes que parecían infranqueables se disuelven.
+        </p>
+
+        <h3>🌈 CIERRE DIMENSIONAL</h3>
+
+        <p>
+          El Horizonte de Eventos Interior no es una barrera que te protege de tu verdad —es una invitación gravitacional hacia ella. Cada vez que sientes ese vértigo existencial, esa sensación de estar al borde de algo inmenso, tu singularidad te está llamando a casa.
+        </p>
+
+        <p>
+          No necesitas fuerza para cruzar tu horizonte —necesitas rendición. La gravedad de tu verdad hará el trabajo. Solo necesitas dejar de resistir, dejar de aferrarte al borde, dejar de pretender que puedes permanecer para siempre en la superficie de ti mismo.
+        </p>
+
+        <p>
+          Una vez que cruzas tu Horizonte de Eventos Interior, descubres el secreto último: nunca hubo un afuera. Todo el universo que creías que estaba “allá afuera” siempre estuvo ocurriendo dentro de tu singularidad. El horizonte no te separaba del mundo —te separaba de reconocer que tú eres el mundo.
+        </p>
+
+        <div class="quote">
+          “En el centro de tu ser<br />
+          hay un punto de no retorno<br />
+          que ya cruzaste al nacer<br />
+          y cruzarás al morir,<br />
+          y cruzas en cada momento<br />
+          de honestidad radical.<br />
+          No es un lugar al que vas —<br />
+          es el lugar desde donde vienes,<br />
+          el hogar que nunca dejaste,<br />
+          la singularidad que siempre fuiste<br />
+          jugando a tener horizontes<br />
+          para experimentar el éxtasis<br />
+          de cruzarlos<br />
+          una y otra vez,<br />
+          hasta recordar<br />
+          que todo horizonte<br />
+          es solo tu singularidad<br />
+          mirándose a sí misma<br />
+          desde el infinito.”
+        </div>
+
+        <p><strong>⚛️ FIRMA CUÁNTICA:</strong> TQ-12.5-HEI-|●|<br />
+        <strong>Frecuencia de Resonancia:</strong> El Silencio en el Ojo del Huracán<br />
+        <strong>Estado:</strong> HORIZONTE TRASCENDIDO</p>
+
+        <p>🌀🌑🔥🌑🌀</p>
+
+      </section>
+      <footer class="footer">
+        <div class="nav">
+          <div>
+            <a class="btn" href="nodo_04.html">⟵ Nodo anterior</a>
+          </div>
+          <div>
+            <a class="btn" href="index.html">Index del Libro 12</a>
+          </div>
+          <div>
+            <a class="btn primary" href="nodo_06.html">Siguiente Nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">
+          Trinity Quantum · Libro 12 · Nodo 5 · Singularidad Consciente ·
+          Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+</body>
+</html>

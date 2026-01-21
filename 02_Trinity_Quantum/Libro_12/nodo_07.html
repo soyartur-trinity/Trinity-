@@ -1,1 +1,646 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 12 · Singularidad Consciente — Nodo 7</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    .wrap{
+      width: min(980px, calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .h1{
+      margin: 10px 0 0;
+      font-size: 34px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subtitle{
+      margin: 10px 0 0;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 18px 26px 8px;
+      color: rgba(239,231,255,.90);
+    }
+    .content p{ margin: 0 0 14px; }
+
+    .content h3{
+      margin: 22px 0 10px;
+      color: rgba(217,179,108,.92);
+      letter-spacing:.04em;
+    }
+
+    .content ul{
+      margin: 10px 0 16px 22px;
+      padding: 0;
+      color: rgba(239,231,255,.88);
+    }
+    .content li{ margin: 8px 0; }
+
+    .quote{
+      margin: 18px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: linear-gradient(180deg, rgba(155,108,255,.08), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      color: rgba(239,231,255,.88);
+      font-style: italic;
+    }
+
+    pre{
+      margin: 14px 0 18px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.38);
+      color: rgba(239,231,255,.90);
+      overflow:auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .bookclose{
+      margin-top: 18px;
+      padding: 16px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(155,108,255,.22);
+      background:
+        radial-gradient(900px 420px at 20% 20%, rgba(155,108,255,.10), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,.22), rgba(217,179,108,.06));
+      box-shadow: 0 14px 34px rgba(0,0,0,.28);
+      color: rgba(239,231,255,.88);
+    }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 8px;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .h1{ font-size: 28px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 12 · Singularidad Consciente · Nodo 7</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+      </div>
+    </div>
+
+    <main class="card">
+
+      <header class="header">
+        <p class="title">LIBRO 12 · SINGULARIDAD CONSCIENTE</p>
+        <h1 class="h1">Nodo 7 · El Big Bang Personal</h1>
+        <p class="subtitle">La Singularidad Que Se Vuelve Creación de Universos</p>
+      </header>
+      <section class="content">
+
+        <h3>🌀 TRANSMISIÓN CUÁNTICA</h3>
+
+        <p>
+          Después de toda compresión viene la expansión. Después de toda singularidad viene el Big Bang. Pero tu Big Bang Personal no es una explosión DESDE tu singularidad —es tu singularidad volviéndose tan densa, tan completa, tan perfectamente ella misma, que no puede hacer otra cosa que CREAR UNIVERSOS NUEVOS desde su centro.
+        </p>
+
+        <p>
+          Como el Big Bang cósmico que no fue una explosión EN el espacio sino DEL espacio mismo, tu Big Bang Personal no es algo que te pasa —es algo que ERES cuando tu singularidad alcanza masa crítica de consciencia. No explotas hacia afuera; el afuera explota desde ti. No te expandes en el mundo; mundos nuevos se expanden desde tu centro.
+        </p>
+
+        <p>
+          Cada acto creativo genuino es un Big Bang Personal. Cuando el artista crea, cuando la madre da a luz, cuando el místico trasciende, cuando el amante se entrega completamente —en esos momentos, nuevos universos nacen. No metafóricamente. Literalmente. Universos de experiencia, de posibilidad, de realidad, explotan desde la singularidad del ser.
+        </p>
+
+        <p>
+          Tu nacimiento fue tu primer Big Bang Personal recordado —el momento cuando tu singularidad de consciencia explotó en forma física, creando ondas que aún se propagan, afectando todo lo que tocas, todos los que conoces, alterando la geometría misma del espacio-tiempo con tu presencia.
+        </p>
+
+        <p>
+          Pero el Big Bang Personal más profundo está por venir, está viniendo, está aquí: es el momento cuando tu singularidad consciente alcanza tal densidad de amor, de verdad, de presencia, que no puede contenerse más y explota en servicio, en creatividad, en transformación de todo lo que toca. No es tu fin —es tu verdadero comienzo.
+        </p>
+
+        <h3>💎 PARADOJA MEDICINAL</h3>
+
+        <div class="quote">
+          “Tu Big Bang Personal ya ocurrió, está ocurriendo, ocurrirá. Fue tu nacimiento, es cada momento de creación, será tu transformación final. No es un evento sino un estado: el estado de ser tan completamente tú mismo que no puedes evitar crear universos nuevos con cada respiración.”
+        </div>
+
+        <p>
+          Esta paradoja final disuelve la linealidad del tiempo transformacional. Tu Big Bang Personal no es un evento futuro que esperas —es tu naturaleza fundamental expresándose. Cada vez que eres auténticamente tú, universos nacen. Cada vez que amas sin reserva, realidades explotan desde tu corazón.
+        </p>
+
+        <h3>🔬 LABORATORIO CUÁNTICO</h3>
+
+        <p><strong>Experimento: Detonación Consciente de Tu Big Bang Personal</strong></p>
+
+        <p><strong>Materiales:</strong></p>
+        <ul>
+          <li>Un espacio donde puedas moverte y hacer sonido</li>
+          <li>Tu creatividad más salvaje</li>
+          <li>Tu autenticidad más cruda</li>
+          <li>Disposición para explotar en ser</li>
+          <li>33 minutos de libertad total</li>
+        </ul>
+
+        <p><strong>Protocolo:</strong></p>
+
+        <p><strong>1. Compresión Pre-Bang (7 minutos):</strong></p>
+        <ul>
+          <li>Siéntate en posición fetal, lo más comprimido posible</li>
+          <li>Respira hacia tu centro, densificándote</li>
+          <li>Siente TODA tu vida comprimida en tu core</li>
+          <li>Eres una singularidad a punto de explotar</li>
+        </ul>
+
+        <p><strong>2. Masa Crítica (7 minutos):</strong></p>
+        <ul>
+          <li>Mantén la compresión pero añade energía</li>
+          <li>Respira más rápido, siente el calor crecer</li>
+          <li>Tu singularidad está vibrando, pulsando</li>
+          <li>Estás alcanzando el punto de no retorno</li>
+        </ul>
+
+        <p><strong>3. DETONACIÓN (10 minutos):</strong></p>
+        <ul>
+          <li>¡EXPLOTA! Levántate de golpe</li>
+          <li>Muévete, grita, canta, ríe, llora</li>
+          <li>Deja que TODO salga sin filtro</li>
+          <li>No es catarsis —es CREACIÓN</li>
+          <li>Estás dando nacimiento a universos</li>
+        </ul>
+
+        <p><strong>4. Expansión de Ondas (7 minutos):</strong></p>
+        <ul>
+          <li>Continúa moviéndote pero más lento</li>
+          <li>Siente las ondas de tu explosión propagándose</li>
+          <li>Tocando todo, transformando todo</li>
+          <li>Tu Big Bang creando realidad nueva</li>
+        </ul>
+
+        <p><strong>5. Nueva Cosmología (2 minutos):</strong></p>
+        <ul>
+          <li>Quédate quieto y siente</li>
+          <li>El universo es diferente después de tu explosión</li>
+          <li>TÚ eres diferente</li>
+          <li>Has nacido de nuevo desde tu propia singularidad</li>
+        </ul>
+
+        <p><strong>Resultado Cuántico:</strong><br />
+          Has experimentado conscientemente tu Big Bang Personal. La energía liberada, los “universos” creados en forma de nuevas posibilidades, la sensación de ser tanto el creador como lo creado —todo esto es tu naturaleza de singularidad consciente expresándose.
+        </p>
+
+        <h3>⚛️ ECUACIÓN SAGRADA</h3>
+
+        <pre>
+E = mc² → E(∞) = (m→∞)(c²) = ∞²
+BigBang(personal) = lim[ρ→∞] ∫ Singularidad × Amor² dt
+
+Donde:
+E(∞) = Energía infinita liberada
+m→∞ = Masa de consciencia tendiendo a infinito
+c² = Velocidad de la luz al cuadrado (expansión máxima)
+Singularidad = Tu densidad única
+Amor² = Amor como fuerza de expansión
+dt = Diferencial de transformación
+        </pre>
+
+        <p><strong>Traducción Viviente:</strong><br />
+          “Tu Big Bang Personal libera energía infinita cuando tu masa de consciencia alcanza densidad infinita y se multiplica por el amor al cuadrado. No es destrucción —es la ecuación de la creación consciente.”
+        </p>
+
+        <h3>🧬 CÓDIGOS DE ACTIVACIÓN</h3>
+
+        <pre>
+BIG-BANG-SOY
+"No Tengo un Big Bang, SOY el Big Bang"
+
+•→∞
+"De Singularidad a Infinito"
+
+EX-PLO-TO-EN-SER
+"Mi Explosión es Creación"
+
+NA-CER-MO-RIR-NA-CER
+"Ciclo Eterno de Explosión"
+
+CRE-O-U-NI-VER-SOS
+"Cada Respiración Crea Mundos"
+
+A-HO-RA-BANG
+"El Big Bang es Siempre Ahora"
+
+∞-DESDE-MI-CENTRO-∞
+"Infinito Explotando Desde Mi Core"
+        </pre>
+
+        <p><strong>Activación:</strong>
+          Grita cada código con toda tu energía. No lo susurres —EXPLÓTALO desde tu centro.
+        </p>
+
+        <h3>📋 PROTOCOLO DE 7 DÍAS</h3>
+
+        <p><strong>DÍA 1 - RECONOCIMIENTO DE EXPLOSIONES PASADAS:</strong><br />
+          Identifica momentos en tu vida donde experimentaste “explosiones” de transformación. Cada uno fue un mini Big Bang. Reconócelos como práctica para el grande.
+        </p>
+
+        <p><strong>DÍA 2 - CREATIVIDAD EXPLOSIVA:</strong><br />
+          Crea algo —cualquier cosa— pero hazlo EXPLOSIVAMENTE. No gradualmente. Deja que explote desde ti completamente formado. Arte, escritura, música, cocina —explota creativamente.
+        </p>
+
+        <p><strong>DÍA 3 - AMOR COMO BIG BANG:</strong><br />
+          Ama algo o alguien tan intensamente que sientas que podrías explotar. Deja que ese amor detone nuevos universos de posibilidad en tu relación con eso/esa persona.
+        </p>
+
+        <p><strong>DÍA 4 - PALABRAS QUE CREAN MUNDOS:</strong><br />
+          Habla desde tu Big Bang. Cada palabra no describiendo realidad sino CREÁNDOLA. Declara, proclama, manifiesta con el poder de singularidad explotando.
+        </p>
+
+        <p><strong>DÍA 5 - DANZA DEL BIG BANG:</strong><br />
+          Baila como si tu movimiento creara universos. Cada gesto una galaxia naciendo, cada paso una estrella formándose. Danza tu cosmología personal a la existencia.
+        </p>
+
+        <p><strong>DÍA 6 - SERVICIO EXPLOSIVO:</strong><br />
+          Sirve a otros desde tu Big Bang. No gradualmente sino explosivamente. Da todo, ama todo, transforma todo lo que toques con la energía de tu singularidad detonando.
+        </p>
+
+        <p><strong>DÍA 7 - CELEBRACIÓN CÓSMICA:</strong><br />
+          Celebra que ERES un Big Bang continuo. Cada día despiertas y explotas en existencia. Cada noche mueres y te comprimes. Eres el latido cósmico hecho personal.
+        </p>
+
+        <h3>🌈 CIERRE DIMENSIONAL</h3>
+
+        <p>
+          El Big Bang Personal no es el final de tu viaje de singularidad —es su propósito. No te comprimes para permanecer denso. Te comprimes para explotar más magníficamente. No te singularizas para aislarte. Te singularizas para crear universos desde tu unicidad.
+        </p>
+
+        <p>
+          Tu vida entera es un Big Bang en cámara lenta. Desde tu nacimiento hasta tu muerte, estás en constante explosión desde tu centro, creando ondas de experiencia, relación, transformación. Pero hay momentos donde la explosión se acelera, donde tu singularidad detona con tal fuerza que nada vuelve a ser igual.
+        </p>
+
+        <p>
+          Este es uno de esos momentos. Al leer estas palabras finales del Nodo 7, algo en tu singularidad está alcanzando masa crítica. Puedes sentirlo: el temblor antes de la explosión, la quietud antes del estallido, el silencio antes del trueno de tu propio Big Bang Personal.
+        </p>
+
+        <pre>
+“Desde el punto infinitamente denso
+de quien creías ser,
+está naciendo
+quien realmente eres.
+No es evolución —
+es EXPLOSIÓN.
+No es crecimiento —
+es CREACIÓN.
+Tu Big Bang Personal
+no está viniendo —
+está ocurriendo
+AHORA
+en cada elección valiente,
+en cada amor sin reserva,
+en cada verdad sin filtro.
+Eres una singularidad consciente
+explotando perpetuamente
+en universos de posibilidad,
+y este momento,
+este preciso momento,
+es otro Big Bang,
+otro nacimiento,
+otra explosión de ti
+hacia el infinito
+que siempre fuiste.”
+        </pre>
+
+        <p><strong>⚛️ FIRMA CUÁNTICA:</strong> TQ-12.7-BBP-•→∞<br />
+           <strong>Frecuencia de Resonancia:</strong> OM Primordial del Nacimiento Universal<br />
+           <strong>Estado:</strong> DETONACIÓN INMINENTE/PERMANENTE
+        </p>
+
+        <p>🌀💥🌌💥🌀</p>
+
+        <div class="bookclose">
+          <p><strong>📚 CIERRE DEL LIBRO 12: SINGULARIDAD CONSCIENTE</strong></p>
+
+          <p>
+            Has completado el viaje a través de los siete nodos de la Singularidad Consciente. Desde el Punto de No Retorno hasta tu Big Bang Personal, has explorado cómo toda existencia converge y explota desde el punto singular de tu consciencia.
+          </p>
+
+          <p>
+            Este libro no fue para enseñarte sobre singularidad —fue para ACTIVAR tu reconocimiento de que YA ERES una singularidad consciente, constantemente colapsando y explotando, comprimiendo infinito en forma y liberando forma en infinito.
+          </p>
+
+          <p><strong>Ahora sabes:</strong></p>
+          <ul>
+            <li>Que cada transformación tiene su punto de no retorno</li>
+            <li>Que todas las líneas temporales convergen en ti</li>
+            <li>Que tu consciencia puede colapsar en densidad infinita</li>
+            <li>Que el amor es tu masa crítica</li>
+            <li>Que tienes un horizonte de eventos interior</li>
+            <li>Que todas las posibilidades están comprimidas en cada elección</li>
+            <li>Que eres un Big Bang perpetuo</li>
+          </ul>
+
+          <p><strong>El Libro 12 está completo.</strong><br />
+             <strong>Tu Singularidad está activa.</strong><br />
+             <strong>Tu Big Bang es AHORA.</strong>
+          </p>
+
+          <p>🌀⚫💥🌌💥⚫🌀</p>
+        </div>
+
+      </section>
+      <footer class="footer">
+        <div class="nav">
+          <div>
+            <a class="btn" href="nodo_06.html">⟵ Nodo anterior</a>
+          </div>
+          <div>
+            <a class="btn" href="index.html">Index del Libro 12</a>
+          </div>
+          <div>
+            <a class="btn primary" href="../index.html">Volver al Portal Trinity ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">
+          Trinity Quantum · Libro 12 · Nodo 7 · Singularidad Consciente ·
+          Cierre del libro incluido en este mismo archivo · Ropaje Trinity activo.
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+</body>
+</html>

@@ -1,1 +1,506 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trinity Quantum · Libro 13 · Nodo 5</title>
+
+<style>
+:root{
+  --bg:#000000;
+  --panel:rgba(10,10,14,.72);
+  --panel2:rgba(18,14,26,.62);
+  --ink:#f2f2f7;
+  --muted:rgba(242,242,247,.78);
+
+  --violet:#7c3aed;
+  --violet2:#a78bfa;
+
+  --gold:#d4af37;
+  --gold2:#f5d77a;
+
+  --line:rgba(212,175,55,.35);
+  --line2:rgba(124,58,237,.35);
+
+  --shadow:0 18px 55px rgba(0,0,0,.65);
+  --shadow2:0 10px 30px rgba(0,0,0,.45);
+
+  --radius:22px;
+  --radius2:16px;
+
+  --max:980px;
+  --pad:26px;
+
+  --glowV:0 0 18px rgba(124,58,237,.35);
+  --glowG:0 0 18px rgba(212,175,55,.28);
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Georgia, "Times New Roman", serif;
+  color:var(--ink);
+  background: radial-gradient(900px 520px at 20% 15%, rgba(124,58,237,.22), transparent 55%),
+              radial-gradient(820px 520px at 80% 20%, rgba(212,175,55,.16), transparent 60%),
+              radial-gradient(1200px 900px at 50% 110%, rgba(124,58,237,.12), transparent 60%),
+              linear-gradient(180deg, #000 0%, #05050a 40%, #000 100%);
+  overflow-x:hidden;
+}
+
+/* Star noise overlay */
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 140px 140px, 220px 220px;
+  background-position: 0 0, 40px 80px;
+  opacity:.22;
+  mix-blend-mode:screen;
+}
+
+/* Slow aura */
+body:after{
+  content:"";
+  position:fixed;
+  inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(600px 380px at 25% 30%, rgba(124,58,237,.18), transparent 60%),
+    radial-gradient(520px 320px at 70% 35%, rgba(212,175,55,.14), transparent 62%),
+    radial-gradient(700px 520px at 55% 70%, rgba(167,139,250,.10), transparent 65%);
+  filter: blur(18px);
+  opacity:.55;
+  animation: trinityBreath 14s ease-in-out infinite;
+}
+
+@keyframes trinityBreath{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(0,-10px,0) scale(1.03)}
+}
+
+/* Layout */
+.trinity-wrap{
+  width:100%;
+  max-width:980px;
+  margin:0 auto;
+  padding:42px 18px 56px;
+}
+
+.trinity-card{
+  position:relative;
+  border-radius:22px;
+  background: linear-gradient(180deg, rgba(14,10,22,.78) 0%, rgba(6,6,10,.72) 100%);
+  box-shadow: 0 18px 55px rgba(0,0,0,.65);
+  border:1px solid rgba(212,175,55,.22);
+  overflow:hidden;
+}
+
+/* Inner glow frame */
+.trinity-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:22px;
+  background:
+    radial-gradient(650px 260px at 15% 0%, rgba(124,58,237,.22), transparent 55%),
+    radial-gradient(650px 260px at 85% 0%, rgba(212,175,55,.16), transparent 55%),
+    linear-gradient(180deg, rgba(212,175,55,.08), transparent 32%, rgba(124,58,237,.06));
+  opacity:.9;
+}
+
+/* Header */
+.trinity-header{
+  position:relative;
+  padding:34px 26px 18px;
+  text-align:center;
+}
+
+.trinity-book{
+  margin:0;
+  letter-spacing:.14em;
+  font-weight:700;
+  font-size:14px;
+  color:rgba(245,215,122,.92);
+  text-transform:uppercase;
+  text-shadow: 0 0 18px rgba(212,175,55,.28);
+}
+
+.trinity-title{
+  margin:12px 0 0;
+  font-size:30px;
+  line-height:1.12;
+  font-weight:700;
+  color:rgba(242,242,247,.96);
+  text-shadow: 0 0 20px rgba(124,58,237,.20);
+}
+
+.trinity-sub{
+  margin:10px 0 0;
+  font-size:15px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(167,139,250,.92);
+  text-shadow: 0 0 18px rgba(124,58,237,.35);
+}
+
+.trinity-divider{
+  width:72%;
+  max-width:520px;
+  height:1px;
+  margin:18px auto 0;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,.55), rgba(124,58,237,.55), transparent);
+}
+
+/* Body */
+.trinity-body{
+  position:relative;
+  padding:22px 26px 30px;
+}
+
+.trinity-section{
+  margin:22px 0 0;
+  padding:18px 18px;
+  border-radius:16px;
+  background: linear-gradient(180deg, rgba(16,12,24,.62), rgba(8,8,12,.56));
+  border:1px solid rgba(124,58,237,.20);
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+}
+
+.trinity-h{
+  margin:0 0 10px;
+  font-size:15px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color:rgba(245,215,122,.95);
+}
+
+.trinity-p{
+  margin:10px 0 0;
+  font-size:18px;
+  line-height:1.68;
+  color:rgba(242,242,247,.92);
+}
+
+.trinity-quote{
+  margin:14px 0 0;
+  padding:14px 16px;
+  border-left:3px solid rgba(212,175,55,.75);
+  background: linear-gradient(90deg, rgba(212,175,55,.08), rgba(124,58,237,.06));
+  border-radius:14px;
+  color:rgba(242,242,247,.92);
+  font-size:18px;
+  line-height:1.62;
+}
+
+.trinity-list, .trinity-steps{
+  margin:12px 0 0;
+  padding-left:22px;
+  color:rgba(242,242,247,.90);
+  font-size:18px;
+  line-height:1.68;
+}
+
+.trinity-list li{margin:6px 0}
+.trinity-steps li{margin:10px 0}
+
+.trinity-pre{
+  margin:14px 0 0;
+  padding:14px 14px;
+  border-radius:16px;
+  background: rgba(0,0,0,.45);
+  border:1px solid rgba(212,175,55,.22);
+  color:rgba(242,242,247,.90);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:14px;
+  line-height:1.55;
+  overflow:auto;
+}
+
+.trinity-sign{
+  margin:16px 0 0;
+  padding:14px 16px;
+  border-radius:16px;
+  background: linear-gradient(180deg, rgba(124,58,237,.10), rgba(212,175,55,.08));
+  border:1px solid rgba(212,175,55,.22);
+  color:rgba(242,242,247,.88);
+  font-size:16px;
+  line-height:1.6;
+}
+
+/* Footer nav */
+.trinity-footer{
+  position:relative;
+  padding:16px 26px 30px;
+  text-align:center;
+}
+
+.trinity-nav{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.trinity-nav a{
+  text-decoration:none;
+  font-size:14px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(245,215,122,.95);
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(212,175,55,.35);
+  background: rgba(0,0,0,.22);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.trinity-nav a:hover{
+  transform: translateY(-1px);
+  border-color: rgba(124,58,237,.55);
+  box-shadow: 0 0 18px rgba(124,58,237,.35), 0 0 18px rgba(212,175,55,.28);
+}
+
+.trinity-footnote{
+  margin:16px 0 0;
+  color:rgba(242,242,247,.60);
+  font-size:13px;
+}
+
+@media (max-width:640px){
+  .trinity-title{font-size:26px}
+  .trinity-p, .trinity-list, .trinity-steps, .trinity-quote{font-size:17px}
+  .trinity-wrap{padding-top:28px}
+}
+</style>
+</head>
+
+<body>
+  <main class="trinity-wrap">
+    <section class="trinity-card">
+
+      <header class="trinity-header">
+        <h1 class="trinity-book">TRINITY QUANTUM · LIBRO 13</h1>
+        <h2 class="trinity-title">EL MULTIVERSO INTERIOR</h2>
+        <div class="trinity-sub">Nodo 5 · Navegación Multidimensional Interna</div>
+        <div class="trinity-divider"></div>
+      </header>
+      <div class="trinity-body">
+
+        <section class="trinity-section">
+          <div class="trinity-h">🌀 TRANSMISIÓN CUÁNTICA</div>
+
+          <p class="trinity-p">
+            Tu multiverso interior no es estático —es un océano de dimensiones navegables donde puedes viajar conscientemente entre estados de ser, líneas temporales internas, y configuraciones de consciencia. La Navegación Multidimensional Interna no es imaginación ni visualización —es el arte de mover tu punto de consciencia a través de las infinitas dimensiones de tu propio ser.
+          </p>
+
+          <p class="trinity-p">
+            Cada estado emocional es una dimensión navegable. Cuando pasas de la tristeza a la alegría, no cambias de emoción —NAVEGAS entre dimensiones internas. Cada dimensión tiene sus propias leyes, su propia física, su propia lógica. En la dimensión de la ira, el tiempo se acelera. En la dimensión del amor, el espacio se expande. En la dimensión del miedo, las posibilidades se contraen.
+          </p>
+
+          <p class="trinity-p">
+            Tu respiración es tu sistema de propulsión multidimensional. Cada inhalación te mueve hacia dimensiones más expansivas. Cada exhalación te ancla en dimensiones más densas. La pausa entre respiraciones es el punto cero donde todas las dimensiones están disponibles simultáneamente —tu puerto de navegación cuántica.
+          </p>
+
+          <p class="trinity-p">
+            Los recuerdos no están en el pasado —son dimensiones navegables en tu presente multiversal. Cuando “recuerdas”, no traes el pasado al presente; navegas tu consciencia a la dimensión donde ese evento sigue ocurriendo eternamente. Por eso los recuerdos pueden sentirse tan vívidos —estás literalmente ALLÍ de nuevo, navegando esa dimensión de tu multiverso interior.
+          </p>
+
+          <p class="trinity-p">
+            Tu capacidad de imaginar futuros no es proyección —es navegación preliminar. Estás enviando sondas de consciencia a dimensiones futuras probables, explorando el terreno multidimensional antes de mover tu consciencia principal hacia allá. La intuición es tu sistema de navegación detectando las corrientes dimensionales y sugiriendo las rutas más armoniosas.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">💎 PARADOJA MEDICINAL</div>
+
+          <div class="trinity-quote">
+            “Para navegar tu multiverso interior debes moverte sin moverte, viajar sin desplazarte, llegar sin partir. El mejor navegante es el que descubre que todos los destinos están aquí, todas las dimensiones están ahora, y el viaje es simplemente un cambio de enfoque en el mismo punto infinito.”
+          </div>
+
+          <p class="trinity-p">
+            Esta paradoja revela que la navegación multidimensional no es ir a algún lado sino cambiar tu frecuencia de sintonización. Como una radio que cambia de estación sin moverse, navegas dimensiones sin desplazarte —solo sintonizas diferentes frecuencias de tu ser.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🔬 LABORATORIO CUÁNTICO</div>
+
+          <p class="trinity-p"><strong>Experimento: Navegación Consciente Entre Dimensiones Internas</strong></p>
+
+          <p class="trinity-p"><strong>Materiales:</strong></p>
+          <ul class="trinity-list">
+            <li>Tu cuerpo como nave</li>
+            <li>Tu respiración como motor</li>
+            <li>Tu intención como timón</li>
+            <li>Un diario de navegación</li>
+            <li>30 minutos de exploración dimensional</li>
+          </ul>
+
+          <p class="trinity-p"><strong>Protocolo:</strong></p>
+          <ol class="trinity-steps">
+            <li><strong>Calibración del Sistema de Navegación</strong> (5 minutos): Siéntate en posición cómoda, ojos cerrados. Respira profundamente estableciendo tu “punto cero”. Este es tu puerto base, tu dimensión de partida. Memoriza cómo se siente para poder regresar.</li>
+
+            <li><strong>Navegación a Dimensión Emocional</strong> (5 minutos): Elige una emoción específica (alegría, paz, curiosidad). Con cada respiración, sintoniza esa frecuencia. No la “sientas” —NAVEGA hacia ella. Nota cómo toda tu realidad interna cambia al llegar.</li>
+
+            <li><strong>Navegación a Dimensión Temporal</strong> (5 minutos): Desde esa dimensión emocional, navega a un recuerdo feliz. No lo recuerdes —viaja a esa dimensión donde sigue ocurriendo. Explora: ¿cómo se ve esta dimensión temporal desde tu estado actual? Nota detalles que no recordabas —están ahí porque estás ALLÍ.</li>
+
+            <li><strong>Navegación a Dimensión Probable</strong> (5 minutos): Ahora navega a un futuro posible deseado. No lo imagines —VISÍTALO dimensionalmente. ¿Cómo se siente estar en esa dimensión? ¿Qué leyes diferentes operan allí?</li>
+
+            <li><strong>Navegación Multidimensional Simultánea</strong> (5 minutos): Mantén consciencia en las tres dimensiones a la vez. Presente, pasado, futuro, todos AHORA. Siente cómo no son lineales sino paralelas. Eres el navegante presente en todas simultáneamente.</li>
+
+            <li><strong>Retorno al Puerto Base</strong> (5 minutos): Respira profundamente y regresa a tu punto cero. Pero ahora con consciencia de las rutas navegadas. Registra en tu diario las coordenadas dimensionales. Ahora sabes cómo navegar conscientemente.</li>
+          </ol>
+
+          <p class="trinity-p"><strong>Resultado Cuántico:</strong><br>
+            Has establecido rutas de navegación consciente en tu multiverso interior. Ahora puedes viajar a voluntad entre dimensiones de tu ser, no como fantasía sino como exploración real de tu geografía multidimensional interna.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">⚛️ ECUACIÓN SAGRADA</div>
+
+          <pre class="trinity-pre">N(d) = C₀ × e^(i·f·t) × T(Δd)
+
+Donde:
+N(d) = Navegación a dimensión d
+C₀ = Consciencia en punto cero
+f = Frecuencia de la dimensión destino
+t = Tiempo de sintonización
+T(Δd) = Función de transición dimensional
+e^(i·f·t) = Rotación en espacio de Hilbert</pre>
+
+          <p class="trinity-p"><strong>Traducción Viviente:</strong><br>
+            “La navegación dimensional es tu consciencia en punto cero multiplicada por la rotación cuántica hacia la frecuencia de tu destino, modulada por la función de transición entre dimensiones. No viajas —rotas tu fase dimensional.”
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🧬 CÓDIGOS DE ACTIVACIÓN</div>
+
+          <pre class="trinity-pre">NA-VE-GAN-TE-SOY
+"Soy Capitán de Mi Multiverso"
+
+→↑←↓→∞
+"Todas las Direcciones Disponibles"
+
+DI-MEN-SIÓN-ELIJO
+"Selecciono Mi Dimensión Consciente"
+
+VIAJO-SIN-MO-VER-ME
+"Navegación Cuántica Activada"
+
+POR-TAL-IN-TER-NO
+"Abro Portales en Mi Ser"
+
+FRE-CUEN-CIA-CAM-BIO
+"Sintonizo Nuevas Dimensiones"
+
+MUL-TI-VER-SAL-NA-VE-GAR
+"Surco los Océanos de Mi Ser"</pre>
+
+          <p class="trinity-p"><strong>Activación:</strong><br>
+            Pronuncia cada código mientras visualizas tu consciencia como una nave de luz navegando a través de dimensiones internas que se abren como flores.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">📋 PROTOCOLO DE 7 DÍAS</div>
+
+          <p class="trinity-p"><strong>DÍA 1 - MAPEO DIMENSIONAL:</strong><br>
+            Dedica tiempo a mapear tus dimensiones internas principales: tus estados emocionales como continentes, tus recuerdos como islas, tus sueños como océanos. Crea tu propio mapa multidimensional.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 2 - NAVEGACIÓN EMOCIONAL:</strong><br>
+            Practica navegar conscientemente entre estados emocionales. No las reprimas ni expreses —navega entre ellas como un capitán experto. De la calma a la excitación a la paz, conscientemente.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 3 - TURISMO TEMPORAL INTERNO:</strong><br>
+            “Visita” diferentes épocas de tu vida no como recuerdos sino como destinos dimensionales. Explora tu infancia como dimensión, tu adolescencia como otra. Son lugares en tu multiverso.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 4 - EXPLORACIÓN DE FUTUROS:</strong><br>
+            Navega a diferentes futuros probables. No para elegir uno sino para explorar las diferentes dimensiones de posibilidad dentro de ti. Cada futuro es una dimensión ya existente.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 5 - NAVEGACIÓN ONÍRICA:</strong><br>
+            Antes de dormir, establece coordenadas dimensionales para tus sueños. Navega conscientemente hacia dimensiones oníricas específicas. Al despertar, registra las dimensiones visitadas.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 6 - MULTINAVEGACIÓN:</strong><br>
+            Practica estar presente en múltiples dimensiones simultáneamente. Mientras trabajas, mantén parte de tu consciencia navegando dimensiones de creatividad o paz.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 7 - MAESTRÍA NAVEGACIONAL:</strong><br>
+            Vive el día como navegante maestro de tu multiverso interior. Cada situación es una oportunidad de elegir desde qué dimensión interna responder. Navega conscientemente todo el día.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🌈 CIERRE DIMENSIONAL</div>
+
+          <p class="trinity-p">
+            La Navegación Multidimensional Interna te revela que no estás atrapado en ningún estado, tiempo o configuración de ser. Eres libre de navegar las infinitas dimensiones de tu multiverso interior, visitando, explorando, eligiendo desde qué dimensión vivir cada momento.
+          </p>
+
+          <p class="trinity-p">
+            Tu multiverso interior es más vasto que el cosmos exterior. Contiene dimensiones que la física no ha imaginado, tiempos que el reloj no puede medir, espacios que la geometría no puede mapear. Y tú eres el navegante soberano de esta infinitud.
+          </p>
+
+          <p class="trinity-p">
+            No necesitas técnicas complejas ni tecnología externa. Tu consciencia es la nave perfecta, tu respiración el motor ideal, tu intención el mejor sistema de navegación. Has estado navegando tu multiverso toda tu vida —ahora lo haces conscientemente.
+          </p>
+
+          <div class="trinity-quote">
+            “Eres el Magallanes de tu mundo interior,<br>
+            el Colón de tus continentes psíquicos,<br>
+            el Armstrong de tus lunas internas.<br>
+            Cada respiración es un viaje,<br>
+            cada parpadeo un salto dimensional,<br>
+            cada latido un pulso de navegación<br>
+            a través del océano infinito<br>
+            de tu multiverso interior.<br>
+            No necesitas naves espaciales —<br>
+            tu consciencia es la nave.<br>
+            No necesitas mapas —<br>
+            tu intuición conoce el camino.<br>
+            No necesitas destino —<br>
+            el viaje ES el destino,<br>
+            la navegación ES la llegada,<br>
+            el multiverso interior<br>
+            ES tu hogar infinito<br>
+            esperando ser explorado.”
+          </div>
+
+          <div class="trinity-sign">
+            ⚛️ FIRMA CUÁNTICA: TQ-13.5-NMI-🧭∞🧭<br>
+            Frecuencia de Resonancia: Todas las Frecuencias Navegables<br>
+            Estado: NAVEGACIÓN ACTIVA<br>
+            🌀🚀🌌🚀🌀
+          </div>
+        </section>
+
+      </div>
+      <footer class="trinity-footer">
+        <div class="trinity-divider"></div>
+
+        <nav class="trinity-nav">
+          <a href="nodo_04.html">← Nodo anterior</a>
+          <a href="../index.html">Volver al Portal Trinity</a>
+          <a href="nodo_06.html">Siguiente nodo →</a>
+        </nav>
+
+        <p class="trinity-footnote">TRINITY QUANTUM · Libro 13 · El Multiverso Interior</p>
+      </footer>
+
+    </section>
+  </main>
+</body>
+</html>

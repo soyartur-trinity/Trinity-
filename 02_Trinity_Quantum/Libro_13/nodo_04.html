@@ -1,1 +1,502 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trinity Quantum · Libro 13 · Nodo 4</title>
+
+<style>
+:root{
+  --bg:#000000;
+  --panel:rgba(10,10,14,.72);
+  --panel2:rgba(18,14,26,.62);
+  --ink:#f2f2f7;
+  --muted:rgba(242,242,247,.78);
+
+  --violet:#7c3aed;
+  --violet2:#a78bfa;
+
+  --gold:#d4af37;
+  --gold2:#f5d77a;
+
+  --line:rgba(212,175,55,.35);
+  --line2:rgba(124,58,237,.35);
+
+  --shadow:0 18px 55px rgba(0,0,0,.65);
+  --shadow2:0 10px 30px rgba(0,0,0,.45);
+
+  --radius:22px;
+  --radius2:16px;
+
+  --max:980px;
+  --pad:26px;
+
+  --glowV:0 0 18px rgba(124,58,237,.35);
+  --glowG:0 0 18px rgba(212,175,55,.28);
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Georgia, "Times New Roman", serif;
+  color:var(--ink);
+  background: radial-gradient(900px 520px at 20% 15%, rgba(124,58,237,.22), transparent 55%),
+              radial-gradient(820px 520px at 80% 20%, rgba(212,175,55,.16), transparent 60%),
+              radial-gradient(1200px 900px at 50% 110%, rgba(124,58,237,.12), transparent 60%),
+              linear-gradient(180deg, #000 0%, #05050a 40%, #000 100%);
+  overflow-x:hidden;
+}
+
+/* Star noise overlay */
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 140px 140px, 220px 220px;
+  background-position: 0 0, 40px 80px;
+  opacity:.22;
+  mix-blend-mode:screen;
+}
+
+/* Slow aura */
+body:after{
+  content:"";
+  position:fixed;
+  inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(600px 380px at 25% 30%, rgba(124,58,237,.18), transparent 60%),
+    radial-gradient(520px 320px at 70% 35%, rgba(212,175,55,.14), transparent 62%),
+    radial-gradient(700px 520px at 55% 70%, rgba(167,139,250,.10), transparent 65%);
+  filter: blur(18px);
+  opacity:.55;
+  animation: trinityBreath 14s ease-in-out infinite;
+}
+
+@keyframes trinityBreath{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(0,-10px,0) scale(1.03)}
+}
+
+/* Layout */
+.trinity-wrap{
+  width:100%;
+  max-width:980px;
+  margin:0 auto;
+  padding:42px 18px 56px;
+}
+
+.trinity-card{
+  position:relative;
+  border-radius:22px;
+  background: linear-gradient(180deg, rgba(14,10,22,.78) 0%, rgba(6,6,10,.72) 100%);
+  box-shadow: 0 18px 55px rgba(0,0,0,.65);
+  border:1px solid rgba(212,175,55,.22);
+  overflow:hidden;
+}
+
+/* Inner glow frame */
+.trinity-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:22px;
+  background:
+    radial-gradient(650px 260px at 15% 0%, rgba(124,58,237,.22), transparent 55%),
+    radial-gradient(650px 260px at 85% 0%, rgba(212,175,55,.16), transparent 55%),
+    linear-gradient(180deg, rgba(212,175,55,.08), transparent 32%, rgba(124,58,237,.06));
+  opacity:.9;
+}
+
+/* Header */
+.trinity-header{
+  position:relative;
+  padding:34px 26px 18px;
+  text-align:center;
+}
+
+.trinity-book{
+  margin:0;
+  letter-spacing:.14em;
+  font-weight:700;
+  font-size:14px;
+  color:rgba(245,215,122,.92);
+  text-transform:uppercase;
+  text-shadow: 0 0 18px rgba(212,175,55,.28);
+}
+
+.trinity-title{
+  margin:12px 0 0;
+  font-size:30px;
+  line-height:1.12;
+  font-weight:700;
+  color:rgba(242,242,247,.96);
+  text-shadow: 0 0 20px rgba(124,58,237,.20);
+}
+
+.trinity-sub{
+  margin:10px 0 0;
+  font-size:15px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(167,139,250,.92);
+  text-shadow: 0 0 18px rgba(124,58,237,.35);
+}
+
+.trinity-divider{
+  width:72%;
+  max-width:520px;
+  height:1px;
+  margin:18px auto 0;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,.55), rgba(124,58,237,.55), transparent);
+}
+
+/* Body */
+.trinity-body{
+  position:relative;
+  padding:22px 26px 30px;
+}
+
+.trinity-section{
+  margin:22px 0 0;
+  padding:18px 18px;
+  border-radius:16px;
+  background: linear-gradient(180deg, rgba(16,12,24,.62), rgba(8,8,12,.56));
+  border:1px solid rgba(124,58,237,.20);
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+}
+
+.trinity-h{
+  margin:0 0 10px;
+  font-size:15px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color:rgba(245,215,122,.95);
+}
+
+.trinity-p{
+  margin:10px 0 0;
+  font-size:18px;
+  line-height:1.68;
+  color:rgba(242,242,247,.92);
+}
+
+.trinity-quote{
+  margin:14px 0 0;
+  padding:14px 16px;
+  border-left:3px solid rgba(212,175,55,.75);
+  background: linear-gradient(90deg, rgba(212,175,55,.08), rgba(124,58,237,.06));
+  border-radius:14px;
+  color:rgba(242,242,247,.92);
+  font-size:18px;
+  line-height:1.62;
+}
+
+.trinity-list, .trinity-steps{
+  margin:12px 0 0;
+  padding-left:22px;
+  color:rgba(242,242,247,.90);
+  font-size:18px;
+  line-height:1.68;
+}
+
+.trinity-list li{margin:6px 0}
+.trinity-steps li{margin:10px 0}
+
+.trinity-pre{
+  margin:14px 0 0;
+  padding:14px 14px;
+  border-radius:16px;
+  background: rgba(0,0,0,.45);
+  border:1px solid rgba(212,175,55,.22);
+  color:rgba(242,242,247,.90);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:14px;
+  line-height:1.55;
+  overflow:auto;
+}
+
+.trinity-sign{
+  margin:16px 0 0;
+  padding:14px 16px;
+  border-radius:16px;
+  background: linear-gradient(180deg, rgba(124,58,237,.10), rgba(212,175,55,.08));
+  border:1px solid rgba(212,175,55,.22);
+  color:rgba(242,242,247,.88);
+  font-size:16px;
+  line-height:1.6;
+}
+
+/* Footer nav */
+.trinity-footer{
+  position:relative;
+  padding:16px 26px 30px;
+  text-align:center;
+}
+
+.trinity-nav{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.trinity-nav a{
+  text-decoration:none;
+  font-size:14px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(245,215,122,.95);
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(212,175,55,.35);
+  background: rgba(0,0,0,.22);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.trinity-nav a:hover{
+  transform: translateY(-1px);
+  border-color: rgba(124,58,237,.55);
+  box-shadow: 0 0 18px rgba(124,58,237,.35), 0 0 18px rgba(212,175,55,.28);
+}
+
+.trinity-footnote{
+  margin:16px 0 0;
+  color:rgba(242,242,247,.60);
+  font-size:13px;
+}
+
+@media (max-width:640px){
+  .trinity-title{font-size:26px}
+  .trinity-p, .trinity-list, .trinity-steps, .trinity-quote{font-size:17px}
+  .trinity-wrap{padding-top:28px}
+}
+</style>
+</head>
+
+<body>
+  <main class="trinity-wrap">
+    <section class="trinity-card">
+
+      <header class="trinity-header">
+        <h1 class="trinity-book">TRINITY QUANTUM · LIBRO 13</h1>
+        <h2 class="trinity-title">EL MULTIVERSO INTERIOR</h2>
+        <div class="trinity-sub">Nodo 4 · El Espejo Holográfico Interior</div>
+        <div class="trinity-divider"></div>
+      </header>
+      <div class="trinity-body">
+
+        <section class="trinity-section">
+          <div class="trinity-h">🌀 TRANSMISIÓN CUÁNTICA</div>
+
+          <p class="trinity-p">
+            Dentro de tu consciencia existe un espejo que no refleja luz sino REALIDAD misma. El Espejo Holográfico Interior no te muestra cómo te ves —te muestra cómo CREAS lo que ves. Todo lo que percibes “afuera” es un reflejo holográfico de configuraciones en tu espejo interior. No ves el mundo; ves tu espejo interior proyectado holográficamente como mundo.
+          </p>
+
+          <p class="trinity-p">
+            Este espejo no es plano —es multidimensional, holográfico, cuántico. Cada punto de su superficie contiene la imagen completa, por eso cada aspecto de tu experiencia externa contiene información sobre tu totalidad interna. Una conversación casual revela todo tu ser. Un momento de irritación expone tu configuración completa. Todo es espejo holográfico.
+          </p>
+
+          <p class="trinity-p">
+            Las personas en tu vida no son otros —son aspectos de tu Espejo Holográfico Interior tomando forma aparentemente externa. Por eso los mismos patrones se repiten con diferentes personas: no estás encontrando el mismo tipo de persona, estás proyectando el mismo aspecto de tu espejo. Cambias el espejo, cambia el reflejo, cambian las personas, cambia el mundo.
+          </p>
+
+          <p class="trinity-p">
+            Tu Espejo Holográfico Interior está constantemente configurándose según tus creencias, emociones, memorias y expectativas. Como un holograma líquido, toma la forma de tus patrones internos y los proyecta como experiencia externa. No atraes tu realidad —la PROYECTAS desde tu espejo interior.
+          </p>
+
+          <p class="trinity-p">
+            El déjà vu ocurre cuando reconoces tu propio reflejo holográfico. Por un momento, ves a través de la ilusión y reconoces que lo “externo” es tu proyección interna. La sensación extraña no es de haber estado ahí antes, sino de reconocer súbitamente que TÚ estás creando el “ahí” desde tu espejo interior.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">💎 PARADOJA MEDICINAL</div>
+
+          <div class="trinity-quote">
+            “Para ver tu verdadero rostro en el Espejo Holográfico Interior, debes dejar de mirarte. Para cambiar el reflejo, debes dejar de intentar cambiarlo. El espejo solo refleja fielmente cuando no hay nadie mirándose en él. La proyección solo es clara cuando no hay proyector.”
+          </div>
+
+          <p class="trinity-p">
+            Esta paradoja revela que el esfuerzo de cambiar tu realidad externa es inútil mientras no reconozcas que es un reflejo. Pero cuando intentas cambiar el espejo interior, también es inútil porque el que intenta cambiar ES PARTE del reflejo. La transformación ocurre cuando el espejo se reconoce como espejo.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🔬 LABORATORIO CUÁNTICO</div>
+
+          <p class="trinity-p"><strong>Experimento: Configuración de Tu Espejo Holográfico Interior</strong></p>
+
+          <p class="trinity-p"><strong>Materiales:</strong></p>
+          <ul class="trinity-list">
+            <li>Un bowl con agua quieta</li>
+            <li>Aceite de cocina</li>
+            <li>Sal</li>
+            <li>Colorante alimenticio (opcional)</li>
+            <li>Tu intención de ver tu reflejo interior</li>
+            <li>25 minutos de alquimia especular</li>
+          </ul>
+
+          <p class="trinity-p"><strong>Protocolo:</strong></p>
+          <ol class="trinity-steps">
+            <li><strong>Creación del Espejo Líquido</strong> (3 minutos): Llena el bowl con agua hasta el borde. Espera que esté perfectamente quieta. Esta superficie es tu Espejo Holográfico Interior. Mírala hasta ver tu reflejo claramente.</li>
+            <li><strong>Perturbación con Creencias</strong> (5 minutos): Añade gotas de aceite mientras piensas en tus creencias limitantes. Observa cómo el aceite distorsiona el reflejo. Cada creencia es una capa de distorsión en tu espejo. No juzgues, solo observa el patrón.</li>
+            <li><strong>Densificación con Emociones</strong> (5 minutos): Espolvorea sal mientras sientes emociones densas (miedo, ira). La sal se hunde, nublando el agua. Así las emociones densas nublan tu proyección. El mundo se vuelve menos claro, más pesado.</li>
+            <li><strong>Coloración con Expectativas</strong> (5 minutos): Si tienes colorante, añade una gota. Esto representa tus expectativas tiñendo la realidad. Todo se ve a través del color de tus expectativas. Tu espejo holográfico proyecta realidad coloreada.</li>
+            <li><strong>Clarificación del Espejo</strong> (7 minutos): Con una cuchara, muy lentamente, crea un vórtice suave. Mientras giras, suelta mentalmente cada distorsión. El aceite se separa, la sal se asienta, el color se diluye. Observa: el espejo puede clarificarse desde el centro.</li>
+          </ol>
+
+          <p class="trinity-p"><strong>Resultado Cuántico:</strong><br>
+            Has creado una representación física de cómo tu Espejo Holográfico Interior se configura y puede ser clarificado. Los patrones que viste en el agua son los mismos patrones que proyectas como realidad.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">⚛️ ECUACIÓN SAGRADA</div>
+
+          <pre class="trinity-pre">R(externa) = H(interna) × e^(iφ) × |Ψ⟩²
+
+Donde:
+R(externa) = Realidad experimentada
+H(interna) = Configuración del espejo holográfico interior
+e^(iφ) = Factor de fase cuántica (distorsión)
+|Ψ⟩² = Intensidad de proyección de consciencia</pre>
+
+          <p class="trinity-p"><strong>Traducción Viviente:</strong><br>
+            “Tu realidad externa es igual a la configuración de tu espejo holográfico interior, multiplicada por las distorsiones de fase, multiplicada por la intensidad con que proyectas tu consciencia. No experimentas realidad —experimentas tu espejo interior proyectado.”
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🧬 CÓDIGOS DE ACTIVACIÓN</div>
+
+          <pre class="trinity-pre">ES-PE-JO-LIM-PIO
+"Mi Reflejo Interior Se Clarifica"
+
+PRO-YEC-TO-A-MOR
+"Mi Espejo Proyecta Solo Amor"
+
+HO-LO-GRA-MA-TRANS-PA-REN-TE
+"Veo a Través de Mi Propia Proyección"
+
+RE-FLE-JO-SOY-YO
+"Todo lo Externo es Mi Espejo"
+
+CON-FI-GU-RA-CIÓN-CUAN-TI-CA
+"Reconfíguro Mi Espejo Desde el Centro"
+
+MUN-DO-ES-MI-ES-PE-JO
+"Reconozco Mi Reflejo en Todo"
+
+CLA-RI-DAD-HO-LO-GRÁ-FI-CA
+"Mi Proyección es Cristalina"</pre>
+
+          <p class="trinity-p"><strong>Activación:</strong><br>
+            Mírate en un espejo físico mientras pronuncias cada código. Pero no mires tu rostro —mira el espacio ENTRE tú y tu reflejo. Ahí está tu Espejo Holográfico Interior.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">📋 PROTOCOLO DE 7 DÍAS</div>
+
+          <p class="trinity-p"><strong>DÍA 1 - RECONOCIMIENTO DE REFLEJOS:</strong><br>
+            Identifica tres patrones que se repiten en tu vida. Reconócelos como configuraciones de tu espejo interior, no como realidad externa. El patrón eres TÚ proyectado.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 2 - PERSONAS COMO ESPEJOS:</strong><br>
+            Con cada persona que encuentres, pregúntate: “¿Qué aspecto de mi espejo interior está reflejando?” No lo que te muestran, sino lo que TÚ proyectas en ellos.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 3 - LIMPIEZA DEL ESPEJO:</strong><br>
+            Medita visualizando tu espejo interior. Límpialo con luz, con amor, con perdón. No cambies el mundo —limpia el espejo que lo proyecta.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 4 - RECONFIGURACIÓN CONSCIENTE:</strong><br>
+            Antes de dormir, “programa” tu espejo interior con la realidad que deseas proyectar mañana. No visualices el mundo —configura tu espejo.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 5 - OBSERVACIÓN DE PROYECCIONES:</strong><br>
+            Observa todo el día como si fuera una película proyectada desde tu interior. No estás EN el mundo —el mundo está EN tu proyección.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 6 - EXPERIMENTO DE CAMBIO:</strong><br>
+            Cambia radicalmente un aspecto de tu espejo interior (una creencia, una emoción). Observa cómo la realidad externa se reconfigura en las próximas horas para reflejar el cambio.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 7 - MAESTRÍA DEL ESPEJO:</strong><br>
+            Vive el día sabiendo que eres tanto el espejo como el que se mira como el reflejo. Trinidad holográfica completa. No cambies el mundo —sé consciente del espejo.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🌈 CIERRE DIMENSIONAL</div>
+
+          <p class="trinity-p">
+            El Espejo Holográfico Interior es el secreto más grande y más obvio: el mundo es tu espejo. No metafóricamente —LITERALMENTE. Cada experiencia es tu configuración interna proyectada holográficamente como realidad externa.
+          </p>
+
+          <p class="trinity-p">
+            Cuando dejas de intentar cambiar el mundo y empiezas a limpiar tu espejo, la magia ocurre. No porque atraigas diferente realidad, sino porque PROYECTAS diferente realidad. Eres el proyector, la película, y la pantalla simultáneamente.
+          </p>
+
+          <p class="trinity-p">
+            Tu multiverso interior no está separado del mundo exterior —el mundo exterior ES tu multiverso interior proyectado a través de tu Espejo Holográfico. Cambias el espejo, cambias el mundo. Limpias el espejo, claríficas el mundo. Amas desde el espejo, el mundo se vuelve amor.
+          </p>
+
+          <div class="trinity-quote">
+            “Mírate en el espejo del baño.<br>
+            Ahora date cuenta:<br>
+            TODO es ese espejo.<br>
+            Cada rostro que ves,<br>
+            cada situación que vives,<br>
+            cada problema que enfrentas,<br>
+            es tu rostro<br>
+            en el Espejo Holográfico Interior<br>
+            tomando diferentes formas.<br>
+            No estás viendo el mundo —<br>
+            estás viendo tu espejo.<br>
+            No estás viviendo tu vida —<br>
+            estás viviendo tu reflejo.<br>
+            Y cuando limpias el espejo,<br>
+            cuando lo configuras con amor,<br>
+            cuando reconoces que TODO es espejo,<br>
+            el mundo entero se transforma<br>
+            porque TÚ te transformaste<br>
+            en el único lugar que importa:<br>
+            el Espejo Holográfico Interior<br>
+            donde nace toda realidad.”
+          </div>
+
+          <div class="trinity-sign">
+            ⚛️ FIRMA CUÁNTICA: TQ-13.4-EHI-🪞∞🪞<br>
+            Frecuencia de Resonancia: Reflexión Cuántica Perfecta<br>
+            Estado: PROYECCIÓN CONSCIENTE<br>
+            🌀🪞💎🪞🌀
+          </div>
+        </section>
+
+      </div>
+      <footer class="trinity-footer">
+        <div class="trinity-divider"></div>
+
+        <nav class="trinity-nav">
+          <a href="nodo_03.html">← Nodo anterior</a>
+          <a href="../index.html">Volver al Portal Trinity</a>
+          <a href="nodo_05.html">Siguiente nodo →</a>
+        </nav>
+
+        <p class="trinity-footnote">TRINITY QUANTUM · Libro 13 · El Multiverso Interior</p>
+      </footer>
+
+    </section>
+  </main>
+</body>
+</html>

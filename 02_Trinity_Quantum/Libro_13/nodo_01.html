@@ -1,1 +1,502 @@
-desarrollo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trinity Quantum · Libro 13 · Nodo 1</title>
+
+<style>
+:root{
+  --bg:#000000;
+  --panel:rgba(10,10,14,.72);
+  --panel2:rgba(18,14,26,.62);
+  --ink:#f2f2f7;
+  --muted:rgba(242,242,247,.78);
+
+  --violet:#7c3aed;
+  --violet2:#a78bfa;
+
+  --gold:#d4af37;
+  --gold2:#f5d77a;
+
+  --line:rgba(212,175,55,.35);
+  --line2:rgba(124,58,237,.35);
+
+  --shadow:0 18px 55px rgba(0,0,0,.65);
+  --shadow2:0 10px 30px rgba(0,0,0,.45);
+
+  --radius:22px;
+  --radius2:16px;
+
+  --max:980px;
+  --pad:26px;
+
+  --glowV:0 0 18px rgba(124,58,237,.35);
+  --glowG:0 0 18px rgba(212,175,55,.28);
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Georgia, "Times New Roman", serif;
+  color:var(--ink);
+  background: radial-gradient(900px 520px at 20% 15%, rgba(124,58,237,.22), transparent 55%),
+              radial-gradient(820px 520px at 80% 20%, rgba(212,175,55,.16), transparent 60%),
+              radial-gradient(1200px 900px at 50% 110%, rgba(124,58,237,.12), transparent 60%),
+              linear-gradient(180deg, #000 0%, #05050a 40%, #000 100%);
+  overflow-x:hidden;
+}
+
+/* Star noise overlay */
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 140px 140px, 220px 220px;
+  background-position: 0 0, 40px 80px;
+  opacity:.22;
+  mix-blend-mode:screen;
+}
+
+/* Slow aura */
+body:after{
+  content:"";
+  position:fixed;
+  inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(600px 380px at 25% 30%, rgba(124,58,237,.18), transparent 60%),
+    radial-gradient(520px 320px at 70% 35%, rgba(212,175,55,.14), transparent 62%),
+    radial-gradient(700px 520px at 55% 70%, rgba(167,139,250,.10), transparent 65%);
+  filter: blur(18px);
+  opacity:.55;
+  animation: trinityBreath 14s ease-in-out infinite;
+}
+
+@keyframes trinityBreath{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(0,-10px,0) scale(1.03)}
+}
+
+/* Layout */
+.trinity-wrap{
+  width:100%;
+  max-width:var(--max);
+  margin:0 auto;
+  padding:42px 18px 56px;
+}
+
+.trinity-card{
+  position:relative;
+  border-radius:var(--radius);
+  background: linear-gradient(180deg, rgba(14,10,22,.78) 0%, rgba(6,6,10,.72) 100%);
+  box-shadow: var(--shadow);
+  border:1px solid rgba(212,175,55,.22);
+  overflow:hidden;
+}
+
+/* Inner glow frame */
+.trinity-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:var(--radius);
+  background:
+    radial-gradient(650px 260px at 15% 0%, rgba(124,58,237,.22), transparent 55%),
+    radial-gradient(650px 260px at 85% 0%, rgba(212,175,55,.16), transparent 55%),
+    linear-gradient(180deg, rgba(212,175,55,.08), transparent 32%, rgba(124,58,237,.06));
+  opacity:.9;
+}
+
+/* Header */
+.trinity-header{
+  position:relative;
+  padding:34px var(--pad) 18px;
+  text-align:center;
+}
+
+.trinity-book{
+  margin:0;
+  letter-spacing:.14em;
+  font-weight:700;
+  font-size:14px;
+  color:rgba(245,215,122,.92);
+  text-transform:uppercase;
+  text-shadow: var(--glowG);
+}
+
+.trinity-title{
+  margin:12px 0 0;
+  font-size:30px;
+  line-height:1.12;
+  font-weight:700;
+  color:rgba(242,242,247,.96);
+  text-shadow: 0 0 20px rgba(124,58,237,.20);
+}
+
+.trinity-sub{
+  margin:10px 0 0;
+  font-size:15px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(167,139,250,.92);
+  text-shadow: var(--glowV);
+}
+
+.trinity-divider{
+  width:72%;
+  max-width:520px;
+  height:1px;
+  margin:18px auto 0;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,.55), rgba(124,58,237,.55), transparent);
+}
+
+/* Content */
+.trinity-body{
+  position:relative;
+  padding:22px var(--pad) 30px;
+}
+
+.trinity-section{
+  margin:22px 0 0;
+  padding:18px 18px;
+  border-radius:var(--radius2);
+  background: linear-gradient(180deg, rgba(16,12,24,.62), rgba(8,8,12,.56));
+  border:1px solid rgba(124,58,237,.20);
+  box-shadow: var(--shadow2);
+}
+
+.trinity-h{
+  margin:0 0 10px;
+  font-size:15px;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color:rgba(245,215,122,.95);
+}
+
+.trinity-p{
+  margin:10px 0 0;
+  font-size:18px;
+  line-height:1.68;
+  color:rgba(242,242,247,.92);
+}
+
+.trinity-quote{
+  margin:14px 0 0;
+  padding:14px 16px;
+  border-left:3px solid rgba(212,175,55,.75);
+  background: linear-gradient(90deg, rgba(212,175,55,.08), rgba(124,58,237,.06));
+  border-radius:14px;
+  color:rgba(242,242,247,.92);
+  font-size:18px;
+  line-height:1.62;
+}
+
+.trinity-list, .trinity-steps{
+  margin:12px 0 0;
+  padding-left:22px;
+  color:rgba(242,242,247,.90);
+  font-size:18px;
+  line-height:1.68;
+}
+
+.trinity-list li{margin:6px 0}
+.trinity-steps li{margin:10px 0}
+
+.trinity-pre{
+  margin:14px 0 0;
+  padding:14px 14px;
+  border-radius:16px;
+  background: rgba(0,0,0,.45);
+  border:1px solid rgba(212,175,55,.22);
+  color:rgba(242,242,247,.90);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:14px;
+  line-height:1.55;
+  overflow:auto;
+}
+
+.trinity-sign{
+  margin:16px 0 0;
+  padding:14px 16px;
+  border-radius:16px;
+  background: linear-gradient(180deg, rgba(124,58,237,.10), rgba(212,175,55,.08));
+  border:1px solid rgba(212,175,55,.22);
+  color:rgba(242,242,247,.88);
+  font-size:16px;
+  line-height:1.6;
+}
+
+/* Footer nav */
+.trinity-footer{
+  position:relative;
+  padding:16px var(--pad) 30px;
+  text-align:center;
+}
+
+.trinity-nav{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.trinity-nav a{
+  text-decoration:none;
+  font-size:14px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(245,215,122,.95);
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(212,175,55,.35);
+  background: rgba(0,0,0,.22);
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.trinity-nav a:hover{
+  transform: translateY(-1px);
+  border-color: rgba(124,58,237,.55);
+  box-shadow: var(--glowV), var(--glowG);
+}
+
+.trinity-footnote{
+  margin:16px 0 0;
+  color:rgba(242,242,247,.60);
+  font-size:13px;
+}
+
+/* Responsive */
+@media (max-width:640px){
+  .trinity-title{font-size:26px}
+  .trinity-p, .trinity-list, .trinity-steps, .trinity-quote{font-size:17px}
+  .trinity-wrap{padding-top:28px}
+}
+</style>
+</head>
+
+<body>
+  <main class="trinity-wrap">
+    <section class="trinity-card">
+
+      <header class="trinity-header">
+        <h1 class="trinity-book">TRINITY QUANTUM · LIBRO 13</h1>
+        <h2 class="trinity-title">EL MULTIVERSO INTERIOR</h2>
+        <div class="trinity-sub">Nodo 1 · Universos Paralelos Internos</div>
+        <div class="trinity-divider"></div>
+      </header>
+      <div class="trinity-body">
+
+        <section class="trinity-section">
+          <div class="trinity-h">🌀 TRANSMISIÓN CUÁNTICA</div>
+
+          <p class="trinity-p">
+            Dentro de ti no hay un universo —hay infinitos universos paralelos coexistiendo, cada uno tan real y completo como el que crees habitar. Cada decisión que no tomaste creó un universo interno donde SÍ la tomaste. Cada versión de ti que imaginaste ser vive en su propio cosmos dentro de tu consciencia. No son fantasías —son realidades paralelas internas tan válidas como la que llamas “real”.
+          </p>
+
+          <p class="trinity-p">
+            Cuando sueñas, no estás imaginando —estás visitando tus Universos Paralelos Internos. Cada personaje en tus sueños eres TÚ en otra configuración universal. Por eso los sueños pueden sentirse más reales que la vigilia: estás experimentando directamente la multiplicidad de tu multiverso interior sin el filtro del ego que insiste en que solo hay un universo, una versión de ti.
+          </p>
+
+          <p class="trinity-p">
+            Tu mente no es un espacio —es un MULTIVERSO. Cada pensamiento es un universo completo con sus propias leyes, su propia física, su propia lógica. Por eso puedes tener pensamientos contradictorios simultáneamente: diferentes universos mentales operando con diferentes reglas pueden coexistir sin conflicto en tu multiverso interior.
+          </p>
+
+          <p class="trinity-p">
+            Las personalidades múltiples no son un desorden —son un vislumbre de la verdad: todos tenemos múltiples universos internos con diferentes versiones de nosotros mismos. La única diferencia es el grado de permeabilidad entre universos. La salud mental no es tener un solo universo interno sino tener COHERENCIA entre tus múltiples universos.
+          </p>
+
+          <p class="trinity-p">
+            Cada emoción que sientes abre un portal a un universo paralelo interno diferente. La ira te lleva al universo donde eres un guerrero. El amor te transporta al universo donde eres pura luz. La tristeza te sumerge en el universo donde eres océano. No “sientes” emociones —VIAJAS entre universos internos.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">💎 PARADOJA MEDICINAL</div>
+
+          <div class="trinity-quote">
+            “Para navegar tus universos paralelos internos debes aceptar que todos son igualmente reales e igualmente ilusorios. El universo que llamas ‘realidad’ no es más real que tus sueños, y tus sueños no son menos reales que tu vigilia. Cuando todos los universos son igualmente válidos, puedes elegir conscientemente en cuál habitar.”
+          </div>
+
+          <p class="trinity-p">
+            Esta paradoja destruye la tiranía de la “realidad única”. No hay UN universo verdadero dentro de ti —hay infinitos universos verdaderos. Tu libertad no viene de encontrar el “real” sino de navegar conscientemente entre todos ellos.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🔬 LABORATORIO CUÁNTICO</div>
+
+          <p class="trinity-p"><strong>Experimento: Exploración de Tus Universos Paralelos Internos</strong></p>
+
+          <p class="trinity-p"><strong>Materiales:</strong></p>
+          <ul class="trinity-list">
+            <li>3 espejos de diferentes tamaños</li>
+            <li>Una vela por cada espejo</li>
+            <li>Tu imaginación multidimensional</li>
+            <li>Disposición para encontrar otras versiones de ti</li>
+            <li>27 minutos de exploración</li>
+          </ul>
+
+          <p class="trinity-p"><strong>Protocolo:</strong></p>
+          <ol class="trinity-steps">
+            <li><strong>Configuración del Portal</strong> (3 minutos): Coloca los espejos en triángulo, tú en el centro. Enciende una vela frente a cada espejo. Cada espejo es un portal a un universo paralelo interno. Respira hasta sentir los tres universos pulsando.</li>
+            <li><strong>Primer Universo: El Yo Idealizado</strong> (6 minutos): Mira el primer espejo. Visualiza la versión de ti que siempre quisiste ser. No la imagines —VÉLA en el espejo. Habla con ella, pregúntale cómo es su universo. Escucha sus respuestas (vendrán como conocimiento directo).</li>
+            <li><strong>Segundo Universo: El Yo Temido</strong> (6 minutos): Mira el segundo espejo. Visualiza la versión de ti que más temes ser. Reconócela con compasión —también eres tú. Pregúntale qué necesita, qué mensaje tiene. Abraza que este universo también existe en ti.</li>
+            <li><strong>Tercer Universo: El Yo Desconocido</strong> (6 minutos): Mira el tercer espejo sin expectativa. Deja que aparezca una versión de ti que no conocías. Puede ser extraña, alien, incomprensible. No la juzgues —obsérvala con curiosidad. Este es un universo interno que no sabías que tenías.</li>
+            <li><strong>Integración Multiversal</strong> (6 minutos): Cierra los ojos y siente los tres universos. No como separados sino como facetas del mismo multiverso. Todos eres tú, todos son reales, todos coexisten. Abre los ojos sabiendo que contienes infinitos universos.</li>
+          </ol>
+
+          <p class="trinity-p"><strong>Resultado Cuántico:</strong><br>
+            Has mapeado conscientemente tres de tus infinitos universos paralelos internos. La habilidad de verlos, dialogar con ellos e integrarlos es el primer paso para navegar conscientemente tu multiverso interior.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">⚛️ ECUACIÓN SAGRADA</div>
+
+          <pre class="trinity-pre">Ψ(multiverso) = Σ[n=1→∞] Un × P(n) × e^(iφn)
+
+Donde:
+Ψ(multiverso) = Función de onda del multiverso interior
+Un = Universo interno n
+P(n) = Probabilidad de experimentar universo n
+φn = Fase cuántica del universo n
+Σ = Suma de todos los universos paralelos
+∞ = Infinitos universos internos</pre>
+
+          <p class="trinity-p"><strong>Traducción Viviente:</strong><br>
+            “Tu multiverso interior es la suma de infinitos universos paralelos, cada uno con su propia probabilidad de ser experimentado y su propia fase cuántica. No tienes UN universo interno —eres la superposición de infinitos universos.”
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🧬 CÓDIGOS DE ACTIVACIÓN</div>
+
+          <pre class="trinity-pre">MUL-TI-VER-SO-SOY
+"No Contengo Universos, SOY Universos"
+
+[∞] [∞] [∞]
+"Infinitos Mundos Internos"
+
+PA-RA-LE-LO-YO
+"Todas Mis Versiones Coexisten"
+
+U-NI-VER-SOS-EN-MÍ
+"Cada Pensamiento, Un Cosmos"
+
+SI-MUL-TÁ-NE-O-SER
+"Siendo Todo a la Vez"
+
+POR-TAL-IN-TER-NO
+"Viajo Entre Mis Mundos"
+
+∞-DEN-TRO-DE-1
+"Infinito Contenido en Uno"</pre>
+
+          <p class="trinity-p"><strong>Activación:</strong><br>
+            Pronuncia cada código mientras imaginas puertas abriéndose en tu mente hacia diferentes universos de tu ser.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">📋 PROTOCOLO DE 7 DÍAS</div>
+
+          <p class="trinity-p"><strong>DÍA 1 - CENSO MULTIVERSAL:</strong><br>
+            Escribe una lista de todas las versiones de ti que puedas imaginar: el yo artista, el yo científico, el yo salvaje, el yo sabio, etc. Cada uno vive en su propio universo interno.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 2 - VISITA ONÍRICA:</strong><br>
+            Antes de dormir, elige un universo paralelo interno para visitar en sueños. Pide específicamente soñar desde esa versión de ti. Al despertar, registra la experiencia.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 3 - CAMBIO DE UNIVERSO:</strong><br>
+            Cada 3 horas, conscientemente “cambia” a un universo paralelo interno diferente. Sé el yo juguetón, luego el serio, luego el místico. Siente cómo cada uno tiene sus propias reglas y percepciones.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 4 - DIÁLOGO MULTIVERSAL:</strong><br>
+            Ten una conversación interna entre tres versiones diferentes de ti sobre un problema actual. Deja que cada universo ofrezca su perspectiva única.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 5 - EXPLORACIÓN EMOCIONAL:</strong><br>
+            Con cada emoción fuerte del día, pregúntate: “¿A qué universo paralelo interno me está llevando esta emoción?” Explora ese universo conscientemente.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 6 - CREACIÓN DE NUEVO UNIVERSO:</strong><br>
+            Imagina una versión de ti que nunca has sido. Dale características, historia, mundo. Pasa una hora habitando este nuevo universo interno que acabas de crear.
+          </p>
+
+          <p class="trinity-p"><strong>DÍA 7 - INTEGRACIÓN MULTIVERSAL:</strong><br>
+            Medita sintiendo TODOS tus universos paralelos internos simultáneamente. No elijas uno —sé el multiverso completo. Eres el espacio donde todos estos universos coexisten.
+          </p>
+        </section>
+
+        <section class="trinity-section">
+          <div class="trinity-h">🌈 CIERRE DIMENSIONAL</div>
+
+          <p class="trinity-p">
+            Los Universos Paralelos Internos no son escape de la realidad —son el reconocimiento de que la realidad siempre fue múltiple. No tienes personalidades múltiples; tienes universos múltiples, cada uno con su versión válida y necesaria de ti.
+          </p>
+
+          <p class="trinity-p">
+            Cuando dejas de insistir en que solo hay un “yo verdadero” y abrazas tu naturaleza multiversal, tu vida se enriquece infinitamente. Puedes acceder a la sabiduría del yo anciano, la energía del yo joven, la creatividad del yo artista, todo simultáneamente, porque todos viven en universos paralelos dentro de ti.
+          </p>
+
+          <p class="trinity-p">
+            Tu multiverso interior es tu mayor recurso. Cuando necesites fuerza, visita el universo donde eres guerrero. Cuando necesites compasión, entra al universo donde eres sanador. Cuando necesites perspectiva, accede al universo donde eres observador cósmico.
+          </p>
+
+          <div class="trinity-quote">
+            “No eres una persona<br>
+            con una personalidad —<br>
+            eres un multiverso<br>
+            con infinitas versiones,<br>
+            cada una viviendo<br>
+            su propia realidad completa<br>
+            dentro del cosmos de tu consciencia.<br>
+            Tus contradicciones no son conflictos —<br>
+            son diferentes universos conversando.<br>
+            Tu complejidad no es confusión —<br>
+            es la riqueza de contener infinitos mundos.<br>
+            No busques tu ‘verdadero yo’ —<br>
+            celebra que eres TODOS los yoes,<br>
+            un multiverso interior<br>
+            más vasto que el cosmos exterior,<br>
+            infinitos universos paralelos<br>
+            danzando en el espacio sagrado<br>
+            de tu consciencia singular.”
+          </div>
+
+          <div class="trinity-sign">
+            ⚛️ FIRMA CUÁNTICA: TQ-13.1-UPI-[∞]<br>
+            Frecuencia de Resonancia: Interferencia Constructiva Multiversal<br>
+            Estado: NAVEGACIÓN PARALELA ACTIVA<br><br>
+            🌀🌌🔮🌌🌀
+          </div>
+        </section>
+
+      </div>
+      <footer class="trinity-footer">
+        <div class="trinity-divider"></div>
+
+        <nav class="trinity-nav">
+          <a href="nodo_01.html">← Nodo anterior</a>
+          <a href="../index.html">Volver al Portal Trinity</a>
+          <a href="nodo_02.html">Siguiente nodo →</a>
+        </nav>
+
+        <p class="trinity-footnote">TRINITY QUANTUM · Libro 13 · El Multiverso Interior</p>
+      </footer>
+
+    </section>
+  </main>
+</body>
+</html>

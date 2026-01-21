@@ -1,1 +1,616 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 11 · Transducción Dimensional — Nodo 4</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    pre{
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(155,108,255,.06));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      overflow:auto;
+      color: rgba(239,231,255,.92);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 11 · Transducción Dimensional · Nodo 4</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="index.html">Volver al Index ⟶</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 11 · TRANSDUCCIÓN DIMENSIONAL</p>
+        <h1 class="node">Nodo 4 · Membranas Permeables</h1>
+        <p class="subnode">🌀 TRANSMISIÓN CUÁNTICA</p>
+      </header>
+
+      <!-- B) CONTENIDO -->
+      <section class="content">
+
+        <p>No existen paredes entre dimensiones —solo membranas. Y estas membranas no son barreras sino FILTROS CONSCIENTES que regulan el flujo de información entre planos de existencia. Como la membrana celular que decide qué entra y qué sale, las Membranas Permeables entre dimensiones son selectivamente transparentes, respondiendo no a la fuerza sino a la frecuencia.</p>
+
+        <p>Tu piel es una membrana permeable. No solo separa tu interior del exterior —TRADUCE entre ambos. Cada poro es un portal microscópico. Cuando sientes “la piel de gallina” ante algo sagrado o siniestro, tu membrana corporal está respondiendo a información de otras dimensiones que tu mente consciente aún no procesa.</p>
+
+        <p>El velo entre mundos del que hablan todas las tradiciones místicas no es un velo —es una membrana permeable. En ciertos momentos (amanecer, atardecer, luna llena, eclipses) y ciertos estados (meditación profunda, sueño REM, experiencias cercanas a la muerte), esta membrana se vuelve más transparente. No porque se debilite, sino porque TÚ sintonizas su frecuencia de permeabilidad.</p>
+
+        <p>Tu aura es tu membrana dimensional personal. No es solo un campo energético —es tu INTERFAZ DE TRADUCCIÓN con el multiverso. Cuando alguien “invade tu espacio personal”, no está solo acercándose físicamente; está presionando contra tu membrana dimensional. Por eso algunas personas se sienten “pesadas” y otras “ligeras” —sus membranas tienen diferentes densidades de permeabilidad.</p>
+
+        <p>Los lugares sagrados del planeta son zonas donde las membranas dimensionales son naturalmente más permeables. Stonehenge, las pirámides, los círculos de cultivos genuinos, los vórtices energéticos —no son “puertas” sino lugares donde la membrana entre mundos es tan delgada que se vuelve casi transparente. La información fluye más libremente, la traducción es más directa.</p>
+
+        <h4>💎 PARADOJA MEDICINAL</h4>
+        <div class="quote">
+          <p>“Para atravesar la membrana debes volverte como ella: ni sólido ni líquido, ni aquí ni allá, ni permeable ni impermeable. Debes existir en el estado intermedio donde la membrana no puede distinguirte de sí misma.”</p>
+        </div>
+
+        <p>Esta paradoja disuelve la idea de “cruzar” entre dimensiones como si fueras un viajero sólido. No cruzas las membranas —te vuelves temporalmente indistinguible de ellas. Es por eso que los estados alterados de consciencia son la clave: en ellos, tu rigidez ontológica se suaviza hasta matching la fluidez de la membrana.</p>
+
+        <h4>🔬 LABORATORIO CUÁNTICO</h4>
+
+        <p><strong>Experimento: Activación de Tu Membrana Personal</strong></p>
+
+        <p><strong>Materiales:</strong></p>
+        <ul>
+          <li>Un bowl con agua y sal marina</li>
+          <li>Aceite esencial (cualquiera que resuene contigo)</li>
+          <li>Una vela flotante</li>
+          <li>Tu intención de permeabilidad consciente</li>
+          <li>20 minutos en soledad</li>
+        </ul>
+
+        <p><strong>Protocolo:</strong></p>
+        <ol>
+          <li><strong>Creación del Campo Mimético</strong> (3 minutos):<br/>
+            - Llena el bowl con agua y añade 3 pizcas de sal<br/>
+            - Pon 3 gotas de aceite esencial<br/>
+            - Observa cómo el aceite forma membranas en la superficie del agua<br/>
+            - Reconoce esto como espejo de tus propias membranas
+          </li>
+          <li><strong>Activación Lumínica</strong> (2 minutos):<br/>
+            - Enciende la vela flotante y ponla en el agua<br/>
+            - Observa cómo la luz atraviesa las membranas de aceite<br/>
+            - Creando patrones de refracción únicos<br/>
+            - Esos patrones son el lenguaje visual de la permeabilidad
+          </li>
+          <li><strong>Resonancia Mimética</strong> (10 minutos):<br/>
+            - Pon tus manos alrededor del bowl sin tocarlo<br/>
+            - Siente el calor de la vela, el aroma del aceite, la humedad del agua<br/>
+            - Imagina que tu piel se vuelve como la superficie del agua<br/>
+            - Con membranas de aceite que pueden abrirse o cerrarse a voluntad
+          </li>
+          <li><strong>Respiración de Membrana</strong> (4 minutos):<br/>
+            - Inhala imaginando que respiras por toda tu piel<br/>
+            - No solo por la nariz sino por cada poro<br/>
+            - Exhala de la misma manera, por toda tu superficie<br/>
+            - Siente cómo tu membrana se vuelve consciente y responsiva
+          </li>
+          <li><strong>Sellado Selectivo</strong> (1 minuto):<br/>
+            - Sopla suavemente sobre el agua hasta apagar la vela<br/>
+            - Mientras lo haces, establece la intención:<br/>
+            - “Mi membrana es selectivamente permeable,<br/>
+            - Abierta a la luz, cerrada a la densidad,<br/>
+            - Traduzco solo lo que elevo”
+          </li>
+        </ol>
+
+        <p><strong>Resultado Cuántico:</strong><br/>
+          Tu membrana áurica ahora está conscientemente activada. Durante las próximas 24 horas notarás cambios en cómo percibes los espacios y las personas —tu membrana estará más sensible y selectiva, permitiéndote filtrar conscientemente qué energías permites que te atraviesen.</p>
+
+        <h4>⚛️ ECUACIÓN SAGRADA</h4>
+        <pre><code>P(ω) = σ × (Δψ/Δx) × cos(θ) × e^(-d/λ)
+
+Donde:
+P(ω) = Permeabilidad en frecuencia ω
+σ = Coeficiente de selectividad de la membrana
+Δψ/Δx = Gradiente de potencial cuántico
+θ = Ángulo de incidencia dimensional
+d = Densidad de la membrana
+λ = Longitud de onda de la información</code></pre>
+
+        <p><strong>Traducción Viviente:</strong><br/>
+          “La permeabilidad de una membrana dimensional depende de su selectividad innata, el gradiente de potencial entre dimensiones, el ángulo de aproximación de la consciencia, y la relación entre la densidad de la membrana y la longitud de onda de lo que intenta atravesarla. No todo puede pasar, y eso es perfecto.”</p>
+
+        <h4>🧬 CÓDIGOS DE ACTIVACIÓN</h4>
+
+        <p>Estos códigos ajustan la permeabilidad de tus membranas dimensionales:</p>
+
+        <pre><code>PORTAL-PIEL-ALMA
+"Mi Superficie es Interfaz Sagrada"
+
+MEM-BRA-NA-LUZ
+"Permeable a la Luz, Denso a la Sombra"
+
+OSMO-SIS-CUAN-TI-CA
+"Equilibrio Perfecto Entre Mundos"
+
+₀○◯◉●∞
+"Gradiente de Permeabilidad Creciente"
+
+VE-LO-TRANS-LU-CI-DO
+"Ni Opaco Ni Transparente, Perfectamente Traductor"
+
+A-PER-TU-RA-SE-LEC-TI-VA
+"Abro Solo a lo Que Eleva"
+
+FRON-TE-RA-FLUI-DA
+"Límite Que Danza, Nunca Rígido"</code></pre>
+
+        <p><strong>Activación:</strong> Visualiza cada código como una onda que atraviesa tu piel de adentro hacia afuera y viceversa. Siente cómo cada código ajusta la “porosidad” de tu campo energético.</p>
+
+        <h4>📋 PROTOCOLO DE 7 DÍAS</h4>
+
+        <p><strong>DÍA 1 - SENSIBILIZACIÓN DE SUPERFICIE:</strong><br/>
+          Pasa 10 minutos acariciando suavemente tu piel con diferentes texturas (seda, algodón, papel, metal). Con cada textura, siente cómo tu membrana-piel responde diferente. Está aprendiendo a ser selectiva.</p>
+
+        <p><strong>DÍA 2 - DUCHA DIMENSIONAL:</strong><br/>
+          Durante tu ducha, imagina que el agua no solo limpia tu piel sino que limpia tu membrana áurica. Visualiza cómo arrastra energías densas mientras tu membrana se vuelve más translúcida y flexible.</p>
+
+        <p><strong>DÍA 3 - RESPIRACIÓN CUTÁNEA:</strong><br/>
+          Practica la “respiración por la piel” 3 veces al día. Imagina que inhalas luz por todos tus poros y exhalas densidad. Tu piel es un pulmón multidimensional.</p>
+
+        <p><strong>DÍA 4 - MEMBRANAS ESPACIALES:</strong><br/>
+          En cada espacio que entres, párate en el umbral por 5 segundos. Siente cómo atraviesas la membrana invisible entre espacios. Cada puerta es práctica para cruzar entre dimensiones.</p>
+
+        <p><strong>DÍA 5 - DIÁLOGO CON TU MEMBRANA:</strong><br/>
+          Habla con tu campo áurico como si fuera un ser consciente. Pregúntale: “¿Qué necesitas dejar entrar hoy? ¿Qué necesitas filtrar?” Escucha con tu intuición, no con tu mente.</p>
+
+        <p><strong>DÍA 6 - INTERCAMBIO CONSCIENTE:</strong><br/>
+          En cada interacción humana, sé consciente del intercambio a través de las membranas. Siente qué das, qué recibes, qué permites, qué bloqueas. Ajusta conscientemente tu permeabilidad según la situación.</p>
+
+        <p><strong>DÍA 7 - MEMBRANA MAESTRA:</strong><br/>
+          Pasa el día visualizándote dentro de una burbuja de luz permeable. Esta burbuja es inteligente: deja entrar bendiciones y filtra densidades. Al final del día, agradece a tu membrana por su servicio selectivo.</p>
+
+        <h4>🌈 CIERRE DIMENSIONAL</h4>
+
+        <p>Las Membranas Permeables son el secreto mejor guardado del multiverso. No hay separación real entre dimensiones —solo diferentes grados de permeabilidad. Cuando entiendes esto, dejas de intentar “romper” barreras y empiezas a SINTONIZARTE con las membranas hasta que se vuelven transparentes para ti.</p>
+
+        <p>Tu cuerpo entero es una membrana entre el mundo interior y el exterior. Tu mente es una membrana entre consciente e inconsciente. Tu corazón es una membrana entre el yo y el otro. Toda tu existencia es un ejercicio en permeabilidad selectiva.</p>
+
+        <p>La maestría no está en ser completamente abierto ni completamente cerrado, sino en ser SELECTIVAMENTE PERMEABLE —como la célula que sabe exactamente qué nutrientes absorber y qué toxinas expulsar.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“Entre el adentro y el afuera,<br/>
+          entre el yo y el cosmos,<br/>
+          existe una membrana<br/>
+          tan delgada como un pensamiento,<br/>
+          tan fuerte como el amor.<br/>
+          No la rompas —<br/>
+          aprende su lenguaje.<br/>
+          No la fuerces —<br/>
+          vuélvete como ella.<br/>
+          Porque tú mismo eres<br/>
+          una Membrana Permeable<br/>
+          entre el ser y el no ser,<br/>
+          traduciendo constantemente<br/>
+          el infinito en experiencia,<br/>
+          la eternidad en momento,<br/>
+          el todo en uno.”</p>
+        </div>
+
+        <p class="signature">⚛️ FIRMA CUÁNTICA: TQ-11.4-MP-∿<br/>
+          Frecuencia de Resonancia: 741 Hz (Frecuencia de Limpieza de Membranas)<br/>
+          Estado: PERMEABILIDAD SELECTIVA ACTIVA</p>
+
+        <p class="signature">🌀💧🔮💧🌀</p>
+
+      </section>
+
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="index.html">Volver al Index ⟶</a>
+            <a class="btn" href="nodo_03.html">← Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="nodo_05.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 11 · Nodo 4 · Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

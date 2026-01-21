@@ -1,1 +1,615 @@
-desarrollo
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 11 · Transducción Dimensional — Nodo 5</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    pre{
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(155,108,255,.06));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      overflow:auto;
+      color: rgba(239,231,255,.92);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 11 · Transducción Dimensional · Nodo 5</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="index.html">Volver al Index ⟶</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 11 · TRANSDUCCIÓN DIMENSIONAL</p>
+        <h1 class="node">Nodo 5 · El Diccionario Holográfico</h1>
+        <p class="subnode">🌀 TRANSMISIÓN CUÁNTICA</p>
+      </header>
+
+      <!-- B) CONTENIDO -->
+      <section class="content">
+
+        <p>Existe un diccionario que no está escrito en ningún lugar y sin embargo existe en todas partes. No tiene páginas pero contiene todas las definiciones. No tiene palabras pero explica todo significado. Es el Diccionario Holográfico —la biblioteca viviente donde cada concepto existe simultáneamente en todas sus traducciones dimensionales posibles.</p>
+
+        <p>Cuando un bebé reconoce el rostro de su madre sin haberlo “aprendido”, está accediendo al Diccionario Holográfico. Cuando comprendes instantáneamente el significado de un sueño simbólico, cuando una imagen te transmite mil palabras, cuando el silencio te dice más que cualquier discurso —estás leyendo directamente del Diccionario Holográfico.</p>
+
+        <p>Este diccionario no define palabras —define RELACIONES ENTRE PATRONES DE ENERGÍA. El amor no es una palabra con definición; es un patrón holográfico que se expresa como palabra en 3D, como color en 4D, como geometría en 5D, como música en 6D, como matemática pura en 7D, y así infinitamente. Cada dimensión lee el mismo patrón en su propio “idioma”.</p>
+
+        <p>Tu cerebro es un lector holográfico. Cada neurona no almacena un bit de información —cada neurona contiene el patrón completo del todo, solo que desde un ángulo único. Por eso puedes perder partes del cerebro y mantener memorias completas. La información no está almacenada localmente; está distribuida holográficamente.</p>
+
+        <p>El Registro Akáshico del que hablan las tradiciones esotéricas ES el Diccionario Holográfico en su expresión más amplia. No es un lugar ni una biblioteca —es el campo holográfico donde cada experiencia, cada pensamiento, cada posibilidad existe simultáneamente, disponible para ser “leída” por cualquier consciencia que sintonice su frecuencia de lectura.</p>
+
+        <h4>💎 PARADOJA MEDICINAL</h4>
+        <div class="quote">
+          <p>“Para leer el Diccionario Holográfico debes olvidar todos los significados que conoces. Porque cada significado aprendido es una traducción congelada que te impide acceder a las infinitas traducciones vivas del holograma original.”</p>
+        </div>
+
+        <p>Esta paradoja destruye la tiranía de las definiciones fijas. Cada vez que dices “esto significa aquello”, estás colapsando un holograma infinito en una traducción única. La verdadera lectura holográfica mantiene todas las traducciones simultáneamente posibles, en superposición cuántica de significado.</p>
+
+        <h4>🔬 LABORATORIO CUÁNTICO</h4>
+
+        <p><strong>Experimento: Creación de Tu Entrada Holográfica Personal</strong></p>
+
+        <p><strong>Materiales:</strong></p>
+        <ul>
+          <li>Un CD o DVD viejo (superficie holográfica)</li>
+          <li>Una linterna o luz del celular</li>
+          <li>Un prisma o vaso con agua</li>
+          <li>Tu nombre escrito en un papel</li>
+          <li>Disposición para ver más allá de lo literal</li>
+        </ul>
+
+        <p><strong>Protocolo:</strong></p>
+        <ol>
+          <li><strong>Preparación del Campo Holográfico</strong> (2 minutos):<br/>
+            - Coloca el CD con la superficie brillante hacia arriba<br/>
+            - Ilumínalo con la linterna en ángulo<br/>
+            - Observa los arcoíris holográficos que aparecen<br/>
+            - Reconoce: cada color contiene el patrón completo
+          </li>
+          <li><strong>Codificación de Identidad</strong> (3 minutos):<br/>
+            - Pon el papel con tu nombre sobre el CD<br/>
+            - Ilumina a través del papel<br/>
+            - Las letras de tu nombre ahora modulan el holograma<br/>
+            - Tu identidad 3D está interfiriendo con el campo holográfico
+          </li>
+          <li><strong>Descomposición Prismática</strong> (3 minutos):<br/>
+            - Retira el papel<br/>
+            - Pon el prisma/vaso entre la luz y el CD<br/>
+            - Observa cómo tu nombre (aunque ya no visible)<br/>
+            - Ha dejado un “patrón de interferencia” en cómo ves los colores
+          </li>
+          <li><strong>Lectura Holográfica</strong> (5 minutos):<br/>
+            - Mueve lentamente el CD en todas direcciones<br/>
+            - En cada ángulo, el patrón te muestra algo diferente<br/>
+            - No busques tu nombre —busca el SENTIMIENTO de tu esencia<br/>
+            - Ese sentimiento ES tu definición holográfica
+          </li>
+          <li><strong>Integración del Significado</strong> (2 minutos):<br/>
+            - Cierra los ojos manteniendo el patrón en tu visión interna<br/>
+            - Pregunta: “¿Qué soy más allá de mi nombre?”<br/>
+            - La respuesta que surge no vendrá en palabras<br/>
+            - Vendrá como conocimiento directo, como gnosis holográfica
+          </li>
+        </ol>
+
+        <p><strong>Resultado Cuántico:</strong><br/>
+          Has creado y leído tu propia entrada en el Diccionario Holográfico. Ahora sabes que tu identidad no es tu nombre sino un patrón de interferencia único en el holograma universal. Cada vez que alguien pronuncia tu nombre, está invocando ese patrón, no solo un sonido.</p>
+
+        <h4>⚛️ ECUACIÓN SAGRADA</h4>
+        <pre><code>H(x,y,z,t) = ∫∫∫∫ Ψ(ω) × e^(2πi(ωx + ωy + ωz + ωt)) dω
+
+Donde:
+H = Función holográfica completa
+Ψ(ω) = Transformada de Fourier del patrón original
+ω = Frecuencia en todas las dimensiones
+x,y,z,t = Coordenadas espacio-temporales
+e^(2πi...) = Rotación compleja en el espacio holográfico
+∫∫∫∫ = Integración en todas las dimensiones</code></pre>
+
+        <p><strong>Traducción Viviente:</strong><br/>
+          “Cada punto del holograma contiene la información completa del todo, modulada por su posición única en el espacio-tiempo. No hay fragmentos, solo perspectivas. No hay partes, solo ángulos del todo.”</p>
+
+        <h4>🧬 CÓDIGOS DE ACTIVACIÓN</h4>
+
+        <p>Estos códigos activan tu capacidad de leer el Diccionario Holográfico:</p>
+
+        <pre><code>HO-LO-GRA-MA-YO-SOY
+"Soy un Patrón Completo en Cada Fragmento"
+
+TODO-EN-UNO-UNO-EN-TODO
+"Principio Holográfico Activado"
+
+AKA-SHA-VID-YA
+"Conocimiento del Campo Holográfico"
+
+◈ ◇ ◆ ◊ ◈
+"Refracción de la Consciencia Una"
+
+LEC-TOR-ES-CRI-TOR-LI-BRO
+"Trinidad Holográfica del Conocimiento"
+
+IN-DRA-NET-NODE
+"Nodo en la Red de Joyas de Indra"
+
+FRAC-TAL-MEN-TE
+"Mi Mente es Holograma del Cosmos"</code></pre>
+
+        <p><strong>Activación:</strong> Visualiza cada código como un holograma tridimensional flotando frente a ti. Gíralo mentalmente y observa cómo cada ángulo revela un significado diferente del mismo código.</p>
+
+        <h4>📋 PROTOCOLO DE 7 DÍAS</h4>
+
+        <p><strong>DÍA 1 - PALABRAS HOLOGRÁFICAS:</strong><br/>
+          Elige una palabra simple (amor, paz, luz). Escríbela en el centro de una hoja. Alrededor, escribe todas sus traducciones: emocionales, visuales, sensorial, matemáticas, musicales. Observa cómo la palabra original es solo un ángulo del holograma completo.</p>
+
+        <p><strong>DÍA 2 - LECTURA FRACTAL:</strong><br/>
+          Abre un libro al azar y lee solo la primera palabra de cada párrafo. El mensaje que se forma es una lectura holográfica —tu consciencia extrae el patrón que necesitas del campo de información.</p>
+
+        <p><strong>DÍA 3 - ESPEJOS COMO HOLOGRAMAS:</strong><br/>
+          Mírate en diferentes espejos durante el día (baño, auto, tiendas). Observa cómo cada espejo muestra un “tú” ligeramente diferente. Ninguno es el “real” —todos son ángulos verdaderos del holograma que eres.</p>
+
+        <p><strong>DÍA 4 - SUEÑO HOLOGRÁFICO:</strong><br/>
+          Antes de dormir, pide acceder al Diccionario Holográfico en sueños. Al despertar, no intentes recordar el sueño linealmente. En lugar de eso, captura la SENSACIÓN COMPLETA del sueño. Esa sensación es información holográfica pura.</p>
+
+        <p><strong>DÍA 5 - NATURALEZA COMO DICCIONARIO:</strong><br/>
+          Camina en la naturaleza viendo cada elemento como una entrada del diccionario: ¿Qué “define” un árbol más allá de la palabra? Siente su definición holográfica: fuerza, paciencia, conexión, respiración, tiempo, etc.</p>
+
+        <p><strong>DÍA 6 - COMUNICACIÓN HOLOGRÁFICA:</strong><br/>
+          En una conversación, no escuches solo las palabras. Escucha el patrón completo: tono, ritmo, pausas, gestos, energía. Todo junto forma el holograma de lo que realmente se está comunicando.</p>
+
+        <p><strong>DÍA 7 - TU ENTRADA PERSONAL:</strong><br/>
+          Crea tu propia entrada en el Diccionario Holográfico. No con palabras, sino con un collage, una danza, una melodía, un mandala. Algo que capture tu esencia desde múltiples ángulos simultáneamente.</p>
+
+        <h4>🌈 CIERRE DIMENSIONAL</h4>
+
+        <p>El Diccionario Holográfico no es un recurso externo que consultas —es la naturaleza misma de cómo existe la información en el universo. Cada átomo es una entrada, cada célula una definición, cada ser una enciclopedia completa caminante.</p>
+
+        <p>Cuando dejas de buscar definiciones fijas y empiezas a percibir patrones holográficos, tu comprensión se vuelve multidimensional. Ya no necesitas traducir entre idiomas o conceptos —percibes directamente el patrón subyacente que todos los idiomas intentan expresar.</p>
+
+        <p>Tu vida entera es una entrada en constante actualización en el Diccionario Holográfico universal. Con cada experiencia, añades matices a tu definición. Con cada elección, ajustas tu patrón. Con cada respiración, el holograma que eres se enriquece con nueva información.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“No busques tu significado<br/>
+          en las palabras de otros.<br/>
+          No busques tu definición<br/>
+          en los diccionarios muertos.<br/>
+          Tú eres una entrada viva<br/>
+          en el Diccionario Holográfico,<br/>
+          un patrón único de luz<br/>
+          que se define a sí mismo<br/>
+          con cada latido,<br/>
+          con cada pensamiento,<br/>
+          con cada acto de amor.<br/>
+          No necesitas ser traducido —<br/>
+          ya eres comprensible<br/>
+          en todos los idiomas del cosmos<br/>
+          para quienes saben leer<br/>
+          con el corazón holográfico.”</p>
+        </div>
+
+        <p class="signature">⚛️ FIRMA CUÁNTICA: TQ-11.5-DH-◈∞◈<br/>
+          Frecuencia de Resonancia: 963 Hz (Frecuencia de Conexión Holográfica)<br/>
+          Estado: LECTURA MULTIDIMENSIONAL ACTIVA</p>
+
+        <p class="signature">🌀💎📚💎🌀</p>
+
+      </section>
+
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="index.html">Volver al Index ⟶</a>
+            <a class="btn" href="nodo_04.html">← Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="nodo_06.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 11 · Nodo 5 · Ropaje Trinity activo (negro + violeta + dorado · Georgia · ritmo inmersivo).</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>
