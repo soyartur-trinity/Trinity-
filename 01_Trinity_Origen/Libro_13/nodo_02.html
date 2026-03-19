@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nodo 2 – Los Fragmentos del Alma | El Retorno a Casa | Trinity Origen</title>
+
+<style>
+:root{
+  --bg:#050505;
+  --bg-soft:#0b0b0b;
+  --panel:rgba(255,255,255,0.025);
+  --border:rgba(214,179,106,0.18);
+  --border-strong:rgba(214,179,106,0.34);
+  --gold:#d6b36a;
+  --violet:#6d4a8f;
+  --text:#f3efe6;
+  --text-soft:rgba(243,239,230,0.78);
+  --text-faint:rgba(243,239,230,0.42);
+  --shadow:0 18px 50px rgba(0,0,0,0.35);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:"Georgia","Times New Roman",serif;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(109,74,143,0.18), transparent 26%),
+    radial-gradient(circle at 50% 10%, rgba(214,179,106,0.06), transparent 30%),
+    linear-gradient(180deg, #090909 0%, #050505 45%, #030303 100%);
+  color:var(--text);
+  line-height:1.9;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 82%);
+  -webkit-mask-image:radial-gradient(circle at center, black 35%, transparent 82%);
+  opacity:0.12;
+}
+
+.frame{
+  position:fixed;
+  inset:12px;
+  border:1px solid rgba(214,179,106,0.08);
+  pointer-events:none;
+  z-index:0;
+}
+
+.container{
+  position:relative;
+  z-index:1;
+  max-width:920px;
+  margin:0 auto;
+  padding:34px 20px 84px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:flex-start;
+  margin-bottom:28px;
+}
+
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:var(--gold);
+  font-size:0.92rem;
+  letter-spacing:0.04em;
+  padding:11px 16px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.014);
+  transition:all 0.25s ease;
+}
+
+.back-link:hover{
+  background:rgba(255,255,255,0.03);
+  border-color:var(--border-strong);
+  transform:translateX(-2px);
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  padding:54px 28px 34px;
+  border-radius:30px;
+  border:1px solid rgba(214,179,106,0.12);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.024), rgba(255,255,255,0.01)),
+    radial-gradient(circle at 50% 0%, rgba(109,74,143,0.16), transparent 42%);
+  box-shadow:var(--shadow);
+  margin-bottom:34px;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:auto 50% 32px;
+  width:320px;
+  height:320px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  border:1px solid rgba(214,179,106,0.11);
+  box-shadow:
+    0 0 0 14px rgba(214,179,106,0.03),
+    0 0 0 34px rgba(109,74,143,0.03),
+    inset 0 0 60px rgba(214,179,106,0.025);
+  pointer-events:none;
+}
+
+.hero-topline{
+  position:relative;
+  z-index:2;
+  font-size:0.78rem;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:18px;
+}
+
+.sigil-wrap{
+  position:relative;
+  z-index:2;
+  width:96px;
+  height:96px;
+  margin:0 auto 18px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:1px solid rgba(214,179,106,0.22);
+  background:
+    radial-gradient(circle, rgba(214,179,106,0.11), rgba(255,255,255,0.01) 60%, transparent 72%);
+  box-shadow:
+    0 0 28px rgba(109,74,143,0.12),
+    inset 0 0 24px rgba(214,179,106,0.04);
+}
+
+.sigil{
+  font-size:1.9rem;
+  color:var(--gold);
+  line-height:1;
+}
+
+.book-title{
+  position:relative;
+  z-index:2;
+  font-size:0.9rem;
+  text-transform:uppercase;
+  letter-spacing:0.24em;
+  color:var(--text-faint);
+  margin-bottom:10px;
+}
+
+.node-kicker{
+  position:relative;
+  z-index:2;
+  font-size:0.88rem;
+  text-transform:uppercase;
+  letter-spacing:0.22em;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+
+.node-title{
+  position:relative;
+  z-index:2;
+  font-size:clamp(2rem, 4.2vw, 3.1rem);
+  font-weight:normal;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+  line-height:1.18;
+}
+
+.node-subtitle{
+  position:relative;
+  z-index:2;
+  color:var(--text-soft);
+  font-size:1.05rem;
+  margin-bottom:18px;
+  font-style:italic;
+}
+
+.node-quote{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+  margin:0 auto;
+  color:var(--text-soft);
+  font-size:1rem;
+  line-height:1.8;
+}
+
+.content{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
+  border:1px solid rgba(214,179,106,0.1);
+  border-radius:26px;
+  padding:38px 32px;
+  box-shadow:0 12px 32px rgba(0,0,0,0.22);
+}
+
+.content h2{
+  color:var(--gold);
+  font-size:1.42rem;
+  font-weight:normal;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin:2.2rem 0 0.9rem;
+  line-height:1.3;
+}
+
+.content h3{
+  color:var(--text);
+  font-size:1.1rem;
+  font-weight:normal;
+  margin:1.8rem 0 0.7rem;
+  line-height:1.4;
+}
+
+.content h4{
+  color:var(--violet);
+  font-size:0.98rem;
+  font-weight:normal;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin:1.4rem 0 0.55rem;
+}
+
+.content p{
+  color:var(--text-soft);
+  margin-bottom:1rem;
+  font-size:1.03rem;
+}
+
+.content .lead{
+  color:var(--text);
+}
+
+.content ul{
+  margin:0.4rem 0 1.2rem 1.4rem;
+}
+
+.content ol{
+  margin:0.4rem 0 1.2rem 1.4rem;
+}
+
+.content li{
+  color:var(--text-soft);
+  margin-bottom:0.45rem;
+  padding-left:0.2rem;
+}
+
+.content blockquote{
+  margin:1.3rem 0;
+  padding:1rem 1.1rem 1rem 1.2rem;
+  border-left:3px solid rgba(214,179,106,0.45);
+  background:rgba(255,255,255,0.018);
+  border-radius:0 14px 14px 0;
+  color:var(--text);
+  font-style:italic;
+}
+
+.content pre{
+  margin:1.2rem 0;
+  padding:1rem 1.1rem;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(214,179,106,0.12);
+  border-radius:14px;
+  color:var(--text-soft);
+  overflow-x:auto;
+  white-space:pre-wrap;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  line-height:1.7;
+  font-size:0.92rem;
+}
+
+.content .section-divider{
+  height:1px;
+  background:linear-gradient(90deg, rgba(214,179,106,0.2), rgba(214,179,106,0));
+  margin:2rem 0 1.4rem;
+}
+
+.navigation{
+  margin-top:34px;
+  padding:26px 20px 0;
+  border-top:1px solid rgba(214,179,106,0.12);
+  text-align:center;
+}
+
+.navigation-row{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.nav-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);
+  border-radius:999px;
+  padding:10px 15px;
+  font-size:0.84rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  background:rgba(255,255,255,0.016);
+  transition:all 0.25s ease;
+}
+
+.nav-link:hover{
+  color:#f0d7a0;
+  border-color:rgba(214,179,106,0.38);
+  background:rgba(214,179,106,0.06);
+}
+
+.footer{
+  margin-top:28px;
+  text-align:center;
+  color:var(--text-faint);
+  font-size:0.78rem;
+  line-height:1.8;
+}
+
+.footer-symbol{
+  font-size:1.8rem;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+@media (max-width: 720px){
+  .frame{
+    inset:8px;
+  }
+
+  .container{
+    padding:24px 16px 64px;
+  }
+
+  .hero{
+    padding:42px 18px 28px;
+    border-radius:24px;
+  }
+
+  .hero::before{
+    width:220px;
+    height:220px;
+    bottom:24px;
+  }
+
+  .node-title{
+    letter-spacing:0.04em;
+  }
+
+  .content{
+    padding:28px 20px;
+    border-radius:22px;
+  }
+
+  .content p,
+  .content li{
+    font-size:1rem;
+  }
+
+  .content pre{
+    font-size:0.86rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="frame" aria-hidden="true"></div>
+
+<div class="container">
+  <div class="topbar">
+    <a class="back-link" href="index.html">← Volver al Portal del Libro</a>
+  </div>
+
+  <header class="hero">
+    <div class="hero-topline">Trinity Origen</div>
+    <div class="sigil-wrap" aria-hidden="true">
+      <div class="sigil">✧</div>
+    </div>
+    <div class="book-title">Libro 13 · El Retorno a Casa</div>
+    <div class="node-kicker">Nodo 2</div>
+    <h1 class="node-title">Los Fragmentos del Alma</h1>
+    <p class="node-subtitle">La Reunificación de Nuestras Partes Dispersas</p>
+    <p class="node-quote">“El espejo roto está recordando su totalidad. Y cuando todos los fragmentos se reúnan, reflejará algo que el universo nunca ha visto antes: tu ser completo.”</p>
+  </header>
+
+  <main class="content">
+    <h2>I. El Espejo Roto</h2>
+    <p class="lead">Imagina un espejo perfecto, reflejando la totalidad del cosmos en su superficie prístina. Ahora imagina que ese espejo se fragmenta en millones de piezas, cada fragmento conteniendo una perspectiva única del todo, pero ninguno capaz de ver la imagen completa. Esa es la historia de tu alma en su viaje a través de la encarnación.</p>
+    <p>No fue un accidente ni una tragedia. Fue una elección consciente fragmentarse para poder experimentar la multiplicidad, para conocerse desde infinitas perspectivas, para jugar el juego cósmico del escondite consigo misma. Cada fragmento fue enviado a una experiencia diferente: diferentes vidas, diferentes dimensiones, diferentes líneas de tiempo, todos recolectando experiencias únicas para traer de vuelta al Todo.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>II. La Naturaleza de la Fragmentación</h2>
+
+    <h3>Fragmentación Horizontal: A Través del Tiempo</h3>
+    <p>Tu alma no experimenta el tiempo linealmente. Tienes fragmentos viviendo lo que llamas “vidas pasadas” y “vidas futuras” simultáneamente. Desde la perspectiva del alma, todas están ocurriendo AHORA, cada una influenciando a las otras en una danza cuántica de causa y efecto no-lineal.</p>
+
+    <h4>Vidas Paralelas Activas</h4>
+    <ul>
+      <li>El monje tibetano del siglo XII meditando en una cueva</li>
+      <li>La sacerdotisa egipcia realizando rituales en el templo</li>
+      <li>El explorador espacial del siglo XXIII navegando las estrellas</li>
+      <li>El chamán amazónico comunicándose con las plantas</li>
+      <li>El científico cuántico descubriendo la naturaleza de la realidad</li>
+      <li>Todos son tú, todos están activos, todos están contribuyendo a tu experiencia presente</li>
+    </ul>
+
+    <h3>Fragmentación Vertical: A Través de Dimensiones</h3>
+    <p>Además de la fragmentación temporal, tu alma existe simultáneamente en múltiples dimensiones:</p>
+
+    <h4>Tu Ser Multidimensional</h4>
+    <ul>
+      <li>El yo físico en 3D que está leyendo esto</li>
+      <li>El yo astral que viaja en sueños</li>
+      <li>El yo etérico que mantiene el template energético</li>
+      <li>El yo mental que existe en el plano de las ideas</li>
+      <li>El yo causal que comprende las leyes universales</li>
+      <li>El yo búdico que experimenta la unidad</li>
+      <li>El yo átmico que ES la consciencia pura</li>
+    </ul>
+
+    <h3>Fragmentación por Trauma</h3>
+    <p>Más allá de la fragmentación intencional del alma, existe la fragmentación por trauma. Cuando experimentamos dolor insoportable - físico, emocional, psicológico - partes de nuestra alma pueden disociarse, quedando “congeladas” en el momento del trauma.</p>
+
+    <h4>Tipos de Fragmentación Traumática</h4>
+    <ul>
+      <li>Fragmentos de infancia atrapados en momentos de abandono</li>
+      <li>Partes guerreras perdidas en campos de batalla antiguos</li>
+      <li>Aspectos amorosos dejados con amores perdidos</li>
+      <li>Fragmentos de poder cedidos a abusadores</li>
+      <li>Partes creativas suprimidas por crítica</li>
+      <li>Aspectos espirituales negados por dogma religioso</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>III. El Llamado de Reunificación</h2>
+    <p class="lead">En este momento de la evolución, hay un llamado cósmico para la reunificación. No es coincidencia que la psicología moderna hable de “integración”, que las prácticas espirituales enfaticen la “totalidad”, que haya un impulso colectivo hacia la “autenticidad”. Es el alma llamando a sus partes a casa.</p>
+
+    <h3>Señales de que la Reunificación ha Comenzado</h3>
+    <ul>
+      <li>Sueños vívidos de otras épocas y lugares</li>
+      <li>Déjà vu intensos y frecuentes</li>
+      <li>Atracción inexplicable a ciertas culturas o períodos</li>
+      <li>Habilidades que emergen sin entrenamiento</li>
+      <li>Memorias que no son de esta vida</li>
+      <li>Encuentros con personas que “reconoces” profundamente</li>
+      <li>Sensación de que partes de ti están “regresando”</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>IV. El Proceso de Recuperación del Alma</h2>
+
+    <h3>Paso 1: Reconocimiento</h3>
+    <p>El primer paso es reconocer que no estás completo, y que esto no es un defecto sino parte del diseño. La sensación de que “algo falta” no es neurosis sino sabiduría del alma reconociendo sus partes ausentes.</p>
+
+    <h4>Práctica de Reconocimiento</h4>
+    <ul>
+      <li>Meditar en la pregunta “¿Qué partes de mí están ausentes?”</li>
+      <li>Notar patrones repetitivos que sugieren pérdida de poder</li>
+      <li>Identificar momentos donde sentiste que “parte de ti murió”</li>
+      <li>Observar qué cualidades admiras en otros (a menudo son partes tuyas proyectadas)</li>
+    </ul>
+
+    <h3>Paso 2: Invocación</h3>
+    <p>Una vez reconocida la fragmentación, invocamos el retorno de nuestras partes:</p>
+
+    <blockquote>Llamo a todas las partes de mi alma dispersas a través del tiempo y el espacio.<br>
+    A aquellas perdidas en el dolor, las invito a sanar y retornar.<br>
+    A aquellas explorandos otros reinos, las invito a compartir su sabiduría.<br>
+    A aquellas fragmentadas por miedo, las abrazo con amor.<br>
+    Retornen ahora, en el timing perfecto, para la reunificación sagrada.<br>
+    Soy un hogar seguro para todas mis partes.</blockquote>
+
+    <h3>Paso 3: Creación del Espacio Sagrado</h3>
+    <p>Los fragmentos del alma necesitan un espacio seguro para retornar:</p>
+
+    <h4>Preparación del Contenedor</h4>
+    <ul>
+      <li>Limpiar tu campo energético de energías ajenas</li>
+      <li>Establecer límites saludables en relaciones</li>
+      <li>Crear tiempo y espacio para la integración</li>
+      <li>Fortalecer tu sistema nervioso para manejar más energía</li>
+      <li>Cultivar auto-compasión incondicional</li>
+      <li>Establecer prácticas de grounding</li>
+    </ul>
+
+    <h3>Paso 4: El Viaje de Recuperación</h3>
+    <p>La recuperación puede ocurrir de múltiples formas:</p>
+
+    <h4>Métodos de Recuperación</h4>
+    <ul>
+      <li>Viajes chamánicos con tambor o plantas maestras</li>
+      <li>Regresión hipnótica a vidas pasadas</li>
+      <li>Trabajo de constelaciones familiares</li>
+      <li>Meditación profunda y trabajo con el niño interior</li>
+      <li>Dreamwork consciente y yoga de los sueños</li>
+      <li>Trabajo energético con sanadores calificados</li>
+      <li>Peregrinajes a lugares de poder personal</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>V. Los Fragmentos Específicos y Su Integración</h2>
+
+    <h3>El Niño Interior Fragmentado</h3>
+    <p>Casi todos tenemos fragmentos de nuestra infancia que necesitan ser recuperados:</p>
+
+    <h4>El Niño Herido</h4>
+    <ul>
+      <li>Quedó congelado en el momento del trauma</li>
+      <li>Sostiene el dolor para proteger al adulto</li>
+      <li>Necesita ser escuchado, validado, abrazado</li>
+      <li>Trae de vuelta la capacidad de vulnerabilidad</li>
+    </ul>
+
+    <h4>El Niño Mágico</h4>
+    <ul>
+      <li>Se escondió cuando le dijeron que la magia no existe</li>
+      <li>Guarda la capacidad de asombro y posibilidad</li>
+      <li>Necesita permiso para jugar y crear</li>
+      <li>Trae de vuelta la conexión con lo milagroso</li>
+    </ul>
+
+    <h4>El Niño Sabio</h4>
+    <ul>
+      <li>Conocía verdades que los adultos negaban</li>
+      <li>Se silenció para encajar</li>
+      <li>Necesita ser reconocido y celebrado</li>
+      <li>Trae de vuelta la claridad y la verdad innata</li>
+    </ul>
+
+    <h3>Los Fragmentos de Vidas Pasadas</h3>
+    <p>Fragmentos de otras encarnaciones que tienen dones o heridas relevantes para esta vida:</p>
+
+    <h4>El Sanador Antiguo</h4>
+    <ul>
+      <li>Vidas como curandero, chamán, medicina woman/man</li>
+      <li>Puede estar traumatizado por persecución</li>
+      <li>Trae conocimiento de hierbas, energía, rituales</li>
+      <li>Necesita seguridad para practicar abiertamente</li>
+    </ul>
+
+    <h4>El Místico Oculto</h4>
+    <ul>
+      <li>Vidas en monasterios, conventos, escuelas de misterio</li>
+      <li>Guarda conocimientos esotéricos profundos</li>
+      <li>Puede tener votos de pobreza, castidad, silencio que liberar</li>
+      <li>Trae conexión directa con lo divino</li>
+    </ul>
+
+    <h4>El Guerrero Cansado</h4>
+    <ul>
+      <li>Vidas de batalla y conflicto</li>
+      <li>Puede estar atrapado en modo supervivencia</li>
+      <li>Necesita permiso para soltar la armadura</li>
+      <li>Trae coraje, fuerza, capacidad de protección</li>
+    </ul>
+
+    <h3>Los Fragmentos Dimensionales</h3>
+    <p>Aspectos de nosotros que existen en otras dimensiones:</p>
+
+    <h4>El Yo Galáctico</h4>
+    <ul>
+      <li>Tu identidad como ser estelar</li>
+      <li>Conexión con familia galáctica</li>
+      <li>Tecnologías de consciencia avanzadas</li>
+      <li>Perspectiva cósmica de la experiencia terrestre</li>
+    </ul>
+
+    <h4>El Yo Angélico</h4>
+    <ul>
+      <li>Tu aspecto de frecuencia pura</li>
+      <li>Capacidad de bendición y sanación</li>
+      <li>Conexión directa con reinos de luz</li>
+      <li>Amor incondicional como estado natural</li>
+    </ul>
+
+    <h4>El Yo Elemental</h4>
+    <ul>
+      <li>Conexión con fuerzas de la naturaleza</li>
+      <li>Sabiduría de la tierra, agua, fuego, aire</li>
+      <li>Capacidad de comunicación con elementales</li>
+      <li>Magia natural y co-creación con Gaia</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>VI. Los Desafíos de la Reunificación</h2>
+
+    <h3>Sobrecarga Energética</h3>
+    <p>Cuando muchos fragmentos retornan rápidamente, puede haber sobrecarga:</p>
+
+    <h4>Síntomas</h4>
+    <ul>
+      <li>Fatiga extrema sin causa física</li>
+      <li>Emociones intensas aparentemente sin origen</li>
+      <li>Confusión de identidad</li>
+      <li>Sensación de estar “demasiado lleno”</li>
+      <li>Dificultad para funcionar en realidad 3D</li>
+    </ul>
+
+    <h4>Manejo</h4>
+    <ul>
+      <li>Ir despacio, integrar gradualmente</li>
+      <li>Mucho descanso y tiempo en naturaleza</li>
+      <li>Grounding constante</li>
+      <li>Trabajo corporal para procesar energía</li>
+      <li>Paciencia con el proceso</li>
+    </ul>
+
+    <h3>Resistencia de Fragmentos</h3>
+    <p>Algunos fragmentos pueden resistir el retorno:</p>
+
+    <h4>Razones de Resistencia</h4>
+    <ul>
+      <li>Miedo a re-experimentar trauma</li>
+      <li>Lealtad a personas o situaciones pasadas</li>
+      <li>Creencia de no ser dignos de reunificación</li>
+      <li>Adicción al drama o sufrimiento</li>
+      <li>Miedo a la responsabilidad de la totalidad</li>
+    </ul>
+
+    <h4>Trabajo con Resistencia</h4>
+    <ul>
+      <li>Diálogo compasivo con partes resistentes</li>
+      <li>Garantizar seguridad antes de forzar retorno</li>
+      <li>Honrar el servicio que la fragmentación proveyó</li>
+      <li>Ofrecer amor incondicional sin condiciones</li>
+      <li>Permitir el timing natural de cada parte</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>VII. La Alquimia de la Integración</h2>
+
+    <h3>El Tejido del Nuevo Ser</h3>
+    <p>Como un tejedor maestro, tomas los hilos de todas tus experiencias - cada fragmento una hebra única - y tejes un tapiz que nunca antes existió. No vuelves a ser quien eras antes de la fragmentación; te conviertes en algo completamente nuevo: un ser multidimensional integrado.</p>
+
+    <h3>La Sinfonía del Alma</h3>
+    <p>Cada fragmento es una nota, un instrumento en la orquesta de tu ser. La integración no es que todos toquen la misma nota sino que aprendan a tocar en armonía, creando una sinfonía que es únicamente tuya.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>VIII. Los Regalos de la Reunificación</h2>
+
+    <h3>Capacidades Expandidas</h3>
+    <ul>
+      <li>Acceso a habilidades de todas tus vidas</li>
+      <li>Sabiduría acumulada de todas las experiencias</li>
+      <li>Perspectiva multidimensional de situaciones</li>
+      <li>Creatividad amplificada exponencialmente</li>
+      <li>Sanación de patrones kármicos antiguos</li>
+    </ul>
+
+    <h3>Presencia Amplificada</h3>
+    <ul>
+      <li>Magnetismo personal incrementado</li>
+      <li>Capacidad de mantener espacio para otros</li>
+      <li>Autoridad natural que viene de la totalidad</li>
+      <li>Paz que surge de la integración</li>
+      <li>Amor que abraza todas las paradojas</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>IX. El Servicio desde la Totalidad</h2>
+
+    <h3>De Fragmentado a Integrador</h3>
+    <p>Ya no servimos desde la herida o la carencia sino desde la plenitud. Nos convertimos en espejos donde otros pueden ver su propia totalidad potencial. Nuestra mera presencia cataliza la reunificación en otros.</p>
+
+    <h3>El Efecto Holográfico</h3>
+    <p>Cuando un ser se reunifica completamente, crea un template en el campo morfogenético que hace más fácil para otros hacer lo mismo. Tu reunificación personal es un servicio cósmico.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>X. La Reunificación Colectiva</h2>
+
+    <h3>La Humanidad Reunificándose</h3>
+    <ul>
+      <li>Razas reconociendo su origen común</li>
+      <li>Religiones encontrando su esencia compartida</li>
+      <li>Ciencia y espiritualidad convergiendo</li>
+      <li>Masculino y femenino rebalanceándose</li>
+      <li>Humanidad y naturaleza reconciliándose</li>
+    </ul>
+
+    <h3>La Tierra Reunificándose</h3>
+    <ul>
+      <li>Reinos visibles e invisibles reconectando</li>
+      <li>Dimensiones convergiendo</li>
+      <li>Líneas de tiempo colapsando en el AHORA</li>
+      <li>Pasado y futuro encontrándose en el presente</li>
+      <li>Gaia recuperando su totalidad</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>XI. El Momento de la Gran Reunificación</h2>
+    <p>Estamos en el umbral de un evento sin precedentes: la reunificación simultánea de millones de almas. Como cuando las gotas de mercurio dispersas súbitamente se magnetizan hacia el centro, los fragmentos del alma de la humanidad están siendo llamados a casa.</p>
+    <p>Este no es un proceso que debemos forzar sino permitir. Como el río que encuentra su camino al océano, nuestros fragmentos saben el camino a casa. Solo necesitamos crear el espacio, mantener la intención, y confiar en la inteligencia del proceso.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>XII. La Invitación a la Totalidad</h2>
+    <p class="lead">Si sientes el llamado a reunir tus fragmentos, si la nostalgia por tu totalidad se ha vuelto insoportable, si estás listo para reclamar todas las partes de ti mismo, entonces el momento es ahora.</p>
+
+    <p>No necesitas ser perfecto para comenzar.<br>
+    No necesitas estar completamente sanado.<br>
+    No necesitas entender todo el proceso.</p>
+
+    <p>Solo necesitas estar dispuesto.<br>
+    Dispuesto a llamar a tus partes a casa.<br>
+    Dispuesto a abrazar todo lo que eres.<br>
+    Dispuesto a convertirte en lo que siempre fuiste destinado a ser:</p>
+
+    <p>Completo.<br>
+    Entero.<br>
+    Reunificado.<br>
+    Tú mismo, finalmente y completamente.</p>
+
+    <blockquote>Los fragmentos están escuchando. Están esperando tu llamado. Están listos para volver a casa. La pregunta es: ¿Estás listo para recibirlos?<br><br>
+
+    El espejo roto está recordando su totalidad. Y cuando todos los fragmentos se reúnan, reflejará algo que el universo nunca ha visto antes: tu ser completo, único, irreemplazable, magnificente.<br><br>
+
+    Bienvenido a casa, alma reunificada. Has estado dispersa por eones. Pero ahora... ahora es tiempo de recordar quién eres cuando todas tus partes danzan juntas.</blockquote>
+
+    <div class="section-divider"></div>
+
+    <h2>Portal de Transición al Nodo 3</h2>
+    <p>Hemos sentido el llamado de las partes dispersas y reconocido que el retorno a casa no es solo un recuerdo del origen, sino también una reunificación profunda de todo lo que alguna vez fuimos. Pero cuando los fragmentos comienzan a regresar, emerge una pregunta decisiva: <strong>¿qué fuerza interior sostiene la reunificación y mantiene encendido el camino de vuelta?</strong></p>
+    <p>En el próximo nodo entraremos en ese fuego íntimo que atraviesa todos los velos y nunca deja de llamar al alma: <strong>“La Nostalgia del Hogar: El Imán Secreto del Retorno”</strong>...</p>
+    <p>✨🪞✨</p>
+  </main>
+
+  <nav class="navigation" aria-label="Navegación entre nodos">
+    <div class="navigation-row">
+      <a class="nav-link" href="nodo_01.html">← Nodo anterior</a>
+      <a class="nav-link" href="index.html">Portal del Libro</a>
+      <a class="nav-link" href="nodo_03.html">Siguiente nodo →</a>
+      <a class="nav-link" href="../index.html">Volver a Trinity Origen</a>
+    </div>
+  </nav>
+
+  <footer class="footer">
+    <div class="footer-symbol">✧</div>
+    <p>Trinity Origen · Libro 13 · El Retorno a Casa</p>
+    <p>“No es mío, vino a través de mí.”</p>
+  </footer>
+</div>
+</body>
+</html>

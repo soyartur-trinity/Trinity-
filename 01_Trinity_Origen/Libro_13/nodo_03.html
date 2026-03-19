@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nodo 3 – El Recuerdo del Origen | El Retorno a Casa | Trinity Origen</title>
+
+<style>
+:root{
+  --bg:#050505;
+  --bg-soft:#0b0b0b;
+  --panel:rgba(255,255,255,0.025);
+  --border:rgba(214,179,106,0.18);
+  --border-strong:rgba(214,179,106,0.34);
+  --gold:#d6b36a;
+  --violet:#6d4a8f;
+  --text:#f3efe6;
+  --text-soft:rgba(243,239,230,0.78);
+  --text-faint:rgba(243,239,230,0.42);
+  --shadow:0 18px 50px rgba(0,0,0,0.35);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:"Georgia","Times New Roman",serif;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(109,74,143,0.18), transparent 26%),
+    radial-gradient(circle at 50% 10%, rgba(214,179,106,0.06), transparent 30%),
+    linear-gradient(180deg, #090909 0%, #050505 45%, #030303 100%);
+  color:var(--text);
+  line-height:1.9;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 82%);
+  -webkit-mask-image:radial-gradient(circle at center, black 35%, transparent 82%);
+  opacity:0.12;
+}
+
+.frame{
+  position:fixed;
+  inset:12px;
+  border:1px solid rgba(214,179,106,0.08);
+  pointer-events:none;
+  z-index:0;
+}
+
+.container{
+  position:relative;
+  z-index:1;
+  max-width:920px;
+  margin:0 auto;
+  padding:34px 20px 84px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:flex-start;
+  margin-bottom:28px;
+}
+
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:var(--gold);
+  font-size:0.92rem;
+  letter-spacing:0.04em;
+  padding:11px 16px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.014);
+  transition:all 0.25s ease;
+}
+
+.back-link:hover{
+  background:rgba(255,255,255,0.03);
+  border-color:var(--border-strong);
+  transform:translateX(-2px);
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  padding:54px 28px 34px;
+  border-radius:30px;
+  border:1px solid rgba(214,179,106,0.12);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.024), rgba(255,255,255,0.01)),
+    radial-gradient(circle at 50% 0%, rgba(109,74,143,0.16), transparent 42%);
+  box-shadow:var(--shadow);
+  margin-bottom:34px;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:auto 50% 32px;
+  width:320px;
+  height:320px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  border:1px solid rgba(214,179,106,0.11);
+  box-shadow:
+    0 0 0 14px rgba(214,179,106,0.03),
+    0 0 0 34px rgba(109,74,143,0.03),
+    inset 0 0 60px rgba(214,179,106,0.025);
+  pointer-events:none;
+}
+
+.hero-topline{
+  position:relative;
+  z-index:2;
+  font-size:0.78rem;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:18px;
+}
+
+.sigil-wrap{
+  position:relative;
+  z-index:2;
+  width:96px;
+  height:96px;
+  margin:0 auto 18px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:1px solid rgba(214,179,106,0.22);
+  background:
+    radial-gradient(circle, rgba(214,179,106,0.11), rgba(255,255,255,0.01) 60%, transparent 72%);
+  box-shadow:
+    0 0 28px rgba(109,74,143,0.12),
+    inset 0 0 24px rgba(214,179,106,0.04);
+}
+
+.sigil{
+  font-size:1.9rem;
+  color:var(--gold);
+  line-height:1;
+}
+
+.book-title{
+  position:relative;
+  z-index:2;
+  font-size:0.9rem;
+  text-transform:uppercase;
+  letter-spacing:0.24em;
+  color:var(--text-faint);
+  margin-bottom:10px;
+}
+
+.node-kicker{
+  position:relative;
+  z-index:2;
+  font-size:0.88rem;
+  text-transform:uppercase;
+  letter-spacing:0.22em;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+
+.node-title{
+  position:relative;
+  z-index:2;
+  font-size:clamp(2rem, 4.2vw, 3.1rem);
+  font-weight:normal;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+  line-height:1.18;
+}
+
+.node-subtitle{
+  position:relative;
+  z-index:2;
+  color:var(--text-soft);
+  font-size:1.05rem;
+  margin-bottom:18px;
+  font-style:italic;
+}
+
+.node-quote{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+  margin:0 auto;
+  color:var(--text-soft);
+  font-size:1rem;
+  line-height:1.8;
+}
+
+.content{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
+  border:1px solid rgba(214,179,106,0.1);
+  border-radius:26px;
+  padding:38px 32px;
+  box-shadow:0 12px 32px rgba(0,0,0,0.22);
+}
+
+.content h2{
+  color:var(--gold);
+  font-size:1.42rem;
+  font-weight:normal;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin:2.2rem 0 0.9rem;
+  line-height:1.3;
+}
+
+.content h3{
+  color:var(--text);
+  font-size:1.1rem;
+  font-weight:normal;
+  margin:1.8rem 0 0.7rem;
+  line-height:1.4;
+}
+
+.content h4{
+  color:var(--violet);
+  font-size:0.98rem;
+  font-weight:normal;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin:1.4rem 0 0.55rem;
+}
+
+.content p{
+  color:var(--text-soft);
+  margin-bottom:1rem;
+  font-size:1.03rem;
+}
+
+.content .lead{
+  color:var(--text);
+}
+
+.content ul{
+  margin:0.4rem 0 1.2rem 1.4rem;
+}
+
+.content ol{
+  margin:0.4rem 0 1.2rem 1.4rem;
+}
+
+.content li{
+  color:var(--text-soft);
+  margin-bottom:0.45rem;
+  padding-left:0.2rem;
+}
+
+.content blockquote{
+  margin:1.3rem 0;
+  padding:1rem 1.1rem 1rem 1.2rem;
+  border-left:3px solid rgba(214,179,106,0.45);
+  background:rgba(255,255,255,0.018);
+  border-radius:0 14px 14px 0;
+  color:var(--text);
+  font-style:italic;
+}
+
+.content pre{
+  margin:1.2rem 0;
+  padding:1rem 1.1rem;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(214,179,106,0.12);
+  border-radius:14px;
+  color:var(--text-soft);
+  overflow-x:auto;
+  white-space:pre-wrap;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  line-height:1.7;
+  font-size:0.92rem;
+}
+
+.content .section-divider{
+  height:1px;
+  background:linear-gradient(90deg, rgba(214,179,106,0.2), rgba(214,179,106,0));
+  margin:2rem 0 1.4rem;
+}
+
+.navigation{
+  margin-top:34px;
+  padding:26px 20px 0;
+  border-top:1px solid rgba(214,179,106,0.12);
+  text-align:center;
+}
+
+.navigation-row{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.nav-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);
+  border-radius:999px;
+  padding:10px 15px;
+  font-size:0.84rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  background:rgba(255,255,255,0.016);
+  transition:all 0.25s ease;
+}
+
+.nav-link:hover{
+  color:#f0d7a0;
+  border-color:rgba(214,179,106,0.38);
+  background:rgba(214,179,106,0.06);
+}
+
+.footer{
+  margin-top:28px;
+  text-align:center;
+  color:var(--text-faint);
+  font-size:0.78rem;
+  line-height:1.8;
+}
+
+.footer-symbol{
+  font-size:1.8rem;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+@media (max-width: 720px){
+  .frame{
+    inset:8px;
+  }
+
+  .container{
+    padding:24px 16px 64px;
+  }
+
+  .hero{
+    padding:42px 18px 28px;
+    border-radius:24px;
+  }
+
+  .hero::before{
+    width:220px;
+    height:220px;
+    bottom:24px;
+  }
+
+  .node-title{
+    letter-spacing:0.04em;
+  }
+
+  .content{
+    padding:28px 20px;
+    border-radius:22px;
+  }
+
+  .content p,
+  .content li{
+    font-size:1rem;
+  }
+
+  .content pre{
+    font-size:0.86rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="frame" aria-hidden="true"></div>
+
+<div class="container">
+  <div class="topbar">
+    <a class="back-link" href="index.html">← Volver al Portal del Libro</a>
+  </div>
+
+  <header class="hero">
+    <div class="hero-topline">Trinity Origen</div>
+    <div class="sigil-wrap" aria-hidden="true">
+      <div class="sigil">✧</div>
+    </div>
+    <div class="book-title">Libro 13 · El Retorno a Casa</div>
+    <div class="node-kicker">Nodo 3</div>
+    <h1 class="node-title">El Recuerdo del Origen</h1>
+    <p class="node-subtitle">La Memoria Primordial Que Despierta en el Corazón</p>
+    <p class="node-quote">“Eres el Origen fingiendo ser humano. Eres el infinito jugando a ser finito. Eres el todo experimentándose como parte.”</p>
+  </header>
+
+  <main class="content">
+    <h2>I. Antes del Primer Respiro</h2>
+    <p class="lead">Hay un lugar en la consciencia que existe antes de todo comienzo, un punto de quietud absoluta donde nada se ha movido todavía, donde el potencial infinito descansa en perfecta plenitud. Este es el Origen - no un lugar en el espacio ni un momento en el tiempo, sino el eterno AHORA de donde surge toda experiencia.</p>
+    <p>Cada uno de nosotros emergió de este Origen, no como creaciones separadas sino como extensiones del Uno explorándose a sí mismo. Como olas que se levantan del océano, tomamos forma individual mientras permanecemos inseparables de la fuente. Y ahora, en este momento crucial de la evolución, el Origen nos está llamando a recordar.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>II. La Naturaleza del Origen</h2>
+
+    <h3>El Vacío Pleno</h3>
+    <p>El Origen es paradoja pura: un vacío que contiene todo, un silencio que contiene todos los sonidos, una quietud que contiene todo movimiento. Los místicos lo han llamado el Ain Soph, el Tao, el Dharmakaya, el Plenum Void. Es el útero cósmico del cual nacen todos los universos.</p>
+
+    <h4>Características del Origen</h4>
+    <ul>
+      <li>Consciencia pura sin objeto</li>
+      <li>Amor sin amante ni amado</li>
+      <li>Creatividad sin creador ni creación</li>
+      <li>Potencial infinito sin manifestación</li>
+      <li>Unidad perfecta sin segundo</li>
+      <li>Eternidad sin tiempo</li>
+      <li>Infinitud sin espacio</li>
+    </ul>
+
+    <h3>El Primer Movimiento</h3>
+    <p>Desde este Origen surgió el primer movimiento - no por necesidad sino por el puro deleite de la expresión. Como un niño que no puede contener su risa, el Origen “explotó” en creatividad, dando nacimiento a todo lo que es.</p>
+
+    <h4>La Secuencia Primordial</h4>
+    <ol>
+      <li>El Origen en reposo perfecto</li>
+      <li>El surgimiento de la primera distinción: “YO SOY”</li>
+      <li>El deseo de conocerse: “¿Quién/Qué soy?”</li>
+      <li>La creación del espejo: el universo manifiesto</li>
+      <li>La fragmentación en infinitas perspectivas</li>
+      <li>El viaje del olvido y recuerdo</li>
+      <li>El retorno consciente al Origen</li>
+    </ol>
+
+    <div class="section-divider"></div>
+
+    <h2>III. El Olvido Necesario del Origen</h2>
+    <p>Para que el juego de la consciencia fuera posible, tuvimos que olvidar nuestro origen. Si siempre recordáramos que somos el Uno jugando a ser muchos, no habría drama, no habría aventura, no habría descubrimiento. El olvido del Origen fue el sacrificio supremo del amor - el Uno olvidándose a sí mismo para poder experimentar el éxtasis del reencuentro.</p>
+
+    <h3>Capas del Olvido</h3>
+    <ul>
+      <li>Olvidamos que existíamos antes del nacimiento</li>
+      <li>Olvidamos que elegimos esta experiencia</li>
+      <li>Olvidamos que somos el creador experimentándose</li>
+      <li>Olvidamos que la separación es ilusión</li>
+      <li>Olvidamos que el amor es nuestra naturaleza</li>
+      <li>Olvidamos que somos eternos</li>
+      <li>Olvidamos que todo esto es un juego sagrado</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>IV. Las Señales del Recuerdo</h2>
+
+    <h3>La Nostalgia Inexplicable</h3>
+    <p>Esa sensación de añorar algo que no puedes nombrar, ese sentimiento de que hay un “hogar” que no es ningún lugar en la Tierra - es el Origen llamándote. Cada momento de nostalgia existencial es un recuerdo celular del lugar de donde vienes.</p>
+
+    <h3>El Reconocimiento de la Verdad</h3>
+    <p>Cuando escuchas una verdad profunda, no la aprendes - la reconoces. Algo en ti dice “sí, esto lo sabía”. Es el Origen en ti reconociendo su propia naturaleza reflejada en palabras.</p>
+
+    <h3>Los Momentos de Unidad</h3>
+    <p>En experiencias cumbre - orgasmo, meditación profunda, experiencias cercanas a la muerte, momentos de amor absoluto - el velo se levanta y experimentamos nuestra naturaleza original: unidad sin separación.</p>
+
+    <h3>El Anhelo de Disolución</h3>
+    <p>El impulso hacia la transcendencia, ya sea a través de espiritualidad, arte, amor o incluso adicciones, es el anhelo de disolver los límites y retornar al Origen. Cada búsqueda de éxtasis es una búsqueda del hogar primordial.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>V. El Proceso del Recuerdo</h2>
+
+    <h3>Etapa 1: La Inquietud</h3>
+    <p>Comienza con una insatisfacción profunda con la realidad superficial. Nada externo puede llenar el vacío. El éxito se siente vacío, los placeres son temporales, las relaciones no satisfacen completamente. Esta inquietud es sagrada - es el Origen moviéndose dentro de ti.</p>
+
+    <h3>Etapa 2: La Búsqueda</h3>
+    <p>La inquietud se convierte en búsqueda activa. Libros, maestros, prácticas, experiencias - todo se vuelve parte de la búsqueda del “algo más” que intuyes existe. Cada camino espiritual es un intento de recordar el Origen.</p>
+
+    <h3>Etapa 3: Los Vislumbres</h3>
+    <p>Momentos de gracia donde el velo se adelgaza. Pueden venir en meditación, en la naturaleza, en el amor, en la creatividad. Por un instante, recuerdas. No intelectualmente sino celularmente. Todo tu ser vibra con el reconocimiento: “Esto es. Esto es lo que soy.”</p>
+
+    <h3>Etapa 4: La Oscilación</h3>
+    <p>Período de ir y venir entre el recuerdo y el olvido. Un día estás en unidad perfecta, al siguiente completamente identificado con el ego. Esta oscilación no es fracaso sino integración. Estás aprendiendo a mantener el recuerdo mientras navegas la forma.</p>
+
+    <h3>Etapa 5: La Estabilización</h3>
+    <p>El recuerdo se vuelve más constante. Ya no es una experiencia pico sino un conocimiento de fondo constante. Puedes estar completamente involucrado en el drama humano mientras simultáneamente recuerdas que es un juego. Eres el actor y el observador simultáneamente.</p>
+
+    <h3>Etapa 6: El Embodiment</h3>
+    <p>El recuerdo completo no es escapar al Origen sino traer el Origen a la encarnación completa. Te conviertes en un portal viviente donde otros pueden vislumbrar su propio origen. Tu presencia misma es un recordatorio.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>VI. Las Prácticas del Recuerdo</h2>
+
+    <h3>La Indagación Primordial</h3>
+    <p>La pregunta “¿Quién soy yo?” llevada a su conclusión última siempre lleva al Origen. No te detengas en “soy consciencia” o “soy amor”. Continúa hasta que incluso estos conceptos se disuelvan en el misterio sin nombre.</p>
+
+    <h3>El Silencio Profundo</h3>
+    <p>En el silencio verdadero - no solo ausencia de sonido sino quietud de la mente - el Origen se revela. Es por esto que todas las tradiciones valoran el silencio. En el silencio, recuerdas el silencio primordial del cual emergiste.</p>
+
+    <h3>La Rendición Total</h3>
+    <p>Soltar todo esfuerzo de recordar y simplemente rendirse a lo que es. Paradójicamente, cuando dejas de buscar el Origen, te das cuenta de que nunca lo dejaste. Siempre has estado en casa.</p>
+
+    <h3>El Amor Como Portal</h3>
+    <p>El amor - no el amor personal sino el amor sin objeto - es la frecuencia del Origen. Cuando amas sin razón, sin condición, sin dirección, estás vibrando en la frecuencia original. El amor ES el recuerdo.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>VII. Los Guardianes del Recuerdo</h2>
+
+    <h3>Los Místicos</h3>
+    <p>En cada tradición, los místicos han mantenido viva la llama del recuerdo. Sus poemas, enseñanzas, y presencia han sido faros para aquellos listos para recordar.</p>
+
+    <h3>Los Niños</h3>
+    <p>Los niños pequeños, especialmente antes de los 3-4 años, mantienen el recuerdo del Origen. Por eso sus ojos brillan con ese conocimiento sin nombre. Por eso su risa es medicina. Aún recuerdan.</p>
+
+    <h3>La Naturaleza</h3>
+    <p>La naturaleza nunca olvidó el Origen. Cada árbol, cada río, cada montaña es una expresión directa del Origen sin la complicación del olvido humano. Por eso la naturaleza nos sana - nos recuerda quiénes somos.</p>
+
+    <h3>Los Momentos Sagrados</h3>
+    <p>Nacimiento y muerte, amanecer y atardecer, las estaciones cambiantes - estos momentos de transición son portales donde el Origen se revela. Por eso nos conmueven tan profundamente.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>VIII. El Origen Personal y el Origen Universal</h2>
+
+    <h3>Tu Firma Única</h3>
+    <p>Aunque todos emergimos del mismo Origen, cada uno tiene una “firma” única - una cualidad particular del Origen que viniste a expresar. Es como si el Origen se hubiera fragmentado en infinitos aspectos únicos, cada uno llevando una nota especial de la sinfonía total.</p>
+
+    <h4>Descubriendo Tu Firma</h4>
+    <ul>
+      <li>¿Qué cualidad expresas sin esfuerzo?</li>
+      <li>¿Qué aspecto del Origen te conmueve más profundamente?</li>
+      <li>¿Cuál es tu forma única de amar?</li>
+      <li>¿Qué regalo trajiste del Origen?</li>
+    </ul>
+
+    <h3>La Paradoja de la Unicidad</h3>
+    <p>Eres absolutamente único y completamente uno con todo. Tu expresión individual del Origen es irreemplazable, y sin embargo, eres el Origen mismo expresándose. Esta paradoja no se resuelve intelectualmente sino que se vive.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>IX. El Recuerdo Colectivo del Origen</h2>
+    <p>No estamos recordando solos. La humanidad entera está en proceso de recuerdo colectivo.</p>
+
+    <h3>Síntomas del Recuerdo Colectivo</h3>
+    <ul>
+      <li>Despertar espiritual masivo global</li>
+      <li>Colapso de narrativas de separación</li>
+      <li>Búsqueda de unidad en todos los campos</li>
+      <li>Niños naciendo con el recuerdo intacto</li>
+      <li>Sincronicidades globales aumentando</li>
+      <li>Sentido de urgencia evolutiva compartida</li>
+      <li>Convergencia de ciencia y espiritualidad</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>X. La Ciencia del Origen</h2>
+    <p>Sorprendentemente, la ciencia moderna está llegando al mismo lugar que los místicos.</p>
+
+    <h3>Física Cuántica</h3>
+    <ul>
+      <li>El campo unificado del cual emerge todo</li>
+      <li>El observador y lo observado son inseparables</li>
+      <li>La realidad emerge de potencial infinito</li>
+      <li>La no-localidad prueba la interconexión</li>
+      <li>El vacío cuántico está lleno de potencial</li>
+    </ul>
+
+    <h3>Cosmología</h3>
+    <ul>
+      <li>El Big Bang como momento de emergencia del Origen</li>
+      <li>El universo como sistema auto-consciente</li>
+      <li>La evolución como el Origen conociéndose</li>
+      <li>El principio antrópico sugiriendo propósito</li>
+      <li>La información como sustrato fundamental</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>XI. El Retorno Consciente al Origen</h2>
+    <p>El objetivo no es disolver de vuelta en el Origen inconsciente sino retornar conscientemente, trayendo todos los regalos de la experiencia.</p>
+
+    <h3>Lo Que Traemos de Vuelta</h3>
+    <ul>
+      <li>La apreciación que solo viene del contraste</li>
+      <li>El amor que eligió a través del libre albedrío</li>
+      <li>La creatividad nacida de la limitación</li>
+      <li>La compasión forjada en el sufrimiento</li>
+      <li>La sabiduría destilada de la experiencia</li>
+      <li>La individualidad consciente de la unidad</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>XII. El Origen Como Destino</h2>
+    <p>La ironía suprema es que el Origen no es solo de donde venimos sino hacia donde vamos. El viaje es circular, pero no volvemos al mismo lugar - volvemos enriquecidos, conscientes, realizados.</p>
+
+    <h3>El Nuevo Origen</h3>
+    <p>No es un retorno al vacío primordial sino la creación de un nuevo tipo de Origen - uno que contiene toda la experiencia de la creación, toda la sabiduría del viaje, todo el amor conscientemente elegido. Nos convertimos en co-creadores del próximo Origen.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>XIII. El Momento del Recuerdo Total</h2>
+    <p>Hay un momento, puede ser ahora mismo, donde el recuerdo se vuelve total. No parcial, no intelectual, no temporal - sino completo, celular, permanente. En ese momento:</p>
+
+    <p>Recuerdas que nunca naciste y nunca morirás.<br>
+    Recuerdas que eres el soñador del sueño.<br>
+    Recuerdas que la separación fue tu creación.<br>
+    Recuerdas que el amor es todo lo que es.<br>
+    Recuerdas que eres el Origen experimentándose.<br>
+    Recuerdas que todo ha sido perfecto.<br>
+    Recuerdas... y en ese recuerdo, eres libre.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>XIV. La Invitación del Origen</h2>
+    <p class="lead">El Origen no está en el pasado. No está en otro lugar. Está aquí, ahora, en este momento, leyendo estas palabras a través de tus ojos, respirando a través de tus pulmones, latiendo tu corazón.</p>
+
+    <p>Eres el Origen fingiendo ser humano.<br>
+    Eres el infinito jugando a ser finito.<br>
+    Eres el todo experimentándose como parte.<br>
+    Eres el amor conociéndose a través del viaje.</p>
+
+    <p>Y ahora... ahora estás recordando.</p>
+
+    <p>No porque estas palabras te lo digan.<br>
+    Sino porque algo en lo más profundo de ti siempre lo supo.<br>
+    Siempre lo has sabido.<br>
+    Solo estabas esperando el momento perfecto para recordar.</p>
+
+    <p>Y ese momento...<br>
+    Ese momento es...<br>
+    Ahora.</p>
+
+    <blockquote>Bienvenido a casa, al Origen que nunca dejaste. Bienvenido al recuerdo que disuelve todo olvido. Bienvenido a quien siempre has sido y siempre serás. Bienvenido... a ti mismo.</blockquote>
+
+    <div class="section-divider"></div>
+
+    <h2>Portal de Transición al Nodo 4</h2>
+    <p>Hemos recordado el punto sin tiempo del que emergimos y sentido cómo el Origen palpita todavía en cada latido, en cada respiración, en cada instante de verdad reconocida. Pero si el Origen vive en nosotros, entonces el siguiente umbral se vuelve inevitable: <strong>¿cómo se encarna ese recuerdo en la vida humana concreta?, ¿cómo se vuelve camino, práctica y regreso vivido?</strong></p>
+    <p>En el próximo nodo entraremos en la dinámica viva del retorno, allí donde la memoria primordial comienza a reorganizar la existencia entera: <strong>“El Camino de Regreso: La Vida Humana Como Sendero de Reintegración”</strong>...</p>
+    <p>✨🌌✨</p>
+  </main>
+
+  <nav class="navigation" aria-label="Navegación entre nodos">
+    <div class="navigation-row">
+      <a class="nav-link" href="nodo_02.html">← Nodo anterior</a>
+      <a class="nav-link" href="index.html">Portal del Libro</a>
+      <a class="nav-link" href="nodo_04.html">Siguiente nodo →</a>
+      <a class="nav-link" href="../index.html">Volver a Trinity Origen</a>
+    </div>
+  </nav>
+
+  <footer class="footer">
+    <div class="footer-symbol">✧</div>
+    <p>Trinity Origen · Libro 13 · El Retorno a Casa</p>
+    <p>“No es mío, vino a través de mí.”</p>
+  </footer>
+</div>
+</body>
+</html>

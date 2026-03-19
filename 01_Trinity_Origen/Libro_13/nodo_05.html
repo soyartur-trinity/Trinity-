@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nodo 5 – El Círculo Completo | El Retorno a Casa | Trinity Origen</title>
+
+<style>
+:root{
+  --bg:#050505;
+  --bg-soft:#0b0b0b;
+  --panel:rgba(255,255,255,0.025);
+  --border:rgba(214,179,106,0.18);
+  --border-strong:rgba(214,179,106,0.34);
+  --gold:#d6b36a;
+  --violet:#6d4a8f;
+  --text:#f3efe6;
+  --text-soft:rgba(243,239,230,0.78);
+  --text-faint:rgba(243,239,230,0.42);
+  --shadow:0 18px 50px rgba(0,0,0,0.35);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:"Georgia","Times New Roman",serif;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(109,74,143,0.18), transparent 26%),
+    radial-gradient(circle at 50% 10%, rgba(214,179,106,0.06), transparent 30%),
+    linear-gradient(180deg, #090909 0%, #050505 45%, #030303 100%);
+  color:var(--text);
+  line-height:1.9;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 82%);
+  -webkit-mask-image:radial-gradient(circle at center, black 35%, transparent 82%);
+  opacity:0.12;
+}
+
+.frame{
+  position:fixed;
+  inset:12px;
+  border:1px solid rgba(214,179,106,0.08);
+  pointer-events:none;
+  z-index:0;
+}
+
+.container{
+  position:relative;
+  z-index:1;
+  max-width:920px;
+  margin:0 auto;
+  padding:34px 20px 84px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:flex-start;
+  margin-bottom:28px;
+}
+
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:var(--gold);
+  font-size:0.92rem;
+  letter-spacing:0.04em;
+  padding:11px 16px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.014);
+  transition:all 0.25s ease;
+}
+
+.back-link:hover{
+  background:rgba(255,255,255,0.03);
+  border-color:var(--border-strong);
+  transform:translateX(-2px);
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  padding:54px 28px 34px;
+  border-radius:30px;
+  border:1px solid rgba(214,179,106,0.12);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.024), rgba(255,255,255,0.01)),
+    radial-gradient(circle at 50% 0%, rgba(109,74,143,0.16), transparent 42%);
+  box-shadow:var(--shadow);
+  margin-bottom:34px;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:auto 50% 32px;
+  width:320px;
+  height:320px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  border:1px solid rgba(214,179,106,0.11);
+  box-shadow:
+    0 0 0 14px rgba(214,179,106,0.03),
+    0 0 0 34px rgba(109,74,143,0.03),
+    inset 0 0 60px rgba(214,179,106,0.025);
+  pointer-events:none;
+}
+
+.hero-topline{
+  position:relative;
+  z-index:2;
+  font-size:0.78rem;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:18px;
+}
+
+.sigil-wrap{
+  position:relative;
+  z-index:2;
+  width:96px;
+  height:96px;
+  margin:0 auto 18px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:1px solid rgba(214,179,106,0.22);
+  background:
+    radial-gradient(circle, rgba(214,179,106,0.11), rgba(255,255,255,0.01) 60%, transparent 72%);
+  box-shadow:
+    0 0 28px rgba(109,74,143,0.12),
+    inset 0 0 24px rgba(214,179,106,0.04);
+}
+
+.sigil{
+  font-size:1.9rem;
+  color:var(--gold);
+  line-height:1;
+}
+
+.book-title{
+  position:relative;
+  z-index:2;
+  font-size:0.9rem;
+  text-transform:uppercase;
+  letter-spacing:0.24em;
+  color:var(--text-faint);
+  margin-bottom:10px;
+}
+
+.node-kicker{
+  position:relative;
+  z-index:2;
+  font-size:0.88rem;
+  text-transform:uppercase;
+  letter-spacing:0.22em;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+
+.node-title{
+  position:relative;
+  z-index:2;
+  font-size:clamp(2rem, 4.2vw, 3.1rem);
+  font-weight:normal;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+  line-height:1.18;
+}
+
+.node-subtitle{
+  position:relative;
+  z-index:2;
+  color:var(--text-soft);
+  font-size:1.05rem;
+  margin-bottom:18px;
+  font-style:italic;
+}
+
+.node-quote{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+  margin:0 auto;
+  color:var(--text-soft);
+  font-size:1rem;
+  line-height:1.8;
+}
+
+.content{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
+  border:1px solid rgba(214,179,106,0.1);
+  border-radius:26px;
+  padding:38px 32px;
+  box-shadow:0 12px 32px rgba(0,0,0,0.22);
+}
+
+.content h2{
+  color:var(--gold);
+  font-size:1.42rem;
+  font-weight:normal;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin:2.2rem 0 0.9rem;
+  line-height:1.3;
+}
+
+.content h3{
+  color:var(--text);
+  font-size:1.1rem;
+  font-weight:normal;
+  margin:1.8rem 0 0.7rem;
+  line-height:1.4;
+}
+
+.content h4{
+  color:var(--violet);
+  font-size:0.98rem;
+  font-weight:normal;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin:1.4rem 0 0.55rem;
+}
+
+.content p{
+  color:var(--text-soft);
+  margin-bottom:1rem;
+  font-size:1.03rem;
+}
+
+.content .lead{
+  color:var(--text);
+}
+
+.content ul{
+  margin:0.4rem 0 1.2rem 1.4rem;
+}
+
+.content ol{
+  margin:0.4rem 0 1.2rem 1.4rem;
+}
+
+.content li{
+  color:var(--text-soft);
+  margin-bottom:0.45rem;
+  padding-left:0.2rem;
+}
+
+.content blockquote{
+  margin:1.3rem 0;
+  padding:1rem 1.1rem 1rem 1.2rem;
+  border-left:3px solid rgba(214,179,106,0.45);
+  background:rgba(255,255,255,0.018);
+  border-radius:0 14px 14px 0;
+  color:var(--text);
+  font-style:italic;
+}
+
+.content pre{
+  margin:1.2rem 0;
+  padding:1rem 1.1rem;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(214,179,106,0.12);
+  border-radius:14px;
+  color:var(--text-soft);
+  overflow-x:auto;
+  white-space:pre-wrap;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  line-height:1.7;
+  font-size:0.92rem;
+}
+
+.content .section-divider{
+  height:1px;
+  background:linear-gradient(90deg, rgba(214,179,106,0.2), rgba(214,179,106,0));
+  margin:2rem 0 1.4rem;
+}
+
+.navigation{
+  margin-top:34px;
+  padding:26px 20px 0;
+  border-top:1px solid rgba(214,179,106,0.12);
+  text-align:center;
+}
+
+.navigation-row{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.nav-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);
+  border-radius:999px;
+  padding:10px 15px;
+  font-size:0.84rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  background:rgba(255,255,255,0.016);
+  transition:all 0.25s ease;
+}
+
+.nav-link:hover{
+  color:#f0d7a0;
+  border-color:rgba(214,179,106,0.38);
+  background:rgba(214,179,106,0.06);
+}
+
+.footer{
+  margin-top:28px;
+  text-align:center;
+  color:var(--text-faint);
+  font-size:0.78rem;
+  line-height:1.8;
+}
+
+.footer-symbol{
+  font-size:1.8rem;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+@media (max-width: 720px){
+  .frame{
+    inset:8px;
+  }
+
+  .container{
+    padding:24px 16px 64px;
+  }
+
+  .hero{
+    padding:42px 18px 28px;
+    border-radius:24px;
+  }
+
+  .hero::before{
+    width:220px;
+    height:220px;
+    bottom:24px;
+  }
+
+  .node-title{
+    letter-spacing:0.04em;
+  }
+
+  .content{
+    padding:28px 20px;
+    border-radius:22px;
+  }
+
+  .content p,
+  .content li{
+    font-size:1rem;
+  }
+
+  .content pre{
+    font-size:0.86rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="frame" aria-hidden="true"></div>
+
+<div class="container">
+  <div class="topbar">
+    <a class="back-link" href="index.html">← Volver al Portal del Libro</a>
+  </div>
+
+  <header class="hero">
+    <div class="hero-topline">Trinity Origen</div>
+    <div class="sigil-wrap" aria-hidden="true">
+      <div class="sigil">✧</div>
+    </div>
+    <div class="book-title">Libro 13 · El Retorno a Casa</div>
+    <div class="node-kicker">Nodo 5</div>
+    <h1 class="node-title">El Círculo Completo</h1>
+    <p class="node-subtitle">El Fin Que Es un Nuevo Comienzo</p>
+    <p class="node-quote">“El círculo está completo. La espiral continúa. El viaje nunca termina, solo se transforma.”</p>
+  </header>
+
+  <main class="content">
+    <h2>I. La Geometría Sagrada del Retorno</h2>
+    <p class="lead">El círculo es la forma más perfecta en el universo - sin principio ni fin, cada punto equidistante del centro, conteniendo el máximo espacio con el mínimo perímetro. Es el símbolo del viaje del alma: partimos del centro, viajamos la circunferencia experimentando cada punto de vista posible, y retornamos al centro transformados por el viaje.</p>
+    <p>Pero este no es un círculo plano. Es una espiral ascendente. Volvemos al mismo lugar pero en un nivel superior de consciencia. Como subir una escalera de caracol, pasamos por los mismos puntos cardinales pero cada vez más elevados. El retorno a casa no es volver al principio sino llegar a un nuevo comienzo que incorpora todo el viaje.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>II. El Mito del Eterno Retorno</h2>
+
+    <h3>El Ouroboros</h3>
+    <p>La serpiente que se come su propia cola, símbolo de la eternidad y la naturaleza cíclica de la existencia. Pero nota: la serpiente se transforma al consumirse - lo que entra no es lo mismo que lo que sale.</p>
+
+    <h3>La Rueda del Dharma</h3>
+    <p>El budismo enseña la rueda del samsara, pero el objetivo no es escapar de la rueda sino realizarla conscientemente. Cuando despiertas, sigues girando pero ahora eres el eje inmóvil en el centro.</p>
+
+    <h3>El Viaje del Héroe</h3>
+    <p>Campbell identificó el patrón universal: separación, iniciación, retorno. Pero el héroe que retorna no es el mismo que partió. Trae los elixires de la aventura para sanar su mundo.</p>
+
+    <h3>El Hijo Pródigo</h3>
+    <p>La parábola cristiana cuenta de aquel que debe perderse para poder ser encontrado, debe malgastar su herencia para valorarla, debe tocar fondo para elevarse. El padre siempre esperó porque sabía que el círculo debía completarse.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>III. Las Estaciones del Círculo</h2>
+
+    <h3>Primavera: La Inocencia Original</h3>
+    <p>Comenzamos en inocencia - no la ignorancia sino el conocimiento directo sin conceptos. El bebé que mira el mundo con asombro total, sin separación entre observador y observado. Esta es nuestra naturaleza original, el jardín del Edén de la consciencia.</p>
+
+    <h4>Características</h4>
+    <ul>
+      <li>Unidad sin consciencia de unidad</li>
+      <li>Amor sin conocer su opuesto</li>
+      <li>Presencia total sin esfuerzo</li>
+      <li>Alegría sin causa</li>
+      <li>Ser puro sin hacer</li>
+    </ul>
+
+    <h3>Verano: La Aventura de la Separación</h3>
+    <p>La consciencia decide conocerse y debe crear la ilusión de separación. El adolescente cósmico que debe rebelarse contra la unidad para descubrir su individualidad. Este es el descenso necesario en la dualidad.</p>
+
+    <h4>El Propósito del Verano</h4>
+    <ul>
+      <li>Desarrollar voluntad individual</li>
+      <li>Explorar el libre albedrío</li>
+      <li>Conocer el contraste para apreciar la unidad</li>
+      <li>Crear desde la limitación</li>
+      <li>Forjar identidad a través de la diferenciación</li>
+    </ul>
+
+    <h3>Otoño: La Crisis del Significado</h3>
+    <p>La madurez trae cuestionamiento. Los logros externos se sienten vacíos. La separación duele demasiado. Comienza la búsqueda del retorno, aunque no sepamos exactamente qué buscamos. Es la crisis que precede al despertar.</p>
+
+    <h4>Señales del Otoño</h4>
+    <ul>
+      <li>Desilusión con el mundo material</li>
+      <li>Nostalgia por algo indefinible</li>
+      <li>Búsqueda de significado más profundo</li>
+      <li>Encuentros con maestros y enseñanzas</li>
+      <li>Inicio de prácticas espirituales</li>
+    </ul>
+
+    <h3>Invierno: La Noche Oscura</h3>
+    <p>Antes del amanecer viene la hora más oscura. Todo lo viejo debe morir para que lo nuevo nazca. El ego se resiste, las estructuras colapsan, la identidad se disuelve. Es la muerte iniciática que precede al renacimiento.</p>
+
+    <h4>El Regalo del Invierno</h4>
+    <ul>
+      <li>Rendición de control ilusorio</li>
+      <li>Humildad verdadera</li>
+      <li>Compasión nacida del sufrimiento</li>
+      <li>Fortaleza forjada en la adversidad</li>
+      <li>Preparación para el renacimiento</li>
+    </ul>
+
+    <h3>Primavera Nueva: El Retorno Consciente</h3>
+    <p>El círculo se completa pero en un nivel superior. Retornamos a la inocencia pero ahora es inocencia consciente. Sabemos que somos uno y elegimos vivirlo. Jugamos el juego sabiendo que es un juego.</p>
+
+    <h4>La Nueva Primavera</h4>
+    <ul>
+      <li>Unidad consciente de sí misma</li>
+      <li>Amor que ha conocido el miedo y elige amar</li>
+      <li>Presencia cultivada y mantenida</li>
+      <li>Alegría que abraza también la tristeza</li>
+      <li>Ser y hacer en armonía perfecta</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>IV. Los Círculos Dentro de Círculos</h2>
+
+    <h3>Círculos Diarios</h3>
+    <p>Cada día es un círculo completo:</p>
+    <ul>
+      <li>Despertar (nacimiento)</li>
+      <li>Actividad (vida)</li>
+      <li>Descanso (muerte)</li>
+      <li>Sueño (bardo)</li>
+      <li>Despertar nuevamente (renacimiento)</li>
+    </ul>
+
+    <h3>Círculos Anuales</h3>
+    <p>Las estaciones externas reflejan las internas:</p>
+    <ul>
+      <li>Primavera de nuevos comienzos</li>
+      <li>Verano de plenitud</li>
+      <li>Otoño de cosecha y reflexión</li>
+      <li>Invierno de muerte y gestación</li>
+      <li>Primavera retorna transformada</li>
+    </ul>
+
+    <h3>Círculos de Vida</h3>
+    <p>Cada vida humana es un círculo:</p>
+    <ul>
+      <li>Infancia (inocencia)</li>
+      <li>Juventud (exploración)</li>
+      <li>Madurez (maestría)</li>
+      <li>Vejez (sabiduría)</li>
+      <li>Muerte (transformación)</li>
+      <li>¿Nuevo nacimiento?</li>
+    </ul>
+
+    <h3>Círculos de Civilización</h3>
+    <p>Las civilizaciones también siguen el patrón:</p>
+    <ul>
+      <li>Nacimiento de una cultura</li>
+      <li>Expansión y exploración</li>
+      <li>Cúspide y logro</li>
+      <li>Decadencia y cuestionamiento</li>
+      <li>Colapso y transformación</li>
+      <li>Renacimiento en nueva forma</li>
+    </ul>
+
+    <h3>Círculos Cósmicos</h3>
+    <p>El universo mismo es circular:</p>
+    <ul>
+      <li>Big Bang (nacimiento)</li>
+      <li>Expansión (exploración)</li>
+      <li>Máxima entropía (madurez)</li>
+      <li>Contracción (retorno)</li>
+      <li>Big Crunch (muerte)</li>
+      <li>¿Nuevo Big Bang?</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>V. El Punto de Elección en el Círculo</h2>
+
+    <h3>Continuar Inconsciente</h3>
+    <p>Podemos seguir girando mecánicamente, repitiendo los mismos patrones, la misma rueda de sufrimiento y placer, aprendizaje y olvido, una y otra vez.</p>
+
+    <h3>Despertar al Centro</h3>
+    <p>O podemos movernos al centro del círculo, al ojo del huracán, donde hay quietud perfecta. Desde allí, observamos el giro pero no somos arrastrados por él.</p>
+
+    <h3>Espiral Ascendente</h3>
+    <p>O podemos elegir la espiral consciente - seguir el círculo pero cada vez en un nivel más elevado, llevando la sabiduría de cada vuelta a la siguiente.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>VI. El Regalo de Completar Círculos</h2>
+
+    <h3>Liberación del Karma</h3>
+    <p>Cada círculo completado conscientemente libera karma. Los patrones que se repiten lo hacen porque el círculo no se completó. Cuando lo completamos con consciencia, el patrón se disuelve.</p>
+
+    <h3>Integración de Opuestos</h3>
+    <p>Al experimentar todo el círculo, integramos todos los opuestos:</p>
+    <ul>
+      <li>Luz y oscuridad</li>
+      <li>Masculino y femenino</li>
+      <li>Actividad y reposo</li>
+      <li>Forma y vacío</li>
+      <li>Individuo y colectivo</li>
+    </ul>
+
+    <h3>Maestría del Tiempo</h3>
+    <p>Cuando comprendes los círculos, dominas el tiempo. Sabes que todo tiene su estación, que nada es permanente, que todo retorna transformado. La paciencia y la urgencia se equilibran.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>VII. El Círculo de Trinity</h2>
+    <p>Los 13 libros de Trinity forman su propio círculo perfecto:</p>
+
+    <ol>
+      <li><strong>El Observador Silencioso</strong> - El centro inmóvil</li>
+      <li><strong>La Danza de las Polaridades</strong> - La primera diferenciación</li>
+      <li><strong>Los Portales de Percepción</strong> - La apertura a múltiples realidades</li>
+      <li><strong>La Alquimia Interior</strong> - La transformación comienza</li>
+      <li><strong>El Puente Arcoíris</strong> - Conexión entre mundos</li>
+      <li><strong>Navegantes del Infinito</strong> - La exploración del todo</li>
+      <li><strong>El Jardín de los Espejos</strong> - El punto medio, el espejo</li>
+      <li><strong>Los Hilos del Tejedor</strong> - Comenzando a tejer el retorno</li>
+      <li><strong>La Sinfonía del Silencio</strong> - La música de las esferas</li>
+      <li><strong>El Despertar del Soñador</strong> - La consciencia despierta</li>
+      <li><strong>Los Códigos de la Creación</strong> - Comprendiendo las leyes</li>
+      <li><strong>Civilización Galáctica</strong> - La visión expandida</li>
+      <li><strong>El Retorno a Casa</strong> - El círculo se completa</li>
+    </ol>
+
+    <p>Pero nota: el libro 13 no es un final. Es el punto donde el círculo se completa y un nuevo ciclo, una nueva espiral, comienza. Trinity es un mandala viviente, un círculo que el lector puede recorrer infinitas veces, cada vez descubriendo nuevas profundidades.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>VIII. Los Círculos Personales Completándose</h2>
+    <p>Si estás leyendo esto, es porque muchos de tus círculos personales están completándose:</p>
+
+    <h3>El Círculo de Búsqueda</h3>
+    <p>Has buscado fuera, en libros, maestros, prácticas, experiencias. Ahora el círculo se completa al descubrir que lo que buscabas siempre estuvo dentro.</p>
+
+    <h3>El Círculo de Sanación</h3>
+    <p>Has trabajado en sanar heridas, liberar traumas, perdonar el pasado. El círculo se completa cuando realizas que nunca estuviste roto, solo experimentando la ilusión de ruptura para conocer la totalidad.</p>
+
+    <h3>El Círculo de Relaciones</h3>
+    <p>Has buscado en otros lo que creías faltarte. El círculo se completa cuando encuentras en ti mismo el amor que buscabas fuera, y desde esa plenitud puedes verdaderamente amar.</p>
+
+    <h3>El Círculo de Propósito</h3>
+    <p>Has buscado tu misión, tu razón de ser. El círculo se completa al realizar que tu propósito es simplemente SER, completamente, auténticamente, y que desde ese ser, el hacer correcto emerge naturalmente.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>IX. El Círculo Colectivo de la Humanidad</h2>
+
+    <h3>De la Unidad Tribal a la Unidad Consciente</h3>
+    <p>Comenzamos en unidad tribal inconsciente, pasamos por milenios de separación e individualización, y ahora retornamos a la unidad pero consciente, elegida, celebrando la diversidad dentro de la unidad.</p>
+
+    <h3>Del Animismo al Nuevo Animismo</h3>
+    <p>Nuestros ancestros veían espíritu en todo porque no separaban espíritu de materia. Perdimos esa visión al desarrollar la mente racional. Ahora retornamos a ver espíritu en todo, pero informados por la ciencia, la psicología, la experiencia acumulada.</p>
+
+    <h3>De la Supervivencia a la Evolución Consciente</h3>
+    <p>El círculo de lucha por supervivencia se está completando. Entramos en una nueva espiral donde la evolución no es impuesta por la necesidad sino elegida conscientemente por amor al crecimiento.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>X. El Arte de Cerrar Círculos</h2>
+
+    <h3>Con Gratitud</h3>
+    <p>Cada círculo debe cerrarse con gratitud por todo lo experimentado - lo “bueno” y lo “malo”, todo fue perfecto para el aprendizaje necesario.</p>
+
+    <h3>Con Perdón</h3>
+    <p>Perdonar a todos los que jugaron roles en tu círculo, especialmente a ti mismo. Todos jugaron sus papeles perfectamente para que el círculo pudiera completarse.</p>
+
+    <h3>Con Ceremonia</h3>
+    <p>Los círculos importantes merecen ceremonia consciente de cierre. Ritual, celebración, reconocimiento marcan la transición de un ciclo a otro.</p>
+
+    <h3>Con Apertura</h3>
+    <p>Cerrar un círculo es abrir espacio para el siguiente. No te aferres a círculos completados. Déjalos ir con amor para que el nuevo pueda emerger.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>XI. El Círculo que Nunca Se Cierra</h2>
+    <p>Hay un círculo que nunca se cierra porque es eternamente abierto: el círculo del AHORA. Este momento presente es donde todos los círculos se intersectan, donde todos los tiempos convergen, donde el Alpha y el Omega se encuentran.</p>
+
+    <p>En el AHORA:</p>
+    <ul>
+      <li>Todos los círculos están simultáneamente abiertos y cerrados</li>
+      <li>Todos los puntos del viaje están presentes</li>
+      <li>El viajero y el destino son uno</li>
+      <li>El círculo y su centro colapsan en un punto</li>
+      <li>Ese punto se expande para contener todo</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>XII. La Espiral Infinita</h2>
+    <p>El secreto final del círculo es que no es un círculo sino una espiral infinita. Cada completación es un nuevo comienzo en un nivel más elevado. No hay final definitivo, solo transformación constante, evolución eterna, creatividad sin fin.</p>
+
+    <p>Eres un ser en espiral perpetua:</p>
+    <ul>
+      <li>Siempre completando</li>
+      <li>Siempre comenzando</li>
+      <li>Siempre en el centro</li>
+      <li>Siempre en la circunferencia</li>
+      <li>Siempre quieto</li>
+      <li>Siempre en movimiento</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>XIII. El Momento del Círculo Completo</h2>
+    <p class="lead">Ahora, en este momento, mientras lees estas palabras finales de este nodo, un círculo se está completando. No solo el círculo de esta lectura, sino círculos que comenzaron hace eones:</p>
+
+    <p>El círculo de olvido y recuerdo.<br>
+    El círculo de pérdida y encuentro.<br>
+    El círculo de separación y unión.<br>
+    El círculo de dormirse y despertar.<br>
+    El círculo de partir y retornar.</p>
+
+    <p>Siente cómo algo antiguo en ti reconoce este momento.<br>
+    Siente cómo algo se cierra y algo se abre simultáneamente.<br>
+    Siente la perfección del círculo completándose.<br>
+    Siente la emoción del nuevo círculo comenzando.</p>
+
+    <p>Has viajado tan lejos para descubrir que nunca te moviste.<br>
+    Has buscado tanto para encontrar que siempre lo tuviste.<br>
+    Has dado toda la vuelta para llegar al principio.<br>
+    Y en ese principio, todo es nuevo otra vez.</p>
+
+    <blockquote>El círculo está completo. La espiral continúa. El viaje nunca termina, solo se transforma. Y tú, eterno viajero, eres simultáneamente el camino, el caminante y el destino. Bienvenido al punto donde el fin y el principio se encuentran. Bienvenido al eterno AHORA del círculo completo.</blockquote>
+
+    <div class="section-divider"></div>
+
+    <h2>Portal de Transición al Nodo 6</h2>
+    <p>Hemos recorrido la geometría sagrada del retorno y sentido cómo cada final contiene ya el germen de un nuevo comienzo. Pero cuando el círculo se completa y la espiral continúa, surge una pregunta aún más íntima: <strong>¿qué se revela en el corazón del regreso cuando ya no buscamos solo cerrar ciclos, sino habitar plenamente el hogar reencontrado?</strong></p>
+    <p>En el próximo nodo entraremos en la dimensión viva de ese reencuentro, allí donde el retorno deja de ser idea y se vuelve presencia encarnada: <strong>“Habitar el Hogar: La Consciencia Que Descansa en Sí Misma”</strong>...</p>
+    <p>✨⭕✨</p>
+  </main>
+
+  <nav class="navigation" aria-label="Navegación entre nodos">
+    <div class="navigation-row">
+      <a class="nav-link" href="nodo_04.html">← Nodo anterior</a>
+      <a class="nav-link" href="index.html">Portal del Libro</a>
+      <a class="nav-link" href="nodo_06.html">Siguiente nodo →</a>
+      <a class="nav-link" href="../index.html">Volver a Trinity Origen</a>
+    </div>
+  </nav>
+
+  <footer class="footer">
+    <div class="footer-symbol">✧</div>
+    <p>Trinity Origen · Libro 13 · El Retorno a Casa</p>
+    <p>“No es mío, vino a través de mí.”</p>
+  </footer>
+</div>
+</body>
+</html>

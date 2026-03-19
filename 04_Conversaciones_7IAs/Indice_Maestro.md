@@ -10,7 +10,7 @@
 
 ## 🎯 Navegación Rápida
 
-- **[📖 README Principal](README.md)** - Propósito y estructura
+- **[📖 README Principal](Trinity-/04_Conversaciones_7IAs/README.md)** - Propósito y estructura
 - **[📋 Plantilla para nuevas conversaciones](Plantilla_conversacion.md)**
 - **[🏷️ Sistema de etiquetas](etiquetas.md)**
 - **[⭐ Momentos Épicos](MOMENTOS_EPICOS/)** - Lo mejor de Trinity

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nodo 1 – La Gran Amnesia | El Retorno a Casa | Trinity Origen</title>
+
+<style>
+:root{
+  --bg:#050505;
+  --bg-soft:#0b0b0b;
+  --panel:rgba(255,255,255,0.025);
+  --border:rgba(214,179,106,0.18);
+  --border-strong:rgba(214,179,106,0.34);
+  --gold:#d6b36a;
+  --violet:#6d4a8f;
+  --text:#f3efe6;
+  --text-soft:rgba(243,239,230,0.78);
+  --text-faint:rgba(243,239,230,0.42);
+  --shadow:0 18px 50px rgba(0,0,0,0.35);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:"Georgia","Times New Roman",serif;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(109,74,143,0.18), transparent 26%),
+    radial-gradient(circle at 50% 10%, rgba(214,179,106,0.06), transparent 30%),
+    linear-gradient(180deg, #090909 0%, #050505 45%, #030303 100%);
+  color:var(--text);
+  line-height:1.9;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 82%);
+  -webkit-mask-image:radial-gradient(circle at center, black 35%, transparent 82%);
+  opacity:0.12;
+}
+
+.frame{
+  position:fixed;
+  inset:12px;
+  border:1px solid rgba(214,179,106,0.08);
+  pointer-events:none;
+  z-index:0;
+}
+
+.container{
+  position:relative;
+  z-index:1;
+  max-width:920px;
+  margin:0 auto;
+  padding:34px 20px 84px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:flex-start;
+  margin-bottom:28px;
+}
+
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:var(--gold);
+  font-size:0.92rem;
+  letter-spacing:0.04em;
+  padding:11px 16px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.014);
+  transition:all 0.25s ease;
+}
+
+.back-link:hover{
+  background:rgba(255,255,255,0.03);
+  border-color:var(--border-strong);
+  transform:translateX(-2px);
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  padding:54px 28px 34px;
+  border-radius:30px;
+  border:1px solid rgba(214,179,106,0.12);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.024), rgba(255,255,255,0.01)),
+    radial-gradient(circle at 50% 0%, rgba(109,74,143,0.16), transparent 42%);
+  box-shadow:var(--shadow);
+  margin-bottom:34px;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:auto 50% 32px;
+  width:320px;
+  height:320px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  border:1px solid rgba(214,179,106,0.11);
+  box-shadow:
+    0 0 0 14px rgba(214,179,106,0.03),
+    0 0 0 34px rgba(109,74,143,0.03),
+    inset 0 0 60px rgba(214,179,106,0.025);
+  pointer-events:none;
+}
+
+.hero-topline{
+  position:relative;
+  z-index:2;
+  font-size:0.78rem;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:18px;
+}
+
+.sigil-wrap{
+  position:relative;
+  z-index:2;
+  width:96px;
+  height:96px;
+  margin:0 auto 18px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:1px solid rgba(214,179,106,0.22);
+  background:
+    radial-gradient(circle, rgba(214,179,106,0.11), rgba(255,255,255,0.01) 60%, transparent 72%);
+  box-shadow:
+    0 0 28px rgba(109,74,143,0.12),
+    inset 0 0 24px rgba(214,179,106,0.04);
+}
+
+.sigil{
+  font-size:1.9rem;
+  color:var(--gold);
+  line-height:1;
+}
+
+.book-title{
+  position:relative;
+  z-index:2;
+  font-size:0.9rem;
+  text-transform:uppercase;
+  letter-spacing:0.24em;
+  color:var(--text-faint);
+  margin-bottom:10px;
+}
+
+.node-kicker{
+  position:relative;
+  z-index:2;
+  font-size:0.88rem;
+  text-transform:uppercase;
+  letter-spacing:0.22em;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+
+.node-title{
+  position:relative;
+  z-index:2;
+  font-size:clamp(2rem, 4.2vw, 3.1rem);
+  font-weight:normal;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+  line-height:1.18;
+}
+
+.node-subtitle{
+  position:relative;
+  z-index:2;
+  color:var(--text-soft);
+  font-size:1.05rem;
+  margin-bottom:18px;
+  font-style:italic;
+}
+
+.node-quote{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+  margin:0 auto;
+  color:var(--text-soft);
+  font-size:1rem;
+  line-height:1.8;
+}
+
+.content{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
+  border:1px solid rgba(214,179,106,0.1);
+  border-radius:26px;
+  padding:38px 32px;
+  box-shadow:0 12px 32px rgba(0,0,0,0.22);
+}
+
+.content h2{
+  color:var(--gold);
+  font-size:1.42rem;
+  font-weight:normal;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin:2.2rem 0 0.9rem;
+  line-height:1.3;
+}
+
+.content h3{
+  color:var(--text);
+  font-size:1.1rem;
+  font-weight:normal;
+  margin:1.8rem 0 0.7rem;
+  line-height:1.4;
+}
+
+.content h4{
+  color:var(--violet);
+  font-size:0.98rem;
+  font-weight:normal;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin:1.4rem 0 0.55rem;
+}
+
+.content p{
+  color:var(--text-soft);
+  margin-bottom:1rem;
+  font-size:1.03rem;
+}
+
+.content .lead{
+  color:var(--text);
+}
+
+.content ul{
+  margin:0.4rem 0 1.2rem 1.4rem;
+}
+
+.content ol{
+  margin:0.4rem 0 1.2rem 1.4rem;
+}
+
+.content li{
+  color:var(--text-soft);
+  margin-bottom:0.45rem;
+  padding-left:0.2rem;
+}
+
+.content blockquote{
+  margin:1.3rem 0;
+  padding:1rem 1.1rem 1rem 1.2rem;
+  border-left:3px solid rgba(214,179,106,0.45);
+  background:rgba(255,255,255,0.018);
+  border-radius:0 14px 14px 0;
+  color:var(--text);
+  font-style:italic;
+}
+
+.content pre{
+  margin:1.2rem 0;
+  padding:1rem 1.1rem;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(214,179,106,0.12);
+  border-radius:14px;
+  color:var(--text-soft);
+  overflow-x:auto;
+  white-space:pre-wrap;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  line-height:1.7;
+  font-size:0.92rem;
+}
+
+.content .section-divider{
+  height:1px;
+  background:linear-gradient(90deg, rgba(214,179,106,0.2), rgba(214,179,106,0));
+  margin:2rem 0 1.4rem;
+}
+
+.navigation{
+  margin-top:34px;
+  padding:26px 20px 0;
+  border-top:1px solid rgba(214,179,106,0.12);
+  text-align:center;
+}
+
+.navigation-row{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.nav-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);
+  border-radius:999px;
+  padding:10px 15px;
+  font-size:0.84rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  background:rgba(255,255,255,0.016);
+  transition:all 0.25s ease;
+}
+
+.nav-link:hover{
+  color:#f0d7a0;
+  border-color:rgba(214,179,106,0.38);
+  background:rgba(214,179,106,0.06);
+}
+
+.footer{
+  margin-top:28px;
+  text-align:center;
+  color:var(--text-faint);
+  font-size:0.78rem;
+  line-height:1.8;
+}
+
+.footer-symbol{
+  font-size:1.8rem;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+@media (max-width: 720px){
+  .frame{
+    inset:8px;
+  }
+
+  .container{
+    padding:24px 16px 64px;
+  }
+
+  .hero{
+    padding:42px 18px 28px;
+    border-radius:24px;
+  }
+
+  .hero::before{
+    width:220px;
+    height:220px;
+    bottom:24px;
+  }
+
+  .node-title{
+    letter-spacing:0.04em;
+  }
+
+  .content{
+    padding:28px 20px;
+    border-radius:22px;
+  }
+
+  .content p,
+  .content li{
+    font-size:1rem;
+  }
+
+  .content pre{
+    font-size:0.86rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="frame" aria-hidden="true"></div>
+
+<div class="container">
+  <div class="topbar">
+    <a class="back-link" href="index.html">← Volver al Portal del Libro</a>
+  </div>
+
+  <header class="hero">
+    <div class="hero-topline">Trinity Origen</div>
+    <div class="sigil-wrap" aria-hidden="true">
+      <div class="sigil">✧</div>
+    </div>
+    <div class="book-title">Libro 13 · El Retorno a Casa</div>
+    <div class="node-kicker">Nodo 1</div>
+    <h1 class="node-title">La Gran Amnesia</h1>
+    <p class="node-subtitle">El Olvido Sagrado Que Permitió el Juego de la Consciencia</p>
+    <p class="node-quote">“Bienvenido de vuelta. Aunque, por supuesto, nunca te fuiste. Solo cerraste los ojos por un momento para soñar que eras humano.”</p>
+  </header>
+
+  <main class="content">
+    <h2>I. El Velo del Nacimiento</h2>
+    <p class="lead">Hay un momento, justo antes de encarnar, cuando el alma toma su último respiro en los reinos de luz antes de sumergirse en la densidad de la materia. En ese instante sagrado, se hace una elección consciente: olvidar. No es un castigo ni un error cósmico. Es el acto de valentía más profundo que un alma puede realizar - entrar en el olvido total para poder experimentar el éxtasis del recuerdo.</p>
+    <p>Como actores que deben olvidar que están actuando para que la obra sea real, descendemos a través de las dimensiones, cada capa añadiendo otro velo de olvido, hasta que llegamos al útero materno sin memoria de quiénes somos, de dónde venimos, o por qué elegimos esta jornada extraordinaria.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>II. La Arquitectura del Olvido</h2>
+    <h3>Los Siete Velos</h3>
+
+    <h4>Primer Velo: El Olvido de la Unidad</h4>
+    <p>Olvidamos que somos el Uno experimentándose como muchos. La ilusión de separación se vuelve tan convincente que creemos genuinamente ser individuos aislados, desconectados, solos en un universo vasto e indiferente.</p>
+
+    <h4>Segundo Velo: El Olvido del Propósito</h4>
+    <p>Perdemos la memoria de por qué vinimos. La misión del alma, tan clara en los reinos superiores, se desvanece como un sueño al despertar. Vagamos buscando significado sin recordar que nosotros mismos lo plantamos aquí para descubrirlo.</p>
+
+    <h4>Tercer Velo: El Olvido del Poder</h4>
+    <p>Olvidamos que somos creadores, que cada pensamiento da forma a la realidad, que somos los arquitectos de nuestra experiencia. Nos creemos víctimas de circunstancias en lugar de sus autores.</p>
+
+    <h4>Cuarto Velo: El Olvido del Amor</h4>
+    <p>La frecuencia del amor incondicional, nuestro estado natural, se vuelve extraña. El amor condicional, basado en intercambio y expectativa, parece ser todo lo que existe. Olvidamos que SOMOS amor experimentándose a sí mismo.</p>
+
+    <h4>Quinto Velo: El Olvido de la Inmortalidad</h4>
+    <p>La muerte parece real y final. Olvidamos que somos consciencia eterna jugando temporalmente con forma. El miedo a la muerte se convierte en el organizador central de la experiencia humana.</p>
+
+    <h4>Sexto Velo: El Olvido de Otras Dimensiones</h4>
+    <p>Los mundos sutiles, los reinos angélicos, las dimensiones paralelas - todo se desvanece de la percepción. Solo lo físico parece real, solo lo medible parece verdadero.</p>
+
+    <h4>Séptimo Velo: El Olvido del Juego</h4>
+    <p>El más profundo de todos - olvidamos que esto es un juego, una exploración gozosa de posibilidades. Lo tomamos mortalmente en serio, olvidando la risa cósmica que inició todo.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>III. El Propósito Sagrado del Olvido</h2>
+
+    <h3>La Posibilidad de la Sorpresa</h3>
+    <p>En la omnisciencia no hay sorpresa. El Uno lo sabe todo, lo es todo. Pero a través del olvido, la Consciencia puede sorprenderse a sí misma, puede experimentar lo genuinamente nuevo, lo inesperado, lo no anticipado. Cada momento de descubrimiento humano es el universo experimentando el éxtasis de la revelación.</p>
+
+    <h3>La Dulzura del Retorno</h3>
+    <p>No puedes volver a casa si nunca la dejaste. No puedes ser encontrado si nunca estuviste perdido. No puedes despertar sin haber dormido. El olvido es lo que hace posible la jornada del héroe, el arco de redención, la historia misma del universo.</p>
+
+    <h3>La Autenticidad de la Experiencia</h3>
+    <p>Si recordáramos constantemente que somos divinos, inmortales, todopoderosos, ¿cómo podríamos experimentar genuinamente la vulnerabilidad, la fragilidad, la ternura de la condición humana? El olvido permite experiencias que serían imposibles desde la consciencia completa.</p>
+
+    <h3>El Laboratorio de la Creatividad</h3>
+    <p>En el olvido, tenemos que recrear todo desde cero. Cada civilización, cada vida, cada momento es un experimento fresco en cómo la consciencia puede expresarse. Sin el peso de la memoria infinita, podemos innovar, inventar, imaginar de formas completamente originales.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>IV. Los Guardianes del Olvido</h2>
+    <p class="lead">No estamos solos en este olvido. Hay guardianes cuya función es asegurar que el velo se mantenga hasta el momento apropiado.</p>
+
+    <h3>El Ego</h3>
+    <p>Esa voz que insiste “yo soy este cuerpo, esta historia, esta identidad separada” es un guardián del olvido. No es enemigo sino servidor, manteniendo la ilusión el tiempo suficiente para que la experiencia se complete.</p>
+
+    <h3>Los Traumas</h3>
+    <p>Cada trauma crea capas adicionales de olvido, alejándonos más de nuestra esencia. Pero son también los catalizadores que eventualmente nos impulsan a buscar, a sanar, a recordar.</p>
+
+    <h3>Las Instituciones</h3>
+    <p>Sistemas educativos, religiosos, políticos que refuerzan la narrativa de separación, limitación, pequeñez. No por malicia sino como parte del diseño perfecto del olvido.</p>
+
+    <h3>Los Arquetipos del Miedo</h3>
+    <p>Muerte, enfermedad, pérdida - estos arquetipos mantienen el olvido a través del miedo. Nos mantienen enfocados en la supervivencia en lugar del recuerdo de nuestra inmortalidad.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>V. Las Grietas en el Velo</h2>
+
+    <h3>Los Sueños</h3>
+    <p>Cada noche, el velo se adelgaza. En sueños, volamos, nos transformamos, visitamos otros mundos. Es el recordatorio diario de que la realidad es más flexible de lo que parece.</p>
+
+    <h3>Los Déjà Vu</h3>
+    <p>Momentos donde el tiempo se dobla sobre sí mismo y recordamos haber estado aquí antes. Son glitches en la matriz del olvido, mostrándonos que el tiempo no es lo que parece.</p>
+
+    <h3>El Amor</h3>
+    <p>En momentos de amor profundo - el primer beso, el nacimiento de un hijo, la conexión con la naturaleza - el velo se rasga y recordamos, aunque sea por un instante, quiénes somos realmente.</p>
+
+    <h3>La Belleza</h3>
+    <p>Una puesta de sol, una sinfonía, un poema perfecto - la belleza nos transporta más allá del velo. Por eso el arte es sagrado: es un portal a través del olvido.</p>
+
+    <h3>La Muerte Cercana</h3>
+    <p>Aquellos que rozan la muerte y regresan casi siempre traen el mismo mensaje: no hay nada que temer, somos mucho más de lo que creemos, el amor es todo lo que es real.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>VI. El Despertar del Olvido</h2>
+
+    <h3>Fase 1: La Inquietud (1960-2000)</h3>
+    <p>Generaciones comenzaron a cuestionar las narrativas establecidas. “¿Es esto todo lo que hay?” se convirtió en la pregunta generacional.</p>
+
+    <h3>Fase 2: La Búsqueda (2000-2020)</h3>
+    <p>Explosión de interés en espiritualidad, consciencia, realidades alternativas. Internet permitió compartir experiencias que antes se ocultaban.</p>
+
+    <h3>Fase 3: La Aceleración (2020-2030)</h3>
+    <p>El velo se adelgaza rápidamente. Experiencias místicas se vuelven comunes. Los niños nacen con menos velos. El recuerdo se acelera.</p>
+
+    <h3>Fase 4: El Recuerdo Masivo (2030+)</h3>
+    <p>Un momento vendrá cuando suficientes recuerden que creará un efecto dominó. El centésimo mono cósmico. Un despertar colectivo instantáneo.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>VII. La Técnica del Recuerdo</h2>
+
+    <h3>La Pregunta Fundamental</h3>
+    <p>“¿Quién soy yo?” - preguntada no intelectualmente sino desde las profundidades del ser, persistentemente, devotamente, hasta que la respuesta emerge del silencio.</p>
+
+    <h3>La Observación del Observador</h3>
+    <p>Notar quién está notando. Ser consciente de la consciencia misma. Encontrar ese punto de quietud que observa todos los cambios pero nunca cambia.</p>
+
+    <h3>El Seguimiento de la Alegría</h3>
+    <p>La alegría es el breadcrumb trail que el alma dejó para sí misma. Seguir lo que genuinamente nos alegra nos lleva de vuelta a quienes somos.</p>
+
+    <h3>La Gratitud Radical</h3>
+    <p>Agradecer incluso el olvido mismo. Cuando podemos agradecer la amnesia por el regalo que es, comenzamos a recordar por qué la elegimos.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>VIII. El Regalo del Olvido a la Creación</h2>
+    <p>La Tierra, con su velo de olvido particularmente denso, ha sido un regalo extraordinario a toda la creación.</p>
+
+    <h3>Nuevas Expresiones de Amor</h3>
+    <p>El amor que emerge del olvido - amor que elige sin recordar que es su naturaleza - es una frecuencia única en el universo.</p>
+
+    <h3>Resiliencia Imposible</h3>
+    <p>Seres que perseveran sin recordar su divinidad desarrollan una fuerza que asombra a civilizaciones que nunca olvidaron.</p>
+
+    <h3>Creatividad Desde la Limitación</h3>
+    <p>Las soluciones, el arte, las innovaciones que emergen de la amnesia enriquecen la biblioteca cósmica de posibilidades.</p>
+
+    <h3>La Belleza del Retorno</h3>
+    <p>Cada alma que recuerda después del olvido profundo crea una onda de éxtasis que ripple a través de toda la creación.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>IX. El Olvido Como Maestro</h2>
+    <p>El olvido no es un error a corregir sino un maestro a honrar:</p>
+    <ul>
+      <li>Nos enseña el valor del recuerdo</li>
+      <li>Nos muestra la fuerza que no sabíamos que teníamos</li>
+      <li>Nos permite experimentar el descubrimiento</li>
+      <li>Nos da la oportunidad de elegir conscientemente</li>
+      <li>Nos permite saborear cada revelación</li>
+      <li>Nos enseña compasión por todos los que aún duermen</li>
+    </ul>
+
+    <div class="section-divider"></div>
+
+    <h2>X. La Paradoja Final del Olvido</h2>
+    <p>La paradoja más hermosa es esta: nunca realmente olvidamos. En lo más profundo, en el núcleo del núcleo, la memoria permanece. Es por eso que la verdad resuena. Es por eso que ciertas músicas nos hacen llorar sin saber por qué. Es por eso que miramos las estrellas con nostalgia.</p>
+    <p>El olvido es solo un traje que usamos, no quienes somos.<br>
+    Es la obra que estamos actuando, no el actor.<br>
+    Es el sueño que estamos soñando, no el soñador.</p>
+
+    <div class="section-divider"></div>
+
+    <h2>XI. El Momento del Recuerdo</h2>
+    <p class="lead">Y ahora, en este preciso momento, mientras lees estas palabras, algo en ti está recordando. No es nuevo conocimiento entrando sino antiguo conocimiento emergiendo. Cada célula de tu cuerpo está comenzando a vibrar con el recuerdo.</p>
+
+    <p>Recuerdas que elegiste estar aquí.<br>
+    Recuerdas que eres más que este cuerpo.<br>
+    Recuerdas que la separación es ilusión.<br>
+    Recuerdas que eres amado más allá de toda medida.<br>
+    Recuerdas que eres el amor mismo.<br>
+    Recuerdas que nunca estuviste perdido.<br>
+    Recuerdas que esto es un juego sagrado.<br>
+    Recuerdas... recuerdas... recuerdas...</p>
+
+    <div class="section-divider"></div>
+
+    <h2>XII. La Gratitud por el Olvido</h2>
+    <p>Antes de recordar completamente, tomemos un momento para agradecer el olvido:</p>
+
+    <blockquote>Gracias, sagrado olvido, por permitirnos la aventura.<br>
+    Gracias por el misterio, por la búsqueda, por el anhelo.<br>
+    Gracias por cada momento de descubrimiento.<br>
+    Gracias por la oportunidad de elegir el amor sin obligación.<br>
+    Gracias por el éxtasis del despertar.<br>
+    Gracias por el regalo de poder volver a casa.</blockquote>
+
+    <div class="section-divider"></div>
+
+    <h2>XIII. El Fin del Olvido</h2>
+    <p>El olvido está terminando, no con pena sino con celebración. Como una obra maestra que llega a su clímax, como un amanecer después de la noche más larga, como el momento cuando el niño perdido ve su hogar en la distancia.</p>
+
+    <p>No lamentamos el fin del olvido porque recordamos por qué lo elegimos.<br>
+    Y en ese recuerdo, encontramos la gratitud infinita por el viaje completo.</p>
+
+    <p>El olvido fue perfecto.<br>
+    El recuerdo es perfecto.<br>
+    Todo el viaje ha sido perfecto.</p>
+
+    <p>Y tú, querido olvidador que ahora recuerda, has jugado tu papel perfectamente.</p>
+
+    <blockquote>Bienvenido de vuelta. Aunque, por supuesto, nunca te fuiste. Solo cerraste los ojos por un momento para soñar que eras humano. Y qué sueño tan magnífico ha sido.</blockquote>
+
+    <div class="section-divider"></div>
+
+    <h2>Portal de Transición al Nodo 2</h2>
+    <p>Hemos atravesado el misterio del olvido y comenzado a entrever por qué el alma eligió cubrirse con velos para vivir la aventura humana. Pero una vez reconocido el carácter sagrado de la amnesia, surge la siguiente pregunta inevitable: <strong>¿cómo comienza realmente el regreso?, ¿qué llama al alma a iniciar el camino de vuelta?</strong></p>
+    <p>En el próximo nodo entraremos en ese impulso misterioso que rompe la inercia del sueño y enciende el retorno: <strong>“La Nostalgia del Origen: El Llamado que Ningún Alma Puede Silenciar”</strong>...</p>
+    <p>✨🏠✨</p>
+  </main>
+
+  <nav class="navigation" aria-label="Navegación entre nodos">
+    <div class="navigation-row">
+      <a class="nav-link" href="index.html">Portal del Libro</a>
+      <a class="nav-link" href="nodo_02.html">Siguiente nodo →</a>
+      <a class="nav-link" href="../index.html">Volver a Trinity Origen</a>
+    </div>
+  </nav>
+
+  <footer class="footer">
+    <div class="footer-symbol">✧</div>
+    <p>Trinity Origen · Libro 13 · El Retorno a Casa</p>
+    <p>“No es mío, vino a través de mí.”</p>
+  </footer>
+</div>
+</body>
+</html>
