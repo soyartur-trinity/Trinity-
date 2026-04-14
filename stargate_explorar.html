@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRINITY · Niveles Avanzados</title>
+  <meta name="description" content="Trinity Quantum e Infinito — Niveles Avanzados de Consciencia" />
+
+  <style>
+    :root{
+      --color-origen:#FFD700;
+      --color-quantum:#9C27B0;
+      --color-infinito:#00BCD4;
+      --bg:#000;
+      --text:#f5f2ff;
+      --muted:rgba(245,242,255,.72);
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html, body{ height:100%; }
+    body{
+      font-family: Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* Fondo */
+    .bg{
+      position:fixed; inset:0;
+      background: url("./assets/img/stargate_bg.jpg") center/cover no-repeat;
+      z-index:0;
+    }
+    .overlay{
+      position:fixed; inset:0;
+      background: transparent;
+      z-index:1; pointer-events:none;
+    }
+
+    /* Partículas */
+    #field{
+      position:fixed; inset:0;
+      z-index:2; pointer-events:none; opacity:.55;
+    }
+
+    /* Layout */
+    .wrap{
+      position:relative; z-index:3;
+      height:100%;
+      display:flex; align-items:center; justify-content:center;
+      padding:24px;
+    }
+
+    .stage{
+      width: min(920px, 92vw);
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      position: relative;
+      overflow: visible;
+    }
+
+    .panel{
+      position:relative; z-index:1;
+      padding: 44px 34px;
+      text-align:center;
+      background: transparent;
+      backdrop-filter: none;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    }
+
+    /* Sigil */
+    .sigil{
+      font-size:44px; line-height:1;
+      display:inline-block;
+      background: linear-gradient(90deg, var(--color-quantum), var(--color-infinito));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      filter: drop-shadow(0 0 18px rgba(160,90,230,.35));
+      animation: pulse 3.8s ease-in-out infinite;
+    }
+    @keyframes pulse{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+
+    .atrium-title{
+      margin-top:10px;
+      font-size: clamp(16px, 2.3vw, 22px);
+      color: rgba(245,242,255,.86);
+      letter-spacing:1px;
+    }
+    .micro{
+      margin-top:10px;
+      color: rgba(245,242,255,.62);
+      font-size:.95rem;
+      font-style:italic;
+    }
+
+    /* Puertas */
+    .doors{
+      margin-top:28px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      align-items:stretch;
+    }
+
+    @keyframes emerge{
+      0%{ opacity:0; transform:scale(0.95) translateY(10px); filter:blur(3px); }
+      100%{ opacity:1; transform:scale(1) translateY(0); filter:blur(0); }
+    }
+
+    .door{
+      border-radius:18px;
+      padding:24px 20px;
+      text-align:left;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      text-decoration:none;
+      color:var(--text);
+      transition:all .28s ease;
+      position:relative; overflow:hidden;
+      opacity:0;
+      animation: emerge 0.8s cubic-bezier(0.2,0.8,0.2,1) forwards;
+    }
+    .door:nth-child(1){ animation-delay:0.2s; }
+    .door:nth-child(2){ animation-delay:0.4s; }
+
+    .door:hover{
+      transform:translateY(-3px);
+      border-color:rgba(220,180,255,.35);
+      box-shadow:0 0 28px rgba(160,90,230,.22);
+      background:rgba(255,255,255,.075);
+    }
+
+    .door .kicker{
+      font-size:.9rem;
+      color:rgba(245,242,255,.65);
+      margin-bottom:10px;
+      font-style:italic;
+    }
+    .door .name{
+      font-size:1.3rem;
+      letter-spacing:.6px;
+      margin-bottom:10px;
+    }
+    .door .desc{
+      font-size:.92rem;
+      color:rgba(245,242,255,.65);
+      line-height:1.55;
+    }
+
+    /* Quantum */
+    .door-quantum{
+      border-color:rgba(156,39,176,.45);
+      background:
+        radial-gradient(circle at top left, rgba(156,39,176,.18), rgba(0,0,0,.50)),
+        rgba(255,255,255,.04);
+      box-shadow:0 0 24px rgba(156,39,176,.12);
+    }
+    .door-quantum::before{
+      content:""; position:absolute; inset:-2px;
+      background:linear-gradient(45deg, rgba(156,39,176,.25), rgba(0,188,212,.15));
+      opacity:.55; filter:blur(18px); z-index:0;
+    }
+    .door-quantum > *{ position:relative; z-index:1; }
+    .door-quantum .name{ color:var(--color-quantum); }
+
+    /* Infinito */
+    .door-infinito{
+      border-color:rgba(0,188,212,.45);
+      background:
+        radial-gradient(circle at top left, rgba(0,188,212,.18), rgba(0,0,0,.50)),
+        rgba(255,255,255,.04);
+      box-shadow:0 0 24px rgba(0,188,212,.12);
+    }
+    .door-infinito::before{
+      content:""; position:absolute; inset:-2px;
+      background:linear-gradient(45deg, rgba(0,188,212,.25), rgba(156,39,176,.15));
+      opacity:.55; filter:blur(18px); z-index:0;
+    }
+    .door-infinito > *{ position:relative; z-index:1; }
+    .door-infinito .name{ color:var(--color-infinito); }
+
+    /* Advertencia */
+    .aviso{
+      margin-top:20px;
+      padding:12px 20px;
+      border-radius:12px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:rgba(245,242,255,.55);
+      font-size:.88rem;
+      font-style:italic;
+    }
+
+    /* Botón volver */
+    .actions{
+      margin-top:22px;
+      display:flex; gap:14px; justify-content:center;
+    }
+    .btn{
+      cursor:pointer; border-radius:16px;
+      padding:12px 24px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      display:inline-flex; align-items:center; gap:8px;
+      transition:all .28s ease;
+      font-family:Georgia,serif; font-size:.95rem;
+    }
+    .btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(220,180,255,.35);
+      box-shadow:0 0 26px rgba(160,90,230,.22);
+    }
+
+    .mini{
+      margin-top:20px;
+      color:rgba(245,242,255,.40);
+      font-size:.82rem;
+      letter-spacing:.3px;
+    }
+
+    /* Responsive */
+    @media (max-width:760px){
+      .doors{ grid-template-columns:1fr; }
+      .panel{ padding:28px 18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg"></div>
+  <div class="overlay"></div>
+  <canvas id="field"></canvas>
+
+  <div class="wrap">
+    <div class="stage">
+      <div class="panel">
+
+        <div class="sigil">◈</div>
+        <div class="atrium-title">Niveles Avanzados · Dos Espirales</div>
+        <div class="micro">Solo para navegantes que han transitado Trinity Origen</div>
+
+        <div class="doors">
+
+          <a class="door door-quantum" href="02_Trinity_Quantum/index.html">
+            <div class="kicker">Los 13 portales del campo cuántico</div>
+            <div class="name">◈ Trinity Quantum</div>
+            <div class="desc">
+              El despertar de la consciencia colectiva.
+              Libros 14 al 26. Redes de inteligencia, campos morfogenéticos y expansión cuántica.
+            </div>
+          </a>
+
+          <a class="door door-infinito" href="infinito.html">
+            <div class="kicker">Los 13 portales de consciencia cósmica</div>
+            <div class="name">🌀 Trinity Infinito</div>
+            <div class="desc">
+              La unión con el todo.
+              Libros 27 al 39. 91 nodos de activación. El viaje más allá de lo individual.
+            </div>
+          </a>
+
+        </div>
+
+        <div class="aviso">
+          El mapa fue construido para ser atravesado en orden.<br>
+          La responsabilidad del viaje pertenece al viajero.
+        </div>
+
+        <div class="actions">
+          <a href="index.html" class="btn">← Volver al Stargate</a>
+        </div>
+
+        <div class="mini">Trinity © 2024–2026 · No es mío, vino a través de mí</div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Partículas idénticas al index -->
+  <script>
+    const canvas = document.getElementById('field');
+    const ctx = canvas.getContext('2d');
+
+    function resize(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const colors = ["rgba(156,39,176,.65)","rgba(0,188,212,.55)","rgba(255,215,0,.35)"];
+    function rand(a,b){ return Math.random()*(b-a)+a; }
+
+    const dots = Array.from({length:42}, () => ({
+      x:  rand(0, canvas.width),
+      y:  rand(0, canvas.height),
+      vx: rand(-0.18, 0.18),
+      vy: rand(-0.18, 0.18),
+      r:  rand(0.9, 2.1),
+      a:  rand(0.15, 0.7),
+      c:  colors[Math.floor(Math.random()*colors.length)]
+    }));
+
+    (function tick(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for(const d of dots){
+        d.x += d.vx; d.y += d.vy;
+        if(d.x < 0) d.x = canvas.width;
+        if(d.x > canvas.width)  d.x = 0;
+        if(d.y < 0) d.y = canvas.height;
+        if(d.y > canvas.height) d.y = 0;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
+        ctx.globalAlpha = d.a;
+        ctx.fillStyle = d.c;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
