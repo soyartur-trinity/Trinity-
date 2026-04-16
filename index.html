@@ -11,16 +11,9 @@
       --color-origen:#FFD700;
       --color-quantum:#9C27B0;
       --color-infinito:#00BCD4;
-
       --bg:#000;
       --text:#f5f2ff;
       --muted:rgba(245,242,255,.72);
-
-      --glass:rgba(0,0,0,.42);
-      --glass2:rgba(255,255,255,.06);
-
-      --ring:rgba(200,160,255,.55);
-      --shadow:rgba(160,90,230,.35);
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
@@ -29,85 +22,55 @@
       font-family: Georgia, serif;
       background: var(--bg);
       color: var(--text);
-      overflow: hidden; /* STARGATE = sin scroll */
+      overflow: hidden;
     }
 
-    /* ===== Fondo STARGATE (Grok) + overlay ===== */
-    /* ===== Fondo STARGATE (Simplificado) ===== */
-    .bg {
-      position: fixed; inset: 0;
-      /* Solo la imagen, sin gradientes encima por ahora */
+    .bg{
+      position:fixed; inset:0;
       background: url("./assets/img/stargate_bg.jpg") center/cover no-repeat;
-      z-index: 0;
+      z-index:0;
     }
-
-    /* ===== Capa de oscurecimiento (Desactivada para que brille la imagen) ===== */
-    .overlay {
-      position: fixed; inset: 0;
-      background: transparent; /* ¡Aquí está la magia! La hacemos invisible */
-      z-index: 1;
-      pointer-events: none; /* Para que los clicks pasen a través de ella */
+    .overlay{
+      position:fixed; inset:0;
+      background: transparent;
+      z-index:1; pointer-events:none;
     }
-
-    /* Partículas */
     #field{
       position:fixed; inset:0;
-      z-index:2;
-      pointer-events:none;
-      opacity:.55;
+      z-index:2; pointer-events:none; opacity:.55;
     }
 
-    /* ===== Layout general ===== */
     .wrap{
-      position:relative;
-      z-index:3;
+      position:relative; z-index:3;
       height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display:flex; align-items:center; justify-content:center;
       padding:24px;
     }
 
-   .stage {
+    .stage{
       width: min(920px, 92vw);
-      background: transparent; /* ¡Invisible! */
-      border: none;            /* Sin bordes */
-      box-shadow: none;        /* Sin sombras cuadradas */
-      position: relative;
-      overflow: visible;       /* Dejamos que la luz fluya */
+      position:relative;
     }
 
-    .stage::before {
-      display: none; /* Apagamos el resplandor de fondo */
+    .panel{
+      position:relative; z-index:1;
+      padding:44px 34px;
+      text-align:center;
+      background:transparent;
+      backdrop-filter:none;
+      text-shadow:0 4px 20px rgba(0,0,0,0.8);
     }
 
-   .panel {
-      position: relative;
-      z-index: 1;
-      padding: 44px 34px;
-      text-align: center;
-      background: transparent;      /* Fondo transparente */
-      backdrop-filter: none;        /* Quitamos el borroneado */
-      text-shadow: 0 4px 20px rgba(0,0,0,0.8); /* Sombra al texto para que se lea perfecto sobre las estrellas */
-    }
-
-    /* ===== Singularidad ===== */
+    /* Singularidad */
     .sigil{
-      font-size:64px;
-      line-height:1;
+      font-size:64px; line-height:1;
       display:inline-block;
       background: linear-gradient(90deg, var(--color-origen), var(--color-quantum), var(--color-infinito));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
+      -webkit-background-clip:text; background-clip:text; color:transparent;
       filter: drop-shadow(0 0 18px rgba(160,90,230,.35));
       animation: pulse 3.8s ease-in-out infinite;
     }
-
-    @keyframes pulse{
-      0%,100%{ transform: scale(1); }
-      50%{ transform: scale(1.06); }
-    }
+    @keyframes pulse{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
 
     h1{
       margin-top:18px;
@@ -115,257 +78,163 @@
       font-size: clamp(28px, 4vw, 44px);
       text-transform:uppercase;
     }
-
     .subtitle{
       margin-top:10px;
-      color: var(--muted);
-      font-style: italic;
-      font-size: 1.05rem;
+      color:var(--muted);
+      font-style:italic;
+      font-size:1.05rem;
     }
-
     .micro{
       margin-top:14px;
-      color: rgba(245,242,255,.62);
-      font-size: .95rem;
+      color:rgba(245,242,255,.62);
+      font-size:.95rem;
     }
 
-    /* ===== Botones ===== */
+    /* Botones */
     .actions{
       margin-top:28px;
-      display:flex;
-      gap:14px;
-      justify-content:center;
-      flex-wrap:wrap;
+      display:flex; gap:14px;
+      justify-content:center; flex-wrap:wrap;
     }
-
     .btn{
-      cursor:pointer;
-      border-radius: 16px;
-      padding: 14px 26px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      transition: all .28s ease;
-      box-shadow: 0 0 16px rgba(0,0,0,.35);
+      cursor:pointer; border-radius:16px;
+      padding:14px 26px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:var(--text); text-decoration:none;
+      display:inline-flex; align-items:center; gap:10px;
+      transition:all .28s ease;
+      box-shadow:0 0 16px rgba(0,0,0,.35);
       user-select:none;
     }
-
     .btn:hover{
-      transform: translateY(-2px);
-      border-color: rgba(220,180,255,.35);
-      box-shadow: 0 0 26px rgba(160,90,230,.22);
+      transform:translateY(-2px);
+      border-color:rgba(220,180,255,.35);
+      box-shadow:0 0 26px rgba(160,90,230,.22);
     }
-
     .btn-primary{
-      background: radial-gradient(circle at top left, rgba(180,120,255,.40), rgba(20,10,40,.85));
-      border-color: rgba(220,180,255,.55);
+      background:radial-gradient(circle at top left, rgba(180,120,255,.40), rgba(20,10,40,.85));
+      border-color:rgba(220,180,255,.55);
     }
-
-    .btn-audio{
-      position:relative;
-    }
+    .btn-audio{ position:relative; }
     .btn-audio::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      border-radius: 18px;
-      border:1px solid rgba(220,180,255,.18);
-      opacity:.6;
-      pointer-events:none;
+      content:""; position:absolute; inset:-2px;
+      border-radius:18px; border:1px solid rgba(220,180,255,.18);
+      opacity:.6; pointer-events:none;
     }
-    .btn-audio.pulse{
-      animation: glow 2.2s ease-in-out infinite;
-    }
+    .btn-audio.pulse{ animation:glow 2.2s ease-in-out infinite; }
     @keyframes glow{
-      0%,100%{ box-shadow: 0 0 18px rgba(160,90,230,.20); }
-      50%{ box-shadow: 0 0 34px rgba(200,150,255,.45); }
+      0%,100%{box-shadow:0 0 18px rgba(160,90,230,.20);}
+      50%{box-shadow:0 0 34px rgba(200,150,255,.45);}
     }
 
-    /* ===== Atrio ===== */
+    /* Atrio */
     .hidden{ display:none; }
 
     .atrium-title{
       margin-top:6px;
-      font-size: clamp(18px, 2.3vw, 24px);
-      color: rgba(245,242,255,.86);
+      font-size:clamp(18px, 2.3vw, 24px);
+      color:rgba(245,242,255,.86);
       letter-spacing:1px;
     }
 
-    .doors{
-      margin-top:26px;
-      display:grid;
-      grid-template-columns: 1.15fr .85fr .85fr;
-      gap:14px;
-      align-items:stretch;
+    /* Mapa de trayectoria */
+    .trinity-map{
+      margin-top:10px;
+      font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase;
+      color:rgba(245,242,255,.7);
+      display:flex; justify-content:center; align-items:center;
+      gap:6px; flex-wrap:wrap;
     }
+    .map-sep{ opacity:.3; }
 
-    @media (max-width: 860px){
-      .doors{ grid-template-columns: 1fr; }
+    /* ── PUERTAS SIN TARJETA ── */
+    .doors{
+      margin-top:32px;
+      display:flex;
+      justify-content:center;
+      align-items:stretch;
+      gap:0;
     }
 
     .door{
-      border-radius: 18px;
-      padding: 18px 18px;
-      text-align:left;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
+      flex:1;
+      max-width:280px;
       text-decoration:none;
-      color: var(--text);
-      transition: all .28s ease;
+      color:var(--text);
+      text-align:center;
+      padding:16px 20px;
+      transition:all .28s ease;
       position:relative;
-      overflow:hidden;
+      /* sin fondo, sin borde, sin sombra */
+      background:transparent;
+      border:none;
+      box-shadow:none;
+      opacity:0;
+      animation:emerge 0.8s cubic-bezier(0.2,0.8,0.2,1) forwards;
+    }
+    .door:nth-child(1){ animation-delay:0.2s; }
+    .door:nth-child(2){ animation-delay:0.4s; }
+    .door:nth-child(3){ animation-delay:0.6s; }
+
+    @keyframes emerge{
+      0%{opacity:0; transform:scale(0.95) translateY(10px); filter:blur(3px);}
+      100%{opacity:1; transform:scale(1) translateY(0); filter:blur(0);}
     }
 
-    .door:hover{
-      transform: translateY(-2px);
-      border-color: rgba(220,180,255,.35);
-      box-shadow: 0 0 28px rgba(160,90,230,.22);
-      background: rgba(255,255,255,.075);
+    /* Separador vertical entre puertas */
+    .door + .door::before{
+      content:"";
+      position:absolute; left:0; top:20%; bottom:20%;
+      width:1px;
+      background:linear-gradient(180deg, transparent, rgba(255,255,255,.15), transparent);
     }
+
+    .door:hover{ transform:translateY(-3px); }
 
     .door .kicker{
-      font-size:.92rem;
-      color: rgba(245,242,255,.70);
-      margin-bottom:8px;
-      font-style:italic;
-    }
-
-    .door .name{
-      font-size:1.25rem;
-      letter-spacing:.6px;
+      font-size:.82rem;
+      color:rgba(245,242,255,.60);
       margin-bottom:10px;
+      font-style:italic;
+      text-shadow:0 2px 8px rgba(0,0,0,.9);
     }
+    .door .name{
+      font-size:clamp(1.1rem, 2.2vw, 1.4rem);
+      letter-spacing:.6px;
+      text-shadow:0 2px 16px rgba(0,0,0,.95), 0 0 30px rgba(0,0,0,.7);
+      line-height:1.3;
+    }
+    /* Color por puerta */
+    .door:nth-child(1) .name{ color:#e8e4ff; }
+    .door-primary .name{ color:var(--color-origen); }
+    .door:nth-child(3) .name{ color:var(--color-infinito); }
 
-    .door .desc{
-      font-size:.98rem;
-      color: rgba(245,242,255,.70);
-      line-height:1.55;
-    }
-
-    /* Puerta central destacada */
-    .door-primary{
-      border-color: rgba(255,215,0,.35);
-      background:
-        radial-gradient(circle at top left, rgba(255,215,0,.12), rgba(0,0,0,.45)),
-        rgba(255,255,255,.04);
-      box-shadow: 0 0 24px rgba(255,215,0,.10);
-    }
-    .door-primary::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: linear-gradient(45deg, rgba(255,215,0,.22), rgba(156,39,176,.18), rgba(0,188,212,.18));
-      opacity:.55;
-      filter: blur(18px);
-      z-index:0;
-    }
-    .door-primary > *{ position:relative; z-index:1; }
+    /* desc oculta siempre */
+    .door .desc{ display:none; }
 
     /* Cita susurro */
     .whisper{
       margin-top:22px;
-      font-style: italic;
-      color: rgba(245,242,255,.62);
-      font-size: 1rem;
-      min-height: 28px;
+      font-style:italic;
+      color:rgba(245,242,255,.62);
+      font-size:1rem;
+      min-height:28px;
     }
 
-    /* Footer mini */
     .mini{
       margin-top:28px;
-      color: rgba(245,242,255,.45);
+      color:rgba(245,242,255,.45);
       font-size:.85rem;
       letter-spacing:.3px;
     }
 
-/* =========================================
-       MAGIA FINAL V2: Minimalismo Radical
-    ========================================= */
-
-    /* 1. ANIMACIÓN DE ENTRADA (Emerger suavemente) */
-    @keyframes emerge {
-      0% { opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(3px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+    /* Responsive */
+    @media (max-width:600px){
+      .doors{ flex-direction:column; align-items:center; gap:8px; }
+      .door + .door::before{ display:none; }
+      .door{ max-width:340px; padding:12px 16px; }
     }
-
-    .door {
-      opacity: 0;
-      animation: emerge 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    }
-    .door:nth-child(1) { animation-delay: 0.2s; }
-    .door:nth-child(2) { animation-delay: 0.4s; }
-    .door:nth-child(3) { animation-delay: 0.6s; }
-
-    /* 2. LIMPIEZA TOTAL (Global) */
-    /* Ocultamos descripciones en TODOS lados para que sea puro título */
-    .door .desc {
-      display: none !important;
-    }
-
-    /* 3. VERSIÓN MÓVIL Y TABLET (Se activa antes, bajo los 1000px) */
-    @media (max-width: 1000px) {
-      .doors {
-        grid-template-columns: 1fr !important; /* Una sola columna vertical */
-        gap: 20px;
-        max-width: 400px; /* Limitamos el ancho para que no se estiren */
-        margin: 20px auto; /* Centrado */
-      }
-
-      .door {
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        padding: 10px 0;
-        text-align: center;
-      }
-
-      .door:hover { transform: scale(1.05); }
-
-      /* Títulos grandes y legibles */
-      .door .name {
-        font-size: 1.6rem;
-        margin-bottom: 2px;
-        text-shadow: 0 4px 10px rgba(0,0,0,0.8); /* Sombra negra para leer sobre nebulosas */
-      }
-
-      /* Subtítulos pequeños */
-      .door .kicker {
-        font-size: 0.9rem;
-        opacity: 0.8;
-        text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-      }
-      
-      /* Color especial para Origen */
-      .door-primary .name { color: var(--color-origen); }
-    }
-    .trinity-map {
-  margin-top: 10px;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(245,242,255,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.map-label {
-  opacity: 0.8;
-}
-
-.map-item {
-  opacity: 0.85;
-}
-
-.map-sep {
-  opacity: 0.3;
-}
   </style>
 </head>
 
@@ -376,20 +245,19 @@
 
   <div class="wrap">
     <div class="stage" role="application" aria-label="Trinity Stargate">
+
       <!-- Pantalla 1: Singularidad -->
       <section class="panel" id="screen-singularity">
         <div class="sigil">◈</div>
         <h1>TRINITY</h1>
         <div class="subtitle">STARGATE · Umbral de Consciencia</div>
         <div class="micro">Entra sin prisa. Elige con presencia.</div>
-
         <div class="actions">
           <button class="btn btn-primary" id="btn-enter" type="button">Entrar</button>
           <button class="btn btn-audio pulse" id="btn-audio" type="button">
             <span id="audio-ico">🎵</span> Activar Frecuencia
           </button>
         </div>
-
         <div class="mini">Trinity © 2024–2026 · No es mío, vino a través de mí</div>
       </section>
 
@@ -400,44 +268,31 @@
         <div class="micro">La Puerta guía. El viajero elige.</div>
 
         <div class="trinity-map">
-  <span class="map-label">Trayectoria:</span>
-  <span class="map-item">Puerta</span>
-  <span class="map-sep">→</span>
-  <span class="map-item">Origen</span>
-  <span class="map-sep">→</span>
-  <span class="map-item">Quantum</span>
-  <span class="map-sep">→</span>
-  <span class="map-item">Infinito</span>
-</div>
+          <span class="map-label">Trayectoria:</span>
+          <span class="map-item">Puerta</span>
+          <span class="map-sep">→</span>
+          <span class="map-item">Origen</span>
+          <span class="map-sep">→</span>
+          <span class="map-item">Quantum</span>
+          <span class="map-sep">→</span>
+          <span class="map-item">Infinito</span>
+        </div>
 
         <div class="doors">
-          
+
           <a class="door" href="00_Portal_Trinity/index.html">
             <div class="kicker">Comienza aquí</div>
             <div class="name">🚪 Trinity · La Puerta</div>
-            <div class="desc">
-              El Umbral. Introducción a la Constelación.
-              Entiende el mapa antes de iniciar el viaje.
-            </div>
           </a>
 
           <a class="door door-primary" href="01_Trinity_Origen/index.html">
             <div class="kicker">El Camino del Iniciado</div>
             <div class="name">◈ Trinity Origen</div>
-            <div class="desc">
-              Los 13 Libros Fundacionales.
-              Psicología Cuántica, Voz Interior y la base de la transformación.
-            </div>
           </a>
 
           <a class="door" href="stargate_explorar.html">
             <div class="kicker">Niveles Avanzados</div>
             <div class="name">🌀 Quantum e Infinito</div>
-            <div class="desc">
-              La expansión de la consciencia.
-              Redes neuronales, inmersión y futuro.
-              (Solo para navegantes experimentados).
-            </div>
           </a>
 
         </div>
@@ -454,7 +309,6 @@
         <div class="mini">El misterio se revela por presencia, no por volumen.</div>
       </section>
 
-      <!-- Audio (no autoplay) -->
       <audio id="audio" loop preload="none">
         <source src="sonidos/frecuencia-432hz.mp3" type="audio/mpeg">
       </audio>
@@ -462,7 +316,6 @@
   </div>
 
   <script>
-    // ===== Citas (modo susurro, no invasivo) =====
     const WHISPERS = [
       "No lees Trinity, Trinity te lee a ti.",
       "La transformación no se busca, se permite.",
@@ -470,113 +323,70 @@
       "Lo esencial aparece cuando el ruido se retira.",
       "Entraste porque estabas listo."
     ];
+    function randomWhisper(){ return `"${WHISPERS[Math.floor(Math.random()*WHISPERS.length)]}"`; }
 
-    function randomWhisper(){
-      return `“${WHISPERS[Math.floor(Math.random()*WHISPERS.length)]}”`;
-    }
-
-    // ===== Cambio de pantallas =====
     const s1 = document.getElementById('screen-singularity');
     const s2 = document.getElementById('screen-atrium');
-    const btnEnter = document.getElementById('btn-enter');
-    const btnBack  = document.getElementById('btn-back');
     const whisperEl = document.getElementById('whisper');
 
-    btnEnter.addEventListener('click', () => {
+    document.getElementById('btn-enter').addEventListener('click', ()=>{
       s1.classList.add('hidden');
       s2.classList.remove('hidden');
       whisperEl.textContent = randomWhisper();
     });
-
-    btnBack.addEventListener('click', () => {
+    document.getElementById('btn-back').addEventListener('click', ()=>{
       s2.classList.add('hidden');
       s1.classList.remove('hidden');
     });
 
-    // ===== Audio (solo por click) =====
     const audio = document.getElementById('audio');
-    const btnAudio1 = document.getElementById('btn-audio');
-    const btnAudio2 = document.getElementById('btn-audio-2');
-    const ico1 = document.getElementById('audio-ico');
-    const ico2 = document.getElementById('audio-ico-2');
-
+    const btnA1 = document.getElementById('btn-audio');
+    const btnA2 = document.getElementById('btn-audio-2');
+    const ico1  = document.getElementById('audio-ico');
+    const ico2  = document.getElementById('audio-ico-2');
     let audioOn = false;
 
     async function toggleAudio(){
       try{
         if(!audioOn){
-          audio.preload = "auto";
-          await audio.play();
-          audioOn = true;
-          ico1.textContent = "🔊";
-          ico2.textContent = "🔊";
-          btnAudio1.classList.remove('pulse');
+          audio.preload="auto"; await audio.play();
+          audioOn=true; ico1.textContent="🔊"; ico2.textContent="🔊";
+          btnA1.classList.remove('pulse');
         }else{
           audio.pause();
-          audioOn = false;
-          ico1.textContent = "🎵";
-          ico2.textContent = "🎵";
-          btnAudio1.classList.add('pulse');
+          audioOn=false; ico1.textContent="🎵"; ico2.textContent="🎵";
+          btnA1.classList.add('pulse');
         }
-      }catch(e){
-        // Si el navegador bloquea por alguna razón, no rompemos UX
-        console.warn("Audio bloqueado:", e);
-      }
+      }catch(e){ console.warn("Audio bloqueado:",e); }
     }
+    btnA1.addEventListener('click', toggleAudio);
+    btnA2.addEventListener('click', toggleAudio);
 
-    btnAudio1.addEventListener('click', toggleAudio);
-    btnAudio2.addEventListener('click', toggleAudio);
-
-    // ===== Partículas sutiles (atmósfera) =====
     const canvas = document.getElementById('field');
     const ctx = canvas.getContext('2d');
+    function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
 
-    function resize(){
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
+    const colors = ["rgba(156,39,176,.65)","rgba(0,188,212,.55)","rgba(255,215,0,.35)"];
+    function rand(a,b){ return Math.random()*(b-a)+a; }
+    const dots = Array.from({length:42},()=>({
+      x:rand(0,canvas.width), y:rand(0,canvas.height),
+      vx:rand(-0.18,0.18), vy:rand(-0.18,0.18),
+      r:rand(0.9,2.1), a:rand(0.15,0.7),
+      c:colors[Math.floor(Math.random()*colors.length)]
+    }));
 
-    const N = 42; // pocas, sobrias
-    const dots = [];
-    const colors = ["rgba(156,39,176,.65)", "rgba(0,188,212,.55)", "rgba(255,215,0,.35)"];
-
-    function rand(min, max){ return Math.random()*(max-min)+min; }
-
-    for(let i=0;i<N;i++){
-      dots.push({
-        x: rand(0, canvas.width),
-        y: rand(0, canvas.height),
-        vx: rand(-0.18, 0.18),
-        vy: rand(-0.18, 0.18),
-        r: rand(0.9, 2.1),
-        a: rand(0.15, 0.7),
-        c: colors[Math.floor(Math.random()*colors.length)]
-      });
-    }
-
-    function tick(){
+    (function tick(){
       ctx.clearRect(0,0,canvas.width,canvas.height);
       for(const d of dots){
-        d.x += d.vx;
-        d.y += d.vy;
-
-        if(d.x < 0) d.x = canvas.width;
-        if(d.x > canvas.width) d.x = 0;
-        if(d.y < 0) d.y = canvas.height;
-        if(d.y > canvas.height) d.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
-        ctx.globalAlpha = d.a;
-        ctx.fillStyle = d.c;
-        ctx.fill();
+        d.x+=d.vx; d.y+=d.vy;
+        if(d.x<0) d.x=canvas.width; if(d.x>canvas.width) d.x=0;
+        if(d.y<0) d.y=canvas.height; if(d.y>canvas.height) d.y=0;
+        ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+        ctx.globalAlpha=d.a; ctx.fillStyle=d.c; ctx.fill();
       }
-      ctx.globalAlpha = 1;
-      requestAnimationFrame(tick);
-    }
-    tick();
+      ctx.globalAlpha=1; requestAnimationFrame(tick);
+    })();
   </script>
 </body>
 </html>
