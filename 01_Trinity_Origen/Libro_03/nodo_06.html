@@ -1,778 +1,187 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 6: Reconfiguración - Cuando el Dolor se Convierte en Camino</title>
-    <meta name="description" content="El momento sagrado en que la misma energía que paralizaba comienza a convertirse en la fuerza que nos impulsa hacia adelante">
-    
-    <style>
-        :root {
-            --rojo-profundo: #8B0000;
-            --naranja-fuego: #FF4500;
-            --dorado-sabiduria: #FFD700;
-            --blanco-luz: #FFFAF0;
-            --negro-profundo: #0a0a0a;
-            --gris-ceniza: #4a4a4a;
-            --purpura-transformacion: #9B59B6;
-            --azul-cielo: #87CEEB;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1a0a2e 0%, #0a0a0a 100%);
-            color: var(--blanco-luz);
-            line-height: 1.8;
-        }
-
-        /* Canvas de transformación */
-        #transformacion-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.25;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 30px;
-        }
-
-        /* Header del nodo */
-        .nodo-header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            border-bottom: 3px solid var(--purpura-transformacion);
-            margin-bottom: 50px;
-        }
-
-        .nodo-simbolo {
-            font-size: 4em;
-            margin-bottom: 20px;
-            animation: transformacion-espiral 8s linear infinite;
-        }
-
-        @keyframes transformacion-espiral {
-            0% { 
-                transform: scale(1) rotate(0deg);
-                filter: drop-shadow(0 0 15px var(--purpura-transformacion));
-            }
-            50% { 
-                transform: scale(1.1) rotate(180deg);
-                filter: drop-shadow(0 0 30px var(--dorado-sabiduria));
-            }
-            100% { 
-                transform: scale(1) rotate(360deg);
-                filter: drop-shadow(0 0 15px var(--purpura-transformacion));
-            }
-        }
-
-        .nodo-numero {
-            font-size: 1.1em;
-            color: var(--dorado-sabiduria);
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-        }
-
-        .nodo-titulo {
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--purpura-transformacion), var(--azul-cielo), var(--dorado-sabiduria));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.3;
-        }
-
-        .nodo-subtitulo {
-            font-size: 1.3em;
-            color: var(--gris-ceniza);
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Navegación */
-        .navegacion {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            color: var(--purpura-transformacion);
-            text-decoration: none;
-            border: 2px solid var(--purpura-transformacion);
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-size: 0.95em;
-        }
-
-        .nav-btn:hover {
-            background: var(--purpura-transformacion);
-            color: var(--blanco-luz);
-            box-shadow: 0 5px 20px rgba(155, 89, 182, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Contenido principal */
-        .contenido-nodo {
-            background: rgba(155, 89, 182, 0.05);
-            border-left: 4px solid var(--purpura-transformacion);
-            padding: 50px;
-            margin: 40px 0;
-            border-radius: 10px;
-        }
-
-        .contenido-nodo p {
-            font-size: 1.15em;
-            margin-bottom: 30px;
-            text-align: justify;
-            line-height: 2;
-        }
-
-        .contenido-nodo p:first-child::first-letter {
-            font-size: 4em;
-            float: left;
-            line-height: 0.8;
-            margin: 10px 10px 0 0;
-            color: var(--purpura-transformacion);
-            font-weight: bold;
-        }
-
-        .contenido-nodo strong {
-            color: var(--dorado-sabiduria);
-            font-weight: normal;
-        }
-
-        .contenido-nodo em {
-            color: var(--azul-cielo);
-            font-style: italic;
-        }
-
-        /* Citas destacadas */
-        .cita-destacada {
-            background: rgba(155, 89, 182, 0.15);
-            border-left: 5px solid var(--purpura-transformacion);
-            padding: 30px 40px;
-            margin: 50px 0;
-            font-size: 1.3em;
-            font-style: italic;
-            color: var(--blanco-luz);
-            position: relative;
-        }
-
-        .cita-destacada::before {
-            content: '✨';
-            position: absolute;
-            top: -20px;
-            left: 20px;
-            font-size: 4em;
-            opacity: 0.3;
-        }
-
-        /* Proceso de transformación */
-        .proceso-transformacion {
-            background: linear-gradient(135deg, rgba(155, 89, 182, 0.2), rgba(135, 206, 235, 0.15));
-            border: 2px solid var(--azul-cielo);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 60px 0;
-        }
-
-        .proceso-titulo {
-            font-size: 1.8em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .proceso-paso {
-            background: rgba(0, 0, 0, 0.3);
-            border-left: 4px solid var(--purpura-transformacion);
-            padding: 20px 30px;
-            margin: 20px 0;
-            border-radius: 10px;
-        }
-
-        .proceso-paso h4 {
-            color: var(--azul-cielo);
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-
-        .proceso-paso p {
-            color: var(--blanco-luz);
-            font-size: 1.1em;
-            line-height: 1.8;
-        }
-
-        /* Llamado transformador */
-        .llamado-transformador {
-            background: rgba(255, 215, 0, 0.1);
-            border: 3px solid var(--dorado-sabiduria);
-            border-radius: 20px;
-            padding: 50px;
-            margin: 60px 0;
-            text-align: center;
-        }
-
-        .llamado-titulo {
-            font-size: 2em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 30px;
-        }
-
-        .llamado-texto {
-            font-size: 1.3em;
-            line-height: 2;
-            color: var(--blanco-luz);
-            font-style: italic;
-        }
-
-        /* Reflexión interactiva */
-        .reflexion-box {
-            background: rgba(255, 215, 0, 0.05);
-            border: 2px solid var(--dorado-sabiduria);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 60px 0;
-        }
-
-        .reflexion-titulo {
-            font-size: 1.8em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .reflexion-pregunta {
-            font-size: 1.2em;
-            color: var(--blanco-luz);
-            margin: 20px 0;
-            padding-left: 20px;
-            border-left: 3px solid var(--purpura-transformacion);
-        }
-
-        /* Meditación */
-        .meditacion-container {
-            background: linear-gradient(135deg, rgba(155, 89, 182, 0.25), rgba(135, 206, 235, 0.15));
-            border: 2px solid var(--purpura-transformacion);
-            border-radius: 20px;
-            padding: 50px;
-            margin: 60px 0;
-            text-align: center;
-        }
-
-        .meditacion-titulo {
-            font-size: 2em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 30px;
-        }
-
-        .meditacion-icono {
-            font-size: 3em;
-            margin: 20px 0;
-            animation: espiral-transformacion 6s ease-in-out infinite;
-        }
-
-        @keyframes espiral-transformacion {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg); 
-                opacity: 0.8; 
-            }
-            50% { 
-                transform: scale(1.2) rotate(180deg); 
-                opacity: 1; 
-            }
-        }
-
-        .meditacion-texto {
-            font-size: 1.15em;
-            line-height: 2;
-            color: var(--blanco-luz);
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .meditacion-boton {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, var(--purpura-transformacion), var(--azul-cielo));
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1.1em;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-        }
-
-        .meditacion-boton:hover {
-            background: linear-gradient(135deg, var(--dorado-sabiduria), var(--purpura-transformacion));
-            transform: scale(1.05);
-            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Navegación inferior */
-        .navegacion-nodos {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 80px 0 40px;
-            padding: 30px;
-            background: rgba(155, 89, 182, 0.1);
-            border-radius: 15px;
-        }
-
-        .nodo-anterior, .nodo-siguiente {
-            flex: 1;
-        }
-
-        .nodo-anterior {
-            text-align: left;
-        }
-
-        .nodo-siguiente {
-            text-align: right;
-        }
-
-        .nodo-link {
-            display: inline-block;
-            padding: 15px 30px;
-            color: var(--purpura-transformacion);
-            text-decoration: none;
-            border: 2px solid var(--purpura-transformacion);
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            font-size: 1.05em;
-        }
-
-        .nodo-link:hover {
-            background: var(--purpura-transformacion);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(155, 89, 182, 0.4);
-        }
-
-        .nodo-centro {
-            flex: 1;
-            text-align: center;
-            color: var(--gris-ceniza);
-            font-size: 0.95em;
-        }
-
-        /* Progreso */
-        .progreso-container {
-            margin: 40px 0;
-            text-align: center;
-        }
-
-        .progreso-barra {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .progreso-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--purpura-transformacion), var(--azul-cielo), var(--dorado-sabiduria));
-            width: 85.68%; /* 6 de 7 nodos */
-            transition: width 0.5s ease;
-            box-shadow: 0 0 10px var(--purpura-transformacion);
-        }
-
-        .progreso-texto {
-            color: var(--gris-ceniza);
-            font-size: 0.95em;
-        }
-
-        /* Footer */
-        .nodo-footer {
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 60px;
-            border-top: 2px solid rgba(155, 89, 182, 0.3);
-        }
-
-        .footer-texto {
-            color: var(--gris-ceniza);
-            margin: 10px 0;
-            font-size: 0.9em;
-        }
-
-        /* Volver arriba */
-        .volver-arriba {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--purpura-transformacion), var(--azul-cielo));
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            font-size: 1.8em;
-            border: 2px solid var(--dorado-sabiduria);
-        }
-
-        .volver-arriba.visible {
-            opacity: 1;
-        }
-
-        .volver-arriba:hover {
-            transform: scale(1.15) rotate(180deg);
-            box-shadow: 0 5px 25px rgba(155, 89, 182, 0.6);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nodo-titulo {
-                font-size: 2.2em;
-            }
-
-            .contenido-nodo {
-                padding: 30px;
-            }
-
-            .navegacion-nodos {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .nodo-anterior, .nodo-siguiente {
-                text-align: center;
-            }
-
-            .reflexion-box, .meditacion-container {
-                padding: 30px;
-            }
-        }
-
-        /* Animación de entrada */
-        .fade-in {
-            animation: fadeIn 1.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nodo VI · Reconfiguración: Cuando el Dolor se Convierte en Camino | El Dolor como Portal | Trinity Origen</title>
+    <style>:root{--bg:#040404;--gold:#d3b06a;--violet:#6f4e90;--ember:#c0401a;--ember-soft:rgba(192,64,26,0.18);--text:#f3efe7;--text-soft:rgba(243,239,231,0.72);--text-faint:rgba(243,239,231,0.4);--border:rgba(211,176,106,0.16);--border-ember:rgba(192,64,26,0.28);--border-strong:rgba(211,176,106,0.3);--radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.38);--max-width:920px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:"Georgia","Times New Roman",serif;background:radial-gradient(circle at 50% 0%,rgba(192,64,26,0.16),transparent 24%),radial-gradient(circle at 50% 10%,rgba(211,176,106,0.05),transparent 30%),linear-gradient(180deg,#0d0504 0%,#040404 45%,#030303 100%);color:var(--text);line-height:1.9;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at center,black 35%,transparent 82%);-webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);opacity:0.12;}
+.frame{position:fixed;inset:12px;border:1px solid rgba(192,64,26,0.08);pointer-events:none;z-index:0;}
+.container{position:relative;z-index:1;max-width:var(--max-width);margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;padding:11px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.014);transition:all 0.25s ease;}
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{position:relative;overflow:hidden;text-align:center;padding:54px 28px 34px;border-radius:30px;border:1px solid rgba(192,64,26,0.22);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(192,64,26,0.18),transparent 42%);box-shadow:var(--shadow);margin-bottom:34px;}
+.hero::before{content:"";position:absolute;inset:auto 50% 30px;width:320px;height:320px;transform:translateX(-50%);border-radius:50%;border:1px solid rgba(192,64,26,0.14);box-shadow:0 0 0 14px rgba(192,64,26,0.04),0 0 0 34px rgba(211,176,106,0.03),inset 0 0 60px rgba(192,64,26,0.04);pointer-events:none;}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(192,64,26,0.3);background:radial-gradient(circle,rgba(192,64,26,0.14),rgba(255,255,255,0.01) 60%,transparent 72%);box-shadow:0 0 28px rgba(192,64,26,0.14),inset 0 0 24px rgba(211,176,106,0.04);}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;}
+.book-label{position:relative;z-index:2;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:8px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title{position:relative;z-index:2;font-size:clamp(1.6rem,4vw,2.7rem);font-weight:normal;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;line-height:1.2;}
+.node-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.02rem;margin-bottom:16px;font-style:italic;}
+.nav-strip{background:rgba(255,255,255,0.016);border:1px solid rgba(192,64,26,0.16);border-radius:18px;padding:14px 20px;margin-bottom:28px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.nav-strip-label{color:var(--gold);font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;margin-right:4px;}
+.nav-node-link{color:var(--text-faint);font-size:0.82rem;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid transparent;transition:all 0.2s;}
+.nav-node-link:hover{color:var(--gold);border-color:var(--border);}
+.nav-node-link.activo{color:var(--gold);border-color:var(--border);background:rgba(211,176,106,0.06);}
+.nav-sep{color:var(--text-faint);opacity:0.4;font-size:0.8rem;}
+.content{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));border:1px solid rgba(192,64,26,0.14);border-radius:26px;padding:40px 36px;box-shadow:0 12px 32px rgba(0,0,0,0.22);}
+.content h2{color:var(--gold);font-size:1.38rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.08rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content h4{color:var(--ember);font-size:0.95rem;font-weight:normal;letter-spacing:0.06em;margin:1.4rem 0 0.5rem;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.02rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content ol{margin:0.4rem 0 1.2rem 1.4rem;}
+.content ol li{color:var(--text-soft);margin-bottom:0.45rem;}
+.content strong{color:var(--text);}
+.content em{color:var(--gold);font-style:italic;}
+.content blockquote{margin:1.4rem 0;padding:1rem 1.1rem 1rem 1.3rem;border-left:3px solid rgba(192,64,26,0.5);background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;color:var(--text);font-style:italic;}
+.cita-destacada{margin:1.6rem 0;padding:1.4rem 1.5rem;border-left:3px solid rgba(192,64,26,0.55);background:rgba(192,64,26,0.06);border-radius:0 16px 16px 0;color:var(--text);font-style:italic;font-size:1.06rem;line-height:1.78;}
+.reflexion-box{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.18);border-radius:16px;padding:28px;margin:1.8rem 0;}
+.reflexion-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;}
+.reflexion-pregunta{font-size:1rem;color:var(--text-soft);margin:0.8rem 0;padding-left:16px;border-left:2px solid rgba(192,64,26,0.35);line-height:1.7;}
+.concepto-clave{background:rgba(192,64,26,0.06);border:1px solid rgba(192,64,26,0.2);border-radius:16px;padding:28px;margin:1.8rem 0;text-align:center;}
+.concepto-clave h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;}
+.concepto-clave p{color:var(--text-soft);font-size:1rem;line-height:1.8;margin-bottom:0;}
+.proceso-box{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.14);border-radius:16px;padding:28px;margin:1.8rem 0;}
+.proceso-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.2rem;}
+.proceso-paso{background:rgba(0,0,0,0.2);border-left:3px solid rgba(192,64,26,0.35);padding:16px 20px;margin:12px 0;border-radius:0 12px 12px 0;}
+.proceso-paso h4{color:var(--gold);font-size:0.95rem;margin-bottom:8px;}
+.proceso-paso p{color:var(--text-soft);font-size:0.98rem;margin-bottom:0;line-height:1.75;}
+.meditacion{background:rgba(111,78,144,0.06);border:1px solid rgba(111,78,144,0.2);border-radius:16px;padding:36px 32px;margin:2rem 0;}
+.meditacion h3{color:var(--gold);text-align:center;margin-top:0;margin-bottom:1.4rem;letter-spacing:0.1em;text-transform:uppercase;font-size:1rem;}
+.meditacion p{color:var(--text-soft);line-height:2.1;margin-bottom:0.6rem;}
+.meditacion em{color:var(--text-soft);font-style:italic;}
+.espacio-silencio{height:80px;display:flex;align-items:center;justify-content:center;margin:1.4rem 0;}
+.espacio-silencio::before{content:"· · ·";color:var(--text-faint);font-size:1.4rem;letter-spacing:0.6em;opacity:0.5;}
+.revelacion-final{background:rgba(211,176,106,0.06);border:1px solid rgba(211,176,106,0.22);border-radius:16px;padding:36px;margin:2rem 0;text-align:center;}
+.revelacion-final h3{color:var(--gold);margin-top:0;margin-bottom:1rem;font-size:1rem;letter-spacing:0.12em;text-transform:uppercase;}
+.revelacion-final p{color:var(--text);font-size:1.1rem;line-height:1.9;font-style:italic;margin-bottom:0;}
+.llamado-box{background:rgba(192,64,26,0.06);border:1px solid rgba(192,64,26,0.22);border-radius:16px;padding:28px;margin:1.8rem 0;text-align:center;}
+.llamado-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;}
+.llamado-box p{color:var(--text-soft);font-size:1rem;line-height:1.8;margin-bottom:0;}
+.cierre-sagrado{background:rgba(255,255,255,0.014);border:1px solid rgba(211,176,106,0.16);border-radius:16px;padding:32px;margin:2rem 0;text-align:center;}
+.cierre-sagrado h3{color:var(--gold);margin-top:0;margin-bottom:0.8rem;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;}
+.cierre-sagrado p{color:var(--text-soft);font-size:1rem;line-height:1.85;font-style:italic;margin-bottom:0;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(192,64,26,0.25),rgba(192,64,26,0));margin:2rem 0 1.4rem;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(192,64,26,0.14);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);border:1px solid rgba(211,176,106,0.18);border-radius:999px;padding:10px 16px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(211,176,106,0.38);background:rgba(211,176,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+.scroll-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:rgba(192,64,26,0.12);border:1px solid var(--border-ember);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:1.1rem;cursor:pointer;opacity:0;transition:all 0.3s ease;z-index:100;}
+.scroll-top.visible{opacity:1;}
+.scroll-top:hover{background:rgba(192,64,26,0.22);}
+@media(max-width:720px){.frame{inset:8px;}.container{padding:24px 16px 64px;}.hero{padding:42px 18px 28px;border-radius:24px;}.hero::before{width:220px;height:220px;bottom:24px;}.content{padding:28px 20px;border-radius:22px;}.navigation-row{flex-direction:column;align-items:center;}}</style>
 </head>
 <body>
-    <!-- Canvas de transformación -->
-    <canvas id="transformacion-canvas"></canvas>
-
-    <!-- Volver arriba -->
-    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
-
-    <div class="container">
-        <!-- Header del Nodo -->
-        <header class="nodo-header fade-in">
-            <div class="nodo-simbolo">🌀</div>
-            <div class="nodo-numero">NODO 6 de 7</div>
-            <h1 class="nodo-titulo">Reconfiguración: Cuando el Dolor se Convierte en Camino</h1>
-            <p class="nodo-subtitulo">El momento sagrado en que la misma energía que paralizaba comienza a convertirse en la fuerza que nos impulsa hacia adelante</p>
-        </header>
-
-        <!-- Navegación superior -->
-        <nav class="navegacion">
-            <a href="nodo_05.html" class="nav-btn">← Nodo Anterior</a>
-            <a href="index.html" class="nav-btn">Índice del Libro</a>
-            <a href="nodo_07.html" class="nav-btn">Siguiente Nodo →</a>
-        </nav>
-
-        <!-- Progreso -->
-        <div class="progreso-container">
-            <div class="progreso-barra">
-                <div class="progreso-fill"></div>
-            </div>
-            <p class="progreso-texto">Nodo 6 de 7 • Reconfiguración: Cuando el Dolor se Convierte en Camino</p>
-        </div>
-
-        <!-- Contenido Principal -->
-        <article class="contenido-nodo fade-in">
-            <p>Llega un momento en todo verdadero viaje de transformación donde algo fundamental se invierte. Es el punto de inflexión sagrado donde <strong>la misma energía que nos paralizaba comienza a convertirse en la fuerza que nos impulsa hacia adelante.</strong> Donde el dolor deja de ser algo que sufrimos pasivamente y se transforma en el combustible mismo de nuestra evolución consciente.</p>
-
-            <p>Esta inversión no es un acto de voluntad. No es el resultado de afirmaciones positivas ni de una decisión mental de "superar" el dolor. Es algo más profundo, más orgánico: es un momento de <em>reconfiguración cuántica</em> donde la conciencia reorganiza completamente su relación con la experiencia del sufrimiento.</p>
-
-            <p>Técnicamente, podríamos llamarlo un salto de fase: el sistema que éramos alcanza un punto crítico de complejidad donde las viejas estructuras ya no pueden sostener la intensidad de la experiencia, y el campo de la conciencia se reorganiza espontáneamente en un patrón de mayor coherencia. Como el agua que al alcanzar cierta temperatura no se calienta más, sino que cambia de estado y se convierte en vapor.</p>
-        </article>
-
-        <!-- Cita destacada 1 -->
-        <div class="cita-destacada fade-in">
-            No es que el dolor desaparezca. Es que su significado cambia radicalmente. Lo que antes era obstáculo se revela como portal. Lo que parecía destrucción se reconoce como construcción de algo más vasto.
-        </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>No es que el dolor desaparezca. Es que su significado cambia radicalmente. Lo que antes era obstáculo se revela como portal. Lo que parecía destrucción se reconoce como construcción de algo más vasto. El sufrimiento que nos fragmentaba comienza a revelarse como la presión exacta que necesitábamos para cristalizar en una forma más auténtica de ser.</p>
-
-            <p>Esta reconfiguración tiene marcadores específicos que podemos reconocer. Son señales de que la alquimia está ocurriendo, de que la transmutación ha comenzado:</p>
-        </article>
-
-        <!-- Proceso de Transformación -->
-        <div class="proceso-transformacion fade-in">
-            <h3 class="proceso-titulo">✨ El Proceso de Reconfiguración ✨</h3>
-            
+<div class="frame" aria-hidden="true"></div>
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+<div class="container">
+    <div class="topbar"><a class="back-link" href="index.html">← Portal del Libro III</a></div>
+    <header class="hero">
+        <div class="hero-topline">Trinity Origen · Libro III</div>
+        <div class="sigil-wrap" aria-hidden="true"><div class="sigil">◈</div></div>
+        <div class="book-label">El Dolor como Portal</div>
+        <div class="node-kicker">Nodo VI</div>
+        <h1 class="node-title">Reconfiguración: Cuando el Dolor se Convierte en Camino</h1>
+        <p class="node-subtitle">El momento sagrado en que la misma energía que paralizaba comienza a convertirse en la fuerza que nos impulsa hacia adelante</p>
+    </header>
+    <nav class="nav-strip" aria-label="Nodos del libro"><span class="nav-strip-label">Nodos:</span><a class="nav-node-link" href="nodo_01.html">I</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_02.html">II</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_03.html">III</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_04.html">IV</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_05.html">V</a><span class="nav-sep">·</span><a class="nav-node-link activo" href="nodo_06.html">VI</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_07.html">VII</a></nav>
+    <main class="content">
+        
+        <h2>El Punto de Inflexión</h2>
+        <p class="lead">Llega un momento en todo verdadero viaje de transformación donde algo fundamental se invierte. Es el punto de inflexión sagrado donde <strong>la misma energía que nos paralizaba comienza a convertirse en la fuerza que nos impulsa hacia adelante.</strong> Donde el dolor deja de ser algo que sufrimos pasivamente y se transforma en el combustible mismo de nuestra evolución consciente.</p>
+        <p>Esta inversión no es un acto de voluntad. No es el resultado de afirmaciones positivas ni de una decisión mental de "superar" el dolor. Es algo más profundo, más orgánico: es un momento de <em>reconfiguración cuántica</em> donde la conciencia reorganiza completamente su relación con la experiencia del sufrimiento.</p>
+        <p>Técnicamente, podríamos llamarlo un salto de fase: el sistema que éramos alcanza un punto crítico de complejidad donde las viejas estructuras ya no pueden sostener la intensidad de la experiencia, y el campo de la conciencia se reorganiza espontáneamente en un patrón de mayor coherencia. Como el agua que al alcanzar cierta temperatura no se calienta más, sino que cambia de estado y se convierte en vapor.</p>
+        <div class="cita-destacada">No es que el dolor desaparezca. Es que su significado cambia radicalmente. Lo que antes era obstáculo se revela como portal. Lo que parecía destrucción se reconoce como construcción de algo más vasto.</div>
+        <div class="section-divider"></div>
+        <h2>Los Marcadores de la Reconfiguración</h2>
+        <p>No es que el dolor desaparezca. Es que su significado cambia radicalmente. Lo que antes era obstáculo se revela como portal. Lo que parecía destrucción se reconoce como construcción de algo más vasto. El sufrimiento que nos fragmentaba comienza a revelarse como la presión exacta que necesitábamos para cristalizar en una forma más auténtica de ser.</p>
+        <p>Esta reconfiguración tiene marcadores específicos que podemos reconocer. Son señales de que la alquimia está ocurriendo, de que la transmutación ha comenzado:</p>
+        <div class="proceso-box">
+            <h3>El Proceso de Reconfiguración</h3>
             <div class="proceso-paso">
                 <h4>1. El cambio de narrativa</h4>
                 <p>Comenzamos a contar nuestra historia de manera diferente. Ya no somos "víctimas del dolor", sino "aprendices conscientes que están atravesando una iniciación". El lenguaje mismo que usamos para describir nuestra experiencia comienza a cambiar, y ese cambio lingüístico refleja y profundiza una transformación en la estructura misma de la conciencia.</p>
             </div>
-
             <div class="proceso-paso">
                 <h4>2. El descubrimiento del observador</h4>
                 <p>Emerge una capacidad nueva: podemos observar nuestro propio dolor sin ser completamente consumidos por él. Hay una parte de nosotros —vasta, espaciosa, silenciosa— que puede sostener incluso las experiencias más intensas sin perder su centro. Este observador no es frío ni distante. Es la forma más pura de la compasión: presencia completa sin identificación total.</p>
             </div>
-
             <div class="proceso-paso">
                 <h4>3. La integración de los opuestos</h4>
                 <p>Dejamos de necesitar que el dolor termine para poder estar bien. Comenzamos a desarrollar una capacidad paradójica: podemos estar simultáneamente en el dolor y en la paz, en la herida y en la totalidad, en la oscuridad y en la luz. No porque negemos una polaridad en favor de la otra, sino porque nuestra conciencia se ha vuelto lo suficientemente espaciosa como para incluir ambas sin conflicto.</p>
             </div>
-
             <div class="proceso-paso">
                 <h4>4. La apertura del corazón</h4>
                 <p>Paradójicamente, el dolor que pensábamos que nos cerraría al mundo comienza a abrirnos de maneras impensadas. Nos volvemos más sensibles, más empáticos, más capaces de reconocer el sufrimiento en otros sin ser abrumados por él. El corazón que fue herido se vuelve sabio en las formas del dolor, y esa sabiduría se convierte en medicina para otros.</p>
             </div>
-
             <div class="proceso-paso">
                 <h4>5. El surgimiento del propósito</h4>
                 <p>Comenzamos a intuir que todo lo que hemos atravesado tenía una dirección. No necesariamente un "plan divino" en el sentido religioso, sino una inteligencia emergente que estaba usando cada experiencia —incluyendo las más dolorosas— como material de construcción para algo que solo ahora comienza a revelarse. Nuestro dolor se convierte en nuestro propósito.</p>
             </div>
         </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>Esta reconfiguración no sucede de una vez. Es un proceso iterativo, como una espiral que se expande. Cada vuelta de la espiral nos lleva más profundo en la comprensión, más alto en la perspectiva, más amplio en la capacidad de abrazar la totalidad de la experiencia humana.</p>
-
-            <p><strong>Y en algún punto de esta espiral ascendente, algo milagroso ocurre: nos damos cuenta de que el dolor ya no es nuestro enemigo.</strong> No lo buscamos, no lo glorificamos, no lo necesitamos. Pero cuando llega —y siempre llega, porque es parte inseparable de la vida consciente— podemos recibirlo de manera diferente. Como un maestro que trae exactamente la enseñanza que necesitamos en este momento.</p>
-        </article>
-
-        <!-- Cita destacada 2 -->
-        <div class="cita-destacada fade-in">
-            El dolor se convierte en camino cuando dejamos de intentar escapar de él y comenzamos a atravesarlo conscientemente, cuando dejamos de verlo como obstáculo y lo reconocemos como umbral.
+        <div class="section-divider"></div>
+        <h2>La Espiral Ascendente</h2>
+        <p>Esta reconfiguración no sucede de una vez. Es un proceso iterativo, como una espiral que se expande. Cada vuelta de la espiral nos lleva más profundo en la comprensión, más alto en la perspectiva, más amplio en la capacidad de abrazar la totalidad de la experiencia humana.</p>
+        <p><strong>Y en algún punto de esta espiral ascendente, algo milagroso ocurre: nos damos cuenta de que el dolor ya no es nuestro enemigo.</strong> No lo buscamos, no lo glorificamos, no lo necesitamos. Pero cuando llega —y siempre llega, porque es parte inseparable de la vida consciente— podemos recibirlo de manera diferente. Como un maestro que trae exactamente la enseñanza que necesitamos en este momento.</p>
+        <div class="cita-destacada">El dolor se convierte en camino cuando dejamos de intentar escapar de él y comenzamos a atravesarlo conscientemente, cuando dejamos de verlo como obstáculo y lo reconocemos como umbral.</div>
+        <p>El dolor se convierte en camino cuando dejamos de intentar escapar de él y comenzamos a atravesarlo conscientemente. Cuando dejamos de verlo como obstáculo y lo reconocemos como umbral. Cuando comprendemos que no estamos rotos y necesitando ser reparados, sino en proceso de transformación hacia algo que aún no podemos imaginar completamente.</p>
+        <p>Esta comprensión es profundamente liberadora. Porque significa que cada momento de sufrimiento que atravesamos conscientemente no es tiempo perdido en un valle oscuro, sino tiempo invertido en una alquimia sagrada. <em>Cada lágrima consciente es una gota de combustible para la transmutación. Cada respiración sostenida en medio del dolor es un acto de reconfiguración del campo de la conciencia.</em></p>
+        <p>Y lo más hermoso es que esta transformación no es solo individual. Cuando nos reconfiguramos a través del dolor conscientemente atravesado, algo en el campo colectivo también se reconfigura. Nos convertimos en prueba viviente de que es posible transformar el sufrimiento en sabiduría, la herida en medicina, la ruptura en apertura.</p>
+        <p>Nos convertimos en lo que las tradiciones antiguas llamaban "sanadores heridos": aquellos que han atravesado sus propias noches oscuras del alma y emergieron no sin cicatrices, pero sí con una comprensión profunda que puede servir de luz para otros que están atravesando su propia oscuridad.</p>
+        <div class="llamado-box">
+            <h3>El Momento es Ahora</h3>
+            <p>No hay forma de saber cuándo llegará este punto de reconfiguración. No podemos forzarlo, apresurarlo ni planificarlo. Pero podemos preparar el terreno. <strong>Podemos elegir, en cada momento de dolor, estar presentes en lugar de disociarnos. Podemos elegir la consciencia sobre la evasión. Podemos elegir el atravesamiento sobre la huida.</strong></p>
         </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>El dolor se convierte en camino cuando dejamos de intentar escapar de él y comenzamos a atravesarlo conscientemente. Cuando dejamos de verlo como obstáculo y lo reconocemos como umbral. Cuando comprendemos que no estamos rotos y necesitando ser reparados, sino en proceso de transformación hacia algo que aún no podemos imaginar completamente.</p>
-
-            <p>Esta comprensión es profundamente liberadora. Porque significa que cada momento de sufrimiento que atravesamos conscientemente no es tiempo perdido en un valle oscuro, sino tiempo invertido en una alquimia sagrada. <em>Cada lágrima consciente es una gota de combustible para la transmutación. Cada respiración sostenida en medio del dolor es un acto de reconfiguración del campo de la conciencia.</em></p>
-
-            <p>Y lo más hermoso es que esta transformación no es solo individual. Cuando nos reconfiguramos a través del dolor conscientemente atravesado, algo en el campo colectivo también se reconfigura. Nos convertimos en prueba viviente de que es posible transformar el sufrimiento en sabiduría, la herida en medicina, la ruptura en apertura.</p>
-
-            <p>Nos convertimos en lo que las tradiciones antiguas llamaban "sanadores heridos": aquellos que han atravesado sus propias noches oscuras del alma y emergieron no sin cicatrices, pero sí con una comprensión profunda que puede servir de luz para otros que están atravesando su propia oscuridad.</p>
-        </article>
-
-        <!-- Llamado Transformador -->
-        <div class="llamado-transformador fade-in">
-            <h3 class="llamado-titulo">🌀 El Momento es Ahora 🌀</h3>
-            <p class="llamado-texto">
-                No hay forma de saber cuándo llegará este punto de reconfiguración. No podemos forzarlo, apresurarlo ni planificarlo. Pero podemos preparar el terreno. <strong>Podemos elegir, en cada momento de dolor, estar presentes en lugar de disociarnos. Podemos elegir la consciencia sobre la evasión. Podemos elegir el atravesamiento sobre la huida.</strong>
-            </p>
+        <p>Y cuando lo hacemos, algo en nosotros comienza a cambiar. Imperceptiblemente al principio, como la primera luz del amanecer que toca el horizonte sin que sepamos exactamente cuándo comenzó. Pero inevitablemente, acumulativamente, transformadoramente.</p>
+        <p>Hasta que un día miramos atrás y nos damos cuenta: ya no somos quienes éramos. El dolor no nos destruyó. Nos reconfiguró en algo más vasto, más sabio, más compasivo, más real. Y esa realización no viene como un logro del ego, sino como un reconocimiento humilde: <strong>nunca estuvimos solos en este viaje. La inteligencia de la vida misma estaba orquestando esta transformación desde el principio.</strong></p>
+        <p>El dolor se convirtió en camino. Y ese camino nos llevó a casa. No a la casa de donde partimos, sino a una casa más profunda que siempre estuvo esperando: la casa de nuestra verdadera naturaleza, vasta como el cielo, capaz de abrazar toda la experiencia humana sin perder su luz esencial.</p>
+        <div class="cita-destacada">Esta es la promesa de la reconfiguración: que no hay dolor que atravieses conscientemente que no se convierta en fuerza para tu evolución. Que cada herida puede ser portal. Que cada final puede ser comienzo. Que siempre, siempre, hay un camino hacia casa.</div>
+        <div class="section-divider"></div>
+        <div class="reflexion-box">
+            <h3>Reflexiones de la Reconfiguración</h3>
+            <div class="reflexion-pregunta">¿Has experimentado momentos donde tu dolor comenzó a transformarse en fuerza? ¿Cómo se sintió ese cambio?</div>
+            <div class="reflexion-pregunta">¿Puedes reconocer al "observador" en ti, esa parte que puede sostener cualquier experiencia con presencia consciente?</div>
+            <div class="reflexion-pregunta">¿Qué narrativa estás usando para contar tu historia de dolor? ¿Es momento de reescribirla desde una perspectiva más amplia?</div>
+            <div class="reflexion-pregunta">Si tu dolor contiene un propósito, ¿cuál podría ser? ¿Qué medicina estás destilando de tu sufrimiento?</div>
         </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>Y cuando lo hacemos, algo en nosotros comienza a cambiar. Imperceptiblemente al principio, como la primera luz del amanecer que toca el horizonte sin que sepamos exactamente cuándo comenzó. Pero inevitablemente, acumulativamente, transformadoramente.</p>
-
-            <p>Hasta que un día miramos atrás y nos damos cuenta: ya no somos quienes éramos. El dolor no nos destruyó. Nos reconfiguró en algo más vasto, más sabio, más compasivo, más real. Y esa realización no viene como un logro del ego, sino como un reconocimiento humilde: <strong>nunca estuvimos solos en este viaje. La inteligencia de la vida misma estaba orquestando esta transformación desde el principio.</strong></p>
-
-            <p>El dolor se convirtió en camino. Y ese camino nos llevó a casa. No a la casa de donde partimos, sino a una casa más profunda que siempre estuvo esperando: la casa de nuestra verdadera naturaleza, vasta como el cielo, capaz de abrazar toda la experiencia humana sin perder su luz esencial.</p>
-        </article>
-
-        <!-- Cita final del nodo -->
-        <div class="cita-destacada fade-in">
-            Esta es la promesa de la reconfiguración: que no hay dolor que atravieses conscientemente que no se convierta en fuerza para tu evolución. Que cada herida puede ser portal. Que cada final puede ser comienzo. Que siempre, siempre, hay un camino hacia casa.
+        <div class="meditacion">
+            <h3>Meditación de la Reconfiguración</h3>
+            <p>Cierra los ojos. Respira profundo. Visualiza tu dolor como energía en movimiento...</p>
+            <p>Observa cómo esa energía puede reorganizarse, reconfigurarse.</p>
+            <p>Pregúntale: <em>"¿Qué quieres convertirte?"</em></p>
+            <p>Permite que la respuesta emerja no como pensamiento, sino como sensación, como intuición profunda.</p>
+            <p>El dolor no es tu enemigo. Es energía buscando su forma más elevada. Tú eres el alquimista. La reconfiguración está ocurriendo ahora.</p>
         </div>
-
-        <!-- Reflexión Interactiva -->
-        <div class="reflexion-box fade-in">
-            <h3 class="reflexion-titulo">🌀 Reflexiones de la Reconfiguración 🌀</h3>
-            
-            <div class="reflexion-pregunta">
-                ¿Has experimentado momentos donde tu dolor comenzó a transformarse en fuerza? ¿Cómo se sintió ese cambio?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                ¿Puedes reconocer al "observador" en ti, esa parte que puede sostener cualquier experiencia con presencia consciente?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                ¿Qué narrativa estás usando para contar tu historia de dolor? ¿Es momento de reescribirla desde una perspectiva más amplia?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                Si tu dolor contiene un propósito, ¿cuál podría ser? ¿Qué medicina estás destilando de tu sufrimiento?
-            </div>
+    </main>
+    
+    <nav class="navigation" aria-label="Navegación entre nodos">
+        <div class="navigation-row">
+            <a class="nav-link" href="nodo_05.html">← Nodo V</a>
+            <a class="nav-link" href="index.html">Portal del Libro</a>
+            <a class="nav-link" href="nodo_07.html">Nodo VII →</a>
+            <a class="nav-link" href="../index.html">Trinity Origen</a>
         </div>
-
-        <!-- Meditación -->
-        <div class="meditacion-container fade-in" id="meditacion">
-            <h3 class="meditacion-titulo">Meditación de la Reconfiguración</h3>
-            <div class="meditacion-icono">🌀</div>
-            <p class="meditacion-texto">
-                Cierra los ojos. Respira profundo. Visualiza tu dolor como energía en movimiento... Observa cómo esa energía puede reorganizarse, reconfigurarse. Pregúntale: "¿Qué quieres convertirte?" Permite que la respuesta emerja no como pensamiento, sino como sensación, como intuición profunda. El dolor no es tu enemigo. Es energía buscando su forma más elevada. Tú eres el alquimista. La reconfiguración está ocurriendo ahora.
-            </p>
-            <button class="meditacion-boton" onclick="iniciarMeditacion()">🌀 Iniciar Meditación (12 min)</button>
-        </div>
-
-        <!-- Navegación entre nodos -->
-        <nav class="navegacion-nodos">
-            <div class="nodo-anterior">
-                <a href="nodo_05.html" class="nodo-link">← Anterior: Dolor Colectivo</a>
-            </div>
-            <div class="nodo-centro">
-                Nodo 6 de 7
-            </div>
-            <div class="nodo-siguiente">
-                <a href="nodo_07.html" class="nodo-link">Siguiente: Portal Abierto →</a>
-            </div>
-        </nav>
-
-        <!-- Footer -->
-        <footer class="nodo-footer">
-            <p class="footer-texto">El Dolor como Portal - Nodo 6: Reconfiguración</p>
-            <p class="footer-texto">🌀 ◈ 🌀</p>
-        </footer>
-    </div>
-
-    <script>
-        // Canvas de transformación (espiral)
-        const canvas = document.getElementById('transformacion-canvas');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        class EspiralTransformacion {
-            constructor() {
-                this.centroX = canvas.width / 2;
-                this.centroY = canvas.height / 2;
-                this.angulo = 0;
-                this.radio = 0;
-                this.color = Math.random() > 0.5 ? '#9B59B6' : '#87CEEB';
-                this.velocidad = Math.random() * 0.02 + 0.01;
-                this.expansion = Math.random() * 0.5 + 0.3;
-            }
-
-            actualizar() {
-                this.angulo += this.velocidad;
-                this.radio += this.expansion;
-                
-                if (this.radio > 300) {
-                    this.radio = 0;
-                    this.angulo = 0;
-                }
-            }
-
-            dibujar() {
-                const x = this.centroX + Math.cos(this.angulo) * this.radio;
-                const y = this.centroY + Math.sin(this.angulo) * this.radio;
-                
-                ctx.beginPath();
-                ctx.arc(x, y, 2, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = 0.6 * (1 - this.radio / 300);
-                ctx.fill();
-            }
-        }
-
-        const espirales = [];
-        for (let i = 0; i < 30; i++) {
-            espirales.push(new EspiralTransformacion());
-        }
-
-        function animarTransformacion() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            espirales.forEach(espiral => {
-                espiral.actualizar();
-                espiral.dibujar();
-            });
-
-            requestAnimationFrame(animarTransformacion);
-        }
-
-        animarTransformacion();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Volver arriba
-        const volverArriba = document.getElementById('volverArriba');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                volverArriba.classList.add('visible');
-            } else {
-                volverArriba.classList.remove('visible');
-            }
-        });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        // Meditación
-        function iniciarMeditacion() {
-            alert('🌀 Meditación de la Reconfiguración\n\n12 minutos de transformación alquímica.\n\nCierra los ojos.\nVisualiza tu dolor como energía.\nObserva su reconfiguración.\nTú eres el alquimista.\nLa transformación ocurre ahora.\n\n(Timer: configura 12 minutos en tu dispositivo)');
-        }
-
-        // Guardar progreso
-        window.addEventListener('load', () => {
-            const progreso = JSON.parse(localStorage.getItem('trinity-progreso-libro3') || '{}');
-            progreso.nodoActual = 6;
-            progreso.ultimoNodo = Math.max(progreso.ultimoNodo || 0, 6);
-            progreso.porcentaje = 85.68;
-            localStorage.setItem('trinity-progreso-libro3', JSON.stringify(progreso));
-        });
-
-        // Animaciones al scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.contenido-nodo, .cita-destacada, .proceso-transformacion, .llamado-transformador, .reflexion-box, .meditacion-container').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
+    </nav>
+    <footer class="footer">
+        <div class="footer-symbol">◈</div>
+        <p>Trinity Origen · Libro III · El Dolor como Portal</p>
+        <p>"No es mío, vino a través de mí."</p>
+    </footer>
+</div>
+<script>
+const st=document.getElementById('scrollTop');
+window.addEventListener('scroll',()=>{st.classList.toggle('visible',window.pageYOffset>300);});
+window.addEventListener('load',()=>{const v=JSON.parse(localStorage.getItem('trinity-progreso-libro3')||'{}');v.nodoActual=6;v.ultimoNodo=Math.max(v.ultimoNodo||0,6);localStorage.setItem('trinity-progreso-libro3',JSON.stringify(v));});
+</script>
 </body>
 </html>

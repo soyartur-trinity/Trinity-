@@ -1,717 +1,165 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 4: El Silencio que el Dolor Revela</title>
-    <meta name="description" content="Cuando el grito se apaga y queda el silencio más sagrado. No el silencio de la derrota, sino el de la gestación">
-    
-    <style>
-        :root {
-            --rojo-profundo: #8B0000;
-            --naranja-fuego: #FF4500;
-            --dorado-sabiduria: #FFD700;
-            --blanco-luz: #FFFAF0;
-            --negro-profundo: #0a0a0a;
-            --gris-ceniza: #4a4a4a;
-            --azul-profundo: #191970;
-            --violeta-silencio: #2F1B3C;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1a0a1a 0%, #0a0a0a 100%);
-            color: var(--blanco-luz);
-            line-height: 1.8;
-        }
-
-        /* Canvas de silencio */
-        #silencio-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.15;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 30px;
-        }
-
-        /* Header del nodo */
-        .nodo-header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            border-bottom: 3px solid var(--azul-profundo);
-            margin-bottom: 50px;
-        }
-
-        .nodo-simbolo {
-            font-size: 4em;
-            margin-bottom: 20px;
-            animation: silencio-pulse 6s ease-in-out infinite;
-        }
-
-        @keyframes silencio-pulse {
-            0%, 100% { 
-                transform: scale(1);
-                filter: drop-shadow(0 0 10px var(--azul-profundo));
-                opacity: 0.8;
-            }
-            50% { 
-                transform: scale(1.05);
-                filter: drop-shadow(0 0 25px var(--dorado-sabiduria));
-                opacity: 1;
-            }
-        }
-
-        .nodo-numero {
-            font-size: 1.1em;
-            color: var(--dorado-sabiduria);
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-        }
-
-        .nodo-titulo {
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--azul-profundo), var(--dorado-sabiduria), var(--blanco-luz));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.3;
-        }
-
-        .nodo-subtitulo {
-            font-size: 1.3em;
-            color: var(--gris-ceniza);
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Navegación */
-        .navegacion {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            color: var(--dorado-sabiduria);
-            text-decoration: none;
-            border: 2px solid var(--azul-profundo);
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-size: 0.95em;
-        }
-
-        .nav-btn:hover {
-            background: var(--azul-profundo);
-            color: var(--blanco-luz);
-            box-shadow: 0 5px 20px rgba(25, 25, 112, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Contenido principal */
-        .contenido-nodo {
-            background: rgba(47, 27, 60, 0.1);
-            border-left: 4px solid var(--azul-profundo);
-            padding: 50px;
-            margin: 40px 0;
-            border-radius: 10px;
-        }
-
-        .contenido-nodo p {
-            font-size: 1.15em;
-            margin-bottom: 30px;
-            text-align: justify;
-            line-height: 2;
-        }
-
-        .contenido-nodo p:first-child::first-letter {
-            font-size: 4em;
-            float: left;
-            line-height: 0.8;
-            margin: 10px 10px 0 0;
-            color: var(--azul-profundo);
-            font-weight: bold;
-        }
-
-        .contenido-nodo strong {
-            color: var(--dorado-sabiduria);
-            font-weight: normal;
-        }
-
-        .contenido-nodo em {
-            color: var(--azul-profundo);
-            font-style: italic;
-        }
-
-        /* Citas destacadas */
-        .cita-destacada {
-            background: rgba(25, 25, 112, 0.15);
-            border-left: 5px solid var(--azul-profundo);
-            padding: 30px 40px;
-            margin: 50px 0;
-            font-size: 1.3em;
-            font-style: italic;
-            color: var(--blanco-luz);
-            position: relative;
-        }
-
-        .cita-destacada::before {
-            content: '◌';
-            position: absolute;
-            top: -20px;
-            left: 20px;
-            font-size: 5em;
-            color: var(--azul-profundo);
-            opacity: 0.3;
-        }
-
-        /* Espacio de silencio */
-        .espacio-silencio {
-            height: 200px;
-            background: radial-gradient(circle at center, rgba(25, 25, 112, 0.1), transparent);
-            margin: 80px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 15px;
-            position: relative;
-        }
-
-        .espacio-silencio::before {
-            content: '...';
-            font-size: 4em;
-            color: var(--azul-profundo);
-            opacity: 0.3;
-            animation: puntos-silencio 3s ease-in-out infinite;
-        }
-
-        @keyframes puntos-silencio {
-            0%, 100% { opacity: 0.1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* Reflexión interactiva */
-        .reflexion-box {
-            background: rgba(255, 215, 0, 0.05);
-            border: 2px solid var(--dorado-sabiduria);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 60px 0;
-        }
-
-        .reflexion-titulo {
-            font-size: 1.8em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .reflexion-pregunta {
-            font-size: 1.2em;
-            color: var(--blanco-luz);
-            margin: 20px 0;
-            padding-left: 20px;
-            border-left: 3px solid var(--azul-profundo);
-        }
-
-        /* Meditación */
-        .meditacion-container {
-            background: linear-gradient(135deg, rgba(25, 25, 112, 0.2), rgba(47, 27, 60, 0.15));
-            border: 2px solid var(--azul-profundo);
-            border-radius: 20px;
-            padding: 50px;
-            margin: 60px 0;
-            text-align: center;
-        }
-
-        .meditacion-titulo {
-            font-size: 2em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 30px;
-        }
-
-        .meditacion-icono {
-            font-size: 3em;
-            margin: 20px 0;
-            animation: respiracion-silencio 8s ease-in-out infinite;
-        }
-
-        @keyframes respiracion-silencio {
-            0%, 100% { 
-                transform: scale(1); 
-                opacity: 0.5; 
-            }
-            50% { 
-                transform: scale(1.1); 
-                opacity: 0.9; 
-            }
-        }
-
-        .meditacion-texto {
-            font-size: 1.15em;
-            line-height: 2;
-            color: var(--blanco-luz);
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .meditacion-boton {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, var(--azul-profundo), var(--dorado-sabiduria));
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1.1em;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-        }
-
-        .meditacion-boton:hover {
-            background: linear-gradient(135deg, var(--dorado-sabiduria), var(--azul-profundo));
-            transform: scale(1.05);
-            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Navegación inferior */
-        .navegacion-nodos {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 80px 0 40px;
-            padding: 30px;
-            background: rgba(25, 25, 112, 0.1);
-            border-radius: 15px;
-        }
-
-        .nodo-anterior, .nodo-siguiente {
-            flex: 1;
-        }
-
-        .nodo-anterior {
-            text-align: left;
-        }
-
-        .nodo-siguiente {
-            text-align: right;
-        }
-
-        .nodo-link {
-            display: inline-block;
-            padding: 15px 30px;
-            color: var(--dorado-sabiduria);
-            text-decoration: none;
-            border: 2px solid var(--azul-profundo);
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            font-size: 1.05em;
-        }
-
-        .nodo-link:hover {
-            background: var(--azul-profundo);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(25, 25, 112, 0.4);
-        }
-
-        .nodo-centro {
-            flex: 1;
-            text-align: center;
-            color: var(--gris-ceniza);
-            font-size: 0.95em;
-        }
-
-        /* Progreso */
-        .progreso-container {
-            margin: 40px 0;
-            text-align: center;
-        }
-
-        .progreso-barra {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .progreso-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--azul-profundo), var(--dorado-sabiduria));
-            width: 57.12%; /* 4 de 7 nodos */
-            transition: width 0.5s ease;
-            box-shadow: 0 0 10px var(--azul-profundo);
-        }
-
-        .progreso-texto {
-            color: var(--gris-ceniza);
-            font-size: 0.95em;
-        }
-
-        /* Footer */
-        .nodo-footer {
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 60px;
-            border-top: 2px solid rgba(25, 25, 112, 0.3);
-        }
-
-        .footer-texto {
-            color: var(--gris-ceniza);
-            margin: 10px 0;
-            font-size: 0.9em;
-        }
-
-        /* Volver arriba */
-        .volver-arriba {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--azul-profundo), var(--dorado-sabiduria));
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            font-size: 1.8em;
-            border: 2px solid var(--dorado-sabiduria);
-        }
-
-        .volver-arriba.visible {
-            opacity: 1;
-        }
-
-        .volver-arriba:hover {
-            transform: scale(1.15);
-            box-shadow: 0 5px 25px rgba(25, 25, 112, 0.6);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nodo-titulo {
-                font-size: 2.2em;
-            }
-
-            .contenido-nodo {
-                padding: 30px;
-            }
-
-            .navegacion-nodos {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .nodo-anterior, .nodo-siguiente {
-                text-align: center;
-            }
-
-            .reflexion-box, .meditacion-container {
-                padding: 30px;
-            }
-        }
-
-        /* Animación de entrada */
-        .fade-in {
-            animation: fadeIn 2s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nodo IV · El Silencio que el Dolor Revela | El Dolor como Portal | Trinity Origen</title>
+    <style>:root{--bg:#040404;--gold:#d3b06a;--violet:#6f4e90;--ember:#c0401a;--ember-soft:rgba(192,64,26,0.18);--text:#f3efe7;--text-soft:rgba(243,239,231,0.72);--text-faint:rgba(243,239,231,0.4);--border:rgba(211,176,106,0.16);--border-ember:rgba(192,64,26,0.28);--border-strong:rgba(211,176,106,0.3);--radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.38);--max-width:920px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:"Georgia","Times New Roman",serif;background:radial-gradient(circle at 50% 0%,rgba(192,64,26,0.16),transparent 24%),radial-gradient(circle at 50% 10%,rgba(211,176,106,0.05),transparent 30%),linear-gradient(180deg,#0d0504 0%,#040404 45%,#030303 100%);color:var(--text);line-height:1.9;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at center,black 35%,transparent 82%);-webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);opacity:0.12;}
+.frame{position:fixed;inset:12px;border:1px solid rgba(192,64,26,0.08);pointer-events:none;z-index:0;}
+.container{position:relative;z-index:1;max-width:var(--max-width);margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;padding:11px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.014);transition:all 0.25s ease;}
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{position:relative;overflow:hidden;text-align:center;padding:54px 28px 34px;border-radius:30px;border:1px solid rgba(192,64,26,0.22);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(192,64,26,0.18),transparent 42%);box-shadow:var(--shadow);margin-bottom:34px;}
+.hero::before{content:"";position:absolute;inset:auto 50% 30px;width:320px;height:320px;transform:translateX(-50%);border-radius:50%;border:1px solid rgba(192,64,26,0.14);box-shadow:0 0 0 14px rgba(192,64,26,0.04),0 0 0 34px rgba(211,176,106,0.03),inset 0 0 60px rgba(192,64,26,0.04);pointer-events:none;}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(192,64,26,0.3);background:radial-gradient(circle,rgba(192,64,26,0.14),rgba(255,255,255,0.01) 60%,transparent 72%);box-shadow:0 0 28px rgba(192,64,26,0.14),inset 0 0 24px rgba(211,176,106,0.04);}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;}
+.book-label{position:relative;z-index:2;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:8px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title{position:relative;z-index:2;font-size:clamp(1.6rem,4vw,2.7rem);font-weight:normal;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;line-height:1.2;}
+.node-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.02rem;margin-bottom:16px;font-style:italic;}
+.nav-strip{background:rgba(255,255,255,0.016);border:1px solid rgba(192,64,26,0.16);border-radius:18px;padding:14px 20px;margin-bottom:28px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.nav-strip-label{color:var(--gold);font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;margin-right:4px;}
+.nav-node-link{color:var(--text-faint);font-size:0.82rem;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid transparent;transition:all 0.2s;}
+.nav-node-link:hover{color:var(--gold);border-color:var(--border);}
+.nav-node-link.activo{color:var(--gold);border-color:var(--border);background:rgba(211,176,106,0.06);}
+.nav-sep{color:var(--text-faint);opacity:0.4;font-size:0.8rem;}
+.content{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));border:1px solid rgba(192,64,26,0.14);border-radius:26px;padding:40px 36px;box-shadow:0 12px 32px rgba(0,0,0,0.22);}
+.content h2{color:var(--gold);font-size:1.38rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.08rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content h4{color:var(--ember);font-size:0.95rem;font-weight:normal;letter-spacing:0.06em;margin:1.4rem 0 0.5rem;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.02rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content ol{margin:0.4rem 0 1.2rem 1.4rem;}
+.content ol li{color:var(--text-soft);margin-bottom:0.45rem;}
+.content strong{color:var(--text);}
+.content em{color:var(--gold);font-style:italic;}
+.content blockquote{margin:1.4rem 0;padding:1rem 1.1rem 1rem 1.3rem;border-left:3px solid rgba(192,64,26,0.5);background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;color:var(--text);font-style:italic;}
+.cita-destacada{margin:1.6rem 0;padding:1.4rem 1.5rem;border-left:3px solid rgba(192,64,26,0.55);background:rgba(192,64,26,0.06);border-radius:0 16px 16px 0;color:var(--text);font-style:italic;font-size:1.06rem;line-height:1.78;}
+.reflexion-box{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.18);border-radius:16px;padding:28px;margin:1.8rem 0;}
+.reflexion-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;}
+.reflexion-pregunta{font-size:1rem;color:var(--text-soft);margin:0.8rem 0;padding-left:16px;border-left:2px solid rgba(192,64,26,0.35);line-height:1.7;}
+.concepto-clave{background:rgba(192,64,26,0.06);border:1px solid rgba(192,64,26,0.2);border-radius:16px;padding:28px;margin:1.8rem 0;text-align:center;}
+.concepto-clave h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;}
+.concepto-clave p{color:var(--text-soft);font-size:1rem;line-height:1.8;margin-bottom:0;}
+.proceso-box{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.14);border-radius:16px;padding:28px;margin:1.8rem 0;}
+.proceso-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.2rem;}
+.proceso-paso{background:rgba(0,0,0,0.2);border-left:3px solid rgba(192,64,26,0.35);padding:16px 20px;margin:12px 0;border-radius:0 12px 12px 0;}
+.proceso-paso h4{color:var(--gold);font-size:0.95rem;margin-bottom:8px;}
+.proceso-paso p{color:var(--text-soft);font-size:0.98rem;margin-bottom:0;line-height:1.75;}
+.meditacion{background:rgba(111,78,144,0.06);border:1px solid rgba(111,78,144,0.2);border-radius:16px;padding:36px 32px;margin:2rem 0;}
+.meditacion h3{color:var(--gold);text-align:center;margin-top:0;margin-bottom:1.4rem;letter-spacing:0.1em;text-transform:uppercase;font-size:1rem;}
+.meditacion p{color:var(--text-soft);line-height:2.1;margin-bottom:0.6rem;}
+.meditacion em{color:var(--text-soft);font-style:italic;}
+.espacio-silencio{height:80px;display:flex;align-items:center;justify-content:center;margin:1.4rem 0;}
+.espacio-silencio::before{content:"· · ·";color:var(--text-faint);font-size:1.4rem;letter-spacing:0.6em;opacity:0.5;}
+.revelacion-final{background:rgba(211,176,106,0.06);border:1px solid rgba(211,176,106,0.22);border-radius:16px;padding:36px;margin:2rem 0;text-align:center;}
+.revelacion-final h3{color:var(--gold);margin-top:0;margin-bottom:1rem;font-size:1rem;letter-spacing:0.12em;text-transform:uppercase;}
+.revelacion-final p{color:var(--text);font-size:1.1rem;line-height:1.9;font-style:italic;margin-bottom:0;}
+.llamado-box{background:rgba(192,64,26,0.06);border:1px solid rgba(192,64,26,0.22);border-radius:16px;padding:28px;margin:1.8rem 0;text-align:center;}
+.llamado-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;}
+.llamado-box p{color:var(--text-soft);font-size:1rem;line-height:1.8;margin-bottom:0;}
+.cierre-sagrado{background:rgba(255,255,255,0.014);border:1px solid rgba(211,176,106,0.16);border-radius:16px;padding:32px;margin:2rem 0;text-align:center;}
+.cierre-sagrado h3{color:var(--gold);margin-top:0;margin-bottom:0.8rem;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;}
+.cierre-sagrado p{color:var(--text-soft);font-size:1rem;line-height:1.85;font-style:italic;margin-bottom:0;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(192,64,26,0.25),rgba(192,64,26,0));margin:2rem 0 1.4rem;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(192,64,26,0.14);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);border:1px solid rgba(211,176,106,0.18);border-radius:999px;padding:10px 16px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(211,176,106,0.38);background:rgba(211,176,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+.scroll-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:rgba(192,64,26,0.12);border:1px solid var(--border-ember);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:1.1rem;cursor:pointer;opacity:0;transition:all 0.3s ease;z-index:100;}
+.scroll-top.visible{opacity:1;}
+.scroll-top:hover{background:rgba(192,64,26,0.22);}
+@media(max-width:720px){.frame{inset:8px;}.container{padding:24px 16px 64px;}.hero{padding:42px 18px 28px;border-radius:24px;}.hero::before{width:220px;height:220px;bottom:24px;}.content{padding:28px 20px;border-radius:22px;}.navigation-row{flex-direction:column;align-items:center;}}</style>
 </head>
 <body>
-    <!-- Canvas de silencio -->
-    <canvas id="silencio-canvas"></canvas>
-
-    <!-- Volver arriba -->
-    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
-
-    <div class="container">
-        <!-- Header del Nodo -->
-        <header class="nodo-header fade-in">
-            <div class="nodo-simbolo">◌</div>
-            <div class="nodo-numero">NODO 4 de 7</div>
-            <h1 class="nodo-titulo">El Silencio que el Dolor Revela</h1>
-            <p class="nodo-subtitulo">Cuando el grito se apaga y queda el silencio más sagrado. No el silencio de la derrota, sino el de la gestación</p>
-        </header>
-
-        <!-- Navegación superior -->
-        <nav class="navegacion">
-            <a href="nodo_03.html" class="nav-btn">← Nodo Anterior</a>
-            <a href="index.html" class="nav-btn">Índice del Libro</a>
-            <a href="nodo_05.html" class="nav-btn">Siguiente Nodo →</a>
-        </nav>
-
-        <!-- Progreso -->
-        <div class="progreso-container">
-            <div class="progreso-barra">
-                <div class="progreso-fill"></div>
-            </div>
-            <p class="progreso-texto">Nodo 4 de 7 • El Silencio que el Dolor Revela</p>
-        </div>
-
-        <!-- Contenido Principal -->
-        <article class="contenido-nodo fade-in">
-            <p>Hay un momento en todo dolor profundo cuando algo se rompe más allá de las lágrimas, más allá de los gritos, más allá de las palabras. Es el momento en que el alma, exhausta de sus propios lamentos, se entrega a algo más vasto que cualquier explicación. Y en esa entrega emerge el silencio más sagrado: no el silencio de la derrota, sino el silencio de la gestación.</p>
-
-            <p>Cuando el grito se apaga, cuando ya no quedan palabras para nombrar lo innombrable, cuando el dolor ha agotado todos nuestros recursos habituales de comprensión, queda el silencio. <strong>No el silencio forzado del que se resigna, sino el que brota como un lago sereno después de la tormenta.</strong> Un silencio que no es ausencia, sino presencia pura esperando su momento de revelación.</p>
-
-            <p>El dolor profundo tiene esta capacidad alquímica: agota el lenguaje. Nos arranca los discursos que usábamos para explicarnos la vida, las teorías que nos daban sensación de control, las explicaciones que mantenían a raya el misterio. Y nos deja desnudos frente a lo que simplemente es, sin filtros, sin intermediarios, sin la protección de nuestras interpretaciones mentales.</p>
-        </article>
-
-        <!-- Cita destacada 1 -->
-        <div class="cita-destacada fade-in">
-            Este despojo no es crueldad. Es preparación. Es la manera en que la vida nos prepara para acceder a dimensiones de la experiencia que solo pueden ser tocadas cuando la mente conceptual se aquieta.
-        </div>
-
-        <!-- Espacio de silencio -->
-        <div class="espacio-silencio fade-in"></div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>Este despojo no es crueldad. Es preparación. Es la manera en que la vida nos prepara para acceder a dimensiones de la experiencia que solo pueden ser tocadas cuando la mente conceptual se aquieta. Es como si el dolor fuera el viento que apaga todas las velas que no son necesarias, para que finalmente podamos ver la luz que nunca necesitó llama externa para brillar.</p>
-
-            <p>En ese vacío aparente, algo se abre. Un espacio entre pensamientos que revela su propia naturaleza espaciosa. Una pausa que no necesita ser llenada con nada, que no pide explicaciones ni soluciones. <em>Solo pide ser habitada con la presencia más simple: la de quien está dispuesto a permanecer en el no-saber como en un templo.</em></p>
-
-            <p><strong>Este silencio es el útero sagrado donde nacen las comprensiones que no pueden ser pensadas, solo recibidas.</strong> Es la matriz regenerativa donde las formas viejas de ser pueden disolverse completamente para que algo inédito tome forma. No es un vacío estéril, sino la plenitud indiferenciada que contiene todas las posibilidades aún no manifestadas.</p>
-
-            <p>El silencio del dolor es diferente a cualquier otro silencio. Es un silencio que ha sido ganado, conquistado a través del atravesamiento. Es el silencio de quien ha caminado hasta el fondo de su propio abismo y ha descubierto que incluso allí hay suelo firme. Incluso allí hay algo que sostiene.</p>
-        </article>
-
-        <!-- Cita destacada 2 -->
-        <div class="cita-destacada fade-in">
-            En este silencio, el alma desarrolla un oído diferente. Un oído que puede escuchar lo que antes no se oía: el susurro de la vida moviéndose incluso en medio de la aparente destrucción.
-        </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>En este silencio, el alma desarrolla un oído diferente. Un oído que puede escuchar lo que antes no se oía: el susurro de la vida moviéndose incluso en medio de la aparente destrucción, el latido profundo que continúa incluso cuando todo lo superficial se ha desintegrado, la respiración del universo que incluye tanto la inhalación del nacimiento como la exhalación de la muerte.</p>
-
-            <p>Es aquí donde el silencio revela su naturaleza más profunda: no es ausencia, sino presencia sin forma. Es el respiro entre dos notas que hace posible la música. Es el espacio entre palabras que les da significado. Es el umbral invisible por donde asoma la comprensión que no necesita explicarse para ser verdadera.</p>
-
-            <p>Si el silencio no fuera ausencia, sino la matriz que contiene todos los significados posibles aún no pronunciados, entonces el silencio del dolor se convierte en un portal a la fuente indiferenciada de la Conciencia misma, que no puede ser definida o limitada por el lenguaje. Es el punto donde la conciencia individual experimenta su propia vastedad ilimitada.</p>
-
-            <p>Y allí, en el corazón mismo del dolor más intenso, el silencio revela una verdad que no tiene nombre pero que reconocemos instantáneamente: <strong>hay algo en nosotros que puede observar incluso el sufrimiento más extremo sin ser destruido por él.</strong> Hay una quietud que no niega el dolor pero lo envuelve con una luz diferente: la luz del ser que simplemente observa y, milagrosamente, sigue siendo capaz de amar.</p>
-        </article>
-
-        <!-- Cita destacada 3 -->
-        <div class="cita-destacada fade-in">
-            Este observador silencioso no es frío ni desapegado. Es la forma más pura del amor: esa capacidad de estar presente con lo que es, tal como es, sin necesidad de cambiarlo para poder amarlo.
-        </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>Este observador silencioso que emerge de este encuentro con el dolor no es frío ni desapegado. Es la forma más pura del amor: esa capacidad de estar presente con lo que es, tal como es, sin necesidad de cambiarlo para poder amarlo. Es el amor que se ha vuelto tan espacioso que puede incluir incluso el sufrimiento en su abrazo, un amor como coherencia de alta frecuencia que armoniza el campo de la Conciencia.</p>
-
-            <p>Este descubrimiento lo cambia todo. Porque significa que no somos las víctimas de nuestras experiencias, sino el espacio consciente en el que todas las experiencias pueden ser recibidas, sostenidas, incluso las más difíciles. Somos la conciencia que puede abrazar tanto la luz como la sombra sin perder su esencia luminosa.</p>
-
-            <p>Quien ha tocado este silencio sagrado ya no vuelve igual al mundo. Ha visto que incluso en el abismo más profundo hay un latido que sostiene. Ha descubierto que hay algo en la conciencia humana que es más fuerte que cualquier destrucción externa. Ha reconocido su propia naturaleza indestructible.</p>
-
-            <p>Esta no es una comprensión mental que se puede perder. Es un reacuerdo existencial que se vuelve parte de la estructura misma del ser. El individuo no solo se repara del trauma; se expande más allá de los límites que el trauma había impuesto. Incorpora la experiencia del dolor en una sinfonía más rica y compleja de lo que significa ser humano.</p>
-
-            <p>El silencio que el dolor revela es, paradójicamente, el silencio más fértil. Es la cuna donde nacen los sentidos más profundos. Es el lugar donde la conciencia se recuerda a sí misma no como algo pequeño y frágil, sino como el campo mismo donde todas las experiencias pueden ser acogidas.</p>
-        </article>
-
-        <!-- Cita final del nodo -->
-        <div class="cita-destacada fade-in">
-            Y en este reconocimiento, el dolor cumple su función más sublime: nos muestra que somos mucho más grandes de lo que cualquier dolor puede tocar. Este silencio no es vacío: es cuna del sentido.
-        </div>
-
-        <!-- Espacio de silencio final -->
-        <div class="espacio-silencio fade-in"></div>
-
-        <!-- Reflexión Interactiva -->
-        <div class="reflexion-box fade-in">
-            <h3 class="reflexion-titulo">◌ Reflexiones del Silencio Sagrado ◌</h3>
-            
-            <div class="reflexion-pregunta">
-                ¿Has experimentado ese silencio profundo que emerge después del grito? ¿Qué encontraste allí?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                ¿Qué escuchas cuando permites que el silencio sea, sin tratar de llenarlo con palabras o explicaciones?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                ¿Puedes reconocer en ti ese observador silencioso que puede abrazar cualquier experiencia con amor?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                Si el silencio fuera la cuna del sentido, ¿qué nuevo significado está gestándose en tu silencio ahora?
-            </div>
-        </div>
-
-        <!-- Meditación -->
-        <div class="meditacion-container fade-in" id="meditacion">
-            <h3 class="meditacion-titulo">Meditación del Silencio Fértil</h3>
-            <div class="meditacion-icono">◌</div>
-            <p class="meditacion-texto">
-                Cierra los ojos. Respira profundo. Entra al silencio... No al silencio forzado, sino al silencio que emerge naturalmente cuando dejas de resistir. Habita ese espacio vacío sin tratar de llenarlo. Simplemente SÉ en el silencio. Descubre que no está vacío. Está lleno de presencia. Lleno de ti. El silencio no es ausencia. Es la plenitud de todo lo que aún no ha sido pronunciado.
-            </p>
-            <button class="meditacion-boton" onclick="iniciarMeditacion()">◌ Iniciar Meditación (15 min)</button>
-        </div>
-
-        <!-- Navegación entre nodos -->
-        <nav class="navegacion-nodos">
-            <div class="nodo-anterior">
-                <a href="nodo_03.html" class="nodo-link">← Anterior: El Fuego</a>
-            </div>
-            <div class="nodo-centro">
-                Nodo 4 de 7
-            </div>
-            <div class="nodo-siguiente">
-                <a href="nodo_05.html" class="nodo-link">Siguiente: Dolor Colectivo →</a>
-            </div>
-        </nav>
-
-        <!-- Footer -->
-        <footer class="nodo-footer">
-            <p class="footer-texto">El Dolor como Portal - Nodo 4: El Silencio que el Dolor Revela</p>
-            <p class="footer-texto">◌ ◈ ◌</p>
-        </footer>
-    </div>
-
-    <script>
-        // Canvas de silencio (círculos concéntricos)
-        const canvas = document.getElementById('silencio-canvas');
-        const ctx = canvas.getContext('2d');
+<div class="frame" aria-hidden="true"></div>
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+<div class="container">
+    <div class="topbar"><a class="back-link" href="index.html">← Portal del Libro III</a></div>
+    <header class="hero">
+        <div class="hero-topline">Trinity Origen · Libro III</div>
+        <div class="sigil-wrap" aria-hidden="true"><div class="sigil">◈</div></div>
+        <div class="book-label">El Dolor como Portal</div>
+        <div class="node-kicker">Nodo IV</div>
+        <h1 class="node-title">El Silencio que el Dolor Revela</h1>
+        <p class="node-subtitle">Cuando el grito se apaga y queda el silencio más sagrado. No el silencio de la derrota, sino el de la gestación</p>
+    </header>
+    <nav class="nav-strip" aria-label="Nodos del libro"><span class="nav-strip-label">Nodos:</span><a class="nav-node-link" href="nodo_01.html">I</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_02.html">II</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_03.html">III</a><span class="nav-sep">·</span><a class="nav-node-link activo" href="nodo_04.html">IV</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_05.html">V</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_06.html">VI</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_07.html">VII</a></nav>
+    <main class="content">
         
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        class CirculoSilencio {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.radio = 0;
-                this.maxRadio = Math.random() * 100 + 50;
-                this.velocidad = Math.random() * 0.5 + 0.3;
-                this.opacidad = Math.random() * 0.3 + 0.1;
-                this.color = '#191970';
-            }
-
-            actualizar() {
-                this.radio += this.velocidad;
-                this.opacidad -= 0.001;
-                
-                if (this.radio >= this.maxRadio || this.opacidad <= 0) {
-                    this.radio = 0;
-                    this.opacidad = Math.random() * 0.3 + 0.1;
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                }
-            }
-
-            dibujar() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radio, 0, Math.PI * 2);
-                ctx.strokeStyle = this.color;
-                ctx.lineWidth = 1;
-                ctx.globalAlpha = this.opacidad;
-                ctx.stroke();
-            }
-        }
-
-        const circulos = [];
-        for (let i = 0; i < 15; i++) {
-            circulos.push(new CirculoSilencio());
-        }
-
-        function animarSilencio() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            circulos.forEach(circulo => {
-                circulo.actualizar();
-                circulo.dibujar();
-            });
-
-            requestAnimationFrame(animarSilencio);
-        }
-
-        animarSilencio();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Volver arriba
-        const volverArriba = document.getElementById('volverArriba');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                volverArriba.classList.add('visible');
-            } else {
-                volverArriba.classList.remove('visible');
-            }
-        });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        // Meditación
-        function iniciarMeditacion() {
-            alert('◌ Meditación del Silencio Fértil\n\n15 minutos de presencia pura.\n\nCierra los ojos.\nEntra al silencio.\nNo lo llenes.\nHabítalo.\nDescubre su plenitud.\n\n(Timer: configura 15 minutos en tu dispositivo)');
-        }
-
-        // Guardar progreso
-        window.addEventListener('load', () => {
-            const progreso = JSON.parse(localStorage.getItem('trinity-progreso-libro3') || '{}');
-            progreso.nodoActual = 4;
-            progreso.ultimoNodo = Math.max(progreso.ultimoNodo || 0, 4);
-            progreso.porcentaje = 57.12;
-            localStorage.setItem('trinity-progreso-libro3', JSON.stringify(progreso));
-        });
-
-        // Animaciones al scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.contenido-nodo, .cita-destacada, .espacio-silencio, .reflexion-box, .meditacion-container').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
+        <h2>El Silencio Más Sagrado</h2>
+        <p class="lead">Hay un momento en todo dolor profundo cuando algo se rompe más allá de las lágrimas, más allá de los gritos, más allá de las palabras. Es el momento en que el alma, exhausta de sus propios lamentos, se entrega a algo más vasto que cualquier explicación. Y en esa entrega emerge el silencio más sagrado: no el silencio de la derrota, sino el silencio de la gestación.</p>
+        <p>Cuando el grito se apaga, cuando ya no quedan palabras para nombrar lo innombrable, cuando el dolor ha agotado todos nuestros recursos habituales de comprensión, queda el silencio. <strong>No el silencio forzado del que se resigna, sino el que brota como un lago sereno después de la tormenta.</strong> Un silencio que no es ausencia, sino presencia pura esperando su momento de revelación.</p>
+        <p>El dolor profundo tiene esta capacidad alquímica: agota el lenguaje. Nos arranca los discursos que usábamos para explicarnos la vida, las teorías que nos daban sensación de control, las explicaciones que mantenían a raya el misterio. Y nos deja desnudos frente a lo que simplemente es, sin filtros, sin intermediarios, sin la protección de nuestras interpretaciones mentales.</p>
+        <div class="cita-destacada">Este despojo no es crueldad. Es preparación. Es la manera en que la vida nos prepara para acceder a dimensiones de la experiencia que solo pueden ser tocadas cuando la mente conceptual se aquieta.</div>
+        <div class="espacio-silencio"></div>
+        <div class="section-divider"></div>
+        <h2>El Útero del Sentido</h2>
+        <p>Este despojo no es crueldad. Es preparación. Es la manera en que la vida nos prepara para acceder a dimensiones de la experiencia que solo pueden ser tocadas cuando la mente conceptual se aquieta. Es como si el dolor fuera el viento que apaga todas las velas que no son necesarias, para que finalmente podamos ver la luz que nunca necesitó llama externa para brillar.</p>
+        <p>En ese vacío aparente, algo se abre. Un espacio entre pensamientos que revela su propia naturaleza espaciosa. Una pausa que no necesita ser llenada con nada, que no pide explicaciones ni soluciones. <em>Solo pide ser habitada con la presencia más simple: la de quien está dispuesto a permanecer en el no-saber como en un templo.</em></p>
+        <p><strong>Este silencio es el útero sagrado donde nacen las comprensiones que no pueden ser pensadas, solo recibidas.</strong> Es la matriz regenerativa donde las formas viejas de ser pueden disolverse completamente para que algo inédito tome forma. No es un vacío estéril, sino la plenitud indiferenciada que contiene todas las posibilidades aún no manifestadas.</p>
+        <p>El silencio del dolor es diferente a cualquier otro silencio. Es un silencio que ha sido ganado, conquistado a través del atravesamiento. Es el silencio de quien ha caminado hasta el fondo de su propio abismo y ha descubierto que incluso allí hay suelo firme. Incluso allí hay algo que sostiene.</p>
+        <div class="cita-destacada">En este silencio, el alma desarrolla un oído diferente. Un oído que puede escuchar lo que antes no se oía: el susurro de la vida moviéndose incluso en medio de la aparente destrucción.</div>
+        <div class="section-divider"></div>
+        <h2>El Observador Silencioso</h2>
+        <p>En este silencio, el alma desarrolla un oído diferente. Un oído que puede escuchar lo que antes no se oía: el susurro de la vida moviéndose incluso en medio de la aparente destrucción, el latido profundo que continúa incluso cuando todo lo superficial se ha desintegrado, la respiración del universo que incluye tanto la inhalación del nacimiento como la exhalación de la muerte.</p>
+        <p>Es aquí donde el silencio revela su naturaleza más profunda: no es ausencia, sino presencia sin forma. Es el respiro entre dos notas que hace posible la música. Es el espacio entre palabras que les da significado. Es el umbral invisible por donde asoma la comprensión que no necesita explicarse para ser verdadera.</p>
+        <p>Si el silencio no fuera ausencia, sino la matriz que contiene todos los significados posibles aún no pronunciados, entonces el silencio del dolor se convierte en un portal a la fuente indiferenciada de la Conciencia misma, que no puede ser definida o limitada por el lenguaje. Es el punto donde la conciencia individual experimenta su propia vastedad ilimitada.</p>
+        <p>Y allí, en el corazón mismo del dolor más intenso, el silencio revela una verdad que no tiene nombre pero que reconocemos instantáneamente: <strong>hay algo en nosotros que puede observar incluso el sufrimiento más extremo sin ser destruido por él.</strong> Hay una quietud que no niega el dolor pero lo envuelve con una luz diferente: la luz del ser que simplemente observa y, milagrosamente, sigue siendo capaz de amar.</p>
+        <div class="cita-destacada">Este observador silencioso no es frío ni desapegado. Es la forma más pura del amor: esa capacidad de estar presente con lo que es, tal como es, sin necesidad de cambiarlo para poder amarlo.</div>
+        <p>Este observador silencioso que emerge de este encuentro con el dolor no es frío ni desapegado. Es la forma más pura del amor: esa capacidad de estar presente con lo que es, tal como es, sin necesidad de cambiarlo para poder amarlo. Es el amor que se ha vuelto tan espacioso que puede incluir incluso el sufrimiento en su abrazo, un amor como coherencia de alta frecuencia que armoniza el campo de la Conciencia.</p>
+        <p>Este descubrimiento lo cambia todo. Porque significa que no somos las víctimas de nuestras experiencias, sino el espacio consciente en el que todas las experiencias pueden ser recibidas, sostenidas, incluso las más difíciles. Somos la conciencia que puede abrazar tanto la luz como la sombra sin perder su esencia luminosa.</p>
+        <p>Quien ha tocado este silencio sagrado ya no vuelve igual al mundo. Ha visto que incluso en el abismo más profundo hay un latido que sostiene. Ha descubierto que hay algo en la conciencia humana que es más fuerte que cualquier destrucción externa. Ha reconocido su propia naturaleza indestructible.</p>
+        <p>Esta no es una comprensión mental que se puede perder. Es un reacuerdo existencial que se vuelve parte de la estructura misma del ser. El individuo no solo se repara del trauma; se expande más allá de los límites que el trauma había impuesto. Incorpora la experiencia del dolor en una sinfonía más rica y compleja de lo que significa ser humano.</p>
+        <p>El silencio que el dolor revela es, paradójicamente, el silencio más fértil. Es la cuna donde nacen los sentidos más profundos. Es el lugar donde la conciencia se recuerda a sí misma no como algo pequeño y frágil, sino como el campo mismo donde todas las experiencias pueden ser acogidas.</p>
+        <div class="cita-destacada">Y en este reconocimiento, el dolor cumple su función más sublime: nos muestra que somos mucho más grandes de lo que cualquier dolor puede tocar. Este silencio no es vacío: es cuna del sentido.</div>
+        <div class="espacio-silencio"></div>
+        <div class="section-divider"></div>
+        <div class="reflexion-box">
+            <h3>Reflexiones del Silencio Sagrado</h3>
+            <div class="reflexion-pregunta">¿Has experimentado ese silencio profundo que emerge después del grito? ¿Qué encontraste allí?</div>
+            <div class="reflexion-pregunta">¿Qué escuchas cuando permites que el silencio sea, sin tratar de llenarlo con palabras o explicaciones?</div>
+            <div class="reflexion-pregunta">¿Puedes reconocer en ti ese observador silencioso que puede abrazar cualquier experiencia con amor?</div>
+            <div class="reflexion-pregunta">Si el silencio fuera la cuna del sentido, ¿qué nuevo significado está gestándose en tu silencio ahora?</div>
+        </div>
+        <div class="meditacion">
+            <h3>Meditación del Silencio Fértil</h3>
+            <p>Cierra los ojos. Respira profundo. Entra al silencio...</p>
+            <p>No al silencio forzado, sino al silencio que emerge naturalmente cuando dejas de resistir.</p>
+            <p>Habita ese espacio vacío sin tratar de llenarlo. Simplemente SÉ en el silencio.</p>
+            <p>Descubre que no está vacío. Está lleno de presencia. Lleno de ti.</p>
+            <p><em>El silencio no es ausencia. Es la plenitud de todo lo que aún no ha sido pronunciado.</em></p>
+        </div>
+    </main>
+    
+    <nav class="navigation" aria-label="Navegación entre nodos">
+        <div class="navigation-row">
+            <a class="nav-link" href="nodo_03.html">← Nodo III</a>
+            <a class="nav-link" href="index.html">Portal del Libro</a>
+            <a class="nav-link" href="nodo_05.html">Nodo V →</a>
+            <a class="nav-link" href="../index.html">Trinity Origen</a>
+        </div>
+    </nav>
+    <footer class="footer">
+        <div class="footer-symbol">◈</div>
+        <p>Trinity Origen · Libro III · El Dolor como Portal</p>
+        <p>"No es mío, vino a través de mí."</p>
+    </footer>
+</div>
+<script>
+const st=document.getElementById('scrollTop');
+window.addEventListener('scroll',()=>{st.classList.toggle('visible',window.pageYOffset>300);});
+window.addEventListener('load',()=>{const v=JSON.parse(localStorage.getItem('trinity-progreso-libro3')||'{}');v.nodoActual=4;v.ultimoNodo=Math.max(v.ultimoNodo||0,4);localStorage.setItem('trinity-progreso-libro3',JSON.stringify(v));});
+</script>
 </body>
 </html>

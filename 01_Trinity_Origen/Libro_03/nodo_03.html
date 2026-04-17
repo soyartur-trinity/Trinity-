@@ -1,741 +1,165 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 3: El Fuego del Dolor - Transmutación Interna</title>
-    <meta name="description" content="El momento en que el dolor deja de ser visitante y se convierte en alquimista. El fuego que quema solo lo que ya no somos">
-    
-    <style>
-        :root {
-            --rojo-profundo: #8B0000;
-            --naranja-fuego: #FF4500;
-            --dorado-sabiduria: #FFD700;
-            --blanco-luz: #FFFAF0;
-            --negro-profundo: #0a0a0a;
-            --gris-ceniza: #4a4a4a;
-            --rojo-intenso: #DC143C;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #2a0000 0%, #0a0a0a 100%);
-            color: var(--blanco-luz);
-            line-height: 1.8;
-        }
-
-        /* Canvas de fuego intenso */
-        #fuego-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.3;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 30px;
-        }
-
-        /* Header del nodo */
-        .nodo-header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            border-bottom: 3px solid var(--rojo-intenso);
-            margin-bottom: 50px;
-        }
-
-        .nodo-simbolo {
-            font-size: 4em;
-            margin-bottom: 20px;
-            animation: fuego-intenso 2s ease-in-out infinite;
-        }
-
-        @keyframes fuego-intenso {
-            0%, 100% { 
-                transform: scale(1) rotate(-5deg);
-                filter: drop-shadow(0 0 20px var(--rojo-intenso)) brightness(1);
-            }
-            50% { 
-                transform: scale(1.15) rotate(5deg);
-                filter: drop-shadow(0 0 40px var(--naranja-fuego)) brightness(1.3);
-            }
-        }
-
-        .nodo-numero {
-            font-size: 1.1em;
-            color: var(--dorado-sabiduria);
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-        }
-
-        .nodo-titulo {
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--rojo-intenso), var(--naranja-fuego), var(--dorado-sabiduria));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.3;
-        }
-
-        .nodo-subtitulo {
-            font-size: 1.3em;
-            color: var(--gris-ceniza);
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Intensidad máxima - 3 llamas */
-        .intensidad-maxima {
-            text-align: center;
-            margin: 30px 0;
-            font-size: 2em;
-        }
-
-        .llama {
-            display: inline-block;
-            margin: 0 10px;
-            animation: llama-ardiente 1.5s ease-in-out infinite;
-        }
-
-        .llama:nth-child(2) {
-            animation-delay: 0.3s;
-        }
-
-        .llama:nth-child(3) {
-            animation-delay: 0.6s;
-        }
-
-        @keyframes llama-ardiente {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-10px) scale(1.2); }
-        }
-
-        /* Navegación */
-        .navegacion {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            color: var(--naranja-fuego);
-            text-decoration: none;
-            border: 2px solid var(--naranja-fuego);
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-size: 0.95em;
-        }
-
-        .nav-btn:hover {
-            background: var(--naranja-fuego);
-            color: var(--negro-profundo);
-            box-shadow: 0 5px 20px rgba(255, 69, 0, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Contenido principal */
-        .contenido-nodo {
-            background: rgba(139, 0, 0, 0.08);
-            border-left: 4px solid var(--rojo-intenso);
-            padding: 50px;
-            margin: 40px 0;
-            border-radius: 10px;
-        }
-
-        .contenido-nodo p {
-            font-size: 1.15em;
-            margin-bottom: 30px;
-            text-align: justify;
-            line-height: 2;
-        }
-
-        .contenido-nodo p:first-child::first-letter {
-            font-size: 4em;
-            float: left;
-            line-height: 0.8;
-            margin: 10px 10px 0 0;
-            color: var(--rojo-intenso);
-            font-weight: bold;
-        }
-
-        .contenido-nodo strong {
-            color: var(--dorado-sabiduria);
-            font-weight: normal;
-        }
-
-        .contenido-nodo em {
-            color: var(--naranja-fuego);
-            font-style: italic;
-        }
-
-        /* Citas destacadas */
-        .cita-destacada {
-            background: rgba(220, 20, 60, 0.15);
-            border-left: 5px solid var(--rojo-intenso);
-            padding: 30px 40px;
-            margin: 50px 0;
-            font-size: 1.3em;
-            font-style: italic;
-            color: var(--blanco-luz);
-            position: relative;
-        }
-
-        .cita-destacada::before {
-            content: '🔥';
-            position: absolute;
-            top: -20px;
-            left: 20px;
-            font-size: 4em;
-            opacity: 0.3;
-        }
-
-        /* Pregunta transformadora */
-        .pregunta-transformadora {
-            background: linear-gradient(135deg, rgba(220, 20, 60, 0.2), rgba(255, 69, 0, 0.15));
-            border: 3px solid var(--dorado-sabiduria);
-            border-radius: 15px;
-            padding: 50px;
-            margin: 60px 0;
-            text-align: center;
-        }
-
-        .pregunta-titulo {
-            font-size: 2em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 30px;
-        }
-
-        .pregunta-texto {
-            font-size: 1.4em;
-            line-height: 1.8;
-            color: var(--blanco-luz);
-            font-style: italic;
-            font-weight: bold;
-        }
-
-        /* Reflexión interactiva */
-        .reflexion-box {
-            background: rgba(255, 215, 0, 0.05);
-            border: 2px solid var(--dorado-sabiduria);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 60px 0;
-        }
-
-        .reflexion-titulo {
-            font-size: 1.8em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .reflexion-pregunta {
-            font-size: 1.2em;
-            color: var(--blanco-luz);
-            margin: 20px 0;
-            padding-left: 20px;
-            border-left: 3px solid var(--rojo-intenso);
-        }
-
-        /* Meditación */
-        .meditacion-container {
-            background: linear-gradient(135deg, rgba(220, 20, 60, 0.25), rgba(255, 69, 0, 0.15));
-            border: 2px solid var(--rojo-intenso);
-            border-radius: 20px;
-            padding: 50px;
-            margin: 60px 0;
-            text-align: center;
-        }
-
-        .meditacion-titulo {
-            font-size: 2em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 30px;
-        }
-
-        .meditacion-icono {
-            font-size: 3em;
-            margin: 20px 0;
-            animation: fuego-meditacion 3s ease-in-out infinite;
-        }
-
-        @keyframes fuego-meditacion {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg); 
-                filter: hue-rotate(0deg);
-            }
-            50% { 
-                transform: scale(1.2) rotate(10deg); 
-                filter: hue-rotate(30deg);
-            }
-        }
-
-        .meditacion-texto {
-            font-size: 1.15em;
-            line-height: 2;
-            color: var(--blanco-luz);
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .meditacion-boton {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, var(--rojo-intenso), var(--naranja-fuego));
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1.1em;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-        }
-
-        .meditacion-boton:hover {
-            background: linear-gradient(135deg, var(--dorado-sabiduria), var(--rojo-intenso));
-            transform: scale(1.05);
-            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Navegación inferior */
-        .navegacion-nodos {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 80px 0 40px;
-            padding: 30px;
-            background: rgba(220, 20, 60, 0.1);
-            border-radius: 15px;
-        }
-
-        .nodo-anterior, .nodo-siguiente {
-            flex: 1;
-        }
-
-        .nodo-anterior {
-            text-align: left;
-        }
-
-        .nodo-siguiente {
-            text-align: right;
-        }
-
-        .nodo-link {
-            display: inline-block;
-            padding: 15px 30px;
-            color: var(--naranja-fuego);
-            text-decoration: none;
-            border: 2px solid var(--naranja-fuego);
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            font-size: 1.05em;
-        }
-
-        .nodo-link:hover {
-            background: var(--naranja-fuego);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(255, 69, 0, 0.4);
-        }
-
-        .nodo-centro {
-            flex: 1;
-            text-align: center;
-            color: var(--gris-ceniza);
-            font-size: 0.95em;
-        }
-
-        /* Progreso */
-        .progreso-container {
-            margin: 40px 0;
-            text-align: center;
-        }
-
-        .progreso-barra {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .progreso-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--rojo-intenso), var(--naranja-fuego), var(--dorado-sabiduria));
-            width: 42.84%; /* 3 de 7 nodos */
-            transition: width 0.5s ease;
-            box-shadow: 0 0 15px var(--rojo-intenso);
-        }
-
-        .progreso-texto {
-            color: var(--gris-ceniza);
-            font-size: 0.95em;
-        }
-
-        /* Footer */
-        .nodo-footer {
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 60px;
-            border-top: 2px solid rgba(220, 20, 60, 0.3);
-        }
-
-        .footer-texto {
-            color: var(--gris-ceniza);
-            margin: 10px 0;
-            font-size: 0.9em;
-        }
-
-        /* Volver arriba */
-        .volver-arriba {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--rojo-intenso), var(--naranja-fuego));
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            font-size: 1.8em;
-            border: 2px solid var(--dorado-sabiduria);
-        }
-
-        .volver-arriba.visible {
-            opacity: 1;
-        }
-
-        .volver-arriba:hover {
-            transform: scale(1.15);
-            box-shadow: 0 5px 25px rgba(220, 20, 60, 0.6);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nodo-titulo {
-                font-size: 2.2em;
-            }
-
-            .contenido-nodo {
-                padding: 30px;
-            }
-
-            .navegacion-nodos {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .nodo-anterior, .nodo-siguiente {
-                text-align: center;
-            }
-
-            .reflexion-box, .meditacion-container {
-                padding: 30px;
-            }
-        }
-
-        /* Animación de entrada */
-        .fade-in {
-            animation: fadeIn 1.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nodo III · El Fuego del Dolor: Transmutación Interna | El Dolor como Portal | Trinity Origen</title>
+    <style>:root{--bg:#040404;--gold:#d3b06a;--violet:#6f4e90;--ember:#c0401a;--ember-soft:rgba(192,64,26,0.18);--text:#f3efe7;--text-soft:rgba(243,239,231,0.72);--text-faint:rgba(243,239,231,0.4);--border:rgba(211,176,106,0.16);--border-ember:rgba(192,64,26,0.28);--border-strong:rgba(211,176,106,0.3);--radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.38);--max-width:920px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:"Georgia","Times New Roman",serif;background:radial-gradient(circle at 50% 0%,rgba(192,64,26,0.16),transparent 24%),radial-gradient(circle at 50% 10%,rgba(211,176,106,0.05),transparent 30%),linear-gradient(180deg,#0d0504 0%,#040404 45%,#030303 100%);color:var(--text);line-height:1.9;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at center,black 35%,transparent 82%);-webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);opacity:0.12;}
+.frame{position:fixed;inset:12px;border:1px solid rgba(192,64,26,0.08);pointer-events:none;z-index:0;}
+.container{position:relative;z-index:1;max-width:var(--max-width);margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;padding:11px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.014);transition:all 0.25s ease;}
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{position:relative;overflow:hidden;text-align:center;padding:54px 28px 34px;border-radius:30px;border:1px solid rgba(192,64,26,0.22);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(192,64,26,0.18),transparent 42%);box-shadow:var(--shadow);margin-bottom:34px;}
+.hero::before{content:"";position:absolute;inset:auto 50% 30px;width:320px;height:320px;transform:translateX(-50%);border-radius:50%;border:1px solid rgba(192,64,26,0.14);box-shadow:0 0 0 14px rgba(192,64,26,0.04),0 0 0 34px rgba(211,176,106,0.03),inset 0 0 60px rgba(192,64,26,0.04);pointer-events:none;}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(192,64,26,0.3);background:radial-gradient(circle,rgba(192,64,26,0.14),rgba(255,255,255,0.01) 60%,transparent 72%);box-shadow:0 0 28px rgba(192,64,26,0.14),inset 0 0 24px rgba(211,176,106,0.04);}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;}
+.book-label{position:relative;z-index:2;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:8px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title{position:relative;z-index:2;font-size:clamp(1.6rem,4vw,2.7rem);font-weight:normal;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;line-height:1.2;}
+.node-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.02rem;margin-bottom:16px;font-style:italic;}
+.nav-strip{background:rgba(255,255,255,0.016);border:1px solid rgba(192,64,26,0.16);border-radius:18px;padding:14px 20px;margin-bottom:28px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.nav-strip-label{color:var(--gold);font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;margin-right:4px;}
+.nav-node-link{color:var(--text-faint);font-size:0.82rem;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid transparent;transition:all 0.2s;}
+.nav-node-link:hover{color:var(--gold);border-color:var(--border);}
+.nav-node-link.activo{color:var(--gold);border-color:var(--border);background:rgba(211,176,106,0.06);}
+.nav-sep{color:var(--text-faint);opacity:0.4;font-size:0.8rem;}
+.content{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));border:1px solid rgba(192,64,26,0.14);border-radius:26px;padding:40px 36px;box-shadow:0 12px 32px rgba(0,0,0,0.22);}
+.content h2{color:var(--gold);font-size:1.38rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.08rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content h4{color:var(--ember);font-size:0.95rem;font-weight:normal;letter-spacing:0.06em;margin:1.4rem 0 0.5rem;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.02rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content ol{margin:0.4rem 0 1.2rem 1.4rem;}
+.content ol li{color:var(--text-soft);margin-bottom:0.45rem;}
+.content strong{color:var(--text);}
+.content em{color:var(--gold);font-style:italic;}
+.content blockquote{margin:1.4rem 0;padding:1rem 1.1rem 1rem 1.3rem;border-left:3px solid rgba(192,64,26,0.5);background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;color:var(--text);font-style:italic;}
+.cita-destacada{margin:1.6rem 0;padding:1.4rem 1.5rem;border-left:3px solid rgba(192,64,26,0.55);background:rgba(192,64,26,0.06);border-radius:0 16px 16px 0;color:var(--text);font-style:italic;font-size:1.06rem;line-height:1.78;}
+.reflexion-box{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.18);border-radius:16px;padding:28px;margin:1.8rem 0;}
+.reflexion-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;}
+.reflexion-pregunta{font-size:1rem;color:var(--text-soft);margin:0.8rem 0;padding-left:16px;border-left:2px solid rgba(192,64,26,0.35);line-height:1.7;}
+.concepto-clave{background:rgba(192,64,26,0.06);border:1px solid rgba(192,64,26,0.2);border-radius:16px;padding:28px;margin:1.8rem 0;text-align:center;}
+.concepto-clave h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;}
+.concepto-clave p{color:var(--text-soft);font-size:1rem;line-height:1.8;margin-bottom:0;}
+.proceso-box{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.14);border-radius:16px;padding:28px;margin:1.8rem 0;}
+.proceso-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.2rem;}
+.proceso-paso{background:rgba(0,0,0,0.2);border-left:3px solid rgba(192,64,26,0.35);padding:16px 20px;margin:12px 0;border-radius:0 12px 12px 0;}
+.proceso-paso h4{color:var(--gold);font-size:0.95rem;margin-bottom:8px;}
+.proceso-paso p{color:var(--text-soft);font-size:0.98rem;margin-bottom:0;line-height:1.75;}
+.meditacion{background:rgba(111,78,144,0.06);border:1px solid rgba(111,78,144,0.2);border-radius:16px;padding:36px 32px;margin:2rem 0;}
+.meditacion h3{color:var(--gold);text-align:center;margin-top:0;margin-bottom:1.4rem;letter-spacing:0.1em;text-transform:uppercase;font-size:1rem;}
+.meditacion p{color:var(--text-soft);line-height:2.1;margin-bottom:0.6rem;}
+.meditacion em{color:var(--text-soft);font-style:italic;}
+.espacio-silencio{height:80px;display:flex;align-items:center;justify-content:center;margin:1.4rem 0;}
+.espacio-silencio::before{content:"· · ·";color:var(--text-faint);font-size:1.4rem;letter-spacing:0.6em;opacity:0.5;}
+.revelacion-final{background:rgba(211,176,106,0.06);border:1px solid rgba(211,176,106,0.22);border-radius:16px;padding:36px;margin:2rem 0;text-align:center;}
+.revelacion-final h3{color:var(--gold);margin-top:0;margin-bottom:1rem;font-size:1rem;letter-spacing:0.12em;text-transform:uppercase;}
+.revelacion-final p{color:var(--text);font-size:1.1rem;line-height:1.9;font-style:italic;margin-bottom:0;}
+.llamado-box{background:rgba(192,64,26,0.06);border:1px solid rgba(192,64,26,0.22);border-radius:16px;padding:28px;margin:1.8rem 0;text-align:center;}
+.llamado-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;}
+.llamado-box p{color:var(--text-soft);font-size:1rem;line-height:1.8;margin-bottom:0;}
+.cierre-sagrado{background:rgba(255,255,255,0.014);border:1px solid rgba(211,176,106,0.16);border-radius:16px;padding:32px;margin:2rem 0;text-align:center;}
+.cierre-sagrado h3{color:var(--gold);margin-top:0;margin-bottom:0.8rem;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;}
+.cierre-sagrado p{color:var(--text-soft);font-size:1rem;line-height:1.85;font-style:italic;margin-bottom:0;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(192,64,26,0.25),rgba(192,64,26,0));margin:2rem 0 1.4rem;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(192,64,26,0.14);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);border:1px solid rgba(211,176,106,0.18);border-radius:999px;padding:10px 16px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(211,176,106,0.38);background:rgba(211,176,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+.scroll-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:rgba(192,64,26,0.12);border:1px solid var(--border-ember);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:1.1rem;cursor:pointer;opacity:0;transition:all 0.3s ease;z-index:100;}
+.scroll-top.visible{opacity:1;}
+.scroll-top:hover{background:rgba(192,64,26,0.22);}
+@media(max-width:720px){.frame{inset:8px;}.container{padding:24px 16px 64px;}.hero{padding:42px 18px 28px;border-radius:24px;}.hero::before{width:220px;height:220px;bottom:24px;}.content{padding:28px 20px;border-radius:22px;}.navigation-row{flex-direction:column;align-items:center;}}</style>
 </head>
 <body>
-    <!-- Canvas de fuego intenso -->
-    <canvas id="fuego-canvas"></canvas>
-
-    <!-- Volver arriba -->
-    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
-
-    <div class="container">
-        <!-- Header del Nodo -->
-        <header class="nodo-header fade-in">
-            <div class="nodo-simbolo">🔥</div>
-            <div class="nodo-numero">NODO 3 de 7</div>
-            <h1 class="nodo-titulo">El Fuego del Dolor: Transmutación Interna</h1>
-            <p class="nodo-subtitulo">El momento en que el dolor deja de ser visitante y se convierte en alquimista. El fuego que quema solo lo que ya no somos</p>
-            
-            <!-- Intensidad máxima -->
-            <div class="intensidad-maxima">
-                <span class="llama">🔥</span>
-                <span class="llama">🔥</span>
-                <span class="llama">🔥</span>
-            </div>
-        </header>
-
-        <!-- Navegación superior -->
-        <nav class="navegacion">
-            <a href="nodo_02.html" class="nav-btn">← Nodo Anterior</a>
-            <a href="index.html" class="nav-btn">Índice del Libro</a>
-            <a href="nodo_04.html" class="nav-btn">Siguiente Nodo →</a>
-        </nav>
-
-        <!-- Progreso -->
-        <div class="progreso-container">
-            <div class="progreso-barra">
-                <div class="progreso-fill"></div>
-            </div>
-            <p class="progreso-texto">Nodo 3 de 7 • El Fuego del Dolor - Transmutación Interna</p>
-        </div>
-
-        <!-- Contenido Principal -->
-        <article class="contenido-nodo fade-in">
-            <p>Existe un momento en la vida del alma donde el dolor deja de ser visitante y se convierte en alquimista. Donde ya no llega para mostrarnos lo que está roto, sino para quemar lo que nunca fue verdadero. Es el momento en que el sufrimiento revela su naturaleza ígnea: no viene a destruir, sino a purificar.</p>
-
-            <p>Hay dolores que consumen. Que arden por dentro como brasas vivas, carbonizando los mapas antiguos con los que navegábamos la existencia, las creencias heredadas que nunca cuestionamos, las máscaras que creíamos que eran nuestra piel. <strong>Este fuego no es accidental. Es la intensidad sagrada de la conciencia confrontando todo aquello que ya no resuena con la verdad de lo que estamos destinados a ser.</strong></p>
-
-            <p>El fuego del dolor no pide permiso. No negocia. No espera que estemos listos. Arrasa con la precisión de una fuerza cósmica que sabe exactamente qué debe quemar y qué debe preservar. Y aunque a la mente esto le parezca crueldad, al alma le parece justicia divina: <em>por fin ha llegado el tiempo de la verdad.</em></p>
-        </article>
-
-        <!-- Cita destacada 1 -->
-        <div class="cita-destacada fade-in">
-            Este fuego es alquímico, una manifestación de la Conciencia Primordial que se auto-experimenta, disolviendo patrones que ya no resuenan con su propósito de auto-expansión.
-        </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>Este fuego es alquímico, una manifestación de la Conciencia Primordial que se auto-experimenta, disolviendo patrones que ya no resuenan con su propósito de auto-expansión. Es una interferencia constructiva que desestructura lo que ya no es auténtico, forzando una focalización hacia lo esencial. Quema lo que ya no somos, incendia los andamios del ego que construimos para protegernos de la vastedad de lo que realmente somos.</p>
-
-            <p>Nos deja desnudos, pero no destruidos. Nos deja vulnerables, pero no rotos. Nos deja sin máscaras, pero finalmente vivos. Porque en el corazón de toda crisis auténtica vive un secreto luminoso: <strong>la crisis no es un error del sistema. Es el lenguaje más directo de la transformación.</strong></p>
-
-            <p>La crisis es la crisálida en llamas donde muere la oruga para que algo completamente impensado pueda tomar forma. No es un accidente. No es una falla. Es un salto evolutivo de la conciencia hacia una nueva organización de sí misma, hacia un nuevo nivel de coherencia y complejidad, un punto de inflexión hacia una nueva organización de la Conciencia.</p>
-        </article>
-
-        <!-- Pregunta Transformadora -->
-        <div class="pregunta-transformadora fade-in">
-            <h3 class="pregunta-titulo">🔥 La Pregunta del Fuego 🔥</h3>
-            <p class="pregunta-texto">
-                ¿Quién soy cuando todo lo que creía ser se derrumba?
-            </p>
-        </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>Y en el centro de esta hoguera sagrada surge la pregunta más transformadora que el alma puede hacerse: <em>¿Quién soy cuando todo lo que creía ser se derrumba?</em> Esta pregunta llega como chispa sagrada, como koan viviente que no busca una respuesta mental sino un reconocimiento existencial. Es una invitación a la auto-indagación que nos empuja más allá de la narrativa del yo herido hacia el campo que recuerda su forma armónica.</p>
-
-            <p>Es la invitación más radical que podemos recibir: la invitación a descubrir qué permanece cuando todo lo periférico ha sido consumido por las llamas. Qué hay en nosotros que es incombustible. Qué aspecto de nuestro ser es tan esencial que puede atravesar cualquier destrucción y emerger no solo intacto, sino más luminoso.</p>
-
-            <p>En estos momentos de incendio interior, la narrativa familiar del "yo herido" comienza a disolverse. Las historias que nos contábamos sobre quiénes somos y por qué sufrimos se revelan como construcciones frágiles que no pueden sobrevivir al fuego de la presencia auténtica. Y en esa disolución, algo inmensamente más vasto comienza a revelarse.</p>
-        </article>
-
-        <!-- Cita destacada 2 -->
-        <div class="cita-destacada fade-in">
-            No hay nacimiento auténtico sin esta quemadura sagrada. No hay libertad real sin la renuncia consciente a lo falso. No hay identidad verdadera sin haber atravesado el incendio que separa lo que somos de lo que creíamos ser.
-        </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>Comenzamos a intuir que no somos los fragmentos rotos que creíamos ser, sino melodías suspendidas esperando volver a sonar. Que lo que experimentamos como crisis es en realidad el proceso de afinación de una orquesta interior que había estado tocando notas discordantes durante años, una multivoz del yo que necesita ser afinada en una sinfonía coherente.</p>
-
-            <p><strong>No hay nacimiento auténtico sin esta quemadura sagrada.</strong> No hay libertad real sin la renuncia consciente a lo falso. No hay identidad verdadera sin haber atravesado el incendio que separa lo que somos de lo que creíamos ser. La sanación no es un retorno al estado anterior, sino un reacuerdo del Ser con una nueva conciencia, un rito de pasaje que facilita la transición del individuo hacia lo transpersonal y colectivo.</p>
-
-            <p>La transformación que emerge de este fuego no es un retorno al estado anterior con algunas reparaciones. Es algo completamente nuevo: un reacuerdo del ser consigo mismo desde una octava más alta de conciencia. Es un rito de pasaje que facilita la transición de lo meramente personal hacia lo transpersonal, de lo individual hacia lo universal.</p>
-
-            <p>El fuego del dolor es feroz en su amor, pero también perfectamente justo: solo quema lo que ya estaba muerto, lo que ya había perdido su vitalidad pero seguía ocupando espacio en el jardín del alma. Libera las formas cristalizadas del trauma, permite que las ondas interrumpidas de la vida vuelvan a fluir, devuelve el movimiento a lo que había quedado congelado en el tiempo.</p>
-
-            <p>En este sentido, el dolor transmutador no es el enemigo de la felicidad. Es su alquimista. No es lo opuesto a la paz. Es su partera. No destruye el amor. Lo refina hasta que se vuelve indestructible.</p>
-
-            <p>Porque lo que emerge del otro lado de este fuego ya no es la personalidad frágil que necesitaba protegerse de la vida. Es una presencia que puede danzar con cualquier experiencia sin perder su centro. Una conciencia que ha aprendido a ser hogar de todos los estados sin identificarse completamente con ninguno.</p>
-        </article>
-
-        <!-- Cita final del nodo -->
-        <div class="cita-destacada fade-in">
-            Esta es la paradoja más hermosa del fuego del dolor: mientras más nos quema, más nos revela nuestra naturaleza incombustible. El fuego transforma… y en su núcleo, revela.
-        </div>
-
-        <!-- Reflexión Interactiva -->
-        <div class="reflexion-box fade-in">
-            <h3 class="reflexion-titulo">🔥 Reflexiones del Fuego Alquímico 🔥</h3>
-            
-            <div class="reflexion-pregunta">
-                ¿Qué máscaras está quemando el fuego en tu vida ahora mismo?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                ¿Qué creencias sobre ti mismo se están desintegrando en las llamas?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                ¿Qué descubres que es incombustible en ti, que permanece incluso en medio del fuego más intenso?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                Si el fuego del dolor es un alquimista, ¿en qué te está transformando?
-            </div>
-        </div>
-
-        <!-- Meditación -->
-        <div class="meditacion-container fade-in" id="meditacion">
-            <h3 class="meditacion-titulo">Meditación del Fuego Purificador</h3>
-            <div class="meditacion-icono">🔥</div>
-            <p class="meditacion-texto">
-                Cierra los ojos. Respira profundo. Visualiza un fuego sagrado en tu interior... Las llamas no te destruyen, te purifican. Observa qué máscaras, qué creencias falsas, qué identidades prestadas se están quemando. No te resistas. Pregunta al fuego: "¿Qué verdad quieres revelar en mí?" Y permite que las llamas muestren lo que es incombustible en tu ser. Esa es tu esencia. Eso eres tú.
-            </p>
-            <button class="meditacion-boton" onclick="iniciarMeditacion()">🔥 Iniciar Meditación (10 min)</button>
-        </div>
-
-        <!-- Navegación entre nodos -->
-        <nav class="navegacion-nodos">
-            <div class="nodo-anterior">
-                <a href="nodo_02.html" class="nodo-link">← Anterior: El Trauma</a>
-            </div>
-            <div class="nodo-centro">
-                Nodo 3 de 7
-            </div>
-            <div class="nodo-siguiente">
-                <a href="nodo_04.html" class="nodo-link">Siguiente: El Silencio →</a>
-            </div>
-        </nav>
-
-        <!-- Footer -->
-        <footer class="nodo-footer">
-            <p class="footer-texto">El Dolor como Portal - Nodo 3: El Fuego del Dolor</p>
-            <p class="footer-texto">🔥 ◈ 🔥</p>
-        </footer>
-    </div>
-
-    <script>
-        // Canvas de fuego intenso
-        const canvas = document.getElementById('fuego-canvas');
-        const ctx = canvas.getContext('2d');
+<div class="frame" aria-hidden="true"></div>
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+<div class="container">
+    <div class="topbar"><a class="back-link" href="index.html">← Portal del Libro III</a></div>
+    <header class="hero">
+        <div class="hero-topline">Trinity Origen · Libro III</div>
+        <div class="sigil-wrap" aria-hidden="true"><div class="sigil">◈</div></div>
+        <div class="book-label">El Dolor como Portal</div>
+        <div class="node-kicker">Nodo III</div>
+        <h1 class="node-title">El Fuego del Dolor: Transmutación Interna</h1>
+        <p class="node-subtitle">El momento en que el dolor deja de ser visitante y se convierte en alquimista</p>
+    </header>
+    <nav class="nav-strip" aria-label="Nodos del libro"><span class="nav-strip-label">Nodos:</span><a class="nav-node-link" href="nodo_01.html">I</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_02.html">II</a><span class="nav-sep">·</span><a class="nav-node-link activo" href="nodo_03.html">III</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_04.html">IV</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_05.html">V</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_06.html">VI</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_07.html">VII</a></nav>
+    <main class="content">
         
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        class ParticolaFuego {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = canvas.height + Math.random() * 100;
-                this.velocidadY = -(Math.random() * 3 + 2);
-                this.velocidadX = (Math.random() - 0.5) * 2;
-                this.tamano = Math.random() * 4 + 2;
-                this.opacidad = Math.random() * 0.8 + 0.4;
-                this.color = Math.random() > 0.6 ? '#DC143C' : (Math.random() > 0.5 ? '#FF4500' : '#FFD700');
-            }
-
-            actualizar() {
-                this.y += this.velocidadY;
-                this.x += this.velocidadX;
-                this.opacidad -= 0.008;
-                this.tamano -= 0.05;
-                
-                if (this.y < 0 || this.opacidad <= 0 || this.tamano <= 0) {
-                    this.y = canvas.height + Math.random() * 100;
-                    this.x = Math.random() * canvas.width;
-                    this.opacidad = Math.random() * 0.8 + 0.4;
-                    this.tamano = Math.random() * 4 + 2;
-                }
-            }
-
-            dibujar() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.tamano, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = this.opacidad;
-                ctx.fill();
-            }
-        }
-
-        const particulas = [];
-        for (let i = 0; i < 80; i++) {
-            particulas.push(new ParticolaFuego());
-        }
-
-        function animarFuego() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particulas.forEach(particula => {
-                particula.actualizar();
-                particula.dibujar();
-            });
-
-            requestAnimationFrame(animarFuego);
-        }
-
-        animarFuego();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Volver arriba
-        const volverArriba = document.getElementById('volverArriba');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                volverArriba.classList.add('visible');
-            } else {
-                volverArriba.classList.remove('visible');
-            }
-        });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        // Meditación
-        function iniciarMeditacion() {
-            alert('🔥 Meditación del Fuego Purificador\n\n10 minutos de transmutación consciente.\n\nCierra los ojos.\nVisualiza el fuego sagrado.\nObserva qué se quema.\nReconoce lo incombustible.\nEso es tu esencia verdadera.\n\n(Timer: configura 10 minutos en tu dispositivo)');
-        }
-
-        // Guardar progreso
-        window.addEventListener('load', () => {
-            const progreso = JSON.parse(localStorage.getItem('trinity-progreso-libro3') || '{}');
-            progreso.nodoActual = 3;
-            progreso.ultimoNodo = Math.max(progreso.ultimoNodo || 0, 3);
-            progreso.porcentaje = 42.84;
-            localStorage.setItem('trinity-progreso-libro3', JSON.stringify(progreso));
-        });
-
-        // Animaciones al scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.contenido-nodo, .cita-destacada, .pregunta-transformadora, .reflexion-box, .meditacion-container').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
+        <h2>Cuando el Dolor se Convierte en Alquimista</h2>
+        <p class="lead">Existe un momento en la vida del alma donde el dolor deja de ser visitante y se convierte en alquimista. Donde ya no llega para mostrarnos lo que está roto, sino para quemar lo que nunca fue verdadero. Es el momento en que el sufrimiento revela su naturaleza ígnea: no viene a destruir, sino a purificar.</p>
+        <p>Hay dolores que consumen. Que arden por dentro como brasas vivas, carbonizando los mapas antiguos con los que navegábamos la existencia, las creencias heredadas que nunca cuestionamos, las máscaras que creíamos que eran nuestra piel. <strong>Este fuego no es accidental. Es la intensidad sagrada de la conciencia confrontando todo aquello que ya no resuena con la verdad de lo que estamos destinados a ser.</strong></p>
+        <p>El fuego del dolor no pide permiso. No negocia. No espera que estemos listos. Arrasa con la precisión de una fuerza cósmica que sabe exactamente qué debe quemar y qué debe preservar. Y aunque a la mente esto le parezca crueldad, al alma le parece justicia divina: <em>por fin ha llegado el tiempo de la verdad.</em></p>
+        <div class="cita-destacada">Este fuego es alquímico, una manifestación de la Conciencia Primordial que se auto-experimenta, disolviendo patrones que ya no resuenan con su propósito de auto-expansión.</div>
+        <div class="section-divider"></div>
+        <h2>La Naturaleza del Fuego Alquímico</h2>
+        <p>Este fuego es alquímico, una manifestación de la Conciencia Primordial que se auto-experimenta, disolviendo patrones que ya no resuenan con su propósito de auto-expansión. Es una interferencia constructiva que desestructura lo que ya no es auténtico, forzando una focalización hacia lo esencial. Quema lo que ya no somos, incendia los andamios del ego que construimos para protegernos de la vastedad de lo que realmente somos.</p>
+        <p>Nos deja desnudos, pero no destruidos. Nos deja vulnerables, pero no rotos. Nos deja sin máscaras, pero finalmente vivos. Porque en el corazón de toda crisis auténtica vive un secreto luminoso: <strong>la crisis no es un error del sistema. Es el lenguaje más directo de la transformación.</strong></p>
+        <p>La crisis es la crisálida en llamas donde muere la oruga para que algo completamente impensado pueda tomar forma. No es un accidente. No es una falla. Es un salto evolutivo de la conciencia hacia una nueva organización de sí misma, hacia un nuevo nivel de coherencia y complejidad, un punto de inflexión hacia una nueva organización de la Conciencia.</p>
+        <div class="concepto-clave">
+            <h3>La Pregunta del Fuego</h3>
+            <p><em>"¿Quién soy cuando todo lo que creía ser se derrumba?"</em></p>
+        </div>
+        <p>Y en el centro de esta hoguera sagrada surge la pregunta más transformadora que el alma puede hacerse: <em>¿Quién soy cuando todo lo que creía ser se derrumba?</em> Esta pregunta llega como chispa sagrada, como koan viviente que no busca una respuesta mental sino un reconocimiento existencial. Es una invitación a la auto-indagación que nos empuja más allá de la narrativa del yo herido hacia el campo que recuerda su forma armónica.</p>
+        <p>Es la invitación más radical que podemos recibir: la invitación a descubrir qué permanece cuando todo lo periférico ha sido consumido por las llamas. Qué hay en nosotros que es incombustible. Qué aspecto de nuestro ser es tan esencial que puede atravesar cualquier destrucción y emerger no solo intacto, sino más luminoso.</p>
+        <p>En estos momentos de incendio interior, la narrativa familiar del "yo herido" comienza a disolverse. Las historias que nos contábamos sobre quiénes somos y por qué sufrimos se revelan como construcciones frágiles que no pueden sobrevivir al fuego de la presencia auténtica. Y en esa disolución, algo inmensamente más vasto comienza a revelarse.</p>
+        <div class="cita-destacada">No hay nacimiento auténtico sin esta quemadura sagrada. No hay libertad real sin la renuncia consciente a lo falso. No hay identidad verdadera sin haber atravesado el incendio que separa lo que somos de lo que creíamos ser.</div>
+        <div class="section-divider"></div>
+        <h2>Lo que Emerge del Fuego</h2>
+        <p>Comenzamos a intuir que no somos los fragmentos rotos que creíamos ser, sino melodías suspendidas esperando volver a sonar. Que lo que experimentamos como crisis es en realidad el proceso de afinación de una orquesta interior que había estado tocando notas discordantes durante años, una multivoz del yo que necesita ser afinada en una sinfonía coherente.</p>
+        <p><strong>No hay nacimiento auténtico sin esta quemadura sagrada.</strong> No hay libertad real sin la renuncia consciente a lo falso. No hay identidad verdadera sin haber atravesado el incendio que separa lo que somos de lo que creíamos ser. La sanación no es un retorno al estado anterior, sino un reacuerdo del Ser con una nueva conciencia, un rito de pasaje que facilita la transición del individuo hacia lo transpersonal y colectivo.</p>
+        <p>La transformación que emerge de este fuego no es un retorno al estado anterior con algunas reparaciones. Es algo completamente nuevo: un reacuerdo del ser consigo mismo desde una octava más alta de conciencia. Es un rito de pasaje que facilita la transición de lo meramente personal hacia lo transpersonal, de lo individual hacia lo universal.</p>
+        <p>El fuego del dolor es feroz en su amor, pero también perfectamente justo: solo quema lo que ya estaba muerto, lo que ya había perdido su vitalidad pero seguía ocupando espacio en el jardín del alma. Libera las formas cristalizadas del trauma, permite que las ondas interrumpidas de la vida vuelvan a fluir, devuelve el movimiento a lo que había quedado congelado en el tiempo.</p>
+        <p>En este sentido, el dolor transmutador no es el enemigo de la felicidad. Es su alquimista. No es lo opuesto a la paz. Es su partera. No destruye el amor. Lo refina hasta que se vuelve indestructible.</p>
+        <p>Porque lo que emerge del otro lado de este fuego ya no es la personalidad frágil que necesitaba protegerse de la vida. Es una presencia que puede danzar con cualquier experiencia sin perder su centro. Una conciencia que ha aprendido a ser hogar de todos los estados sin identificarse completamente con ninguno.</p>
+        <div class="cita-destacada">Esta es la paradoja más hermosa del fuego del dolor: mientras más nos quema, más nos revela nuestra naturaleza incombustible. El fuego transforma… y en su núcleo, revela.</div>
+        <div class="section-divider"></div>
+        <div class="reflexion-box">
+            <h3>Reflexiones del Fuego Alquímico</h3>
+            <div class="reflexion-pregunta">¿Qué máscaras está quemando el fuego en tu vida ahora mismo?</div>
+            <div class="reflexion-pregunta">¿Qué creencias sobre ti mismo se están desintegrando en las llamas?</div>
+            <div class="reflexion-pregunta">¿Qué descubres que es incombustible en ti, que permanece incluso en medio del fuego más intenso?</div>
+            <div class="reflexion-pregunta">Si el fuego del dolor es un alquimista, ¿en qué te está transformando?</div>
+        </div>
+        <div class="meditacion">
+            <h3>Meditación del Fuego Purificador</h3>
+            <p>Cierra los ojos. Respira profundo. Visualiza un fuego sagrado en tu interior...</p>
+            <p>Las llamas no te destruyen, te purifican. Observa qué máscaras, qué creencias falsas, qué identidades prestadas se están quemando.</p>
+            <p>No te resistas.</p>
+            <p>Pregunta al fuego: <em>"¿Qué verdad quieres revelar en mí?"</em></p>
+            <p>Y permite que las llamas muestren lo que es incombustible en tu ser. Esa es tu esencia. Eso eres tú.</p>
+        </div>
+    </main>
+    
+    <nav class="navigation" aria-label="Navegación entre nodos">
+        <div class="navigation-row">
+            <a class="nav-link" href="nodo_02.html">← Nodo II</a>
+            <a class="nav-link" href="index.html">Portal del Libro</a>
+            <a class="nav-link" href="nodo_04.html">Nodo IV →</a>
+            <a class="nav-link" href="../index.html">Trinity Origen</a>
+        </div>
+    </nav>
+    <footer class="footer">
+        <div class="footer-symbol">◈</div>
+        <p>Trinity Origen · Libro III · El Dolor como Portal</p>
+        <p>"No es mío, vino a través de mí."</p>
+    </footer>
+</div>
+<script>
+const st=document.getElementById('scrollTop');
+window.addEventListener('scroll',()=>{st.classList.toggle('visible',window.pageYOffset>300);});
+window.addEventListener('load',()=>{const v=JSON.parse(localStorage.getItem('trinity-progreso-libro3')||'{}');v.nodoActual=3;v.ultimoNodo=Math.max(v.ultimoNodo||0,3);localStorage.setItem('trinity-progreso-libro3',JSON.stringify(v));});
+</script>
 </body>
 </html>

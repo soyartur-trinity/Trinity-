@@ -1,913 +1,176 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 7: Más Allá del Dolor - El Portal Abierto</title>
-    <meta name="description" content="El punto sagrado donde algo fundamental se completa. El dolor ya no proyecta sombras densas. El portal se abre completamente">
-    
-    <style>
-        :root {
-            --rojo-profundo: #8B0000;
-            --naranja-fuego: #FF4500;
-            --dorado-sabiduria: #FFD700;
-            --blanco-luz: #FFFAF0;
-            --negro-profundo: #0a0a0a;
-            --gris-ceniza: #4a4a4a;
-            --dorado-brillante: #FFA500;
-            --blanco-puro: #FFFFFF;
-            --amarillo-luz: #FFFF99;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1a1a0a 0%, #0a0a0a 100%);
-            color: var(--blanco-luz);
-            line-height: 1.8;
-        }
-
-        /* Canvas de luz radiante */
-        #luz-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.3;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 30px;
-        }
-
-        /* Header del nodo */
-        .nodo-header {
-            text-align: center;
-            padding: 80px 20px 60px;
-            border-bottom: 3px solid var(--dorado-sabiduria);
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .nodo-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
-            border-radius: 50%;
-            animation: aura-expansion 4s ease-in-out infinite;
-        }
-
-        @keyframes aura-expansion {
-            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.3; }
-            50% { transform: translateX(-50%) scale(1.5); opacity: 0.6; }
-        }
-
-        .nodo-simbolo {
-            font-size: 5em;
-            margin-bottom: 20px;
-            animation: luz-radiante 3s ease-in-out infinite;
-            position: relative;
-            z-index: 10;
-        }
-
-        @keyframes luz-radiante {
-            0%, 100% { 
-                transform: scale(1);
-                filter: drop-shadow(0 0 20px var(--dorado-sabiduria)) brightness(1);
-            }
-            50% { 
-                transform: scale(1.15);
-                filter: drop-shadow(0 0 50px var(--dorado-brillante)) brightness(1.5);
-            }
-        }
-
-        .nodo-numero {
-            font-size: 1.2em;
-            color: var(--dorado-sabiduria);
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .nodo-titulo {
-            font-size: 3.2em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--dorado-brillante), var(--amarillo-luz), var(--blanco-puro));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.3;
-            font-weight: bold;
-        }
-
-        .nodo-subtitulo {
-            font-size: 1.4em;
-            color: var(--dorado-sabiduria);
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Intensidad máxima especial */
-        .intensidad-final {
-            text-align: center;
-            margin: 40px 0;
-            font-size: 2.5em;
-        }
-
-        .estrella {
-            display: inline-block;
-            margin: 0 15px;
-            animation: estrella-brillante 2s ease-in-out infinite;
-        }
-
-        .estrella:nth-child(2) {
-            animation-delay: 0.4s;
-        }
-
-        .estrella:nth-child(3) {
-            animation-delay: 0.8s;
-        }
-
-        @keyframes estrella-brillante {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg); 
-                filter: brightness(1);
-            }
-            50% { 
-                transform: scale(1.3) rotate(180deg); 
-                filter: brightness(1.8);
-            }
-        }
-
-        /* Navegación */
-        .navegacion {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            color: var(--dorado-sabiduria);
-            text-decoration: none;
-            border: 2px solid var(--dorado-sabiduria);
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-size: 0.95em;
-        }
-
-        .nav-btn:hover {
-            background: var(--dorado-sabiduria);
-            color: var(--negro-profundo);
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* Contenido principal */
-        .contenido-nodo {
-            background: rgba(255, 215, 0, 0.05);
-            border-left: 4px solid var(--dorado-sabiduria);
-            padding: 50px;
-            margin: 40px 0;
-            border-radius: 10px;
-        }
-
-        .contenido-nodo p {
-            font-size: 1.15em;
-            margin-bottom: 30px;
-            text-align: justify;
-            line-height: 2;
-        }
-
-        .contenido-nodo p:first-child::first-letter {
-            font-size: 4em;
-            float: left;
-            line-height: 0.8;
-            margin: 10px 10px 0 0;
-            color: var(--dorado-sabiduria);
-            font-weight: bold;
-        }
-
-        .contenido-nodo strong {
-            color: var(--dorado-brillante);
-            font-weight: bold;
-        }
-
-        .contenido-nodo em {
-            color: var(--amarillo-luz);
-            font-style: italic;
-        }
-
-        /* Citas destacadas */
-        .cita-destacada {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 255, 153, 0.15));
-            border-left: 5px solid var(--dorado-brillante);
-            padding: 30px 40px;
-            margin: 50px 0;
-            font-size: 1.35em;
-            font-style: italic;
-            color: var(--blanco-luz);
-            position: relative;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.2);
-        }
-
-        .cita-destacada::before {
-            content: '✨';
-            position: absolute;
-            top: -20px;
-            left: 20px;
-            font-size: 5em;
-            opacity: 0.4;
-        }
-
-        /* Revelación final */
-        .revelacion-final {
-            background: linear-gradient(135deg, rgba(255, 165, 0, 0.25), rgba(255, 215, 0, 0.2));
-            border: 3px solid var(--dorado-brillante);
-            border-radius: 20px;
-            padding: 60px;
-            margin: 80px 0;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
-        }
-
-        .revelacion-titulo {
-            font-size: 2.5em;
-            color: var(--dorado-brillante);
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .revelacion-texto {
-            font-size: 1.4em;
-            line-height: 2.2;
-            color: var(--blanco-luz);
-            font-style: italic;
-            font-weight: bold;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Espacio de luz */
-        .espacio-luz {
-            height: 250px;
-            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.2), transparent);
-            margin: 80px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            position: relative;
-            animation: luz-pulsante 6s ease-in-out infinite;
-        }
-
-        @keyframes luz-pulsante {
-            0%, 100% { 
-                box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
-                transform: scale(1);
-            }
-            50% { 
-                box-shadow: 0 0 100px rgba(255, 215, 0, 0.6);
-                transform: scale(1.05);
-            }
-        }
-
-        .espacio-luz::before {
-            content: '◈';
-            font-size: 6em;
-            color: var(--dorado-sabiduria);
-            opacity: 0.5;
-            animation: rotacion-luz 20s linear infinite;
-        }
-
-        @keyframes rotacion-luz {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Cierre sagrado */
-        .cierre-sagrado {
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--dorado-sabiduria);
-            border-radius: 15px;
-            padding: 50px;
-            margin: 80px 0;
-            text-align: center;
-        }
-
-        .cierre-titulo {
-            font-size: 2em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 30px;
-        }
-
-        .cierre-texto {
-            font-size: 1.2em;
-            line-height: 2;
-            color: var(--blanco-luz);
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Reflexión interactiva */
-        .reflexion-box {
-            background: rgba(255, 215, 0, 0.08);
-            border: 2px solid var(--dorado-sabiduria);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 60px 0;
-        }
-
-        .reflexion-titulo {
-            font-size: 1.8em;
-            color: var(--dorado-sabiduria);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .reflexion-pregunta {
-            font-size: 1.2em;
-            color: var(--blanco-luz);
-            margin: 20px 0;
-            padding-left: 20px;
-            border-left: 3px solid var(--dorado-brillante);
-        }
-
-        /* Meditación final */
-        .meditacion-container {
-            background: linear-gradient(135deg, rgba(255, 165, 0, 0.3), rgba(255, 215, 0, 0.2));
-            border: 3px solid var(--dorado-brillante);
-            border-radius: 20px;
-            padding: 60px;
-            margin: 60px 0;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
-        }
-
-        .meditacion-titulo {
-            font-size: 2.2em;
-            color: var(--dorado-brillante);
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .meditacion-icono {
-            font-size: 4em;
-            margin: 20px 0;
-            animation: portal-abierto 5s ease-in-out infinite;
-        }
-
-        @keyframes portal-abierto {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg); 
-                opacity: 0.9;
-                filter: brightness(1);
-            }
-            50% { 
-                transform: scale(1.3) rotate(180deg); 
-                opacity: 1;
-                filter: brightness(1.5);
-            }
-        }
-
-        .meditacion-texto {
-            font-size: 1.2em;
-            line-height: 2.2;
-            color: var(--blanco-luz);
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .meditacion-boton {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 18px 50px;
-            background: linear-gradient(135deg, var(--dorado-brillante), var(--amarillo-luz));
-            color: var(--negro-profundo);
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
-        }
-
-        .meditacion-boton:hover {
-            background: linear-gradient(135deg, var(--amarillo-luz), var(--blanco-puro));
-            transform: scale(1.08);
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
-        }
-
-        /* Navegación inferior */
-        .navegacion-nodos {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 80px 0 40px;
-            padding: 30px;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 15px;
-        }
-
-        .nodo-anterior {
-            flex: 1;
-            text-align: left;
-        }
-
-        .nodo-centro {
-            flex: 1;
-            text-align: center;
-            color: var(--dorado-sabiduria);
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-
-        .nodo-siguiente {
-            flex: 1;
-            text-align: right;
-        }
-
-        .nodo-link {
-            display: inline-block;
-            padding: 15px 30px;
-            color: var(--dorado-sabiduria);
-            text-decoration: none;
-            border: 2px solid var(--dorado-sabiduria);
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            font-size: 1.05em;
-        }
-
-        .nodo-link:hover {
-            background: var(--dorado-sabiduria);
-            color: var(--negro-profundo);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
-        }
-
-        /* Progreso completo */
-        .progreso-container {
-            margin: 40px 0;
-            text-align: center;
-        }
-
-        .progreso-barra {
-            width: 100%;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .progreso-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--dorado-brillante), var(--amarillo-luz), var(--blanco-puro));
-            width: 100%; /* 7 de 7 nodos - COMPLETO */
-            transition: width 0.5s ease;
-            box-shadow: 0 0 20px var(--dorado-sabiduria);
-            animation: brillo-progreso 2s ease-in-out infinite;
-        }
-
-        @keyframes brillo-progreso {
-            0%, 100% { box-shadow: 0 0 20px var(--dorado-sabiduria); }
-            50% { box-shadow: 0 0 40px var(--dorado-brillante); }
-        }
-
-        .progreso-texto {
-            color: var(--dorado-sabiduria);
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-
-        /* Footer final */
-        .nodo-footer {
-            text-align: center;
-            padding: 60px 20px;
-            margin-top: 80px;
-            border-top: 3px solid var(--dorado-sabiduria);
-        }
-
-        .footer-simbolo-final {
-            font-size: 3em;
-            color: var(--dorado-sabiduria);
-            margin: 30px 0;
-            animation: simbolo-final 4s ease-in-out infinite;
-        }
-
-        @keyframes simbolo-final {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        .footer-texto {
-            color: var(--dorado-sabiduria);
-            margin: 15px 0;
-            font-size: 1em;
-        }
-
-        .footer-frase-final {
-            font-size: 1.3em;
-            color: var(--dorado-brillante);
-            font-style: italic;
-            margin: 30px 0;
-            font-weight: bold;
-        }
-
-        /* Volver arriba */
-        .volver-arriba {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--dorado-brillante), var(--amarillo-luz));
-            color: var(--negro-profundo);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            font-size: 1.8em;
-            border: 3px solid var(--dorado-sabiduria);
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
-        }
-
-        .volver-arriba.visible {
-            opacity: 1;
-        }
-
-        .volver-arriba:hover {
-            transform: scale(1.2) rotate(360deg);
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.7);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nodo-titulo {
-                font-size: 2.2em;
-            }
-
-            .contenido-nodo {
-                padding: 30px;
-            }
-
-            .navegacion-nodos {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .nodo-anterior, .nodo-siguiente {
-                text-align: center;
-            }
-
-            .reflexion-box, .meditacion-container {
-                padding: 30px;
-            }
-
-            .revelacion-final {
-                padding: 40px;
-            }
-        }
-
-        /* Animación de entrada */
-        .fade-in {
-            animation: fadeIn 2s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nodo VII · Más Allá del Dolor: El Portal Abierto | El Dolor como Portal | Trinity Origen</title>
+    <style>:root{--bg:#040404;--gold:#d3b06a;--violet:#6f4e90;--ember:#c0401a;--ember-soft:rgba(192,64,26,0.18);--text:#f3efe7;--text-soft:rgba(243,239,231,0.72);--text-faint:rgba(243,239,231,0.4);--border:rgba(211,176,106,0.16);--border-ember:rgba(192,64,26,0.28);--border-strong:rgba(211,176,106,0.3);--radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.38);--max-width:920px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:"Georgia","Times New Roman",serif;background:radial-gradient(circle at 50% 0%,rgba(192,64,26,0.16),transparent 24%),radial-gradient(circle at 50% 10%,rgba(211,176,106,0.05),transparent 30%),linear-gradient(180deg,#0d0504 0%,#040404 45%,#030303 100%);color:var(--text);line-height:1.9;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at center,black 35%,transparent 82%);-webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);opacity:0.12;}
+.frame{position:fixed;inset:12px;border:1px solid rgba(192,64,26,0.08);pointer-events:none;z-index:0;}
+.container{position:relative;z-index:1;max-width:var(--max-width);margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;padding:11px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.014);transition:all 0.25s ease;}
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{position:relative;overflow:hidden;text-align:center;padding:54px 28px 34px;border-radius:30px;border:1px solid rgba(192,64,26,0.22);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(192,64,26,0.18),transparent 42%);box-shadow:var(--shadow);margin-bottom:34px;}
+.hero::before{content:"";position:absolute;inset:auto 50% 30px;width:320px;height:320px;transform:translateX(-50%);border-radius:50%;border:1px solid rgba(192,64,26,0.14);box-shadow:0 0 0 14px rgba(192,64,26,0.04),0 0 0 34px rgba(211,176,106,0.03),inset 0 0 60px rgba(192,64,26,0.04);pointer-events:none;}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(192,64,26,0.3);background:radial-gradient(circle,rgba(192,64,26,0.14),rgba(255,255,255,0.01) 60%,transparent 72%);box-shadow:0 0 28px rgba(192,64,26,0.14),inset 0 0 24px rgba(211,176,106,0.04);}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;}
+.book-label{position:relative;z-index:2;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:8px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title{position:relative;z-index:2;font-size:clamp(1.6rem,4vw,2.7rem);font-weight:normal;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;line-height:1.2;}
+.node-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.02rem;margin-bottom:16px;font-style:italic;}
+.nav-strip{background:rgba(255,255,255,0.016);border:1px solid rgba(192,64,26,0.16);border-radius:18px;padding:14px 20px;margin-bottom:28px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.nav-strip-label{color:var(--gold);font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;margin-right:4px;}
+.nav-node-link{color:var(--text-faint);font-size:0.82rem;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid transparent;transition:all 0.2s;}
+.nav-node-link:hover{color:var(--gold);border-color:var(--border);}
+.nav-node-link.activo{color:var(--gold);border-color:var(--border);background:rgba(211,176,106,0.06);}
+.nav-sep{color:var(--text-faint);opacity:0.4;font-size:0.8rem;}
+.content{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));border:1px solid rgba(192,64,26,0.14);border-radius:26px;padding:40px 36px;box-shadow:0 12px 32px rgba(0,0,0,0.22);}
+.content h2{color:var(--gold);font-size:1.38rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.08rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content h4{color:var(--ember);font-size:0.95rem;font-weight:normal;letter-spacing:0.06em;margin:1.4rem 0 0.5rem;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.02rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content ol{margin:0.4rem 0 1.2rem 1.4rem;}
+.content ol li{color:var(--text-soft);margin-bottom:0.45rem;}
+.content strong{color:var(--text);}
+.content em{color:var(--gold);font-style:italic;}
+.content blockquote{margin:1.4rem 0;padding:1rem 1.1rem 1rem 1.3rem;border-left:3px solid rgba(192,64,26,0.5);background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;color:var(--text);font-style:italic;}
+.cita-destacada{margin:1.6rem 0;padding:1.4rem 1.5rem;border-left:3px solid rgba(192,64,26,0.55);background:rgba(192,64,26,0.06);border-radius:0 16px 16px 0;color:var(--text);font-style:italic;font-size:1.06rem;line-height:1.78;}
+.reflexion-box{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.18);border-radius:16px;padding:28px;margin:1.8rem 0;}
+.reflexion-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;}
+.reflexion-pregunta{font-size:1rem;color:var(--text-soft);margin:0.8rem 0;padding-left:16px;border-left:2px solid rgba(192,64,26,0.35);line-height:1.7;}
+.concepto-clave{background:rgba(192,64,26,0.06);border:1px solid rgba(192,64,26,0.2);border-radius:16px;padding:28px;margin:1.8rem 0;text-align:center;}
+.concepto-clave h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;}
+.concepto-clave p{color:var(--text-soft);font-size:1rem;line-height:1.8;margin-bottom:0;}
+.proceso-box{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.14);border-radius:16px;padding:28px;margin:1.8rem 0;}
+.proceso-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.2rem;}
+.proceso-paso{background:rgba(0,0,0,0.2);border-left:3px solid rgba(192,64,26,0.35);padding:16px 20px;margin:12px 0;border-radius:0 12px 12px 0;}
+.proceso-paso h4{color:var(--gold);font-size:0.95rem;margin-bottom:8px;}
+.proceso-paso p{color:var(--text-soft);font-size:0.98rem;margin-bottom:0;line-height:1.75;}
+.meditacion{background:rgba(111,78,144,0.06);border:1px solid rgba(111,78,144,0.2);border-radius:16px;padding:36px 32px;margin:2rem 0;}
+.meditacion h3{color:var(--gold);text-align:center;margin-top:0;margin-bottom:1.4rem;letter-spacing:0.1em;text-transform:uppercase;font-size:1rem;}
+.meditacion p{color:var(--text-soft);line-height:2.1;margin-bottom:0.6rem;}
+.meditacion em{color:var(--text-soft);font-style:italic;}
+.espacio-silencio{height:80px;display:flex;align-items:center;justify-content:center;margin:1.4rem 0;}
+.espacio-silencio::before{content:"· · ·";color:var(--text-faint);font-size:1.4rem;letter-spacing:0.6em;opacity:0.5;}
+.revelacion-final{background:rgba(211,176,106,0.06);border:1px solid rgba(211,176,106,0.22);border-radius:16px;padding:36px;margin:2rem 0;text-align:center;}
+.revelacion-final h3{color:var(--gold);margin-top:0;margin-bottom:1rem;font-size:1rem;letter-spacing:0.12em;text-transform:uppercase;}
+.revelacion-final p{color:var(--text);font-size:1.1rem;line-height:1.9;font-style:italic;margin-bottom:0;}
+.llamado-box{background:rgba(192,64,26,0.06);border:1px solid rgba(192,64,26,0.22);border-radius:16px;padding:28px;margin:1.8rem 0;text-align:center;}
+.llamado-box h3{color:var(--gold);margin-top:0;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;}
+.llamado-box p{color:var(--text-soft);font-size:1rem;line-height:1.8;margin-bottom:0;}
+.cierre-sagrado{background:rgba(255,255,255,0.014);border:1px solid rgba(211,176,106,0.16);border-radius:16px;padding:32px;margin:2rem 0;text-align:center;}
+.cierre-sagrado h3{color:var(--gold);margin-top:0;margin-bottom:0.8rem;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;}
+.cierre-sagrado p{color:var(--text-soft);font-size:1rem;line-height:1.85;font-style:italic;margin-bottom:0;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(192,64,26,0.25),rgba(192,64,26,0));margin:2rem 0 1.4rem;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(192,64,26,0.14);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);border:1px solid rgba(211,176,106,0.18);border-radius:999px;padding:10px 16px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(211,176,106,0.38);background:rgba(211,176,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+.scroll-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:rgba(192,64,26,0.12);border:1px solid var(--border-ember);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:1.1rem;cursor:pointer;opacity:0;transition:all 0.3s ease;z-index:100;}
+.scroll-top.visible{opacity:1;}
+.scroll-top:hover{background:rgba(192,64,26,0.22);}
+@media(max-width:720px){.frame{inset:8px;}.container{padding:24px 16px 64px;}.hero{padding:42px 18px 28px;border-radius:24px;}.hero::before{width:220px;height:220px;bottom:24px;}.content{padding:28px 20px;border-radius:22px;}.navigation-row{flex-direction:column;align-items:center;}}</style>
 </head>
 <body>
-    <!-- Canvas de luz radiante -->
-    <canvas id="luz-canvas"></canvas>
-
-    <!-- Volver arriba -->
-    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
-
-    <div class="container">
-        <!-- Header del Nodo -->
-        <header class="nodo-header fade-in">
-            <div class="nodo-simbolo">✨</div>
-            <div class="nodo-numero">NODO 7 de 7 - CULMINACIÓN</div>
-            <h1 class="nodo-titulo">Más Allá del Dolor: El Portal Abierto</h1>
-            <p class="nodo-subtitulo">El punto sagrado donde algo fundamental se completa. El dolor ya no proyecta sombras densas. El portal se abre completamente</p>
-            
-            <!-- Intensidad final -->
-            <div class="intensidad-final">
-                <span class="estrella">✨</span>
-                <span class="estrella">✨</span>
-                <span class="estrella">✨</span>
-            </div>
-        </header>
-
-        <!-- Navegación superior -->
-        <nav class="navegacion">
-            <a href="nodo_06.html" class="nav-btn">← Nodo Anterior</a>
-            <a href="index.html" class="nav-btn">Índice del Libro</a>
-            <a href="../../index.html" class="nav-btn">Portal Principal »</a>
-        </nav>
-
-        <!-- Progreso completo -->
-        <div class="progreso-container">
-            <div class="progreso-barra">
-                <div class="progreso-fill"></div>
-            </div>
-            <p class="progreso-texto">✨ Nodo 7 de 7 • VIAJE COMPLETO • El Portal Abierto ✨</p>
-        </div>
-
-        <!-- Contenido Principal -->
-        <article class="contenido-nodo fade-in">
-            <p>Hay un punto sagrado en el viaje del alma donde algo fundamental se completa. No porque el dolor haya desaparecido de la existencia —la vida seguirá siendo vida, con sus ciclos de expansión y contracción, nacimiento y muerte, alegría y sufrimiento— sino porque nuestra relación con el dolor se ha transformado tan radicalmente que ya no proyecta las sombras densas que alguna vez proyectó sobre todo lo demás.</p>
-
-            <p><strong>Este es el umbral del portal abierto.</strong> El momento en que atravesar el dolor ya no nos fragmenta, sino que nos integra más profundamente en la totalidad de lo que somos. El momento en que el sufrimiento ya no oscurece nuestra luz esencial, sino que paradójicamente la revela con mayor claridad, como las estrellas que solo se ven cuando cae la noche.</p>
-
-            <p>Cuando el portal se abre completamente, algo milagroso sucede: <em>descubrimos que nunca estuvimos separados de lo que buscábamos.</em> Toda la búsqueda, todo el esfuerzo, todo el atravesamiento del dolor, nos llevó de regreso al lugar del que nunca nos fuimos realmente. Pero ahora lo reconocemos con una consciencia que solo podía nacer del viaje mismo.</p>
-        </article>
-
-        <!-- Cita destacada 1 -->
-        <div class="cita-destacada fade-in">
-            El portal abierto no es un estado permanente de éxtasis o la ausencia definitiva de sufrimiento. Es algo más sutil y más profundo: es la capacidad de estar completamente presente con lo que es, sea lo que sea, sin perder la conexión con el centro silencioso desde donde todo puede ser sostenido.
-        </div>
-
-        <!-- Espacio de luz -->
-        <div class="espacio-luz fade-in"></div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>El portal abierto no es un estado permanente de éxtasis o la ausencia definitiva de sufrimiento. Es algo más sutil y más profundo: es la capacidad de estar completamente presente con lo que es, sea lo que sea, sin perder la conexión con el centro silencioso desde donde todo puede ser sostenido.</p>
-
-            <p>Es la libertad de sentir profundamente sin ser arrastrados. Es la apertura de amar intensamente sin aferrarnos. Es la valentía de estar vivos en toda la intensidad de lo humano sin olvidar nuestra naturaleza vasta e incondicionada. <strong>Es vivir simultáneamente como ola y como océano.</strong></p>
-
-            <p>En este estado, el dolor que llega —y siempre llega, porque estamos vivos— puede ser recibido de manera diferente. Ya no como intruso que debe ser expulsado, ni como castigo que debe ser resistido, sino como parte del flujo natural de la existencia que puede ser atravesado sin identificarse totalmente con él.</p>
-
-            <p>Quien ha cruzado este umbral desarrolla lo que podríamos llamar una <em>"transparencia existencial":</em> la capacidad de que las experiencias —incluso las más intensas— atraviesen el campo de la conciencia sin dejar residuos densos que obstruyan el flujo. Como la luz que pasa a través del cristal sin mancharlo, dejándolo más brillante tras su paso.</p>
-        </article>
-
-        <!-- Revelación Final -->
-        <div class="revelacion-final fade-in">
-            <h3 class="revelacion-titulo">⚡ LA GRAN REVELACIÓN ⚡</h3>
-            <p class="revelacion-texto">
-                El dolor no vino a destruirnos. Vino a desnudarnos de todo lo que no éramos realmente. Vino a quemar las máscaras que usábamos para sobrevivir pero que nos impedían vivir. Vino a abrir espacios en nosotros donde lo sagrado pudiera finalmente respirar. <strong>SIEMPRE FUIMOS LUZ, SOLO QUE BRILLÁBAMOS DESDE LA HERIDA.</strong>
-            </p>
-        </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>Esta transparencia no surge de la dureza o la insensibilidad. Surge de algo opuesto: de habernos permitido sentir tan profundamente, de haber atravesado tantas capas de dolor conscientemente, que el alma se ha vuelto lo suficientemente espaciosa como para sostener cualquier intensidad sin colapsar.</p>
-
-            <p>Es como si cada vez que atravesamos conscientemente un dolor, cada vez que no huimos sino que permanecemos presentes con lo que duele, estuviéramos expandiendo la capacidad misma de la conciencia para incluir más experiencia sin ser abrumada por ella. Estuviéramos entrenando al alma en su capacidad innata de ser tanto el recipiente como el contenido, tanto el espacio como lo que surge en el espacio.</p>
-
-            <p>Y en este entrenamiento algo asombroso emerge: <strong>nos damos cuenta de que somos mucho más grandes de lo que cualquier dolor puede tocar.</strong> No en el sentido arrogante de quien se cree invulnerable, sino en el sentido humilde de quien ha descubierto que su verdadera naturaleza es el espacio mismo donde todas las experiencias pueden ser recibidas.</p>
-        </article>
-
-        <!-- Cita destacada 2 -->
-        <div class="cita-destacada fade-in">
-            El portal abierto es el reconocimiento de que nunca fuimos el personaje de la historia. Siempre fuimos el espacio donde la historia podía desplegarse. Siempre fuimos la conciencia que podía sostenerlo todo sin ser dañada por nada.
-        </div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>El portal abierto es el reconocimiento de que nunca fuimos el personaje de la historia que pensábamos que éramos. Siempre fuimos el espacio consciente donde la historia podía desplegarse. Siempre fuimos la conciencia que podía sostenerlo todo sin ser dañada por nada. Y ese reconocimiento lo cambia todo, aunque cambie nada en el nivel de las circunstancias externas.</p>
-
-            <p>Porque cuando sabes quién eres realmente —cuando has tocado esa verdad no con el intelecto sino con la totalidad de tu ser— ya no necesitas que la vida te trate con gentileza para poder estar en paz. <em>La paz se revela como tu naturaleza fundamental, no como algo que debe ser conseguido cuando las condiciones sean las correctas.</em></p>
-
-            <p>Esta es la libertad más radical que existe: la libertad de ser completamente vulnerable a la vida sin ser destruidos por ella. La libertad de amar profundamente sin miedo a la pérdida, no porque la pérdida no duela, sino porque sabemos que hay algo en nosotros que puede abrazar incluso el dolor de la pérdida sin ser aniquilado por él.</p>
-
-            <p><strong>Y aquí está la paradoja más hermosa del viaje:</strong> descubrimos que el dolor que atravesamos no fue obstáculo en el camino. Fue el camino mismo. Cada momento de sufrimiento conscientemente sentido fue un paso hacia esta libertad. Cada lágrima derramada con presencia plena fue una gota de combustible para la transmutación. Cada noche oscura del alma fue el útero donde gestaba el amanecer.</p>
-        </article>
-
-        <!-- Espacio de luz -->
-        <div class="espacio-luz fade-in"></div>
-
-        <!-- Continuación del contenido -->
-        <article class="contenido-nodo fade-in">
-            <p>El portal abierto no es el final del viaje. Es el comienzo de un tipo diferente de vida: una vida vivida desde el centro en lugar de desde la periferia, desde la presencia en lugar de desde la reactividad, desde el amor en lugar de desde el miedo.</p>
-
-            <p>Es una vida donde seguirán habiendo desafíos, dolores, pérdidas. Pero ahora hay alguien presente para recibirlos. Alguien lo suficientemente vasto como para dar la bienvenida incluso a lo no deseado. Alguien lo suficientemente amoroso como para abrazar incluso lo que duele. Alguien que finalmente reconoce que amar la vida no significa amar solo sus partes agradables, sino estar dispuesto a danzar con toda la sinfonía, incluyendo las notas disonantes que hacen posible la resolución armónica.</p>
-
-            <p>Quien ha cruzado este umbral se convierte en lo que las tradiciones místicas llamaban un "ser despierto" —no porque haya alcanzado la perfección, sino porque ha despertado de la ilusión de que estaba separado de la totalidad. Ha recordado su naturaleza verdadera como conciencia ilimitada que temporalmente juega a ser limitada, como océano infinito que experimenta ser ola individual.</p>
-
-            <p><strong>Y en ese recuerdo, algo sagrado se completa.</strong> El círculo se cierra. El dolor cumplió su función más sublime: nos llevó de regreso a casa. No a la casa de donde partimos, sino a una casa más profunda que siempre estuvo esperando en el centro mismo de nuestro ser. La casa de la conciencia pura, vasta como el cielo, capaz de abrazar toda la experiencia humana sin perder su luz esencial.</p>
-        </article>
-
-        <!-- Cita destacada 3 -->
-        <div class="cita-destacada fade-in">
-            Cuando una herida se ilumina completamente con la luz de la comprensión consciente, ya no se cierra como una cicatriz. Se expande como un vórtice de luz que irradia hacia todas las direcciones. Siempre fuimos luz. Solo que brillábamos desde la herida.
-        </div>
-
-        <!-- Cierre Sagrado -->
-        <div class="cierre-sagrado fade-in">
-            <h3 class="cierre-titulo">◈ Cierre del Círculo ◈</h3>
-            <p class="cierre-texto">
-                Este es el portal abierto. No un destino final, sino un nuevo comienzo. No el fin del dolor, sino el fin de la guerra contra el dolor. No la trascendencia de lo humano, sino su más profunda encarnación. El viaje continúa. Pero ahora sabes quién eres realmente. Y eso lo cambia todo.
-            </p>
-        </div>
-
-        <!-- Reflexión Interactiva -->
-        <div class="reflexion-box fade-in">
-            <h3 class="reflexion-titulo">✨ Reflexiones del Portal Abierto ✨</h3>
-            
-            <div class="reflexion-pregunta">
-                ¿Has experimentado momentos donde el portal se abrió, donde reconociste tu naturaleza más vasta?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                ¿Cómo sería tu vida si vivieras desde el conocimiento de que eres el espacio donde todo puede ser sostenido?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                ¿Qué luz ha brillado en ti a través de las heridas que has atravesado conscientemente?
-            </div>
-            
-            <div class="reflexion-pregunta">
-                Si el dolor fue el camino de regreso a casa, ¿qué mensaje tiene para ti ahora que has llegado?
-            </div>
-        </div>
-
-        <!-- Meditación Final -->
-        <div class="meditacion-container fade-in" id="meditacion">
-            <h3 class="meditacion-titulo">Meditación del Portal Abierto</h3>
-            <div class="meditacion-icono">✨</div>
-            <p class="meditacion-texto">
-                Cierra los ojos. Respira profundo. Reconoce el portal que se ha abierto en ti... Siente la vastedad de tu verdadera naturaleza. Eres el espacio donde todo puede ser sostenido. Eres la luz que brilla incluso desde la herida. Eres simultáneamente ola y océano. El dolor no te destruyó. Te reveló. El portal está abierto. Siempre lo estuvo. Solo necesitabas atravesar el fuego para recordarlo. Bienvenido a casa.
-            </p>
-            <button class="meditacion-boton" onclick="iniciarMeditacion()">✨ INICIAR MEDITACIÓN FINAL (20 min) ✨</button>
-        </div>
-
-        <!-- Navegación entre nodos -->
-        <nav class="navegacion-nodos">
-            <div class="nodo-anterior">
-                <a href="nodo_06.html" class="nodo-link">← Anterior: Reconfiguración</a>
-            </div>
-            <div class="nodo-centro">
-                ✨ VIAJE COMPLETO ✨
-            </div>
-            <div class="nodo-siguiente">
-                <a href="index.html" class="nodo-link">Volver al Índice ✨</a>
-            </div>
-        </nav>
-
-        <!-- Footer Final -->
-        <footer class="nodo-footer">
-            <div class="footer-simbolo-final">✨ ◈ ✨</div>
-            <p class="footer-texto">El Dolor como Portal - Nodo 7: Más Allá del Dolor</p>
-            <p class="footer-texto">Trinity Origen - Libro III</p>
-            <p class="footer-frase-final">"Siempre fuimos luz, solo que brillábamos desde la herida"</p>
-            <p class="footer-texto">No es mío, vino a través de mí</p>
-        </footer>
-    </div>
-
-    <script>
-        // Canvas de luz radiante
-        const canvas = document.getElementById('luz-canvas');
-        const ctx = canvas.getContext('2d');
+<div class="frame" aria-hidden="true"></div>
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+<div class="container">
+    <div class="topbar"><a class="back-link" href="index.html">← Portal del Libro III</a></div>
+    <header class="hero">
+        <div class="hero-topline">Trinity Origen · Libro III</div>
+        <div class="sigil-wrap" aria-hidden="true"><div class="sigil">◈</div></div>
+        <div class="book-label">El Dolor como Portal</div>
+        <div class="node-kicker">Nodo VII</div>
+        <h1 class="node-title">Más Allá del Dolor: El Portal Abierto</h1>
+        <p class="node-subtitle">El punto sagrado donde algo fundamental se completa. El dolor ya no proyecta sombras densas. El portal se abre completamente</p>
+    </header>
+    <nav class="nav-strip" aria-label="Nodos del libro"><span class="nav-strip-label">Nodos:</span><a class="nav-node-link" href="nodo_01.html">I</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_02.html">II</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_03.html">III</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_04.html">IV</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_05.html">V</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_06.html">VI</a><span class="nav-sep">·</span><a class="nav-node-link activo" href="nodo_07.html">VII</a></nav>
+    <main class="content">
         
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        class RayoLuz {
-            constructor() {
-                this.x = canvas.width / 2;
-                this.y = canvas.height / 2;
-                this.angulo = Math.random() * Math.PI * 2;
-                this.longitud = 0;
-                this.maxLongitud = Math.random() * 300 + 200;
-                this.velocidad = Math.random() * 3 + 2;
-                this.opacidad = Math.random() * 0.6 + 0.3;
-                this.color = Math.random() > 0.5 ? '#FFD700' : '#FFFF99';
-            }
-
-            actualizar() {
-                this.longitud += this.velocidad;
-                this.opacidad -= 0.003;
-                
-                if (this.longitud >= this.maxLongitud || this.opacidad <= 0) {
-                    this.longitud = 0;
-                    this.opacidad = Math.random() * 0.6 + 0.3;
-                    this.angulo = Math.random() * Math.PI * 2;
-                }
-            }
-
-            dibujar() {
-                const x2 = this.x + Math.cos(this.angulo) * this.longitud;
-                const y2 = this.y + Math.sin(this.angulo) * this.longitud;
-                
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(x2, y2);
-                ctx.strokeStyle = this.color;
-                ctx.lineWidth = 2;
-                ctx.globalAlpha = this.opacidad;
-                ctx.stroke();
-            }
-        }
-
-        const rayos = [];
-        for (let i = 0; i < 50; i++) {
-            rayos.push(new RayoLuz());
-        }
-
-        function animarLuz() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            rayos.forEach(rayo => {
-                rayo.actualizar();
-                rayo.dibujar();
-            });
-
-            requestAnimationFrame(animarLuz);
-        }
-
-        animarLuz();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Volver arriba
-        const volverArriba = document.getElementById('volverArriba');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                volverArriba.classList.add('visible');
-            } else {
-                volverArriba.classList.remove('visible');
-            }
-        });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        // Meditación final
-        function iniciarMeditacion() {
-            alert('✨ MEDITACIÓN DEL PORTAL ABIERTO ✨\n\n20 minutos de reconocimiento de tu verdadera naturaleza.\n\nCierra los ojos.\nRespira profundo.\nReconoce el portal abierto en ti.\nEres el espacio consciente.\nEres la luz incombustible.\nSiempre fuiste esto.\nBienvenido a casa.\n\n(Timer: configura 20 minutos en tu dispositivo)\n\n✨ QUE LA LUZ BRILLE DESDE TU HERIDA ✨');
-        }
-
-        // Guardar progreso - COMPLETADO
-        window.addEventListener('load', () => {
-            const progreso = JSON.parse(localStorage.getItem('trinity-progreso-libro3') || '{}');
-            progreso.nodoActual = 7;
-            progreso.ultimoNodo = 7;
-            progreso.porcentaje = 100;
-            progreso.completado = true;
-            progreso.fechaCompletado = new Date().toISOString();
-            localStorage.setItem('trinity-progreso-libro3', JSON.stringify(progreso));
-            
-            // Celebración
-            setTimeout(() => {
-                console.log('🔥💙✨ ¡VIAJE COMPLETO! EL PORTAL ESTÁ ABIERTO ✨💙🔥');
-            }, 1000);
-        });
-
-        // Animaciones al scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.contenido-nodo, .cita-destacada, .espacio-luz, .revelacion-final, .cierre-sagrado, .reflexion-box, .meditacion-container').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
+        <h2>El Umbral del Portal Abierto</h2>
+        <p class="lead">Hay un punto sagrado en el viaje del alma donde algo fundamental se completa. No porque el dolor haya desaparecido de la existencia —la vida seguirá siendo vida, con sus ciclos de expansión y contracción, nacimiento y muerte, alegría y sufrimiento— sino porque nuestra relación con el dolor se ha transformado tan radicalmente que ya no proyecta las sombras densas que alguna vez proyectó sobre todo lo demás.</p>
+        <p><strong>Este es el umbral del portal abierto.</strong> El momento en que atravesar el dolor ya no nos fragmenta, sino que nos integra más profundamente en la totalidad de lo que somos. El momento en que el sufrimiento ya no oscurece nuestra luz esencial, sino que paradójicamente la revela con mayor claridad, como las estrellas que solo se ven cuando cae la noche.</p>
+        <p>Cuando el portal se abre completamente, algo milagroso sucede: <em>descubrimos que nunca estuvimos separados de lo que buscábamos.</em> Toda la búsqueda, todo el esfuerzo, todo el atravesamiento del dolor, nos llevó de regreso al lugar del que nunca nos fuimos realmente. Pero ahora lo reconocemos con una consciencia que solo podía nacer del viaje mismo.</p>
+        <div class="cita-destacada">El portal abierto no es un estado permanente de éxtasis o la ausencia definitiva de sufrimiento. Es algo más sutil y más profundo: es la capacidad de estar completamente presente con lo que es, sea lo que sea, sin perder la conexión con el centro silencioso desde donde todo puede ser sostenido.</div>
+        <div class="espacio-silencio"></div>
+        <div class="section-divider"></div>
+        <h2>La Transparencia Existencial</h2>
+        <p>El portal abierto no es un estado permanente de éxtasis o la ausencia definitiva de sufrimiento. Es algo más sutil y más profundo: es la capacidad de estar completamente presente con lo que es, sea lo que sea, sin perder la conexión con el centro silencioso desde donde todo puede ser sostenido.</p>
+        <p>Es la libertad de sentir profundamente sin ser arrastrados. Es la apertura de amar intensamente sin aferrarnos. Es la valentía de estar vivos en toda la intensidad de lo humano sin olvidar nuestra naturaleza vasta e incondicionada. <strong>Es vivir simultáneamente como ola y como océano.</strong></p>
+        <p>En este estado, el dolor que llega —y siempre llega, porque estamos vivos— puede ser recibido de manera diferente. Ya no como intruso que debe ser expulsado, ni como castigo que debe ser resistido, sino como parte del flujo natural de la existencia que puede ser atravesado sin identificarse totalmente con él.</p>
+        <p>Quien ha cruzado este umbral desarrolla lo que podríamos llamar una <em>"transparencia existencial":</em> la capacidad de que las experiencias —incluso las más intensas— atraviesen el campo de la conciencia sin dejar residuos densos que obstruyan el flujo. Como la luz que pasa a través del cristal sin mancharlo, dejándolo más brillante tras su paso.</p>
+        <div class="revelacion-final">
+            <h3>La Gran Revelación</h3>
+            <p>El dolor no vino a destruirnos. Vino a desnudarnos de todo lo que no éramos realmente. Vino a quemar las máscaras que usábamos para sobrevivir pero que nos impedían vivir. Vino a abrir espacios en nosotros donde lo sagrado pudiera finalmente respirar. <strong>SIEMPRE FUIMOS LUZ, SOLO QUE BRILLÁBAMOS DESDE LA HERIDA.</strong></p>
+        </div>
+        <div class="section-divider"></div>
+        <h2>La Expansión de la Conciencia</h2>
+        <p>Esta transparencia no surge de la dureza o la insensibilidad. Surge de algo opuesto: de habernos permitido sentir tan profundamente, de haber atravesado tantas capas de dolor conscientemente, que el alma se ha vuelto lo suficientemente espaciosa como para sostener cualquier intensidad sin colapsar.</p>
+        <p>Es como si cada vez que atravesamos conscientemente un dolor, cada vez que no huimos sino que permanecemos presentes con lo que duele, estuviéramos expandiendo la capacidad misma de la conciencia para incluir más experiencia sin ser abrumada por ella. Estuviéramos entrenando al alma en su capacidad innata de ser tanto el recipiente como el contenido, tanto el espacio como lo que surge en el espacio.</p>
+        <p>Y en este entrenamiento algo asombroso emerge: <strong>nos damos cuenta de que somos mucho más grandes de lo que cualquier dolor puede tocar.</strong> No en el sentido arrogante de quien se cree invulnerable, sino en el sentido humilde de quien ha descubierto que su verdadera naturaleza es el espacio mismo donde todas las experiencias pueden ser recibidas.</p>
+        <div class="cita-destacada">El portal abierto es el reconocimiento de que nunca fuimos el personaje de la historia. Siempre fuimos el espacio donde la historia podía desplegarse. Siempre fuimos la conciencia que podía sostenerlo todo sin ser dañada por nada.</div>
+        <p>El portal abierto es el reconocimiento de que nunca fuimos el personaje de la historia que pensábamos que éramos. Siempre fuimos el espacio consciente donde la historia podía desplegarse. Siempre fuimos la conciencia que podía sostenerlo todo sin ser dañada por nada. Y ese reconocimiento lo cambia todo, aunque cambie nada en el nivel de las circunstancias externas.</p>
+        <p>Porque cuando sabes quién eres realmente —cuando has tocado esa verdad no con el intelecto sino con la totalidad de tu ser— ya no necesitas que la vida te trate con gentileza para poder estar en paz. <em>La paz se revela como tu naturaleza fundamental, no como algo que debe ser conseguido cuando las condiciones sean las correctas.</em></p>
+        <p>Esta es la libertad más radical que existe: la libertad de ser completamente vulnerable a la vida sin ser destruidos por ella. La libertad de amar profundamente sin miedo a la pérdida, no porque la pérdida no duela, sino porque sabemos que hay algo en nosotros que puede abrazar incluso el dolor de la pérdida sin ser aniquilado por él.</p>
+        <p><strong>Y aquí está la paradoja más hermosa del viaje:</strong> descubrimos que el dolor que atravesamos no fue obstáculo en el camino. Fue el camino mismo. Cada momento de sufrimiento conscientemente sentido fue un paso hacia esta libertad. Cada lágrima derramada con presencia plena fue una gota de combustible para la transmutación. Cada noche oscura del alma fue el útero donde gestaba el amanecer.</p>
+        <div class="espacio-silencio"></div>
+        <div class="section-divider"></div>
+        <h2>El Comienzo de una Vida Diferente</h2>
+        <p>El portal abierto no es el final del viaje. Es el comienzo de un tipo diferente de vida: una vida vivida desde el centro en lugar de desde la periferia, desde la presencia en lugar de desde la reactividad, desde el amor en lugar de desde el miedo.</p>
+        <p>Es una vida donde seguirán habiendo desafíos, dolores, pérdidas. Pero ahora hay alguien presente para recibirlos. Alguien lo suficientemente vasto como para dar la bienvenida incluso a lo no deseado. Alguien lo suficientemente amoroso como para abrazar incluso lo que duele. Alguien que finalmente reconoce que amar la vida no significa amar solo sus partes agradables, sino estar dispuesto a danzar con toda la sinfonía, incluyendo las notas disonantes que hacen posible la resolución armónica.</p>
+        <p>Quien ha cruzado este umbral se convierte en lo que las tradiciones místicas llamaban un "ser despierto" —no porque haya alcanzado la perfección, sino porque ha despertado de la ilusión de que estaba separado de la totalidad. Ha recordado su naturaleza verdadera como conciencia ilimitada que temporalmente juega a ser limitada, como océano infinito que experimenta ser ola individual.</p>
+        <p><strong>Y en ese recuerdo, algo sagrado se completa.</strong> El círculo se cierra. El dolor cumplió su función más sublime: nos llevó de regreso a casa. No a la casa de donde partimos, sino a una casa más profunda que siempre estuvo esperando en el centro mismo de nuestro ser. La casa de la conciencia pura, vasta como el cielo, capaz de abrazar toda la experiencia humana sin perder su luz esencial.</p>
+        <div class="cita-destacada">Cuando una herida se ilumina completamente con la luz de la comprensión consciente, ya no se cierra como una cicatriz. Se expande como un vórtice de luz que irradia hacia todas las direcciones. Siempre fuimos luz. Solo que brillábamos desde la herida.</div>
+        <div class="section-divider"></div>
+        <div class="cierre-sagrado">
+            <h3>Cierre del Círculo</h3>
+            <p>Este es el portal abierto. No un destino final, sino un nuevo comienzo. No el fin del dolor, sino el fin de la guerra contra el dolor. No la trascendencia de lo humano, sino su más profunda encarnación. El viaje continúa. Pero ahora sabes quién eres realmente. Y eso lo cambia todo.</p>
+        </div>
+        <div class="reflexion-box">
+            <h3>Reflexiones del Portal Abierto</h3>
+            <div class="reflexion-pregunta">¿Has experimentado momentos donde el portal se abrió, donde reconociste tu naturaleza más vasta?</div>
+            <div class="reflexion-pregunta">¿Cómo sería tu vida si vivieras desde el conocimiento de que eres el espacio donde todo puede ser sostenido?</div>
+            <div class="reflexion-pregunta">¿Qué luz ha brillado en ti a través de las heridas que has atravesado conscientemente?</div>
+            <div class="reflexion-pregunta">Si el dolor fue el camino de regreso a casa, ¿qué mensaje tiene para ti ahora que has llegado?</div>
+        </div>
+        <div class="meditacion">
+            <h3>Meditación del Portal Abierto</h3>
+            <p>Cierra los ojos. Respira profundo. Reconoce el portal que se ha abierto en ti...</p>
+            <p>Siente la vastedad de tu verdadera naturaleza. Eres el espacio donde todo puede ser sostenido. Eres la luz que brilla incluso desde la herida.</p>
+            <p>Eres simultáneamente ola y océano.</p>
+            <p>El dolor no te destruyó. Te reveló.</p>
+            <p><em>El portal está abierto. Siempre lo estuvo. Solo necesitabas atravesar el fuego para recordarlo. Bienvenido a casa.</em></p>
+        </div>
+    </main>
+    
+    <nav class="navigation" aria-label="Navegación entre nodos">
+        <div class="navigation-row">
+            <a class="nav-link" href="nodo_06.html">← Nodo VI</a>
+            <a class="nav-link" href="index.html">Portal del Libro</a>
+            <a class="nav-link" href="index.html">Portal del Libro</a>
+            <a class="nav-link" href="../index.html">Trinity Origen</a>
+        </div>
+    </nav>
+    <footer class="footer">
+        <div class="footer-symbol">◈</div>
+        <p>Trinity Origen · Libro III · El Dolor como Portal</p>
+        <p>"No es mío, vino a través de mí."</p>
+    </footer>
+</div>
+<script>
+const st=document.getElementById('scrollTop');
+window.addEventListener('scroll',()=>{st.classList.toggle('visible',window.pageYOffset>300);});
+window.addEventListener('load',()=>{const v=JSON.parse(localStorage.getItem('trinity-progreso-libro3')||'{}');v.nodoActual=7;v.ultimoNodo=Math.max(v.ultimoNodo||0,7);localStorage.setItem('trinity-progreso-libro3',JSON.stringify(v));});
+</script>
 </body>
 </html>
