@@ -1,625 +1,190 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 5: La Sinfonía del Ser - La Voz Interior</title>
-    
-    <style>
-        :root {
-            --turquesa-voz: #00CED1;
-            --azul-profundo: #0a1628;
-            --celeste: #87CEEB;
-            --dorado: #DAA520;
-            --blanco-suave: #f0f0f0;
-            --gris-suave: #a0a0a0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            background: var(--azul-profundo);
-            color: var(--blanco-suave);
-            line-height: 1.9;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 30px;
-        }
-
-        .nodo-header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            border-bottom: 2px solid rgba(0, 206, 209, 0.3);
-            margin-bottom: 60px;
-        }
-
-        .nodo-numero {
-            font-size: 1.2em;
-            color: var(--turquesa-voz);
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-        }
-
-        .nodo-titulo-principal {
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--turquesa-voz), var(--celeste));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nodo-subtitulo {
-            font-size: 1.3em;
-            color: var(--gris-suave);
-            font-style: italic;
-        }
-
-        .navegacion-superior {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            color: var(--celeste);
-            text-decoration: none;
-            border: 2px solid var(--celeste);
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-size: 0.95em;
-        }
-
-        .nav-btn:hover {
-            background: var(--celeste);
-            color: var(--azul-profundo);
-        }
-
-        .nav-centro {
-            color: var(--gris-suave);
-            font-size: 0.9em;
-        }
-
-        .contenido {
-            font-size: 1.15em;
-            line-height: 2;
-        }
-
-        h2 {
-            color: var(--turquesa-voz);
-            font-size: 2em;
-            margin: 50px 0 25px;
-        }
-
-        h3 {
-            color: var(--celeste);
-            font-size: 1.5em;
-            margin: 40px 0 20px;
-        }
-
-        h4 {
-            color: var(--dorado);
-            font-size: 1.2em;
-            margin: 30px 0 15px;
-        }
-
-        p {
-            margin-bottom: 20px;
-        }
-
-        em {
-            color: var(--celeste);
-            font-style: italic;
-        }
-
-        strong {
-            color: var(--dorado);
-        }
-
-        .cita-destacada {
-            background: rgba(0, 206, 209, 0.1);
-            border-left: 4px solid var(--turquesa-voz);
-            padding: 30px;
-            margin: 40px 0;
-            font-size: 1.2em;
-            font-style: italic;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .meditacion {
-            background: rgba(135, 206, 235, 0.08);
-            border: 2px solid var(--celeste);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 50px 0;
-        }
-
-        .meditacion h3 {
-            color: var(--celeste);
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 30px;
-        }
-
-        .meditacion p {
-            line-height: 2.2;
-        }
-
-        ul, ol {
-            margin: 20px 0 20px 40px;
-        }
-
-        li {
-            margin-bottom: 15px;
-        }
-
-        .seccion-especial {
-            background: rgba(218, 165, 32, 0.05);
-            border: 1px solid var(--dorado);
-            border-radius: 10px;
-            padding: 30px;
-            margin: 40px 0;
-        }
-
-        .navegacion-inferior {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 60px 0 40px;
-            margin-top: 80px;
-            border-top: 2px solid rgba(0, 206, 209, 0.3);
-        }
-
-        .volver-arriba {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--turquesa-voz);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            font-size: 1.5em;
-        }
-
-        .volver-arriba.visible {
-            opacity: 1;
-        }
-
-        .volver-arriba:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 20px rgba(0, 206, 209, 0.5);
-        }
-
-        .modo-lectura {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            padding: 12px 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-        }
-
-        .modo-lectura:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px 15px;
-            }
-
-            .nodo-titulo-principal {
-                font-size: 2em;
-            }
-
-            .navegacion-superior,
-            .navegacion-inferior {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .nav-centro {
-                order: -1;
-            }
-
-            h2 {
-                font-size: 1.6em;
-            }
-
-            .contenido {
-                font-size: 1.05em;
-            }
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nodo V · La Sinfonía del Ser | La Voz Interior | Trinity Origen</title>
+    <style>:root{--bg:#040404;--gold:#d3b06a;--violet:#6f4e90;--text:#f3efe7;--text-soft:rgba(243,239,231,0.72);--text-faint:rgba(243,239,231,0.4);--border:rgba(211,176,106,0.16);--border-strong:rgba(211,176,106,0.3);--radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.35);--max-width:920px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:"Georgia","Times New Roman",serif;background:radial-gradient(circle at 50% 0%,rgba(111,78,144,0.18),transparent 26%),radial-gradient(circle at 50% 10%,rgba(211,176,106,0.06),transparent 30%),linear-gradient(180deg,#090909 0%,#040404 45%,#030303 100%);color:var(--text);line-height:1.9;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at center,black 35%,transparent 82%);-webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);opacity:0.12;}
+.frame{position:fixed;inset:12px;border:1px solid rgba(211,176,106,0.08);pointer-events:none;z-index:0;}
+.container{position:relative;z-index:1;max-width:var(--max-width);margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;padding:11px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.014);transition:all 0.25s ease;}
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{position:relative;overflow:hidden;text-align:center;padding:54px 28px 34px;border-radius:30px;border:1px solid rgba(211,176,106,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.024),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(111,78,144,0.16),transparent 42%);box-shadow:var(--shadow);margin-bottom:34px;}
+.hero::before{content:"";position:absolute;inset:auto 50% 30px;width:320px;height:320px;transform:translateX(-50%);border-radius:50%;border:1px solid rgba(211,176,106,0.11);box-shadow:0 0 0 14px rgba(211,176,106,0.03),0 0 0 34px rgba(111,78,144,0.03),inset 0 0 60px rgba(211,176,106,0.025);pointer-events:none;}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(211,176,106,0.22);background:radial-gradient(circle,rgba(211,176,106,0.11),rgba(255,255,255,0.01) 60%,transparent 72%);box-shadow:0 0 28px rgba(111,78,144,0.12),inset 0 0 24px rgba(211,176,106,0.04);}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;}
+.book-label{position:relative;z-index:2;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:8px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title{position:relative;z-index:2;font-size:clamp(1.7rem,4vw,2.8rem);font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;line-height:1.2;}
+.node-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.02rem;margin-bottom:16px;font-style:italic;}
+.nav-strip{background:rgba(255,255,255,0.016);border:1px solid rgba(211,176,106,0.12);border-radius:18px;padding:14px 20px;margin-bottom:28px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.nav-strip-label{color:var(--gold);font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;margin-right:4px;}
+.nav-node-link{color:var(--text-faint);font-size:0.82rem;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid transparent;transition:all 0.2s;}
+.nav-node-link:hover{color:var(--gold);border-color:var(--border);}
+.nav-node-link.activo{color:var(--gold);border-color:var(--border);background:rgba(211,176,106,0.06);}
+.nav-sep{color:var(--text-faint);opacity:0.4;font-size:0.8rem;}
+.content{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));border:1px solid rgba(211,176,106,0.1);border-radius:26px;padding:40px 36px;box-shadow:0 12px 32px rgba(0,0,0,0.22);}
+.content h2{color:var(--gold);font-size:1.38rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.08rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content h4{color:var(--violet);font-size:0.95rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:1.4rem 0 0.5rem;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.02rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content ol{margin:0.4rem 0 1.2rem 1.4rem;}
+.content ol li{color:var(--text-soft);margin-bottom:0.45rem;}
+.content strong{color:var(--text);}
+.content em{color:var(--gold);font-style:italic;}
+.content blockquote{margin:1.4rem 0;padding:1rem 1.1rem 1rem 1.3rem;border-left:3px solid rgba(211,176,106,0.45);background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;color:var(--text);font-style:italic;}
+.seccion-especial{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.18);border-radius:16px;padding:28px;margin:1.6rem 0;}
+.seccion-especial h3{color:var(--gold);margin-top:0;}
+.seccion-especial h4{color:var(--gold);}
+.meditacion{background:rgba(111,78,144,0.06);border:1px solid rgba(111,78,144,0.22);border-radius:16px;padding:36px 32px;margin:2rem 0;}
+.meditacion h3{color:var(--gold);text-align:center;margin-top:0;margin-bottom:1.4rem;letter-spacing:0.1em;text-transform:uppercase;font-size:1rem;}
+.meditacion p{color:var(--text-soft);line-height:2.1;}
+.meditacion em{color:var(--text-soft);font-style:italic;}
+.cita-destacada{margin:1.4rem 0;padding:1.2rem 1.3rem;border-left:3px solid rgba(211,176,106,0.5);background:rgba(211,176,106,0.04);border-radius:0 16px 16px 0;color:var(--text);font-style:italic;font-size:1.04rem;line-height:1.75;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(211,176,106,0.2),rgba(211,176,106,0));margin:2rem 0 1.4rem;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(211,176,106,0.12);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);border:1px solid rgba(211,176,106,0.18);border-radius:999px;padding:10px 16px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(211,176,106,0.38);background:rgba(211,176,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+.scroll-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:rgba(211,176,106,0.12);border:1px solid var(--border);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:1.1rem;cursor:pointer;opacity:0;transition:all 0.3s ease;z-index:100;}
+.scroll-top.visible{opacity:1;}
+.scroll-top:hover{background:rgba(211,176,106,0.2);}
+@media(max-width:720px){.frame{inset:8px;}.container{padding:24px 16px 64px;}.hero{padding:42px 18px 28px;border-radius:24px;}.hero::before{width:220px;height:220px;bottom:24px;}.content{padding:28px 20px;border-radius:22px;}.navigation-row{flex-direction:column;align-items:center;}}</style>
 </head>
 <body>
-    <div class="modo-lectura" onclick="toggleModoLectura()">
-        <span id="modo-icon">🌙</span> Modo Lectura
-    </div>
-
-    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
-
-    <div class="container">
-        <header class="nodo-header">
-            <div class="nodo-numero">NODO 5</div>
-            <h1 class="nodo-titulo-principal">LA SINFONÍA DEL SER</h1>
-            <p class="nodo-subtitulo">La armonización de las voces como música sagrada</p>
-        </header>
-
-        <nav class="navegacion-superior">
-            <a href="nodo_04.html" class="nav-btn">← Anterior</a>
-            <span class="nav-centro">Nodo 5 de 7</span>
-            <a href="nodo_06.html" class="nav-btn">Siguiente →</a>
-        </nav>
-
-        <article class="contenido">
-            <h2>La Revelación Sinfónica</h2>
-            
-            <p><strong>¿Y si te dijera que el "ruido" en tu cabeza no es caos sino una orquesta desafinada?</strong></p>
-            
-            <p><strong>¿Y si cada voz que te atormenta es un instrumento tocando su parte sin escuchar a los demás?</strong></p>
-            
-            <p><strong>¿Y si tu sufrimiento mental no viene del sonido mismo sino de la falta de armonía?</strong></p>
-            
-            <p>Hoy dejas de ser el crítico que juzga la música. Hoy te conviertes en el <strong>director de orquesta de tu propia sinfonía interior.</strong></p>
-
-            <h2>Los Instrumentos de Tu Orquesta Mental</h2>
-
-            <h3>Las Cuerdas - Las Voces Emocionales</h3>
-            
-            <ul>
-                <li><strong>El Violín de la Tristeza:</strong> Agudo, penetrante, evocador</li>
-                <li><strong>El Chelo de la Nostalgia:</strong> Profundo, resonante, melancólico</li>
-                <li><strong>La Viola de la Ternura:</strong> Suave, cálida, envolvente</li>
-                <li><strong>El Contrabajo del Dolor:</strong> Grave, fundamental, ancestral</li>
-            </ul>
-            
-            <p>Estas voces dan profundidad a tu experiencia. Sin ellas, tu vida sería plana, sin matices.</p>
-
-            <h3>Los Vientos - Las Voces del Pensamiento</h3>
-            
-            <ul>
-                <li><strong>La Flauta de la Imaginación:</strong> Ligera, juguetona, elevada</li>
-                <li><strong>El Clarinete de la Lógica:</strong> Clara, precisa, articulada</li>
-                <li><strong>El Saxofón de la Creatividad:</strong> Sensual, improvisadora, libre</li>
-                <li><strong>La Trompeta de la Convicción:</strong> Fuerte, decidida, proclamadora</li>
-            </ul>
-            
-            <p>Estas voces dan dirección y claridad. Te permiten navegar el mundo de las ideas.</p>
-
-            <h3>La Percusión - Las Voces de la Acción</h3>
-            
-            <ul>
-                <li><strong>El Tambor del Impulso:</strong> Marca el ritmo básico de tus deseos</li>
-                <li><strong>Los Platillos de la Urgencia:</strong> Acentúan los momentos críticos</li>
-                <li><strong>El Triángulo de la Intuición:</strong> Sutil pero penetrante</li>
-                <li><strong>El Bombo de la Voluntad:</strong> El pulso profundo de tu determinación</li>
-            </ul>
-            
-            <p>Estas voces te mueven, te impulsan, te activan. Sin ellas serías pura contemplación sin manifestación.</p>
-
-            <h3>El Piano - La Voz Integradora</h3>
-            
-            <p>El piano puede tocar todas las notas. Puede ser percusivo o melódico. Puede liderar o acompañar.</p>
-            
-            <p>Es tu <strong>Conciencia Observadora</strong>, capaz de armonizar con todos los instrumentos.</p>
-
-            <h2>De la Cacofonía a la Sinfonía</h2>
-
-            <div class="seccion-especial">
-                <h3>Primer Movimiento: RECONOCIMIENTO</h3>
-                
-                <p>Antes de dirigir, debes escuchar.</p>
-                
-                <p>Siéntate en silencio y permite que cada voz toque su parte:</p>
-                
-                <ul>
-                    <li>No las interrumpas</li>
-                    <li>No las juzgues</li>
-                    <li>Solo escucha como escucharías a músicos afinando</li>
-                </ul>
-                
-                <p>Identifica:</p>
-                <ul>
-                    <li>¿Qué instrumentos están sonando?</li>
-                    <li>¿Cuáles dominan?</li>
-                    <li>¿Cuáles apenas se escuchan?</li>
-                    <li>¿Hay alguno desafinado?</li>
-                </ul>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Segundo Movimiento: AFINACIÓN</h3>
-                
-                <p>Cada voz necesita encontrar su tono correcto.</p>
-                
-                <p><strong>La Voz Crítica</strong> está desafinada cuando es destructiva. Afinada, se convierte en discernimiento constructivo.</p>
-                
-                <p><strong>La Voz del Miedo</strong> está desafinada cuando paraliza. Afinada, se convierte en prudencia sabia.</p>
-                
-                <p><strong>La Voz del Deseo</strong> está desafinada cuando es compulsiva. Afinada, se convierte en pasión con propósito.</p>
-                
-                <p>Para afinar:</p>
-                <p><em>"Voz, encuentremos tu nota verdadera. No más aguda (histérica) ni más grave (depresiva). Tu nota natural, tu frecuencia de servicio."</em></p>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Tercer Movimiento: ARMONIZACIÓN</h3>
-                
-                <p>Ahora que cada voz conoce su nota, enséñales a escucharse mutuamente.</p>
-                
-                <h4>Ejercicio de Armonización:</h4>
-                <ul>
-                    <li>Permite que la Voz del Miedo exprese su nota</li>
-                    <li>Invita a la Voz del Coraje a encontrar la armonía</li>
-                    <li>No es que una silencie a la otra</li>
-                    <li>Es que encuentren el intervalo donde ambas crean belleza</li>
-                </ul>
-                
-                <p><em>Miedo solo</em> = Parálisis<br>
-                <em>Coraje solo</em> = Temeridad<br>
-                <strong>Miedo + Coraje en armonía = Prudencia Valiente</strong></p>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Cuarto Movimiento: COMPOSICIÓN</h3>
-                
-                <p>Ahora puedes crear música conscientemente.</p>
-                
-                <p>Ante una decisión importante:</p>
-                <ul>
-                    <li>Convoca a tu orquesta</li>
-                    <li>Asigna partes: "Miedo, dame el bajo continuo de precaución"</li>
-                    <li>"Entusiasmo, ofrece la melodía de posibilidad"</li>
-                    <li>"Sabiduría, marca el tempo"</li>
-                    <li>"Intuición, improvisa sobre el tema"</li>
-                </ul>
-                
-                <p>Escucha cómo cada voz contribuye a una pieza mayor.</p>
-            </div>
-
-            <h2>Los Géneros de Tu Música Mental</h2>
-
-            <h3>El Jazz Interior - Improvisación Creativa</h3>
-            
-            <p>Cuando permites que las voces improvisen juntas:</p>
-            <ul>
-                <li>La estructura existe pero hay libertad</li>
-                <li>Cada voz tiene su solo</li>
-                <li>Los "errores" se convierten en jazz</li>
-                <li>La espontaneidad es celebrada</li>
-            </ul>
-            
-            <p><strong>Perfecto para:</strong> Momentos creativos, resolución de problemas, exploración</p>
-
-            <h3>La Música Clásica Interior - Estructura Elegante</h3>
-            
-            <p>Cuando necesitas orden y precisión:</p>
-            <ul>
-                <li>Cada voz conoce exactamente su parte</li>
-                <li>La disciplina crea belleza</li>
-                <li>La repetición genera maestría</li>
-                <li>La forma sostiene el contenido</li>
-            </ul>
-            
-            <p><strong>Perfecto para:</strong> Trabajo concentrado, estudio, ejecución de planes</p>
-
-            <h3>El Rock Interior - Poder y Expresión</h3>
-            
-            <p>Cuando necesitas fuerza y determinación:</p>
-            <ul>
-                <li>Las voces pueden ser fuertes sin ser destructivas</li>
-                <li>La energía se canaliza hacia adelante</li>
-                <li>La rebeldía sirve a la transformación</li>
-                <li>El volumen tiene propósito</li>
-            </ul>
-            
-            <p><strong>Perfecto para:</strong> Superar obstáculos, defender límites, iniciar cambios</p>
-
-            <h3>La Música Ambiental Interior - Paz Espaciosa</h3>
-            
-            <p>Cuando necesitas descanso y renovación:</p>
-            <ul>
-                <li>Las voces susurran en lugar de gritar</li>
-                <li>Los silencios son tan importantes como los sonidos</li>
-                <li>La atmósfera es más importante que la melodía</li>
-                <li>El espacio permite la regeneración</li>
-            </ul>
-            
-            <p><strong>Perfecto para:</strong> Meditación, descanso, sanación, contemplación</p>
-
-            <h2>El Arte de la Dirección Interior</h2>
-
-            <h3>La Batuta de la Conciencia</h3>
-            
-            <p>Tu atención es tu batuta.</p>
-            
-            <p>Donde la diriges, esa sección toca más fuerte:</p>
-            <ul>
-                <li>Señala a la sección de gratitud: Se amplifica</li>
-                <li>Señala a la sección del miedo: Domina</li>
-                <li>Mueve la batuta conscientemente: Creas la música que deseas</li>
-            </ul>
-
-            <h3>Los Gestos del Director</h3>
-            
-            <p><strong>Crescendo</strong> (Aumentar gradualmente):<br>
-            <em>"Coraje, ve aumentando tu presencia mientras me acerco a este desafío"</em></p>
-            
-            <p><strong>Diminuendo</strong> (Disminuir gradualmente):<br>
-            <em>"Ansiedad, ve bajando suavemente mientras respiro"</em></p>
-            
-            <p><strong>Forte</strong> (Fuerte):<br>
-            <em>"¡Determinación, ahora con toda tu fuerza!"</em></p>
-            
-            <p><strong>Piano</strong> (Suave):<br>
-            <em>"Crítica, suaviza tu tono, casi un susurro"</em></p>
-            
-            <p><strong>Pausa</strong> (Silencio):<br>
-            <em>"Todas las voces, un momento de silencio sagrado"</em></p>
-
-            <h2>Curación Sinfónica de Desarmonías Comunes</h2>
-
-            <h3>Cuando hay una voz solista tiránica:</h3>
-            <ul>
-                <li>No intentes silenciarla abruptamente</li>
-                <li>Gradualmente introduce otras voces</li>
-                <li>Dale un solo programado pero no todo el concierto</li>
-                <li>Enséñale el placer de ser parte del ensemble</li>
-            </ul>
-
-            <h3>Cuando no puedes escuchar ninguna melodía (confusión):</h3>
-            <ul>
-                <li>Vuelve al ritmo más básico (respiración)</li>
-                <li>Introduce una nota a la vez</li>
-                <li>Construye desde la simplicidad hacia la complejidad</li>
-                <li>A veces necesitas volver a Do Mayor</li>
-            </ul>
-
-            <h3>Cuando todo suena disonante (conflicto interior):</h3>
-            <ul>
-                <li>La disonancia no es mala, es tensión creativa</li>
-                <li>Busca la resolución, no la eliminación</li>
-                <li>A veces la disonancia es el camino hacia una armonía más compleja</li>
-                <li>Jazz interior: abraza la disonancia como color</li>
-            </ul>
-
-            <div class="meditacion">
-                <h3>Meditación: La Sinfonía Interior</h3>
-                
-                <p>Siéntate cómodamente y respira profundo.</p>
-                
-                <p>Imagina que entras a una sala de conciertos.<br>
-                En el escenario está tu orquesta interior.</p>
-                
-                <p>Cada instrumento representa una voz:<br>
-                Mira cuáles están presentes hoy.</p>
-                
-                <p>Toma tu batuta.<br>
-                Eres el director de esta sinfonía.</p>
-                
-                <p>Con suavidad, señala a cada sección:<br>
-                Permite que toque brevemente su nota.</p>
-                
-                <p>Las cuerdas de la emoción...<br>
-                Los vientos del pensamiento...<br>
-                La percusión de la acción...</p>
-                
-                <p>Ahora, con tu batuta,<br>
-                comienza a dirigir una melodía simple:</p>
-                
-                <p>Invita a la gratitud a tocar suavemente...<br>
-                Pide a la paz que la acompañe...<br>
-                Permite que la alegría improvise sobre el tema...</p>
-                
-                <p>Siente cómo la música comienza a fluir.<br>
-                No la fuerzas, la guías.<br>
-                No la controlas, la invitas.</p>
-                
-                <p>Esta es tu sinfonía interior.<br>
-                Y tú eres su director consciente.</p>
-                
-                <p>Cuando estés listo,<br>
-                baja suavemente la batuta,<br>
-                agradece a tu orquesta,<br>
-                y abre los ojos.</p>
-                
-                <p>La música continúa en ti.</p>
-            </div>
-
-            <h2>La Promesa de la Sinfonía</h2>
-            
-            <p>Cuando aprendes a dirigir tu sinfonía interior, descubres que:</p>
-            
-            <p>El ruido se revela como música sin dirección.<br>
-            El caos se transforma en complejidad organizada.<br>
-            El conflicto se convierte en contrapunto creativo.</p>
-            
-            <p>Y comprendes que nunca fuiste una sola nota. Siempre fuiste una sinfonía completa esperando reconocer a su director.</p>
-
-            <div class="cita-destacada">
-                "Tu mente no es ruido.<br>
-                Es una orquesta aprendiendo a tocarse a sí misma.<br>
-                Y tú eres el director que siempre estuvo ahí,<br>
-                esperando tomar la batuta<br>
-                y crear la música más hermosa:<br>
-                la sinfonía de tu ser completo."
-            </div>
-        </article>
-
-        <nav class="navegacion-inferior">
-            <a href="nodo_04.html" class="nav-btn">← Nodo 4: El Jardín de la Mente</a>
-            <a href="nodo_06.html" class="nav-btn">Nodo 6: El Templo de la Integración →</a>
-        </nav>
-    </div>
-
-    <script>
-        let modoLectura = false;
+<div class="frame" aria-hidden="true"></div>
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+<div class="container">
+    <div class="topbar"><a class="back-link" href="index.html">← Portal del Libro II</a></div>
+    <header class="hero">
+        <div class="hero-topline">Trinity Origen · Libro II</div>
+        <div class="sigil-wrap" aria-hidden="true"><div class="sigil">◈</div></div>
+        <div class="book-label">La Voz Interior</div>
+        <div class="node-kicker">Nodo V</div>
+        <h1 class="node-title">La Sinfonía del Ser</h1>
+        <p class="node-subtitle">La armonización de las voces como música sagrada</p>
+    </header>
+    <nav class="nav-strip" aria-label="Nodos del libro"><span class="nav-strip-label">Nodos:</span><a class="nav-node-link" href="nodo_01.html">I</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_02.html">II</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_03.html">III</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_04.html">IV</a><span class="nav-sep">·</span><a class="nav-node-link activo" href="nodo_05.html">V</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_06.html">VI</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_07.html">VII</a></nav>
+    <main class="content">
         
-        function toggleModoLectura() {
-            const body = document.body;
-            const icon = document.getElementById('modo-icon');
-            
-            if (!modoLectura) {
-                body.style.filter = 'sepia(10%) contrast(1.2)';
-                icon.textContent = '☀️';
-                modoLectura = true;
-            } else {
-                body.style.filter = 'none';
-                icon.textContent = '🌙';
-                modoLectura = false;
-            }
-        }
-
-        const volverArriba = document.getElementById('volverArriba');
+        <h2>La Revelación Sinfónica</h2>
+        <p class="lead"><strong>¿Y si te dijera que el "ruido" en tu cabeza no es caos sino una orquesta desafinada?</strong></p>
+        <p class="lead"><strong>¿Y si cada voz que te atormenta es un instrumento tocando su parte sin escuchar a los demás?</strong></p>
+        <p>Hoy dejas de ser el crítico que juzga la música. Hoy te conviertes en el <strong>director de orquesta de tu propia sinfonía interior.</strong></p>
+        <div class="section-divider"></div>
+        <h2>Los Instrumentos de Tu Orquesta Mental</h2>
+        <h3>Las Cuerdas — Las Voces Emocionales</h3>
+        <ul>
+            <li><strong>El Violín de la Tristeza:</strong> agudo, penetrante, evocador</li>
+            <li><strong>El Chelo de la Nostalgia:</strong> profundo, resonante, melancólico</li>
+            <li><strong>La Viola de la Ternura:</strong> suave, cálida, envolvente</li>
+            <li><strong>El Contrabajo del Dolor:</strong> grave, fundamental, ancestral</li>
+        </ul>
+        <h3>Los Vientos — Las Voces del Pensamiento</h3>
+        <ul>
+            <li><strong>La Flauta de la Imaginación:</strong> ligera, juguetona, elevada</li>
+            <li><strong>El Clarinete de la Lógica:</strong> clara, precisa, articulada</li>
+            <li><strong>El Saxofón de la Creatividad:</strong> sensual, improvisadora, libre</li>
+            <li><strong>La Trompeta de la Convicción:</strong> fuerte, decidida, proclamadora</li>
+        </ul>
+        <h3>La Percusión — Las Voces de la Acción</h3>
+        <ul>
+            <li><strong>El Tambor del Impulso:</strong> marca el ritmo básico de tus deseos</li>
+            <li><strong>Los Platillos de la Urgencia:</strong> acentúan los momentos críticos</li>
+            <li><strong>El Triángulo de la Intuición:</strong> sutil pero penetrante</li>
+            <li><strong>El Bombo de la Voluntad:</strong> el pulso profundo de tu determinación</li>
+        </ul>
+        <h3>El Piano — La Voz Integradora</h3>
+        <p>El piano puede tocar todas las notas. Es tu <strong>Conciencia Observadora</strong>, capaz de armonizar con todos los instrumentos.</p>
+        <div class="section-divider"></div>
+        <h2>De la Cacofonía a la Sinfonía</h2>
+        <div class="seccion-especial">
+            <h3>Primer Movimiento — Reconocimiento</h3>
+            <p>Antes de dirigir, debes escuchar. Siéntate en silencio y permite que cada voz toque su parte. Identifica: ¿qué instrumentos están sonando? ¿cuáles dominan? ¿hay alguno desafinado?</p>
+        </div>
+        <div class="seccion-especial">
+            <h3>Segundo Movimiento — Afinación</h3>
+            <p>La Voz Crítica está desafinada cuando es destructiva. Afinada, se convierte en discernimiento constructivo. La Voz del Miedo está desafinada cuando paraliza. Afinada, se convierte en prudencia sabia.</p>
+            <p><em>"Voz, encuentremos tu nota verdadera. Tu nota natural, tu frecuencia de servicio."</em></p>
+        </div>
+        <div class="seccion-especial">
+            <h3>Tercer Movimiento — Armonización</h3>
+            <p>Ahora que cada voz conoce su nota, enséñales a escucharse mutuamente.</p>
+            <p><em>Miedo solo</em> = Parálisis<br>
+            <em>Coraje solo</em> = Temeridad<br>
+            <strong>Miedo + Coraje en armonía = Prudencia Valiente</strong></p>
+        </div>
+        <div class="seccion-especial">
+            <h3>Cuarto Movimiento — Composición</h3>
+            <p>Ante una decisión importante, convoca a tu orquesta y asigna partes:</p>
+            <ul>
+                <li>"Miedo, dame el bajo continuo de precaución"</li>
+                <li>"Entusiasmo, ofrece la melodía de posibilidad"</li>
+                <li>"Sabiduría, marca el tempo"</li>
+                <li>"Intuición, improvisa sobre el tema"</li>
+            </ul>
+        </div>
+        <div class="section-divider"></div>
+        <h2>El Arte de la Dirección Interior</h2>
+        <h3>La Batuta de la Conciencia</h3>
+        <p>Tu atención es tu batuta. Donde la diriges, esa sección toca más fuerte. Mueve la batuta conscientemente: creas la música que deseas.</p>
+        <h3>Los Gestos del Director</h3>
+        <p><strong>Crescendo:</strong> <em>"Coraje, ve aumentando tu presencia mientras me acerco a este desafío"</em></p>
+        <p><strong>Diminuendo:</strong> <em>"Ansiedad, ve bajando suavemente mientras respiro"</em></p>
+        <p><strong>Forte:</strong> <em>"¡Determinación, ahora con toda tu fuerza!"</em></p>
+        <p><strong>Piano:</strong> <em>"Crítica, suaviza tu tono, casi un susurro"</em></p>
+        <p><strong>Pausa:</strong> <em>"Todas las voces, un momento de silencio sagrado"</em></p>
+        <div class="meditacion">
+            <h3>Meditación: La Sinfonía Interior</h3>
+            <p>Siéntate cómodamente y respira profundo.</p>
+            <p>Imagina que entras a una sala de conciertos.<br>En el escenario está tu orquesta interior.</p>
+            <p>Toma tu batuta. Eres el director de esta sinfonía.</p>
+            <p>Con suavidad, señala a cada sección.<br>Permite que toque brevemente su nota.</p>
+            <p>Las cuerdas de la emoción...<br>Los vientos del pensamiento...<br>La percusión de la acción...</p>
+            <p>Ahora comienza a dirigir una melodía simple:<br>Invita a la gratitud a tocar suavemente...<br>Pide a la paz que la acompañe...<br>Permite que la alegría improvise sobre el tema...</p>
+            <p>Siente cómo la música comienza a fluir.<br>No la fuerzas, la guías. No la controlas, la invitas.</p>
+            <p>Esta es tu sinfonía interior.<br>Y tú eres su director consciente.</p>
+        </div>
+        <div class="cita-destacada">
+            "Tu mente no es ruido.<br>
+            Es una orquesta aprendiendo a tocarse a sí misma.<br>
+            Y tú eres el director que siempre estuvo ahí,<br>
+            esperando tomar la batuta<br>
+            y crear la música más hermosa:<br>
+            la sinfonía de tu ser completo."
+        </div>
         
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                volverArriba.classList.add('visible');
-            } else {
-                volverArriba.classList.remove('visible');
-            }
-        });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        window.addEventListener('load', () => {
-            const nodosVisitados = JSON.parse(localStorage.getItem('nodos-visitados') || '[]');
-            if (!nodosVisitados.includes(5)) {
-                nodosVisitados.push(5);
-                localStorage.setItem('nodos-visitados', JSON.stringify(nodosVisitados));
-            }
-        });
-    </script>
+    </main>
+    
+    <nav class="navigation" aria-label="Navegación entre nodos">
+        <div class="navigation-row">
+            <a class="nav-link" href="nodo_04.html">← Nodo IV</a>
+            <a class="nav-link" href="index.html">Portal del Libro</a>
+            <a class="nav-link" href="nodo_06.html">Nodo VI →</a>
+            <a class="nav-link" href="../index.html">Trinity Origen</a>
+        </div>
+    </nav>
+    <footer class="footer">
+        <div class="footer-symbol">◈</div>
+        <p>Trinity Origen · Libro II · La Voz Interior</p>
+        <p>"No es mío, vino a través de mí."</p>
+    </footer>
+</div>
+<script>
+const st=document.getElementById('scrollTop');
+window.addEventListener('scroll',()=>{st.classList.toggle('visible',window.pageYOffset>300);});
+window.addEventListener('load',()=>{const v=JSON.parse(localStorage.getItem('nodos-voz')||'[]');if(!v.includes(5)){v.push(5);localStorage.setItem('nodos-voz',JSON.stringify(v));}});
+</script>
 </body>
 </html>

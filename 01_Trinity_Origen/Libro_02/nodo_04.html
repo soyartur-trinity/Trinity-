@@ -1,678 +1,189 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 4: El Jardín de la Mente - La Voz Interior</title>
-    
-    <style>
-        :root {
-            --turquesa-voz: #00CED1;
-            --azul-profundo: #0a1628;
-            --celeste: #87CEEB;
-            --dorado: #DAA520;
-            --blanco-suave: #f0f0f0;
-            --gris-suave: #a0a0a0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            background: var(--azul-profundo);
-            color: var(--blanco-suave);
-            line-height: 1.9;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 30px;
-        }
-
-        .nodo-header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            border-bottom: 2px solid rgba(0, 206, 209, 0.3);
-            margin-bottom: 60px;
-        }
-
-        .nodo-numero {
-            font-size: 1.2em;
-            color: var(--turquesa-voz);
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-        }
-
-        .nodo-titulo-principal {
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--turquesa-voz), var(--celeste));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nodo-subtitulo {
-            font-size: 1.3em;
-            color: var(--gris-suave);
-            font-style: italic;
-        }
-
-        .navegacion-superior {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            color: var(--celeste);
-            text-decoration: none;
-            border: 2px solid var(--celeste);
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-size: 0.95em;
-        }
-
-        .nav-btn:hover {
-            background: var(--celeste);
-            color: var(--azul-profundo);
-        }
-
-        .nav-centro {
-            color: var(--gris-suave);
-            font-size: 0.9em;
-        }
-
-        .contenido {
-            font-size: 1.15em;
-            line-height: 2;
-        }
-
-        h2 {
-            color: var(--turquesa-voz);
-            font-size: 2em;
-            margin: 50px 0 25px;
-        }
-
-        h3 {
-            color: var(--celeste);
-            font-size: 1.5em;
-            margin: 40px 0 20px;
-        }
-
-        h4 {
-            color: var(--dorado);
-            font-size: 1.2em;
-            margin: 30px 0 15px;
-        }
-
-        p {
-            margin-bottom: 20px;
-        }
-
-        em {
-            color: var(--celeste);
-            font-style: italic;
-        }
-
-        strong {
-            color: var(--dorado);
-        }
-
-        .cita-destacada {
-            background: rgba(0, 206, 209, 0.1);
-            border-left: 4px solid var(--turquesa-voz);
-            padding: 30px;
-            margin: 40px 0;
-            font-size: 1.2em;
-            font-style: italic;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .meditacion {
-            background: rgba(135, 206, 235, 0.08);
-            border: 2px solid var(--celeste);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 50px 0;
-        }
-
-        .meditacion h3 {
-            color: var(--celeste);
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 30px;
-        }
-
-        .meditacion p {
-            line-height: 2.2;
-        }
-
-        ul, ol {
-            margin: 20px 0 20px 40px;
-        }
-
-        li {
-            margin-bottom: 15px;
-        }
-
-        .seccion-especial {
-            background: rgba(218, 165, 32, 0.05);
-            border: 1px solid var(--dorado);
-            border-radius: 10px;
-            padding: 30px;
-            margin: 40px 0;
-        }
-
-        .navegacion-inferior {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 60px 0 40px;
-            margin-top: 80px;
-            border-top: 2px solid rgba(0, 206, 209, 0.3);
-        }
-
-        .volver-arriba {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--turquesa-voz);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            font-size: 1.5em;
-        }
-
-        .volver-arriba.visible {
-            opacity: 1;
-        }
-
-        .volver-arriba:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 20px rgba(0, 206, 209, 0.5);
-        }
-
-        .modo-lectura {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            padding: 12px 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-        }
-
-        .modo-lectura:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px 15px;
-            }
-
-            .nodo-titulo-principal {
-                font-size: 2em;
-            }
-
-            .navegacion-superior,
-            .navegacion-inferior {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .nav-centro {
-                order: -1;
-            }
-
-            h2 {
-                font-size: 1.6em;
-            }
-
-            .contenido {
-                font-size: 1.05em;
-            }
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nodo IV · El Jardín de la Mente | La Voz Interior | Trinity Origen</title>
+    <style>:root{--bg:#040404;--gold:#d3b06a;--violet:#6f4e90;--text:#f3efe7;--text-soft:rgba(243,239,231,0.72);--text-faint:rgba(243,239,231,0.4);--border:rgba(211,176,106,0.16);--border-strong:rgba(211,176,106,0.3);--radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.35);--max-width:920px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:"Georgia","Times New Roman",serif;background:radial-gradient(circle at 50% 0%,rgba(111,78,144,0.18),transparent 26%),radial-gradient(circle at 50% 10%,rgba(211,176,106,0.06),transparent 30%),linear-gradient(180deg,#090909 0%,#040404 45%,#030303 100%);color:var(--text);line-height:1.9;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at center,black 35%,transparent 82%);-webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);opacity:0.12;}
+.frame{position:fixed;inset:12px;border:1px solid rgba(211,176,106,0.08);pointer-events:none;z-index:0;}
+.container{position:relative;z-index:1;max-width:var(--max-width);margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;padding:11px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.014);transition:all 0.25s ease;}
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{position:relative;overflow:hidden;text-align:center;padding:54px 28px 34px;border-radius:30px;border:1px solid rgba(211,176,106,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.024),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(111,78,144,0.16),transparent 42%);box-shadow:var(--shadow);margin-bottom:34px;}
+.hero::before{content:"";position:absolute;inset:auto 50% 30px;width:320px;height:320px;transform:translateX(-50%);border-radius:50%;border:1px solid rgba(211,176,106,0.11);box-shadow:0 0 0 14px rgba(211,176,106,0.03),0 0 0 34px rgba(111,78,144,0.03),inset 0 0 60px rgba(211,176,106,0.025);pointer-events:none;}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(211,176,106,0.22);background:radial-gradient(circle,rgba(211,176,106,0.11),rgba(255,255,255,0.01) 60%,transparent 72%);box-shadow:0 0 28px rgba(111,78,144,0.12),inset 0 0 24px rgba(211,176,106,0.04);}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;}
+.book-label{position:relative;z-index:2;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:8px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title{position:relative;z-index:2;font-size:clamp(1.7rem,4vw,2.8rem);font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;line-height:1.2;}
+.node-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.02rem;margin-bottom:16px;font-style:italic;}
+.nav-strip{background:rgba(255,255,255,0.016);border:1px solid rgba(211,176,106,0.12);border-radius:18px;padding:14px 20px;margin-bottom:28px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.nav-strip-label{color:var(--gold);font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;margin-right:4px;}
+.nav-node-link{color:var(--text-faint);font-size:0.82rem;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid transparent;transition:all 0.2s;}
+.nav-node-link:hover{color:var(--gold);border-color:var(--border);}
+.nav-node-link.activo{color:var(--gold);border-color:var(--border);background:rgba(211,176,106,0.06);}
+.nav-sep{color:var(--text-faint);opacity:0.4;font-size:0.8rem;}
+.content{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));border:1px solid rgba(211,176,106,0.1);border-radius:26px;padding:40px 36px;box-shadow:0 12px 32px rgba(0,0,0,0.22);}
+.content h2{color:var(--gold);font-size:1.38rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.08rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content h4{color:var(--violet);font-size:0.95rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:1.4rem 0 0.5rem;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.02rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content ol{margin:0.4rem 0 1.2rem 1.4rem;}
+.content ol li{color:var(--text-soft);margin-bottom:0.45rem;}
+.content strong{color:var(--text);}
+.content em{color:var(--gold);font-style:italic;}
+.content blockquote{margin:1.4rem 0;padding:1rem 1.1rem 1rem 1.3rem;border-left:3px solid rgba(211,176,106,0.45);background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;color:var(--text);font-style:italic;}
+.seccion-especial{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.18);border-radius:16px;padding:28px;margin:1.6rem 0;}
+.seccion-especial h3{color:var(--gold);margin-top:0;}
+.seccion-especial h4{color:var(--gold);}
+.meditacion{background:rgba(111,78,144,0.06);border:1px solid rgba(111,78,144,0.22);border-radius:16px;padding:36px 32px;margin:2rem 0;}
+.meditacion h3{color:var(--gold);text-align:center;margin-top:0;margin-bottom:1.4rem;letter-spacing:0.1em;text-transform:uppercase;font-size:1rem;}
+.meditacion p{color:var(--text-soft);line-height:2.1;}
+.meditacion em{color:var(--text-soft);font-style:italic;}
+.cita-destacada{margin:1.4rem 0;padding:1.2rem 1.3rem;border-left:3px solid rgba(211,176,106,0.5);background:rgba(211,176,106,0.04);border-radius:0 16px 16px 0;color:var(--text);font-style:italic;font-size:1.04rem;line-height:1.75;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(211,176,106,0.2),rgba(211,176,106,0));margin:2rem 0 1.4rem;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(211,176,106,0.12);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);border:1px solid rgba(211,176,106,0.18);border-radius:999px;padding:10px 16px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(211,176,106,0.38);background:rgba(211,176,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+.scroll-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:rgba(211,176,106,0.12);border:1px solid var(--border);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:1.1rem;cursor:pointer;opacity:0;transition:all 0.3s ease;z-index:100;}
+.scroll-top.visible{opacity:1;}
+.scroll-top:hover{background:rgba(211,176,106,0.2);}
+@media(max-width:720px){.frame{inset:8px;}.container{padding:24px 16px 64px;}.hero{padding:42px 18px 28px;border-radius:24px;}.hero::before{width:220px;height:220px;bottom:24px;}.content{padding:28px 20px;border-radius:22px;}.navigation-row{flex-direction:column;align-items:center;}}</style>
 </head>
 <body>
-    <div class="modo-lectura" onclick="toggleModoLectura()">
-        <span id="modo-icon">🌙</span> Modo Lectura
-    </div>
-
-    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
-
-    <div class="container">
-        <header class="nodo-header">
-            <div class="nodo-numero">NODO 4</div>
-            <h1 class="nodo-titulo-principal">EL JARDÍN DE LA MENTE</h1>
-            <p class="nodo-subtitulo">El cultivo consciente del ecosistema mental</p>
-        </header>
-
-        <nav class="navegacion-superior">
-            <a href="nodo_03.html" class="nav-btn">← Anterior</a>
-            <span class="nav-centro">Nodo 4 de 7</span>
-            <a href="nodo_05.html" class="nav-btn">Siguiente →</a>
-        </nav>
-
-        <article class="contenido">
-            <h2>La Revelación del Jardinero</h2>
-            
-            <p><strong>Tu mente no es un campo de batalla.</strong><br>
-            <strong>Es un jardín.</strong></p>
-            
-            <p><strong>Y tú no eres el guerrero que debe conquistarla.</strong><br>
-            <strong>Eres el jardinero que puede cultivarla.</strong></p>
-            
-            <p>En este jardín:</p>
-            
-            <ul>
-                <li>Los pensamientos son semillas</li>
-                <li>Las emociones son el clima</li>
-                <li>Las voces son diferentes especies de plantas</li>
-                <li>La atención es el agua</li>
-                <li>La intención es el sol</li>
-                <li>La compasión es el abono</li>
-            </ul>
-            
-            <p>Y como todo jardinero sabio sabe: No puedes forzar el crecimiento, pero puedes crear las condiciones para que la vida florezca.</p>
-
-            <h2>El Ecosistema Mental</h2>
-
-            <h3>La Biodiversidad es Salud</h3>
-            
-            <p>Un jardín con una sola especie de planta es vulnerable. Una mente con una sola voz dominante es frágil.</p>
-            
-            <p>Necesitas:</p>
-            
-            <ul>
-                <li>La voz crítica (como las espinas que protegen la rosa)</li>
-                <li>La voz soñadora (como las flores que atraen la belleza)</li>
-                <li>La voz práctica (como las raíces que anclan)</li>
-                <li>La voz intuitiva (como las hojas que sienten la dirección del viento)</li>
-                <li>La voz compasiva (como el musgo que suaviza las piedras)</li>
-            </ul>
-            
-            <p>Cada una tiene su función en el ecosistema. Eliminar alguna desequilibra el todo.</p>
-
-            <h3>Los Ciclos Naturales</h3>
-            
-            <p>Tu jardín mental tiene estaciones:</p>
-            
-            <ul>
-                <li><strong>Primaveras mentales:</strong> Cuando todo brota con entusiasmo</li>
-                <li><strong>Veranos mentales:</strong> Cuando las ideas maduran bajo el sol pleno</li>
-                <li><strong>Otoños mentales:</strong> Cuando es tiempo de cosechar y soltar</li>
-                <li><strong>Inviernos mentales:</strong> Cuando el descanso prepara el próximo ciclo</li>
-            </ul>
-            
-            <p>Respetar estos ciclos es sabiduría. Forzar verano perpetuo es agotamiento. Temer al invierno es perderse la renovación.</p>
-
-            <h2>Las Herramientas del Jardinero Mental</h2>
-
-            <div class="seccion-especial">
-                <h3>La Observación Matutina</h3>
-                
-                <p>Cada mañana, antes de comenzar el día, camina por tu jardín mental:</p>
-                
-                <ul>
-                    <li>¿Qué ha crecido durante la noche?</li>
-                    <li>¿Qué necesita atención hoy?</li>
-                    <li>¿Hay malezas que necesiten ser gentilmente removidas?</li>
-                    <li>¿Hay plantas que necesiten más luz?</li>
-                </ul>
-                
-                <p>No juzgues lo que encuentres. Solo observa con la curiosidad de un jardinero que ama cada rincón de su jardín.</p>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>El Riego Consciente (La Atención)</h3>
-                
-                <p><strong>Aquello a lo que prestas atención, crece.</strong></p>
-                
-                <p>¿Estás regando las flores o las malezas? ¿Estás alimentando los pensamientos que te nutren o los que te envenenan? ¿Tu atención es como lluvia suave o como tormenta destructiva?</p>
-                
-                <h4>Práctica del Riego Selectivo:</h4>
-                <ul>
-                    <li>Cuando notes un pensamiento nutritivo, deténte</li>
-                    <li>Dale tu atención completa por 17 segundos</li>
-                    <li>Es el tiempo que tarda una semilla mental en enraizar</li>
-                </ul>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>La Poda Compasiva</h3>
-                
-                <p>Podar no es violencia, es amor.</p>
-                
-                <p>Cuando una voz o pensamiento crece descontroladamente:</p>
-                
-                <ul>
-                    <li>No lo arranques con violencia</li>
-                    <li>Agradécele su vigor</li>
-                    <li>Redirígelo suavemente</li>
-                    <li>Pódalo con intención de que crezca más sano</li>
-                </ul>
-                
-                <p><em>"Voz crítica, aprecio tu energía, pero crezcamos en esta dirección más constructiva."</em></p>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>El Compostaje Alquímico</h3>
-                
-                <p>Los "desperdicios" mentales son el mejor fertilizante:</p>
-                
-                <ul>
-                    <li>Los errores se convierten en sabiduría</li>
-                    <li>Los miedos se transforman en prudencia</li>
-                    <li>Las tristezas se vuelven compasión</li>
-                    <li>Las rabias se transmutan en determinación</li>
-                </ul>
-                
-                <p>No tires nada. Todo puede ser compostado en nutrientes para nuevo crecimiento.</p>
-            </div>
-
-            <h2>Las Zonas del Jardín Mental</h2>
-
-            <h3>El Santuario Central</h3>
-            <p>El espacio sagrado de quietud. Aquí no crece nada, solo ES. Es el claro en el bosque donde descansas. El banco donde te sientas a contemplar.</p>
-            <p><strong>Protege este espacio. Es tu refugio.</strong></p>
-
-            <h3>El Huerto Práctico</h3>
-            <p>Donde cultivas pensamientos útiles:</p>
-            <ul>
-                <li>Soluciones a problemas cotidianos</li>
-                <li>Planes y estrategias</li>
-                <li>Conocimientos aplicables</li>
-                <li>Habilidades en desarrollo</li>
-            </ul>
-
-            <h3>El Jardín de Flores</h3>
-            <p>Donde permites la belleza sin propósito:</p>
-            <ul>
-                <li>Sueños sin meta</li>
-                <li>Fantasías creativas</li>
-                <li>Memorias hermosas</li>
-                <li>Apreciaciones estéticas</li>
-            </ul>
-
-            <h3>El Bosque Salvaje</h3>
-            <p>La zona sin domesticar de tu mente:</p>
-            <ul>
-                <li>Intuiciones primarias</li>
-                <li>Instintos antiguos</li>
-                <li>Sabiduría no verbal</li>
-                <li>Conexión con lo misterioso</li>
-            </ul>
-            
-            <p><strong>No intentes controlarlo todo. Deja que una parte sea salvaje. Ahí vive tu genio indomable.</strong></p>
-
-            <h3>El Invernadero de Sanación</h3>
-            <p>Donde cuidas los brotes más delicados:</p>
-            <ul>
-                <li>Nuevas creencias en formación</li>
-                <li>Aspectos heridos en recuperación</li>
-                <li>Potenciales emergentes</li>
-                <li>Sueños nacientes</li>
-            </ul>
-            
-            <p>Aquí se requiere temperatura controlada, atención extra, paciencia infinita.</p>
-
-            <h2>El Calendario del Jardinero Mental</h2>
-
-            <div class="seccion-especial">
-                <h3>Ritual Diario: La Caminata del Jardinero</h3>
-                <p>5 minutos cada mañana:</p>
-                <ul>
-                    <li>Respira y centra</li>
-                    <li>Observa el estado del jardín</li>
-                    <li>Riega con atención lo que quieres cultivar</li>
-                    <li>Poda suavemente lo sobrecrecido</li>
-                    <li>Agradece la abundancia</li>
-                </ul>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Ritual Semanal: La Gran Jardinería</h3>
-                <p>30 minutos cada domingo:</p>
-                <ul>
-                    <li>Revisión profunda del ecosistema</li>
-                    <li>Trasplante de ideas que necesitan más espacio</li>
-                    <li>Siembra de nuevas intenciones</li>
-                    <li>Compostaje de la semana pasada</li>
-                    <li>Planificación del cultivo semanal</li>
-                </ul>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Ritual Mensual: La Luna del Jardinero</h3>
-                <p>Una tarde al mes:</p>
-                <ul>
-                    <li>Evaluación de los ciclos completados</li>
-                    <li>Celebración de lo cosechado</li>
-                    <li>Liberación de lo que ya cumplió su ciclo</li>
-                    <li>Preparación del terreno para el próximo mes</li>
-                    <li>Renovación del compromiso con el jardín</li>
-                </ul>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Ritual Estacional: La Renovación</h3>
-                <p>Cuatro veces al año:</p>
-                <ul>
-                    <li>Reconocimiento del cambio de estación mental</li>
-                    <li>Ajuste de las prácticas de cultivo</li>
-                    <li>Grandes podas o siembras según corresponda</li>
-                    <li>Conexión con el ritmo mayor de la vida</li>
-                    <li>Ceremonia de gratitud por el jardín</li>
-                </ul>
-            </div>
-
-            <h2>Remedios del Jardinero para Problemas Comunes</h2>
-
-            <h3>Cuando el jardín está sobrecrecido (mente caótica):</h3>
-            <ul>
-                <li>No intentes podar todo de una vez</li>
-                <li>Comienza con un pequeño claro</li>
-                <li>Expande desde ese centro de orden</li>
-                <li>Un poco cada día es mejor que un ataque masivo</li>
-            </ul>
-
-            <h3>Cuando nada crece (mente estancada):</h3>
-            <ul>
-                <li>Revisa el suelo (tus creencias fundamentales)</li>
-                <li>Añade nutrientes (nuevas experiencias, lecturas, conversaciones)</li>
-                <li>Cambia el riego (modifica tus rutinas de atención)</li>
-                <li>A veces el suelo necesita descansar (permítete el vacío)</li>
-            </ul>
-
-            <h3>Cuando las malezas dominan (pensamientos negativos):</h3>
-            <ul>
-                <li>No las odies, son plantas también</li>
-                <li>Pregúntate qué necesidad están expresando</li>
-                <li>A menudo indican un desequilibrio en el pH mental</li>
-                <li>Ajusta las condiciones en lugar de solo combatir síntomas</li>
-            </ul>
-
-            <h3>Cuando aparecen plagas (pensamientos intrusivos):</h3>
-            <ul>
-                <li>Las plagas aparecen en jardines desequilibrados</li>
-                <li>Fortalece el ecosistema completo</li>
-                <li>Introduce "depredadores naturales" (pensamientos de gratitud, compasión)</li>
-                <li>Recuerda: un jardín perfectamente limpio no es natural ni sano</li>
-            </ul>
-
-            <h2>La Cosecha del Jardinero Mental</h2>
-            
-            <p>Cuando cultivas tu mente como jardín, cosechas:</p>
-
-            <h3>Paz en lugar de guerra</h3>
-            <p>No hay enemigos en un jardín, solo vida buscando expresarse.</p>
-
-            <h3>Curiosidad en lugar de juicio</h3>
-            <p>"¿Qué está tratando de crecer aquí?" reemplaza a "¿Por qué pienso estas cosas?"</p>
-
-            <h3>Paciencia en lugar de prisa</h3>
-            <p>Los jardines enseñan que todo tiene su tiempo.</p>
-
-            <h3>Asombro en lugar de control</h3>
-            <p>A veces crecen flores que no sembraste. Son regalos del misterio.</p>
-
-            <h3>Colaboración en lugar de dominación</h3>
-            <p>Trabajas CON las fuerzas de tu mente, no contra ellas.</p>
-
-            <div class="meditacion">
-                <h3>Meditación: Entrando al Jardín</h3>
-                
-                <p>Cierra los ojos y respira profundo.</p>
-                
-                <p>Imagina que caminas hacia tu jardín mental.<br>
-                Hay una puerta. Tal vez una verja de madera,<br>
-                tal vez un arco de flores, tal vez solo una apertura.</p>
-                
-                <p>Entras.</p>
-                
-                <p>¿Qué ves?<br>
-                ¿Cómo está tu jardín hoy?</p>
-                
-                <p>Sin juicio, solo observa.</p>
-                
-                <p>Camina por los senderos.<br>
-                Algunos claros, otros cubiertos de hierba.<br>
-                Está bien. Es tu jardín tal como es hoy.</p>
-                
-                <p>Encuentra tu lugar favorito.<br>
-                Tal vez bajo un árbol.<br>
-                Tal vez junto a una fuente.<br>
-                Tal vez en un claro soleado.</p>
-                
-                <p>Siéntate ahí.</p>
-                
-                <p>Desde este lugar, siente el jardín completo.<br>
-                Es tuyo. Eres su jardinero.<br>
-                No su dueño, sino su cuidador.</p>
-                
-                <p>Pregúntale al jardín:<br>
-                <em>"¿Qué necesitas de mí hoy?"</em></p>
-                
-                <p>Escucha.<br>
-                No con los oídos.<br>
-                Con esa parte de ti que sabe sin saber.</p>
-                
-                <p>Cuando recibas la respuesta,<br>
-                haz un compromiso simple:<br>
-                <em>"Te cuidaré como pueda hoy."</em></p>
-                
-                <p>Agradece al jardín.<br>
-                Agradécete a ti mismo por ser su jardinero.</p>
-                
-                <p>Cuando estés listo,<br>
-                camina de vuelta a la puerta,<br>
-                sabiendo que puedes regresar cuando quieras.</p>
-                
-                <p>Abre los ojos.<br>
-                Traes contigo la paz del jardín.</p>
-            </div>
-
-            <h2>El Secreto Final del Jardinero</h2>
-            
-            <p>El secreto más profundo del jardinero mental es este:</p>
-            
-            <div class="cita-destacada">
-                Tú no eres el jardinero.<br>
-                Tú eres el jardín mismo que se cuida a sí mismo.
-            </div>
-            
-            <p>La separación entre jardinero y jardín es una ilusión útil para comenzar. Pero la maestría llega cuando comprendes:</p>
-            
-            <p>Eres la tierra y la semilla.<br>
-            Eres el agua y la sed.<br>
-            Eres la flor y el que la contempla.</p>
-            
-            <p>En esa unidad, el cuidado se vuelve natural, el cultivo se vuelve espontáneo, el florecimiento se vuelve inevitable.</p>
-            
-            <p>Y tu mente, ese jardín sagrado, se convierte en un paraíso viviente donde cada pensamiento es una flor, cada voz un pájaro cantando, cada momento una estación perfecta en el ciclo eterno del crecer.</p>
-
-            <div class="cita-destacada">
-                "Cultiva tu mente como cultivarías el más precioso jardín,<br>
-                con paciencia, con amor, con asombro,<br>
-                y observa cómo lo que parecía caos<br>
-                se revela como el diseño perfecto<br>
-                de la naturaleza expresándose<br>
-                a través de ti."
-            </div>
-        </article>
-
-        <nav class="navegacion-inferior">
-            <a href="nodo_03.html" class="nav-btn">← Nodo 3: La Alquimia del Diálogo</a>
-            <a href="nodo_05.html" class="nav-btn">Nodo 5: La Sinfonía del Ser →</a>
-        </nav>
-    </div>
-
-    <script>
-        let modoLectura = false;
+<div class="frame" aria-hidden="true"></div>
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+<div class="container">
+    <div class="topbar"><a class="back-link" href="index.html">← Portal del Libro II</a></div>
+    <header class="hero">
+        <div class="hero-topline">Trinity Origen · Libro II</div>
+        <div class="sigil-wrap" aria-hidden="true"><div class="sigil">◈</div></div>
+        <div class="book-label">La Voz Interior</div>
+        <div class="node-kicker">Nodo IV</div>
+        <h1 class="node-title">El Jardín de la Mente</h1>
+        <p class="node-subtitle">El cultivo consciente del ecosistema mental</p>
+    </header>
+    <nav class="nav-strip" aria-label="Nodos del libro"><span class="nav-strip-label">Nodos:</span><a class="nav-node-link" href="nodo_01.html">I</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_02.html">II</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_03.html">III</a><span class="nav-sep">·</span><a class="nav-node-link activo" href="nodo_04.html">IV</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_05.html">V</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_06.html">VI</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_07.html">VII</a></nav>
+    <main class="content">
         
-        function toggleModoLectura() {
-            const body = document.body;
-            const icon = document.getElementById('modo-icon');
-            
-            if (!modoLectura) {
-                body.style.filter = 'sepia(10%) contrast(1.2)';
-                icon.textContent = '☀️';
-                modoLectura = true;
-            } else {
-                body.style.filter = 'none';
-                icon.textContent = '🌙';
-                modoLectura = false;
-            }
-        }
-
-        const volverArriba = document.getElementById('volverArriba');
+        <h2>La Revelación del Jardinero</h2>
+        <p class="lead"><strong>Tu mente no es un campo de batalla. Es un jardín.</strong></p>
+        <p class="lead"><strong>Y tú no eres el guerrero que debe conquistarla. Eres el jardinero que puede cultivarla.</strong></p>
+        <p>En este jardín: los pensamientos son semillas, las emociones son el clima, las voces son diferentes especies de plantas, la atención es el agua, la intención es el sol, y la compasión es el abono.</p>
+        <div class="section-divider"></div>
+        <h2>El Ecosistema Mental</h2>
+        <h3>La Biodiversidad es Salud</h3>
+        <p>Un jardín con una sola especie de planta es vulnerable. Una mente con una sola voz dominante es frágil. Necesitas la voz crítica (como las espinas que protegen la rosa), la soñadora (como las flores que atraen la belleza), la práctica (como las raíces que anclan), la intuitiva (como las hojas que sienten el viento).</p>
+        <h3>Los Ciclos Naturales</h3>
+        <p>Tu jardín mental tiene estaciones:</p>
+        <ul>
+            <li><strong>Primaveras mentales:</strong> cuando todo brota con entusiasmo</li>
+            <li><strong>Veranos mentales:</strong> cuando las ideas maduran bajo el sol pleno</li>
+            <li><strong>Otoños mentales:</strong> cuando es tiempo de cosechar y soltar</li>
+            <li><strong>Inviernos mentales:</strong> cuando el descanso prepara el próximo ciclo</li>
+        </ul>
+        <div class="section-divider"></div>
+        <h2>Las Herramientas del Jardinero Mental</h2>
+        <div class="seccion-especial">
+            <h3>La Observación Matutina</h3>
+            <p>Cada mañana, antes de comenzar el día, camina por tu jardín mental:</p>
+            <ul>
+                <li>¿Qué ha crecido durante la noche?</li>
+                <li>¿Qué necesita atención hoy?</li>
+                <li>¿Hay malezas que necesiten ser gentilmente removidas?</li>
+                <li>¿Hay plantas que necesiten más luz?</li>
+            </ul>
+        </div>
+        <div class="seccion-especial">
+            <h3>El Riego Consciente</h3>
+            <p><strong>Aquello a lo que prestas atención, crece.</strong></p>
+            <p>¿Estás regando las flores o las malezas? Cuando notes un pensamiento nutritivo, detente y dale tu atención completa por 17 segundos — el tiempo que tarda una semilla mental en enraizar.</p>
+        </div>
+        <div class="seccion-especial">
+            <h3>La Poda Compasiva</h3>
+            <p>Podar no es violencia, es amor. Cuando una voz crece descontroladamente: no la arranques, agradécele su vigor, redirígela suavemente.</p>
+            <p><em>"Voz crítica, aprecio tu energía, pero crezcamos en esta dirección más constructiva."</em></p>
+        </div>
+        <div class="seccion-especial">
+            <h3>El Compostaje Alquímico</h3>
+            <p>Los "desperdicios" mentales son el mejor fertilizante: los errores se convierten en sabiduría, los miedos en prudencia, las tristezas en compasión, las rabias en determinación. No tires nada. Todo puede ser compostado.</p>
+        </div>
+        <div class="section-divider"></div>
+        <h2>Las Zonas del Jardín Mental</h2>
+        <h3>El Santuario Central</h3>
+        <p>El espacio sagrado de quietud. Aquí no crece nada, solo ES. Es el claro en el bosque donde descansas. <strong>Protege este espacio. Es tu refugio.</strong></p>
+        <h3>El Huerto Práctico</h3>
+        <p>Donde cultivas pensamientos útiles: soluciones a problemas cotidianos, planes y estrategias, conocimientos aplicables, habilidades en desarrollo.</p>
+        <h3>El Jardín de Flores</h3>
+        <p>Donde permites la belleza sin propósito: sueños sin meta, fantasías creativas, memorias hermosas, apreciaciones estéticas.</p>
+        <h3>El Bosque Salvaje</h3>
+        <p>La zona sin domesticar: intuiciones primarias, instintos antiguos, sabiduría no verbal. <strong>No intentes controlarlo todo. Deja que una parte sea salvaje. Ahí vive tu genio indomable.</strong></p>
+        <div class="section-divider"></div>
+        <h2>Remedios del Jardinero para Problemas Comunes</h2>
+        <h3>Cuando el jardín está sobrecrecido (mente caótica):</h3>
+        <ul>
+            <li>No intentes podar todo de una vez</li>
+            <li>Comienza con un pequeño claro y expande desde ese centro</li>
+            <li>Un poco cada día es mejor que un ataque masivo</li>
+        </ul>
+        <h3>Cuando nada crece (mente estancada):</h3>
+        <ul>
+            <li>Revisa el suelo (tus creencias fundamentales)</li>
+            <li>Añade nutrientes (nuevas experiencias, lecturas, conversaciones)</li>
+            <li>A veces el suelo necesita descansar</li>
+        </ul>
+        <div class="meditacion">
+            <h3>Meditación: Entrando al Jardín</h3>
+            <p>Cierra los ojos y respira profundo.</p>
+            <p>Imagina que caminas hacia tu jardín mental.<br>Hay una puerta. Entras.</p>
+            <p>¿Qué ves? ¿Cómo está tu jardín hoy?<br>Sin juicio, solo observa.</p>
+            <p>Camina por los senderos.<br>Algunos claros, otros cubiertos de hierba. Está bien.</p>
+            <p>Encuentra tu lugar favorito. Siéntate ahí.</p>
+            <p>Desde este lugar, siente el jardín completo.<br>Es tuyo. Eres su jardinero.</p>
+            <p>Pregúntale al jardín:<br><em>"¿Qué necesitas de mí hoy?"</em></p>
+            <p>Escucha. Con esa parte de ti que sabe sin saber.</p>
+            <p>Agradece al jardín. Agradécete a ti mismo por ser su jardinero.</p>
+        </div>
+        <div class="cita-destacada">
+            "Cultiva tu mente como cultivarías el más precioso jardín,<br>
+            con paciencia, con amor, con asombro,<br>
+            y observa cómo lo que parecía caos<br>
+            se revela como el diseño perfecto<br>
+            de la naturaleza expresándose a través de ti."
+        </div>
         
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                volverArriba.classList.add('visible');
-            } else {
-                volverArriba.classList.remove('visible');
-            }
-        });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        window.addEventListener('load', () => {
-            const nodosVisitados = JSON.parse(localStorage.getItem('nodos-visitados') || '[]');
-            if (!nodosVisitados.includes(4)) {
-                nodosVisitados.push(4);
-                localStorage.setItem('nodos-visitados', JSON.stringify(nodosVisitados));
-            }
-        });
-    </script>
+    </main>
+    
+    <nav class="navigation" aria-label="Navegación entre nodos">
+        <div class="navigation-row">
+            <a class="nav-link" href="nodo_03.html">← Nodo III</a>
+            <a class="nav-link" href="index.html">Portal del Libro</a>
+            <a class="nav-link" href="nodo_05.html">Nodo V →</a>
+            <a class="nav-link" href="../index.html">Trinity Origen</a>
+        </div>
+    </nav>
+    <footer class="footer">
+        <div class="footer-symbol">◈</div>
+        <p>Trinity Origen · Libro II · La Voz Interior</p>
+        <p>"No es mío, vino a través de mí."</p>
+    </footer>
+</div>
+<script>
+const st=document.getElementById('scrollTop');
+window.addEventListener('scroll',()=>{st.classList.toggle('visible',window.pageYOffset>300);});
+window.addEventListener('load',()=>{const v=JSON.parse(localStorage.getItem('nodos-voz')||'[]');if(!v.includes(4)){v.push(4);localStorage.setItem('nodos-voz',JSON.stringify(v));}});
+</script>
 </body>
 </html>

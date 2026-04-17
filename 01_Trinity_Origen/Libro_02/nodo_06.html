@@ -1,701 +1,174 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 6: El Templo de la Integración - La Voz Interior</title>
-    
-    <style>
-        :root {
-            --turquesa-voz: #00CED1;
-            --azul-profundo: #0a1628;
-            --celeste: #87CEEB;
-            --dorado: #DAA520;
-            --blanco-suave: #f0f0f0;
-            --gris-suave: #a0a0a0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            background: var(--azul-profundo);
-            color: var(--blanco-suave);
-            line-height: 1.9;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 30px;
-        }
-
-        .nodo-header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            border-bottom: 2px solid rgba(0, 206, 209, 0.3);
-            margin-bottom: 60px;
-        }
-
-        .nodo-numero {
-            font-size: 1.2em;
-            color: var(--turquesa-voz);
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-        }
-
-        .nodo-titulo-principal {
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--turquesa-voz), var(--celeste));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nodo-subtitulo {
-            font-size: 1.3em;
-            color: var(--gris-suave);
-            font-style: italic;
-        }
-
-        .navegacion-superior {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            color: var(--celeste);
-            text-decoration: none;
-            border: 2px solid var(--celeste);
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-size: 0.95em;
-        }
-
-        .nav-btn:hover {
-            background: var(--celeste);
-            color: var(--azul-profundo);
-        }
-
-        .nav-centro {
-            color: var(--gris-suave);
-            font-size: 0.9em;
-        }
-
-        .contenido {
-            font-size: 1.15em;
-            line-height: 2;
-        }
-
-        h2 {
-            color: var(--turquesa-voz);
-            font-size: 2em;
-            margin: 50px 0 25px;
-        }
-
-        h3 {
-            color: var(--celeste);
-            font-size: 1.5em;
-            margin: 40px 0 20px;
-        }
-
-        h4 {
-            color: var(--dorado);
-            font-size: 1.2em;
-            margin: 30px 0 15px;
-        }
-
-        p {
-            margin-bottom: 20px;
-        }
-
-        em {
-            color: var(--celeste);
-            font-style: italic;
-        }
-
-        strong {
-            color: var(--dorado);
-        }
-
-        .cita-destacada {
-            background: rgba(0, 206, 209, 0.1);
-            border-left: 4px solid var(--turquesa-voz);
-            padding: 30px;
-            margin: 40px 0;
-            font-size: 1.2em;
-            font-style: italic;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .meditacion {
-            background: rgba(135, 206, 235, 0.08);
-            border: 2px solid var(--celeste);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 50px 0;
-        }
-
-        .meditacion h3 {
-            color: var(--celeste);
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 30px;
-        }
-
-        .meditacion p {
-            line-height: 2.2;
-        }
-
-        ul, ol {
-            margin: 20px 0 20px 40px;
-        }
-
-        li {
-            margin-bottom: 15px;
-        }
-
-        .seccion-especial {
-            background: rgba(218, 165, 32, 0.05);
-            border: 1px solid var(--dorado);
-            border-radius: 10px;
-            padding: 30px;
-            margin: 40px 0;
-        }
-
-        .navegacion-inferior {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 60px 0 40px;
-            margin-top: 80px;
-            border-top: 2px solid rgba(0, 206, 209, 0.3);
-        }
-
-        .volver-arriba {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--turquesa-voz);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            font-size: 1.5em;
-        }
-
-        .volver-arriba.visible {
-            opacity: 1;
-        }
-
-        .volver-arriba:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 20px rgba(0, 206, 209, 0.5);
-        }
-
-        .modo-lectura {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            padding: 12px 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-        }
-
-        .modo-lectura:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px 15px;
-            }
-
-            .nodo-titulo-principal {
-                font-size: 2em;
-            }
-
-            .navegacion-superior,
-            .navegacion-inferior {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .nav-centro {
-                order: -1;
-            }
-
-            h2 {
-                font-size: 1.6em;
-            }
-
-            .contenido {
-                font-size: 1.05em;
-            }
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nodo VI · El Templo de la Integración | La Voz Interior | Trinity Origen</title>
+    <style>:root{--bg:#040404;--gold:#d3b06a;--violet:#6f4e90;--text:#f3efe7;--text-soft:rgba(243,239,231,0.72);--text-faint:rgba(243,239,231,0.4);--border:rgba(211,176,106,0.16);--border-strong:rgba(211,176,106,0.3);--radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.35);--max-width:920px;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:"Georgia","Times New Roman",serif;background:radial-gradient(circle at 50% 0%,rgba(111,78,144,0.18),transparent 26%),radial-gradient(circle at 50% 10%,rgba(211,176,106,0.06),transparent 30%),linear-gradient(180deg,#090909 0%,#040404 45%,#030303 100%);color:var(--text);line-height:1.9;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at center,black 35%,transparent 82%);-webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);opacity:0.12;}
+.frame{position:fixed;inset:12px;border:1px solid rgba(211,176,106,0.08);pointer-events:none;z-index:0;}
+.container{position:relative;z-index:1;max-width:var(--max-width);margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;padding:11px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.014);transition:all 0.25s ease;}
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{position:relative;overflow:hidden;text-align:center;padding:54px 28px 34px;border-radius:30px;border:1px solid rgba(211,176,106,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.024),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(111,78,144,0.16),transparent 42%);box-shadow:var(--shadow);margin-bottom:34px;}
+.hero::before{content:"";position:absolute;inset:auto 50% 30px;width:320px;height:320px;transform:translateX(-50%);border-radius:50%;border:1px solid rgba(211,176,106,0.11);box-shadow:0 0 0 14px rgba(211,176,106,0.03),0 0 0 34px rgba(111,78,144,0.03),inset 0 0 60px rgba(211,176,106,0.025);pointer-events:none;}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(211,176,106,0.22);background:radial-gradient(circle,rgba(211,176,106,0.11),rgba(255,255,255,0.01) 60%,transparent 72%);box-shadow:0 0 28px rgba(111,78,144,0.12),inset 0 0 24px rgba(211,176,106,0.04);}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;}
+.book-label{position:relative;z-index:2;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:8px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title{position:relative;z-index:2;font-size:clamp(1.7rem,4vw,2.8rem);font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;line-height:1.2;}
+.node-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.02rem;margin-bottom:16px;font-style:italic;}
+.nav-strip{background:rgba(255,255,255,0.016);border:1px solid rgba(211,176,106,0.12);border-radius:18px;padding:14px 20px;margin-bottom:28px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.nav-strip-label{color:var(--gold);font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;margin-right:4px;}
+.nav-node-link{color:var(--text-faint);font-size:0.82rem;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid transparent;transition:all 0.2s;}
+.nav-node-link:hover{color:var(--gold);border-color:var(--border);}
+.nav-node-link.activo{color:var(--gold);border-color:var(--border);background:rgba(211,176,106,0.06);}
+.nav-sep{color:var(--text-faint);opacity:0.4;font-size:0.8rem;}
+.content{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));border:1px solid rgba(211,176,106,0.1);border-radius:26px;padding:40px 36px;box-shadow:0 12px 32px rgba(0,0,0,0.22);}
+.content h2{color:var(--gold);font-size:1.38rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.08rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content h4{color:var(--violet);font-size:0.95rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:1.4rem 0 0.5rem;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.02rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content ol{margin:0.4rem 0 1.2rem 1.4rem;}
+.content ol li{color:var(--text-soft);margin-bottom:0.45rem;}
+.content strong{color:var(--text);}
+.content em{color:var(--gold);font-style:italic;}
+.content blockquote{margin:1.4rem 0;padding:1rem 1.1rem 1rem 1.3rem;border-left:3px solid rgba(211,176,106,0.45);background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;color:var(--text);font-style:italic;}
+.seccion-especial{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.18);border-radius:16px;padding:28px;margin:1.6rem 0;}
+.seccion-especial h3{color:var(--gold);margin-top:0;}
+.seccion-especial h4{color:var(--gold);}
+.meditacion{background:rgba(111,78,144,0.06);border:1px solid rgba(111,78,144,0.22);border-radius:16px;padding:36px 32px;margin:2rem 0;}
+.meditacion h3{color:var(--gold);text-align:center;margin-top:0;margin-bottom:1.4rem;letter-spacing:0.1em;text-transform:uppercase;font-size:1rem;}
+.meditacion p{color:var(--text-soft);line-height:2.1;}
+.meditacion em{color:var(--text-soft);font-style:italic;}
+.cita-destacada{margin:1.4rem 0;padding:1.2rem 1.3rem;border-left:3px solid rgba(211,176,106,0.5);background:rgba(211,176,106,0.04);border-radius:0 16px 16px 0;color:var(--text);font-style:italic;font-size:1.04rem;line-height:1.75;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(211,176,106,0.2),rgba(211,176,106,0));margin:2rem 0 1.4rem;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(211,176,106,0.12);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);border:1px solid rgba(211,176,106,0.18);border-radius:999px;padding:10px 16px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(211,176,106,0.38);background:rgba(211,176,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+.scroll-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:rgba(211,176,106,0.12);border:1px solid var(--border);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:1.1rem;cursor:pointer;opacity:0;transition:all 0.3s ease;z-index:100;}
+.scroll-top.visible{opacity:1;}
+.scroll-top:hover{background:rgba(211,176,106,0.2);}
+@media(max-width:720px){.frame{inset:8px;}.container{padding:24px 16px 64px;}.hero{padding:42px 18px 28px;border-radius:24px;}.hero::before{width:220px;height:220px;bottom:24px;}.content{padding:28px 20px;border-radius:22px;}.navigation-row{flex-direction:column;align-items:center;}}</style>
 </head>
 <body>
-    <div class="modo-lectura" onclick="toggleModoLectura()">
-        <span id="modo-icon">🌙</span> Modo Lectura
-    </div>
-
-    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
-
-    <div class="container">
-        <header class="nodo-header">
-            <div class="nodo-numero">NODO 6</div>
-            <h1 class="nodo-titulo-principal">EL TEMPLO DE LA INTEGRACIÓN</h1>
-            <p class="nodo-subtitulo">La arquitectura sagrada de la unidad interior</p>
-        </header>
-
-        <nav class="navegacion-superior">
-            <a href="nodo_05.html" class="nav-btn">← Anterior</a>
-            <span class="nav-centro">Nodo 6 de 7</span>
-            <a href="nodo_07.html" class="nav-btn">Siguiente →</a>
-        </nav>
-
-        <article class="contenido">
-            <h2>El Arquitecto Despierta</h2>
-            
-            <p>Has sido jardinero de tu mente.<br>
-            Has sido director de tu sinfonía interior.<br>
-            Ahora te conviertes en el <strong>arquitecto sagrado</strong><br>
-            del templo donde todas tus voces<br>
-            pueden finalmente coexistir en paz.</p>
-            
-            <p>Este templo no se construye con ladrillos sino con conciencia.<br>
-            Sus cimientos no son de piedra sino de aceptación.<br>
-            Sus muros no separan sino que abrazan.<br>
-            Su techo no limita sino que conecta con el infinito.</p>
-            
-            <p><strong>Es el Templo de Tu Integración Total.</strong></p>
-
-            <h2>Los Cimientos: Aceptación Radical</h2>
-            
-            <p>Antes de construir hacia arriba, debes cavar profundo. Los cimientos de tu templo son:</p>
-
-            <h3>La Piedra Angular de la Auto-Aceptación</h3>
-            
-            <div class="cita-destacada">
-                "Yo soy todo lo que soy.<br>
-                Las voces que amo y las que temo.<br>
-                Los aspectos luminosos y los sombríos.<br>
-                Todo pertenece. Todo tiene un lugar aquí."
-            </div>
-
-            <h3>Los Pilares de la No-Resistencia</h3>
-            
-            <p>Cuatro pilares sostienen la estructura:</p>
-            
-            <ul>
-                <li><strong>No resistir al dolor</strong> - Es maestro, no enemigo</li>
-                <li><strong>No resistir al placer</strong> - Es bendición, no peligro</li>
-                <li><strong>No resistir al cambio</strong> - Es vida, no muerte</li>
-                <li><strong>No resistir a la quietud</strong> - Es plenitud, no vacío</li>
-            </ul>
-
-            <h3>El Mortero de la Compasión</h3>
-            
-            <p>Lo que une cada piedra, cada elemento:</p>
-            
-            <ul>
-                <li>Compasión hacia tu humanidad imperfecta</li>
-                <li>Compasión hacia tu proceso de aprendizaje</li>
-                <li>Compasión hacia cada voz que intenta ayudar</li>
-                <li>Compasión hacia el arquitecto que aprende construyendo</li>
-            </ul>
-
-            <h2>La Arquitectura del Templo Interior</h2>
-
-            <h3>El Vestíbulo - Espacio de Transición</h3>
-            
-            <p>Al entrar a tu templo, hay un espacio de transición. Aquí dejas:</p>
-            
-            <ul>
-                <li>Los juicios del mundo exterior</li>
-                <li>Las máscaras que usas para otros</li>
-                <li>La prisa y la urgencia</li>
-                <li>La necesidad de ser diferente de lo que eres</li>
-            </ul>
-            
-            <p>Es el espacio donde te preparas para el encuentro con la totalidad de tu ser.</p>
-
-            <h3>La Sala de las Voces - El Gran Salón</h3>
-            
-            <p>Un espacio circular, sin jerarquías. Cada voz tiene su altar:</p>
-            
-            <ul>
-                <li><strong>El Altar del Guerrero:</strong> Honra tu fuerza y protección</li>
-                <li><strong>El Altar del Niño:</strong> Celebra tu inocencia y asombro</li>
-                <li><strong>El Altar del Sabio:</strong> Reverencia tu conocimiento profundo</li>
-                <li><strong>El Altar del Amante:</strong> Abraza tu capacidad de conexión</li>
-                <li><strong>El Altar del Creador:</strong> Manifiesta tu poder generativo</li>
-                <li><strong>El Altar del Místico:</strong> Conecta con el misterio</li>
-                <li><strong>El Altar del Sanador:</strong> Reconoce tu poder regenerativo</li>
-            </ul>
-            
-            <p><strong>En el centro: El Fuego Sagrado de la Presencia</strong></p>
-            
-            <p>La llama que nunca se apaga. Tu conciencia observadora. El testigo de todos los altares.</p>
-
-            <h3>La Biblioteca de las Memorias</h3>
-            
-            <p>Cada experiencia de tu vida tiene un libro aquí:</p>
-            
-            <ul>
-                <li><strong>Los tomos dorados:</strong> Momentos de gloria y alegría</li>
-                <li><strong>Los tomos oscuros:</strong> Experiencias de dolor y pérdida</li>
-                <li><strong>Los tomos rojos:</strong> Pasiones y amores</li>
-                <li><strong>Los tomos azules:</strong> Sabiduría y aprendizaje</li>
-                <li><strong>Los tomos transparentes:</strong> Misterios aún no comprendidos</li>
-            </ul>
-            
-            <p>Ningún libro está prohibido. Todos cuentan la historia de quién eres.</p>
-
-            <h3>El Jardín Interior del Templo</h3>
-            
-            <p>Un patio central abierto al cielo. Aquí crece:</p>
-            
-            <ul>
-                <li><strong>El Árbol de la Vida:</strong> Tus raíces y ramas</li>
-                <li><strong>La Fuente de las Lágrimas:</strong> Donde el dolor se purifica</li>
-                <li><strong>El Estanque del Reflejo:</strong> Donde ves tu verdadero rostro</li>
-                <li><strong>Las Flores del Momento:</strong> Siempre diferentes, siempre presentes</li>
-            </ul>
-
-            <h3>La Cámara de Alquimia</h3>
-            
-            <p>Donde los opuestos se encuentran y fusionan:</p>
-            
-            <ul>
-                <li>Luz y sombra se abrazan</li>
-                <li>Masculino y femenino danzan</li>
-                <li>Acción y quietud se equilibran</li>
-                <li>Cielo y tierra se tocan</li>
-            </ul>
-            
-            <p>Aquí no hay conflicto, solo creatividad. No hay guerra, solo bodas alquímicas.</p>
-
-            <h3>El Sanctasanctórum - El Centro Sagrado</h3>
-            
-            <p>El lugar más profundo de tu templo.</p>
-            
-            <p>Aquí no hay voces. No hay formas. No hay historias.</p>
-            
-            <p><strong>Solo ES.</strong></p>
-            
-            <p>Es el punto de quietud absoluta. El ojo del huracán de tu existencia. El lugar donde eres uno con Todo.</p>
-            
-            <p>El trono vacío donde se sienta tu verdadera naturaleza.</p>
-
-            <h2>Los Rituales del Templo</h2>
-
-            <div class="seccion-especial">
-                <h3>Ritual Matutino: Apertura del Templo</h3>
-                
-                <p>Al despertar:</p>
-                <ul>
-                    <li>Respira y conecta con el templo</li>
-                    <li>Enciende simbólicamente el Fuego Central</li>
-                    <li>Saluda a cada altar: "Buenos días, mis sagradas voces"</li>
-                    <li>Establece la intención del día desde el centro</li>
-                    <li>Abre las puertas del templo al mundo</li>
-                </ul>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Ritual Vespertino: Consagración del Día</h3>
-                
-                <p>Al anochecer:</p>
-                <ul>
-                    <li>Regresa al templo interior</li>
-                    <li>Deposita las experiencias del día en la Biblioteca</li>
-                    <li>Limpia cada altar con gratitud</li>
-                    <li>Permite que las voces compartan sus experiencias</li>
-                    <li>Descansa en el Sanctasanctórum antes de dormir</li>
-                </ul>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Ritual de Luna Nueva: Renovación</h3>
-                
-                <p>Mensualmente:</p>
-                <ul>
-                    <li>Limpieza profunda del templo</li>
-                    <li>Renovación de los altares</li>
-                    <li>Revisión de la Biblioteca</li>
-                    <li>Siembra de nuevas intenciones en el Jardín</li>
-                    <li>Ceremonia de integración en la Cámara de Alquimia</li>
-                </ul>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Ritual de Integración: La Gran Ceremonia</h3>
-                
-                <p>Cuando hay conflicto severo entre voces:</p>
-                
-                <h4>1. Convocatoria Sagrada</h4>
-                <p>Todas las voces son llamadas al Gran Salón</p>
-                
-                <h4>2. Círculo de Verdad</h4>
-                <p>Cada voz expresa su verdad sin interrupción</p>
-                
-                <h4>3. Tejido de Comprensión</h4>
-                <p>Se buscan los hilos que conectan las perspectivas</p>
-                
-                <h4>4. Alquimia de Resolución</h4>
-                <p>En la Cámara de Alquimia, los opuestos se funden</p>
-                
-                <h4>5. Celebración de la Nueva Unidad</h4>
-                <p>Se celebra la integración lograda</p>
-            </div>
-
-            <h2>Los Guardianes del Templo</h2>
-
-            <h3>El Guardián del Umbral</h3>
-            <p><strong>Tu discernimiento.</strong> Decide qué entra y qué no al espacio sagrado. No desde el juicio sino desde la sabiduría.</p>
-
-            <h3>El Guardián del Fuego</h3>
-            <p><strong>Tu presencia.</strong> Mantiene viva la llama de la conciencia. Nunca duerme, siempre observa.</p>
-
-            <h3>El Guardián de los Misterios</h3>
-            <p><strong>Tu intuición.</strong> Conoce los secretos que tu mente no puede comprender. Guía sin palabras, enseña sin conceptos.</p>
-
-            <h3>El Guardián de la Armonía</h3>
-            <p><strong>Tu corazón.</strong> Siente cuando algo está desequilibrado. Restaura la paz con amor, no con fuerza.</p>
-
-            <h2>Las Leyes del Templo</h2>
-
-            <div class="cita-destacada">
-                <strong>Ley de la Inclusión Total</strong><br>
-                "Nada de mí es rechazado. Todo tiene un lugar sagrado aquí."
-            </div>
-
-            <div class="cita-destacada">
-                <strong>Ley del Respeto Mutuo</strong><br>
-                "Cada voz es tratada con la dignidad de un huésped sagrado."
-            </div>
-
-            <div class="cita-destacada">
-                <strong>Ley de la Verdad Compasiva</strong><br>
-                "La verdad se habla, pero siempre vestida de compasión."
-            </div>
-
-            <div class="cita-destacada">
-                <strong>Ley del Espacio Sagrado</strong><br>
-                "Este templo es refugio. Aquí no entra la violencia interior."
-            </div>
-
-            <div class="cita-destacada">
-                <strong>Ley de la Evolución Constante</strong><br>
-                "El templo crece y cambia. No está terminado, está vivo."
-            </div>
-
-            <div class="meditacion">
-                <h3>Meditación: Construyendo Tu Templo</h3>
-                
-                <p>Cierra los ojos y respira desde tu centro.</p>
-                
-                <p>Imagina un espacio vacío dentro de ti.<br>
-                Puro potencial. Tierra sagrada.</p>
-                
-                <p>Ahora, con cada respiración, comienza a construir:</p>
-                
-                <p><em>Inhala:</em> Los cimientos de aceptación se asientan.<br>
-                <em>Exhala:</em> Los muros de compasión se elevan.</p>
-                
-                <p><em>Inhala:</em> El techo de conexión se extiende.<br>
-                <em>Exhala:</em> Las puertas de bienvenida se abren.</p>
-                
-                <p>Ve cómo cada parte de tu templo toma forma.<br>
-                No desde el esfuerzo, sino desde la intención amorosa.</p>
-                
-                <p>Ahora entra a tu templo.<br>
-                Camina por sus espacios.</p>
-                
-                <p>Siente la paz de un lugar<br>
-                donde cada parte de ti es bienvenida.</p>
-                
-                <p>Encuentra el centro.<br>
-                El Fuego Sagrado de tu presencia.<br>
-                Siéntate ahí.</p>
-                
-                <p>Desde este centro, siente todo el templo.<br>
-                Es tuyo. Es tú.</p>
-                
-                <p>Es el espacio sagrado<br>
-                donde tu integración acontece.</p>
-                
-                <p>Cuando estés listo,<br>
-                sabiendo que puedes regresar cuando quieras,<br>
-                abre suavemente los ojos.</p>
-                
-                <p>El templo permanece.<br>
-                Siempre ha estado ahí.<br>
-                Esperando que lo reconocieras.</p>
-            </div>
-
-            <h2>La Consagración del Templo</h2>
-            
-            <p>Tu templo no necesita ser perfecto para ser sagrado.<br>
-            No necesita estar terminado para ser habitado.<br>
-            No necesita ser grandioso para ser poderoso.</p>
-            
-            <p><strong>Solo necesita ser tuyo.</strong><br>
-            Auténticamente, completamente, amorosamente tuyo.</p>
-            
-            <p>Cada vez que eliges la integración sobre la fragmentación,<br>
-            consagras tu templo.</p>
-            
-            <p>Cada vez que abrazas una parte rechazada de ti,<br>
-            consagras tu templo.</p>
-            
-            <p>Cada vez que permites que voces opuestas coexistan,<br>
-            consagras tu templo.</p>
-
-            <h2>El Milagro del Templo Vivo</h2>
-            
-            <p>Cuando tu templo interior está establecido:</p>
-            
-            <ul>
-                <li><strong>Las voces ya no luchan por territorio</strong><br>
-                Cada una tiene su altar sagrado</li>
-                
-                <li><strong>Los conflictos se vuelven ceremonias</strong><br>
-                Oportunidades para mayor integración</li>
-                
-                <li><strong>La soledad se vuelve imposible</strong><br>
-                Estás en comunión constante con todas tus partes</li>
-                
-                <li><strong>La paz no es ausencia de voces</strong><br>
-                Es la armonía de todas ellas en espacio sagrado</li>
-                
-                <li><strong>Tú no eres el templo</strong><br>
-                Eres la conciencia que lo habita y lo trasciende</li>
-            </ul>
-
-            <h2>El Templo Como Portal</h2>
-            
-            <p>Tu templo interior no es solo refugio. Es portal.</p>
-            
-            <p>Portal entre:</p>
-            <ul>
-                <li>Tu humanidad y tu divinidad</li>
-                <li>Tu individualidad y tu universalidad</li>
-                <li>Tu tiempo y tu eternidad</li>
-                <li>Tu forma y tu esencia</li>
-            </ul>
-            
-            <p>Cuando el templo está integrado, se convierte en el punto de encuentro entre todos los aspectos de tu ser y el Ser mismo.</p>
-
-            <h2>La Bendición del Arquitecto</h2>
-            
-            <div class="cita-destacada">
-                Bendito seas, arquitecto de tu templo interior.<br><br>
-                
-                Que tus cimientos sean fuertes en la aceptación.<br>
-                Que tus muros sean flexibles en la compasión.<br>
-                Que tu techo sea abierto al infinito.<br>
-                Que tus puertas den la bienvenida a todo tu ser.<br><br>
-                
-                Que cada voz encuentre su altar.<br>
-                Que cada parte encuentre su hogar.<br>
-                Que cada aspecto encuentre su lugar sagrado.<br><br>
-                
-                Y que en la integración de todas tus partes,<br>
-                descubras no solo la paz,<br>
-                sino la magnificencia<br>
-                de ser un templo vivo<br>
-                donde lo humano y lo divino<br>
-                se encuentran,<br>
-                se abrazan,<br>
-                y danzan<br>
-                en la celebración eterna<br>
-                de tu Ser Total.
-            </div>
-
-            <div class="cita-destacada">
-                "En el templo de tu integración,<br>
-                cada voz es un sacerdote,<br>
-                cada experiencia es una ofrenda,<br>
-                cada momento es una oración,<br>
-                y tú eres tanto el templo<br>
-                como la divinidad<br>
-                que lo habita."
-            </div>
-        </article>
-
-        <nav class="navegacion-inferior">
-            <a href="nodo_05.html" class="nav-btn">← Nodo 5: La Sinfonía del Ser</a>
-            <a href="nodo_07.html" class="nav-btn">Nodo 7: El Retorno a la Unidad →</a>
-        </nav>
-    </div>
-
-    <script>
-        let modoLectura = false;
+<div class="frame" aria-hidden="true"></div>
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+<div class="container">
+    <div class="topbar"><a class="back-link" href="index.html">← Portal del Libro II</a></div>
+    <header class="hero">
+        <div class="hero-topline">Trinity Origen · Libro II</div>
+        <div class="sigil-wrap" aria-hidden="true"><div class="sigil">◈</div></div>
+        <div class="book-label">La Voz Interior</div>
+        <div class="node-kicker">Nodo VI</div>
+        <h1 class="node-title">El Templo de la Integración</h1>
+        <p class="node-subtitle">La arquitectura sagrada de la unidad interior</p>
+    </header>
+    <nav class="nav-strip" aria-label="Nodos del libro"><span class="nav-strip-label">Nodos:</span><a class="nav-node-link" href="nodo_01.html">I</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_02.html">II</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_03.html">III</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_04.html">IV</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_05.html">V</a><span class="nav-sep">·</span><a class="nav-node-link activo" href="nodo_06.html">VI</a><span class="nav-sep">·</span><a class="nav-node-link" href="nodo_07.html">VII</a></nav>
+    <main class="content">
         
-        function toggleModoLectura() {
-            const body = document.body;
-            const icon = document.getElementById('modo-icon');
-            
-            if (!modoLectura) {
-                body.style.filter = 'sepia(10%) contrast(1.2)';
-                icon.textContent = '☀️';
-                modoLectura = true;
-            } else {
-                body.style.filter = 'none';
-                icon.textContent = '🌙';
-                modoLectura = false;
-            }
-        }
-
-        const volverArriba = document.getElementById('volverArriba');
+        <h2>El Arquitecto Despierta</h2>
+        <p>Has sido jardinero de tu mente.<br>Has sido director de tu sinfonía interior.<br>Ahora te conviertes en el <strong>arquitecto sagrado</strong> del templo donde todas tus voces pueden finalmente coexistir en paz.</p>
+        <p>Este templo no se construye con ladrillos sino con conciencia. Sus cimientos no son de piedra sino de aceptación. Sus muros no separan sino que abrazan. Su techo no limita sino que conecta con el infinito.</p>
+        <div class="section-divider"></div>
+        <h2>Los Cimientos: Aceptación Radical</h2>
+        <div class="cita-destacada">"Yo soy todo lo que soy. Las voces que amo y las que temo. Los aspectos luminosos y los sombríos. Todo pertenece. Todo tiene un lugar aquí."</div>
+        <h3>Los Pilares de la No-Resistencia</h3>
+        <ul>
+            <li><strong>No resistir al dolor</strong> — es maestro, no enemigo</li>
+            <li><strong>No resistir al placer</strong> — es bendición, no peligro</li>
+            <li><strong>No resistir al cambio</strong> — es vida, no muerte</li>
+            <li><strong>No resistir a la quietud</strong> — es plenitud, no vacío</li>
+        </ul>
+        <div class="section-divider"></div>
+        <h2>La Arquitectura del Templo Interior</h2>
+        <h3>El Vestíbulo — Espacio de Transición</h3>
+        <p>Al entrar a tu templo, aquí dejas los juicios del mundo exterior, las máscaras que usas para otros, la prisa y la urgencia, la necesidad de ser diferente de lo que eres.</p>
+        <h3>La Sala de las Voces — El Gran Salón</h3>
+        <p>Un espacio circular, sin jerarquías. Cada voz tiene su altar:</p>
+        <ul>
+            <li><strong>El Altar del Guerrero:</strong> honra tu fuerza y protección</li>
+            <li><strong>El Altar del Niño:</strong> celebra tu inocencia y asombro</li>
+            <li><strong>El Altar del Sabio:</strong> reverencia tu conocimiento profundo</li>
+            <li><strong>El Altar del Amante:</strong> abraza tu capacidad de conexión</li>
+            <li><strong>El Altar del Creador:</strong> manifiesta tu poder generativo</li>
+            <li><strong>El Altar del Místico:</strong> conecta con el misterio</li>
+        </ul>
+        <p><strong>En el centro: El Fuego Sagrado de la Presencia.</strong> La llama que nunca se apaga. Tu conciencia observadora.</p>
+        <h3>El Sanctasanctórum — El Centro Sagrado</h3>
+        <p>El lugar más profundo de tu templo. Aquí no hay voces. No hay formas. No hay historias.</p>
+        <p><strong>Solo ES.</strong></p>
+        <p>Es el punto de quietud absoluta. El ojo del huracán de tu existencia. El trono vacío donde se sienta tu verdadera naturaleza.</p>
+        <div class="section-divider"></div>
+        <h2>Los Rituales del Templo</h2>
+        <div class="seccion-especial">
+            <h3>Ritual Matutino — Apertura del Templo</h3>
+            <ul>
+                <li>Respira y conecta con el templo</li>
+                <li>Enciende simbólicamente el Fuego Central</li>
+                <li>Saluda a cada altar: <em>"Buenos días, mis sagradas voces"</em></li>
+                <li>Establece la intención del día desde el centro</li>
+            </ul>
+        </div>
+        <div class="seccion-especial">
+            <h3>Las Leyes del Templo</h3>
+            <p><em>Ley de la Inclusión Total:</em> "Nada de mí es rechazado. Todo tiene un lugar sagrado aquí."</p>
+            <p><em>Ley del Respeto Mutuo:</em> "Cada voz es tratada con la dignidad de un huésped sagrado."</p>
+            <p><em>Ley de la Verdad Compasiva:</em> "La verdad se habla, pero siempre vestida de compasión."</p>
+            <p><em>Ley de la Evolución Constante:</em> "El templo crece y cambia. No está terminado, está vivo."</p>
+        </div>
+        <div class="meditacion">
+            <h3>Meditación: Construyendo Tu Templo</h3>
+            <p>Cierra los ojos y respira desde tu centro.</p>
+            <p>Imagina un espacio vacío dentro de ti.<br>Puro potencial. Tierra sagrada.</p>
+            <p>Ahora, con cada respiración, comienza a construir:</p>
+            <p><em>Inhala:</em> Los cimientos de aceptación se asientan.<br><em>Exhala:</em> Los muros de compasión se elevan.</p>
+            <p><em>Inhala:</em> El techo de conexión se extiende.<br><em>Exhala:</em> Las puertas de bienvenida se abren.</p>
+            <p>Ve cómo cada parte de tu templo toma forma.<br>No desde el esfuerzo, sino desde la intención amorosa.</p>
+            <p>Ahora entra a tu templo. Camina por sus espacios.<br>Siente la paz de un lugar donde cada parte de ti es bienvenida.</p>
+            <p>Encuentra el centro. El Fuego Sagrado de tu presencia. Siéntate ahí.</p>
+            <p>El templo permanece. Siempre ha estado ahí.<br>Esperando que lo reconocieras.</p>
+        </div>
+        <div class="cita-destacada">
+            "En el templo de tu integración,<br>
+            cada voz es un sacerdote,<br>
+            cada experiencia es una ofrenda,<br>
+            cada momento es una oración,<br>
+            y tú eres tanto el templo<br>
+            como la divinidad que lo habita."
+        </div>
         
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                volverArriba.classList.add('visible');
-            } else {
-                volverArriba.classList.remove('visible');
-            }
-        });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        window.addEventListener('load', () => {
-            const nodosVisitados = JSON.parse(localStorage.getItem('nodos-visitados') || '[]');
-            if (!nodosVisitados.includes(6)) {
-                nodosVisitados.push(6);
-                localStorage.setItem('nodos-visitados', JSON.stringify(nodosVisitados));
-            }
-        });
-    </script>
+    </main>
+    
+    <nav class="navigation" aria-label="Navegación entre nodos">
+        <div class="navigation-row">
+            <a class="nav-link" href="nodo_05.html">← Nodo V</a>
+            <a class="nav-link" href="index.html">Portal del Libro</a>
+            <a class="nav-link" href="nodo_07.html">Nodo VII →</a>
+            <a class="nav-link" href="../index.html">Trinity Origen</a>
+        </div>
+    </nav>
+    <footer class="footer">
+        <div class="footer-symbol">◈</div>
+        <p>Trinity Origen · Libro II · La Voz Interior</p>
+        <p>"No es mío, vino a través de mí."</p>
+    </footer>
+</div>
+<script>
+const st=document.getElementById('scrollTop');
+window.addEventListener('scroll',()=>{st.classList.toggle('visible',window.pageYOffset>300);});
+window.addEventListener('load',()=>{const v=JSON.parse(localStorage.getItem('nodos-voz')||'[]');if(!v.includes(6)){v.push(6);localStorage.setItem('nodos-voz',JSON.stringify(v));}});
+</script>
 </body>
 </html>

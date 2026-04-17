@@ -1,556 +1,173 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 2: El Observador Luminoso - La Voz Interior</title>
-    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nodo II · El Observador Luminoso | La Voz Interior | Trinity Origen</title>
     <style>
-        :root {
-            --turquesa-voz: #00CED1;
-            --azul-profundo: #0a1628;
-            --celeste: #87CEEB;
-            --dorado: #DAA520;
-            --blanco-suave: #f0f0f0;
-            --gris-suave: #a0a0a0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Georgia', serif;
-            background: var(--azul-profundo);
-            color: var(--blanco-suave);
-            line-height: 1.9;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 30px;
-        }
-
-        .nodo-header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            border-bottom: 2px solid rgba(0, 206, 209, 0.3);
-            margin-bottom: 60px;
-        }
-
-        .nodo-numero {
-            font-size: 1.2em;
-            color: var(--turquesa-voz);
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-        }
-
-        .nodo-titulo-principal {
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--turquesa-voz), var(--celeste));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nodo-subtitulo {
-            font-size: 1.3em;
-            color: var(--gris-suave);
-            font-style: italic;
-        }
-
-        .navegacion-superior {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            color: var(--celeste);
-            text-decoration: none;
-            border: 2px solid var(--celeste);
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-size: 0.95em;
-        }
-
-        .nav-btn:hover {
-            background: var(--celeste);
-            color: var(--azul-profundo);
-        }
-
-        .nav-centro {
-            color: var(--gris-suave);
-            font-size: 0.9em;
-        }
-
-        .contenido {
-            font-size: 1.15em;
-            line-height: 2;
-        }
-
-        h2 {
-            color: var(--turquesa-voz);
-            font-size: 2em;
-            margin: 50px 0 25px;
-        }
-
-        h3 {
-            color: var(--celeste);
-            font-size: 1.5em;
-            margin: 40px 0 20px;
-        }
-
-        h4 {
-            color: var(--dorado);
-            font-size: 1.2em;
-            margin: 30px 0 15px;
-        }
-
-        p {
-            margin-bottom: 20px;
-        }
-
-        em {
-            color: var(--celeste);
-            font-style: italic;
-        }
-
-        strong {
-            color: var(--dorado);
-        }
-
-        .cita-destacada {
-            background: rgba(0, 206, 209, 0.1);
-            border-left: 4px solid var(--turquesa-voz);
-            padding: 30px;
-            margin: 40px 0;
-            font-size: 1.2em;
-            font-style: italic;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .meditacion {
-            background: rgba(135, 206, 235, 0.08);
-            border: 2px solid var(--celeste);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 50px 0;
-        }
-
-        .meditacion h3 {
-            color: var(--celeste);
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 30px;
-        }
-
-        .meditacion p {
-            line-height: 2.2;
-        }
-
-        ul, ol {
-            margin: 20px 0 20px 40px;
-        }
-
-        li {
-            margin-bottom: 15px;
-        }
-
-        .seccion-especial {
-            background: rgba(218, 165, 32, 0.05);
-            border: 1px solid var(--dorado);
-            border-radius: 10px;
-            padding: 30px;
-            margin: 40px 0;
-        }
-
-        .navegacion-inferior {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 60px 0 40px;
-            margin-top: 80px;
-            border-top: 2px solid rgba(0, 206, 209, 0.3);
-        }
-
-        .volver-arriba {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--turquesa-voz);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            font-size: 1.5em;
-        }
-
-        .volver-arriba.visible {
-            opacity: 1;
-        }
-
-        .volver-arriba:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 20px rgba(0, 206, 209, 0.5);
-        }
-
-        .modo-lectura {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            padding: 12px 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-        }
-
-        .modo-lectura:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px 15px;
-            }
-
-            .nodo-titulo-principal {
-                font-size: 2em;
-            }
-
-            .navegacion-superior,
-            .navegacion-inferior {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .nav-centro {
-                order: -1;
-            }
-
-            h2 {
-                font-size: 1.6em;
-            }
-
-            .contenido {
-                font-size: 1.05em;
-            }
-        }
+        :root{--bg:#040404;--gold:#d3b06a;--violet:#6f4e90;--text:#f3efe7;--text-soft:rgba(243,239,231,0.72);--text-faint:rgba(243,239,231,0.4);--border:rgba(211,176,106,0.16);--border-strong:rgba(211,176,106,0.3);--radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.35);--max-width:920px;}
+        *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+        body{font-family:"Georgia","Times New Roman",serif;background:radial-gradient(circle at 50% 0%,rgba(111,78,144,0.18),transparent 26%),radial-gradient(circle at 50% 10%,rgba(211,176,106,0.06),transparent 30%),linear-gradient(180deg,#090909 0%,#040404 45%,#030303 100%);color:var(--text);line-height:1.9;overflow-x:hidden;}
+        body::before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at center,black 35%,transparent 82%);-webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);opacity:0.12;}
+        .frame{position:fixed;inset:12px;border:1px solid rgba(211,176,106,0.08);pointer-events:none;z-index:0;}
+        .container{position:relative;z-index:1;max-width:var(--max-width);margin:0 auto;padding:34px 20px 84px;}
+        .topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+        .back-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;padding:11px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.014);transition:all 0.25s ease;}
+        .back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+        .hero{position:relative;overflow:hidden;text-align:center;padding:54px 28px 34px;border-radius:30px;border:1px solid rgba(211,176,106,0.12);background:linear-gradient(180deg,rgba(255,255,255,0.024),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(111,78,144,0.16),transparent 42%);box-shadow:var(--shadow);margin-bottom:34px;}
+        .hero::before{content:"";position:absolute;inset:auto 50% 30px;width:320px;height:320px;transform:translateX(-50%);border-radius:50%;border:1px solid rgba(211,176,106,0.11);box-shadow:0 0 0 14px rgba(211,176,106,0.03),0 0 0 34px rgba(111,78,144,0.03),inset 0 0 60px rgba(211,176,106,0.025);pointer-events:none;}
+        .hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+        .sigil-wrap{position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(211,176,106,0.22);background:radial-gradient(circle,rgba(211,176,106,0.11),rgba(255,255,255,0.01) 60%,transparent 72%);box-shadow:0 0 28px rgba(111,78,144,0.12),inset 0 0 24px rgba(211,176,106,0.04);}
+        .sigil{font-size:1.9rem;color:var(--gold);line-height:1;}
+        .book-label{position:relative;z-index:2;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:8px;}
+        .node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+        .node-title{position:relative;z-index:2;font-size:clamp(1.7rem,4vw,2.8rem);font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;line-height:1.2;}
+        .node-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.02rem;margin-bottom:16px;font-style:italic;}
+        .nav-strip{background:rgba(255,255,255,0.016);border:1px solid rgba(211,176,106,0.12);border-radius:18px;padding:14px 20px;margin-bottom:28px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+        .nav-strip-label{color:var(--gold);font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;margin-right:4px;}
+        .nav-node-link{color:var(--text-faint);font-size:0.82rem;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid transparent;transition:all 0.2s;}
+        .nav-node-link:hover{color:var(--gold);border-color:var(--border);}
+        .nav-node-link.activo{color:var(--gold);border-color:var(--border);background:rgba(211,176,106,0.06);}
+        .nav-sep{color:var(--text-faint);opacity:0.4;font-size:0.8rem;}
+        .content{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));border:1px solid rgba(211,176,106,0.1);border-radius:26px;padding:40px 36px;box-shadow:0 12px 32px rgba(0,0,0,0.22);}
+        .content h2{color:var(--gold);font-size:1.38rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+        .content h2:first-child{margin-top:0;}
+        .content h3{color:var(--text);font-size:1.08rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+        .content h4{color:var(--violet);font-size:0.95rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:1.4rem 0 0.5rem;}
+        .content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.02rem;}
+        .content .lead{color:var(--text);}
+        .content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+        .content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+        .content ol{margin:0.4rem 0 1.2rem 1.4rem;}
+        .content ol li{color:var(--text-soft);margin-bottom:0.45rem;}
+        .content strong{color:var(--text);}
+        .content em{color:var(--gold);font-style:italic;}
+        .content blockquote{margin:1.4rem 0;padding:1rem 1.1rem 1rem 1.3rem;border-left:3px solid rgba(211,176,106,0.45);background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;color:var(--text);font-style:italic;}
+        .seccion-especial{background:rgba(211,176,106,0.04);border:1px solid rgba(211,176,106,0.18);border-radius:16px;padding:28px;margin:1.6rem 0;}
+        .seccion-especial h3{color:var(--gold);margin-top:0;}
+        .meditacion{background:rgba(111,78,144,0.06);border:1px solid rgba(111,78,144,0.22);border-radius:16px;padding:36px 32px;margin:2rem 0;}
+        .meditacion h3{color:var(--gold);text-align:center;margin-top:0;margin-bottom:1.4rem;letter-spacing:0.1em;text-transform:uppercase;font-size:1rem;}
+        .meditacion p{color:var(--text-soft);line-height:2.1;}
+        .meditacion em{color:var(--text-soft);font-style:italic;}
+        .cita-destacada{margin:1.4rem 0;padding:1.2rem 1.3rem;border-left:3px solid rgba(211,176,106,0.5);background:rgba(211,176,106,0.04);border-radius:0 16px 16px 0;color:var(--text);font-style:italic;font-size:1.04rem;line-height:1.75;}
+        .section-divider{height:1px;background:linear-gradient(90deg,rgba(211,176,106,0.2),rgba(211,176,106,0));margin:2rem 0 1.4rem;}
+        .navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(211,176,106,0.12);text-align:center;}
+        .navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+        .nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);border:1px solid rgba(211,176,106,0.18);border-radius:999px;padding:10px 16px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+        .nav-link:hover{color:#f0d7a0;border-color:rgba(211,176,106,0.38);background:rgba(211,176,106,0.06);}
+        .footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+        .footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+        .scroll-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:rgba(211,176,106,0.12);border:1px solid var(--border);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:1.1rem;cursor:pointer;opacity:0;transition:all 0.3s ease;z-index:100;}
+        .scroll-top.visible{opacity:1;}
+        .scroll-top:hover{background:rgba(211,176,106,0.2);}
+        @media(max-width:720px){.frame{inset:8px;}.container{padding:24px 16px 64px;}.hero{padding:42px 18px 28px;border-radius:24px;}.hero::before{width:220px;height:220px;bottom:24px;}.content{padding:28px 20px;border-radius:22px;}.navigation-row{flex-direction:column;align-items:center;}}
     </style>
 </head>
 <body>
-    <div class="modo-lectura" onclick="toggleModoLectura()">
-        <span id="modo-icon">🌙</span> Modo Lectura
-    </div>
-
-    <div class="volver-arriba" id="volverArriba" onclick="scrollToTop()">↑</div>
-
-    <div class="container">
-        <header class="nodo-header">
-            <div class="nodo-numero">NODO 2</div>
-            <h1 class="nodo-titulo-principal">EL OBSERVADOR LUMINOSO</h1>
-            <p class="nodo-subtitulo">La conciencia testigo como presencia sanadora</p>
-        </header>
-
-        <nav class="navegacion-superior">
-            <a href="nodo_01.html" class="nav-btn">← Anterior</a>
-            <span class="nav-centro">Nodo 2 de 7</span>
-            <a href="nodo_03.html" class="nav-btn">Siguiente →</a>
-        </nav>
-
-        <article class="contenido">
-            <h2>El Descubrimiento Más Revolucionario</h2>
-            
-            <p><strong>Hay alguien en ti que nunca ha sido herido.</strong></p>
-            <p><strong>Hay alguien en ti que nunca ha estado perdido.</strong></p>
-            <p><strong>Hay alguien en ti que observa todo el drama interior con la serenidad de quien contempla las nubes pasar por el cielo.</strong></p>
-            
-            <p>Ese alguien no es una voz más. Es el espacio donde todas las voces acontecen. Es la pantalla donde se proyecta la película de tu mente. Es el cielo que permanece inmutable sin importar qué tormentas lo atraviesen.</p>
-            
-            <p><strong>Ese es tu Observador Luminoso.</strong></p>
-
-            <h2>La Naturaleza del Testigo Interior</h2>
-
-            <h3>No es indiferencia - es presencia plena</h3>
-            
-            <p>El Observador no es frío ni distante. Es como el sol que ilumina por igual la flor y la piedra, sin preferencia pero con total presencia. No juzga porque ve la imagen completa. No condena porque comprende el origen de cada movimiento interior.</p>
-
-            <h3>No es pasividad - es poder sereno</h3>
-            
-            <p>Observar no significa no actuar. Significa actuar desde la claridad en lugar de la reactividad. El Observador es como el ojo del huracán: en completa calma mientras todo gira alrededor, y desde esa calma, capaz de navegar la tormenta con maestría.</p>
-
-            <h3>No es separación - es inclusión total</h3>
-            
-            <p>El Observador no está "afuera" mirando "adentro". Es la conciencia misma que se reconoce a sí misma. Es el océano tomando conciencia de sus propias olas. Es la totalidad experimentándose en sus partes.</p>
-
-            <h2>Los Dones del Observador Luminoso</h2>
-
-            <h3>La Distancia Sagrada</h3>
-            
-            <div class="cita-destacada">
-                "Puedo ver mis pensamientos sin creer que soy mis pensamientos."
-            </div>
-            
-            <p>Cuando activas tu Observador, instantáneamente creas espacio entre tú y tu experiencia. Ese espacio es libertad. En ese espacio, lo que parecía sólido se vuelve fluido, lo que parecía permanente se revela transitorio.</p>
-
-            <h3>La Compasión Automática</h3>
-            
-            <div class="cita-destacada">
-                "Desde aquí, veo que cada parte de mí está tratando de ayudar."
-            </div>
-            
-            <p>El Observador ve con claridad que incluso tus voces más destructivas nacieron del amor mal dirigido o del dolor no sanado. No hay villanos en tu teatro interior, solo actores confundidos sobre su papel.</p>
-
-            <h3>La Perspectiva Expandida</h3>
-            
-            <div class="cita-destacada">
-                "Esto que me consume es apenas una ola en el océano de mi ser."
-            </div>
-            
-            <p>Lo que desde la identificación con una voz parece totalizante, desde el Observador se ve como un evento más en el flujo infinito de la conciencia. Los problemas no desaparecen, pero se dimensionan.</p>
-
-            <h3>La Elección Consciente</h3>
-            
-            <div class="cita-destacada">
-                "Veo todas las opciones y elijo desde mi centro."
-            </div>
-            
-            <p>Solo el Observador puede realmente elegir, porque solo él no está identificado con ninguna agenda particular. Las voces proponen; el Observador dispone.</p>
-
-            <h2>El Cultivo del Observador Luminoso</h2>
-
-            <div class="seccion-especial">
-                <h3>Práctica 1: El Retorno al Centro</h3>
-                
-                <p>Cuando te encuentres perdido en el drama de tus voces:</p>
-                
-                <ul>
-                    <li><strong>PAUSA</strong> - Detén toda actividad mental por un instante</li>
-                    <li><strong>RESPIRA</strong> - Tres respiraciones conscientes para anclar la presencia</li>
-                    <li><strong>PREGUNTA</strong> - "¿Quién está observando todo esto?"</li>
-                    <li><strong>RECONOCE</strong> - "Yo soy el que observa, no lo observado"</li>
-                    <li><strong>DESCANSA</strong> - En esa conciencia observadora por unos momentos</li>
-                </ul>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Práctica 2: El Testimonio Amoroso</h3>
-                
-                <p>Cada noche, antes de dormir:</p>
-                
-                <ul>
-                    <li>Revisa tu día desde la perspectiva del Observador</li>
-                    <li>No juzgues, solo observa: "Hoy mi voz crítica estuvo muy activa"</li>
-                    <li>Reconoce sin identificarte: "Hubo miedo, pero yo no soy el miedo"</li>
-                    <li>Abraza con compasión: "Todas mis partes hicieron lo mejor que pudieron"</li>
-                </ul>
-            </div>
-
-            <div class="seccion-especial">
-                <h3>Práctica 3: La Meditación del Espejo Interior</h3>
-                
-                <p>Siéntate frente a un espejo o imagina uno:</p>
-                
-                <ul>
-                    <li>Mira tus ojos y reconoce al Observador detrás de ellos</li>
-                    <li>Di: "Te veo, presencia que siempre has estado aquí"</li>
-                    <li>Nota cómo el que mira y el que es mirado son uno</li>
-                    <li>Descansa en esa unidad observadora</li>
-                </ul>
-            </div>
-
-            <h2>El Observador en Acción</h2>
-
-            <h3>Cuando surge la crítica destructiva:</h3>
-            
-            <p><em>Voz Crítica:</em> "Eres un fracaso, nunca logras nada"</p>
-            <p><strong>Observador:</strong> "Noto que mi voz crítica está activa. Está asustada de que no sea suficiente. La escucho sin creerle."</p>
-
-            <h3>Cuando aparece el miedo paralizante:</h3>
-            
-            <p><em>Voz del Miedo:</em> "Todo va a salir mal, mejor no lo intentes"</p>
-            <p><strong>Observador:</strong> "Mi protector interno está trabajando horas extra. Le agradezco su intención pero elijo desde mi centro."</p>
-
-            <h3>Cuando emerge la tristeza profunda:</h3>
-            
-            <p><em>Voz de la Tristeza:</em> "Nada tiene sentido, todo es dolor"</p>
-            <p><strong>Observador:</strong> "Hay dolor moviéndose a través de mí. Lo permito sin que me defina."</p>
-
-            <h2>La Paradoja Luminosa</h2>
-            
-            <p><strong>Mientras más observas, menos necesitas controlar.</strong></p>
-            <p><strong>Mientras más testimonias, menos necesitas cambiar.</strong></p>
-            <p><strong>Mientras más presencias, menos necesitas escapar.</strong></p>
-            
-            <p>El Observador no lucha contra nada porque sabe un secreto:</p>
-            
-            <div class="cita-destacada">
-                Todo lo que es visto completamente, se transforma.<br><br>
-                No por manipulación.<br>
-                No por fuerza.<br>
-                Sino por la alquimia natural de la conciencia que,<br>
-                al iluminar completamente algo,<br>
-                permite que encuentre su siguiente movimiento evolutivo.
-            </div>
-
-            <h2>El Observador Como Refugio</h2>
-            
-            <p>En los momentos más oscuros, cuando todas tus voces gritan, cuando el caos parece total, recuerda:</p>
-            
-            <p><strong>Hay un lugar en ti que es pura quietud.</strong><br>
-            <strong>Hay un espacio en ti que es pura paz.</strong><br>
-            <strong>Hay un centro en ti que es pura claridad.</strong></p>
-            
-            <p>No tienes que crearlo. No tienes que ganártelo. No tienes que merecerlo.</p>
-            
-            <p><em>Solo tienes que recordar volver a él.</em></p>
-            
-            <p>Una respiración y estás ahí. Un momento de pausa y lo encuentras. Un instante de reconocimiento y eres eso.</p>
-
-            <h2>La Transmutación del Observador</h2>
-
-            <h3>Nivel 1: El Observador que Separa</h3>
-            <p>"Yo observo mis pensamientos" - Hay un yo y hay pensamientos.</p>
-
-            <h3>Nivel 2: El Observador que Incluye</h3>
-            <p>"La observación acontece" - No hay separación entre observador y observado.</p>
-
-            <h3>Nivel 3: El Observador que Es</h3>
-            <p>"Yo Soy la conciencia en la que todo aparece" - Unidad total.</p>
-            
-            <p>No necesitas forzar estos niveles. Con práctica y gracia, la evolución es natural. El Observador madura hacia su propia naturaleza luminosa.</p>
-
-            <div class="meditacion">
-                <h3>Meditación: Activación del Observador Luminoso</h3>
-                
-                <p>Cierra suavemente los ojos.</p>
-                <p>Permite que tu respiración encuentre su ritmo natural.</p>
-                
-                <p>Ahora, nota que hay algo en ti que está notando.</p>
-                <p>Algo que observa la respiración sin ser la respiración.</p>
-                <p>Algo que percibe los pensamientos sin ser los pensamientos.</p>
-                <p>Algo que siente las emociones sin ser las emociones.</p>
-                
-                <p><strong>Ese algo eres Tú.</strong><br>
-                Tu naturaleza más esencial.<br>
-                Tu centro inalterable.</p>
-                
-                <p>Desde ese centro, observa:</p>
-                
-                <p>Las voces vienen y van - Tú permaneces.<br>
-                Las emociones surgen y pasan - Tú permaneces.<br>
-                Los pensamientos aparecen y desaparecen - Tú permaneces.</p>
-                
-                <p><em>Eres el espacio donde todo acontece.</em><br>
-                <em>Eres la conciencia que todo lo abraza.</em><br>
-                <em>Eres la luz que todo lo ilumina.</em></p>
-                
-                <p>Descansa en este reconocimiento.</p>
-                <p>No hay nada que hacer. No hay ningún lugar al que ir.</p>
-                <p>Ya estás en casa. Ya eres completo.</p>
-                
-                <p>Cuando estés listo, abre suavemente los ojos, manteniendo la conciencia del Observador.</p>
-                
-                <p>Mira el mundo desde esos ojos que ven sin juzgar.<br>
-                Muévete desde ese centro que actúa sin reaccionar.<br>
-                Vive desde esa presencia que ama sin condiciones.</p>
-            </div>
-
-            <h2>La Promesa del Observador</h2>
-            
-            <p>Cuando cultivas tu Observador Luminoso, algo milagroso comienza a suceder:</p>
-            
-            <p>Las voces que te atormentaban se vuelven maestras.<br>
-            Los conflictos que te desgarraban se vuelven invitaciones a integrar.<br>
-            El caos que te abrumaba se revela como creatividad buscando forma.</p>
-            
-            <p>Y un día, sin que te des cuenta exactamente cuándo sucedió, descubres que ya no luchas con tu mente.</p>
-            
-            <p>La observas con la misma fascinación con que observarías un jardín:</p>
-            
-            <p><em>A veces hay flores, a veces hay malas hierbas.<br>
-            A veces hay sol, a veces hay lluvia.</em></p>
-            
-            <p>Pero tú, el jardinero consciente, permaneces en paz, sabiendo que todo es parte del milagro infinito de estar vivo.</p>
-
-            <div class="cita-destacada">
-                "El Observador Luminoso no es algo que debas desarrollar.<br>
-                Es lo que ya eres cuando dejas de identificarte<br>
-                con el contenido de tu conciencia<br>
-                y descansas en la conciencia misma.<br><br>
-                Ahí está tu libertad.<br>
-                Ahí está tu paz.<br>
-                Ahí está tu hogar eterno."
-            </div>
-        </article>
-
-        <nav class="navegacion-inferior">
-            <a href="nodo_01.html" class="nav-btn">← Nodo 1: El Parlamento Sagrado</a>
-            <a href="nodo_03.html" class="nav-btn">Nodo 3: La Alquimia del Diálogo →</a>
-        </nav>
-    </div>
-
-    <script>
-        let modoLectura = false;
-        
-        function toggleModoLectura() {
-            const body = document.body;
-            const icon = document.getElementById('modo-icon');
-            
-            if (!modoLectura) {
-                body.style.filter = 'sepia(10%) contrast(1.2)';
-                icon.textContent = '☀️';
-                modoLectura = true;
-            } else {
-                body.style.filter = 'none';
-                icon.textContent = '🌙';
-                modoLectura = false;
-            }
-        }
-
-        const volverArriba = document.getElementById('volverArriba');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                volverArriba.classList.add('visible');
-            } else {
-                volverArriba.classList.remove('visible');
-            }
-        });
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        window.addEventListener('load', () => {
-            const nodosVisitados = JSON.parse(localStorage.getItem('nodos-visitados') || '[]');
-            if (!nodosVisitados.includes(2)) {
-                nodosVisitados.push(2);
-                localStorage.setItem('nodos-visitados', JSON.stringify(nodosVisitados));
-            }
-        });
-    </script>
+<div class="frame" aria-hidden="true"></div>
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+<div class="container">
+    <div class="topbar"><a class="back-link" href="index.html">← Portal del Libro II</a></div>
+    <header class="hero">
+        <div class="hero-topline">Trinity Origen · Libro II</div>
+        <div class="sigil-wrap" aria-hidden="true"><div class="sigil">◈</div></div>
+        <div class="book-label">La Voz Interior</div>
+        <div class="node-kicker">Nodo II</div>
+        <h1 class="node-title">El Observador Luminoso</h1>
+        <p class="node-subtitle">La conciencia testigo como presencia sanadora</p>
+    </header>
+    <nav class="nav-strip" aria-label="Nodos del libro">
+        <span class="nav-strip-label">Nodos:</span>
+        <a class="nav-node-link" href="nodo_01.html">I</a><span class="nav-sep">·</span>
+        <a class="nav-node-link activo" href="nodo_02.html">II</a><span class="nav-sep">·</span>
+        <a class="nav-node-link" href="nodo_03.html">III</a><span class="nav-sep">·</span>
+        <a class="nav-node-link" href="nodo_04.html">IV</a><span class="nav-sep">·</span>
+        <a class="nav-node-link" href="nodo_05.html">V</a><span class="nav-sep">·</span>
+        <a class="nav-node-link" href="nodo_06.html">VI</a><span class="nav-sep">·</span>
+        <a class="nav-node-link" href="nodo_07.html">VII</a>
+    </nav>
+    <main class="content">
+        <h2>La Revelación del Testigo</h2>
+        <p class="lead">Hay alguien en ti que nunca ha sido herido.</p>
+        <p class="lead">Hay alguien en ti que nunca ha estado confundido.</p>
+        <p class="lead">Hay alguien en ti que ha visto todo — el dolor, la alegría, el caos, la paz — sin ser tocado por ninguno.</p>
+        <p>A este alguien lo llamamos el <strong>Observador Luminoso</strong>: la conciencia testigo que no juzga, no interfiere, no toma partido. Simplemente <em>ve</em>.</p>
+        <div class="section-divider"></div>
+        <h2>Diferentes Mapas, El Mismo Territorio</h2>
+        <p>La psicología contemplativa y las tradiciones de sabiduría convergen en un punto fundamental: detrás de todos los contenidos de la mente — pensamientos, emociones, recuerdos, fantasías — existe una dimensión de conciencia que no es ninguno de esos contenidos.</p>
+        <p>En el budismo se habla del <em>rigpa</em>, la conciencia primordial. En la Advaita Vedanta, del <em>Atman</em>, el Ser testigo. En la psicología transpersonal, del <em>Self observador</em>. En la ACT —Terapia de Aceptación y Compromiso— del "Yo como contexto" versus el "Yo como contenido".</p>
+        <div class="section-divider"></div>
+        <h2>Las Cualidades del Observador Luminoso</h2>
+        <h3>Siempre presente, nunca atrapado</h3>
+        <p>El Observador estuvo presente cuando eras niño y tenías miedo. Estaba ahí en tus momentos de mayor vergüenza. También en tus cimas de alegría. Siempre mirando, nunca siendo.</p>
+        <h3>Ecuánime sin ser indiferente</h3>
+        <p>No confundas la ecuanimidad del Observador con frialdad o desapego patológico. El Observador <em>ve</em> el dolor con plena claridad — no lo suprime. Pero no es el dolor. Hay una diferencia abismal entre "estoy sufriendo" y "observo que surge el sufrimiento".</p>
+        <div class="cita-destacada">"No soy la tormenta. Soy el cielo en el que la tormenta ocurre."</div>
+        <h3>Anterior a las voces</h3>
+        <p>El Observador no es una voz más del parlamento interior. Es el espacio en el que el parlamento se reúne. Cuando el Guardián critica, el Observador ve al Guardián. Cuando el Niño llora, el Observador ve al Niño. El Observador no toma partido porque está antes del partido.</p>
+        <h3>Indestructible</h3>
+        <p>Esta es la revelación más liberadora: el Observador no puede ser herido porque no tiene forma que pueda ser dañada. Puedes perder un trabajo, una relación, la salud — el Observador permanece intacto, mirando incluso la pérdida con presencia serena.</p>
+        <div class="section-divider"></div>
+        <h2>El Ejercicio del Testigo</h2>
+        <div class="seccion-especial">
+            <h3>Práctica de Defusión Cognitiva</h3>
+            <p>Cuando surja un pensamiento perturbador, en lugar de luchar con él, practica esta secuencia:</p>
+            <ul>
+                <li><strong>Fusión:</strong> "Soy un fracaso" <em>(identificación total)</em></li>
+                <li><strong>Noticing:</strong> "Tengo el pensamiento de que soy un fracaso"</li>
+                <li><strong>Observador:</strong> "Noto que surge el pensamiento de que soy un fracaso"</li>
+                <li><strong>Testigo pleno:</strong> "Hay una parte de mí que observa cómo aparece ese pensamiento"</li>
+            </ul>
+            <p>Cada paso crea distancia. La distancia crea libertad. La libertad crea elección.</p>
+        </div>
+        <div class="seccion-especial">
+            <h3>La Pregunta del Espejo</h3>
+            <p>Cuando estés en medio de una emoción intensa, hazte esta pregunta:</p>
+            <p><em>"¿Quién está observando este dolor / esta ira / esta tristeza?"</em></p>
+            <p>No busques una respuesta conceptual. Simplemente dirige la atención hacia quien pregunta. Ese movimiento — volverse hacia el observador — es el acceso directo al Observador Luminoso.</p>
+        </div>
+        <div class="section-divider"></div>
+        <h2>El Observador en la Práctica Clínica</h2>
+        <p>En la psicoterapia de tercera generación, el desarrollo de la perspectiva del Yo-como-contexto es central para la flexibilidad psicológica. No se trata de desapegarse de la experiencia, sino de ampliar la perspectiva desde la cual se experimenta.</p>
+        <p>El paciente que puede observar su ansiedad desde el Observador Luminoso no ha eliminado la ansiedad. Ha cambiado su relación con ella. Y ese cambio de relación es, frecuentemente, más transformador que cualquier técnica de reducción de síntomas.</p>
+        <div class="section-divider"></div>
+        <h2>Cuando el Observador Se Oscurece</h2>
+        <p>Hay momentos — el duelo agudo, el trauma, la disociación severa — en que el acceso al Observador Luminoso parece bloqueado. En esos momentos, la práctica no es <em>forzar</em> el acceso al Observador. Es confiar en que sigue ahí, aunque no se perciba. Como el sol detrás de las nubes: la nube no destruye al sol. Lo oscurece temporalmente.</p>
+        <div class="meditacion">
+            <h3>Meditación del Observador Luminoso</h3>
+            <p>Siéntate en silencio. Cierra los ojos.</p>
+            <p>Permite que aparezcan pensamientos, sensaciones, emociones.<br>No los busques ni los evites.</p>
+            <p>Ahora pregúntate suavemente:<br><em>"¿Quién está notando lo que surge?"</em></p>
+            <p>No busques una respuesta. Solo orienta la atención<br>hacia esa presencia que observa.</p>
+            <p>Esa presencia que ve tus pensamientos<br>pero no es ningún pensamiento.<br>Que siente tus emociones<br>pero no es ninguna emoción.</p>
+            <p>Que ha estado ahí siempre.<br>Antes del primer pensamiento de hoy.<br>Antes del primer pensamiento de tu vida.</p>
+            <p><em>Ese es tu Observador Luminoso.<br>Eres tú, en tu dimensión más vasta.</em></p>
+            <p>Descansa aquí, sin esfuerzo, por unos momentos.<br>No hay nada que hacer. Solo ser el que ve.</p>
+        </div>
+        <div class="cita-destacada">
+            "El Observador Luminoso no es una meta espiritual lejana.<br>
+            Es lo que ya eres, cuando dejas de confundirte<br>
+            con lo que simplemente <em>tienes</em>."
+        </div>
+    </main>
+    <nav class="navigation" aria-label="Navegación entre nodos">
+        <div class="navigation-row">
+            <a class="nav-link" href="nodo_01.html">← Nodo I</a>
+            <a class="nav-link" href="index.html">Portal del Libro</a>
+            <a class="nav-link" href="nodo_03.html">Nodo III →</a>
+            <a class="nav-link" href="../index.html">Trinity Origen</a>
+        </div>
+    </nav>
+    <footer class="footer">
+        <div class="footer-symbol">◈</div>
+        <p>Trinity Origen · Libro II · La Voz Interior</p>
+        <p>"No es mío, vino a través de mí."</p>
+    </footer>
+</div>
+<script>
+    const st=document.getElementById('scrollTop');
+    window.addEventListener('scroll',()=>{st.classList.toggle('visible',window.pageYOffset>300);});
+    window.addEventListener('load',()=>{const v=JSON.parse(localStorage.getItem('nodos-voz')||'[]');if(!v.includes(2)){v.push(2);localStorage.setItem('nodos-voz',JSON.stringify(v));}});
+</script>
 </body>
 </html>
