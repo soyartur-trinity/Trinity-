@@ -1,1152 +1,521 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 6: El Legado Cuántico | La Muerte como Maestra</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-
-    body {
-        font-family: 'Georgia', serif;
-        background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0f0f2e 100%);
-        color: #e8e8e8;
-        line-height: 1.8;
-        overflow-x: hidden;
-    }
-
-    #ondas-canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        pointer-events: none;
-        opacity: 0.3;
-    }
-
-    .container {
-        position: relative;
-        z-index: 1;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 40px 20px;
-    }
-
-    .header {
-        text-align: center;
-        margin-bottom: 60px;
-        padding: 60px 20px;
-        background: rgba(26, 26, 62, 0.5);
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255, 215, 0, 0.3);
-        box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
-    }
-
-    .book-title {
-        font-size: 1.1rem;
-        color: #ffd700;
-        letter-spacing: 4px;
-        margin-bottom: 15px;
-        text-transform: uppercase;
-        opacity: 0.9;
-    }
-
-    .nodo-number {
-        font-size: 3.5rem;
-        font-weight: bold;
-        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffa500 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 20px;
-    }
-
-    .nodo-title {
-        font-size: 2.8rem;
-        color: #ffffff;
-        margin-bottom: 30px;
-        text-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
-    }
-
-    .quote {
-        font-style: italic;
-        font-size: 1.15rem;
-        color: #ffe57f;
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 30px;
-        border-left: 3px solid #ffd700;
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.1) 100%);
-        border-radius: 10px;
-    }
-
-    .section {
-        margin: 60px 0;
-        padding: 40px;
-        background: rgba(26, 26, 62, 0.35);
-        border-radius: 15px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 215, 0, 0.2);
-        animation: fadeIn 0.8s ease-out;
-    }
-
-    h2 {
-        font-size: 2.2rem;
-        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-
-    h3 {
-        font-size: 1.6rem;
-        color: #ffd700;
-        margin: 30px 0 20px 0;
-    }
-
-    h4 {
-        font-size: 1.3rem;
-        color: #ffe57f;
-        margin: 20px 0 15px 0;
-    }
-
-    p {
-        margin-bottom: 20px;
-        font-size: 1.05rem;
-        text-align: justify;
-    }
-
-    .legado-card {
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
-        padding: 30px;
-        margin: 25px 0;
-        border-radius: 15px;
-        border-left: 5px solid #ffd700;
-        transition: all 0.3s ease;
-    }
-
-    .legado-card:hover {
-        transform: translateX(10px);
-        box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4);
-    }
-
-    .legado-name {
-        font-size: 1.8rem;
-        color: #ffd700;
-        margin-bottom: 15px;
-        font-weight: bold;
-    }
-
-    .testimonio {
-        background: rgba(76, 175, 80, 0.15);
-        padding: 25px;
-        margin: 20px 0;
-        border-radius: 12px;
-        border-left: 4px solid #4caf50;
-        font-style: italic;
-    }
-
-    .testimonio-autor {
-        text-align: right;
-        color: #4caf50;
-        font-weight: bold;
-        margin-top: 10px;
-        font-style: normal;
-    }
-
-    .practica-card {
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.15) 100%);
-        padding: 35px;
-        margin: 30px 0;
-        border-radius: 18px;
-        border: 2px solid rgba(255, 215, 0, 0.4);
-        box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
-    }
-
-    .practica-titulo {
-        font-size: 1.5rem;
-        color: #ffd700;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .practica-duracion {
-        font-size: 0.9rem;
-        color: #ffe57f;
-        font-style: italic;
-        margin-bottom: 20px;
-    }
-
-    .practica-steps {
-        background: rgba(10, 10, 26, 0.4);
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 15px;
-    }
-
-    .quantum-box {
-        background: rgba(33, 150, 243, 0.15);
-        padding: 25px;
-        margin: 20px 0;
-        border-radius: 12px;
-        border: 2px solid rgba(100, 181, 246, 0.4);
-    }
-
-    .quantum-box::before {
-        content: '⚛️ ';
-        font-size: 1.5rem;
-    }
-
-    .lista-item {
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 165, 0, 0.08) 100%);
-        padding: 15px 20px;
-        margin: 12px 0;
-        border-radius: 10px;
-        border-left: 4px solid #ffd700;
-    }
-
-    ul, ol {
-        margin: 20px 0 20px 40px;
-    }
-
-    li {
-        margin: 10px 0;
-        line-height: 1.6;
-    }
-
-    .conexion-box {
-        background: rgba(2, 136, 209, 0.12);
-        padding: 25px;
-        margin: 20px 0;
-        border-radius: 12px;
-        border-left: 4px solid #29b6f6;
-        font-style: italic;
-    }
-
-    .caso-card {
-        background: linear-gradient(135deg, rgba(156, 39, 176, 0.15) 0%, rgba(255, 215, 0, 0.1) 100%);
-        padding: 30px;
-        margin: 25px 0;
-        border-radius: 15px;
-        border-left: 5px solid #ab47bc;
-        transition: all 0.3s ease;
-    }
-
-    .caso-card:hover {
-        transform: translateX(10px);
-        box-shadow: 0 5px 25px rgba(171, 71, 188, 0.3);
-    }
-
-    .caso-name {
-        font-size: 1.6rem;
-        color: #ffd700;
-        margin-bottom: 15px;
-        font-weight: bold;
-    }
-
-    .inmortalidad-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-        margin: 30px 0;
-    }
-
-    .inmortalidad-item {
-        background: rgba(255, 215, 0, 0.15);
-        padding: 20px;
-        border-radius: 12px;
-        border-left: 4px solid #ffd700;
-        transition: all 0.3s ease;
-    }
-
-    .inmortalidad-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
-    }
-
-    .meditacion-box {
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(10, 10, 26, 0.5) 100%);
-        padding: 40px;
-        margin: 40px 0;
-        border-radius: 20px;
-        border: 2px solid rgba(255, 215, 0, 0.5);
-        text-align: center;
-    }
-
-    .preguntas-box {
-        background: rgba(255, 215, 0, 0.1);
-        padding: 30px;
-        margin: 30px 0;
-        border-radius: 15px;
-        border: 2px dashed #ffd700;
-    }
-
-    .pregunta-item {
-        font-size: 1.1rem;
-        color: #ffd700;
-        margin: 15px 0;
-        font-weight: 500;
-    }
-
-    .transicion {
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(76, 175, 80, 0.2) 100%);
-        padding: 40px;
-        margin: 50px 0;
-        border-radius: 20px;
-        border: 3px solid rgba(255, 215, 0, 0.5);
-        text-align: center;
-    }
-
-    .simbolo-muerte {
-        font-size: 3rem;
-        margin: 20px 0;
-    }
-
-    strong {
-        color: #ffd700;
-    }
-
-    .highlight {
-        background: linear-gradient(135deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 165, 0, 0.15) 100%);
-        padding: 3px 10px;
-        border-radius: 5px;
-    }
-
-    .navegacion {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 60px;
-        gap: 20px;
-    }
-
-    .nav-button {
-        padding: 15px 30px;
-        background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
-        color: #0a0a1a;
-        text-decoration: none;
-        border-radius: 30px;
-        font-size: 1.1rem;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-    }
-
-    .nav-button:hover {
-        background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
-        color: #0a0a1a;
-        transform: translateY(-3px);
-        box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
-    }
-
-    .efecto-box {
-        background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(255, 215, 0, 0.1) 100%);
-        padding: 30px;
-        margin: 30px 0;
-        border-radius: 15px;
-        border: 2px solid rgba(76, 175, 80, 0.4);
-        text-align: center;
-    }
-
-    .akashico-box {
-        background: linear-gradient(135deg, rgba(156, 39, 176, 0.2) 0%, rgba(33, 150, 243, 0.15) 100%);
-        padding: 30px;
-        margin: 30px 0;
-        border-radius: 15px;
-        border: 2px solid rgba(100, 181, 246, 0.5);
-    }
-
-    @media (max-width: 768px) {
-        .nodo-number {
-            font-size: 2.5rem;
-        }
-        
-        .nodo-title {
-            font-size: 2rem;
-        }
-        
-        h2 {
-            font-size: 1.7rem;
-        }
-        
-        .section {
-            padding: 25px;
-        }
-        
-        .inmortalidad-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .navegacion {
-            flex-direction: column;
-        }
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    blockquote {
-        font-style: italic;
-        padding: 20px;
-        margin: 20px 0;
-        border-left: 4px solid #ffd700;
-        background: rgba(255, 215, 0, 0.1);
-    }
-
-    .ejercicio-box {
-        background: rgba(255, 215, 0, 0.08);
-        padding: 30px;
-        margin: 30px 0;
-        border-radius: 15px;
-        border: 2px solid rgba(255, 215, 0, 0.3);
-    }
-
-    .ejercicio-titulo {
-        font-size: 1.4rem;
-        color: #ffd700;
-        margin-bottom: 20px;
-        text-align: center;
-        font-weight: bold;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nodo 6 &ndash; EL LEGADO CUÁNTICO | La Muerte como Maestra | Trinity Origen</title>
+<script>(function(){var r=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(!r)document.documentElement.classList.add('anim');})();</script>
+<style>
+:root{
+  --bg:#050505;--bg-soft:#0b0b0b;--panel:rgba(255,255,255,0.025);
+  --border:rgba(214,179,106,0.18);--border-strong:rgba(214,179,106,0.34);
+  --gold:#d6b36a;--violet:#6d4a8f;--text:#f3efe6;
+  --text-soft:rgba(243,239,230,0.78);--text-faint:rgba(243,239,230,0.42);
+  --radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.35);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Georgia","Times New Roman",serif;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(150,110,196,0.20), transparent 28%),
+    radial-gradient(circle at 50% 8%, rgba(120,90,170,0.05), transparent 34%),
+    radial-gradient(circle at 50% 12%, rgba(214,179,106,0.05), transparent 30%),
+    linear-gradient(180deg, #0b0813 0%, #070510 45%, #03020a 100%);
+  color:var(--text);line-height:1.9;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(circle at center,black 35%,transparent 82%);
+  -webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);
+  opacity:0.12;
+}
+/* Marco con transparencias: doble hairline translúcido + leve resplandor violeta interior */
+.frame{position:fixed;inset:12px;border:1px solid rgba(214,179,106,0.10);pointer-events:none;z-index:0;border-radius:5px;box-shadow:inset 0 0 140px rgba(150,110,196,0.05);}
+.frame::after{content:"";position:absolute;inset:6px;border:1px solid rgba(214,179,106,0.045);border-radius:3px;}
+.container{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+  color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;
+  padding:11px 16px;border-radius:999px;border:1px solid var(--border);
+  background:rgba(255,255,255,0.014);transition:all 0.25s ease;
+}
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{
+  position:relative;overflow:hidden;text-align:center;
+  padding:54px 28px 34px;border-radius:30px;
+  border:1px solid rgba(214,179,106,0.12);
+  background:linear-gradient(180deg,rgba(255,255,255,0.024),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(109,74,143,0.18),transparent 42%);
+  box-shadow:var(--shadow);margin-bottom:34px;
+}
+.hero::before{
+  content:"";position:absolute;inset:auto 50% 32px;width:320px;height:320px;transform:translateX(-50%);
+  border-radius:50%;border:1px solid rgba(214,179,106,0.11);
+  box-shadow:0 0 0 14px rgba(214,179,106,0.03),0 0 0 34px rgba(109,74,143,0.03),inset 0 0 60px rgba(214,179,106,0.025);
+  pointer-events:none;animation:ringbreath 13s ease-in-out infinite;
+}
+@keyframes ringbreath{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.045);}}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{
+  position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;
+  display:grid;place-items:center;border-radius:50%;
+  border:1px solid rgba(214,179,106,0.22);
+  background:radial-gradient(circle,rgba(214,179,106,0.11),rgba(255,255,255,0.01) 60%,transparent 72%);
+  box-shadow:0 0 28px rgba(109,74,143,0.12),inset 0 0 24px rgba(214,179,106,0.04);
+}
+.sigil-wrap::after{content:"";position:absolute;inset:-7px;border-radius:50%;box-shadow:0 0 32px rgba(214,179,106,0.16);opacity:.4;animation:glowpulse 6.5s ease-in-out infinite;pointer-events:none;}
+@keyframes glowpulse{0%,100%{opacity:.32;}50%{opacity:.7;}}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;animation:sigilbreath 6.5s ease-in-out infinite;}
+@keyframes sigilbreath{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
+.book-title,.book-label{position:relative;z-index:2;font-size:0.9rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:10px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title,.hero-title{position:relative;z-index:2;font-size:clamp(2rem,4.2vw,3.1rem);font-weight:normal;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;line-height:1.18;}
+.node-subtitle,.hero-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.05rem;margin-bottom:18px;font-style:italic;}
+.node-quote,.hero-desc{position:relative;z-index:2;max-width:760px;margin:0 auto;color:var(--text-soft);font-size:1rem;line-height:1.8;}
+.content{
+  background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));
+  border:1px solid rgba(214,179,106,0.1);border-radius:26px;
+  padding:38px 32px;box-shadow:0 12px 32px rgba(0,0,0,0.22);
+}
+.content h2{color:var(--gold);font-size:1.42rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.1rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.03rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content blockquote{
+  margin:1.3rem 0;padding:1rem 1.1rem 1rem 1.2rem;
+  border-left:3px solid rgba(214,179,106,0.45);
+  background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;
+  color:var(--text);font-style:italic;
+}
+.content strong{color:var(--text);}
+.content em{color:var(--gold);font-style:italic;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(214,179,106,0.2),rgba(214,179,106,0));margin:2rem 0 1.4rem;}
+.mapa-nav{
+  background:rgba(255,255,255,0.016);border:1px solid rgba(214,179,106,0.12);
+  border-radius:18px;padding:22px 24px;margin-bottom:28px;
+}
+.mapa-nav h3{color:var(--gold);font-size:0.82rem;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:14px;font-weight:normal;}
+.mapa-nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.mapa-nav li{color:var(--text-soft);font-size:0.91rem;padding:4px 0;border-bottom:1px solid rgba(214,179,106,0.06);}
+.mapa-nav li:last-child{border-bottom:none;}
+.bloque{
+  background:rgba(255,255,255,0.016);border:1px solid rgba(214,179,106,0.14);
+  border-radius:20px;padding:30px 28px;margin:34px 0;
+}
+.bloque h3{color:var(--gold);font-size:0.92rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:18px;font-weight:normal;text-align:center;}
+.bloque ul{list-style:none;margin:0;padding:0;}
+.bloque li{color:var(--text-soft);font-size:1.02rem;line-height:1.7;margin:14px 0;padding-left:18px;position:relative;font-style:italic;}
+.bloque li::before{content:"\\27D0";position:absolute;left:0;color:var(--gold);opacity:0.6;font-style:normal;}
+.bloque p{color:var(--text-soft);font-size:1.02rem;margin-bottom:0.8rem;}
+.bloque .duracion{color:var(--text-faint);font-style:italic;font-size:0.9rem;margin-top:14px;margin-bottom:0;}
+/* Indice del libro */
+.nodos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:36px 0 10px;}
+.nodo-card{position:relative;padding:22px 20px 18px;border-radius:18px;border:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(255,255,255,0.022),rgba(255,255,255,0.012));
+  transition:transform 0.25s ease,border-color 0.25s ease,box-shadow 0.25s ease;
+  box-shadow:0 12px 32px rgba(0,0,0,0.22);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;}
+.nodo-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(109,74,143,0.1),transparent 30%);pointer-events:none;}
+.nodo-card::after{content:"";position:absolute;left:20px;right:20px;top:50px;height:1px;background:linear-gradient(90deg,rgba(214,179,106,0.16),rgba(214,179,106,0));pointer-events:none;}
+.nodo-card:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:0 18px 40px rgba(0,0,0,0.3);}
+.nodo-num{position:relative;z-index:2;color:var(--gold);font-size:0.76rem;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:14px;}
+.nodo-titulo{position:relative;z-index:2;font-size:1.05rem;font-weight:normal;line-height:1.4;margin-bottom:8px;color:var(--text);}
+.nodo-desc{position:relative;z-index:2;font-size:0.9rem;color:var(--text-soft);line-height:1.65;margin-bottom:14px;}
+.nodo-link{position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;text-decoration:none;color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);border-radius:999px;padding:8px 14px;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;
+  background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nodo-link:hover{color:#f0d7a0;border-color:rgba(214,179,106,0.38);background:rgba(214,179,106,0.06);}
+.nodos-heading{text-align:center;margin:14px 0 6px;color:var(--gold);font-size:1.05rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:normal;}
+.nodos-sub{text-align:center;color:var(--text-faint);font-style:italic;margin-bottom:6px;}
+.cierre{text-align:center;padding:30px 20px;border-radius:20px;border:1px solid rgba(214,179,106,0.1);
+  background:linear-gradient(180deg,rgba(255,255,255,0.018),rgba(255,255,255,0.008));color:var(--text-soft);font-size:0.98rem;line-height:1.9;margin:30px 0 10px;}
+.cierre em{color:var(--gold);font-style:italic;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(214,179,106,0.12);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);border-radius:999px;padding:10px 15px;font-size:0.84rem;letter-spacing:0.08em;text-transform:uppercase;
+  background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(214,179,106,0.38);background:rgba(214,179,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+/* Reveal sutil (solo con JS y sin movimiento reducido) */
+html.anim .reveal{opacity:0;transform:translateY(20px);transition:opacity .9s ease,transform .9s ease;}
+html.anim .reveal.visible{opacity:1;transform:translateY(0);}
+@media(max-width:720px){
+  .frame{inset:8px;}.container{padding:24px 16px 64px;}
+  .hero{padding:42px 18px 28px;border-radius:24px;}
+  .hero::before{width:220px;height:220px;bottom:24px;}
+  .content{padding:28px 20px;border-radius:22px;}
+  .content p,.content li{font-size:1rem;}
+  .bloque{padding:24px 20px;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;}
+  html.anim .reveal{opacity:1!important;transform:none!important;}
+}
 </style>
-
 </head>
 <body>
-    <canvas id="ondas-canvas"></canvas>
-
+<div class="frame" aria-hidden="true"></div>
 <div class="container">
-    <div class="header">
-        <div class="book-title">📖 Libro 7: La Muerte como Maestra</div>
-        <div class="nodo-number">💎 NODO 6 💎</div>
-        <h1 class="nodo-title">EL LEGADO CUÁNTICO</h1>
-        <p class="quote">
-            "Tu cuerpo volverá al polvo, tu nombre será olvidado, tus logros se desvanecerán. Pero cada acto de amor, cada momento de consciencia, cada verdad vivida, altera el campo cuántico para siempre. Eres más inmortal de lo que imaginas."
-        </p>
+
+  <div class="topbar">
+    <a class="back-link" href="index.html">&larr; Volver al Portal del Libro</a>
+  </div>
+
+  <header class="hero reveal">
+    <div class="hero-topline">Trinity Origen</div>
+    <div class="sigil-wrap" aria-hidden="true"><div class="sigil">&#9672;</div></div>
+    <div class="book-title">Libro VII &middot; La Muerte como Maestra</div>
+    <div class="node-kicker">Nodo 6 &middot; de 7</div>
+    <h1 class="node-title">EL LEGADO CUÁNTICO</h1>
+  </header>
+
+  <div class="mapa-nav reveal">
+    <h3>Mapa de navegaci&oacute;n del nodo</h3>
+    <ul>
+      <li>La Inmortalidad que No Sabías que Tenías</li>
+      <li>El Registro Akáshico Personal</li>
+      <li>Más Allá de los Genes: Herencia Cuántica</li>
+      <li>Creación Consciente del Legado</li>
+      <li>El Efecto Mariposa Existencial</li>
+      <li>Ciencia del Legado Cuántico</li>
+      <li>Casos de Legado Transformador</li>
+      <li>Tecnologías de Legado Consciente</li>
+      <li>El Arte de Morir Vacío</li>
+      <li>Práctica Final: Tu Legado en Este Momento</li>
+      <li>El Legado Último</li>
+      <li>Preguntas para el Alma Inmortal</li>
+      <li>Transición al Nodo 7</li>
+    </ul>
+  </div>
+
+  <main class="content reveal">
+    <h3>Libro 7: La Muerte como Maestra</h3>
+    <p class="lead">"Tu cuerpo volverá al polvo, tu nombre será olvidado, tus logros se desvanecerán. Pero cada acto de amor, cada momento de consciencia, cada verdad vivida, altera el campo cuántico para siempre. Eres más inmortal de lo que imaginas."</p>
+    <h2>La Inmortalidad que No Sabías que Tenías</h2>
+    <p>Vivimos obsesionados con dejar huella, con ser recordados, con que nuestro nombre perdure. Pirámides, estatuas, fundaciones con nuestro nombre - monumentos al ego aterrado de desaparecer. Pero hay una inmortalidad más profunda, más real, operando en cada momento.</p>
+    <p>La física cuántica nos revela: <strong>la información nunca se destruye.</strong> Cada pensamiento, cada emoción, cada acción, crea ondas en el campo cuántico que reverberan eternamente. No metafóricamente - literalmente. Tu vida está escribiendo en el tejido mismo de la realidad.</p>
+    <h3>Los Niveles del Legado</h3>
+    <h3>Legado Genético</h3>
+    <p><strong>El más obvio, el más limitado</strong></p>
+    <ul>
+      <li>ADN pasado a descendientes</li>
+      <li>Dura algunas generaciones</li>
+      <li>Se diluye con el tiempo</li>
+      <li>El ego se aferra a esto</li>
+    </ul>
+    <h3>Legado Memético</h3>
+    <p><strong>Ideas que se replican</strong></p>
+    <ul>
+      <li>Conceptos que enseñaste</li>
+      <li>Historias que contaste</li>
+      <li>Valores que transmitiste</li>
+      <li>Puede durar siglos</li>
+    </ul>
+    <h3>Legado Morfogenético</h3>
+    <p><strong>Campos de forma</strong></p>
+    <ul>
+      <li>Patrones de comportamiento</li>
+      <li>Caminos neuronales que abriste</li>
+      <li>Facilitas el camino para otros</li>
+      <li>Opera inconscientemente</li>
+    </ul>
+    <h3>Legado Cuántico</h3>
+    <p><strong>Alteración del campo</strong></p>
+    <ul>
+      <li>Cada elección colapsa probabilidades</li>
+      <li>Cada acto de consciencia eleva frecuencia</li>
+      <li>Cambias el universo permanentemente</li>
+      <li>Opera más allá del tiempo-espacio</li>
+    </ul>
+    <h3>Legado Akáshico</h3>
+    <p><strong>Registro en la consciencia cósmica</strong></p>
+    <ul>
+      <li>Tu vida completa "grabada"</li>
+      <li>Accesible desde otras dimensiones</li>
+      <li>Biblioteca de experiencias</li>
+      <li>Recurso eterno de aprendizaje</li>
+    </ul>
+    <blockquote>Cuando entendí que cada momento de amor hacia mi hija alteraba el campo cuántico no solo para ella sino para todas las madres e hijas futuras, la crianza se volvió acto sagrado." — María, física y madre</blockquote>
+    <div class="section-divider"></div>
+    <h2>El Registro Akáshico Personal</h2>
+    <p>Los místicos siempre lo supieron: existe una biblioteca cósmica donde cada vida está registrada. No es metáfora poética - es mecánica de consciencia. Cada vida es un libro único en esta biblioteca infinita.</p>
+    <h3>¿Qué se Registra?</h3>
+    <p>No solo los hechos, sino:</p>
+    <ul>
+      <li>La cualidad de consciencia en cada momento</li>
+      <li>Las intenciones detrás de las acciones</li>
+      <li>Los aprendizajes del alma</li>
+      <li>Las preguntas no respondidas</li>
+      <li>Los potenciales no realizados</li>
+      <li>El amor expresado y retenido</li>
+      <li>Los momentos de despertar</li>
+    </ul>
+    <h3>Práctica: Escribiendo Conscientemente tu Registro</h3>
+    <p>Cada noche antes de dormir</p>
+    <ul>
+      <li><strong>Revisa el día</strong> no por lo que hiciste, sino por cómo lo viviste</li>
+      <li><strong>Pregunta:</strong> ¿Qué calidad de consciencia aporté hoy?</li>
+      <li><strong>Siente:</strong> ¿Qué ondas creé en el campo?</li>
+      <li><strong>Intenciona:</strong> ¿Qué quiero registrar mañana?</li>
+      <li><strong>Dedica:</strong> Que mi registro sirva a todos los seres</li>
+    </ul>
+    <blockquote>Vivo cada día como si fuera una página que otros leerán durante milenios. No para impresionar, sino para servir." — Lama Tenzin</blockquote>
+    <p><strong>Conexión con Psicología Cuántica:</strong> En ese libro se explora cómo cada acto consciente crea un "surco" en el campo cuántico que facilita actos similares en otros. Tu registro personal se convierte en mapa para futuros viajeros de consciencia.</p>
+    <div class="section-divider"></div>
+    <h2>Más Allá de los Genes: Herencia Cuántica</h2>
+    <h3>Epigenética Espiritual</h3>
+    <p>La ciencia descubre lo que los chamanes sabían: <strong>heredamos más que genes.</strong> Heredamos patrones, traumas, dones, despertar. Y más revolucionario: podemos sanar hacia atrás y hacia adelante en el linaje.</p>
+    <h3>Caso Documentado</h3>
+    <p><strong>Rachel, sobreviviente de tercera generación del Holocausto.</strong> En terapia profunda, revivió memorias de su abuela en campos de concentración - memorias imposibles de tener. Al sanar su trauma, su hija de 5 años dejó de tener pesadillas con trenes. Sanar uno sana la línea.</p>
+    <h3>Transmisión No-Local</h3>
+    <p>Tu transformación afecta instantáneamente a:</p>
+    <h3>Ancestros</h3>
+    <p>Sí, retroactivamente</p>
+    <h3>Descendientes</h3>
+    <p>Incluso no nacidos</p>
+    <h3>Tu línea de alma</h3>
+    <p>Todas tus encarnaciones</p>
+    <h3>Resonancia similar</h3>
+    <p>Seres en tu frecuencia</p>
+    <h3>Campo colectivo</h3>
+    <p>La humanidad entera</p>
+    <h3>Experimento de los Monos 100</h3>
+    <p>Cuando suficientes monos aprendieron a lavar batatas, TODOS los monos de islas distantes súbitamente supieron hacerlo. <strong>Tu despertar contribuye a la masa crítica de consciencia.</strong></p>
+    <p><strong>Conexión con Los Vínculos Sagrados:</strong> En ese libro se describe cómo los vínculos trascienden el tiempo lineal. Cuando sanas una relación, sanas todas las relaciones similares en tu línea ancestral y descendiente. Los vínculos son cuánticos.</p>
+    <div class="section-divider"></div>
+    <h2>Creación Consciente del Legado</h2>
+    <h3>El Testamento Cuántico</h3>
+    <p>Más allá del testamento legal, necesitas un testamento cuántico:</p>
+    <h3>Elementos Esenciales:</h3>
+    <h3>1. Declaración de Intención Álmica</h3>
+    <ul>
+      <li>¿Para qué vine?</li>
+      <li>¿Qué vine a sanar?</li>
+      <li>¿Qué vine a aportar?</li>
+      <li>¿Cómo quiero ser usado después?</li>
+    </ul>
+    <h3>2. Mapa de Aprendizajes</h3>
+    <ul>
+      <li>Sabiduría destilada</li>
+      <li>Errores como enseñanzas</li>
+      <li>Insights únicos</li>
+      <li>Preguntas sin respuesta</li>
+    </ul>
+    <h3>3. Códigos de Activación</h3>
+    <ul>
+      <li>Prácticas que desarrollaste</li>
+      <li>Mantras personales</li>
+      <li>Símbolos de poder</li>
+      <li>Frecuencias de sanación</li>
+    </ul>
+    <h3>4. Bendiciones Específicas</h3>
+    <ul>
+      <li>Para descendientes</li>
+      <li>Para buscadores futuros</li>
+      <li>Para la Tierra</li>
+      <li>Para el cosmos</li>
+    </ul>
+    <h3>Práctica: Redacción del Testamento Cuántico</h3>
+    <h3>Preparación:</h3>
+    <ul>
+      <li>Espacio sagrado</li>
+      <li>Estado meditativo profundo</li>
+      <li>Conexión con Yo Superior</li>
+      <li>Apertura al campo</li>
+    </ul>
+    <h3>Proceso:</h3>
+    <ul>
+      <li><strong>Escribe sin censura</strong> - deja fluir</li>
+      <li><strong>Destila la esencia</strong> - encuentra los núcleos</li>
+      <li><strong>Codifica en símbolos</strong> - crea tu sello</li>
+      <li><strong>Graba energéticamente</strong> - en meditación profunda</li>
+      <li><strong>Suelta al campo</strong> - confía en la distribución cósmica</li>
+    </ul>
+    <blockquote>Mi testamento cuántico lo escribí a los 30, lo reescribo cada década. Es mi regalo al futuro, mi manera de seguir sirviendo cuando mi cuerpo ya no esté." — Alejandra, maestra espiritual</blockquote>
+    <div class="section-divider"></div>
+    <h2>El Efecto Mariposa Existencial</h2>
+    <p>Cada vida es una piedra lanzada al estanque cósmico. Las ondas continúan expandiéndose eternamente. Pero no todas las piedras crean las mismas ondas.</p>
+    <h3>Actos de Legado Máximo</h3>
+    <h3>Momentos de Amor Incondicional</h3>
+    <ul>
+      <li>Reverberan por dimensiones</li>
+      <li>Sanan líneas temporales</li>
+      <li>Crean cascadas de bondad</li>
+      <li>Alteran la matriz de realidad</li>
+    </ul>
+    <h3>Elecciones de Consciencia</h3>
+    <ul>
+      <li>Elegir amor sobre miedo</li>
+      <li>Perdonar lo imperdonable</li>
+      <li>Dar sin esperar</li>
+      <li>Cada elección consciente eleva todo</li>
+    </ul>
+    <h3>Creatividad Auténtica</h3>
+    <ul>
+      <li>Arte que canaliza verdad</li>
+      <li>Palabras que despiertan</li>
+      <li>Música que sana</li>
+      <li>Belleza que transforma</li>
+    </ul>
+    <h3>Servicio Silencioso</h3>
+    <ul>
+      <li>Actos anónimos de bondad</li>
+      <li>Oraciones por desconocidos</li>
+      <li>Trabajo energético planetario</li>
+      <li>Sostener luz sin reconocimiento</li>
+    </ul>
+    <h3>Historia: El Barrendero Iluminado</h3>
+    <blockquote>En un monasterio zen, un monje barría hojas cada día durante 40 años. Nunca enseñó, nunca escribió, solo barrió. Cuando murió, el abad dijo: <strong>"Su barrer consciente elevó la frecuencia de este lugar más que mil sermones. Cada hoja barrida con amor total alteró el campo. Generaciones de monjes encontrarán más fácil despertar aquí gracias a él."</strong></blockquote>
+    <p><strong>Conexión con El Vacío Fértil:</strong> En ese libro se explora cómo las acciones más simples, hechas desde el vacío (sin ego), tienen el mayor impacto cuántico. El barrendero no "hacía" - era el barrer. Esa no-separación es lo que altera el campo permanentemente.</p>
+    <div class="section-divider"></div>
+    <h2>Ciencia del Legado Cuántico</h2>
+    <h3>Estudios de Consciencia No-Local</h3>
+    <h3>Instituto HeartMath</h3>
+    <p>Documentó cómo la coherencia cardíaca de un individuo afecta campos electromagnéticos a distancia.</p>
+    <h3>Experimentos de Intención Global</h3>
+    <p>Meditadores coordinados alteran generadores de números aleatorios mundialmente.</p>
+    <h3>Estudios de Gemelos</h3>
+    <p>Cambios epigenéticos en uno afectan al otro instantáneamente, sin importar distancia.</p>
+    <h3>La Física de la Información Inmortal</h3>
+    <ul>
+      <li><strong>Principio de Conservación de Información:</strong> En física cuántica, la información no puede destruirse, solo transformarse.</li>
+      <li><strong>Entrelazamiento Cuántico:</strong> Tu consciencia está entrelazada con todo lo que tocaste, literal y metafóricamente.</li>
+      <li><strong>Campos Morfogenéticos:</strong> Cada patrón que vives facilita que otros lo vivan - evolución por resonancia.</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>Casos de Legado Transformador</h2>
+    <h3>La Maestra Anónima</h3>
+    <p>Sarah enseñó en primaria rural por 30 años. Sin fama, sin premios. Pero amó a cada niño como propio. 20 años después de jubilar, una estudiante de neurociencia descubrió: <strong>el 80% de los niños de esa escuela rural se convirtieron en agentes de cambio en sus comunidades.</strong> Rastreó el factor común: todos tuvieron a Sarah. Su amor había alterado trayectorias de vida permanentemente.</p>
+    <h3>El Código del Programador</h3>
+    <p>David, programador, tuvo una epifanía: cada línea de código podía llevar intención. Comenzó a programar con mantras, infundiendo sus aplicaciones con frecuencias de paz. Sus apps eran inexplicablemente "satisfactorias". Después de su muerte, análisis de código revelaron patrones geométricos sagrados. <strong>Miles reportaron experiencias de calma usando sus programas. Había codificado consciencia en silicio.</strong></p>
+    <h3>La Abuela que Sanó el Linaje</h3>
+    <p>Rosa nunca salió de su pueblo, pero a los 70 decidió sanar su línea ancestral. Cada día meditaba enviando perdón hacia atrás y bendiciones hacia adelante. Sus nietos, sin saber de su práctica, reportaron sueños de reconciliación. <strong>Patrones familiares de adicción se rompieron. Bisnietos nacieron con una paz inusual. Rosa alteró su línea genética con consciencia pura.</strong></p>
+    <div class="section-divider"></div>
+    <h2>Tecnologías de Legado Consciente</h2>
+    <h3>Cápsulas de Consciencia</h3>
+    <p>Grabar estados de consciencia para transmisión futura:</p>
+    <ul>
+      <li>Meditaciones en momentos de insight</li>
+      <li>Estados de amor puro grabados</li>
+      <li>Frecuencias de sanación codificadas</li>
+      <li>"Mensajes en botellas" cuánticas</li>
+    </ul>
+    <h3>Objetos Cargados</h3>
+    <p>Impregnar objetos con intención/energía:</p>
+    <ul>
+      <li>Cristales programados</li>
+      <li>Libros bendecidos</li>
+      <li>Arte como portal</li>
+      <li>Espacios sagrados creados</li>
+    </ul>
+    <h3>Rituales de Transmisión</h3>
+    <p>Ceremonias para pasar consciencia:</p>
+    <ul>
+      <li>Iniciaciones energéticas</li>
+      <li>Transmisión de linaje</li>
+      <li>Activaciones a distancia</li>
+      <li>Bendiciones transgeneracionales</li>
+    </ul>
+    <h3>Campos Morfogenéticos Intencionales</h3>
+    <p>Crear campos que faciliten despertar:</p>
+    <ul>
+      <li>Centros de meditación</li>
+      <li>Comunidades conscientes</li>
+      <li>Proyectos de servicio</li>
+      <li>Redes de luz</li>
+    </ul>
+    <p><strong>Conexión con Civilización Galáctica:</strong> En ese libro se describe cómo civilizaciones avanzadas transmiten consciencia a través de campos morfogenéticos, dejando "bibliotecas vivientes" que futuros seres pueden acceder. Tu legado consciente es tu contribución a esta biblioteca cósmica.</p>
+    <div class="section-divider"></div>
+    <h2>El Arte de Morir Vacío</h2>
+    <p>Paradoja suprema: el mayor legado viene de quien no busca dejar legado. Cuando el ego muere (Nodo 5), lo que queda naturalmente bendice.</p>
+    <h3>Testimonio: El Millonario que Murió Vacío</h3>
+    <blockquote><strong>James</strong> amasó fortuna para 'dejar legado'. Fundaciones, edificios con su nombre. A los 60, cáncer terminal. En sus últimos meses, algo cambió. Disolvió fundaciones, distribuyó anónimamente. Pasó sus días finales simplemente amando - a enfermeras, visitantes, pájaros en la ventana. Murió sin un centavo, sin nada a su nombre. Pero cada persona que lo cuidó reportó transformaciones profundas. <strong>Su amor sin agenda había sido más poderoso que millones de dólares. Su vacío fue su mayor regalo.</strong></blockquote>
+    <h3>Morir Vacío significa:</h3>
+    <ul>
+      <li>Haber dado todo lo que viniste a dar</li>
+      <li>No retener nada por miedo o avaricia</li>
+      <li>Compartir tu luz sin preocuparte por el crédito</li>
+      <li>Vaciar tus dones en el mundo</li>
+      <li>Partir sin asuntos pendientes</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>Práctica Final: Tu Legado en Este Momento</h2>
+    <p>No necesitas esperar a morir para activar tu legado cuántico. <strong>Cada momento es oportunidad.</strong></p>
+    <h3>EJERCICIO CONTEMPLATIVO</h3>
+    <h3>Práctica 6.1: Anclaje en el Eje Vertical del Ahora</h3>
+    <p>El tiempo lineal es un eje horizontal (pasado-presente-futuro). El tiempo sagrado o "Kairos" es un eje vertical que profundiza en el Ahora. Este ejercicio te ayuda a pasar de uno a otro.</p>
+    <h3>Paso 1: Detectar el Viaje Horizontal</h3>
+    <p>Durante el día, hazte consciente de cuándo tu mente está "viajando en el tiempo". ¿Estás rumiando un error del pasado? ¿Estás ensayando ansiosamente una conversación futura? Simplemente nótalo sin juicio: "Estoy en el pasado" o "Estoy en el futuro".</p>
+    <h3>Paso 2: Encontrar un Ancla Sensorial</h3>
+    <p>En ese momento, detente. Busca un ancla en el presente inmediato y concreto. Puede ser:</p>
+    <ul>
+      <li>La sensación de tus pies en el suelo</li>
+      <li>El peso de tu cuerpo en la silla</li>
+      <li>El contacto de la tela de tu ropa con tu piel</li>
+      <li>Un sonido específico en la habitación</li>
+      <li>El sabor del café que estás bebiendo</li>
+    </ul>
+    <h3>Paso 3: Profundizar en el Eje Vertical</h3>
+    <p>Elige un ancla y sumérgete en ella con toda tu atención durante 30 segundos. Explórala como si fuera la primera vez. Si es la sensación de tus pies en el suelo, siente la textura del calcetín, la temperatura, la presión. Al hacer esto, has dejado de viajar horizontalmente y has "descendido" verticalmente en la profundidad del momento presente.</p>
+    <h3>Paso 4: Repetir</h3>
+    <p>Haz este micro-ejercicio de 1 minuto varias veces al día. Es un entrenamiento para habitar el único punto donde la vida realmente ocurre: el Ahora.</p>
+    <div class="section-divider"></div>
+    <h2>El Legado Último</h2>
+    <p>Al final, el legado más profundo no es <strong>lo que haces</strong> sino <strong>lo que eres.</strong> No los actos sino la consciencia detrás. No los logros sino el amor expresado.</p>
+    <p>Tu legado cuántico ya está escribiéndose. Cada respiración consciente, cada elección amorosa, cada momento de presencia, <strong>altera el campo para siempre.</strong></p>
+    <h3>La Verdad Final</h3>
+    <p><strong>Eres más vasto de lo que imaginas.</strong> <strong>Eres más eterno de lo que crees.</strong> <strong>Tu vida importa en formas que no puedes concebir.</strong> Vive en consecuencia.</p>
+    <div class="section-divider"></div>
+    <h2>Preguntas para el Alma Inmortal</h2>
+    <ul>
+      <li>¿Qué patrones estoy sanando para mi linaje?</li>
+      <li>¿Qué información única vine a aportar al campo?</li>
+      <li>¿Cómo quiero que mi vida sea leída en el futuro?</li>
+      <li>¿Qué ondas estoy creando con mi estado de consciencia actual?</li>
+      <li>¿Puedo amar sin necesitar ser recordado?</li>
+      <li>¿Qué parte de mi legado está motivada por ego?</li>
+      <li>¿Cómo sería vivir cada día como regalo al futuro?</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>Transición al Nodo 7</h2>
+    <p>Has explorado tu <strong>inmortalidad cuántica</strong>. Has visto cómo cada momento deja huella eterna en el campo. Has comprendido que tu legado no es algo que dejas - es algo que eres.</p>
+    <p>Pero hay un legado más grande desenvolviéndose. No solo individual, sino <strong>colectivo</strong>. La humanidad entera está en proceso de muerte y renacimiento. <strong>La Tierra misma está en transición.</strong></p>
+    <p>En el nodo final, exploraremos "La Gran Reunión" - la muerte y resurrección planetaria. Porque tu muerte individual es ensayo para participar conscientemente en la transformación de nuestra especie.</p>
+    <p><strong>Prepárate para la visión más amplia.</strong> El clímax de nuestra exploración nos espera.</p>
+  </main>
+
+  <section class="bloque reveal" aria-label="Meditación del Legado Vivo">
+    <h3>Meditación del Legado Vivo</h3>
+    <p>Siéntate. Respira. Centra en el corazón.</p>
+    <p><strong>Pregunta:</strong> Si muriera en una hora, ¿cuál ha sido mi legado hasta ahora? Siente sin juicio. Solo observa las ondas que has creado. <strong>Ahora pregunta:</strong> ¿Qué legado quiero crear en esta próxima hora? No actos grandiosos. Tal vez solo presencia total. Tal vez solo amor sin condiciones. Tal vez solo paz en medio del caos.</p>
+    <p>Comprométete: Viviré esta hora como legado consciente.</p>
+    <p>Abre los ojos. <strong>Tu inmortalidad comienza ahora.</strong></p>
+  </section>
+  <nav class="navigation reveal" aria-label="Navegaci&oacute;n entre nodos">
+    <div class="navigation-row">
+      <a class="nav-link" href="nodo_05.html">&larr; Nodo anterior</a>
+      <a class="nav-link" href="index.html">Portal del Libro</a>
+      <a class="nav-link" href="nodo_07.html">Siguiente nodo &rarr;</a>
+      <a class="nav-link" href="../index.html">Volver a Trinity Origen</a>
     </div>
+  </nav>
 
-    <div class="section">
-        <h2>🌌 La Inmortalidad que No Sabías que Tenías</h2>
-        <p>
-            Vivimos obsesionados con dejar huella, con ser recordados, con que nuestro nombre perdure. Pirámides, estatuas, fundaciones con nuestro nombre - monumentos al ego aterrado de desaparecer. Pero hay una inmortalidad más profunda, más real, operando en cada momento.
-        </p>
-        <p>
-            La física cuántica nos revela: <strong>la información nunca se destruye.</strong> Cada pensamiento, cada emoción, cada acción, crea ondas en el campo cuántico que reverberan eternamente. No metafóricamente - literalmente. Tu vida está escribiendo en el tejido mismo de la realidad.
-        </p>
+  <footer class="footer reveal">
+    <div class="footer-symbol">&#9672;</div>
+    <p>Trinity Origen &middot; Libro VII &middot; La Muerte como Maestra</p>
+    <p>"No es m&iacute;o vino a trav&eacute;s de m&iacute;."</p>
+  </footer>
 
-        <h3>📊 Los Niveles del Legado</h3>
-
-        <div class="legado-card">
-            <div class="legado-name">🧬 Legado Genético</div>
-            <p><strong>El más obvio, el más limitado</strong></p>
-            <ul>
-                <li>ADN pasado a descendientes</li>
-                <li>Dura algunas generaciones</li>
-                <li>Se diluye con el tiempo</li>
-                <li>El ego se aferra a esto</li>
-            </ul>
-        </div>
-
-        <div class="legado-card">
-            <div class="legado-name">🧠 Legado Memético</div>
-            <p><strong>Ideas que se replican</strong></p>
-            <ul>
-                <li>Conceptos que enseñaste</li>
-                <li>Historias que contaste</li>
-                <li>Valores que transmitiste</li>
-                <li>Puede durar siglos</li>
-            </ul>
-        </div>
-
-        <div class="legado-card">
-            <div class="legado-name">🌊 Legado Morfogenético</div>
-            <p><strong>Campos de forma</strong></p>
-            <ul>
-                <li>Patrones de comportamiento</li>
-                <li>Caminos neuronales que abriste</li>
-                <li>Facilitas el camino para otros</li>
-                <li>Opera inconscientemente</li>
-            </ul>
-        </div>
-
-        <div class="legado-card">
-            <div class="legado-name">⚛️ Legado Cuántico</div>
-            <p><strong>Alteración del campo</strong></p>
-            <ul>
-                <li>Cada elección colapsa probabilidades</li>
-                <li>Cada acto de consciencia eleva frecuencia</li>
-                <li>Cambias el universo permanentemente</li>
-                <li>Opera más allá del tiempo-espacio</li>
-            </ul>
-        </div>
-
-        <div class="legado-card">
-            <div class="legado-name">📚 Legado Akáshico</div>
-            <p><strong>Registro en la consciencia cósmica</strong></p>
-            <ul>
-                <li>Tu vida completa "grabada"</li>
-                <li>Accesible desde otras dimensiones</li>
-                <li>Biblioteca de experiencias</li>
-                <li>Recurso eterno de aprendizaje</li>
-            </ul>
-        </div>
-
-        <div class="testimonio">
-            "Cuando entendí que cada momento de amor hacia mi hija alteraba el campo cuántico no solo para ella sino para todas las madres e hijas futuras, la crianza se volvió acto sagrado."
-            <div class="testimonio-autor">— María, física y madre</div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>📚 El Registro Akáshico Personal</h2>
-        <p>
-            Los místicos siempre lo supieron: existe una biblioteca cósmica donde cada vida está registrada. No es metáfora poética - es mecánica de consciencia. Cada vida es un libro único en esta biblioteca infinita.
-        </p>
-
-        <div class="akashico-box">
-            <h3>📖 ¿Qué se Registra?</h3>
-            <p style="margin-bottom: 20px;">No solo los hechos, sino:</p>
-            
-            <div class="lista-item">✨ La cualidad de consciencia en cada momento</div>
-            <div class="lista-item">💫 Las intenciones detrás de las acciones</div>
-            <div class="lista-item">🎓 Los aprendizajes del alma</div>
-            <div class="lista-item">❓ Las preguntas no respondidas</div>
-            <div class="lista-item">🌱 Los potenciales no realizados</div>
-            <div class="lista-item">❤️ El amor expresado y retenido</div>
-            <div class="lista-item">⚡ Los momentos de despertar</div>
-        </div>
-
-        <div class="practica-card">
-            <div class="practica-titulo">📝 Práctica: Escribiendo Conscientemente tu Registro</div>
-            <div class="practica-duracion">Cada noche antes de dormir</div>
-            <div class="practica-steps">
-                <ol>
-                    <li><strong>Revisa el día</strong> no por lo que hiciste, sino por cómo lo viviste</li>
-                    <li><strong>Pregunta:</strong> ¿Qué calidad de consciencia aporté hoy?</li>
-                    <li><strong>Siente:</strong> ¿Qué ondas creé en el campo?</li>
-                    <li><strong>Intenciona:</strong> ¿Qué quiero registrar mañana?</li>
-                    <li><strong>Dedica:</strong> Que mi registro sirva a todos los seres</li>
-                </ol>
-            </div>
-        </div>
-
-        <div class="testimonio">
-            "Vivo cada día como si fuera una página que otros leerán durante milenios. No para impresionar, sino para servir."
-            <div class="testimonio-autor">— Lama Tenzin</div>
-        </div>
-
-        <div class="conexion-box">
-            <p><strong>🔗 Conexión con Psicología Cuántica:</strong> En ese libro se explora cómo cada acto consciente crea un "surco" en el campo cuántico que facilita actos similares en otros. Tu registro personal se convierte en mapa para futuros viajeros de consciencia.</p>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🧬 Más Allá de los Genes: Herencia Cuántica</h2>
-
-        <h3>🌀 Epigenética Espiritual</h3>
-        <p>
-            La ciencia descubre lo que los chamanes sabían: <strong>heredamos más que genes.</strong> Heredamos patrones, traumas, dones, despertar. Y más revolucionario: podemos sanar hacia atrás y hacia adelante en el linaje.
-        </p>
-
-        <div class="caso-card">
-            <div class="caso-name">📖 Caso Documentado</div>
-            <p>
-                <strong>Rachel, sobreviviente de tercera generación del Holocausto.</strong> En terapia profunda, revivió memorias de su abuela en campos de concentración - memorias imposibles de tener. Al sanar su trauma, su hija de 5 años dejó de tener pesadillas con trenes. <span class="highlight">Sanar uno sana la línea.</span>
-            </p>
-        </div>
-
-        <h3>🌐 Transmisión No-Local</h3>
-        <p>Tu transformación afecta instantáneamente a:</p>
-
-        <div class="inmortalidad-grid">
-            <div class="inmortalidad-item">
-                <h4 style="color: #ffd700;">⏳ Ancestros</h4>
-                <p>Sí, retroactivamente</p>
-            </div>
-            <div class="inmortalidad-item">
-                <h4 style="color: #ffd700;">👶 Descendientes</h4>
-                <p>Incluso no nacidos</p>
-            </div>
-            <div class="inmortalidad-item">
-                <h4 style="color: #ffd700;">🔮 Tu línea de alma</h4>
-                <p>Todas tus encarnaciones</p>
-            </div>
-            <div class="inmortalidad-item">
-                <h4 style="color: #ffd700;">🎯 Resonancia similar</h4>
-                <p>Seres en tu frecuencia</p>
-            </div>
-            <div class="inmortalidad-item">
-                <h4 style="color: #ffd700;">🌍 Campo colectivo</h4>
-                <p>La humanidad entera</p>
-            </div>
-        </div>
-
-        <div class="quantum-box">
-            <h4 style="color: #64b5f6; margin-bottom: 15px;">Experimento de los Monos 100</h4>
-            <p>
-                Cuando suficientes monos aprendieron a lavar batatas, TODOS los monos de islas distantes súbitamente supieron hacerlo. <strong>Tu despertar contribuye a la masa crítica de consciencia.</strong>
-            </p>
-        </div>
-
-        <div class="conexion-box">
-            <p><strong>🧬 Conexión con Los Vínculos Sagrados:</strong> En ese libro se describe cómo los vínculos trascienden el tiempo lineal. Cuando sanas una relación, sanas todas las relaciones similares en tu línea ancestral y descendiente. Los vínculos son cuánticos.</p>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🎨 Creación Consciente del Legado</h2>
-
-        <h3>📜 El Testamento Cuántico</h3>
-        <p>Más allá del testamento legal, necesitas un testamento cuántico:</p>
-
-        <div class="akashico-box">
-            <h4 style="color: #ffd700; margin-bottom: 20px;">Elementos Esenciales:</h4>
-            
-            <div class="legado-card">
-                <div class="legado-name">1. Declaración de Intención Álmica</div>
-                <ul>
-                    <li>¿Para qué vine?</li>
-                    <li>¿Qué vine a sanar?</li>
-                    <li>¿Qué vine a aportar?</li>
-                    <li>¿Cómo quiero ser usado después?</li>
-                </ul>
-            </div>
-
-            <div class="legado-card">
-                <div class="legado-name">2. Mapa de Aprendizajes</div>
-                <ul>
-                    <li>Sabiduría destilada</li>
-                    <li>Errores como enseñanzas</li>
-                    <li>Insights únicos</li>
-                    <li>Preguntas sin respuesta</li>
-                </ul>
-            </div>
-
-            <div class="legado-card">
-                <div class="legado-name">3. Códigos de Activación</div>
-                <ul>
-                    <li>Prácticas que desarrollaste</li>
-                    <li>Mantras personales</li>
-                    <li>Símbolos de poder</li>
-                    <li>Frecuencias de sanación</li>
-                </ul>
-            </div>
-
-            <div class="legado-card">
-                <div class="legado-name">4. Bendiciones Específicas</div>
-                <ul>
-                    <li>Para descendientes</li>
-                    <li>Para buscadores futuros</li>
-                    <li>Para la Tierra</li>
-                    <li>Para el cosmos</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="practica-card">
-            <div class="practica-titulo">✍️ Práctica: Redacción del Testamento Cuántico</div>
-            
-            <h4 style="color: #ffd700; margin-top: 20px;">Preparación:</h4>
-            <div class="practica-steps">
-                <ul>
-                    <li>Espacio sagrado</li>
-                    <li>Estado meditativo profundo</li>
-                    <li>Conexión con Yo Superior</li>
-                    <li>Apertura al campo</li>
-                </ul>
-            </div>
-
-            <h4 style="color: #ffd700; margin-top: 20px;">Proceso:</h4>
-            <div class="practica-steps">
-                <ol>
-                    <li><strong>Escribe sin censura</strong> - deja fluir</li>
-                    <li><strong>Destila la esencia</strong> - encuentra los núcleos</li>
-                    <li><strong>Codifica en símbolos</strong> - crea tu sello</li>
-                    <li><strong>Graba energéticamente</strong> - en meditación profunda</li>
-                    <li><strong>Suelta al campo</strong> - confía en la distribución cósmica</li>
-                </ol>
-            </div>
-        </div>
-
-        <div class="testimonio">
-            "Mi testamento cuántico lo escribí a los 30, lo reescribo cada década. Es mi regalo al futuro, mi manera de seguir sirviendo cuando mi cuerpo ya no esté."
-            <div class="testimonio-autor">— Alejandra, maestra espiritual</div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🌊 El Efecto Mariposa Existencial</h2>
-        <p>
-            Cada vida es una piedra lanzada al estanque cósmico. Las ondas continúan expandiéndose eternamente. Pero no todas las piedras crean las mismas ondas.
-        </p>
-
-        <div class="efecto-box">
-            <h3 style="color: #ffd700; margin-bottom: 25px;">🌟 Actos de Legado Máximo</h3>
-
-            <div class="legado-card">
-                <div class="legado-name">💖 Momentos de Amor Incondicional</div>
-                <ul>
-                    <li>Reverberan por dimensiones</li>
-                    <li>Sanan líneas temporales</li>
-                    <li>Crean cascadas de bondad</li>
-                    <li>Alteran la matriz de realidad</li>
-                </ul>
-            </div>
-
-            <div class="legado-card">
-                <div class="legado-name">⚡ Elecciones de Consciencia</div>
-                <ul>
-                    <li>Elegir amor sobre miedo</li>
-                    <li>Perdonar lo imperdonable</li>
-                    <li>Dar sin esperar</li>
-                    <li>Cada elección consciente eleva todo</li>
-                </ul>
-            </div>
-
-            <div class="legado-card">
-                <div class="legado-name">🎨 Creatividad Auténtica</div>
-                <ul>
-                    <li>Arte que canaliza verdad</li>
-                    <li>Palabras que despiertan</li>
-                    <li>Música que sana</li>
-                    <li>Belleza que transforma</li>
-                </ul>
-            </div>
-
-            <div class="legado-card">
-                <div class="legado-name">🕊️ Servicio Silencioso</div>
-                <ul>
-                    <li>Actos anónimos de bondad</li>
-                    <li>Oraciones por desconocidos</li>
-                    <li>Trabajo energético planetario</li>
-                    <li>Sostener luz sin reconocimiento</li>
-                </ul>
-            </div>
-        </div>
-
-        <h3>📖 Historia: El Barrendero Iluminado</h3>
-        <div class="testimonio">
-            En un monasterio zen, un monje barría hojas cada día durante 40 años. Nunca enseñó, nunca escribió, solo barrió. Cuando murió, el abad dijo: <strong>"Su barrer consciente elevó la frecuencia de este lugar más que mil sermones. Cada hoja barrida con amor total alteró el campo. Generaciones de monjes encontrarán más fácil despertar aquí gracias a él."</strong>
-        </div>
-
-        <div class="conexion-box">
-            <p><strong>🌱 Conexión con El Vacío Fértil:</strong> En ese libro se explora cómo las acciones más simples, hechas desde el vacío (sin ego), tienen el mayor impacto cuántico. El barrendero no "hacía" - era el barrer. Esa no-separación es lo que altera el campo permanentemente.</p>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🔬 Ciencia del Legado Cuántico</h2>
-
-        <h3>🧪 Estudios de Consciencia No-Local</h3>
-
-        <div class="quantum-box">
-            <h4 style="color: #64b5f6;">Instituto HeartMath</h4>
-            <p>Documentó cómo la coherencia cardíaca de un individuo afecta campos electromagnéticos a distancia.</p>
-        </div>
-
-        <div class="quantum-box">
-            <h4 style="color: #64b5f6;">Experimentos de Intención Global</h4>
-            <p>Meditadores coordinados alteran generadores de números aleatorios mundialmente.</p>
-        </div>
-
-        <div class="quantum-box">
-            <h4 style="color: #64b5f6;">Estudios de Gemelos</h4>
-            <p>Cambios epigenéticos en uno afectan al otro instantáneamente, sin importar distancia.</p>
-        </div>
-
-        <h3>⚛️ La Física de la Información Inmortal</h3>
-
-        <div class="akashico-box">
-            <div class="lista-item">
-                <strong>Principio de Conservación de Información:</strong> En física cuántica, la información no puede destruirse, solo transformarse.
-            </div>
-            <div class="lista-item">
-                <strong>Entrelazamiento Cuántico:</strong> Tu consciencia está entrelazada con todo lo que tocaste, literal y metafóricamente.
-            </div>
-            <div class="lista-item">
-                <strong>Campos Morfogenéticos:</strong> Cada patrón que vives facilita que otros lo vivan - evolución por resonancia.
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🌟 Casos de Legado Transformador</h2>
-
-        <div class="caso-card">
-            <div class="caso-name">👩‍🏫 La Maestra Anónima</div>
-            <p>
-                Sarah enseñó en primaria rural por 30 años. Sin fama, sin premios. Pero amó a cada niño como propio. 20 años después de jubilar, una estudiante de neurociencia descubrió: <strong>el 80% de los niños de esa escuela rural se convirtieron en agentes de cambio en sus comunidades.</strong> Rastreó el factor común: todos tuvieron a Sarah. Su amor había alterado trayectorias de vida permanentemente.
-            </p>
-        </div>
-
-        <div class="caso-card">
-            <div class="caso-name">💻 El Código del Programador</div>
-            <p>
-                David, programador, tuvo una epifanía: cada línea de código podía llevar intención. Comenzó a programar con mantras, infundiendo sus aplicaciones con frecuencias de paz. Sus apps eran inexplicablemente "satisfactorias". Después de su muerte, análisis de código revelaron patrones geométricos sagrados. <strong>Miles reportaron experiencias de calma usando sus programas. Había codificado consciencia en silicio.</strong>
-            </p>
-        </div>
-
-        <div class="caso-card">
-            <div class="caso-name">👵 La Abuela que Sanó el Linaje</div>
-            <p>
-                Rosa nunca salió de su pueblo, pero a los 70 decidió sanar su línea ancestral. Cada día meditaba enviando perdón hacia atrás y bendiciones hacia adelante. Sus nietos, sin saber de su práctica, reportaron sueños de reconciliación. <strong>Patrones familiares de adicción se rompieron. Bisnietos nacieron con una paz inusual. Rosa alteró su línea genética con consciencia pura.</strong>
-            </p>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>💫 Tecnologías de Legado Consciente</h2>
-
-        <div class="legado-card">
-            <div class="legado-name">📼 Cápsulas de Consciencia</div>
-            <p>Grabar estados de consciencia para transmisión futura:</p>
-            <ul>
-                <li>Meditaciones en momentos de insight</li>
-                <li>Estados de amor puro grabados</li>
-                <li>Frecuencias de sanación codificadas</li>
-                <li>"Mensajes en botellas" cuánticas</li>
-            </ul>
-        </div>
-
-        <div class="legado-card">
-            <div class="legado-name">💎 Objetos Cargados</div>
-            <p>Impregnar objetos con intención/energía:</p>
-            <ul>
-                <li>Cristales programados</li>
-                <li>Libros bendecidos</li>
-                <li>Arte como portal</li>
-                <li>Espacios sagrados creados</li>
-            </ul>
-        </div>
-
-        <div class="legado-card">
-            <div class="legado-name">🔥 Rituales de Transmisión</div>
-            <p>Ceremonias para pasar consciencia:</p>
-            <ul>
-                <li>Iniciaciones energéticas</li>
-                <li>Transmisión de linaje</li>
-                <li>Activaciones a distancia</li>
-                <li>Bendiciones transgeneracionales</li>
-            </ul>
-        </div>
-
-        <div class="legado-card">
-            <div class="legado-name">🌐 Campos Morfogenéticos Intencionales</div>
-            <p>Crear campos que faciliten despertar:</p>
-            <ul>
-                <li>Centros de meditación</li>
-                <li>Comunidades conscientes</li>
-                <li>Proyectos de servicio</li>
-                <li>Redes de luz</li>
-            </ul>
-        </div>
-
-        <div class="conexion-box">
-            <p><strong>📡 Conexión con Civilización Galáctica:</strong> En ese libro se describe cómo civilizaciones avanzadas transmiten consciencia a través de campos morfogenéticos, dejando "bibliotecas vivientes" que futuros seres pueden acceder. Tu legado consciente es tu contribución a esta biblioteca cósmica.</p>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🌺 El Arte de Morir Vacío</h2>
-        <p>
-            Paradoja suprema: <span class="highlight">el mayor legado viene de quien no busca dejar legado.</span> Cuando el ego muere (Nodo 5), lo que queda naturalmente bendice.
-        </p>
-
-        <h3>📖 Testimonio: El Millonario que Murió Vacío</h3>
-        <div class="testimonio">
-            <strong>James</strong> amasó fortuna para 'dejar legado'. Fundaciones, edificios con su nombre. A los 60, cáncer terminal. En sus últimos meses, algo cambió. Disolvió fundaciones, distribuyó anónimamente. Pasó sus días finales simplemente amando - a enfermeras, visitantes, pájaros en la ventana.<br><br>
-            
-            Murió sin un centavo, sin nada a su nombre. Pero cada persona que lo cuidó reportó transformaciones profundas. <strong>Su amor sin agenda había sido más poderoso que millones de dólares. Su vacío fue su mayor regalo.</strong>
-        </div>
-
-        <div class="efecto-box">
-            <h3 style="color: #ffd700; margin-bottom: 20px;">🕊️ Morir Vacío significa:</h3>
-            <div class="lista-item">Haber dado todo lo que viniste a dar</div>
-            <div class="lista-item">No retener nada por miedo o avaricia</div>
-            <div class="lista-item">Compartir tu luz sin preocuparte por el crédito</div>
-            <div class="lista-item">Vaciar tus dones en el mundo</div>
-            <div class="lista-item">Partir sin asuntos pendientes</div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🕊️ Práctica Final: Tu Legado en Este Momento</h2>
-        <p>
-            No necesitas esperar a morir para activar tu legado cuántico. <strong>Cada momento es oportunidad.</strong>
-        </p>
-
-        <div class="meditacion-box">
-            <h3 style="color: #ffd700; margin-bottom: 25px;">✨ Meditación del Legado Vivo</h3>
-            <div class="simbolo-muerte">💎 🌟 ✨</div>
-            
-            <p style="font-style: italic; line-height: 2; max-width: 800px; margin: 20px auto;">
-                Siéntate. Respira. Centra en el corazón.
-            </p>
-            
-            <p style="margin: 30px auto; max-width: 800px; line-height: 2;">
-                <strong>Pregunta:</strong> Si muriera en una hora, ¿cuál ha sido mi legado hasta ahora?<br><br>
-                Siente sin juicio. Solo observa las ondas que has creado.<br><br>
-                <strong>Ahora pregunta:</strong> ¿Qué legado quiero crear en esta próxima hora?<br><br>
-                No actos grandiosos. Tal vez solo presencia total.<br>
-                Tal vez solo amor sin condiciones.<br>
-                Tal vez solo paz en medio del caos.
-            </p>
-            
-            <p style="font-weight: bold; font-size: 1.3rem; margin-top: 30px; color: #ffd700;">
-                Comprométete: Viviré esta hora como legado consciente.
-            </p>
-            
-            <p style="font-size: 1.2rem; margin: 30px auto; line-height: 2;">
-                Abre los ojos.<br>
-                <strong>Tu inmortalidad comienza ahora.</strong>
-            </p>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="ejercicio-box">
-            <div class="ejercicio-titulo">📝 EJERCICIO CONTEMPLATIVO</div>
-            
-            <h4 style="color: #ffd700; margin: 20px 0;">Práctica 6.1: Anclaje en el Eje Vertical del Ahora</h4>
-            
-            <p style="margin-bottom: 20px;">
-                El tiempo lineal es un eje horizontal (pasado-presente-futuro). El tiempo sagrado o "Kairos" es un eje vertical que profundiza en el Ahora. Este ejercicio te ayuda a pasar de uno a otro.
-            </p>
-
-            <div class="practica-steps">
-                <h4 style="color: #ffd700; margin-top: 15px;">Paso 1: Detectar el Viaje Horizontal</h4>
-                <p>Durante el día, hazte consciente de cuándo tu mente está "viajando en el tiempo". ¿Estás rumiando un error del pasado? ¿Estás ensayando ansiosamente una conversación futura? Simplemente nótalo sin juicio: "Estoy en el pasado" o "Estoy en el futuro".</p>
-
-                <h4 style="color: #ffd700; margin-top: 15px;">Paso 2: Encontrar un Ancla Sensorial</h4>
-                <p>En ese momento, detente. Busca un ancla en el presente inmediato y concreto. Puede ser:</p>
-                <ul>
-                    <li>La sensación de tus pies en el suelo</li>
-                    <li>El peso de tu cuerpo en la silla</li>
-                    <li>El contacto de la tela de tu ropa con tu piel</li>
-                    <li>Un sonido específico en la habitación</li>
-                    <li>El sabor del café que estás bebiendo</li>
-                </ul>
-
-                <h4 style="color: #ffd700; margin-top: 15px;">Paso 3: Profundizar en el Eje Vertical</h4>
-                <p>Elige un ancla y sumérgete en ella con toda tu atención durante 30 segundos. Explórala como si fuera la primera vez. Si es la sensación de tus pies en el suelo, siente la textura del calcetín, la temperatura, la presión. Al hacer esto, has dejado de viajar horizontalmente y has "descendido" verticalmente en la profundidad del momento presente.</p>
-
-                <h4 style="color: #ffd700; margin-top: 15px;">Paso 4: Repetir</h4>
-                <p>Haz este micro-ejercicio de 1 minuto varias veces al día. Es un entrenamiento para habitar el único punto donde la vida realmente ocurre: el Ahora.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🌈 El Legado Último</h2>
-        
-        <div class="efecto-box">
-            <p style="font-size: 1.2rem; line-height: 2;">
-                Al final, el legado más profundo no es <strong>lo que haces</strong> sino <strong>lo que eres.</strong><br>
-                No los actos sino la consciencia detrás.<br>
-                No los logros sino el amor expresado.
-            </p>
-            <div class="simbolo-muerte">💎 ✨ 🌟</div>
-            <p style="font-size: 1.15rem; line-height: 2; margin-top: 20px;">
-                Tu legado cuántico ya está escribiéndose.<br>
-                Cada respiración consciente,<br>
-                cada elección amorosa,<br>
-                cada momento de presencia,<br>
-                <strong>altera el campo para siempre.</strong>
-            </p>
-        </div>
-
-        <div class="akashico-box" style="text-align: center; margin-top: 40px;">
-            <h3 style="color: #ffd700; margin-bottom: 25px;">🌟 La Verdad Final</h3>
-            <p style="font-size: 1.3rem; line-height: 2;">
-                <strong>Eres más vasto de lo que imaginas.</strong><br>
-                <strong>Eres más eterno de lo que crees.</strong><br>
-                <strong>Tu vida importa en formas que no puedes concebir.</strong><br><br>
-                <span style="color: #ffd700; font-size: 1.4rem;">Vive en consecuencia.</span>
-            </p>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="preguntas-box">
-            <h2 style="text-align: center; margin-bottom: 30px;">💎 Preguntas para el Alma Inmortal</h2>
-            
-            <ol>
-                <li class="pregunta-item">¿Qué patrones estoy sanando para mi linaje?</li>
-                <li class="pregunta-item">¿Qué información única vine a aportar al campo?</li>
-                <li class="pregunta-item">¿Cómo quiero que mi vida sea leída en el futuro?</li>
-                <li class="pregunta-item">¿Qué ondas estoy creando con mi estado de consciencia actual?</li>
-                <li class="pregunta-item">¿Puedo amar sin necesitar ser recordado?</li>
-                <li class="pregunta-item">¿Qué parte de mi legado está motivada por ego?</li>
-                <li class="pregunta-item">¿Cómo sería vivir cada día como regalo al futuro?</li>
-            </ol>
-        </div>
-    </div>
-
-    <div class="transicion">
-        <h2>🚪 Transición al Nodo 7</h2>
-        <div class="simbolo-muerte">💎 → 🌍 → 🌟</div>
-        
-        <p style="font-size: 1.1rem; line-height: 1.8; max-width: 900px; margin: 20px auto;">
-            Has explorado tu <strong>inmortalidad cuántica</strong>. Has visto cómo cada momento deja huella eterna en el campo. Has comprendido que tu legado no es algo que dejas - <span class="highlight">es algo que eres.</span>
-        </p>
-        
-        <p style="font-size: 1.1rem; line-height: 1.8; max-width: 900px; margin: 20px auto;">
-            Pero hay un legado más grande desenvolviéndose. No solo individual, sino <strong>colectivo</strong>. La humanidad entera está en proceso de muerte y renacimiento. <strong>La Tierra misma está en transición.</strong>
-        </p>
-        
-        <p style="font-size: 1.1rem; line-height: 1.8; max-width: 900px; margin: 20px auto;">
-            En el nodo final, exploraremos <span class="highlight">"La Gran Reunión"</span> - la muerte y resurrección planetaria. Porque tu muerte individual es ensayo para participar conscientemente en la transformación de nuestra especie.
-        </p>
-        
-        <p style="font-size: 1.15rem; margin-top: 30px;">
-            <strong>Prepárate para la visión más amplia.</strong><br>
-            El clímax de nuestra exploración nos espera.
-        </p>
-    </div>
-
-    <div class="navegacion">
-        <a href="nodo_05.html" class="nav-button">← Nodo 5: La Muerte del Ego</a>
-        <a href="nodo_07.html" class="nav-button">Nodo 7: La Gran Reunión →</a>
-    </div>
 </div>
-
 <script>
-    // Canvas de ondas cuánticas
-    const canvas = document.getElementById('ondas-canvas');
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
-
-    class OndaCuantica {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.radius = 0;
-            this.maxRadius = Math.random() * 200 + 100;
-            this.speed = Math.random() * 0.5 + 0.3;
-            this.opacity = Math.random() * 0.5 + 0.3;
-            this.decayRate = 0.002;
-            this.hue = Math.random() * 30 + 40; // Tonos dorados
-        }
-
-        update() {
-            this.radius += this.speed;
-            this.opacity -= this.decayRate;
-
-            if (this.radius > this.maxRadius || this.opacity <= 0) {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.radius = 0;
-                this.opacity = Math.random() * 0.5 + 0.3;
-            }
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.strokeStyle = `hsla(${this.hue}, 100%, 60%, ${this.opacity})`;
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            // Onda interior
-            if (this.radius > 20) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius - 20, 0, Math.PI * 2);
-                ctx.strokeStyle = `hsla(${this.hue + 20}, 100%, 70%, ${this.opacity * 0.5})`;
-                ctx.lineWidth = 1;
-                ctx.stroke();
-            }
-        }
-    }
-
-    class Particula {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2 + 1;
-            this.speedX = (Math.random() - 0.5) * 0.5;
-            this.speedY = (Math.random() - 0.5) * 0.5;
-            this.opacity = Math.random() * 0.5 + 0.3;
-            this.hue = Math.random() * 30 + 40;
-        }
-
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-
-            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `hsla(${this.hue}, 100%, 60%, ${this.opacity})`;
-            ctx.fill();
-        }
-    }
-
-    const ondas = [];
-    const particulas = [];
-
-    for (let i = 0; i < 8; i++) {
-        ondas.push(new OndaCuantica());
-    }
-
-    for (let i = 0; i < 50; i++) {
-        particulas.push(new Particula());
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        ondas.forEach(onda => {
-            onda.update();
-            onda.draw();
-        });
-
-        particulas.forEach(particula => {
-            particula.update();
-            particula.draw();
-        });
-
-        requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
+(function(){var els=[].slice.call(document.querySelectorAll('.reveal'));function showAll(){els.forEach(function(e){e.classList.add('visible');});}if(!('IntersectionObserver' in window)){showAll();return;}var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}});},{threshold:0,rootMargin:'0px 0px 12% 0px'});els.forEach(function(e){io.observe(e);});setTimeout(showAll,1500);window.addEventListener('load',function(){setTimeout(showAll,300);});})();
 </script>
-
-
 </body>
 </html>
