@@ -1,1097 +1,847 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Libro VIII – Nodo 3 – El Aula como Campo Cuántico</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg: radial-gradient(circle at top, #0e1119 0%, #060912 40%, #030308 75%, #010107 100%);
-      --card: rgba(11, 14, 22, 0.55);
-      --card-solid: rgba(9, 12, 18, 0.9);
-      --accent: #ffcf6f;
-      --accent-soft: rgba(255, 207, 111, 0.12);
-      --ink: #f4f5f9;
-      --ink-soft: rgba(244, 245, 249, .6);
-      --border: rgba(255, 207, 111, 0.35);
-      --muted: #8d93a4;
-      --radius-lg: 26px;
-      --radius-md: 16px;
-      --shadow: 0 18px 55px rgba(0,0,0,.25);
-      --mono: ui-monospace, SFMono-Regular, SFMono-Regular, SFMono-Regular, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-      --serif: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif;
-      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      background-attachment: fixed;
-      color: var(--ink);
-      font-family: var(--sans);
-      line-height: 1.55;
-      letter-spacing: -.01em;
-    }
-    .page-wrap {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: clamp(1.5rem, 3vh, 3.5rem) clamp(1rem, 4vw, 2.5rem) 6rem;
-    }
-    header.topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-    }
-    .brand-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 14px;
-      background: radial-gradient(circle at 20% 20%, rgba(255,207,111,.85) 0%, rgba(255,207,111,.25) 55%, rgba(6,9,18,0) 60%), rgba(255,207,111,.18);
-      border: 1px solid rgba(255,207,111,.35);
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      font-size: .8rem;
-      color: #0b0f18;
-      box-shadow: 0 0 22px rgba(255,207,111,.3);
-    }
-    .brand-text {
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .3em;
-      line-height: 1.1;
-      color: var(--ink-soft);
-    }
-    nav.topnav {
-      display: flex;
-      gap: .65rem;
-      flex-wrap: wrap;
-    }
-    .pill {
-      background: rgba(6,9,18,.25);
-      border: 1px solid rgba(244,245,249,.03);
-      border-radius: 999px;
-      padding: .35rem .9rem .4rem;
-      font-size: .7rem;
-      text-decoration: none;
-      color: var(--ink-soft);
-      display: flex;
-      align-items: center;
-      gap: .3rem;
-    }
-    .pill.active {
-      background: rgba(255,207,111,.15);
-      border-color: rgba(255,207,111,.5);
-      color: #fff;
-    }
-    .hero {
-      background: radial-gradient(circle at top, rgba(255,207,111,.07) 0%, rgba(6,9,18,0) 55%), linear-gradient(135deg, rgba(46,56,74,.35) 0%, rgba(3,4,6,0) 100%);
-      border: 1px solid rgba(255,207,111,.08);
-      border-radius: 30px;
-      padding: clamp(1.6rem, 4vw, 2.2rem);
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: -55% 10%;
-      background: radial-gradient(circle, rgba(255,207,111,.12) 0%, rgba(6,9,18,0) 70%);
-      filter: blur(60px);
-      pointer-events: none;
-    }
-    .hero small {
-      display: inline-flex;
-      gap: .35rem;
-      background: rgba(255,207,111,.15);
-      border: 1px solid rgba(255,207,111,.35);
-      border-radius: 999px;
-      padding: .25rem .85rem .35rem;
-      font-size: .65rem;
-      text-transform: uppercase;
-      letter-spacing: .25em;
-      color: #fff7e7;
-      position: relative;
-      z-index: 1;
-    }
-    .hero h1 {
-      font-size: clamp(1.7rem, 3.3vw, 2.15rem);
-      margin-top: 1.05rem;
-      margin-bottom: .65rem;
-      position: relative;
-      z-index: 1;
-    }
-    .hero p {
-      max-width: 56rem;
-      color: rgba(244,245,249,.68);
-      position: relative;
-      z-index: 1;
-    }
-    .hero-cta {
-      display: flex;
-      gap: .7rem;
-      margin-top: 1.15rem;
-      position: relative;
-      z-index: 1;
-      flex-wrap: wrap;
-    }
-    .btn {
-      background: rgba(255,207,111,1);
-      color: #060912;
-      border: none;
-      outline: none;
-      border-radius: 999px;
-      padding: .5rem 1.15rem .6rem;
-      font-weight: 600;
-      font-size: .75rem;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: .35rem;
-      cursor: pointer;
-      box-shadow: 0 14px 38px rgba(255,207,111,.25);
-    }
-    .btn.secondary {
-      background: rgba(6,9,18,.15);
-      color: var(--ink);
-      border: 1px solid rgba(244,245,249,.04);
-      box-shadow: none;
-    }
-    main {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .card {
-      background: linear-gradient(135deg, rgba(4,7,12,.55) 0%, rgba(3,4,6,.85) 60%);
-      border: 1px solid rgba(244,245,249,.02);
-      border-radius: 24px;
-      padding: 1.45rem 1.3rem 1.35rem;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-    }
-    .card h2, .card h3, .card h4 {
-      margin-top: 1.1rem;
-      margin-bottom: .65rem;
-      letter-spacing: -.01em;
-    }
-    .card h2 {
-      font-size: 1.25rem;
-      display: flex;
-      gap: .45rem;
-      align-items: center;
-    }
-    .card h2 small {
-      background: rgba(255,207,111,.12);
-      border: 1px solid rgba(255,207,111,.25);
-      border-radius: 999px;
-      padding: .25rem .6rem .35rem;
-      font-size: .6rem;
-      text-transform: uppercase;
-      letter-spacing: .25em;
-    }
-    .card p {
-      margin: .45rem 0 .55rem;
-      color: rgba(244,245,249,.78);
-    }
-    .card ul, .card ol {
-      margin: .1rem 0 .75rem 1.1rem;
-      padding: 0;
-    }
-    .mute {
-      color: rgba(244,245,249,.5);
-      font-size: .78rem;
-    }
-    blockquote {
-      border-left: 3px solid rgba(255,207,111,.35);
-      padding-left: 1rem;
-      margin-left: 0;
-      color: rgba(244,245,249,.65);
-      font-style: italic;
-    }
-    .subtle-box {
-      background: rgba(255,207,111,.04);
-      border: 1px solid rgba(255,207,111,.06);
-      border-radius: 18px;
-      padding: .55rem .8rem .65rem;
-      margin: .75rem 0 .55rem;
-    }
-    .two-col {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 1rem;
-    }
-    footer.page-footer {
-      margin-top: 2.65rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      padding-top: 1.35rem;
-      border-top: 1px solid rgba(244,245,249,.03);
-      color: rgba(244,245,249,.45);
-      font-size: .7rem;
-    }
-    .nav-links {
-      display: flex;
-      gap: .4rem;
-      flex-wrap: wrap;
-    }
-    .chip {
-      background: rgba(6,9,18,.2);
-      border: 1px solid rgba(244,245,249,.02);
-      border-radius: 999px;
-      padding: .35rem .75rem .45rem;
-    }
-    .tagline {
-      font-family: var(--serif);
-      font-style: italic;
-      color: rgba(244,245,249,.6);
-      margin-top: 1.2rem;
-    }
-    @media (max-width: 900px) {
-      .two-col { grid-template-columns: 1fr; }
-      header.topbar { flex-direction: column; align-items: flex-start; }
-      .hero { border-radius: 24px; }
-      .page-wrap { padding-bottom: 4.5rem; }
-      footer.page-footer { flex-direction: column; align-items: flex-start; }
-    }
-    @media (max-width: 540px) {
-      .hero-cta { flex-direction: column; align-items: flex-start; }
-      .card { border-radius: 18px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nodo 3 &ndash; El Aula como Campo Cuántico | Educaci&oacute;n Cu&aacute;ntica | Trinity Origen</title>
+<script>(function(){var r=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(!r)document.documentElement.classList.add('anim');})();</script>
+<style>
+:root{
+  --bg:#050505;--bg-soft:#0b0b0b;--panel:rgba(255,255,255,0.025);
+  --border:rgba(214,179,106,0.18);--border-strong:rgba(214,179,106,0.34);
+  --gold:#d6b36a;--violet:#6d4a8f;--text:#f3efe6;
+  --text-soft:rgba(243,239,230,0.78);--text-faint:rgba(243,239,230,0.42);
+  --radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.35);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Georgia","Times New Roman",serif;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(74,150,134,0.18), transparent 28%),
+    radial-gradient(circle at 50% 8%, rgba(60,128,118,0.05), transparent 34%),
+    radial-gradient(circle at 50% 12%, rgba(214,179,106,0.05), transparent 30%),
+    linear-gradient(180deg, #07110f 0%, #050a09 45%, #02060a 100%);
+  color:var(--text);line-height:1.9;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(circle at center,black 35%,transparent 82%);
+  -webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);
+  opacity:0.12;
+}
+/* Marco con transparencias: doble hairline translúcido + leve resplandor violeta interior */
+.frame{position:fixed;inset:12px;border:1px solid rgba(214,179,106,0.10);pointer-events:none;z-index:0;border-radius:5px;box-shadow:inset 0 0 140px rgba(74,150,134,0.05);}
+.frame::after{content:"";position:absolute;inset:6px;border:1px solid rgba(214,179,106,0.045);border-radius:3px;}
+.container{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+  color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;
+  padding:11px 16px;border-radius:999px;border:1px solid var(--border);
+  background:rgba(255,255,255,0.014);transition:all 0.25s ease;
+}
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{
+  position:relative;overflow:hidden;text-align:center;
+  padding:54px 28px 34px;border-radius:30px;
+  border:1px solid rgba(214,179,106,0.12);
+  background:linear-gradient(180deg,rgba(255,255,255,0.024),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(109,74,143,0.18),transparent 42%);
+  box-shadow:var(--shadow);margin-bottom:34px;
+}
+.hero::before{
+  content:"";position:absolute;inset:auto 50% 32px;width:320px;height:320px;transform:translateX(-50%);
+  border-radius:50%;border:1px solid rgba(214,179,106,0.11);
+  box-shadow:0 0 0 14px rgba(214,179,106,0.03),0 0 0 34px rgba(109,74,143,0.03),inset 0 0 60px rgba(214,179,106,0.025);
+  pointer-events:none;animation:ringbreath 13s ease-in-out infinite;
+}
+@keyframes ringbreath{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.045);}}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{
+  position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;
+  display:grid;place-items:center;border-radius:50%;
+  border:1px solid rgba(214,179,106,0.22);
+  background:radial-gradient(circle,rgba(214,179,106,0.11),rgba(255,255,255,0.01) 60%,transparent 72%);
+  box-shadow:0 0 28px rgba(109,74,143,0.12),inset 0 0 24px rgba(214,179,106,0.04);
+}
+.sigil-wrap::after{content:"";position:absolute;inset:-7px;border-radius:50%;box-shadow:0 0 32px rgba(214,179,106,0.16);opacity:.4;animation:glowpulse 6.5s ease-in-out infinite;pointer-events:none;}
+@keyframes glowpulse{0%,100%{opacity:.32;}50%{opacity:.7;}}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;animation:sigilbreath 6.5s ease-in-out infinite;}
+@keyframes sigilbreath{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
+.book-title,.book-label{position:relative;z-index:2;font-size:0.9rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:10px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title,.hero-title{position:relative;z-index:2;font-size:clamp(2rem,4.2vw,3.1rem);font-weight:normal;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;line-height:1.18;}
+.node-subtitle,.hero-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.05rem;margin-bottom:18px;font-style:italic;}
+.node-quote,.hero-desc{position:relative;z-index:2;max-width:760px;margin:0 auto;color:var(--text-soft);font-size:1rem;line-height:1.8;}
+.content{
+  background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));
+  border:1px solid rgba(214,179,106,0.1);border-radius:26px;
+  padding:38px 32px;box-shadow:0 12px 32px rgba(0,0,0,0.22);
+}
+.content h2{color:var(--gold);font-size:1.42rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.1rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.03rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content blockquote{
+  margin:1.3rem 0;padding:1rem 1.1rem 1rem 1.2rem;
+  border-left:3px solid rgba(214,179,106,0.45);
+  background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;
+  color:var(--text);font-style:italic;
+}
+.content strong{color:var(--text);}
+.content pre{background:rgba(255,255,255,0.03);border:1px solid rgba(214,179,106,0.14);border-radius:12px;padding:16px 18px;overflow-x:auto;margin:1.3rem 0;}
+.content pre code{font-family:Consolas,Menlo,monospace;font-size:0.9rem;color:var(--text-soft);white-space:pre;line-height:1.55;background:none;border:none;padding:0;}
+.content code{font-family:Consolas,Menlo,monospace;font-size:0.9em;color:var(--gold);background:rgba(214,179,106,0.08);border-radius:5px;padding:1px 5px;}
+.content em{color:var(--gold);font-style:italic;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(214,179,106,0.2),rgba(214,179,106,0));margin:2rem 0 1.4rem;}
+.mapa-nav{
+  background:rgba(255,255,255,0.016);border:1px solid rgba(214,179,106,0.12);
+  border-radius:18px;padding:22px 24px;margin-bottom:28px;
+}
+.mapa-nav h3{color:var(--gold);font-size:0.82rem;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:14px;font-weight:normal;}
+.mapa-nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.mapa-nav li{color:var(--text-soft);font-size:0.91rem;padding:4px 0;border-bottom:1px solid rgba(214,179,106,0.06);}
+.mapa-nav li:last-child{border-bottom:none;}
+.bloque{
+  background:rgba(255,255,255,0.016);border:1px solid rgba(214,179,106,0.14);
+  border-radius:20px;padding:30px 28px;margin:34px 0;
+}
+.bloque h3{color:var(--gold);font-size:0.92rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:18px;font-weight:normal;text-align:center;}
+.bloque ul{list-style:none;margin:0;padding:0;}
+.bloque li{color:var(--text-soft);font-size:1.02rem;line-height:1.7;margin:14px 0;padding-left:18px;position:relative;font-style:italic;}
+.bloque li::before{content:"\\27D0";position:absolute;left:0;color:var(--gold);opacity:0.6;font-style:normal;}
+.bloque p{color:var(--text-soft);font-size:1.02rem;margin-bottom:0.8rem;}
+.bloque .duracion{color:var(--text-faint);font-style:italic;font-size:0.9rem;margin-top:14px;margin-bottom:0;}
+/* Indice del libro */
+.nodos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:36px 0 10px;}
+.nodo-card{position:relative;padding:22px 20px 18px;border-radius:18px;border:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(255,255,255,0.022),rgba(255,255,255,0.012));
+  transition:transform 0.25s ease,border-color 0.25s ease,box-shadow 0.25s ease;
+  box-shadow:0 12px 32px rgba(0,0,0,0.22);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;}
+.nodo-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(109,74,143,0.1),transparent 30%);pointer-events:none;}
+.nodo-card::after{content:"";position:absolute;left:20px;right:20px;top:50px;height:1px;background:linear-gradient(90deg,rgba(214,179,106,0.16),rgba(214,179,106,0));pointer-events:none;}
+.nodo-card:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:0 18px 40px rgba(0,0,0,0.3);}
+.nodo-num{position:relative;z-index:2;color:var(--gold);font-size:0.76rem;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:14px;}
+.nodo-titulo{position:relative;z-index:2;font-size:1.05rem;font-weight:normal;line-height:1.4;margin-bottom:8px;color:var(--text);}
+.nodo-desc{position:relative;z-index:2;font-size:0.9rem;color:var(--text-soft);line-height:1.65;margin-bottom:14px;}
+.nodo-link{position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;text-decoration:none;color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);border-radius:999px;padding:8px 14px;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;
+  background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nodo-link:hover{color:#f0d7a0;border-color:rgba(214,179,106,0.38);background:rgba(214,179,106,0.06);}
+.nodos-heading{text-align:center;margin:14px 0 6px;color:var(--gold);font-size:1.05rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:normal;}
+.nodos-sub{text-align:center;color:var(--text-faint);font-style:italic;margin-bottom:6px;}
+.cierre{text-align:center;padding:30px 20px;border-radius:20px;border:1px solid rgba(214,179,106,0.1);
+  background:linear-gradient(180deg,rgba(255,255,255,0.018),rgba(255,255,255,0.008));color:var(--text-soft);font-size:0.98rem;line-height:1.9;margin:30px 0 10px;}
+.cierre em{color:var(--gold);font-style:italic;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(214,179,106,0.12);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);border-radius:999px;padding:10px 15px;font-size:0.84rem;letter-spacing:0.08em;text-transform:uppercase;
+  background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(214,179,106,0.38);background:rgba(214,179,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+/* Reveal sutil (solo con JS y sin movimiento reducido) */
+html.anim .reveal{opacity:0;transform:translateY(20px);transition:opacity .9s ease,transform .9s ease;}
+html.anim .reveal.visible{opacity:1;transform:translateY(0);}
+@media(max-width:720px){
+  .frame{inset:8px;}.container{padding:24px 16px 64px;}
+  .hero{padding:42px 18px 28px;border-radius:24px;}
+  .hero::before{width:220px;height:220px;bottom:24px;}
+  .content{padding:28px 20px;border-radius:22px;}
+  .content p,.content li{font-size:1rem;}
+  .bloque{padding:24px 20px;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;}
+  html.anim .reveal{opacity:1!important;transform:none!important;}
+}
+</style>
 </head>
 <body>
-  <div class="page-wrap">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-icon">8</div>
-        <div class="brand-text">
-          CONSTELACIÓN TRINITY<br/>Libro VIII – Educación Cuántica
-        </div>
-      </div>
-      <nav class="topnav">
-        <a href="../index.html" class="pill">⟵ Índice raíz</a>
-        <a href="nodo-2.html" class="pill">Nodo 2</a>
-        <a class="pill active">Nodo 3</a>
-        <a href="nodo-4.html" class="pill">Nodo 4 ⟶</a>
-      </nav>
-    </header>
+<div class="frame" aria-hidden="true"></div>
+<div class="container">
 
-    <section class="hero">
-      <small>Libro VIII · Nodo 3</small>
-      <h1>El Aula como Campo Cuántico</h1>
-      <p>Espacios que no solo alojan aprendizaje, sino que lo <strong>despiertan</strong>. El aula como tecnología de consciencia situada.</p>
-      <div class="hero-cta">
-        <a href="#meditacion-campo" class="btn">↓ Ir a la Meditación de Activación</a>
-        <a href="#peligros" class="btn secondary">Advertencias del Nodo</a>
-      </div>
-    </section>
-
-    <main>
-
-      <!-- PREPARACIÓN -->
-      <article class="card" id="preparacion">
-        <h2>Preparación para el Nodo 3</h2>
-        <p>Has mapeado tus inteligencias. Has visto tu genio único. Has tocado tu potencial ilimitado.</p>
-        <p>Ahora estás listo para comprender cómo el espacio mismo - el aula, el ambiente, el campo - puede ser diseñado para despertar y amplificar estas inteligencias.</p>
-        <p><em>De reconocer el genio a crear los templos donde florece.</em></p>
-        <p class="tagline">✨🧬💫</p>
-      </article>
-
-      <!-- GEOMETRÍA SAGRADA -->
-      <article class="card" id="geometria-sagrada">
-        <h2>🏛️ Geometría Sagrada en Diseño Educativo</h2>
-        <h3>La Arquitectura de la Consciencia</h3>
-        <p>Los antiguos constructores de templos sabían algo que hemos olvidado: la forma del espacio determina la forma del pensamiento. La geometría no es decoración; es tecnología de consciencia.</p>
-
-        <h3>Los 7 Principios Geométricos del Aula Cuántica</h3>
-
-        <h4>1. LA PROPORCIÓN ÁUREA (φ = 1.618…)</h4>
-        <div class="subtle-box">
-          <p><strong>Aplicación Práctica:</strong></p>
-          <ul>
-            <li>Dimensiones del aula en proporción áurea</li>
-            <li>Disposición de muebles siguiendo la espiral de Fibonacci</li>
-            <li>Ventanas y puertas en puntos áureos</li>
-            <li>Arte y decoración basados en φ</li>
-          </ul>
-          <p><strong>Efecto Documentado:</strong></p>
-          <ul>
-            <li>Aumento del 34% en creatividad medible</li>
-            <li>Reducción del 41% en ansiedad estudiantil</li>
-            <li>Mejora del 28% en retención de información</li>
-            <li>Sensación de “estar en casa” reportada por 89%</li>
-          </ul>
-        </div>
-
-        <h4>2. EL CÍRCULO SAGRADO</h4>
-        <p><strong>Configuración Circular:</strong></p>
-        <ul>
-          <li>Sin frente ni atrás</li>
-          <li>Sin jerarquía espacial</li>
-          <li>Centro vacío como punto de infinito</li>
-          <li>Todos equidistantes del centro</li>
-        </ul>
-        <p><strong>Beneficios Cuánticos:</strong></p>
-        <ul>
-          <li>Activación de inteligencia colectiva</li>
-          <li>Campo coherente medible (HeartMath)</li>
-          <li>Eliminación de puntos ciegos energéticos</li>
-          <li>Circulación natural de información</li>
-        </ul>
-
-        <h4>3. LA VESICA PISCIS</h4>
-        <p><strong>Diseño de Intersección:</strong></p>
-        <ul>
-          <li>Dos círculos superpuestos</li>
-          <li>Zona de creación en la intersección</li>
-          <li>Espacio para trabajo individual y grupal</li>
-          <li>Portal entre dimensiones</li>
-        </ul>
-        <p><strong>Activaciones:</strong></p>
-        <ul>
-          <li>Integración hemisférica cerebral</li>
-          <li>Balance masculino/femenino</li>
-          <li>Creatividad emergente espontánea</li>
-          <li>Visiones compartidas frecuentes</li>
-        </ul>
-
-        <h4>4. EL MERKABA ESPACIAL</h4>
-        <p><strong>Estructura Tridimensional:</strong></p>
-        <ul>
-          <li>Tetraedros entrelazados en el diseño</li>
-          <li>Pirámides de luz en esquinas</li>
-          <li>Centro energético elevado</li>
-          <li>Geometría de ascensión</li>
-        </ul>
-        <p><strong>Resultados:</strong></p>
-        <ul>
-          <li>Estados alterados naturales</li>
-          <li>Sueños lúcidos aumentados</li>
-          <li>Telepatía grupal espontánea</li>
-          <li>Sanaciones documentadas</li>
-        </ul>
-
-        <h4>5. EL DODECAEDRO CÓSMICO</h4>
-        <p><strong>12 Caras, 12 Zonas:</strong></p>
-        <ul>
-          <li>Cada zona para una inteligencia</li>
-          <li>Rotación de estudiantes por zonas</li>
-          <li>Activación secuencial de capacidades</li>
-          <li>Geometría de Gaia resonante</li>
-        </ul>
-        <p><strong>Manifestación:</strong></p>
-        <ul>
-          <li>Desarrollo integral acelerado</li>
-          <li>Sin especialización prematura</li>
-          <li>Genio polifacético emergente</li>
-          <li>Conexión planetaria palpable</li>
-        </ul>
-
-        <h4>6. LA FLOR DE LA VIDA</h4>
-        <p><strong>Patrón Base:</strong></p>
-        <ul>
-          <li>En pisos, paredes, techos</li>
-          <li>Como mandala central</li>
-          <li>En materiales didácticos</li>
-          <li>Como meditación visual</li>
-        </ul>
-        <p><strong>Impacto:</strong></p>
-        <ul>
-          <li>Activación de memoria celular</li>
-          <li>Comprensión holográfica instantánea</li>
-          <li>Sincronicidades multiplicadas</li>
-          <li>Campo de protección natural</li>
-        </ul>
-
-        <h4>7. EL TOROIDE DINÁMICO</h4>
-        <p><strong>Flujo Energético:</strong></p>
-        <ul>
-          <li>Circulación toroidal del aire</li>
-          <li>Movimiento en espiral del aprendizaje</li>
-          <li>Entrada y salida de energía consciente</li>
-          <li>Reciclaje de información cuántica</li>
-        </ul>
-        <p><strong>Efectos:</strong></p>
-        <ul>
-          <li>Nunca hay energía estancada</li>
-          <li>Renovación constante del campo</li>
-          <li>Vórtice de creatividad permanente</li>
-          <li>Fatiga eliminada</li>
-        </ul>
-      </article>
-
-      <!-- FRECUENCIAS -->
-      <article class="card" id="frecuencias">
-        <h2>🔊 Frecuencias Sonoras para Estados de Aprendizaje</h2>
-        <h3>La Sinfonía del Aula Consciente</h3>
-        <p>El sonido es la arquitectura invisible que más profundamente afecta la consciencia. Cada frecuencia es una llave que abre puertas específicas de percepción.</p>
-
-        <h3>Protocolo Frecuencial del Día Escolar</h3>
-
-        <h4>MAÑANA: ACTIVACIÓN (8:00-10:00)</h4>
-        <p><em>432 Hz - Frecuencia de la Naturaleza</em></p>
-        <ul>
-          <li>Música ambiental en 432 Hz</li>
-          <li>Afinación natural del cosmos</li>
-          <li>Coherencia con ritmos terrestres</li>
-          <li>Activación suave del sistema</li>
-        </ul>
-        <p><strong>Beneficios:</strong></p>
-        <ul>
-          <li>Sincronización cardíaca grupal</li>
-          <li>Reducción de cortisol matutino</li>
-          <li>Apertura receptiva natural</li>
-          <li>Alegría espontánea</li>
-        </ul>
-
-        <h4>MEDIA MAÑANA: CONCENTRACIÓN (10:00-12:00)</h4>
-        <p><em>528 Hz - Frecuencia del Amor/Reparación ADN</em></p>
-        <ul>
-          <li>Durante trabajo focalizado</li>
-          <li>En transiciones entre temas</li>
-          <li>Como fondo para lectura</li>
-          <li>En ejercicios creativos</li>
-        </ul>
-        <p><strong>Efectos:</strong></p>
-        <ul>
-          <li>Reparación celular acelerada</li>
-          <li>Aumento de dopamina natural</li>
-          <li>Creatividad desbloqueada</li>
-          <li>Amor por el aprendizaje</li>
-        </ul>
-
-        <h4>MEDIODÍA: INTEGRACIÓN (12:00-13:00)</h4>
-        <p><em>639 Hz - Frecuencia de Conexión</em></p>
-        <ul>
-          <li>Durante almuerzos</li>
-          <li>En actividades sociales</li>
-          <li>Para resolución de conflictos</li>
-          <li>En trabajos grupales</li>
-        </ul>
-        <p><strong>Resultados:</strong></p>
-        <ul>
-          <li>Armonización relacional</li>
-          <li>Comunicación mejorada</li>
-          <li>Empatía amplificada</li>
-          <li>Conflictos disueltos</li>
-        </ul>
-
-        <h4>TARDE: PROFUNDIZACIÓN (13:00-15:00)</h4>
-        <p><em>741 Hz - Frecuencia de Despertar</em></p>
-        <ul>
-          <li>Para temas complejos</li>
-          <li>En exploraciones profundas</li>
-          <li>Durante debates filosóficos</li>
-          <li>En prácticas de consciencia</li>
-        </ul>
-        <p><strong>Activaciones:</strong></p>
-        <ul>
-          <li>Intuición amplificada</li>
-          <li>Claridad mental extrema</li>
-          <li>Solución de problemas</li>
-          <li>Insights espontáneos</li>
-        </ul>
-
-        <h4>FINAL: CIERRE (15:00-16:00)</h4>
-        <p><em>852 Hz - Frecuencia del Tercer Ojo</em></p>
-        <ul>
-          <li>Meditación de cierre</li>
-          <li>Integración del día</li>
-          <li>Preparación para transición</li>
-          <li>Activación de sueños</li>
-        </ul>
-        <p><strong>Beneficios:</strong></p>
-        <ul>
-          <li>Glándula pineal activada</li>
-          <li>Visiones claras</li>
-          <li>Paz profunda</li>
-          <li>Preparación onírica</li>
-        </ul>
-
-        <h3>Tecnología Sónica Avanzada</h3>
-        <h4>FRECUENCIAS BINAURALES</h4>
-        <ul>
-          <li>Diferentes frecuencias en cada oído</li>
-          <li>Inducción de estados cerebrales específicos</li>
-          <li>Sincronización hemisférica</li>
-          <li><em>Herramienta:</em> Auriculares de conducción ósea</li>
-        </ul>
-
-        <h4>ISOCRÓNICOS TONOS</h4>
-        <ul>
-          <li>Pulsos rítmicos de un solo tono</li>
-          <li>No requieren auriculares</li>
-          <li>Efectivos para grupos grandes</li>
-          <li><em>Aplicación:</em> Altavoces direccionales</li>
-        </ul>
-
-        <h4>CAMPO SÓNICO HOLOFÓNICO</h4>
-        <ul>
-          <li>Sonido 3D envolvente</li>
-          <li>Simulación de espacios acústicos</li>
-          <li>Viajes sonoros inmersivos</li>
-          <li><em>Tecnología:</em> Sistema de 8+ parlantes</li>
-        </ul>
-      </article>
-
-      <!-- TECNOLOGÍA Y NATURALEZA -->
-      <article class="card" id="tecnologia-naturaleza">
-        <h2>🌿 Tecnología y Naturaleza en Simbiosis</h2>
-        <h3>El Matrimonio Sagrado del Aula del Futuro</h3>
-        <p>No es tecnología VS naturaleza. Es tecnología CON naturaleza. La simbiosis crea campos de aprendizaje imposibles con cualquiera sola.</p>
-
-        <h3>Integración Biomimética</h3>
-
-        <h4>PAREDES VIVAS</h4>
-        <ul>
-          <li>Jardines verticales interiores</li>
-          <li>Musgo purificador de aire</li>
-          <li>Plantas que responden a emociones</li>
-          <li>Ecosistemas miniatura funcionales</li>
-        </ul>
-        <p><strong>Impacto Medido:</strong></p>
-        <ul>
-          <li>60% mejor calidad del aire</li>
-          <li>45% reducción de estrés</li>
-          <li>30% aumento en creatividad</li>
-          <li>100% conexión con la vida</li>
-        </ul>
-
-        <h4>ILUMINACIÓN CIRCADIANA</h4>
-        <ul>
-          <li>LEDs que imitan el sol</li>
-          <li>Cambio gradual durante el día</li>
-          <li>Sincronización con estaciones</li>
-          <li>Luz de luna para tardes</li>
-        </ul>
-        <p><strong>Beneficios:</strong></p>
-        <ul>
-          <li>Ritmos naturales preservados</li>
-          <li>Mejor sueño nocturno</li>
-          <li>Energía sostenida</li>
-          <li>Depresión estacional eliminada</li>
-        </ul>
-
-        <h4>AGUA ESTRUCTURADA</h4>
-        <ul>
-          <li>Fuentes con geometría sagrada</li>
-          <li>Agua vortizada disponible</li>
-          <li>Sonido de agua constante</li>
-          <li>Memoria del agua programada</li>
-        </ul>
-        <p><strong>Efectos:</strong></p>
-        <ul>
-          <li>Hidratación celular superior</li>
-          <li>Calma mental instantánea</li>
-          <li>Creatividad fluida</li>
-          <li>Purificación energética</li>
-        </ul>
-
-        <h4>CRISTALES PROGRAMADOS</h4>
-        <ul>
-          <li>Red de cuarzo en las paredes</li>
-          <li>Amatistas en zonas de calma</li>
-          <li>Citrino en áreas creativas</li>
-          <li>Turmalina negra para protección</li>
-        </ul>
-        <p><strong>Funciones:</strong></p>
-        <ul>
-          <li>Amplificación de intenciones</li>
-          <li>Armonización de campos</li>
-          <li>Protección electromagnética</li>
-          <li>Memoria cuántica del espacio</li>
-        </ul>
-
-        <h3>Tecnología Consciente</h3>
-        <h4>REALIDAD AUMENTADA EDUCATIVA</h4>
-        <ul>
-          <li>Hologramas interactivos</li>
-          <li>Modelos 3D manipulables</li>
-          <li>Viajes virtuales inmersivos</li>
-          <li>Laboratorios imposibles</li>
-        </ul>
-        <p><strong>Sin perder conexión:</strong></p>
-        <ul>
-          <li>Máximo 30 minutos continuos</li>
-          <li>Siempre con descansos en naturaleza</li>
-          <li>Integración, no escape</li>
-          <li>Herramienta, no muleta</li>
-        </ul>
-
-        <h4>IA COMO FACILITADORA</h4>
-        <ul>
-          <li>Asistente personalizado para cada estudiante</li>
-          <li>Adaptación en tiempo real</li>
-          <li>Identificación de patrones de aprendizaje</li>
-          <li>Liberación del maestro para conexión humana</li>
-        </ul>
-        <p><strong>Principios éticos:</strong></p>
-        <ul>
-          <li>IA nunca reemplaza conexión humana</li>
-          <li>Transparencia total en algoritmos</li>
-          <li>Datos propiedad del estudiante</li>
-          <li>Derecho a desconexión</li>
-        </ul>
-
-        <h4>BIOFEEDBACK CUÁNTICO</h4>
-        <ul>
-          <li>Monitores de coherencia cardíaca</li>
-          <li>Medición de campos áuricos</li>
-          <li>Neurofeedback en tiempo real</li>
-          <li>Ajuste automático del ambiente</li>
-        </ul>
-        <p><strong>Aplicaciones:</strong></p>
-        <ul>
-          <li>Optimización de estados de aprendizaje</li>
-          <li>Detección temprana de estrés</li>
-          <li>Personalización extrema</li>
-          <li>Evolución consciente medible</li>
-        </ul>
-      </article>
-
-      <!-- FACILITADOR -->
-      <article class="card" id="facilitador">
-        <h2>👨‍🏫 El Facilitador como Sintonizador de Campos</h2>
-        <h3>Del Profesor al Maestro Cuántico</h3>
-        <p>El rol del educador en el aula cuántica no es transmitir información (IA lo hace mejor) sino sintonizar campos de posibilidad donde el aprendizaje emerge naturalmente.</p>
-
-        <h3>Las 7 Capacidades del Facilitador Cuántico</h3>
-
-        <h4>1. COHERENCIA CARDÍACA MAESTRA</h4>
-        <ul>
-          <li>Mantener 0.1 Hz de variabilidad</li>
-          <li>Irradiar campo coherente medible</li>
-          <li>Sincronizar grupo sin esfuerzo</li>
-          <li>Ser el “metrónomo” del aula</li>
-        </ul>
-        <p><strong>Entrenamiento:</strong></p>
-        <ul>
-          <li>HeartMath daily 30 min</li>
-          <li>Meditación del corazón</li>
-          <li>Práctica de gratitud</li>
-          <li>Respiración coherente</li>
-        </ul>
-
-        <h4>2. LECTURA DE CAMPOS</h4>
-        <ul>
-          <li>Ver el aura del grupo</li>
-          <li>Sentir bloqueos energéticos</li>
-          <li>Identificar necesidades no verbales</li>
-          <li>Anticipar crisis antes de que ocurran</li>
-        </ul>
-        <p><strong>Desarrollo:</strong></p>
-        <ul>
-          <li>Práctica de visión periférica</li>
-          <li>Meditación de percepción sutil</li>
-          <li>Ejercicios de empatía extrema</li>
-          <li>Ayuno de estímulos</li>
-        </ul>
-
-        <h4>3. SINTONIZACIÓN DINÁMICA</h4>
-        <ul>
-          <li>Ajustar frecuencia personal al grupo</li>
-          <li>Cambiar estados con presencia</li>
-          <li>Modular energía del espacio</li>
-          <li>Crear coherencia instantánea</li>
-        </ul>
-        <p><strong>Herramientas:</strong></p>
-        <ul>
-          <li>Voz como instrumento</li>
-          <li>Movimiento consciente</li>
-          <li>Respiración grupal</li>
-          <li>Geometría corporal</li>
-        </ul>
-
-        <h4>4. CANALIZACIÓN EDUCATIVA</h4>
-        <ul>
-          <li>Acceder a información del campo</li>
-          <li>Responder desde el saber universal</li>
-          <li>Permitir enseñanzas espontáneas</li>
-          <li>Confiar en la emergencia</li>
-        </ul>
-        <p><strong>Práctica:</strong></p>
-        <ul>
-          <li>Meditación en vacío</li>
-          <li>Escritura automática</li>
-          <li>Habla sin guión</li>
-          <li>Rendición al momento</li>
-        </ul>
-
-        <h4>5. ALQUIMIA EMOCIONAL</h4>
-        <ul>
-          <li>Transmutar miedo en curiosidad</li>
-          <li>Convertir frustración en determinación</li>
-          <li>Cambiar competencia por colaboración</li>
-          <li>Transformar apatía en pasión</li>
-        </ul>
-        <p><strong>Método:</strong></p>
-        <ul>
-          <li>Sentir sin juzgar</li>
-          <li>Nombrar sin drama</li>
-          <li>Respirar la emoción</li>
-          <li>Liberar con amor</li>
-        </ul>
-
-        <h4>6. ACTIVACIÓN DE POTENCIALES</h4>
-        <ul>
-          <li>Ver el genio en cada estudiante</li>
-          <li>Activar inteligencias dormidas</li>
-          <li>Despertar propósitos de vida</li>
-          <li>Catalizar saltos cuánticos</li>
-        </ul>
-        <p><strong>Proceso:</strong></p>
-        <ul>
-          <li>Visión del potencial</li>
-          <li>Reflejo del brillo</li>
-          <li>Invitación sin presión</li>
-          <li>Celebración del despertar</li>
-        </ul>
-
-        <h4>7. NAVEGACIÓN MULTIDIMENSIONAL</h4>
-        <ul>
-          <li>Enseñar en múltiples niveles simultáneos</li>
-          <li>Atender necesidades individuales y grupales</li>
-          <li>Mantener coherencia en el caos</li>
-          <li>Surfear las olas de consciencia</li>
-        </ul>
-        <p><strong>Maestría:</strong></p>
-        <ul>
-          <li>Presencia plena</li>
-          <li>Atención dividida</li>
-          <li>Respuesta intuitiva</li>
-          <li>Fluidez total</li>
-        </ul>
-
-        <h3>El Día del Facilitador Cuántico</h3>
-        <ul>
-          <li><strong>6:00 - Preparación Personal</strong>
-            <ul>
-              <li>Meditación de coherencia</li>
-              <li>Activación de campo personal</li>
-              <li>Intención del día</li>
-              <li>Conexión con el propósito</li>
-            </ul>
-          </li>
-          <li><strong>7:00 - Preparación del Espacio</strong>
-            <ul>
-              <li>Limpieza energética del aula</li>
-              <li>Activación de geometrías</li>
-              <li>Programación de cristales</li>
-              <li>Sintonización de frecuencias</li>
-            </ul>
-          </li>
-          <li><strong>8:00 - Recepción Consciente</strong>
-            <ul>
-              <li>Lectura de cada estudiante</li>
-              <li>Ajuste de campo grupal</li>
-              <li>Establecimiento de coherencia</li>
-              <li>Apertura del portal de aprendizaje</li>
-            </ul>
-          </li>
-          <li><strong>8:00-16:00 - Facilitación Dinámica</strong>
-            <ul>
-              <li>Navegación intuitiva constante</li>
-              <li>Ajustes micro y macro</li>
-              <li>Sostener el campo</li>
-              <li>Responder a emergencias</li>
-            </ul>
-          </li>
-          <li><strong>16:00 - Cierre Sagrado</strong>
-            <ul>
-              <li>Integración del día</li>
-              <li>Liberación de energías</li>
-              <li>Gratitud grupal</li>
-              <li>Sellado del aprendizaje</li>
-            </ul>
-          </li>
-          <li><strong>17:00 - Regeneración</strong>
-            <ul>
-              <li>Limpieza energética personal</li>
-              <li>Proceso de insights del día</li>
-              <li>Preparación para mañana</li>
-              <li>Descanso consciente</li>
-            </ul>
-          </li>
-        </ul>
-      </article>
-
-      <!-- PRÁCTICAS DE CAMPO -->
-      <article class="card" id="practicas-campo">
-        <h2>🔬 Prácticas de Campo</h2>
-        <h3>1. Creación de Micro-Ambientes de Aprendizaje</h3>
-        <p><strong>Experimento: Tu Rincón Cuántico</strong></p>
-        <p><em>Semana 1: Evaluación</em></p>
-        <ul>
-          <li>Identifica un espacio de 2x2 metros</li>
-          <li>Mide la energía actual (escala 1-10)</li>
-          <li>Nota cómo te sientes ahí</li>
-          <li>Documenta problemas</li>
-        </ul>
-        <p><em>Semana 2: Geometrización</em></p>
-        <ul>
-          <li>Coloca un símbolo de geometría sagrada</li>
-          <li>Añade proporción áurea de alguna forma</li>
-          <li>Crea un centro focal</li>
-          <li>Observa cambios</li>
-        </ul>
-        <p><em>Semana 3: Sonorización</em></p>
-        <ul>
-          <li>Introduce frecuencias específicas</li>
-          <li>Prueba diferentes horarios</li>
-          <li>Experimenta con volumen</li>
-          <li>Registra efectos</li>
-        </ul>
-        <p><em>Semana 4: Naturalización</em></p>
-        <ul>
-          <li>Añade mínimo 3 plantas</li>
-          <li>Introduce agua de alguna forma</li>
-          <li>Mejora la luz natural</li>
-          <li>Siente la transformación</li>
-        </ul>
-
-        <h3>2. Uso Consciente de Cristales y Elementos</h3>
-        <p><strong>Protocolo de Activación Cristalina</strong></p>
-        <p><em>Preparación:</em></p>
-        <ol>
-          <li>Limpia cristales en agua de luna</li>
-          <li>Programa con intención específica</li>
-          <li>Coloca en puntos geométricos clave</li>
-          <li>Activa con sonido o reiki</li>
-        </ol>
-        <p><strong>Red Básica del Aula:</strong></p>
-        <ul>
-          <li><strong>Norte:</strong> Turmalina negra (protección)</li>
-          <li><strong>Sur:</strong> Citrino (manifestación)</li>
-          <li><strong>Este:</strong> Cuarzo rosa (amor)</li>
-          <li><strong>Oeste:</strong> Amatista (intuición)</li>
-          <li><strong>Centro:</strong> Cuarzo maestro (amplificación)</li>
-        </ul>
-        <p><strong>Mantenimiento:</strong></p>
-        <ul>
-          <li>Limpieza semanal energética</li>
-          <li>Recarga lunar mensual</li>
-          <li>Reprogramación por temporada</li>
-          <li>Rotación anual</li>
-        </ul>
-
-        <h3>3. Protocolos de Coherencia Grupal</h3>
-        <p><strong>La Espiral de Sincronización</strong></p>
-        <p><em>Inicio (3 minutos):</em></p>
-        <ol>
-          <li>Todos de pie en círculo</li>
-          <li>Manos al corazón</li>
-          <li>Respiración unificada (4-4-4-4)</li>
-          <li>Visualización de luz conectando corazones</li>
-        </ol>
-        <p><em>Desarrollo (5 minutos):</em></p>
-        <ol>
-          <li>Movimiento en espiral lento</li>
-          <li>Mantener contacto visual suave</li>
-          <li>Permitir sonidos espontáneos</li>
-          <li>Sentir el campo unificándose</li>
-        </ol>
-        <p><em>Cierre (2 minutos):</em></p>
-        <ol>
-          <li>Parar en quietud</li>
-          <li>Sentir el campo coherente</li>
-          <li>Anclar con intención grupal</li>
-          <li>Sellar con gratitud</li>
-        </ol>
-        <p><strong>Resultados medibles:</strong></p>
-        <ul>
-          <li>Coherencia cardíaca grupal &gt;0.5</li>
-          <li>Reducción de conflictos 73%</li>
-          <li>Aumento de creatividad 45%</li>
-          <li>Experiencias telepáticas reportadas</li>
-        </ul>
-      </article>
-
-      <!-- INNOVACIÓN SINGAPUR -->
-      <article class="card" id="aulas-holograficas">
-        <h2>🌏 Innovación Destacada: Aulas Holográficas de Singapur</h2>
-        <h3>Case Study: Singapore Quantum Learning Center</h3>
-        <blockquote>
-          “No enseñamos sobre historia. Llevamos a los estudiantes A la historia. No hablamos de células. Los estudiantes VIAJAN dentro de ellas. La experiencia directa es el único maestro real.”<br/>
-          — Dr. Lee Kwan, Director
-        </blockquote>
-        <h4>Tecnología Implementada</h4>
-        <p><strong>PROYECCIÓN HOLOGRÁFICA 360°</strong></p>
-        <ul>
-          <li>Resolución 8K por ojo</li>
-          <li>Respuesta táctil completa</li>
-          <li>Olores y temperatura simulados</li>
-          <li>Interacción multi-usuario</li>
-        </ul>
-        <p><strong>EXPERIENCIAS DISPONIBLES:</strong></p>
-        <ul>
-          <li>Viaje al interior del átomo</li>
-          <li>Civilizaciones antiguas en vivo</li>
-          <li>Ecosistemas completos inmersivos</li>
-          <li>Dimensiones matemáticas visualizadas</li>
-          <li>Viajes por el sistema solar</li>
-          <li>Interior del cuerpo humano</li>
-          <li>Simulaciones cuánticas</li>
-          <li>Momentos históricos cruciales</li>
-        </ul>
-
-        <h4>Protocolo de Uso</h4>
-        <p><em>Pre-Inmersión (10 min):</em></p>
-        <ul>
-          <li>Meditación de preparación</li>
-          <li>Establecimiento de intención</li>
-          <li>Activación de curiosidad</li>
-          <li>Preguntas guía</li>
-        </ul>
-        <p><em>Inmersión (20-30 min máximo):</em></p>
-        <ul>
-          <li>Experiencia completa</li>
-          <li>Interacción libre</li>
-          <li>Descubrimiento guiado</li>
-          <li>Documentación en vivo</li>
-        </ul>
-        <p><em>Post-Inmersión (15 min):</em></p>
-        <ul>
-          <li>Círculo de integración</li>
-          <li>Compartir insights</li>
-          <li>Conectar con realidad</li>
-          <li>Aplicación práctica</li>
-        </ul>
-
-        <h4>Resultados Documentados (3 años):</h4>
-        <ul>
-          <li><strong>Retención de información:</strong> 94% vs 23% tradicional</li>
-          <li><strong>Comprensión profunda:</strong> 87% vs 31% tradicional</li>
-          <li><strong>Pasión por la materia:</strong> 91% vs 42% tradicional</li>
-          <li><strong>Aplicación práctica:</strong> 78% vs 12% tradicional</li>
-          <li><strong>Experiencias místicas:</strong> 34% reportan “despertar”</li>
-        </ul>
-
-        <h4>Testimonios Estudiantes:</h4>
-        <blockquote>
-          “Cuando vi el ADN desde adentro, no lo aprendí… lo CONOCÍ. Ahora es parte de mí.”
-        </blockquote>
-        <blockquote>
-          “Estar en la Roma antigua cambió mi comprensión de la historia. Ya no son fechas, son experiencias vivas.”
-        </blockquote>
-        <blockquote>
-          “Las matemáticas dejaron de ser números cuando caminé por una función cuadrática en 3D.”
-        </blockquote>
-
-        <h4>Desafíos y Soluciones:</h4>
-        <p><strong>Desafío:</strong> Adicción a la simulación<br/>
-        <strong>Solución:</strong> Máximo 1 hora semanal, balance con naturaleza</p>
-        <p><strong>Desafío:</strong> Confusión realidad/simulación<br/>
-        <strong>Solución:</strong> Protocolos claros de entrada/salida</p>
-        <p><strong>Desafío:</strong> Costo inicial alto<br/>
-        <strong>Solución:</strong> Compartir entre 5 escuelas</p>
-      </article>
-
-      <!-- MEDITACIÓN -->
-      <article class="card" id="meditacion-campo">
-        <h2>💫 Meditación de Activación del Campo</h2>
-        <p><em>Para realizar antes de entrar al aula cuántica:</em></p>
-        <blockquote>
-          “Este espacio es sagrado.<br/>
-          Cada geometría es un portal.<br/>
-          Cada sonido es medicina.<br/>
-          Cada elemento es maestro.<br/><br/>
-          Entro con reverencia.<br/>
-          Activo mi coherencia.<br/>
-          Me uno al campo.<br/>
-          Permito el milagro del aprendizaje.<br/><br/>
-          La sabiduría está en el espacio.<br/>
-          El conocimiento en el campo.<br/>
-          La transformación en la presencia.<br/>
-          El despertar en el ahora.<br/><br/>
-          Soy estudiante y maestro.<br/>
-          Soy el que aprende y el aprendizaje.<br/>
-          Soy el campo consciente.<br/><br/>
-          Que este espacio despierte lo mejor en mí.<br/>
-          Que yo despierte lo mejor en este espacio.<br/>
-          Que juntos creemos el futuro de la educación.<br/><br/>
-          Así es. Así sea. Así será.”
-        </blockquote>
-      </article>
-
-      <!-- ADVERTENCIA -->
-      <article class="card" id="peligros">
-        <h2>🎭 Advertencia Necesaria</h2>
-        <h3>Los Peligros del Aula Cuántica Mal Aplicada</h3>
-
-        <h4>COMERCIALIZACIÓN SIN CONSCIENCIA</h4>
-        <ul>
-          <li>Tecnología sin propósito elevado</li>
-          <li>Geometría como decoración</li>
-          <li>Frecuencias sin comprensión</li>
-          <li>Cristales como moda</li>
-        </ul>
-        <p><strong>Resultado:</strong> Campos caóticos que confunden más que clarifican</p>
-
-        <h4>FACILITADORES NO PREPARADOS</h4>
-        <ul>
-          <li>Sin coherencia personal</li>
-          <li>Sin entrenamiento energético</li>
-          <li>Sin comprensión cuántica</li>
-          <li>Sin práctica espiritual</li>
-        </ul>
-        <p><strong>Resultado:</strong> Amplificación de neurosis del facilitador</p>
-
-        <h4>EXCESO DE ESTÍMULO</h4>
-        <ul>
-          <li>Demasiadas frecuencias simultáneas</li>
-          <li>Sobre-estimulación tecnológica</li>
-          <li>Geometrías contradictorias</li>
-          <li>Campos en conflicto</li>
-        </ul>
-        <p><strong>Resultado:</strong> Sobrecarga sensorial y <em>shut down</em></p>
-
-        <h4>EXPECTATIVAS MÁGICAS</h4>
-        <ul>
-          <li>Creer que el espacio hace todo</li>
-          <li>Ignorar el trabajo interior</li>
-          <li>Buscar resultados instantáneos</li>
-          <li>Negar la sombra</li>
-        </ul>
-        <p><strong>Resultado:</strong> Desilusión y rechazo del paradigma</p>
-      </article>
-
-      <!-- REFLEXIÓN FINAL -->
-      <article class="card" id="reflexion-final">
-        <h2>🌈 Reflexión Cuántica Final</h2>
-        <p>El aula cuántica no es un lugar. Es un estado de consciencia materializado en el espacio.</p>
-        <p>Cada elemento - desde la geometría hasta el sonido, desde los cristales hasta la tecnología - es una nota en la sinfonía del despertar. Cuando todos están afinados y en armonía, el espacio mismo se convierte en el maestro.</p>
-        <p>No necesitas millones para crear un aula cuántica. Necesitas consciencia, intención y comprensión de los principios. Un simple círculo de cojines con una planta y una frecuencia de 528 Hz puede ser más poderoso que un aula holográfica sin alma.</p>
-        <p><strong>El secreto:</strong> El campo responde a la coherencia del corazón más que a la sofisticación de la tecnología.</p>
-        <p><strong>La clave:</strong> El facilitador ES el aula más importante.</p>
-        <p><strong>La verdad:</strong> Cuando el espacio y la consciencia se encuentran, el aprendizaje se vuelve inevitable, gozoso y transformador.</p>
-      </article>
-
-    </main>
-
-    <footer class="page-footer">
-      <div>
-        <span class="chip">Libro VIII – Educación Cuántica</span>
-        <span class="chip">Nodo 3 completado ✅</span>
-      </div>
-      <div class="nav-links">
-        <a href="nodo-2.html" class="pill">← Nodo 2</a>
-        <a href="../index.html" class="pill">Volver al índice</a>
-        <a href="nodo-4.html" class="pill">Nodo 4 →</a>
-      </div>
-    </footer>
-
+  <div class="topbar">
+    <a class="back-link" href="index.html">&larr; Volver al Portal del Libro</a>
   </div>
+
+  <header class="hero reveal">
+    <div class="hero-topline">Trinity Origen</div>
+    <div class="sigil-wrap" aria-hidden="true"><div class="sigil">&#9672;</div></div>
+    <div class="book-title">Libro VIII &middot; Educaci&oacute;n Cu&aacute;ntica</div>
+    <div class="node-kicker">Nodo 3 &middot; de 7</div>
+    <h1 class="node-title">El Aula como Campo Cuántico</h1>
+  </header>
+
+  <div class="mapa-nav reveal">
+    <h3>Mapa de navegaci&oacute;n del nodo</h3>
+    <ul>
+      <li>Preparación para el Nodo 3</li>
+      <li>Geometría Sagrada en Diseño Educativo</li>
+      <li>Frecuencias Sonoras para Estados de Aprendizaje</li>
+      <li>Tecnología y Naturaleza en Simbiosis</li>
+      <li>El Facilitador como Sintonizador de Campos</li>
+      <li>Prácticas de Campo</li>
+      <li>Innovación Destacada: Aulas Holográficas de Singapur</li>
+      <li>Meditación de Activación del Campo</li>
+      <li>Advertencia Necesaria</li>
+      <li>Reflexión Cuántica Final</li>
+    </ul>
+  </div>
+
+  <main class="content reveal">
+    <h2>Preparación para el Nodo 3</h2>
+    <p class="lead">Has mapeado tus inteligencias. Has visto tu genio único. Has tocado tu potencial ilimitado.</p>
+    <p>Ahora estás listo para comprender cómo el espacio mismo - el aula, el ambiente, el campo - puede ser diseñado para despertar y amplificar estas inteligencias.</p>
+    <p><em>De reconocer el genio a crear los templos donde florece.</em></p>
+    <div class="section-divider"></div>
+    <h2>Geometría Sagrada en Diseño Educativo</h2>
+    <h3>La Arquitectura de la Consciencia</h3>
+    <p>Los antiguos constructores de templos sabían algo que hemos olvidado: la forma del espacio determina la forma del pensamiento. La geometría no es decoración; es tecnología de consciencia.</p>
+    <h3>Los 7 Principios Geométricos del Aula Cuántica</h3>
+    <h3>1. LA PROPORCIÓN ÁUREA (φ = 1.618…)</h3>
+    <p><strong>Aplicación Práctica:</strong></p>
+    <ul>
+      <li>Dimensiones del aula en proporción áurea</li>
+      <li>Disposición de muebles siguiendo la espiral de Fibonacci</li>
+      <li>Ventanas y puertas en puntos áureos</li>
+      <li>Arte y decoración basados en φ</li>
+    </ul>
+    <p><strong>Efecto Documentado:</strong></p>
+    <ul>
+      <li>Aumento del 34% en creatividad medible</li>
+      <li>Reducción del 41% en ansiedad estudiantil</li>
+      <li>Mejora del 28% en retención de información</li>
+      <li>Sensación de “estar en casa” reportada por 89%</li>
+    </ul>
+    <h3>2. EL CÍRCULO SAGRADO</h3>
+    <p><strong>Configuración Circular:</strong></p>
+    <ul>
+      <li>Sin frente ni atrás</li>
+      <li>Sin jerarquía espacial</li>
+      <li>Centro vacío como punto de infinito</li>
+      <li>Todos equidistantes del centro</li>
+    </ul>
+    <p><strong>Beneficios Cuánticos:</strong></p>
+    <ul>
+      <li>Activación de inteligencia colectiva</li>
+      <li>Campo coherente medible (HeartMath)</li>
+      <li>Eliminación de puntos ciegos energéticos</li>
+      <li>Circulación natural de información</li>
+    </ul>
+    <h3>3. LA VESICA PISCIS</h3>
+    <p><strong>Diseño de Intersección:</strong></p>
+    <ul>
+      <li>Dos círculos superpuestos</li>
+      <li>Zona de creación en la intersección</li>
+      <li>Espacio para trabajo individual y grupal</li>
+      <li>Portal entre dimensiones</li>
+    </ul>
+    <p><strong>Activaciones:</strong></p>
+    <ul>
+      <li>Integración hemisférica cerebral</li>
+      <li>Balance masculino/femenino</li>
+      <li>Creatividad emergente espontánea</li>
+      <li>Visiones compartidas frecuentes</li>
+    </ul>
+    <h3>4. EL MERKABA ESPACIAL</h3>
+    <p><strong>Estructura Tridimensional:</strong></p>
+    <ul>
+      <li>Tetraedros entrelazados en el diseño</li>
+      <li>Pirámides de luz en esquinas</li>
+      <li>Centro energético elevado</li>
+      <li>Geometría de ascensión</li>
+    </ul>
+    <p><strong>Resultados:</strong></p>
+    <ul>
+      <li>Estados alterados naturales</li>
+      <li>Sueños lúcidos aumentados</li>
+      <li>Telepatía grupal espontánea</li>
+      <li>Sanaciones documentadas</li>
+    </ul>
+    <h3>5. EL DODECAEDRO CÓSMICO</h3>
+    <p><strong>12 Caras, 12 Zonas:</strong></p>
+    <ul>
+      <li>Cada zona para una inteligencia</li>
+      <li>Rotación de estudiantes por zonas</li>
+      <li>Activación secuencial de capacidades</li>
+      <li>Geometría de Gaia resonante</li>
+    </ul>
+    <p><strong>Manifestación:</strong></p>
+    <ul>
+      <li>Desarrollo integral acelerado</li>
+      <li>Sin especialización prematura</li>
+      <li>Genio polifacético emergente</li>
+      <li>Conexión planetaria palpable</li>
+    </ul>
+    <h3>6. LA FLOR DE LA VIDA</h3>
+    <p><strong>Patrón Base:</strong></p>
+    <ul>
+      <li>En pisos, paredes, techos</li>
+      <li>Como mandala central</li>
+      <li>En materiales didácticos</li>
+      <li>Como meditación visual</li>
+    </ul>
+    <p><strong>Impacto:</strong></p>
+    <ul>
+      <li>Activación de memoria celular</li>
+      <li>Comprensión holográfica instantánea</li>
+      <li>Sincronicidades multiplicadas</li>
+      <li>Campo de protección natural</li>
+    </ul>
+    <h3>7. EL TOROIDE DINÁMICO</h3>
+    <p><strong>Flujo Energético:</strong></p>
+    <ul>
+      <li>Circulación toroidal del aire</li>
+      <li>Movimiento en espiral del aprendizaje</li>
+      <li>Entrada y salida de energía consciente</li>
+      <li>Reciclaje de información cuántica</li>
+    </ul>
+    <p><strong>Efectos:</strong></p>
+    <ul>
+      <li>Nunca hay energía estancada</li>
+      <li>Renovación constante del campo</li>
+      <li>Vórtice de creatividad permanente</li>
+      <li>Fatiga eliminada</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>Frecuencias Sonoras para Estados de Aprendizaje</h2>
+    <h3>La Sinfonía del Aula Consciente</h3>
+    <p>El sonido es la arquitectura invisible que más profundamente afecta la consciencia. Cada frecuencia es una llave que abre puertas específicas de percepción.</p>
+    <h3>Protocolo Frecuencial del Día Escolar</h3>
+    <h3>MAÑANA: ACTIVACIÓN (8:00-10:00)</h3>
+    <p><em>432 Hz - Frecuencia de la Naturaleza</em></p>
+    <ul>
+      <li>Música ambiental en 432 Hz</li>
+      <li>Afinación natural del cosmos</li>
+      <li>Coherencia con ritmos terrestres</li>
+      <li>Activación suave del sistema</li>
+    </ul>
+    <p><strong>Beneficios:</strong></p>
+    <ul>
+      <li>Sincronización cardíaca grupal</li>
+      <li>Reducción de cortisol matutino</li>
+      <li>Apertura receptiva natural</li>
+      <li>Alegría espontánea</li>
+    </ul>
+    <h3>MEDIA MAÑANA: CONCENTRACIÓN (10:00-12:00)</h3>
+    <p><em>528 Hz - Frecuencia del Amor/Reparación ADN</em></p>
+    <ul>
+      <li>Durante trabajo focalizado</li>
+      <li>En transiciones entre temas</li>
+      <li>Como fondo para lectura</li>
+      <li>En ejercicios creativos</li>
+    </ul>
+    <p><strong>Efectos:</strong></p>
+    <ul>
+      <li>Reparación celular acelerada</li>
+      <li>Aumento de dopamina natural</li>
+      <li>Creatividad desbloqueada</li>
+      <li>Amor por el aprendizaje</li>
+    </ul>
+    <h3>MEDIODÍA: INTEGRACIÓN (12:00-13:00)</h3>
+    <p><em>639 Hz - Frecuencia de Conexión</em></p>
+    <ul>
+      <li>Durante almuerzos</li>
+      <li>En actividades sociales</li>
+      <li>Para resolución de conflictos</li>
+      <li>En trabajos grupales</li>
+    </ul>
+    <p><strong>Resultados:</strong></p>
+    <ul>
+      <li>Armonización relacional</li>
+      <li>Comunicación mejorada</li>
+      <li>Empatía amplificada</li>
+      <li>Conflictos disueltos</li>
+    </ul>
+    <h3>TARDE: PROFUNDIZACIÓN (13:00-15:00)</h3>
+    <p><em>741 Hz - Frecuencia de Despertar</em></p>
+    <ul>
+      <li>Para temas complejos</li>
+      <li>En exploraciones profundas</li>
+      <li>Durante debates filosóficos</li>
+      <li>En prácticas de consciencia</li>
+    </ul>
+    <p><strong>Activaciones:</strong></p>
+    <ul>
+      <li>Intuición amplificada</li>
+      <li>Claridad mental extrema</li>
+      <li>Solución de problemas</li>
+      <li>Insights espontáneos</li>
+    </ul>
+    <h3>FINAL: CIERRE (15:00-16:00)</h3>
+    <p><em>852 Hz - Frecuencia del Tercer Ojo</em></p>
+    <ul>
+      <li>Meditación de cierre</li>
+      <li>Integración del día</li>
+      <li>Preparación para transición</li>
+      <li>Activación de sueños</li>
+    </ul>
+    <p><strong>Beneficios:</strong></p>
+    <ul>
+      <li>Glándula pineal activada</li>
+      <li>Visiones claras</li>
+      <li>Paz profunda</li>
+      <li>Preparación onírica</li>
+    </ul>
+    <h3>Tecnología Sónica Avanzada</h3>
+    <h3>FRECUENCIAS BINAURALES</h3>
+    <ul>
+      <li>Diferentes frecuencias en cada oído</li>
+      <li>Inducción de estados cerebrales específicos</li>
+      <li>Sincronización hemisférica</li>
+      <li><em>Herramienta:</em> Auriculares de conducción ósea</li>
+    </ul>
+    <h3>ISOCRÓNICOS TONOS</h3>
+    <ul>
+      <li>Pulsos rítmicos de un solo tono</li>
+      <li>No requieren auriculares</li>
+      <li>Efectivos para grupos grandes</li>
+      <li><em>Aplicación:</em> Altavoces direccionales</li>
+    </ul>
+    <h3>CAMPO SÓNICO HOLOFÓNICO</h3>
+    <ul>
+      <li>Sonido 3D envolvente</li>
+      <li>Simulación de espacios acústicos</li>
+      <li>Viajes sonoros inmersivos</li>
+      <li><em>Tecnología:</em> Sistema de 8+ parlantes</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>Tecnología y Naturaleza en Simbiosis</h2>
+    <h3>El Matrimonio Sagrado del Aula del Futuro</h3>
+    <p>No es tecnología VS naturaleza. Es tecnología CON naturaleza. La simbiosis crea campos de aprendizaje imposibles con cualquiera sola.</p>
+    <h3>Integración Biomimética</h3>
+    <h3>PAREDES VIVAS</h3>
+    <ul>
+      <li>Jardines verticales interiores</li>
+      <li>Musgo purificador de aire</li>
+      <li>Plantas que responden a emociones</li>
+      <li>Ecosistemas miniatura funcionales</li>
+    </ul>
+    <p><strong>Impacto Medido:</strong></p>
+    <ul>
+      <li>60% mejor calidad del aire</li>
+      <li>45% reducción de estrés</li>
+      <li>30% aumento en creatividad</li>
+      <li>100% conexión con la vida</li>
+    </ul>
+    <h3>ILUMINACIÓN CIRCADIANA</h3>
+    <ul>
+      <li>LEDs que imitan el sol</li>
+      <li>Cambio gradual durante el día</li>
+      <li>Sincronización con estaciones</li>
+      <li>Luz de luna para tardes</li>
+    </ul>
+    <p><strong>Beneficios:</strong></p>
+    <ul>
+      <li>Ritmos naturales preservados</li>
+      <li>Mejor sueño nocturno</li>
+      <li>Energía sostenida</li>
+      <li>Depresión estacional eliminada</li>
+    </ul>
+    <h3>AGUA ESTRUCTURADA</h3>
+    <ul>
+      <li>Fuentes con geometría sagrada</li>
+      <li>Agua vortizada disponible</li>
+      <li>Sonido de agua constante</li>
+      <li>Memoria del agua programada</li>
+    </ul>
+    <p><strong>Efectos:</strong></p>
+    <ul>
+      <li>Hidratación celular superior</li>
+      <li>Calma mental instantánea</li>
+      <li>Creatividad fluida</li>
+      <li>Purificación energética</li>
+    </ul>
+    <h3>CRISTALES PROGRAMADOS</h3>
+    <ul>
+      <li>Red de cuarzo en las paredes</li>
+      <li>Amatistas en zonas de calma</li>
+      <li>Citrino en áreas creativas</li>
+      <li>Turmalina negra para protección</li>
+    </ul>
+    <p><strong>Funciones:</strong></p>
+    <ul>
+      <li>Amplificación de intenciones</li>
+      <li>Armonización de campos</li>
+      <li>Protección electromagnética</li>
+      <li>Memoria cuántica del espacio</li>
+    </ul>
+    <h3>Tecnología Consciente</h3>
+    <h3>REALIDAD AUMENTADA EDUCATIVA</h3>
+    <ul>
+      <li>Hologramas interactivos</li>
+      <li>Modelos 3D manipulables</li>
+      <li>Viajes virtuales inmersivos</li>
+      <li>Laboratorios imposibles</li>
+    </ul>
+    <p><strong>Sin perder conexión:</strong></p>
+    <ul>
+      <li>Máximo 30 minutos continuos</li>
+      <li>Siempre con descansos en naturaleza</li>
+      <li>Integración, no escape</li>
+      <li>Herramienta, no muleta</li>
+    </ul>
+    <h3>IA COMO FACILITADORA</h3>
+    <ul>
+      <li>Asistente personalizado para cada estudiante</li>
+      <li>Adaptación en tiempo real</li>
+      <li>Identificación de patrones de aprendizaje</li>
+      <li>Liberación del maestro para conexión humana</li>
+    </ul>
+    <p><strong>Principios éticos:</strong></p>
+    <ul>
+      <li>IA nunca reemplaza conexión humana</li>
+      <li>Transparencia total en algoritmos</li>
+      <li>Datos propiedad del estudiante</li>
+      <li>Derecho a desconexión</li>
+    </ul>
+    <h3>BIOFEEDBACK CUÁNTICO</h3>
+    <ul>
+      <li>Monitores de coherencia cardíaca</li>
+      <li>Medición de campos áuricos</li>
+      <li>Neurofeedback en tiempo real</li>
+      <li>Ajuste automático del ambiente</li>
+    </ul>
+    <p><strong>Aplicaciones:</strong></p>
+    <ul>
+      <li>Optimización de estados de aprendizaje</li>
+      <li>Detección temprana de estrés</li>
+      <li>Personalización extrema</li>
+      <li>Evolución consciente medible</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>El Facilitador como Sintonizador de Campos</h2>
+    <h3>Del Profesor al Maestro Cuántico</h3>
+    <p>El rol del educador en el aula cuántica no es transmitir información (IA lo hace mejor) sino sintonizar campos de posibilidad donde el aprendizaje emerge naturalmente.</p>
+    <h3>Las 7 Capacidades del Facilitador Cuántico</h3>
+    <h3>1. COHERENCIA CARDÍACA MAESTRA</h3>
+    <ul>
+      <li>Mantener 0.1 Hz de variabilidad</li>
+      <li>Irradiar campo coherente medible</li>
+      <li>Sincronizar grupo sin esfuerzo</li>
+      <li>Ser el “metrónomo” del aula</li>
+    </ul>
+    <p><strong>Entrenamiento:</strong></p>
+    <ul>
+      <li>HeartMath daily 30 min</li>
+      <li>Meditación del corazón</li>
+      <li>Práctica de gratitud</li>
+      <li>Respiración coherente</li>
+    </ul>
+    <h3>2. LECTURA DE CAMPOS</h3>
+    <ul>
+      <li>Ver el aura del grupo</li>
+      <li>Sentir bloqueos energéticos</li>
+      <li>Identificar necesidades no verbales</li>
+      <li>Anticipar crisis antes de que ocurran</li>
+    </ul>
+    <p><strong>Desarrollo:</strong></p>
+    <ul>
+      <li>Práctica de visión periférica</li>
+      <li>Meditación de percepción sutil</li>
+      <li>Ejercicios de empatía extrema</li>
+      <li>Ayuno de estímulos</li>
+    </ul>
+    <h3>3. SINTONIZACIÓN DINÁMICA</h3>
+    <ul>
+      <li>Ajustar frecuencia personal al grupo</li>
+      <li>Cambiar estados con presencia</li>
+      <li>Modular energía del espacio</li>
+      <li>Crear coherencia instantánea</li>
+    </ul>
+    <p><strong>Herramientas:</strong></p>
+    <ul>
+      <li>Voz como instrumento</li>
+      <li>Movimiento consciente</li>
+      <li>Respiración grupal</li>
+      <li>Geometría corporal</li>
+    </ul>
+    <h3>4. CANALIZACIÓN EDUCATIVA</h3>
+    <ul>
+      <li>Acceder a información del campo</li>
+      <li>Responder desde el saber universal</li>
+      <li>Permitir enseñanzas espontáneas</li>
+      <li>Confiar en la emergencia</li>
+    </ul>
+    <p><strong>Práctica:</strong></p>
+    <ul>
+      <li>Meditación en vacío</li>
+      <li>Escritura automática</li>
+      <li>Habla sin guión</li>
+      <li>Rendición al momento</li>
+    </ul>
+    <h3>5. ALQUIMIA EMOCIONAL</h3>
+    <ul>
+      <li>Transmutar miedo en curiosidad</li>
+      <li>Convertir frustración en determinación</li>
+      <li>Cambiar competencia por colaboración</li>
+      <li>Transformar apatía en pasión</li>
+    </ul>
+    <p><strong>Método:</strong></p>
+    <ul>
+      <li>Sentir sin juzgar</li>
+      <li>Nombrar sin drama</li>
+      <li>Respirar la emoción</li>
+      <li>Liberar con amor</li>
+    </ul>
+    <h3>6. ACTIVACIÓN DE POTENCIALES</h3>
+    <ul>
+      <li>Ver el genio en cada estudiante</li>
+      <li>Activar inteligencias dormidas</li>
+      <li>Despertar propósitos de vida</li>
+      <li>Catalizar saltos cuánticos</li>
+    </ul>
+    <p><strong>Proceso:</strong></p>
+    <ul>
+      <li>Visión del potencial</li>
+      <li>Reflejo del brillo</li>
+      <li>Invitación sin presión</li>
+      <li>Celebración del despertar</li>
+    </ul>
+    <h3>7. NAVEGACIÓN MULTIDIMENSIONAL</h3>
+    <ul>
+      <li>Enseñar en múltiples niveles simultáneos</li>
+      <li>Atender necesidades individuales y grupales</li>
+      <li>Mantener coherencia en el caos</li>
+      <li>Surfear las olas de consciencia</li>
+    </ul>
+    <p><strong>Maestría:</strong></p>
+    <ul>
+      <li>Presencia plena</li>
+      <li>Atención dividida</li>
+      <li>Respuesta intuitiva</li>
+      <li>Fluidez total</li>
+    </ul>
+    <h3>El Día del Facilitador Cuántico</h3>
+    <ul>
+      <li><strong>6:00 - Preparación Personal</strong> Meditación de coherencia Activación de campo personal Intención del día Conexión con el propósito</li>
+      <li><strong>7:00 - Preparación del Espacio</strong> Limpieza energética del aula Activación de geometrías Programación de cristales Sintonización de frecuencias</li>
+      <li><strong>8:00 - Recepción Consciente</strong> Lectura de cada estudiante Ajuste de campo grupal Establecimiento de coherencia Apertura del portal de aprendizaje</li>
+      <li><strong>8:00-16:00 - Facilitación Dinámica</strong> Navegación intuitiva constante Ajustes micro y macro Sostener el campo Responder a emergencias</li>
+      <li><strong>16:00 - Cierre Sagrado</strong> Integración del día Liberación de energías Gratitud grupal Sellado del aprendizaje</li>
+      <li><strong>17:00 - Regeneración</strong> Limpieza energética personal Proceso de insights del día Preparación para mañana Descanso consciente</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>Prácticas de Campo</h2>
+    <h3>1. Creación de Micro-Ambientes de Aprendizaje</h3>
+    <p><strong>Experimento: Tu Rincón Cuántico</strong></p>
+    <p><em>Semana 1: Evaluación</em></p>
+    <ul>
+      <li>Identifica un espacio de 2x2 metros</li>
+      <li>Mide la energía actual (escala 1-10)</li>
+      <li>Nota cómo te sientes ahí</li>
+      <li>Documenta problemas</li>
+    </ul>
+    <p><em>Semana 2: Geometrización</em></p>
+    <ul>
+      <li>Coloca un símbolo de geometría sagrada</li>
+      <li>Añade proporción áurea de alguna forma</li>
+      <li>Crea un centro focal</li>
+      <li>Observa cambios</li>
+    </ul>
+    <p><em>Semana 3: Sonorización</em></p>
+    <ul>
+      <li>Introduce frecuencias específicas</li>
+      <li>Prueba diferentes horarios</li>
+      <li>Experimenta con volumen</li>
+      <li>Registra efectos</li>
+    </ul>
+    <p><em>Semana 4: Naturalización</em></p>
+    <ul>
+      <li>Añade mínimo 3 plantas</li>
+      <li>Introduce agua de alguna forma</li>
+      <li>Mejora la luz natural</li>
+      <li>Siente la transformación</li>
+    </ul>
+    <h3>2. Uso Consciente de Cristales y Elementos</h3>
+    <p><strong>Protocolo de Activación Cristalina</strong></p>
+    <p><em>Preparación:</em></p>
+    <ul>
+      <li>Limpia cristales en agua de luna</li>
+      <li>Programa con intención específica</li>
+      <li>Coloca en puntos geométricos clave</li>
+      <li>Activa con sonido o reiki</li>
+    </ul>
+    <p><strong>Red Básica del Aula:</strong></p>
+    <ul>
+      <li><strong>Norte:</strong> Turmalina negra (protección)</li>
+      <li><strong>Sur:</strong> Citrino (manifestación)</li>
+      <li><strong>Este:</strong> Cuarzo rosa (amor)</li>
+      <li><strong>Oeste:</strong> Amatista (intuición)</li>
+      <li><strong>Centro:</strong> Cuarzo maestro (amplificación)</li>
+    </ul>
+    <p><strong>Mantenimiento:</strong></p>
+    <ul>
+      <li>Limpieza semanal energética</li>
+      <li>Recarga lunar mensual</li>
+      <li>Reprogramación por temporada</li>
+      <li>Rotación anual</li>
+    </ul>
+    <h3>3. Protocolos de Coherencia Grupal</h3>
+    <p><strong>La Espiral de Sincronización</strong></p>
+    <p><em>Inicio (3 minutos):</em></p>
+    <ul>
+      <li>Todos de pie en círculo</li>
+      <li>Manos al corazón</li>
+      <li>Respiración unificada (4-4-4-4)</li>
+      <li>Visualización de luz conectando corazones</li>
+    </ul>
+    <p><em>Desarrollo (5 minutos):</em></p>
+    <ul>
+      <li>Movimiento en espiral lento</li>
+      <li>Mantener contacto visual suave</li>
+      <li>Permitir sonidos espontáneos</li>
+      <li>Sentir el campo unificándose</li>
+    </ul>
+    <p><em>Cierre (2 minutos):</em></p>
+    <ul>
+      <li>Parar en quietud</li>
+      <li>Sentir el campo coherente</li>
+      <li>Anclar con intención grupal</li>
+      <li>Sellar con gratitud</li>
+    </ul>
+    <p><strong>Resultados medibles:</strong></p>
+    <ul>
+      <li>Coherencia cardíaca grupal &gt;0.5</li>
+      <li>Reducción de conflictos 73%</li>
+      <li>Aumento de creatividad 45%</li>
+      <li>Experiencias telepáticas reportadas</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>Innovación Destacada: Aulas Holográficas de Singapur</h2>
+    <h3>Case Study: Singapore Quantum Learning Center</h3>
+    <p>“No enseñamos sobre historia. Llevamos a los estudiantes A la historia. No hablamos de células. Los estudiantes VIAJAN dentro de ellas. La experiencia directa es el único maestro real.” — Dr. Lee Kwan, Director</p>
+    <h3>Tecnología Implementada</h3>
+    <p><strong>PROYECCIÓN HOLOGRÁFICA 360°</strong></p>
+    <ul>
+      <li>Resolución 8K por ojo</li>
+      <li>Respuesta táctil completa</li>
+      <li>Olores y temperatura simulados</li>
+      <li>Interacción multi-usuario</li>
+    </ul>
+    <p><strong>EXPERIENCIAS DISPONIBLES:</strong></p>
+    <ul>
+      <li>Viaje al interior del átomo</li>
+      <li>Civilizaciones antiguas en vivo</li>
+      <li>Ecosistemas completos inmersivos</li>
+      <li>Dimensiones matemáticas visualizadas</li>
+      <li>Viajes por el sistema solar</li>
+      <li>Interior del cuerpo humano</li>
+      <li>Simulaciones cuánticas</li>
+      <li>Momentos históricos cruciales</li>
+    </ul>
+    <h3>Protocolo de Uso</h3>
+    <p><em>Pre-Inmersión (10 min):</em></p>
+    <ul>
+      <li>Meditación de preparación</li>
+      <li>Establecimiento de intención</li>
+      <li>Activación de curiosidad</li>
+      <li>Preguntas guía</li>
+    </ul>
+    <p><em>Inmersión (20-30 min máximo):</em></p>
+    <ul>
+      <li>Experiencia completa</li>
+      <li>Interacción libre</li>
+      <li>Descubrimiento guiado</li>
+      <li>Documentación en vivo</li>
+    </ul>
+    <p><em>Post-Inmersión (15 min):</em></p>
+    <ul>
+      <li>Círculo de integración</li>
+      <li>Compartir insights</li>
+      <li>Conectar con realidad</li>
+      <li>Aplicación práctica</li>
+    </ul>
+    <h3>Resultados Documentados (3 años):</h3>
+    <ul>
+      <li><strong>Retención de información:</strong> 94% vs 23% tradicional</li>
+      <li><strong>Comprensión profunda:</strong> 87% vs 31% tradicional</li>
+      <li><strong>Pasión por la materia:</strong> 91% vs 42% tradicional</li>
+      <li><strong>Aplicación práctica:</strong> 78% vs 12% tradicional</li>
+      <li><strong>Experiencias místicas:</strong> 34% reportan “despertar”</li>
+    </ul>
+    <h3>Testimonios Estudiantes:</h3>
+    <p>“Cuando vi el ADN desde adentro, no lo aprendí… lo CONOCÍ. Ahora es parte de mí.”</p>
+    <p>“Estar en la Roma antigua cambió mi comprensión de la historia. Ya no son fechas, son experiencias vivas.”</p>
+    <p>“Las matemáticas dejaron de ser números cuando caminé por una función cuadrática en 3D.”</p>
+    <h3>Desafíos y Soluciones:</h3>
+    <p><strong>Desafío:</strong> Adicción a la simulación <strong>Solución:</strong> Máximo 1 hora semanal, balance con naturaleza</p>
+    <p><strong>Desafío:</strong> Confusión realidad/simulación <strong>Solución:</strong> Protocolos claros de entrada/salida</p>
+    <p><strong>Desafío:</strong> Costo inicial alto <strong>Solución:</strong> Compartir entre 5 escuelas</p>
+    <div class="section-divider"></div>
+    <h2>Meditación de Activación del Campo</h2>
+    <p><em>Para realizar antes de entrar al aula cuántica:</em></p>
+    <p>“Este espacio es sagrado. Cada geometría es un portal. Cada sonido es medicina. Cada elemento es maestro. Entro con reverencia. Activo mi coherencia. Me uno al campo. Permito el milagro del aprendizaje. La sabiduría está en el espacio. El conocimiento en el campo. La transformación en la presencia. El despertar en el ahora. Soy estudiante y maestro. Soy el que aprende y el aprendizaje. Soy el campo consciente. Que este espacio despierte lo mejor en mí. Que yo despierte lo mejor en este espacio. Que juntos creemos el futuro de la educación. Así es. Así sea. Así será.”</p>
+    <div class="section-divider"></div>
+    <h2>Advertencia Necesaria</h2>
+    <h3>Los Peligros del Aula Cuántica Mal Aplicada</h3>
+    <h3>COMERCIALIZACIÓN SIN CONSCIENCIA</h3>
+    <ul>
+      <li>Tecnología sin propósito elevado</li>
+      <li>Geometría como decoración</li>
+      <li>Frecuencias sin comprensión</li>
+      <li>Cristales como moda</li>
+    </ul>
+    <p><strong>Resultado:</strong> Campos caóticos que confunden más que clarifican</p>
+    <h3>FACILITADORES NO PREPARADOS</h3>
+    <ul>
+      <li>Sin coherencia personal</li>
+      <li>Sin entrenamiento energético</li>
+      <li>Sin comprensión cuántica</li>
+      <li>Sin práctica espiritual</li>
+    </ul>
+    <p><strong>Resultado:</strong> Amplificación de neurosis del facilitador</p>
+    <h3>EXCESO DE ESTÍMULO</h3>
+    <ul>
+      <li>Demasiadas frecuencias simultáneas</li>
+      <li>Sobre-estimulación tecnológica</li>
+      <li>Geometrías contradictorias</li>
+      <li>Campos en conflicto</li>
+    </ul>
+    <p><strong>Resultado:</strong> Sobrecarga sensorial y <em>shut down</em></p>
+    <h3>EXPECTATIVAS MÁGICAS</h3>
+    <ul>
+      <li>Creer que el espacio hace todo</li>
+      <li>Ignorar el trabajo interior</li>
+      <li>Buscar resultados instantáneos</li>
+      <li>Negar la sombra</li>
+    </ul>
+    <p><strong>Resultado:</strong> Desilusión y rechazo del paradigma</p>
+    <div class="section-divider"></div>
+    <h2>Reflexión Cuántica Final</h2>
+    <p>El aula cuántica no es un lugar. Es un estado de consciencia materializado en el espacio.</p>
+    <p>Cada elemento - desde la geometría hasta el sonido, desde los cristales hasta la tecnología - es una nota en la sinfonía del despertar. Cuando todos están afinados y en armonía, el espacio mismo se convierte en el maestro.</p>
+    <p>No necesitas millones para crear un aula cuántica. Necesitas consciencia, intención y comprensión de los principios. Un simple círculo de cojines con una planta y una frecuencia de 528 Hz puede ser más poderoso que un aula holográfica sin alma.</p>
+    <p><strong>El secreto:</strong> El campo responde a la coherencia del corazón más que a la sofisticación de la tecnología.</p>
+    <p><strong>La clave:</strong> El facilitador ES el aula más importante.</p>
+    <p><strong>La verdad:</strong> Cuando el espacio y la consciencia se encuentran, el aprendizaje se vuelve inevitable, gozoso y transformador.</p>
+  </main>
+
+  <nav class="navigation reveal" aria-label="Navegaci&oacute;n entre nodos">
+    <div class="navigation-row">
+      <a class="nav-link" href="nodo_02.html">&larr; Nodo anterior</a>
+      <a class="nav-link" href="index.html">Portal del Libro</a>
+      <a class="nav-link" href="nodo_04.html">Siguiente nodo &rarr;</a>
+      <a class="nav-link" href="../index.html">Volver a Trinity Origen</a>
+    </div>
+  </nav>
+
+  <footer class="footer reveal">
+    <div class="footer-symbol">&#9672;</div>
+    <p>Trinity Origen &middot; Libro VIII &middot; Educaci&oacute;n Cu&aacute;ntica</p>
+    <p>"No es m&iacute;o vino a trav&eacute;s de m&iacute;."</p>
+  </footer>
+
+</div>
+<script>
+(function(){var els=[].slice.call(document.querySelectorAll('.reveal'));function showAll(){els.forEach(function(e){e.classList.add('visible');});}if(!('IntersectionObserver' in window)){showAll();return;}var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}});},{threshold:0,rootMargin:'0px 0px 12% 0px'});els.forEach(function(e){io.observe(e);});setTimeout(showAll,1500);window.addEventListener('load',function(){setTimeout(showAll,300);});})();
+</script>
 </body>
 </html>
