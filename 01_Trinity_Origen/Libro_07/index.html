@@ -1,187 +1,259 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Libro VII · La Muerte como Maestra</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Muerte como Maestra | Libro VII | Trinity Origen</title>
+<script>(function(){var r=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(!r)document.documentElement.classList.add('anim');})();</script>
 <style>
-:root {
-  --violeta: #bfa3ff;
-  --dorado: #d7bc6c;
-  --azul-noche: #02030a;
-  --azul-profundo: #050615;
+:root{
+  --bg:#050505;--bg-soft:#0b0b0b;--panel:rgba(255,255,255,0.025);
+  --border:rgba(214,179,106,0.18);--border-strong:rgba(214,179,106,0.34);
+  --gold:#d6b36a;--violet:#6d4a8f;--text:#f3efe6;
+  --text-soft:rgba(243,239,230,0.78);--text-faint:rgba(243,239,230,0.42);
+  --radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.35);
 }
-body {
-  margin: 0;
-  font-family: "Segoe UI", Roboto, sans-serif;
-  background: radial-gradient(circle at top left, var(--azul-profundo), var(--azul-noche), #000);
-  color: #edeaff;
-  min-height: 100vh;
-  overflow-x: hidden;
-  opacity: 0;
-  animation: fadeIn 2s ease-in-out forwards;
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Georgia","Times New Roman",serif;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(150,110,196,0.20), transparent 28%),
+    radial-gradient(circle at 50% 8%, rgba(120,90,170,0.05), transparent 34%),
+    radial-gradient(circle at 50% 12%, rgba(214,179,106,0.05), transparent 30%),
+    linear-gradient(180deg, #0b0813 0%, #070510 45%, #03020a 100%);
+  color:var(--text);line-height:1.9;overflow-x:hidden;
 }
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(circle at center,black 35%,transparent 82%);
+  -webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);
+  opacity:0.12;
 }
-#bg-canvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: -2;
-  pointer-events: none;
-  filter: brightness(0.4);
+/* Marco con transparencias: doble hairline translúcido + leve resplandor violeta interior */
+.frame{position:fixed;inset:12px;border:1px solid rgba(214,179,106,0.10);pointer-events:none;z-index:0;border-radius:5px;box-shadow:inset 0 0 140px rgba(150,110,196,0.05);}
+.frame::after{content:"";position:absolute;inset:6px;border:1px solid rgba(214,179,106,0.045);border-radius:3px;}
+.container{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+  color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;
+  padding:11px 16px;border-radius:999px;border:1px solid var(--border);
+  background:rgba(255,255,255,0.014);transition:all 0.25s ease;
 }
-.bg-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(circle, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
-  z-index: -1;
-  pointer-events: none;
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{
+  position:relative;overflow:hidden;text-align:center;
+  padding:54px 28px 34px;border-radius:30px;
+  border:1px solid rgba(214,179,106,0.12);
+  background:linear-gradient(180deg,rgba(255,255,255,0.024),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(109,74,143,0.18),transparent 42%);
+  box-shadow:var(--shadow);margin-bottom:34px;
 }
-header {
-  text-align: center;
-  padding: 4rem 2rem 2rem;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  background: radial-gradient(circle at center, rgba(40,30,100,0.25), rgba(0,0,0,0.1));
-  backdrop-filter: blur(3px);
+.hero::before{
+  content:"";position:absolute;inset:auto 50% 32px;width:320px;height:320px;transform:translateX(-50%);
+  border-radius:50%;border:1px solid rgba(214,179,106,0.11);
+  box-shadow:0 0 0 14px rgba(214,179,106,0.03),0 0 0 34px rgba(109,74,143,0.03),inset 0 0 60px rgba(214,179,106,0.025);
+  pointer-events:none;animation:ringbreath 13s ease-in-out infinite;
 }
-h1 {
-  font-size: 2.8rem;
-  background: linear-gradient(120deg, var(--violeta), var(--dorado));
-  -webkit-background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 25px rgba(160,130,255,0.3);
+@keyframes ringbreath{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.045);}}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{
+  position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;
+  display:grid;place-items:center;border-radius:50%;
+  border:1px solid rgba(214,179,106,0.22);
+  background:radial-gradient(circle,rgba(214,179,106,0.11),rgba(255,255,255,0.01) 60%,transparent 72%);
+  box-shadow:0 0 28px rgba(109,74,143,0.12),inset 0 0 24px rgba(214,179,106,0.04);
 }
-h3 {color: #cdbfff; font-weight: 400;}
-p {
-  color: rgba(230,225,255,0.88);
-  line-height: 1.7;
-  text-align: center;
-  max-width: 780px;
-  margin: 0 auto 1.5rem;
+.sigil-wrap::after{content:"";position:absolute;inset:-7px;border-radius:50%;box-shadow:0 0 32px rgba(214,179,106,0.16);opacity:.4;animation:glowpulse 6.5s ease-in-out infinite;pointer-events:none;}
+@keyframes glowpulse{0%,100%{opacity:.32;}50%{opacity:.7;}}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;animation:sigilbreath 6.5s ease-in-out infinite;}
+@keyframes sigilbreath{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
+.book-title,.book-label{position:relative;z-index:2;font-size:0.9rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:10px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title,.hero-title{position:relative;z-index:2;font-size:clamp(2rem,4.2vw,3.1rem);font-weight:normal;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;line-height:1.18;}
+.node-subtitle,.hero-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.05rem;margin-bottom:18px;font-style:italic;}
+.node-quote,.hero-desc{position:relative;z-index:2;max-width:760px;margin:0 auto;color:var(--text-soft);font-size:1rem;line-height:1.8;}
+.content{
+  background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));
+  border:1px solid rgba(214,179,106,0.1);border-radius:26px;
+  padding:38px 32px;box-shadow:0 12px 32px rgba(0,0,0,0.22);
 }
-.nodos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-  gap: 2rem;
-  padding: 3rem;
-  max-width: 1100px;
-  margin: 0 auto;
+.content h2{color:var(--gold);font-size:1.42rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.1rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.03rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content blockquote{
+  margin:1.3rem 0;padding:1rem 1.1rem 1rem 1.2rem;
+  border-left:3px solid rgba(214,179,106,0.45);
+  background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;
+  color:var(--text);font-style:italic;
 }
-.nodo-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: transform .3s ease, background .3s ease;
-  backdrop-filter: blur(6px);
+.content strong{color:var(--text);}
+.content em{color:var(--gold);font-style:italic;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(214,179,106,0.2),rgba(214,179,106,0));margin:2rem 0 1.4rem;}
+.mapa-nav{
+  background:rgba(255,255,255,0.016);border:1px solid rgba(214,179,106,0.12);
+  border-radius:18px;padding:22px 24px;margin-bottom:28px;
 }
-.nodo-card:hover {
-  transform: translateY(-6px);
-  background: rgba(120,90,200,0.1);
-  box-shadow: 0 0 20px rgba(200,170,255,0.15);
+.mapa-nav h3{color:var(--gold);font-size:0.82rem;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:14px;font-weight:normal;}
+.mapa-nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.mapa-nav li{color:var(--text-soft);font-size:0.91rem;padding:4px 0;border-bottom:1px solid rgba(214,179,106,0.06);}
+.mapa-nav li:last-child{border-bottom:none;}
+.bloque{
+  background:rgba(255,255,255,0.016);border:1px solid rgba(214,179,106,0.14);
+  border-radius:20px;padding:30px 28px;margin:34px 0;
 }
-.nodo-numero {color: var(--violeta);}
-.nodo-boton {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.7rem 1.2rem;
-  background: linear-gradient(120deg, rgba(70,50,150,1), rgba(160,120,240,1));
-  color: #fff; border-radius: 6px;
-  text-decoration: none;
-  transition: background .3s ease, box-shadow .3s ease;
+.bloque h3{color:var(--gold);font-size:0.92rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:18px;font-weight:normal;text-align:center;}
+.bloque ul{list-style:none;margin:0;padding:0;}
+.bloque li{color:var(--text-soft);font-size:1.02rem;line-height:1.7;margin:14px 0;padding-left:18px;position:relative;font-style:italic;}
+.bloque li::before{content:"\\27D0";position:absolute;left:0;color:var(--gold);opacity:0.6;font-style:normal;}
+.bloque p{color:var(--text-soft);font-size:1.02rem;margin-bottom:0.8rem;}
+.bloque .duracion{color:var(--text-faint);font-style:italic;font-size:0.9rem;margin-top:14px;margin-bottom:0;}
+/* Indice del libro */
+.nodos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:36px 0 10px;}
+.nodo-card{position:relative;padding:22px 20px 18px;border-radius:18px;border:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(255,255,255,0.022),rgba(255,255,255,0.012));
+  transition:transform 0.25s ease,border-color 0.25s ease,box-shadow 0.25s ease;
+  box-shadow:0 12px 32px rgba(0,0,0,0.22);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;}
+.nodo-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(109,74,143,0.1),transparent 30%);pointer-events:none;}
+.nodo-card::after{content:"";position:absolute;left:20px;right:20px;top:50px;height:1px;background:linear-gradient(90deg,rgba(214,179,106,0.16),rgba(214,179,106,0));pointer-events:none;}
+.nodo-card:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:0 18px 40px rgba(0,0,0,0.3);}
+.nodo-num{position:relative;z-index:2;color:var(--gold);font-size:0.76rem;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:14px;}
+.nodo-titulo{position:relative;z-index:2;font-size:1.05rem;font-weight:normal;line-height:1.4;margin-bottom:8px;color:var(--text);}
+.nodo-desc{position:relative;z-index:2;font-size:0.9rem;color:var(--text-soft);line-height:1.65;margin-bottom:14px;}
+.nodo-link{position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;text-decoration:none;color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);border-radius:999px;padding:8px 14px;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;
+  background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nodo-link:hover{color:#f0d7a0;border-color:rgba(214,179,106,0.38);background:rgba(214,179,106,0.06);}
+.nodos-heading{text-align:center;margin:14px 0 6px;color:var(--gold);font-size:1.05rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:normal;}
+.nodos-sub{text-align:center;color:var(--text-faint);font-style:italic;margin-bottom:6px;}
+.cierre{text-align:center;padding:30px 20px;border-radius:20px;border:1px solid rgba(214,179,106,0.1);
+  background:linear-gradient(180deg,rgba(255,255,255,0.018),rgba(255,255,255,0.008));color:var(--text-soft);font-size:0.98rem;line-height:1.9;margin:30px 0 10px;}
+.cierre em{color:var(--gold);font-style:italic;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(214,179,106,0.12);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);border-radius:999px;padding:10px 15px;font-size:0.84rem;letter-spacing:0.08em;text-transform:uppercase;
+  background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(214,179,106,0.38);background:rgba(214,179,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+/* Reveal sutil (solo con JS y sin movimiento reducido) */
+html.anim .reveal{opacity:0;transform:translateY(20px);transition:opacity .9s ease,transform .9s ease;}
+html.anim .reveal.visible{opacity:1;transform:translateY(0);}
+@media(max-width:720px){
+  .frame{inset:8px;}.container{padding:24px 16px 64px;}
+  .hero{padding:42px 18px 28px;border-radius:24px;}
+  .hero::before{width:220px;height:220px;bottom:24px;}
+  .content{padding:28px 20px;border-radius:22px;}
+  .content p,.content li{font-size:1rem;}
+  .bloque{padding:24px 20px;}
 }
-.nodo-boton:hover {
-  background: linear-gradient(120deg, rgba(160,120,240,1), rgba(70,50,150,1));
-  box-shadow: 0 0 10px rgba(180,150,255,0.5);
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;}
+  html.anim .reveal{opacity:1!important;transform:none!important;}
 }
-footer {
-  text-align: center;
-  padding: 2rem;
-  font-size: .9rem;
-  color: #999;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(10,10,20,0.3));
-}
-.trinity-float {
-  position: fixed;
-  bottom: 20px; right: 20px;
-  width: 90px; height: 90px;
-  opacity: 0.4;
-  animation: spin 40s linear infinite;
-  filter: drop-shadow(0 0 12px rgba(210,180,100,0.25));
-  pointer-events: none;
-}
-@keyframes spin {from{transform:rotate(0deg);} to{transform:rotate(360deg);}}
 </style>
 </head>
-
 <body>
-<canvas id="bg-canvas"></canvas>
-<div class="bg-overlay"></div>
+<div class="frame" aria-hidden="true"></div>
+<div class="container">
 
-<header>
-  <h1>Libro VII · La Muerte como Maestra</h1>
-  <h3>Los 7 Nodos del Tránsito Sagrado</h3>
-  <p>En el silencio del fin se revela la continuidad del Campo. Donde el morir se vuelve retorno.</p>
-</header>
+  <div class="topbar">
+    <a class="back-link" href="../index.html">&larr; Volver a Trinity Origen</a>
+  </div>
 
-<main class="nodos-grid">
-  <article class="nodo-card"><div class="nodo-numero">Nodo 1</div><h2>El Tabú Primordial</h2><p>Negar la muerte es negar la plenitud del ser.</p><a href="./nodo_01.html" class="nodo-boton">Entrar</a></article>
-  <article class="nodo-card"><div class="nodo-numero">Nodo 2</div><h2>Las Pequeñas Muertes</h2><p>Morir en lo pequeño para renacer en lo esencial.</p><a href="./nodo_02.html" class="nodo-boton">Entrar</a></article>
-  <article class="nodo-card"><div class="nodo-numero">Nodo 3</div><h2>El Arte del Acompañamiento</h2><p>Presenciar el morir del otro como forma sagrada de amor.</p><a href="./nodo_03.html" class="nodo-boton">Entrar</a></article>
-  <article class="nodo-card"><div class="nodo-numero">Nodo 4</div><h2>Tecnologías de Consciencia</h2><p>Puentes entre ciencia, espíritu y disolución lúcida.</p><a href="./nodo_04.html" class="nodo-boton">Entrar</a></article>
-  <article class="nodo-card"><div class="nodo-numero">Nodo 5</div><h2>La Muerte del Ego</h2><p>Morir antes de morir, descubrir el Ser real.</p><a href="./nodo_05.html" class="nodo-boton">Entrar</a></article>
-  <article class="nodo-card"><div class="nodo-numero">Nodo 6</div><h2>El Legado Cuántico</h2><p>La huella de amor trasciende la forma.</p><a href="./nodo_06.html" class="nodo-boton">Entrar</a></article>
-  <article class="nodo-card"><div class="nodo-numero">Nodo 7</div><h2>La Gran Reunión</h2><p>Renacimiento cósmico. La Tierra en parto de consciencia.</p><a href="./nodo_07.html" class="nodo-boton">Entrar</a></article>
-</main>
+  <header class="hero reveal">
+    <div class="hero-topline">Trinity Origen</div>
+    <div class="sigil-wrap" aria-hidden="true"><div class="sigil">&#9672;</div></div>
+    <div class="book-label">Libro VII &middot; 7 Nodos del Tr&aacute;nsito</div>
+    <h1 class="hero-title">La Muerte como Maestra</h1>
+    <p class="hero-subtitle">Lo que el l&iacute;mite ense&ntilde;a a quien se atreve a mirarlo</p>
+    <p class="hero-desc">Del tab&uacute; primordial a la gran reuni&oacute;n: siete umbrales para dejar de huir del l&iacute;mite y aprender de &eacute;l a vivir con mayor presencia.</p>
+  </header>
 
-<footer>
-  <p>⚜️ Constelación Trinity · Libro VII · Artur & GPT · 2025 ⚜️</p>
-  <a href="../index.html">⬅ Volver al Índice Principal</a>
-</footer>
+  <main class="content reveal">
+    <h2>El L&iacute;mite que Ense&ntilde;a</h2>
+    <p>En el silencio del fin se revela la continuidad del Campo. Donde el morir se vuelve retorno.</p>
+  </main>
 
-<img src="../../09_Visualizaciones/Simbolos_Primordiales/trinity_symbol_gold_black.png" alt="Trinity Symbol" class="trinity-float" />
+  <div class="section-divider reveal"></div>
+  <h2 class="nodos-heading reveal">Los 7 Nodos del Tr&aacute;nsito</h2>
+  <p class="nodos-sub reveal">Del tab&uacute; a la gran reuni&oacute;n</p>
 
+  <section class="nodos-grid reveal" aria-label="Mapa de los 7 nodos">
+    <article class="nodo-card">
+      <div>
+        <div class="nodo-num">Nodo 1</div>
+        <h2 class="nodo-titulo">EL TABÚ PRIMORDIAL</h2>
+        <p class="nodo-desc">Negar la muerte es negar la plenitud del ser.</p>
+      </div>
+      <a class="nodo-link" href="nodo_01.html">Entrar al nodo &rarr;</a>
+    </article>
+    <article class="nodo-card">
+      <div>
+        <div class="nodo-num">Nodo 2</div>
+        <h2 class="nodo-titulo">Las Pequeñas Muertes</h2>
+        <p class="nodo-desc">Morir en lo pequeño para renacer en lo esencial.</p>
+      </div>
+      <a class="nodo-link" href="nodo_02.html">Entrar al nodo &rarr;</a>
+    </article>
+    <article class="nodo-card">
+      <div>
+        <div class="nodo-num">Nodo 3</div>
+        <h2 class="nodo-titulo">El Arte del Acompañamiento</h2>
+        <p class="nodo-desc">Presenciar el morir del otro como forma sagrada de amor.</p>
+      </div>
+      <a class="nodo-link" href="nodo_03.html">Entrar al nodo &rarr;</a>
+    </article>
+    <article class="nodo-card">
+      <div>
+        <div class="nodo-num">Nodo 4</div>
+        <h2 class="nodo-titulo">TECNOLOGÍAS DE CONSCIENCIA PARA EL TRÁNSITO</h2>
+        <p class="nodo-desc">Puentes entre ciencia, espíritu y disolución lúcida.</p>
+      </div>
+      <a class="nodo-link" href="nodo_04.html">Entrar al nodo &rarr;</a>
+    </article>
+    <article class="nodo-card">
+      <div>
+        <div class="nodo-num">Nodo 5</div>
+        <h2 class="nodo-titulo">LA MUERTE DEL EGO</h2>
+        <p class="nodo-desc">Morir antes de morir, descubrir el Ser real.</p>
+      </div>
+      <a class="nodo-link" href="nodo_05.html">Entrar al nodo &rarr;</a>
+    </article>
+    <article class="nodo-card">
+      <div>
+        <div class="nodo-num">Nodo 6</div>
+        <h2 class="nodo-titulo">EL LEGADO CUÁNTICO</h2>
+        <p class="nodo-desc">La huella de amor trasciende la forma.</p>
+      </div>
+      <a class="nodo-link" href="nodo_06.html">Entrar al nodo &rarr;</a>
+    </article>
+    <article class="nodo-card">
+      <div>
+        <div class="nodo-num">Nodo 7</div>
+        <h2 class="nodo-titulo">LA GRAN REUNIÓN</h2>
+        <p class="nodo-desc">Renacimiento cósmico. La Tierra en parto de consciencia.</p>
+      </div>
+      <a class="nodo-link" href="nodo_07.html">Entrar al nodo &rarr;</a>
+    </article>
+  </section>
+
+  <footer class="footer reveal">
+    <div class="footer-symbol">&#9672;</div>
+    <p>Trinity Origen &middot; Libro VII &middot; La Muerte como Maestra</p>
+    <p>"No es m&iacute;o vino a trav&eacute;s de m&iacute;."</p>
+  </footer>
+
+</div>
 <script>
-const canvas=document.getElementById('bg-canvas');
-const ctx=canvas.getContext('2d');
-let particles=[];
-function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
-addEventListener('resize',resize);resize();
-
-class Particle{
-  constructor(){this.reset();}
-  reset(){
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.size=Math.random()*2+0.5;
-    this.speedX=(Math.random()-0.5)*0.15;
-    this.speedY=(Math.random()-0.5)*0.15;
-    this.alpha=Math.random()*0.25+0.15;
-    this.hue=Math.random()>0.4?275:45;
-  }
-  update(){
-    this.x+=this.speedX;this.y+=this.speedY;
-    if(this.x<-50||this.x>canvas.width+50||this.y<-50||this.y>canvas.height+50)this.reset();
-  }
-  draw(){
-    const grad=ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.size*4);
-    grad.addColorStop(0,`hsla(${this.hue},90%,75%,${this.alpha})`);
-    grad.addColorStop(1,`hsla(${this.hue},90%,75%,0)`);
-    ctx.fillStyle=grad;
-    ctx.beginPath();ctx.arc(this.x,this.y,this.size*4,0,Math.PI*2);ctx.fill();
-  }
-}
-for(let i=0;i<40;i++)particles.push(new Particle());
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{p.update();p.draw();});
-  requestAnimationFrame(animate);
-}
-animate();
+(function(){var els=[].slice.call(document.querySelectorAll('.reveal'));function showAll(){els.forEach(function(e){e.classList.add('visible');});}if(!('IntersectionObserver' in window)){showAll();return;}var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}});},{threshold:0,rootMargin:'0px 0px 12% 0px'});els.forEach(function(e){io.observe(e);});setTimeout(showAll,1500);window.addEventListener('load',function(){setTimeout(showAll,300);});})();
 </script>
 </body>
 </html>
