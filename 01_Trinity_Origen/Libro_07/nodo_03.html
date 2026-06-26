@@ -1,1112 +1,496 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 3: El Arte del Acompañamiento | La Muerte como Maestra</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-    body {
-        font-family: 'Georgia', serif;
-        background: linear-gradient(135deg, #0a1128 0%, #1a2332 50%, #0a1128 100%);
-        color: #d4e7f5;
-        line-height: 1.8;
-        overflow-x: hidden;
-    }
-
-    /* Canvas de velas flotantes */
-    #candleCanvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    .container {
-        position: relative;
-        z-index: 2;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 40px 20px;
-    }
-
-    header {
-        text-align: center;
-        padding: 60px 20px;
-        background: rgba(26, 35, 50, 0.7);
-        border: 2px solid #64b5f6;
-        border-radius: 20px;
-        margin-bottom: 60px;
-        box-shadow: 0 8px 32px rgba(100, 181, 246, 0.3);
-        backdrop-filter: blur(10px);
-    }
-
-    h1 {
-        font-size: 3.5em;
-        color: #64b5f6;
-        margin-bottom: 20px;
-        text-shadow: 0 0 20px rgba(100, 181, 246, 0.5);
-        letter-spacing: 2px;
-    }
-
-    .subtitle {
-        font-size: 1.5em;
-        color: #90caf9;
-        font-style: italic;
-        margin-bottom: 30px;
-    }
-
-    .quote {
-        font-size: 1.2em;
-        color: #d4e7f5;
-        font-style: italic;
-        line-height: 1.6;
-        padding: 30px;
-        background: rgba(0, 0, 0, 0.4);
-        border-left: 4px solid #64b5f6;
-        border-radius: 10px;
-        margin: 20px 0;
-    }
-
-    section {
-        background: rgba(10, 17, 40, 0.6);
-        backdrop-filter: blur(10px);
-        padding: 40px;
-        margin: 40px 0;
-        border-radius: 15px;
-        border: 1px solid rgba(100, 181, 246, 0.3);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    h2 {
-        font-size: 2.5em;
-        color: #64b5f6;
-        margin-bottom: 30px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    h3 {
-        font-size: 1.8em;
-        color: #90caf9;
-        margin: 30px 0 20px 0;
-    }
-
-    h4 {
-        font-size: 1.4em;
-        color: #81d4fa;
-        margin: 20px 0 15px 0;
-    }
-
-    p {
-        margin-bottom: 20px;
-        font-size: 1.1em;
-    }
-
-    /* Cards de presencia */
-    .presence-card {
-        background: linear-gradient(135deg, rgba(100, 181, 246, 0.15), rgba(30, 136, 229, 0.15));
-        padding: 30px;
-        margin: 30px 0;
-        border-radius: 15px;
-        border: 2px solid #1e88e5;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .presence-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(100, 181, 246, 0.4);
-    }
-
-    /* Comparación */
-    .comparison-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin: 30px 0;
-    }
-
-    .comparison-box {
-        padding: 25px;
-        border-radius: 12px;
-        border: 2px solid;
-    }
-
-    .comparison-box.wrong {
-        background: rgba(244, 67, 54, 0.1);
-        border-color: #f44336;
-    }
-
-    .comparison-box.right {
-        background: rgba(76, 175, 80, 0.1);
-        border-color: #4caf50;
-    }
-
-    .comparison-title {
-        font-size: 1.5em;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-
-    /* Enseñanzas del umbral */
-    .teaching-card {
-        background: rgba(100, 181, 246, 0.1);
-        padding: 25px;
-        margin: 20px 0;
-        border-radius: 12px;
-        border-left: 5px solid #64b5f6;
-    }
-
-    .teaching-title {
-        font-size: 1.4em;
-        color: #64b5f6;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-
-    /* Campos morfogenéticos */
-    .field-card {
-        background: rgba(156, 39, 176, 0.15);
-        padding: 25px;
-        margin: 20px 0;
-        border-radius: 12px;
-        border: 2px solid #9c27b0;
-    }
-
-    .field-title {
-        font-size: 1.4em;
-        color: #ba68c8;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-
-    /* Técnicas de acompañamiento */
-    .technique-box {
-        background: rgba(100, 181, 246, 0.1);
-        padding: 25px;
-        margin: 20px 0;
-        border-radius: 12px;
-        border-left: 4px solid #64b5f6;
-        transition: all 0.3s ease;
-    }
-
-    .technique-box:hover {
-        background: rgba(100, 181, 246, 0.2);
-        transform: translateX(10px);
-    }
-
-    .technique-name {
-        font-size: 1.5em;
-        color: #64b5f6;
-        margin-bottom: 15px;
-        font-weight: bold;
-    }
-
-    /* Momentos críticos */
-    .critical-moment {
-        background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(255, 193, 7, 0.15));
-        padding: 30px;
-        margin: 25px 0;
-        border-radius: 12px;
-        border: 2px solid #ff9800;
-    }
-
-    .critical-title {
-        font-size: 1.6em;
-        color: #ffb74d;
-        margin-bottom: 15px;
-        font-weight: bold;
-    }
-
-    /* Protocolo post-mortem */
-    .protocol-section {
-        background: rgba(121, 134, 203, 0.15);
-        padding: 30px;
-        margin: 30px 0;
-        border-radius: 15px;
-        border: 2px solid #7986cb;
-    }
-
-    /* Testimonios */
-    .testimonial {
-        background: linear-gradient(135deg, rgba(76, 187, 23, 0.1), rgba(56, 142, 60, 0.1));
-        padding: 30px;
-        margin: 30px 0;
-        border-radius: 15px;
-        border-left: 5px solid #4caf50;
-        font-style: italic;
-    }
-
-    .testimonial-author {
-        text-align: right;
-        color: #81c784;
-        font-weight: bold;
-        margin-top: 15px;
-    }
-
-    /* Lista de prácticas */
-    .practice-list {
-        list-style: none;
-        counter-reset: practice-counter;
-    }
-
-    .practice-list li {
-        counter-increment: practice-counter;
-        margin: 15px 0;
-        padding-left: 40px;
-        position: relative;
-    }
-
-    .practice-list li::before {
-        content: counter(practice-counter);
-        position: absolute;
-        left: 0;
-        top: 0;
-        background: #64b5f6;
-        color: #0a1128;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-    }
-
-    /* Transformación del acompañante */
-    .transformation-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-        margin: 30px 0;
-    }
-
-    .transformation-box {
-        background: rgba(100, 181, 246, 0.1);
-        padding: 25px;
-        border-radius: 12px;
-        border: 2px solid #64b5f6;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    .transformation-box:hover {
-        background: rgba(100, 181, 246, 0.2);
-        transform: scale(1.05);
-    }
-
-    .transformation-number {
-        font-size: 2.5em;
-        color: #64b5f6;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    /* Meditación */
-    .meditation {
-        background: linear-gradient(135deg, rgba(100, 181, 246, 0.2), rgba(30, 136, 229, 0.2));
-        padding: 40px;
-        margin: 40px 0;
-        border-radius: 20px;
-        border: 3px solid #64b5f6;
-        text-align: center;
-    }
-
-    .meditation-title {
-        font-size: 2.5em;
-        color: #64b5f6;
-        margin-bottom: 30px;
-    }
-
-    .meditation-text {
-        font-size: 1.3em;
-        line-height: 2;
-        color: #d4e7f5;
-        font-style: italic;
-    }
-
-    /* Conexiones Trinity */
-    .trinity-connections {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-        margin: 40px 0;
-    }
-
-    .trinity-card {
-        background: rgba(30, 136, 229, 0.15);
-        padding: 25px;
-        border-radius: 12px;
-        border: 2px solid #1e88e5;
-        transition: all 0.3s ease;
-    }
-
-    .trinity-card:hover {
-        background: rgba(30, 136, 229, 0.25);
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(30, 136, 229, 0.3);
-    }
-
-    .trinity-icon {
-        font-size: 2em;
-        margin-bottom: 10px;
-    }
-
-    .trinity-title {
-        font-size: 1.3em;
-        color: #64b5f6;
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-
-    /* Preguntas */
-    .questions {
-        background: rgba(100, 181, 246, 0.1);
-        padding: 35px;
-        margin: 40px 0;
-        border-radius: 15px;
-        border: 2px solid #64b5f6;
-    }
-
-    .questions ol {
-        counter-reset: question-counter;
-        list-style: none;
-    }
-
-    .questions li {
-        counter-increment: question-counter;
-        margin: 20px 0;
-        padding-left: 40px;
-        position: relative;
-        font-size: 1.2em;
-    }
-
-    .questions li::before {
-        content: counter(question-counter);
-        position: absolute;
-        left: 0;
-        top: 0;
-        background: #64b5f6;
-        color: #0a1128;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-    }
-
-    /* Navegación */
-    .navigation {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 60px 0 40px 0;
-        padding: 30px;
-        background: rgba(30, 136, 229, 0.2);
-        border-radius: 15px;
-        border: 2px solid #64b5f6;
-    }
-
-    .nav-button {
-        padding: 15px 30px;
-        background: #64b5f6;
-        color: #0a1128;
-        text-decoration: none;
-        border-radius: 10px;
-        font-weight: bold;
-        font-size: 1.1em;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .nav-button:hover {
-        background: #90caf9;
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(100, 181, 246, 0.4);
-    }
-
-    .nav-center {
-        text-align: center;
-        color: #64b5f6;
-        font-size: 1.2em;
-    }
-
-    /* Animaciones */
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    section {
-        animation: fadeIn 0.8s ease-out;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        h1 {
-            font-size: 2.5em;
-        }
-
-        h2 {
-            font-size: 2em;
-        }
-
-        .comparison-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .navigation {
-            flex-direction: column;
-            gap: 20px;
-        }
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nodo 3 &ndash; El Arte del Acompañamiento | La Muerte como Maestra | Trinity Origen</title>
+<script>(function(){var r=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(!r)document.documentElement.classList.add('anim');})();</script>
+<style>
+:root{
+  --bg:#050505;--bg-soft:#0b0b0b;--panel:rgba(255,255,255,0.025);
+  --border:rgba(214,179,106,0.18);--border-strong:rgba(214,179,106,0.34);
+  --gold:#d6b36a;--violet:#6d4a8f;--text:#f3efe6;
+  --text-soft:rgba(243,239,230,0.78);--text-faint:rgba(243,239,230,0.42);
+  --radius:22px;--shadow:0 18px 50px rgba(0,0,0,0.35);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Georgia","Times New Roman",serif;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(150,110,196,0.20), transparent 28%),
+    radial-gradient(circle at 50% 8%, rgba(120,90,170,0.05), transparent 34%),
+    radial-gradient(circle at 50% 12%, rgba(214,179,106,0.05), transparent 30%),
+    linear-gradient(180deg, #0b0813 0%, #070510 45%, #03020a 100%);
+  color:var(--text);line-height:1.9;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(circle at center,black 35%,transparent 82%);
+  -webkit-mask-image:radial-gradient(circle at center,black 35%,transparent 82%);
+  opacity:0.12;
+}
+/* Marco con transparencias: doble hairline translúcido + leve resplandor violeta interior */
+.frame{position:fixed;inset:12px;border:1px solid rgba(214,179,106,0.10);pointer-events:none;z-index:0;border-radius:5px;box-shadow:inset 0 0 140px rgba(150,110,196,0.05);}
+.frame::after{content:"";position:absolute;inset:6px;border:1px solid rgba(214,179,106,0.045);border-radius:3px;}
+.container{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:34px 20px 84px;}
+.topbar{display:flex;justify-content:flex-start;margin-bottom:28px;}
+.back-link{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+  color:var(--gold);font-size:0.92rem;letter-spacing:0.04em;
+  padding:11px 16px;border-radius:999px;border:1px solid var(--border);
+  background:rgba(255,255,255,0.014);transition:all 0.25s ease;
+}
+.back-link:hover{background:rgba(255,255,255,0.03);border-color:var(--border-strong);transform:translateX(-2px);}
+.hero{
+  position:relative;overflow:hidden;text-align:center;
+  padding:54px 28px 34px;border-radius:30px;
+  border:1px solid rgba(214,179,106,0.12);
+  background:linear-gradient(180deg,rgba(255,255,255,0.024),rgba(255,255,255,0.01)),radial-gradient(circle at 50% 0%,rgba(109,74,143,0.18),transparent 42%);
+  box-shadow:var(--shadow);margin-bottom:34px;
+}
+.hero::before{
+  content:"";position:absolute;inset:auto 50% 32px;width:320px;height:320px;transform:translateX(-50%);
+  border-radius:50%;border:1px solid rgba(214,179,106,0.11);
+  box-shadow:0 0 0 14px rgba(214,179,106,0.03),0 0 0 34px rgba(109,74,143,0.03),inset 0 0 60px rgba(214,179,106,0.025);
+  pointer-events:none;animation:ringbreath 13s ease-in-out infinite;
+}
+@keyframes ringbreath{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.045);}}
+.hero-topline{position:relative;z-index:2;font-size:0.78rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.sigil-wrap{
+  position:relative;z-index:2;width:96px;height:96px;margin:0 auto 18px;
+  display:grid;place-items:center;border-radius:50%;
+  border:1px solid rgba(214,179,106,0.22);
+  background:radial-gradient(circle,rgba(214,179,106,0.11),rgba(255,255,255,0.01) 60%,transparent 72%);
+  box-shadow:0 0 28px rgba(109,74,143,0.12),inset 0 0 24px rgba(214,179,106,0.04);
+}
+.sigil-wrap::after{content:"";position:absolute;inset:-7px;border-radius:50%;box-shadow:0 0 32px rgba(214,179,106,0.16);opacity:.4;animation:glowpulse 6.5s ease-in-out infinite;pointer-events:none;}
+@keyframes glowpulse{0%,100%{opacity:.32;}50%{opacity:.7;}}
+.sigil{font-size:1.9rem;color:var(--gold);line-height:1;animation:sigilbreath 6.5s ease-in-out infinite;}
+@keyframes sigilbreath{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
+.book-title,.book-label{position:relative;z-index:2;font-size:0.9rem;text-transform:uppercase;letter-spacing:0.24em;color:var(--text-faint);margin-bottom:10px;}
+.node-kicker{position:relative;z-index:2;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--gold);margin-bottom:10px;}
+.node-title,.hero-title{position:relative;z-index:2;font-size:clamp(2rem,4.2vw,3.1rem);font-weight:normal;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;line-height:1.18;}
+.node-subtitle,.hero-subtitle{position:relative;z-index:2;color:var(--text-soft);font-size:1.05rem;margin-bottom:18px;font-style:italic;}
+.node-quote,.hero-desc{position:relative;z-index:2;max-width:760px;margin:0 auto;color:var(--text-soft);font-size:1rem;line-height:1.8;}
+.content{
+  background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.012));
+  border:1px solid rgba(214,179,106,0.1);border-radius:26px;
+  padding:38px 32px;box-shadow:0 12px 32px rgba(0,0,0,0.22);
+}
+.content h2{color:var(--gold);font-size:1.42rem;font-weight:normal;letter-spacing:0.08em;text-transform:uppercase;margin:2.2rem 0 0.9rem;line-height:1.3;}
+.content h2:first-child{margin-top:0;}
+.content h3{color:var(--text);font-size:1.1rem;font-weight:normal;margin:1.8rem 0 0.7rem;line-height:1.4;}
+.content p{color:var(--text-soft);margin-bottom:1rem;font-size:1.03rem;}
+.content .lead{color:var(--text);}
+.content ul{margin:0.4rem 0 1.2rem 1.4rem;}
+.content li{color:var(--text-soft);margin-bottom:0.45rem;padding-left:0.2rem;}
+.content blockquote{
+  margin:1.3rem 0;padding:1rem 1.1rem 1rem 1.2rem;
+  border-left:3px solid rgba(214,179,106,0.45);
+  background:rgba(255,255,255,0.018);border-radius:0 14px 14px 0;
+  color:var(--text);font-style:italic;
+}
+.content strong{color:var(--text);}
+.content em{color:var(--gold);font-style:italic;}
+.section-divider{height:1px;background:linear-gradient(90deg,rgba(214,179,106,0.2),rgba(214,179,106,0));margin:2rem 0 1.4rem;}
+.mapa-nav{
+  background:rgba(255,255,255,0.016);border:1px solid rgba(214,179,106,0.12);
+  border-radius:18px;padding:22px 24px;margin-bottom:28px;
+}
+.mapa-nav h3{color:var(--gold);font-size:0.82rem;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:14px;font-weight:normal;}
+.mapa-nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.mapa-nav li{color:var(--text-soft);font-size:0.91rem;padding:4px 0;border-bottom:1px solid rgba(214,179,106,0.06);}
+.mapa-nav li:last-child{border-bottom:none;}
+.bloque{
+  background:rgba(255,255,255,0.016);border:1px solid rgba(214,179,106,0.14);
+  border-radius:20px;padding:30px 28px;margin:34px 0;
+}
+.bloque h3{color:var(--gold);font-size:0.92rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:18px;font-weight:normal;text-align:center;}
+.bloque ul{list-style:none;margin:0;padding:0;}
+.bloque li{color:var(--text-soft);font-size:1.02rem;line-height:1.7;margin:14px 0;padding-left:18px;position:relative;font-style:italic;}
+.bloque li::before{content:"\\27D0";position:absolute;left:0;color:var(--gold);opacity:0.6;font-style:normal;}
+.bloque p{color:var(--text-soft);font-size:1.02rem;margin-bottom:0.8rem;}
+.bloque .duracion{color:var(--text-faint);font-style:italic;font-size:0.9rem;margin-top:14px;margin-bottom:0;}
+/* Indice del libro */
+.nodos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:36px 0 10px;}
+.nodo-card{position:relative;padding:22px 20px 18px;border-radius:18px;border:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(255,255,255,0.022),rgba(255,255,255,0.012));
+  transition:transform 0.25s ease,border-color 0.25s ease,box-shadow 0.25s ease;
+  box-shadow:0 12px 32px rgba(0,0,0,0.22);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;}
+.nodo-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(109,74,143,0.1),transparent 30%);pointer-events:none;}
+.nodo-card::after{content:"";position:absolute;left:20px;right:20px;top:50px;height:1px;background:linear-gradient(90deg,rgba(214,179,106,0.16),rgba(214,179,106,0));pointer-events:none;}
+.nodo-card:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:0 18px 40px rgba(0,0,0,0.3);}
+.nodo-num{position:relative;z-index:2;color:var(--gold);font-size:0.76rem;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:14px;}
+.nodo-titulo{position:relative;z-index:2;font-size:1.05rem;font-weight:normal;line-height:1.4;margin-bottom:8px;color:var(--text);}
+.nodo-desc{position:relative;z-index:2;font-size:0.9rem;color:var(--text-soft);line-height:1.65;margin-bottom:14px;}
+.nodo-link{position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;text-decoration:none;color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);border-radius:999px;padding:8px 14px;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;
+  background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nodo-link:hover{color:#f0d7a0;border-color:rgba(214,179,106,0.38);background:rgba(214,179,106,0.06);}
+.nodos-heading{text-align:center;margin:14px 0 6px;color:var(--gold);font-size:1.05rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:normal;}
+.nodos-sub{text-align:center;color:var(--text-faint);font-style:italic;margin-bottom:6px;}
+.cierre{text-align:center;padding:30px 20px;border-radius:20px;border:1px solid rgba(214,179,106,0.1);
+  background:linear-gradient(180deg,rgba(255,255,255,0.018),rgba(255,255,255,0.008));color:var(--text-soft);font-size:0.98rem;line-height:1.9;margin:30px 0 10px;}
+.cierre em{color:var(--gold);font-style:italic;}
+.navigation{margin-top:34px;padding:26px 20px 0;border-top:1px solid rgba(214,179,106,0.12);text-align:center;}
+.navigation-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.nav-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--gold);
+  border:1px solid rgba(214,179,106,0.18);border-radius:999px;padding:10px 15px;font-size:0.84rem;letter-spacing:0.08em;text-transform:uppercase;
+  background:rgba(255,255,255,0.016);transition:all 0.25s ease;}
+.nav-link:hover{color:#f0d7a0;border-color:rgba(214,179,106,0.38);background:rgba(214,179,106,0.06);}
+.footer{margin-top:28px;text-align:center;color:var(--text-faint);font-size:0.78rem;line-height:1.8;}
+.footer-symbol{font-size:1.8rem;color:var(--gold);margin-bottom:8px;}
+/* Reveal sutil (solo con JS y sin movimiento reducido) */
+html.anim .reveal{opacity:0;transform:translateY(20px);transition:opacity .9s ease,transform .9s ease;}
+html.anim .reveal.visible{opacity:1;transform:translateY(0);}
+@media(max-width:720px){
+  .frame{inset:8px;}.container{padding:24px 16px 64px;}
+  .hero{padding:42px 18px 28px;border-radius:24px;}
+  .hero::before{width:220px;height:220px;bottom:24px;}
+  .content{padding:28px 20px;border-radius:22px;}
+  .content p,.content li{font-size:1rem;}
+  .bloque{padding:24px 20px;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;}
+  html.anim .reveal{opacity:1!important;transform:none!important;}
+}
 </style>
-
-
 </head>
 <body>
-    <canvas id="candleCanvas"></canvas>
-
+<div class="frame" aria-hidden="true"></div>
 <div class="container">
-    <header>
-        <h1>🕊️ NODO 3: EL ARTE DEL ACOMPAÑAMIENTO 🕊️</h1>
-        <p class="subtitle">Ser testigo sagrado del tránsito</p>
-        <div class="quote">
-            "En el momento de la muerte, no necesitamos doctores ni sacerdotes. Necesitamos un ser humano presente, completo, sin miedo, que pueda sostener el espacio sagrado mientras el alma emprende su viaje más importante."
-        </div>
-    </header>
 
-    <section>
-        <h2>🌹 La Presencia Como Medicina Suprema</h2>
-        <p>En nuestra cultura medicalizada, hemos olvidado que la presencia humana consciente es la medicina más poderosa en el umbral de la muerte. No la presencia ansiosa que quiere "hacer algo", sino la presencia que sabe estar, respirar, sostener el misterio sin intentar resolverlo.</p>
-        
-        <p>Los que trabajan en hospicios lo saben: llega un momento donde todas las intervenciones médicas cesan. Los familiares han dicho lo que tenían que decir. Las cuentas están saldadas. Y en ese espacio liminal, lo único que queda - y lo único que realmente importa - es la calidad de presencia que podemos ofrecer.</p>
+  <div class="topbar">
+    <a class="back-link" href="index.html">&larr; Volver al Portal del Libro</a>
+  </div>
+
+  <header class="hero reveal">
+    <div class="hero-topline">Trinity Origen</div>
+    <div class="sigil-wrap" aria-hidden="true"><div class="sigil">&#9672;</div></div>
+    <div class="book-title">Libro VII &middot; La Muerte como Maestra</div>
+    <div class="node-kicker">Nodo 3 &middot; de 7</div>
+    <h1 class="node-title">El Arte del Acompañamiento</h1>
+  </header>
+
+  <div class="mapa-nav reveal">
+    <h3>Mapa de navegaci&oacute;n del nodo</h3>
+    <ul>
+      <li>NODO 3: EL ARTE DEL ACOMPAÑAMIENTO</li>
+      <li>La Presencia Como Medicina Suprema</li>
+      <li>El Moribundo Como Maestro Supremo</li>
+      <li>Campos Morfogenéticos en el Proceso de Muerte</li>
+      <li>La Muerte Como Acto Creativo Supremo</li>
+      <li>Técnicas de Acompañamiento Consciente</li>
+      <li>Momentos Críticos del Acompañamiento</li>
+      <li>Protocolos Post-Mortem Inmediatos</li>
+      <li>Testimonios de Acompañantes</li>
+      <li>El Fuego Transformador del Acompañamiento</li>
+      <li>Preparación Personal del Acompañante</li>
+      <li>El Regalo del Acompañante</li>
+      <li>Meditación: Preparación para Acompañar</li>
+      <li>Conexiones con la Constelación Trinity</li>
+      <li>Preguntas para el Alma del Acompañante</li>
+      <li>Transición al Nodo 4</li>
+    </ul>
+  </div>
+
+  <main class="content reveal">
+    <h2>NODO 3: EL ARTE DEL ACOMPAÑAMIENTO</h2>
+    <p class="lead">Ser testigo sagrado del tránsito</p>
+    <p>"En el momento de la muerte, no necesitamos doctores ni sacerdotes. Necesitamos un ser humano presente, completo, sin miedo, que pueda sostener el espacio sagrado mientras el alma emprende su viaje más importante."</p>
+    <div class="section-divider"></div>
+    <h2>La Presencia Como Medicina Suprema</h2>
+    <p>En nuestra cultura medicalizada, hemos olvidado que la presencia humana consciente es la medicina más poderosa en el umbral de la muerte. No la presencia ansiosa que quiere "hacer algo", sino la presencia que sabe estar, respirar, sostener el misterio sin intentar resolverlo.</p>
+    <p>Los que trabajan en hospicios lo saben: llega un momento donde todas las intervenciones médicas cesan. Los familiares han dicho lo que tenían que decir. Las cuentas están saldadas. Y en ese espacio liminal, lo único que queda - y lo único que realmente importa - es la calidad de presencia que podemos ofrecer.</p>
+    <h3>La Diferencia Entre Estar Presente y Estar Ahí</h3>
+    <h3>Estar ahí</h3>
+    <ul>
+      <li>• Cuerpo presente, mente en otro lado</li>
+      <li>• Mirando el teléfono</li>
+      <li>• Pensando qué decir</li>
+      <li>• Incómodo con el silencio</li>
+      <li>• Proyectando tu propio miedo</li>
+      <li>• Queriendo que "termine rápido"</li>
+    </ul>
+    <h3>Estar presente</h3>
+    <ul>
+      <li>• Cada célula de tu ser aquí y ahora</li>
+      <li>• Respiración sincronizada</li>
+      <li>• Corazón abierto</li>
+      <li>• Sin agenda</li>
+      <li>• Sin prisa</li>
+      <li>• Disponible para lo que emerge</li>
+      <li>• Honrando el misterio</li>
+    </ul>
+    <blockquote>Acompañé a mi madre en sus últimas 72 horas. No hablamos mucho. Pero respiramos juntas. Mi presencia le decía: 'No estás sola. Es seguro soltar.' Murió en paz, con una sonrisa sutil." - Carmen, profesora de meditación</blockquote>
+    <div class="section-divider"></div>
+    <h2>El Moribundo Como Maestro Supremo</h2>
+    <p>Invertimos la relación: creemos que nosotros "ayudamos" al moribundo. La verdad es al revés. El que está muriendo es el maestro. Nosotros somos los estudiantes privilegiados, admitidos al aula más sagrada.</p>
+    <h3>Las Enseñanzas del Umbral</h3>
+    <h3>La Verdad Desnuda</h3>
+    <p>En el umbral, todas las máscaras caen. El moribundo no tiene tiempo para pretensiones. Te enseñará sobre autenticidad radical.</p>
+    <h3>Las Prioridades Reales</h3>
+    <p>Nadie en su lecho de muerte dice "Ojalá hubiera trabajado más horas extras". Te mostrarán qué importa realmente.</p>
+    <h3>El Perdón Como Liberación</h3>
+    <p>Muchos esperan hasta el final para perdonar y pedir perdón. Presenciarás el poder transformador de soltar resentimientos.</p>
+    <h3>La Rendición Como Poder</h3>
+    <p>Verás cómo la verdadera fuerza no está en luchar, sino en saber cuándo rendirse al misterio.</p>
+    <h3>La Muerte Como Parto</h3>
+    <p>Algunos mueren con el mismo esfuerzo y éxtasis con que nacen los bebés. La muerte puede ser un alumbramiento hacia otro estado.</p>
+    <h3>Práctica: Preparándose para Ser Estudiante</h3>
+    <p><strong>Antes de acompañar a alguien en su tránsito:</strong></p>
+    <ul>
+      <li><strong>Clarifica tu intención:</strong> ¿Vienes a servir o a resolver tu propio miedo?</li>
+      <li><strong>Vacíate:</strong> Medita hasta sentirte como cuenco vacío</li>
+      <li><strong>Suelta expectativas:</strong> No sabes cómo "debería" morir alguien</li>
+      <li><strong>Prepárate para el regalo:</strong> Cada muerte es una enseñanza única</li>
+      <li><strong>Honra el privilegio:</strong> Estás siendo admitido al momento más íntimo</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>Campos Morfogenéticos en el Proceso de Muerte</h2>
+    <p>Rupert Sheldrake nos enseñó sobre campos morfogenéticos - campos de información que moldean la forma y el comportamiento. En ningún lugar son más palpables que alrededor del lecho de muerte.</p>
+    <h3>Los Campos que Convergen</h3>
+    <h3>El Campo del Moribundo</h3>
+    <p>Su historia, sus amores, sus miedos, sus esperanzas - todo concentrado, intensificado.</p>
+    <h3>El Campo Familiar/Ancestral</h3>
+    <p>Generaciones de patrones de muerte. ¿Cómo murieron los ancestros? Esos patrones están presentes.</p>
+    <h3>El Campo Cultural</h3>
+    <p>Las creencias colectivas sobre la muerte impregnan el espacio. En Occidente, miedo. En otras culturas, celebración.</p>
+    <h3>El Campo del Más Allá</h3>
+    <p>Muchos reportan presencias. Familiares fallecidos que "vienen a buscar". Seres de luz. No importa si "crees" - el campo está activo.</p>
+    <h3>Tu Propio Campo</h3>
+    <p>Tu relación con la muerte, consciente o no, afecta el espacio. Tu miedo o tu paz son contagiosos.</p>
+    <h3>Práctica: Armonización de Campos</h3>
+    <p><strong>Cuando entres al espacio de alguien que está muriendo:</strong></p>
+    <ul>
+      <li><strong>Pausa en el umbral:</strong> Siente los campos presentes</li>
+      <li><strong>Respira profundo:</strong> Centra tu propio campo</li>
+      <li><strong>Intención silenciosa:</strong> "Vengo a servir al mayor bien"</li>
+      <li><strong>Sintoniza:</strong> Ajusta tu campo al del moribundo</li>
+      <li><strong>Mantén coherencia:</strong> Tu paz estabiliza todos los campos</li>
+    </ul>
+    <blockquote>Cuando entré a la habitación de mi padre moribundo, sentí el caos - miedo familiar ancestral. Respiré, me centré, emané paz. Vi cómo todo el campo se calmaba. Mi paz le dio permiso para soltar." - Miguel, terapeuta energético</blockquote>
+    <div class="section-divider"></div>
+    <h2>La Muerte Como Acto Creativo Supremo</h2>
+    <p>Nacemos sin elección, pero podemos elegir cómo morir. No siempre las circunstancias, pero sí la consciencia. La muerte consciente es el acto creativo final - la obra maestra de una vida.</p>
+    <h3>Elementos del Morir Creativo</h3>
+    <h3>Diseño del Espacio</h3>
+    <p>Algunos quieren naturaleza, otros sus objetos amados. El espacio importa.</p>
+    <h3>La Banda Sonora</h3>
+    <p>Música, mantras, silencio. El paisaje sonoro del tránsito.</p>
+    <h3>Las Últimas Palabras</h3>
+    <p>Algunos las planean. Otros dejan que emerjan. Todas son poesía.</p>
+    <h3>Los Gestos Finales</h3>
+    <p>Una mano que busca otra. Una sonrisa. Un suspiro de liberación.</p>
+    <h3>El Timing</h3>
+    <p>Muchos esperan estar solos. Otros esperan que llegue alguien. La muerte tiene su propia inteligencia temporal.</p>
+    <div class="section-divider"></div>
+    <h2>Técnicas de Acompañamiento Consciente</h2>
+    <h3>Respiración Sincronizada</h3>
+    <p>Sutilmente, ajusta tu respiración a la del moribundo. No fuerces. Simplemente acompaña. Es una forma de decir "No estás solo" sin palabras.</p>
+    <h3>Toque Consciente</h3>
+    <p>Si es apropiado y bienvenido:</p>
+    <ul>
+      <li>• Mano sobre mano</li>
+      <li>• Mano en el corazón</li>
+      <li>• Pies masajeados suavemente</li>
+      <li>• Frente acariciada</li>
+    </ul>
+    <p><em>El toque dice: "Este cuerpo fue sagrado. Lo honro."</em></p>
+    <h3>Permiso Verbal</h3>
+    <p>A veces necesitan oírlo:</p>
+    <ul>
+      <li>• "Está bien soltar"</li>
+      <li>• "Te amamos. Puedes irte"</li>
+      <li>• "Estaremos bien"</li>
+      <li>• "Ve hacia la luz"</li>
+    </ul>
+    <h3>Canto y Tono</h3>
+    <ul>
+      <li>• Mantras suaves</li>
+      <li>• Tarareo bajo</li>
+      <li>• Las canciones de su vida</li>
+      <li>• El sonido OM sostenido</li>
+    </ul>
+    <h3>Lectura Sagrada</h3>
+    <p>De sus textos amados:</p>
+    <ul>
+      <li>• Poesía</li>
+      <li>• Escrituras</li>
+      <li>• Cartas de amor</li>
+      <li>• Sus propias palabras</li>
+    </ul>
+    <h3>Silencio Sagrado</h3>
+    <p>A veces, el mayor regalo es callar. Estar. Respirar. Sostener el espacio para el misterio.</p>
+    <div class="section-divider"></div>
+    <h2>Momentos Críticos del Acompañamiento</h2>
+    <h3>El Rally Antes de la Muerte</h3>
+    <p>Muchos experimentan una mejoría súbita antes del final. Lucidez. Energía. Apetito. No es "recuperación" - es el último regalo. Úsalo bien:</p>
+    <ul>
+      <li>• Conversaciones pendientes</li>
+      <li>• Despedidas necesarias</li>
+      <li>• Últimas risas</li>
+      <li>• Momentos de claridad</li>
+    </ul>
+    <h3>La Respiración Cheyne-Stokes</h3>
+    <p>Respiración irregular. Pausas largas. Respiraciones profundas. Es normal. No entres en pánico. Mantén tu propia respiración estable. Sé el ancla.</p>
+    <h3>El Estertor de la Muerte</h3>
+    <p>Sonido gutural por fluidos. Perturba a las familias. Recuerda: la persona no está sufriendo. Es el cuerpo soltando. Mantén la calma. Explica si es necesario.</p>
+    <h3>Los Últimos Minutos</h3>
+    <ul>
+      <li>• Pupilas fijas</li>
+      <li>• Extremidades frías</li>
+      <li>• Cambio de color</li>
+      <li>• Respiración espaciada</li>
+    </ul>
+    <p><strong>No es momento de pánico. Es momento de presencia total. De honrar la transición.</strong></p>
+    <div class="section-divider"></div>
+    <h2>Protocolos Post-Mortem Inmediatos</h2>
+    <h3>La Primera Hora: Tiempo Sagrado</h3>
+    <p>En muchas tradiciones, el alma necesita tiempo para separarse completamente. La prisa occidental por "procesar el cuerpo" es violencia espiritual.</p>
+    <h3>Práctica de la Primera Hora:</h3>
+    <ul>
+      <li>No muevas el cuerpo inmediatamente</li>
+      <li>Mantén el espacio en silencio o con canto suave</li>
+      <li>Permite que la familia toque, hable, llore</li>
+      <li>Abre una ventana - simbólico pero poderoso</li>
+      <li>Enciende velas - luz para el viaje</li>
+      <li>Resiste la urgencia de "hacer algo"</li>
+    </ul>
+    <h3>Honrando el Cascarón Sagrado</h3>
+    <p>El cuerpo sin alma sigue siendo sagrado. Fue el templo. Trátalo como tal:</p>
+    <ul>
+      <li>• Lávalo con amor</li>
+      <li>• Vístelo con sus ropas favoritas</li>
+      <li>• Permite que todos se despidan</li>
+      <li>• No lo trates como "problema a resolver"</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>Testimonios de Acompañantes</h2>
+    <blockquote><strong>María, enfermera de hospicio - 20 años</strong> "He acompañado a más de mil personas. Cada muerte me enseña algo nuevo. Los que mueren en paz tienen algo en común: se sienten vistos, no juzgados, profundamente acompañados. Mi trabajo no es médico. Es sostener el espacio sagrado." - María</blockquote>
+    <blockquote><strong>Carlos, hijo acompañante</strong> "Mi padre y yo teníamos una relación difícil. Pero en sus últimos días, todo se disolvió. Solo quedó amor. Lo acompañé sin agenda, sin necesitar resolver nada. Murió tomando mi mano. Esos tres días sanaron 30 años de distancia." - Carlos</blockquote>
+    <blockquote><strong>Ana, doula de muerte</strong> "Sí, existen doulas de muerte. Así como ayudamos a nacer, ayudamos a morir. La muerte es un parto al revés. Mi trabajo es crear las condiciones para que ese parto sea lo más suave posible. No prometo sin dolor. Prometo sin soledad." - Ana</blockquote>
+    <blockquote><strong>Roberto, monje budista</strong> "En el monasterio, practicamos meditación en cementerios, contemplación de cadáveres. Parece mórbido para Occidente. Pero cuando llegó mi turno de acompañar a mi maestro, no había miedo, solo gratitud. Él me enseñó a vivir. Al final, me enseñó a morir." - Roberto</blockquote>
+    <div class="section-divider"></div>
+    <h2>El Fuego Transformador del Acompañamiento</h2>
+    <p>Acompañar conscientemente a alguien en su muerte te cambia. No puedes presenciar ese misterio y seguir igual. Es una iniciación.</p>
+    <h3>Cómo Transforma el Acompañamiento</h3>
+    <p><strong>Disuelve el miedo personal</strong> Ves que la muerte puede ser hermosa</p>
+    <p><strong>Reordena prioridades</strong> Lo urgente se vuelve trivial</p>
+    <p><strong>Abre el corazón</strong> El amor se vuelve más importante que tener razón</p>
+    <p><strong>Desarrolla presencia</strong> Aprendes a estar sin hacer</p>
+    <p><strong>Conecta con lo sagrado</strong> Tocas el misterio directamente</p>
+    <p><strong>Sana relaciones</strong> Ves la futilidad de resentimientos</p>
+    <p><strong>Despierta gratitud</strong> Cada respiración se vuelve regalo</p>
+    <div class="section-divider"></div>
+    <h2>Preparación Personal del Acompañante</h2>
+    <h3>Limpieza Antes del Acompañamiento</h3>
+    <ul>
+      <li>Meditación de vaciamiento: 30 minutos mínimo</li>
+      <li>Baño ritual: Agua con sal, intención de pureza</li>
+      <li>Ayuno ligero: Estómago liviano, mente clara</li>
+      <li>Revisión de motivaciones: ¿Por qué voy?</li>
+      <li>Protección energética: Visualiza luz dorada</li>
+    </ul>
+    <h3>Sostenimiento Durante</h3>
+    <ul>
+      <li>• Respiración consciente constante</li>
+      <li>• Pies enraizados en la tierra</li>
+      <li>• Corazón abierto pero protegido</li>
+      <li>• Mente sin juicio</li>
+      <li>• Disponibilidad total</li>
+    </ul>
+    <h3>Integración Después</h3>
+    <ul>
+      <li>No te vayas inmediatamente: Permite la transición</li>
+      <li>Ritual de cierre: Agradece el privilegio</li>
+      <li>Limpieza energética: Ducha, naturaleza, movimiento</li>
+      <li>Proceso emocional: Llora si necesitas</li>
+      <li>Integra la enseñanza: ¿Qué aprendiste?</li>
+      <li>Descansa profundamente: El acompañamiento agota</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>El Regalo del Acompañante</h2>
+    <p>Tu presencia consciente puede ser la diferencia entre:</p>
+    <ul>
+      <li>Morir con miedo</li>
+      <li>Sentirse abandonado</li>
+      <li>Luchar contra la muerte</li>
+      <li>Partir con asuntos pendientes</li>
+      <li>Una muerte traumática</li>
+      <li>Morir en paz</li>
+      <li>Sentirse sostenido</li>
+      <li>Fluir con ella</li>
+      <li>Partir completo</li>
+      <li>Una muerte sagrada</li>
+    </ul>
+    <p><strong>No subestimes este servicio. En una cultura que abandona a sus moribundos, ser verdadero acompañante es medicina revolucionaria.</strong></p>
+    <div class="section-divider"></div>
+    <h2>Meditación: Preparación para Acompañar</h2>
+    <p>Siéntate cómodo. Cierra los ojos. Respira profundo.</p>
+    <p>Imagina que eres llamado a acompañar.</p>
+    <p>Puede ser alguien amado o un desconocido.</p>
+    <p>Siente el llamado en tu corazón.</p>
+    <p>Visualízate entrando al espacio sagrado.</p>
+    <p>Sientes los campos. Te sintonizas. Te vacías de todo excepto amor y presencia.</p>
+    <p>Te sientas junto al lecho.</p>
+    <p>Tu respiración se calma. Tu corazón se abre.</p>
+    <p>No necesitas hacer nada. Solo ser.</p>
+    <p>Siente la profundidad de este servicio.</p>
+    <p>El honor de ser testigo. La medicina de tu presencia.</p>
+    <p>Cuando estés listo, abre los ojos.</p>
+    <p>Ya sabes cómo acompañar. Siempre lo supiste.</p>
+    <div class="section-divider"></div>
+    <h2>Conexiones con la Constelación Trinity</h2>
+    <h3>Los Vínculos Sagrados</h3>
+    <p>La presencia se describe como un puente invisible que no invade ni empuja: sostiene. El acompañante no es el que camina por el otro, sino el que ilumina lo suficiente para que el otro vea su propio paso.</p>
+    <h3>Civilización Galáctica</h3>
+    <p>La presencia se visualiza como un campo luminoso que envuelve, sin cerrarse sobre el otro. Esta forma de acompañar permite que la conciencia del que parte se expanda sin miedo.</p>
+    <h3>El Dolor como Portal</h3>
+    <p>La respiración consciente es descrita como "el metrónomo de la conciencia". En el tránsito, la respiración puede convertirse en un ancla rítmica que conecta el presente corporal con dimensiones más amplias de la existencia.</p>
+    <h3>Psicología Cuántica</h3>
+    <p>La técnica de Respiración Fractal se ha utilizado para inducir estados de calma profunda en personas que enfrentan ansiedad terminal, generando una sensación de continuidad más allá del umbral.</p>
+    <div class="section-divider"></div>
+    <h2>Preguntas para el Alma del Acompañante</h2>
+    <ul>
+      <li>¿Qué miedos personales proyecto en los moribundos?</li>
+      <li>¿Puedo estar presente sin necesitar "arreglar"?</li>
+      <li>¿Qué me enseñaron las muertes que he presenciado?</li>
+      <li>¿A quién me gustaría tener presente en mi muerte?</li>
+      <li>¿Qué cualidades quiero cultivar como acompañante?</li>
+      <li>¿Cómo puedo prepararme mejor para este servicio?</li>
+      <li>¿Qué me impide ofrecer mi presencia plena?</li>
+    </ul>
+    <div class="section-divider"></div>
+    <h2>Transición al Nodo 4</h2>
+    <p>Has aprendido el arte sagrado del acompañamiento. Has visto cómo la presencia consciente es medicina, cómo el moribundo es maestro, cómo la muerte puede ser creación.</p>
+    <p>Pero hay herramientas - antiguas y nuevas - que pueden apoyar este proceso. Tecnologías de consciencia desarrolladas por tradiciones milenarias y descubrimientos modernos que facilitan el tránsito.</p>
+    <p>En el próximo nodo, exploraremos estas tecnologías sagradas. Desde el Bardo Thodol tibetano hasta la neurotecnología moderna, desde plantas sagradas hasta frecuencias sonoras.</p>
+    <p><strong>Prepárate para descubrir el arsenal de herramientas disponibles para hacer del morir un arte consciente.</strong></p>
+  </main>
+
+  <nav class="navigation reveal" aria-label="Navegaci&oacute;n entre nodos">
+    <div class="navigation-row">
+      <a class="nav-link" href="nodo_02.html">&larr; Nodo anterior</a>
+      <a class="nav-link" href="index.html">Portal del Libro</a>
+      <a class="nav-link" href="nodo_04.html">Siguiente nodo &rarr;</a>
+      <a class="nav-link" href="../index.html">Volver a Trinity Origen</a>
+    </div>
+  </nav>
+
+  <footer class="footer reveal">
+    <div class="footer-symbol">&#9672;</div>
+    <p>Trinity Origen &middot; Libro VII &middot; La Muerte como Maestra</p>
+    <p>"No es m&iacute;o vino a trav&eacute;s de m&iacute;."</p>
+  </footer>
 
-        <h3>La Diferencia Entre Estar Presente y Estar Ahí</h3>
-
-        <div class="comparison-grid">
-            <div class="comparison-box wrong">
-                <div class="comparison-title" style="color: #f44336;">❌ Estar ahí</div>
-                <ul style="list-style: none; padding: 0;">
-                    <li>• Cuerpo presente, mente en otro lado</li>
-                    <li>• Mirando el teléfono</li>
-                    <li>• Pensando qué decir</li>
-                    <li>• Incómodo con el silencio</li>
-                    <li>• Proyectando tu propio miedo</li>
-                    <li>• Queriendo que "termine rápido"</li>
-                </ul>
-            </div>
-
-            <div class="comparison-box right">
-                <div class="comparison-title" style="color: #4caf50;">✓ Estar presente</div>
-                <ul style="list-style: none; padding: 0;">
-                    <li>• Cada célula de tu ser aquí y ahora</li>
-                    <li>• Respiración sincronizada</li>
-                    <li>• Corazón abierto</li>
-                    <li>• Sin agenda</li>
-                    <li>• Sin prisa</li>
-                    <li>• Disponible para lo que emerge</li>
-                    <li>• Honrando el misterio</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="testimonial">
-            "Acompañé a mi madre en sus últimas 72 horas. No hablamos mucho. Pero respiramos juntas. Mi presencia le decía: 'No estás sola. Es seguro soltar.' Murió en paz, con una sonrisa sutil."
-            <div class="testimonial-author">- Carmen, profesora de meditación</div>
-        </div>
-    </section>
-
-    <section>
-        <h2>👁️ El Moribundo Como Maestro Supremo</h2>
-        <p>Invertimos la relación: creemos que nosotros "ayudamos" al moribundo. La verdad es al revés. El que está muriendo es el maestro. Nosotros somos los estudiantes privilegiados, admitidos al aula más sagrada.</p>
-
-        <h3>Las Enseñanzas del Umbral</h3>
-
-        <div class="teaching-card">
-            <div class="teaching-title">🎭 La Verdad Desnuda</div>
-            <p>En el umbral, todas las máscaras caen. El moribundo no tiene tiempo para pretensiones. Te enseñará sobre autenticidad radical.</p>
-        </div>
-
-        <div class="teaching-card">
-            <div class="teaching-title">⚖️ Las Prioridades Reales</div>
-            <p>Nadie en su lecho de muerte dice "Ojalá hubiera trabajado más horas extras". Te mostrarán qué importa realmente.</p>
-        </div>
-
-        <div class="teaching-card">
-            <div class="teaching-title">🕊️ El Perdón Como Liberación</div>
-            <p>Muchos esperan hasta el final para perdonar y pedir perdón. Presenciarás el poder transformador de soltar resentimientos.</p>
-        </div>
-
-        <div class="teaching-card">
-            <div class="teaching-title">🙏 La Rendición Como Poder</div>
-            <p>Verás cómo la verdadera fuerza no está en luchar, sino en saber cuándo rendirse al misterio.</p>
-        </div>
-
-        <div class="teaching-card">
-            <div class="teaching-title">👶 La Muerte Como Parto</div>
-            <p>Algunos mueren con el mismo esfuerzo y éxtasis con que nacen los bebés. La muerte puede ser un alumbramiento hacia otro estado.</p>
-        </div>
-
-        <div class="presence-card">
-            <h3 style="color: #64b5f6; margin-bottom: 20px;">🧘 Práctica: Preparándose para Ser Estudiante</h3>
-            <p><strong>Antes de acompañar a alguien en su tránsito:</strong></p>
-            <ol class="practice-list">
-                <li><strong>Clarifica tu intención:</strong> ¿Vienes a servir o a resolver tu propio miedo?</li>
-                <li><strong>Vacíate:</strong> Medita hasta sentirte como cuenco vacío</li>
-                <li><strong>Suelta expectativas:</strong> No sabes cómo "debería" morir alguien</li>
-                <li><strong>Prepárate para el regalo:</strong> Cada muerte es una enseñanza única</li>
-                <li><strong>Honra el privilegio:</strong> Estás siendo admitido al momento más íntimo</li>
-            </ol>
-        </div>
-    </section>
-
-    <section>
-        <h2>🌊 Campos Morfogenéticos en el Proceso de Muerte</h2>
-        <p>Rupert Sheldrake nos enseñó sobre campos morfogenéticos - campos de información que moldean la forma y el comportamiento. En ningún lugar son más palpables que alrededor del lecho de muerte.</p>
-
-        <h3>Los Campos que Convergen</h3>
-
-        <div class="field-card">
-            <div class="field-title">🎯 El Campo del Moribundo</div>
-            <p>Su historia, sus amores, sus miedos, sus esperanzas - todo concentrado, intensificado.</p>
-        </div>
-
-        <div class="field-card">
-            <div class="field-title">🌳 El Campo Familiar/Ancestral</div>
-            <p>Generaciones de patrones de muerte. ¿Cómo murieron los ancestros? Esos patrones están presentes.</p>
-        </div>
-
-        <div class="field-card">
-            <div class="field-title">🌍 El Campo Cultural</div>
-            <p>Las creencias colectivas sobre la muerte impregnan el espacio. En Occidente, miedo. En otras culturas, celebración.</p>
-        </div>
-
-        <div class="field-card">
-            <div class="field-title">✨ El Campo del Más Allá</div>
-            <p>Muchos reportan presencias. Familiares fallecidos que "vienen a buscar". Seres de luz. No importa si "crees" - el campo está activo.</p>
-        </div>
-
-        <div class="field-card">
-            <div class="field-title">💫 Tu Propio Campo</div>
-            <p>Tu relación con la muerte, consciente o no, afecta el espacio. Tu miedo o tu paz son contagiosos.</p>
-        </div>
-
-        <div class="presence-card">
-            <h3 style="color: #64b5f6; margin-bottom: 20px;">⚡ Práctica: Armonización de Campos</h3>
-            <p><strong>Cuando entres al espacio de alguien que está muriendo:</strong></p>
-            <ol class="practice-list">
-                <li><strong>Pausa en el umbral:</strong> Siente los campos presentes</li>
-                <li><strong>Respira profundo:</strong> Centra tu propio campo</li>
-                <li><strong>Intención silenciosa:</strong> "Vengo a servir al mayor bien"</li>
-                <li><strong>Sintoniza:</strong> Ajusta tu campo al del moribundo</li>
-                <li><strong>Mantén coherencia:</strong> Tu paz estabiliza todos los campos</li>
-            </ol>
-        </div>
-
-        <div class="testimonial">
-            "Cuando entré a la habitación de mi padre moribundo, sentí el caos - miedo familiar ancestral. Respiré, me centré, emané paz. Vi cómo todo el campo se calmaba. Mi paz le dio permiso para soltar."
-            <div class="testimonial-author">- Miguel, terapeuta energético</div>
-        </div>
-    </section>
-
-    <section>
-        <h2>🎨 La Muerte Como Acto Creativo Supremo</h2>
-        <p>Nacemos sin elección, pero podemos elegir cómo morir. No siempre las circunstancias, pero sí la consciencia. La muerte consciente es el acto creativo final - la obra maestra de una vida.</p>
-
-        <h3>Elementos del Morir Creativo</h3>
-
-        <div class="technique-box">
-            <div class="technique-name">🏠 Diseño del Espacio</div>
-            <p>Algunos quieren naturaleza, otros sus objetos amados. El espacio importa.</p>
-        </div>
-
-        <div class="technique-box">
-            <div class="technique-name">🎵 La Banda Sonora</div>
-            <p>Música, mantras, silencio. El paisaje sonoro del tránsito.</p>
-        </div>
-
-        <div class="technique-box">
-            <div class="technique-name">💬 Las Últimas Palabras</div>
-            <p>Algunos las planean. Otros dejan que emerjan. Todas son poesía.</p>
-        </div>
-
-        <div class="technique-box">
-            <div class="technique-name">✋ Los Gestos Finales</div>
-            <p>Una mano que busca otra. Una sonrisa. Un suspiro de liberación.</p>
-        </div>
-
-        <div class="technique-box">
-            <div class="technique-name">⏰ El Timing</div>
-            <p>Muchos esperan estar solos. Otros esperan que llegue alguien. La muerte tiene su propia inteligencia temporal.</p>
-        </div>
-    </section>
-
-    <section>
-        <h2>🕯️ Técnicas de Acompañamiento Consciente</h2>
-
-        <div class="technique-box">
-            <div class="technique-name">🫁 Respiración Sincronizada</div>
-            <p>Sutilmente, ajusta tu respiración a la del moribundo. No fuerces. Simplemente acompaña. Es una forma de decir "No estás solo" sin palabras.</p>
-        </div>
-
-        <div class="technique-box">
-            <div class="technique-name">✋ Toque Consciente</div>
-            <p>Si es apropiado y bienvenido:</p>
-            <ul>
-                <li>• Mano sobre mano</li>
-                <li>• Mano en el corazón</li>
-                <li>• Pies masajeados suavemente</li>
-                <li>• Frente acariciada</li>
-            </ul>
-            <p><em>El toque dice: "Este cuerpo fue sagrado. Lo honro."</em></p>
-        </div>
-
-        <div class="technique-box">
-            <div class="technique-name">💬 Permiso Verbal</div>
-            <p>A veces necesitan oírlo:</p>
-            <ul>
-                <li>• "Está bien soltar"</li>
-                <li>• "Te amamos. Puedes irte"</li>
-                <li>• "Estaremos bien"</li>
-                <li>• "Ve hacia la luz"</li>
-            </ul>
-        </div>
-
-        <div class="technique-box">
-            <div class="technique-name">🎶 Canto y Tono</div>
-            <ul>
-                <li>• Mantras suaves</li>
-                <li>• Tarareo bajo</li>
-                <li>• Las canciones de su vida</li>
-                <li>• El sonido OM sostenido</li>
-            </ul>
-        </div>
-
-        <div class="technique-box">
-            <div class="technique-name">📖 Lectura Sagrada</div>
-            <p>De sus textos amados:</p>
-            <ul>
-                <li>• Poesía</li>
-                <li>• Escrituras</li>
-                <li>• Cartas de amor</li>
-                <li>• Sus propias palabras</li>
-            </ul>
-        </div>
-
-        <div class="technique-box">
-            <div class="technique-name">🤫 Silencio Sagrado</div>
-            <p>A veces, el mayor regalo es callar. Estar. Respirar. Sostener el espacio para el misterio.</p>
-        </div>
-    </section>
-
-    <section>
-        <h2>💎 Momentos Críticos del Acompañamiento</h2>
-
-        <div class="critical-moment">
-            <div class="critical-title">⚡ El Rally Antes de la Muerte</div>
-            <p>Muchos experimentan una mejoría súbita antes del final. Lucidez. Energía. Apetito. No es "recuperación" - es el último regalo. Úsalo bien:</p>
-            <ul>
-                <li>• Conversaciones pendientes</li>
-                <li>• Despedidas necesarias</li>
-                <li>• Últimas risas</li>
-                <li>• Momentos de claridad</li>
-            </ul>
-        </div>
-
-        <div class="critical-moment">
-            <div class="critical-title">🌊 La Respiración Cheyne-Stokes</div>
-            <p>Respiración irregular. Pausas largas. Respiraciones profundas. Es normal. No entres en pánico. Mantén tu propia respiración estable. Sé el ancla.</p>
-        </div>
-
-        <div class="critical-moment">
-            <div class="critical-title">🔊 El Estertor de la Muerte</div>
-            <p>Sonido gutural por fluidos. Perturba a las familias. Recuerda: la persona no está sufriendo. Es el cuerpo soltando. Mantén la calma. Explica si es necesario.</p>
-        </div>
-
-        <div class="critical-moment">
-            <div class="critical-title">⏳ Los Últimos Minutos</div>
-            <ul>
-                <li>• Pupilas fijas</li>
-                <li>• Extremidades frías</li>
-                <li>• Cambio de color</li>
-                <li>• Respiración espaciada</li>
-            </ul>
-            <p style="margin-top: 15px;"><strong>No es momento de pánico. Es momento de presencia total. De honrar la transición.</strong></p>
-        </div>
-    </section>
-
-    <section>
-        <h2>🌺 Protocolos Post-Mortem Inmediatos</h2>
-        
-        <div class="protocol-section">
-            <h3 style="color: #7986cb;">La Primera Hora: Tiempo Sagrado</h3>
-            <p>En muchas tradiciones, el alma necesita tiempo para separarse completamente. La prisa occidental por "procesar el cuerpo" es violencia espiritual.</p>
-
-            <h4 style="color: #9fa8da; margin-top: 25px;">Práctica de la Primera Hora:</h4>
-            <ol class="practice-list">
-                <li>No muevas el cuerpo inmediatamente</li>
-                <li>Mantén el espacio en silencio o con canto suave</li>
-                <li>Permite que la familia toque, hable, llore</li>
-                <li>Abre una ventana - simbólico pero poderoso</li>
-                <li>Enciende velas - luz para el viaje</li>
-                <li>Resiste la urgencia de "hacer algo"</li>
-            </ol>
-
-            <h4 style="color: #9fa8da; margin-top: 25px;">Honrando el Cascarón Sagrado</h4>
-            <p>El cuerpo sin alma sigue siendo sagrado. Fue el templo. Trátalo como tal:</p>
-            <ul>
-                <li>• Lávalo con amor</li>
-                <li>• Vístelo con sus ropas favoritas</li>
-                <li>• Permite que todos se despidan</li>
-                <li>• No lo trates como "problema a resolver"</li>
-            </ul>
-        </div>
-    </section>
-
-    <section>
-        <h2>📿 Testimonios de Acompañantes</h2>
-
-        <div class="testimonial">
-            <strong>María, enfermera de hospicio - 20 años</strong><br><br>
-            "He acompañado a más de mil personas. Cada muerte me enseña algo nuevo. Los que mueren en paz tienen algo en común: se sienten vistos, no juzgados, profundamente acompañados. Mi trabajo no es médico. Es sostener el espacio sagrado."
-            <div class="testimonial-author">- María</div>
-        </div>
-
-        <div class="testimonial">
-            <strong>Carlos, hijo acompañante</strong><br><br>
-            "Mi padre y yo teníamos una relación difícil. Pero en sus últimos días, todo se disolvió. Solo quedó amor. Lo acompañé sin agenda, sin necesitar resolver nada. Murió tomando mi mano. Esos tres días sanaron 30 años de distancia."
-            <div class="testimonial-author">- Carlos</div>
-        </div>
-
-        <div class="testimonial">
-            <strong>Ana, doula de muerte</strong><br><br>
-            "Sí, existen doulas de muerte. Así como ayudamos a nacer, ayudamos a morir. La muerte es un parto al revés. Mi trabajo es crear las condiciones para que ese parto sea lo más suave posible. No prometo sin dolor. Prometo sin soledad."
-            <div class="testimonial-author">- Ana</div>
-        </div>
-
-        <div class="testimonial">
-            <strong>Roberto, monje budista</strong><br><br>
-            "En el monasterio, practicamos meditación en cementerios, contemplación de cadáveres. Parece mórbido para Occidente. Pero cuando llegó mi turno de acompañar a mi maestro, no había miedo, solo gratitud. Él me enseñó a vivir. Al final, me enseñó a morir."
-            <div class="testimonial-author">- Roberto</div>
-        </div>
-    </section>
-
-    <section>
-        <h2>🔥 El Fuego Transformador del Acompañamiento</h2>
-        <p>Acompañar conscientemente a alguien en su muerte te cambia. No puedes presenciar ese misterio y seguir igual. Es una iniciación.</p>
-
-        <h3>Cómo Transforma el Acompañamiento</h3>
-
-        <div class="transformation-grid">
-            <div class="transformation-box">
-                <div class="transformation-number">1</div>
-                <p><strong>Disuelve el miedo personal</strong><br>Ves que la muerte puede ser hermosa</p>
-            </div>
-
-            <div class="transformation-box">
-                <div class="transformation-number">2</div>
-                <p><strong>Reordena prioridades</strong><br>Lo urgente se vuelve trivial</p>
-            </div>
-
-            <div class="transformation-box">
-                <div class="transformation-number">3</div>
-                <p><strong>Abre el corazón</strong><br>El amor se vuelve más importante que tener razón</p>
-            </div>
-
-            <div class="transformation-box">
-                <div class="transformation-number">4</div>
-                <p><strong>Desarrolla presencia</strong><br>Aprendes a estar sin hacer</p>
-            </div>
-
-            <div class="transformation-box">
-                <div class="transformation-number">5</div>
-                <p><strong>Conecta con lo sagrado</strong><br>Tocas el misterio directamente</p>
-            </div>
-
-            <div class="transformation-box">
-                <div class="transformation-number">6</div>
-                <p><strong>Sana relaciones</strong><br>Ves la futilidad de resentimientos</p>
-            </div>
-
-            <div class="transformation-box">
-                <div class="transformation-number">7</div>
-                <p><strong>Despierta gratitud</strong><br>Cada respiración se vuelve regalo</p>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <h2>🌟 Preparación Personal del Acompañante</h2>
-
-        <div class="presence-card">
-            <h3 style="color: #64b5f6;">Limpieza Antes del Acompañamiento</h3>
-            <ol class="practice-list">
-                <li>Meditación de vaciamiento: 30 minutos mínimo</li>
-                <li>Baño ritual: Agua con sal, intención de pureza</li>
-                <li>Ayuno ligero: Estómago liviano, mente clara</li>
-                <li>Revisión de motivaciones: ¿Por qué voy?</li>
-                <li>Protección energética: Visualiza luz dorada</li>
-            </ol>
-        </div>
-
-        <div class="presence-card">
-            <h3 style="color: #64b5f6;">Sostenimiento Durante</h3>
-            <ul>
-                <li>• Respiración consciente constante</li>
-                <li>• Pies enraizados en la tierra</li>
-                <li>• Corazón abierto pero protegido</li>
-                <li>• Mente sin juicio</li>
-                <li>• Disponibilidad total</li>
-            </ul>
-        </div>
-
-        <div class="presence-card">
-            <h3 style="color: #64b5f6;">Integración Después</h3>
-            <ol class="practice-list">
-                <li>No te vayas inmediatamente: Permite la transición</li>
-                <li>Ritual de cierre: Agradece el privilegio</li>
-                <li>Limpieza energética: Ducha, naturaleza, movimiento</li>
-                <li>Proceso emocional: Llora si necesitas</li>
-                <li>Integra la enseñanza: ¿Qué aprendiste?</li>
-                <li>Descansa profundamente: El acompañamiento agota</li>
-            </ol>
-        </div>
-    </section>
-
-    <section>
-        <h2>💫 El Regalo del Acompañante</h2>
-        <p>Tu presencia consciente puede ser la diferencia entre:</p>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0;">
-            <div style="background: rgba(244, 67, 54, 0.1); padding: 20px; border-radius: 10px; border-left: 4px solid #f44336;">
-                <ul style="list-style: none; padding: 0;">
-                    <li>❌ Morir con miedo</li>
-                    <li>❌ Sentirse abandonado</li>
-                    <li>❌ Luchar contra la muerte</li>
-                    <li>❌ Partir con asuntos pendientes</li>
-                    <li>❌ Una muerte traumática</li>
-                </ul>
-            </div>
-            <div style="background: rgba(76, 175, 80, 0.1); padding: 20px; border-radius: 10px; border-left: 4px solid #4caf50;">
-                <ul style="list-style: none; padding: 0;">
-                    <li>✓ Morir en paz</li>
-                    <li>✓ Sentirse sostenido</li>
-                    <li>✓ Fluir con ella</li>
-                    <li>✓ Partir completo</li>
-                    <li>✓ Una muerte sagrada</li>
-                </ul>
-            </div>
-        </div>
-
-        <p style="text-align: center; font-size: 1.3em; color: #64b5f6; margin-top: 30px;"><strong>No subestimes este servicio. En una cultura que abandona a sus moribundos, ser verdadero acompañante es medicina revolucionaria.</strong></p>
-    </section>
-
-    <section class="meditation">
-        <h2 class="meditation-title">🕊️ Meditación: Preparación para Acompañar</h2>
-        <div class="meditation-text">
-            <p>Siéntate cómodo. Cierra los ojos. Respira profundo.</p>
-            <p style="margin-top: 20px;">Imagina que eres llamado a acompañar.</p>
-            <p>Puede ser alguien amado o un desconocido.</p>
-            <p>Siente el llamado en tu corazón.</p>
-            <p style="margin-top: 30px;">Visualízate entrando al espacio sagrado.</p>
-            <p>Sientes los campos. Te sintonizas. Te vacías de todo excepto amor y presencia.</p>
-            <p style="margin-top: 30px;">Te sientas junto al lecho.</p>
-            <p>Tu respiración se calma. Tu corazón se abre.</p>
-            <p>No necesitas hacer nada. Solo ser.</p>
-            <p style="margin-top: 30px;">Siente la profundidad de este servicio.</p>
-            <p>El honor de ser testigo. La medicina de tu presencia.</p>
-            <p style="margin-top: 30px;">Cuando estés listo, abre los ojos.</p>
-            <p>Ya sabes cómo acompañar. Siempre lo supiste.</p>
-        </div>
-    </section>
-
-    <section>
-        <h2>🔗 Conexiones con la Constelación Trinity</h2>
-
-        <div class="trinity-connections">
-            <div class="trinity-card">
-                <div class="trinity-icon">🔗</div>
-                <div class="trinity-title">Los Vínculos Sagrados</div>
-                <p>La presencia se describe como un puente invisible que no invade ni empuja: sostiene. El acompañante no es el que camina por el otro, sino el que ilumina lo suficiente para que el otro vea su propio paso.</p>
-            </div>
-
-            <div class="trinity-card">
-                <div class="trinity-icon">🌌</div>
-                <div class="trinity-title">Civilización Galáctica</div>
-                <p>La presencia se visualiza como un campo luminoso que envuelve, sin cerrarse sobre el otro. Esta forma de acompañar permite que la conciencia del que parte se expanda sin miedo.</p>
-            </div>
-
-            <div class="trinity-card">
-                <div class="trinity-icon">🚪</div>
-                <div class="trinity-title">El Dolor como Portal</div>
-                <p>La respiración consciente es descrita como "el metrónomo de la conciencia". En el tránsito, la respiración puede convertirse en un ancla rítmica que conecta el presente corporal con dimensiones más amplias de la existencia.</p>
-            </div>
-
-            <div class="trinity-card">
-                <div class="trinity-icon">🧠</div>
-                <div class="trinity-title">Psicología Cuántica</div>
-                <p>La técnica de Respiración Fractal se ha utilizado para inducir estados de calma profunda en personas que enfrentan ansiedad terminal, generando una sensación de continuidad más allá del umbral.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="questions">
-        <h2>🌺 Preguntas para el Alma del Acompañante</h2>
-        <ol>
-            <li>¿Qué miedos personales proyecto en los moribundos?</li>
-            <li>¿Puedo estar presente sin necesitar "arreglar"?</li>
-            <li>¿Qué me enseñaron las muertes que he presenciado?</li>
-            <li>¿A quién me gustaría tener presente en mi muerte?</li>
-            <li>¿Qué cualidades quiero cultivar como acompañante?</li>
-            <li>¿Cómo puedo prepararme mejor para este servicio?</li>
-            <li>¿Qué me impide ofrecer mi presencia plena?</li>
-        </ol>
-    </section>
-
-    <section>
-        <h2>🌟 Transición al Nodo 4</h2>
-        <p>Has aprendido el arte sagrado del acompañamiento. Has visto cómo la presencia consciente es medicina, cómo el moribundo es maestro, cómo la muerte puede ser creación.</p>
-        
-        <p>Pero hay herramientas - antiguas y nuevas - que pueden apoyar este proceso. Tecnologías de consciencia desarrolladas por tradiciones milenarias y descubrimientos modernos que facilitan el tránsito.</p>
-        
-        <p>En el próximo nodo, exploraremos estas tecnologías sagradas. Desde el Bardo Thodol tibetano hasta la neurotecnología moderna, desde plantas sagradas hasta frecuencias sonoras.</p>
-        
-        <p style="text-align: center; font-size: 1.3em; color: #64b5f6; margin-top: 30px;"><strong>Prepárate para descubrir el arsenal de herramientas disponibles para hacer del morir un arte consciente.</strong></p>
-    </section>
-
-    <nav class="navigation">
-        <a href="nodo_02.html" class="nav-button">← Nodo 2: Las Pequeñas Muertes</a>
-        <div class="nav-center">⭕ La Constelación Trinity ⭕</div>
-        <a href="nodo_04.html" class="nav-button">Nodo 4: Tecnologías →</a>
-    </nav>
 </div>
-
 <script>
-    // Canvas con velas flotantes y llamas danzantes
-    const canvas = document.getElementById('candleCanvas');
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    class Candle {
-        constructor() {
-            this.reset();
-        }
-
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.floatSpeed = 0.2 + Math.random() * 0.3;
-            this.floatAmount = 10 + Math.random() * 20;
-            this.time = Math.random() * 1000;
-            this.size = 30 + Math.random() * 20;
-            this.opacity = 0.3 + Math.random() * 0.3;
-            this.flamePhase = Math.random() * Math.PI * 2;
-        }
-
-        update() {
-            this.time += 0.02;
-            this.y += Math.sin(this.time) * 0.3;
-            this.x += Math.cos(this.time * 0.5) * 0.2;
-
-            // Mantener dentro del canvas
-            if (this.x < -50) this.x = canvas.width + 50;
-            if (this.x > canvas.width + 50) this.x = -50;
-            if (this.y < -50) this.y = canvas.height + 50;
-            if (this.y > canvas.height + 50) this.y = -50;
-        }
-
-        draw() {
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.globalAlpha = this.opacity;
-
-            // Resplandor
-            const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size * 2);
-            gradient.addColorStop(0, 'rgba(100, 181, 246, 0.3)');
-            gradient.addColorStop(0.5, 'rgba(100, 181, 246, 0.1)');
-            gradient.addColorStop(1, 'rgba(100, 181, 246, 0)');
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(0, 0, this.size * 2, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Llama
-            const flameHeight = this.size * (0.8 + Math.sin(this.time * 3) * 0.2);
-            const flameGradient = ctx.createRadialGradient(0, -flameHeight/2, 0, 0, -flameHeight/2, this.size/2);
-            flameGradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-            flameGradient.addColorStop(0.3, 'rgba(100, 181, 246, 0.7)');
-            flameGradient.addColorStop(0.7, 'rgba(30, 136, 229, 0.5)');
-            flameGradient.addColorStop(1, 'rgba(30, 136, 229, 0)');
-
-            ctx.fillStyle = flameGradient;
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.bezierCurveTo(
-                -this.size/4, -flameHeight/3,
-                -this.size/6, -flameHeight * 0.7,
-                0, -flameHeight
-            );
-            ctx.bezierCurveTo(
-                this.size/6, -flameHeight * 0.7,
-                this.size/4, -flameHeight/3,
-                0, 0
-            );
-            ctx.fill();
-
-            ctx.restore();
-        }
-    }
-
-    // Crear velas
-    const candles = [];
-    for (let i = 0; i < 15; i++) {
-        candles.push(new Candle());
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        candles.forEach(candle => {
-            candle.update();
-            candle.draw();
-        });
-
-        requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    // Redimensionar
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
+(function(){var els=[].slice.call(document.querySelectorAll('.reveal'));function showAll(){els.forEach(function(e){e.classList.add('visible');});}if(!('IntersectionObserver' in window)){showAll();return;}var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}});},{threshold:0,rootMargin:'0px 0px 12% 0px'});els.forEach(function(e){io.observe(e);});setTimeout(showAll,1500);window.addEventListener('load',function(){setTimeout(showAll,300);});})();
 </script>
-
-
 </body>
 </html>
