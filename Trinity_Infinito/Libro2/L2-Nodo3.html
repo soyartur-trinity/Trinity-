@@ -8,13 +8,15 @@
         body {
             background: #000;
             color: #fff;
-            font-family: 'Times New Roman', serif;
+            /* Georgia: estándar de la serie (antes Times New Roman) */
+            font-family: 'Georgia', 'Times New Roman', serif;
             margin: 0;
             height: 100vh;
             overflow: hidden;
             position: relative;
+            cursor: none;
         }
-        
+
         .experience-flow {
             position: absolute;
             width: 100%;
@@ -23,52 +25,38 @@
             align-items: center;
             justify-content: center;
         }
-        
+
+        /* Cada sensación llega, se deja leer un momento en el centro, y pasa.
+           Delay negativo (respirar persistente). */
         .sensation {
             position: absolute;
             padding: 20px;
-            opacity: 0;
-            animation: sensation-pass 12s infinite;
-            animation-delay: calc(var(--delay) * 2s);
             font-size: 1.1em;
             letter-spacing: 0.2em;
+            opacity: 0;
+            animation: sensation-pass 12s infinite ease-in-out;
+            animation-delay: calc(var(--delay) * -2s);
         }
-        
         @keyframes sensation-pass {
-            0% { 
-                opacity: 0; 
-                transform: translate(var(--startX), var(--startY)) scale(0.5);
-            }
-            50% { 
-                opacity: 0.6; 
-                transform: translate(0, 0) scale(1);
-            }
-            100% { 
-                opacity: 0; 
-                transform: translate(var(--endX), var(--endY)) scale(0.5);
-            }
+            0%   { opacity: 0; transform: translate(var(--startX), var(--startY)) scale(0.5); }
+            35%  { opacity: 0.6; transform: translate(0, 0) scale(1); }
+            60%  { opacity: 0.6; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--endX), var(--endY)) scale(0.5); }
         }
-        
+
         .no-experiencer {
             position: relative;
             z-index: 10;
             font-size: 2em;
             letter-spacing: 0.5em;
             text-align: center;
-            animation: center-pulse 8s infinite;
+            animation: center-pulse 8s infinite ease-in-out;
         }
-        
         @keyframes center-pulse {
-            0%, 100% { 
-                opacity: 0.2; 
-                transform: scale(0.9);
-            }
-            50% { 
-                opacity: 0.5; 
-                transform: scale(1);
-            }
+            0%, 100% { opacity: 0.2; transform: scale(0.9); }
+            50% { opacity: 0.5; transform: scale(1); }
         }
-        
+
         .experience-note {
             position: absolute;
             bottom: 10%;
@@ -79,6 +67,45 @@
             font-size: 0.9em;
             letter-spacing: 0.3em;
         }
+
+        .hint {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe {
+            0%, 100% { opacity: 0.16; }
+            50% { opacity: 0.4; }
+        }
+
+        .infinito {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.6s ease;
+            z-index: 60;
+        }
+        .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .sensation      { animation: none; opacity: 0; }
+            .no-experiencer { animation: none; opacity: 0.5; transform: none; }
+            .hint           { animation: none; opacity: 0.3; }
+        }
     </style>
 </head>
 <body>
@@ -86,35 +113,111 @@
         <div class="sensation" style="--delay: 0; --startX: -200px; --startY: -100px; --endX: 200px; --endY: 100px;">
             Ver ocurre
         </div>
-        
+
         <div class="sensation" style="--delay: 1; --startX: 200px; --startY: -150px; --endX: -200px; --endY: 150px;">
             Oír sucede
         </div>
-        
+
         <div class="sensation" style="--delay: 2; --startX: -150px; --startY: 200px; --endX: 150px; --endY: -200px;">
             Sentir surge
         </div>
-        
+
         <div class="sensation" style="--delay: 3; --startX: 250px; --startY: 50px; --endX: -250px; --endY: -50px;">
             Pensar acontece
         </div>
-        
+
         <div class="sensation" style="--delay: 4; --startX: 0; --startY: -250px; --endX: 0; --endY: 250px;">
             Dolor aparece
         </div>
-        
+
         <div class="sensation" style="--delay: 5; --startX: -180px; --startY: 0; --endX: 180px; --endY: 0;">
             Placer fluye
         </div>
-        
+
         <div class="no-experiencer">
             NADIE<br>
             experimenta
         </div>
     </div>
-    
+
     <div class="experience-note">
         La experiencia es · No hay experimentador
     </div>
+
+    <div class="hint" id="hint">( tocá para que la experiencia resuene )</div>
+    <a class="infinito" href="L2-Nodo4.html" title="Siguiente portal">∞</a>
+
+    <script>
+    // ============================================================
+    //  Web Audio API puro, SIN CDN.
+    //  Un drone quieto sostiene el campo (sin experimentador);
+    //  por encima, sonidos transitorios que surgen y pasan,
+    //  cruzando el estéreo —la impermanencia de cada sensación—.
+    // ============================================================
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate, len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++)
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+        }
+        return buf;
+    }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+
+        const dry = actx.createGain(); dry.gain.value = 0.7; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(8, 2.3);
+        const wet = actx.createGain(); wet.gain.value = 0.45; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Drone quieto: el campo donde la experiencia ocurre
+        const o1 = actx.createOscillator(); o1.type = 'sine'; o1.frequency.value = 70;
+        const dg = actx.createGain(); dg.gain.value = 0.05; o1.connect(dg); dg.connect(fxIn);
+        const lfo = actx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.05;
+        const lfoDepth = actx.createGain(); lfoDepth.gain.value = 0.02;
+        lfo.connect(lfoDepth); lfoDepth.connect(dg.gain);
+        o1.start(); lfo.start();
+    }
+
+    // Una sensación que surge y pasa, cruzando el estéreo
+    let sentidoIdx = 0;
+    const sentidos = [261.63, 329.63, 392.00, 440.00, 493.88, 587.33]; // C4 E4 G4 A4 B4 D5
+    function playPassing(t0) {
+        const f = sentidos[sentidoIdx % sentidos.length]; sentidoIdx++;
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.045, t0 + 1.5);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 5);
+        const sp = actx.createStereoPanner();
+        const dir = Math.random() < 0.5 ? 1 : -1;
+        sp.pan.setValueAtTime(-0.9 * dir, t0);
+        sp.pan.linearRampToValueAtTime(0.9 * dir, t0 + 5); // cruza el campo
+        o.connect(g); g.connect(sp); sp.connect(fxIn);
+        o.start(t0); o.stop(t0 + 5.2);
+    }
+
+    function startScheduling() {
+        const pass = () => playPassing(actx.currentTime + 0.05);
+        pass(); timers.push(setInterval(pass, 2200));
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.75, actx.currentTime + 4);
+        startScheduling();
+        const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
