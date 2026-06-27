@@ -21,23 +21,27 @@
             max-width: 800px;
             text-align: center;
         }
+        /* Respirar persistente: delay NEGATIVO (se conserva en cada vuelta).
+           Sin filter:blur — sólo opacity/transform. Plateau legible. */
         .paradox {
             margin: 40px 0;
             font-size: 1.1em;
             letter-spacing: 0.2em;
             opacity: 0;
-            animation: paradox-cycle 10s infinite;
-            animation-delay: calc(var(--index) * 2.5s); /* Aumentado el delay para dar espacio a cada paradoja */
+            animation: paradox-cycle 15s infinite ease-in-out;
+            animation-delay: calc(var(--index) * -2.5s);
         }
         @keyframes paradox-cycle {
-            0%, 100% { opacity: 0; transform: scale(0.9); filter: blur(5px); }
-            20%, 40% { opacity: 0.7; transform: scale(1); filter: blur(0); }
-            60% { opacity: 0; transform: scale(1.1); filter: blur(10px); }
+            0%   { opacity: 0; transform: scale(0.92); }
+            10%  { opacity: 0.75; transform: scale(1); }
+            27%  { opacity: 0.75; transform: scale(1); }
+            40%  { opacity: 0; transform: scale(1.08); }
+            100% { opacity: 0; transform: scale(1.08); }
         }
         .dissolution-point {
             margin: 80px 0;
             font-size: 3em;
-            animation: dissolve-pulse 8s infinite; /* Sincronizado con el pulso sonoro */
+            animation: dissolve-pulse 8s infinite;
         }
         @keyframes dissolve-pulse {
             0%, 100% { opacity: 0.1; transform: scale(0.5) rotate(0deg); }
@@ -47,18 +51,22 @@
             margin-top: 100px;
             font-size: 1.3em;
             letter-spacing: 0.5em;
+            line-height: 1.8;
             opacity: 0;
-            animation: final-emergence 20s infinite;
+            animation: final-emergence 24s infinite;
         }
+        /* Aparece con tiempo de lectura real (antes ~1 s, ilegible) */
         @keyframes final-emergence {
-            0%, 85%, 100% { opacity: 0; }
-            90%, 95% { opacity: 0.6; }
+            0%, 65%, 100% { opacity: 0; }
+            72%, 90% { opacity: 0.6; }
+            96% { opacity: 0; }
         }
         .paradox-pair {
             display: flex;
             justify-content: space-around;
             align-items: center;
             margin: 30px 0;
+            gap: 16px;
         }
         .vs {
             opacity: 0.2;
@@ -67,6 +75,50 @@
         @keyframes vs-flash {
             0%, 90%, 100% { opacity: 0.2; }
             95% { opacity: 0.8; }
+        }
+        .hint {
+            position: fixed;
+            bottom: 66px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe {
+            0%, 100% { opacity: 0.18; }
+            50% { opacity: 0.45; }
+        }
+        .infinito {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.6s ease;
+            z-index: 60;
+        }
+        .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .paradox          { animation: none; opacity: 0.7; transform: none; }
+            .dissolution-point{ animation: none; opacity: 0.4; transform: none; }
+            .resolution       { animation: none; opacity: 0.5; }
+            .vs               { animation: none; opacity: 0.4; }
+            .hint             { animation: none; opacity: 0.3; }
+        }
+        @media (max-width: 640px) {
+            .paradox { font-size: 0.95em; }
+            .paradox-pair { flex-direction: column; gap: 8px; }
+            .resolution { font-size: 1.05em; letter-spacing: 0.3em; }
         }
     </style>
 </head>
@@ -110,71 +162,106 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <div class="hint" id="hint">( tocá para que las paradojas resuenen )</div>
+    <a class="infinito" href="L1-Nodo6.html" title="Siguiente portal">∞</a>
+
     <script>
-        let soundInitialized = false;
+    // ============================================================
+    //  La Sinfonía de la Disolución — Web Audio API puro, SIN CDN
+    //  Concepto preservado: campo binaural alpha, tensión estéreo
+    //  de la paradoja (izquierda/derecha), acorde de la disolución
+    //  y caída en el silencio cuando emerge la resolución.
+    // ============================================================
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
 
-        async function initSound() {
-            if (soundInitialized) return;
-            await Tone.start();
-
-            const reverb = new Tone.Reverb({ decay: 10, wet: 0.5 }).toDestination();
-
-            // 1. El Campo de la Observación (Binaural Alpha)
-            const baseFreq = 90;
-            const binauralBeat = 9; // 9 Hz = Onda Alpha
-            const oscL = new Tone.Oscillator(baseFreq, "sine").connect(new Tone.Panner(-1).connect(reverb)).start();
-            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").connect(new Tone.Panner(1).connect(reverb)).start();
-            oscL.volume.value = -35;
-            oscR.volume.value = -35;
-
-            // 2. La Tensión Estéreo de la Paradoja (Lógica Corregida)
-            const synthL = new Tone.FMSynth({ envelope: { attack: 1.5, release: 1.5 }, volume: -22 }).connect(new Tone.Panner(-1).connect(reverb));
-            const synthR = new Tone.FMSynth({ envelope: { attack: 1.5, release: 1.5 }, volume: -22 }).connect(new Tone.Panner(1).connect(reverb));
-            
-            const paradoxNotes = [ ["C3", "C4"], ["D3", "A3"], ["E3", "B3"], ["F3", "C4"], ["G3", "D4"], ["A3", "E4"] ];
-            const animationDelayStep = 2.5; // Corresponde al nuevo delay en el CSS
-            const noteStartTime = 10 * 0.2; // 20% de la duración de la animación de 10s
-            const noteDuration = "2s";
-            
-            // Usamos Tone.Part para una programación precisa y clara
-            const paradoxPart = new Tone.Part((time, value) => {
-                value.synth.triggerAttackRelease(value.note, noteDuration, time);
-            }, []).start(0);
-            paradoxPart.loop = true;
-            paradoxPart.loopEnd = paradoxNotes.length * animationDelayStep + 5; // Duración total del ciclo
-
-            paradoxNotes.forEach((pair, index) => {
-                const startTime = index * animationDelayStep + noteStartTime;
-                paradoxPart.add(startTime, { note: pair[0], synth: synthL });
-                paradoxPart.add(startTime, { note: pair[1], synth: synthR });
-            });
-
-            // 3. El Acorde de la Disolución
-            const dissolutionSynth = new Tone.PolySynth(Tone.FMSynth, {
-                envelope: { attack: 2, decay: 4, sustain: 0.1, release: 4 },
-                volume: -15
-            }).connect(reverb);
-             new Tone.Loop(time => {
-                dissolutionSynth.triggerAttackRelease(["C4", "E4", "G4"], "6s", time);
-            }, "8s").start(0); // Sincronizado con la animación del diamante de 8s
-
-            // 4. La Caída en el Silencio
-            new Tone.Loop(time => {
-                // Silenciamos los sintetizadores de paradojas al aparecer el texto final
-                // La animación 'final-emergence' dura 20s y el texto aparece al 90% (18s)
-                 Tone.Transport.scheduleOnce(t => {
-                    synthL.volume.rampTo(-Infinity, '4s', t);
-                    synthR.volume.rampTo(-Infinity, '4s', t);
-                 }, "18s");
-            }, "20s").start(0);
-
-            Tone.Transport.start();
-            soundInitialized = true;
-            console.log("La Sinfonía de la Disolución (Afinada) ha comenzado.");
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate, len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++)
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
         }
+        return buf;
+    }
+    function panner(p) { const sp = actx.createStereoPanner(); sp.pan.value = p; return sp; }
 
-        document.body.addEventListener('click', initSound, { once: true });
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+
+        const dry = actx.createGain(); dry.gain.value = 0.7; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(7, 2.5);
+        const wet = actx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // 1) Campo binaural alpha (~9 Hz)
+        const oscL = actx.createOscillator(); oscL.type = 'sine'; oscL.frequency.value = 90;
+        const oscR = actx.createOscillator(); oscR.type = 'sine'; oscR.frequency.value = 99;
+        const binGain = actx.createGain(); binGain.gain.value = 0.05;
+        oscL.connect(panner(-1)).connect(binGain);
+        oscR.connect(panner(1)).connect(binGain);
+        binGain.connect(fxIn);
+        oscL.start(); oscR.start();
+    }
+
+    // 2) Tensión estéreo de la paradoja: dos voces enfrentadas L/R
+    function playParadoxTone(freq, t0, dur, pan, peak) {
+        const o = actx.createOscillator(); o.type = 'triangle'; o.frequency.value = freq;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(peak, t0 + dur * 0.5);
+        g.gain.linearRampToValueAtTime(0.0001, t0 + dur);
+        o.connect(g); g.connect(panner(pan)).connect(fxIn);
+        o.start(t0); o.stop(t0 + dur + 0.1);
+    }
+
+    // 3) Acorde de la disolución
+    function playChord(freqs, t0, dur, peak) {
+        freqs.forEach(f => {
+            const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+            const g = actx.createGain();
+            g.gain.setValueAtTime(0.0001, t0);
+            g.gain.linearRampToValueAtTime(peak, t0 + 2);
+            g.gain.linearRampToValueAtTime(0.0001, t0 + dur);
+            o.connect(g); g.connect(fxIn);
+            o.start(t0); o.stop(t0 + dur + 0.1);
+        });
+    }
+
+    function startScheduling() {
+        // Pares de la paradoja (izquierda ↔ derecha)
+        const pares = [
+            [130.81, 261.63], [146.83, 220.00], [164.81, 246.94],
+            [174.61, 261.63], [196.00, 293.66], [220.00, 329.63]
+        ];
+        // Ciclo de 20 s: las paradojas suenan en los primeros ~16 s;
+        // el silencio final deja emerger la resolución.
+        const ciclo = () => {
+            const t = actx.currentTime;
+            pares.forEach((par, i) => {
+                const ts = t + i * 2.5 + 2;
+                playParadoxTone(par[0], ts, 2, -0.7, 0.06); // izquierda
+                playParadoxTone(par[1], ts, 2, 0.7, 0.06);  // derecha
+            });
+        };
+        ciclo(); timers.push(setInterval(ciclo, 20000));
+
+        // Acorde de disolución cada 8 s (sincronizado con el diamante ◈)
+        const acorde = () => playChord([261.63, 329.63, 392.00], actx.currentTime + 0.05, 6, 0.05);
+        acorde(); timers.push(setInterval(acorde, 8000));
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.8, actx.currentTime + 4);
+        startScheduling();
+        const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
     </script>
-    </body>
+</body>
 </html>
