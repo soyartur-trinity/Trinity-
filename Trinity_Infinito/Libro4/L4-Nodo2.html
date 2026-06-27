@@ -6,36 +6,31 @@
     <title>Escalas Sin Medida</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            /* NUEVO: Prevenir destellos de hardware */
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
         }
 
         body {
-            background: radial-gradient(circle at center, #0a0020, #000000);
+            background: radial-gradient(circle at center, #0a0a0c, #000000);
             color: #fff;
-            font-family: 'Courier New', monospace;
+            font-family: 'Georgia', serif;
             overflow: hidden;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: none;
         }
-        
+
         .scale-container {
             position: relative;
             width: 100%;
             height: 100%;
             perspective: 2000px;
-            /* NUEVO: Contener composición */
             transform-style: preserve-3d;
         }
-        
+
         .scale-plane {
             position: absolute;
             width: 200px;
@@ -45,178 +40,120 @@
             transform: translate(-50%, -50%);
             transform-style: preserve-3d;
         }
-        
+
+        /* Anillos de escala: transform/opacity. Color = blanco→oro por profundidad. */
         .scale-level {
             position: absolute;
             width: 100%;
             height: 100%;
             border: 1px solid;
-            /* CORRECCIÓN: Gradiente más oscuro y suave */
-            background: radial-gradient(
-                circle, 
-                transparent 50%, 
-                rgba(150, 180, 220, 0.03) 70%,
-                transparent 90%
-            );
-            animation: scaleBreath 12s infinite ease-in-out;
-            /* NUEVO: Prevenir flashes */
+            background: radial-gradient(circle, transparent 50%, rgba(208,192,160,0.025) 70%, transparent 90%);
             opacity: 0;
+            animation: scaleBreath 12s infinite ease-in-out;
         }
-        
         @keyframes scaleBreath {
-            0% {
-                transform: scale(var(--scale)) rotateX(var(--rotX)) rotateY(var(--rotY));
-                opacity: 0;
-            }
-            30% {
-                transform: scale(calc(var(--scale) * 1.8)) rotateX(calc(var(--rotX) + 90deg)) rotateY(calc(var(--rotY) + 90deg));
-                opacity: 0.6;
-            }
-            70% {
-                opacity: 0.4;
-            }
-            100% {
-                transform: scale(calc(var(--scale) * 3.5)) rotateX(calc(var(--rotX) + 360deg)) rotateY(calc(var(--rotY) + 360deg));
-                opacity: 0;
-            }
+            0%   { transform: scale(var(--scale)) rotateX(var(--rotX)) rotateY(var(--rotY)); opacity: 0; }
+            30%  { transform: scale(calc(var(--scale) * 1.8)) rotateX(calc(var(--rotX) + 90deg)) rotateY(calc(var(--rotY) + 90deg)); opacity: 0.6; }
+            70%  { opacity: 0.35; }
+            100% { transform: scale(calc(var(--scale) * 3.5)) rotateX(calc(var(--rotX) + 360deg)) rotateY(calc(var(--rotY) + 360deg)); opacity: 0; }
         }
-        
+
         .quantum-text {
             position: absolute;
             font-size: 14px;
-            /* CORRECCIÓN: Cyan más oscuro */
-            color: rgba(100, 220, 255, 0.7);
-            text-shadow: 0 0 8px rgba(100, 220, 255, 0.3);
-            animation: quantumFloat 15s infinite ease-in-out;
+            letter-spacing: 0.1em;
+            color: rgba(235, 230, 215, 0.7);
+            text-shadow: 0 0 10px rgba(235, 230, 215, 0.2);
             white-space: nowrap;
-            --moveX: 0px;
-            --moveY: 0px;
-            /* NUEVO: Suavizar transiciones */
-            transition: opacity 0.5s ease;
+            animation: quantumFloat 16s infinite ease-in-out;
+            --moveX: 0px; --moveY: 0px;
         }
-        
         @keyframes quantumFloat {
-            0% {
-                transform: translate(0, 0) scale(0.1);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.7;
-            }
-            60% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translate(var(--moveX), var(--moveY)) scale(8);
-                opacity: 0;
-            }
+            0%   { transform: translate(0, 0) scale(0.1); opacity: 0; }
+            20%  { opacity: 0.75; }
+            60%  { opacity: 0.5; }
+            100% { transform: translate(var(--moveX), var(--moveY)) scale(7); opacity: 0; }
         }
-        
-        /* CORRECCIÓN PRINCIPAL: Infinity zoom sin blanco */
+
         .infinity-zoom {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
             width: 8px;
             height: 8px;
-            /* CAMBIO CRÍTICO: Eliminar blanco, usar azul oscuro */
-            background: radial-gradient(
-                circle,
-                rgba(120, 180, 255, 0.6) 0%,
-                rgba(80, 150, 220, 0.3) 40%,
-                transparent 70%
-            );
+            background: radial-gradient(circle, rgba(255,248,235,0.55) 0%, rgba(208,192,160,0.25) 40%, transparent 70%);
             border-radius: 50%;
-            animation: infiniteZoom 6s infinite ease-out;
+            transform: translate(-50%, -50%) scale(1);
             opacity: 0;
-            /* NUEVO: Prevenir destellos */
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
+            animation: infiniteZoom 6s infinite ease-out;
         }
-        
         @keyframes infiniteZoom {
-            0% {
-                transform: translate(-50%, -50%) scale(1);
-                /* CORRECCIÓN: Box-shadow sin blanco */
-                box-shadow: 0 0 0 0 rgba(120, 180, 255, 0.4);
-                opacity: 0;
-            }
-            15% {
-                opacity: 0.5;
-            }
-            70% {
-                opacity: 0.2;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(80);
-                box-shadow: 0 0 150px 80px transparent;
-                opacity: 0;
-            }
+            0%   { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+            15%  { opacity: 0.45; }
+            70%  { opacity: 0.15; }
+            100% { transform: translate(-50%, -50%) scale(80); opacity: 0; }
         }
-        
+
         .dimension-text {
-            position: absolute;
-            bottom: 10%;
+            position: fixed;
+            bottom: 12%;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
-            font-size: 20px;
-            /* CORRECCIÓN: Dorado más oscuro */
-            color: rgba(255, 200, 50, 0.8);
-            text-shadow: 0 0 15px rgba(255, 200, 50, 0.3);
-            animation: dimensionPulse 6s infinite ease-in-out;
+            font-size: 1.15em;
+            line-height: 1.8;
+            letter-spacing: 0.15em;
+            color: rgba(208, 192, 160, 0.85);
+            text-shadow: 0 0 16px rgba(208, 192, 160, 0.25);
+            animation: dimensionPulse 11s infinite ease-in-out;
+            z-index: 40;
         }
-        
         @keyframes dimensionPulse {
-            0%, 100% { 
-                opacity: 0.4;
-                letter-spacing: 2px;
-            }
-            50% { 
-                opacity: 0.7;
-                letter-spacing: 4px;
-            }
-        }
-        
-        .scale-marker {
-            position: absolute;
-            /* CORRECCIÓN: Magenta más oscuro */
-            color: rgba(220, 100, 220, 0.7);
-            font-size: 12px;
-            animation: markerFloat 20s infinite linear;
-            text-shadow: 0 0 4px rgba(220, 100, 220, 0.3);
-        }
-        
-        @keyframes markerFloat {
-            from {
-                transform: rotate(0deg) translateX(250px) rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg) translateX(250px) rotate(-360deg);
-            }
-        }
-        
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.15;
+            0%   { opacity: 0; }
+            14%  { opacity: 0.85; }
+            80%  { opacity: 0.85; }
+            92%  { opacity: 0; }
+            100% { opacity: 0; }
         }
 
-        /* NUEVO: Capa supresora de destellos */
-        .scale-container::before {
-            content: '';
+        .scale-marker {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 100;
-            pointer-events: none;
+            color: rgba(212, 192, 160, 0.6);
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            text-shadow: 0 0 6px rgba(212, 192, 160, 0.2);
+            animation: markerFloat 24s infinite linear;
+        }
+        @keyframes markerFloat {
+            from { transform: rotate(0deg) translateX(250px) rotate(0deg); }
+            to   { transform: rotate(360deg) translateX(250px) rotate(-360deg); }
+        }
+
+        canvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.12;
+        }
+
+        .hint {
+            position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+            font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+        .infinito {
+            position: fixed; bottom: 24px; right: 28px;
+            color: rgba(208,192,160,0.35); text-decoration: none; font-size: 24px;
+            cursor: pointer; transition: color 0.6s ease; z-index: 60;
+        }
+        .infinito:hover { color: rgba(208,192,160,0.95); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .scale-level   { animation: none; opacity: 0.18; }
+            .quantum-text  { animation: none; opacity: 0; }
+            .scale-marker  { animation: none; opacity: 0; }
+            .infinity-zoom { animation: none; opacity: 0; }
+            .dimension-text{ animation: none; opacity: 0.85; }
         }
     </style>
 </head>
@@ -233,110 +170,155 @@
         La misma danza en todas las escalas
     </div>
 
+    <div class="hint" id="hint">( tocá: las escalas resuenan )</div>
+    <a class="infinito" href="L4-Nodo3.html" title="Siguiente portal">∞</a>
+
     <script>
-        // Canvas para líneas de escala
-        const canvas = document.getElementById('scaleCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        function drawScaleLines() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // CORRECCIÓN: Líneas más suaves y oscuras
-            ctx.strokeStyle = 'rgba(150, 170, 200, 0.05)';
-            ctx.lineWidth = 0.8;
-            
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const time = Date.now() * 0.00005; // Más lento
-            
-            for (let i = 0; i < 40; i++) {
-                const scale = Math.pow(1.4, i - 20);
-                const radius = 40 * scale % (canvas.width / 2);
-                const opacity = 0.1 + Math.sin(time + i * 0.5) * 0.05;
-                
-                ctx.globalAlpha = opacity;
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-            
-            ctx.globalAlpha = 1;
-            requestAnimationFrame(drawScaleLines);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ── Canvas: anillos de escala (blanco tenue) ──
+    const canvas = document.getElementById('scaleCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    function drawScaleLines() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = 'rgba(210, 205, 195, 0.06)';
+        ctx.lineWidth = 0.8;
+        const cx = canvas.width / 2, cy = canvas.height / 2;
+        const time = Date.now() * 0.00004;
+        for (let i = 0; i < 40; i++) {
+            const scale = Math.pow(1.4, i - 20);
+            const radius = (40 * scale) % (canvas.width / 2);
+            ctx.globalAlpha = 0.1 + Math.sin(time + i * 0.5) * 0.05;
+            ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI * 2); ctx.stroke();
         }
-        
-        drawScaleLines();
-        
-        // Crear niveles de escala
-        const plane = document.querySelector('.scale-plane');
-        for (let i = 0; i < 15; i++) {
-            const level = document.createElement('div');
-            level.className = 'scale-level';
-            level.style.setProperty('--scale', Math.pow(1.4, i - 7));
-            level.style.setProperty('--rotX', `${i * 24}deg`);
-            level.style.setProperty('--rotY', `${i * 48}deg`);
-            // CORRECCIÓN: Colores más oscuros
-            level.style.borderColor = `hsla(${i * 24}, 80%, 50%, 0.6)`;
-            level.style.animationDelay = `${i * 0.6}s`;
-            plane.appendChild(level);
-        }
-        
-        // Textos cuánticos flotantes
-        const quantumTexts = [
-            'Planck', 'Quark', 'Átomo', 'Molécula', 'Célula',
-            'Organismo', 'Planeta', 'Sistema', 'Galaxia', 'Universo'
-        ];
-        
-        quantumTexts.forEach((text, i) => {
-            const element = document.createElement('div');
-            element.className = 'quantum-text';
-            element.textContent = text;
-            element.style.left = Math.random() * 100 + '%';
-            element.style.top = Math.random() * 100 + '%';
-            element.style.setProperty('--moveX', (Math.random() - 0.5) * 400 + 'px');
-            element.style.setProperty('--moveY', (Math.random() - 0.5) * 400 + 'px');
-            element.style.animationDelay = i * 1.5 + 's';
-            document.body.appendChild(element);
+        ctx.globalAlpha = 1;
+        if (!reduce) requestAnimationFrame(drawScaleLines);
+    }
+    drawScaleLines();
+
+    // ── Niveles de escala (blanco→oro por profundidad) ──
+    const plane = document.querySelector('.scale-plane');
+    for (let i = 0; i < 15; i++) {
+        const level = document.createElement('div');
+        level.className = 'scale-level';
+        level.style.setProperty('--scale', Math.pow(1.4, i - 7));
+        level.style.setProperty('--rotX', `${i * 24}deg`);
+        level.style.setProperty('--rotY', `${i * 48}deg`);
+        const t = i / 14; // 0 = interior, 1 = exterior
+        level.style.borderColor = `rgba(255, ${Math.round(255 - t * 40)}, ${Math.round(255 - t * 100)}, 0.5)`;
+        level.style.animationDelay = `${i * 0.6}s`;
+        plane.appendChild(level);
+    }
+
+    if (!reduce) {
+        // ── Palabras de escala flotantes ──
+        ['Planck','Quark','Átomo','Molécula','Célula','Organismo','Planeta','Sistema','Galaxia','Universo']
+        .forEach((text, i) => {
+            const el = document.createElement('div');
+            el.className = 'quantum-text';
+            el.textContent = text;
+            el.style.left = Math.random() * 100 + '%';
+            el.style.top = Math.random() * 100 + '%';
+            el.style.setProperty('--moveX', (Math.random() - 0.5) * 400 + 'px');
+            el.style.setProperty('--moveY', (Math.random() - 0.5) * 400 + 'px');
+            el.style.animationDelay = i * 1.5 + 's';
+            document.body.appendChild(el);
         });
-        
-        // Marcadores de escala
-        const scales = [
-            '10⁻³⁵ m', '10⁻²⁰ m', '10⁻¹⁰ m', '10⁻⁵ m', '1 m',
-            '10⁵ m', '10¹⁰ m', '10¹⁵ m', '10²⁰ m', '10²⁸ m'
-        ];
-        
-        scales.forEach((scale, i) => {
-            const marker = document.createElement('div');
-            marker.className = 'scale-marker';
-            marker.textContent = scale;
-            marker.style.top = '50%';
-            marker.style.left = '50%';
-            marker.style.animationDelay = i * 2 + 's';
-            document.body.appendChild(marker);
+
+        // ── Marcadores de escala orbitando ──
+        ['10⁻³⁵ m','10⁻²⁰ m','10⁻¹⁰ m','10⁻⁵ m','1 m','10⁵ m','10¹⁰ m','10¹⁵ m','10²⁰ m','10²⁸ m']
+        .forEach((scale, i) => {
+            const m = document.createElement('div');
+            m.className = 'scale-marker';
+            m.textContent = scale;
+            m.style.top = '50%'; m.style.left = '50%';
+            m.style.animationDelay = i * 2 + 's';
+            document.body.appendChild(m);
         });
-        
-        // Crear zoom infinitos periódicos (menos frecuentes)
+
+        // ── Zoom infinitos periódicos (menos frecuentes) ──
         setInterval(() => {
             const zoom = document.createElement('div');
             zoom.className = 'infinity-zoom';
             document.querySelector('.scale-container').appendChild(zoom);
             setTimeout(() => zoom.remove(), 6000);
-        }, 1500);
-        
-        // Actualizar texto dimensional
-        const dimensions = [
-            "10⁻³⁵ metros ← → 10²⁸ metros<br>La misma danza en todas las escalas",
-            "Longitud de Planck ← → Observable Universe<br>Un continuo sin divisiones",
-            "Quantum ← → Cosmos<br>No hay arriba ni abajo en el infinito",
-            "Subatómico ← → Supergaláctico<br>El mismo patrón repitiéndose",
-            "Lo infinitamente pequeño ← → Lo infinitamente grande<br>Se encuentran en el círculo"
-        ];
-        
-        let dimIndex = 0;
-        setInterval(() => {
-            dimIndex = (dimIndex + 1) % dimensions.length;
-            document.querySelector('.dimension-text').innerHTML = dimensions[dimIndex];
-        }, 6000);
+        }, 3000);
+    }
+
+    // ── Texto dimensional (con tiempo de lectura) ──
+    const dimensions = [
+        "10⁻³⁵ metros ← → 10²⁸ metros<br>La misma danza en todas las escalas",
+        "Longitud de Planck ← → Universo observable<br>Un continuo sin divisiones",
+        "Quantum ← → Cosmos<br>No hay arriba ni abajo en el infinito",
+        "Subatómico ← → Supergaláctico<br>El mismo patrón repitiéndose",
+        "Lo infinitamente pequeño ← → Lo infinitamente grande<br>Se encuentran en el círculo"
+    ];
+    let dimIndex = 0;
+    setInterval(() => {
+        dimIndex = (dimIndex + 1) % dimensions.length;
+        document.querySelector('.dimension-text').innerHTML = dimensions[dimIndex];
+    }, 11000);
+
+    // ── Audio (Web Audio puro, SIN CDN; nace al tocar) ──
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+    function makeReverbIR(s, d) {
+        const rate = actx.sampleRate, len = Math.floor(rate * s);
+        const b = actx.createBuffer(2, len, rate);
+        for (let c = 0; c < 2; c++) { const a = b.getChannelData(c); for (let i = 0; i < len; i++) a[i] = (Math.random()*2-1)*Math.pow(1-i/len, d); }
+        return b;
+    }
+    function panner(p) { const s = actx.createStereoPanner(); s.pan.value = p; return s; }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(12, 1.8);
+        const wet = actx.createGain(); wet.gain.value = 0.6; conv.connect(wet); wet.connect(master);
+        const dry = actx.createGain(); dry.gain.value = 0.62; dry.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Drone con filtro que se abre y cierra muy lento (expansión de escalas)
+        const lp = actx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 400;
+        const sw = actx.createOscillator(); sw.type = 'sine'; sw.frequency.value = 1 / 40;
+        const swD = actx.createGain(); swD.gain.value = 700;
+        const swB = actx.createConstantSource(); swB.offset.value = 900;
+        sw.connect(swD); swD.connect(lp.frequency); swB.connect(lp.frequency);
+        const dg = actx.createGain(); dg.gain.value = 0.05;
+        [55, 82.41].forEach(f => { const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f; o.connect(lp); o.start(); });
+        lp.connect(dg); dg.connect(fxIn);
+        sw.start(); swB.start();
+    }
+
+    // Escalera de escalas: tonos que ascienden de lo pequeño a lo grande
+    const escalera = [65.41, 98.00, 130.81, 196.00, 261.63, 392.00, 523.25, 783.99, 1046.50];
+    let paso = 0;
+    function playEscalon(t0) {
+        const f = escalera[paso % escalera.length];
+        const pan = (paso % escalera.length) / (escalera.length - 1) * 1.6 - 0.8; // bajo→centro→alto barre el campo
+        paso++;
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+        const o2 = actx.createOscillator(); o2.type = 'sine'; o2.frequency.value = f * 2;
+        const g2 = actx.createGain(); g2.gain.value = 0.18; o2.connect(g2);
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.045, t0 + 1.5);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 6);
+        o.connect(g); g2.connect(g); g.connect(panner(pan)).connect(fxIn);
+        o.start(t0); o2.start(t0); o.stop(t0 + 6.2); o2.stop(t0 + 6.2);
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.7, actx.currentTime + 5);
+        const step = () => playEscalon(actx.currentTime + 0.05);
+        step(); timers.push(setInterval(step, 2400));
+        const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
     </script>
 </body>
 </html>
