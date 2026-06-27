@@ -1,263 +1,289 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Fractal Primordial</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Fractal Primordial</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
         background: #000;
         color: #fff;
-        font-family: 'Courier New', monospace;
+        font-family: 'Georgia', serif;
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
         perspective: 1500px;
+        cursor: none;
     }
-    
+
+    .sacred-symbol {
+        position: fixed;
+        top: 24px;
+        left: 50%;
+        font-size: 42px;
+        color: #d0c0a0;
+        text-shadow: 0 0 24px rgba(208, 192, 160, 0.45);
+        animation: sacred-rotate 22s infinite linear;
+        z-index: 30;
+    }
+    @keyframes sacred-rotate {
+        from { transform: translateX(-50%) rotate(0deg); }
+        to { transform: translateX(-50%) rotate(360deg); }
+    }
+
     .fractal-container {
         position: relative;
         width: 600px;
         height: 600px;
+        max-width: 92vw;
+        max-height: 92vh;
         transform-style: preserve-3d;
-        animation: rotateSpace 30s infinite linear;
+        animation: rotateSpace 44s infinite linear;
     }
-    
     @keyframes rotateSpace {
         from { transform: rotateY(0deg) rotateX(0deg); }
         to { transform: rotateY(360deg) rotateX(360deg); }
     }
-    
+
+    /* Anillos anidados: sólo transform/opacity, sin hue-rotate ni neón */
     .fractal-level {
         position: absolute;
-        border: 2px solid;
+        border: 1px solid;
         border-radius: 50%;
         transform-style: preserve-3d;
-        animation: pulse 4s infinite alternate;
+        animation: pulse 9s infinite alternate ease-in-out;
     }
-    
     @keyframes pulse {
-        0% { 
-            transform: scale(1) rotateZ(0deg);
-            filter: hue-rotate(0deg);
-        }
-        100% { 
-            transform: scale(1.2) rotateZ(180deg);
-            filter: hue-rotate(360deg);
-        }
+        0%   { transform: scale(1) rotateZ(0deg); opacity: 0.5; }
+        100% { transform: scale(1.18) rotateZ(180deg); opacity: 0.9; }
     }
-    
-    .level-1 {
-        width: 100%;
-        height: 100%;
-        border-color: #ff00ff;
-        box-shadow: 0 0 50px #ff00ff, inset 0 0 50px #ff00ff;
-    }
-    
-    .level-2 {
-        width: 70%;
-        height: 70%;
-        top: 15%;
-        left: 15%;
-        border-color: #00ffff;
-        box-shadow: 0 0 40px #00ffff, inset 0 0 40px #00ffff;
-        animation-delay: 0.5s;
-    }
-    
-    .level-3 {
-        width: 49%;
-        height: 49%;
-        top: 25.5%;
-        left: 25.5%;
-        border-color: #ffff00;
-        box-shadow: 0 0 30px #ffff00, inset 0 0 30px #ffff00;
-        animation-delay: 1s;
-    }
-    
-    .level-4 {
-        width: 34.3%;
-        height: 34.3%;
-        top: 32.85%;
-        left: 32.85%;
-        border-color: #ff00ff;
-        box-shadow: 0 0 20px #ff00ff, inset 0 0 20px #ff00ff;
-        animation-delay: 1.5s;
-    }
-    
+    .level-1 { width: 100%; height: 100%; border-color: rgba(255,255,255,0.18); box-shadow: 0 0 40px rgba(255,255,255,0.05), inset 0 0 40px rgba(255,255,255,0.03); }
+    .level-2 { width: 70%; height: 70%; top: 15%; left: 15%; border-color: rgba(255,255,255,0.24); box-shadow: 0 0 32px rgba(255,255,255,0.05), inset 0 0 32px rgba(255,255,255,0.03); animation-delay: 1.2s; }
+    .level-3 { width: 49%; height: 49%; top: 25.5%; left: 25.5%; border-color: rgba(224,208,176,0.3); box-shadow: 0 0 26px rgba(208,192,160,0.07), inset 0 0 26px rgba(208,192,160,0.04); animation-delay: 2.4s; }
+    .level-4 { width: 34.3%; height: 34.3%; top: 32.85%; left: 32.85%; border-color: rgba(212,192,160,0.38); box-shadow: 0 0 20px rgba(208,192,160,0.1), inset 0 0 20px rgba(208,192,160,0.05); animation-delay: 3.6s; }
+    .level-5 { width: 24%; height: 24%; top: 38%; left: 38%; border-color: rgba(212,192,160,0.5); box-shadow: 0 0 16px rgba(208,192,160,0.14), inset 0 0 16px rgba(208,192,160,0.07); animation-delay: 4.8s; }
+
     .infinity-point {
         position: absolute;
-        width: 10px;
-        height: 10px;
-        background: white;
+        width: 8px;
+        height: 8px;
+        background: radial-gradient(circle, rgba(255,248,235,0.95), rgba(212,192,160,0.2));
         border-radius: 50%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        box-shadow: 0 0 30px white, 0 0 60px white, 0 0 90px white;
-        animation: infinityPulse 2s infinite;
+        box-shadow: 0 0 22px rgba(255,240,220,0.5), 0 0 44px rgba(208,192,160,0.25);
+        animation: infinityPulse 4s infinite ease-in-out;
     }
-    
     @keyframes infinityPulse {
-        0%, 100% { transform: translate(-50%, -50%) scale(1); }
-        50% { transform: translate(-50%, -50%) scale(2); }
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        50% { transform: translate(-50%, -50%) scale(1.9); opacity: 1; }
     }
-    
-    .wisdom-text {
+
+    /* Anillos-eco: profundidad fractal infinita, monocromáticos */
+    .echo-ring {
         position: absolute;
-        bottom: 50px;
+        top: 50%;
+        left: 50%;
+        width: 600px;
+        height: 600px;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0.15);
+        opacity: 0;
+        pointer-events: none;
+        animation: echo-expand 7s ease-out forwards;
+    }
+    @keyframes echo-expand {
+        0%   { transform: translate(-50%, -50%) scale(0.12); opacity: 0; }
+        20%  { opacity: 0.22; }
+        100% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
+    }
+
+    .wisdom-text {
+        position: fixed;
+        bottom: 70px;
         left: 50%;
         transform: translateX(-50%);
         text-align: center;
-        font-size: 18px;
-        color: #fff;
-        text-shadow: 0 0 20px rgba(255,255,255,0.8);
-        animation: fadeInOut 6s infinite;
+        font-size: 1.05em;
+        line-height: 1.9;
+        color: rgba(255,255,255,0.85);
         width: 90%;
-        z-index: 100;
+        max-width: 640px;
+        z-index: 40;
+        animation: wisdom-fade 13s infinite ease-in-out;
     }
-    
-    @keyframes fadeInOut {
-        0%, 100% { opacity: 0; }
-        50% { opacity: 1; }
+    @keyframes wisdom-fade {
+        0%   { opacity: 0; }
+        12%  { opacity: 0.85; }
+        80%  { opacity: 0.85; }
+        92%  { opacity: 0; }
+        100% { opacity: 0; }
     }
-    
+
     .particle {
         position: absolute;
         width: 2px;
         height: 2px;
-        background: white;
+        background: rgba(255,255,255,0.7);
         border-radius: 50%;
-        animation: float 10s infinite linear;
+        pointer-events: none;
+        animation: float 14s infinite linear;
     }
-    
     @keyframes float {
-        from {
-            transform: translate(0, 0) scale(0);
-            opacity: 0;
-        }
-        10% {
-            opacity: 1;
-        }
-        90% {
-            opacity: 1;
-        }
-        to {
-            transform: translate(var(--endX), var(--endY)) scale(2);
-            opacity: 0;
-        }
+        0%   { transform: translate(0,0) scale(0); opacity: 0; }
+        10%  { opacity: 0.5; }
+        90%  { opacity: 0.3; }
+        100% { transform: translate(var(--endX), var(--endY)) scale(1.6); opacity: 0; }
     }
-    
-    .sacred-symbol {
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 48px;
-        animation: rotate 10s infinite linear;
-        color: gold;
-        text-shadow: 0 0 30px gold;
+
+    .hint {
+        position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+        font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+        animation: hint-breathe 4s ease-in-out infinite;
+        transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
     }
-    
-    @keyframes rotate {
-        from { transform: translateX(-50%) rotate(0deg); }
-        to { transform: translateX(-50%) rotate(360deg); }
+    .hint.oculto { opacity: 0; }
+    @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+    .infinito {
+        position: fixed; bottom: 24px; right: 28px;
+        color: rgba(208,192,160,0.35); text-decoration: none; font-size: 24px;
+        cursor: pointer; transition: color 0.6s ease; z-index: 60;
+    }
+    .infinito:hover { color: rgba(208,192,160,0.95); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .sacred-symbol { animation: none; }
+        .fractal-container { animation: none; }
+        .fractal-level { animation: none; opacity: 0.6; }
+        .infinity-point { animation: none; }
+        .wisdom-text { animation: none; opacity: 0.85; }
     }
 </style>
-
-
 </head>
 <body>
     <div class="sacred-symbol">∞</div>
 
+    <div class="fractal-container">
+        <div class="fractal-level level-1"></div>
+        <div class="fractal-level level-2"></div>
+        <div class="fractal-level level-3"></div>
+        <div class="fractal-level level-4"></div>
+        <div class="fractal-level level-5"></div>
+        <div class="infinity-point"></div>
+    </div>
 
-<div class="fractal-container">
-    <div class="fractal-level level-1"></div>
-    <div class="fractal-level level-2"></div>
-    <div class="fractal-level level-3"></div>
-    <div class="fractal-level level-4"></div>
-    <div class="infinity-point"></div>
-</div>
+    <div class="wisdom-text">
+        En cada átomo danza un universo completo<br>
+        En cada universo, infinitos átomos danzan<br>
+        La escala es ilusión — Todo contiene todo
+    </div>
 
-<div class="wisdom-text">
-    "En cada átomo danza un universo completo<br>
-    En cada universo, infinitos átomos danzan<br>
-    La escala es ilusión - Todo contiene todo"
-</div>
+    <div class="hint" id="hint">( tocá: el fractal resuena )</div>
+    <a class="infinito" href="L4-Nodo2.html" title="Siguiente portal">∞</a>
 
-<script>
-    // Crear partículas fractales
-    function createParticle() {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        
-        const startX = Math.random() * window.innerWidth;
-        const startY = Math.random() * window.innerHeight;
-        const endX = (Math.random() - 0.5) * 1000;
-        const endY = (Math.random() - 0.5) * 1000;
-        
-        particle.style.left = startX + 'px';
-        particle.style.top = startY + 'px';
-        particle.style.setProperty('--endX', endX + 'px');
-        particle.style.setProperty('--endY', endY + 'px');
-        particle.style.animationDelay = Math.random() * 10 + 's';
-        particle.style.animationDuration = (5 + Math.random() * 10) + 's';
-        
-        document.body.appendChild(particle);
-        
-        setTimeout(() => particle.remove(), 15000);
-    }
-    
-    // Generar partículas continuamente
-    setInterval(createParticle, 200);
-    
-    // Textos de sabiduría fractal
+    <script>
+    // ── Visual (corre al cargar) ──
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const wisdoms = [
-        "En cada átomo danza un universo completo<br>En cada universo, infinitos átomos danzan<br>La escala es ilusión - Todo contiene todo",
-        "El patrón que se repite en lo pequeño<br>Es el mismo que gobierna lo grande<br>Como es arriba, es abajo",
+        "En cada átomo danza un universo completo<br>En cada universo, infinitos átomos danzan<br>La escala es ilusión — Todo contiene todo",
+        "El patrón que se repite en lo pequeño<br>es el mismo que gobierna lo grande<br>Como es arriba, es abajo",
         "Cada parte contiene el todo<br>El todo está en cada parte<br>No hay fragmentos, solo hologramas",
         "La gota contiene el océano<br>El océano está en la gota<br>¿Dónde comienza uno y termina el otro?",
         "Zoom infinito hacia adentro<br>Expansión infinita hacia afuera<br>El mismo paisaje en todas las escalas"
     ];
-    
-    let wisdomIndex = 0;
+    let wIdx = 0;
     setInterval(() => {
-        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
-        document.querySelector('.wisdom-text').innerHTML = wisdoms[wisdomIndex];
-    }, 6000);
-    
-    // Crear más niveles fractales dinámicamente
-    function createFractalLevel(size, delay) {
-        const level = document.createElement('div');
-        level.className = 'fractal-level';
-        level.style.width = size + '%';
-        level.style.height = size + '%';
-        level.style.top = (50 - size/2) + '%';
-        level.style.left = (50 - size/2) + '%';
-        level.style.borderColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-        level.style.animationDelay = delay + 's';
-        level.style.boxShadow = `0 0 ${size/2}px currentColor, inset 0 0 ${size/2}px currentColor`;
-        
-        document.querySelector('.fractal-container').appendChild(level);
-        
-        setTimeout(() => level.remove(), 8000);
+        wIdx = (wIdx + 1) % wisdoms.length;
+        document.querySelector('.wisdom-text').innerHTML = wisdoms[wIdx];
+    }, 13000);
+
+    if (!reduce) {
+        const cont = document.querySelector('.fractal-container');
+        // partículas calmas
+        function createParticle() {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * window.innerWidth + 'px';
+            p.style.top = Math.random() * window.innerHeight + 'px';
+            p.style.setProperty('--endX', (Math.random() - 0.5) * 600 + 'px');
+            p.style.setProperty('--endY', (Math.random() - 0.5) * 600 + 'px');
+            p.style.animationDuration = (10 + Math.random() * 8) + 's';
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 18000);
+        }
+        for (let i = 0; i < 14; i++) createParticle();
+        setInterval(createParticle, 700);
+
+        // anillos-eco (profundidad fractal infinita)
+        setInterval(() => {
+            const r = document.createElement('div');
+            r.className = 'echo-ring';
+            cont.appendChild(r);
+            setTimeout(() => r.remove(), 7000);
+        }, 2500);
     }
-    
-    // Generar niveles fractales adicionales
-    setInterval(() => {
-        createFractalLevel(Math.random() * 80 + 10, Math.random() * 2);
-    }, 3000);
-</script>
 
+    // ── Audio (Web Audio puro, SIN CDN; nace al tocar) ──
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+    function makeReverbIR(s, d) {
+        const rate = actx.sampleRate, len = Math.floor(rate * s);
+        const b = actx.createBuffer(2, len, rate);
+        for (let c = 0; c < 2; c++) { const a = b.getChannelData(c); for (let i = 0; i < len; i++) a[i] = (Math.random()*2-1)*Math.pow(1-i/len, d); }
+        return b;
+    }
+    function panner(p) { const s = actx.createStereoPanner(); s.pan.value = p; return s; }
 
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+        const dry = actx.createGain(); dry.gain.value = 0.65; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(9, 2.0);
+        const wet = actx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Drone de octavas anidadas (autosimilar)
+        [65.41, 130.81, 196.00, 261.63].forEach((f, i) => {
+            const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+            const g = actx.createGain(); g.gain.value = 0.045 / (i * 0.5 + 1);
+            const lfo = actx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 1 / (13 + i * 5);
+            const depth = actx.createGain(); depth.gain.value = g.gain.value * 0.6;
+            lfo.connect(depth); depth.connect(g.gain);
+            o.connect(g); g.connect(fxIn); o.start(); lfo.start();
+        });
+    }
+
+    // Zoom: un tono que sube una octava y se desvanece (se solapan = ascenso sin fin)
+    function playZoom(t0) {
+        const base = [98, 130.81, 196][Math.floor(Math.random() * 3)];
+        const o = actx.createOscillator(); o.type = 'sine';
+        o.frequency.setValueAtTime(base, t0);
+        o.frequency.exponentialRampToValueAtTime(base * 2, t0 + 6);
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.04, t0 + 2);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 6);
+        o.connect(g); g.connect(panner(Math.random()*1.4-0.7)).connect(fxIn);
+        o.start(t0); o.stop(t0 + 6.2);
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.7, actx.currentTime + 5);
+        const z = () => playZoom(actx.currentTime + 0.05);
+        z(); timers.push(setInterval(z, 3000));
+        const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
