@@ -8,7 +8,8 @@
         body {
             background: #000;
             color: #fff;
-            font-family: 'Times New Roman', serif;
+            /* Georgia: tipografía del estándar Trinity Infinito (antes Times New Roman) */
+            font-family: 'Georgia', 'Times New Roman', serif;
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -22,6 +23,8 @@
             position: relative;
             width: 600px;
             height: 600px;
+            max-width: 92vw;
+            max-height: 92vh;
         }
         .existence, .non-existence {
             position: absolute;
@@ -29,6 +32,7 @@
             text-align: center;
             font-size: 1.5em;
             letter-spacing: 0.3em;
+            opacity: 0;
             animation: phase 12s infinite ease-in-out;
         }
         .existence {
@@ -39,10 +43,13 @@
             bottom: 20%;
             animation-delay: 6s;
         }
+        /* Plateau legible: aparece, se sostiene un momento, se disuelve. Sólo opacity/transform. */
         @keyframes phase {
-            0%, 100% { opacity: 0; transform: scale(0.8); }
-            25% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 0; transform: scale(1.2); }
+            0%   { opacity: 0;   transform: scale(0.85); }
+            15%  { opacity: 0.6; transform: scale(1); }
+            35%  { opacity: 0.6; transform: scale(1); }
+            50%  { opacity: 0;   transform: scale(1.15); }
+            100% { opacity: 0;   transform: scale(1.15); }
         }
         .neither {
             position: absolute;
@@ -61,13 +68,17 @@
             position: absolute;
             font-size: 0.9em;
             opacity: 0;
-            animation: quantum-flicker 4s infinite ease-in-out;
-            animation-delay: calc(var(--delay) * 0.7s);
-            color: #666;
+            animation: quantum-flicker 9s infinite ease-in-out;
+            animation-delay: calc(var(--delay) * 0.9s);
+            color: #888;
         }
+        /* Antes era un destello de ~0.4s (ilegible). Ahora alcanza a leerse, sin perder su carácter fugaz. */
         @keyframes quantum-flicker {
-            0%, 90%, 100% { opacity: 0; }
-            95% { opacity: 0.5; }
+            0%   { opacity: 0; }
+            8%   { opacity: 0.5; }
+            28%  { opacity: 0.5; }
+            36%  { opacity: 0; }
+            100% { opacity: 0; }
         }
         .center-void {
             position: absolute;
@@ -84,6 +95,63 @@
             0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; }
             50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.3; }
         }
+        .disuelve {
+            position: absolute;
+            bottom: 10%;
+            width: 100%;
+            text-align: center;
+            opacity: 0.2;
+            font-size: 0.8em;
+            letter-spacing: 0.5em;
+        }
+        /* Pista discreta: como el cursor está oculto, indica que la paradoja despierta al tacto. */
+        .hint {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe {
+            0%, 100% { opacity: 0.18; }
+            50% { opacity: 0.45; }
+        }
+        /* === NAVEGACIÓN ∞ (respeta nomenclatura: L1-NodoN.html) === */
+        .infinito {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.6s ease;
+            z-index: 60;
+        }
+        .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        /* === RESPETO POR prefers-reduced-motion === */
+        @media (prefers-reduced-motion: reduce) {
+            .existence     { animation: none; opacity: 0.55; transform: none; top: 18%; }
+            .non-existence { animation: none; opacity: 0.55; transform: none; bottom: 18%; }
+            .neither       { animation: none; opacity: 0.8; }
+            .quantum-state { animation: none; opacity: 0.35; }
+            .center-void   { animation: none; opacity: 0.2; transform: translate(-50%, -50%); }
+            .hint          { animation: none; opacity: 0.3; }
+        }
+        @media (max-width: 640px) {
+            .existence, .non-existence { font-size: 1.2em; }
+            .neither { font-size: 2.2em; }
+            .quantum-state { font-size: 0.8em; }
+        }
     </style>
 </head>
 <body>
@@ -98,86 +166,139 @@
         <div class="quantum-state" style="bottom: 10%; right: 20%; --delay: 4;">¿Ninguno?</div>
         <div class="quantum-state" style="top: 50%; left: 5%; --delay: 5;">¿La pregunta misma?</div>
         <div class="quantum-state" style="top: 70%; right: 5%; --delay: 6;">¿El que pregunta?</div>
-        <div style="position: absolute; bottom: 10%; width: 100%; text-align: center; opacity: 0.2; font-size: 0.8em; letter-spacing: 0.5em;">
-            LA RESPUESTA DISUELVE LA PREGUNTA
-        </div>
+        <div class="disuelve">LA RESPUESTA DISUELVE LA PREGUNTA</div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <div class="hint" id="hint">( tocá para que la paradoja resuene )</div>
+    <a class="infinito" href="L1-Nodo4.html" title="Siguiente portal">∞</a>
+
     <script>
-        let soundInitialized = false;
+    // ============================================================
+    //  La Sinfonía de la Paradoja — Web Audio API puro, SIN CDN
+    //  (Reconstrucción del diseño sonoro original de Tone.js,
+    //   preservando su concepto: binaural theta, oscilación de la
+    //   dualidad, gong de la trascendencia y susurros de la mente.)
+    // ============================================================
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
 
-        async function initSound() {
-            if (soundInitialized) return;
-            await Tone.start();
-
-            const reverb = new Tone.Reverb({ decay: 15, wet: 0.5 }).toDestination();
-
-            // 1. El Cruce Binaural
-            const baseFreq = 100; // Frecuencia central
-            const binauralBeat = 5; // 5 Hz = Onda Theta
-            const lfo = new Tone.LFO("12s", -binauralBeat / 2, binauralBeat / 2).start();
-            
-            const oscL = new Tone.Oscillator(baseFreq, "sine").toDestination();
-            const oscR = new Tone.Oscillator(baseFreq, "sine").toDestination();
-            
-            lfo.connect(oscL.frequency, 0, 1);
-            lfo.connect(oscR.frequency, 0, -1); // Conectado inversamente
-            
-            const pannerL = new Tone.Panner(-1).connect(reverb);
-            const pannerR = new Tone.Panner(1).connect(reverb);
-            oscL.connect(pannerL);
-            oscR.connect(pannerR);
-            oscL.volume.value = -30;
-            oscR.volume.value = -30;
-            oscL.start();
-            oscR.start();
-
-            // 2. La Oscilación de la Dualidad
-            const existenceSynth = new Tone.FMSynth({ envelope: { attack: 3, release: 3 }, volume: -20 }).connect(reverb);
-            const nonExistenceSynth = new Tone.FMSynth({ envelope: { attack: 3, release: 3 }, volume: -20 }).connect(reverb);
-            
-            new Tone.Loop(time => {
-                existenceSynth.triggerAttackRelease("C3", "6s", time + 3); // Aparece al 25% de 12s
-                nonExistenceSynth.triggerAttackRelease("G3", "6s", time + 9); // Aparece al 25% de su ciclo, 6s después
-            }, "12s").start(0);
-
-            // 3. El Gong de la Trascendencia
-            const gongSynth = new Tone.MetalSynth({
-                frequency: 150,
-                envelope: { attack: 0.01, decay: 4, release: 1 },
-                harmonicity: 3.1,
-                modulationIndex: 20,
-                resonance: 800,
-                octaves: 1.5,
-                volume: -12
-            }).connect(reverb);
-            
-            new Tone.Loop(time => {
-                gongSynth.triggerAttack(time + 6); // Ocurre al 50% de 12s
-            }, "12s").start(0);
-            
-            // 4. Los Susurros de la Mente (preguntas)
-            const whisperSynth = new Tone.PluckSynth({
-                attackNoise: 0.5,
-                dampening: 8000,
-                resonance: 0.98,
-                volume: -25
-            }).connect(reverb);
-            const whisperPanner = new Tone.AutoPanner("2s").connect(reverb).start();
-            whisperSynth.connect(whisperPanner);
-            
-            new Tone.Loop(time => {
-                whisperSynth.triggerAttack("C6", time);
-            }, "4.2s").start("1s");
-
-
-            Tone.Transport.start();
-            soundInitialized = true;
-            console.log("La Sinfonía de la Paradoja ha comenzado.");
+    // Reverb por convolución: impulso sintético (cola que decae).
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate;
+        const len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+            }
         }
+        return buf;
+    }
 
-        document.body.addEventListener('click', initSound, { once: true });
+    function panner(p) {
+        const sp = actx.createStereoPanner();
+        sp.pan.value = p;
+        return sp;
+    }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+
+        master = actx.createGain();
+        master.gain.value = 0;
+        master.connect(actx.destination);
+
+        // Mezcla seco + húmedo
+        const dry = actx.createGain(); dry.gain.value = 0.7; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(7, 2.5);
+        const wet = actx.createGain(); wet.gain.value = 0.45;
+        conv.connect(wet); wet.connect(master);
+
+        fxIn = actx.createGain(); fxIn.gain.value = 1;
+        fxIn.connect(dry); fxIn.connect(conv);
+
+        // 1) EL CRUCE BINAURAL — pulso theta (~5 Hz) entre ambos oídos
+        const oscL = actx.createOscillator(); oscL.type = 'sine'; oscL.frequency.value = 100;
+        const oscR = actx.createOscillator(); oscR.type = 'sine'; oscR.frequency.value = 105;
+        const binGain = actx.createGain(); binGain.gain.value = 0.06;
+        oscL.connect(panner(-1)).connect(binGain);
+        oscR.connect(panner(1)).connect(binGain);
+        binGain.connect(fxIn);
+        // deriva lentísima del latido binaural
+        const drift = actx.createOscillator(); drift.type = 'sine'; drift.frequency.value = 1 / 24;
+        const driftAmt = actx.createGain(); driftAmt.gain.value = 1.5;
+        drift.connect(driftAmt); driftAmt.connect(oscR.frequency);
+        oscL.start(); oscR.start(); drift.start();
+    }
+
+    // Tono con envolvente lenta (la oscilación de la dualidad)
+    function playTone(freq, t0, dur, peak) {
+        const o = actx.createOscillator(); o.type = 'triangle'; o.frequency.value = freq;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(peak, t0 + dur * 0.4);
+        g.gain.linearRampToValueAtTime(0.0001, t0 + dur);
+        o.connect(g); g.connect(fxIn);
+        o.start(t0); o.stop(t0 + dur + 0.1);
+    }
+
+    // El gong de la trascendencia: parciales inarmónicos, ataque seco, cola larga
+    function playGong(t0) {
+        const base = 150, partials = [1, 1.5, 2.4, 3.1, 4.7], peak = 0.13;
+        partials.forEach((r, i) => {
+            const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = base * r;
+            const g = actx.createGain();
+            g.gain.setValueAtTime(0.0001, t0);
+            g.gain.linearRampToValueAtTime(peak / (i + 1), t0 + 0.01);
+            g.gain.exponentialRampToValueAtTime(0.0001, t0 + 4 + i * 0.4);
+            o.connect(g); g.connect(fxIn);
+            o.start(t0); o.stop(t0 + 5 + i * 0.4);
+        });
+    }
+
+    // Susurros de la mente: breves púas agudas que cruzan el campo
+    function playWhisper(t0) {
+        const o = actx.createOscillator(); o.type = 'triangle'; o.frequency.value = 1046.5; // C6
+        const lp = actx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3000;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(0.05, t0 + 0.006);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.28);
+        o.connect(lp); lp.connect(g); g.connect(panner(Math.random() * 1.6 - 0.8)).connect(fxIn);
+        o.start(t0); o.stop(t0 + 0.32);
+    }
+
+    function startScheduling() {
+        // Ciclo de 12 s, sincronizado con lo visual:
+        //  +3s EXISTENCIA (C3) · +6s NI (gong) · +9s NO-EXISTENCIA (G3)
+        const ciclo = () => {
+            const t = actx.currentTime;
+            playTone(130.81, t + 3, 6, 0.10);
+            playGong(t + 6);
+            playTone(196.00, t + 9, 6, 0.10);
+        };
+        ciclo();
+        timers.push(setInterval(ciclo, 12000));
+
+        // Susurros cada 4.2 s
+        const susurro = () => playWhisper(actx.currentTime + 0.05);
+        susurro();
+        timers.push(setInterval(susurro, 4200));
+    }
+
+    async function initSound() {
+        if (started) return;
+        started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.8, actx.currentTime + 4);
+        startScheduling();
+        const hint = document.getElementById('hint');
+        if (hint) hint.classList.add('oculto');
+    }
+
+    document.body.addEventListener('click', initSound, { once: true });
     </script>
-    </body>
+</body>
 </html>
