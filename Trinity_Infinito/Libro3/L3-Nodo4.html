@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +8,8 @@
         body {
             background: #000;
             color: #fff;
-            font-family: 'Palatino', serif;
+            /* Georgia: estándar de la serie (antes Palatino) */
+            font-family: 'Georgia', 'Palatino', serif;
             margin: 0;
             height: 100vh;
             display: flex;
@@ -17,131 +17,230 @@
             justify-content: center;
             overflow: hidden;
             perspective: 1000px;
+            cursor: none;
         }
 
+        .infinite-board {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            transform-style: preserve-3d;
+            animation: board-rotate 30s infinite linear;
+        }
+        @keyframes board-rotate {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
 
-    .infinite-board {
-        position: relative;
-        width: 600px;
-        height: 600px;
-        transform-style: preserve-3d;
-        animation: board-rotate 30s infinite linear;
-    }
-    
-    @keyframes board-rotate {
-        from { transform: rotateX(0deg) rotateY(0deg); }
-        to { transform: rotateX(360deg) rotateY(360deg); }
-    }
-    
-    .board-square {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        border: 1px solid rgba(255,255,255,0.1);
-        animation: square-pulse 10s infinite;
-        animation-delay: calc(var(--x) * 0.1s + var(--y) * 0.1s);
-        transform: translateZ(calc(var(--z) * 20px));
-    }
-    
-    @keyframes square-pulse {
-        0%, 100% { 
-            opacity: 0.1; 
-            background: transparent;
+        /* Antes animaba background-color (paint). Ahora sólo opacity. */
+        .board-square {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(255,255,255,0.12);
+            transform: translateZ(calc(var(--z) * 20px));
+            animation: square-pulse 10s infinite ease-in-out;
+            animation-delay: calc(var(--x) * 0.1s + var(--y) * 0.1s);
         }
-        50% { 
-            opacity: 0.3; 
-            background: rgba(255,255,255,0.05);
+        @keyframes square-pulse {
+            0%, 100% { opacity: 0.12; }
+            50% { opacity: 0.35; }
         }
-    }
-    
-    .infinity-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 4em;
-        opacity: 0.2;
-        animation: infinity-breathe 8s infinite;
-    }
-    
-    @keyframes infinity-breathe {
-        0%, 100% { 
-            opacity: 0.2; 
-            transform: translate(-50%, -50%) scale(1);
-        }
-        50% { 
-            opacity: 0.4; 
-            transform: translate(-50%, -50%) scale(1.2);
-        }
-    }
-    
-    .dimension-text {
-        position: absolute;
-        font-size: 0.9em;
-        letter-spacing: 0.3em;
-        opacity: 0;
-        animation: dimension-flash 12s infinite;
-        animation-delay: calc(var(--dim) * 3s);
-    }
-    
-    @keyframes dimension-flash {
-        0%, 90%, 100% { opacity: 0; }
-        93%, 97% { opacity: 0.4; }
-    }
-</style>
 
+        /* ∞ estable en el centro: el infinito quieto en torno al cual
+           gira el tablero finito (sacado del contenedor que rota). */
+        .infinity-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            font-size: 4em;
+            opacity: 0.2;
+            z-index: 20;
+            animation: infinity-breathe 8s infinite ease-in-out;
+        }
+        @keyframes infinity-breathe {
+            0%, 100% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.18); }
+        }
 
+        /* Textos legibles, fuera del giro 3D, respirando con su tiempo. */
+        .dimensions {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 25;
+        }
+        .dimension-text {
+            position: absolute;
+            font-size: 0.9em;
+            letter-spacing: 0.3em;
+            opacity: 0;
+            animation: dimension-breathe 26s infinite ease-in-out;
+            animation-delay: calc(var(--dim) * -6.5s);
+        }
+        @keyframes dimension-breathe {
+            0%   { opacity: 0; }
+            8%   { opacity: 0.45; }
+            30%  { opacity: 0.45; }
+            38%  { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .hint {
+            position: fixed; bottom: 66px; left: 50%; transform: translateX(-50%);
+            font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease; pointer-events: none; z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+        .infinito {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,0.25); text-decoration: none; font-size: 24px;
+            cursor: pointer; transition: color 0.6s ease; z-index: 60;
+        }
+        .infinito:hover { color: rgba(255,255,255,0.85); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .infinite-board { animation: none; }
+            .board-square   { animation: none; opacity: 0.16; }
+            .infinity-text  { animation: none; opacity: 0.3; }
+            .dimension-text { animation: none; opacity: 0.4; }
+            .hint           { animation: none; opacity: 0.3; }
+        }
+    </style>
 </head>
 <body>
     <div class="infinite-board">
-        <!-- Crear grid 3D -->
         <div class="board-square" style="left: 100px; top: 100px; --x: 1; --y: 1; --z: 0;"></div>
         <div class="board-square" style="left: 200px; top: 100px; --x: 2; --y: 1; --z: 1;"></div>
         <div class="board-square" style="left: 300px; top: 100px; --x: 3; --y: 1; --z: 2;"></div>
         <div class="board-square" style="left: 400px; top: 100px; --x: 4; --y: 1; --z: 1;"></div>
         <div class="board-square" style="left: 500px; top: 100px; --x: 5; --y: 1; --z: 0;"></div>
 
+        <div class="board-square" style="left: 100px; top: 200px; --x: 1; --y: 2; --z: 1;"></div>
+        <div class="board-square" style="left: 200px; top: 200px; --x: 2; --y: 2; --z: 2;"></div>
+        <div class="board-square" style="left: 300px; top: 200px; --x: 3; --y: 2; --z: 3;"></div>
+        <div class="board-square" style="left: 400px; top: 200px; --x: 4; --y: 2; --z: 2;"></div>
+        <div class="board-square" style="left: 500px; top: 200px; --x: 5; --y: 2; --z: 1;"></div>
 
-    <div class="board-square" style="left: 100px; top: 200px; --x: 1; --y: 2; --z: 1;"></div>
-    <div class="board-square" style="left: 200px; top: 200px; --x: 2; --y: 2; --z: 2;"></div>
-    <div class="board-square" style="left: 300px; top: 200px; --x: 3; --y: 2; --z: 3;"></div>
-    <div class="board-square" style="left: 400px; top: 200px; --x: 4; --y: 2; --z: 2;"></div>
-    <div class="board-square" style="left: 500px; top: 200px; --x: 5; --y: 2; --z: 1;"></div>
-    
-    <div class="board-square" style="left: 100px; top: 300px; --x: 1; --y: 3; --z: 2;"></div>
-    <div class="board-square" style="left: 200px; top: 300px; --x: 2; --y: 3; --z: 3;"></div>
-    <div class="board-square" style="left: 300px; top: 300px; --x: 3; --y: 3; --z: 4;"></div>
-    <div class="board-square" style="left: 400px; top: 300px; --x: 4; --y: 3; --z: 3;"></div>
-    <div class="board-square" style="left: 500px; top: 300px; --x: 5; --y: 3; --z: 2;"></div>
-    
-    <div class="board-square" style="left: 100px; top: 400px; --x: 1; --y: 4; --z: 1;"></div>
-    <div class="board-square" style="left: 200px; top: 400px; --x: 2; --y: 4; --z: 2;"></div>
-    <div class="board-square" style="left: 300px; top: 400px; --x: 3; --y: 4; --z: 3;"></div>
-    <div class="board-square" style="left: 400px; top: 400px; --x: 4; --y: 4; --z: 2;"></div>
-    <div class="board-square" style="left: 500px; top: 400px; --x: 5; --y: 4; --z: 1;"></div>
-    
-    <div class="board-square" style="left: 100px; top: 500px; --x: 1; --y: 5; --z: 0;"></div>
-    <div class="board-square" style="left: 200px; top: 500px; --x: 2; --y: 5; --z: 1;"></div>
-    <div class="board-square" style="left: 300px; top: 500px; --x: 3; --y: 5; --z: 2;"></div>
-    <div class="board-square" style="left: 400px; top: 500px; --x: 4; --y: 5; --z: 1;"></div>
-    <div class="board-square" style="left: 500px; top: 500px; --x: 5; --y: 5; --z: 0;"></div>
-    
+        <div class="board-square" style="left: 100px; top: 300px; --x: 1; --y: 3; --z: 2;"></div>
+        <div class="board-square" style="left: 200px; top: 300px; --x: 2; --y: 3; --z: 3;"></div>
+        <div class="board-square" style="left: 300px; top: 300px; --x: 3; --y: 3; --z: 4;"></div>
+        <div class="board-square" style="left: 400px; top: 300px; --x: 4; --y: 3; --z: 3;"></div>
+        <div class="board-square" style="left: 500px; top: 300px; --x: 5; --y: 3; --z: 2;"></div>
+
+        <div class="board-square" style="left: 100px; top: 400px; --x: 1; --y: 4; --z: 1;"></div>
+        <div class="board-square" style="left: 200px; top: 400px; --x: 2; --y: 4; --z: 2;"></div>
+        <div class="board-square" style="left: 300px; top: 400px; --x: 3; --y: 4; --z: 3;"></div>
+        <div class="board-square" style="left: 400px; top: 400px; --x: 4; --y: 4; --z: 2;"></div>
+        <div class="board-square" style="left: 500px; top: 400px; --x: 5; --y: 4; --z: 1;"></div>
+
+        <div class="board-square" style="left: 100px; top: 500px; --x: 1; --y: 5; --z: 0;"></div>
+        <div class="board-square" style="left: 200px; top: 500px; --x: 2; --y: 5; --z: 1;"></div>
+        <div class="board-square" style="left: 300px; top: 500px; --x: 3; --y: 5; --z: 2;"></div>
+        <div class="board-square" style="left: 400px; top: 500px; --x: 4; --y: 5; --z: 1;"></div>
+        <div class="board-square" style="left: 500px; top: 500px; --x: 5; --y: 5; --z: 0;"></div>
+    </div>
+
     <div class="infinity-text">∞</div>
-    
-    <div class="dimension-text" style="top: 10%; left: 50%; transform: translateX(-50%); --dim: 0;">
-        Sin bordes
-    </div>
-    <div class="dimension-text" style="bottom: 10%; left: 50%; transform: translateX(-50%); --dim: 1;">
-        Sin límites
-    </div>
-    <div class="dimension-text" style="top: 50%; left: 10%; --dim: 2;">
-        Sin dimensiones fijas
-    </div>
-    <div class="dimension-text" style="top: 50%; right: 10%; --dim: 3;">
-        Expansión perpetua
-    </div>
-</div>
 
+    <div class="dimensions">
+        <div class="dimension-text" style="top: 12%; left: 50%; transform: translateX(-50%); --dim: 0;">Sin bordes</div>
+        <div class="dimension-text" style="bottom: 14%; left: 50%; transform: translateX(-50%); --dim: 1;">Sin límites</div>
+        <div class="dimension-text" style="top: 50%; left: 8%; --dim: 2;">Sin dimensiones fijas</div>
+        <div class="dimension-text" style="top: 50%; right: 8%; --dim: 3;">Expansión perpetua</div>
+    </div>
 
+    <div class="hint" id="hint">( tocá: el tablero no tiene bordes )</div>
+    <a class="infinito" href="L3-Nodo5.html" title="Siguiente portal">∞</a>
+
+    <script>
+    // ============================================================
+    //  Web Audio API puro, SIN CDN.
+    //  Un drone cuyo filtro respira abriéndose y cerrándose muy lento
+    //  (el tablero expandiéndose) y tonos que aparecen a distintas
+    //  "profundidades" —cerca (seco) o lejos (sólo reverberación)—
+    //  y posiciones, sugiriendo dimensiones infinitas.
+    // ============================================================
+    let actx = null, master = null, started = false;
+    let nearBus = null, farBus = null;
+    const timers = [];
+    const escala = [98.00, 130.81, 196.00, 261.63, 392.00, 523.25, 587.33, 783.99];
+
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate, len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++)
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+        }
+        return buf;
+    }
+    function panner(p) { const sp = actx.createStereoPanner(); sp.pan.value = p; return sp; }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(12, 1.8);
+        const wet = actx.createGain(); wet.gain.value = 0.6; conv.connect(wet); wet.connect(master);
+        nearBus = actx.createGain(); nearBus.gain.value = 0.8; nearBus.connect(master);
+        farBus = actx.createGain(); farBus.gain.value = 1.0; farBus.connect(conv); // lejos = sólo reverb
+
+        // Drone con filtro que respira (el tablero abriéndose y cerrándose)
+        const lp = actx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 300;
+        const swLFO = actx.createOscillator(); swLFO.type = 'sine'; swLFO.frequency.value = 1 / 48; // ~48s
+        const swDepth = actx.createGain(); swDepth.gain.value = 650;
+        const swBase = actx.createConstantSource(); swBase.offset.value = 800;
+        swLFO.connect(swDepth); swDepth.connect(lp.frequency); swBase.connect(lp.frequency);
+        const dg = actx.createGain(); dg.gain.value = 0.05;
+        [55, 82.41, 110].forEach(f => {
+            const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+            o.connect(lp); o.start();
+        });
+        lp.connect(dg); dg.connect(nearBus); dg.connect(conv);
+        swLFO.start(); swBase.start();
+    }
+
+    // Un tono en alguna dimensión: cerca (seco) o lejos (reverb)
+    function playDimension(t0) {
+        const f = escala[Math.floor(Math.random() * escala.length)];
+        const lejos = Math.random() < 0.5;
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+        const o2 = actx.createOscillator(); o2.type = 'sine'; o2.frequency.value = f * 1.5;
+        const g2 = actx.createGain(); g2.gain.value = 0.2; o2.connect(g2);
+        const g = actx.createGain();
+        const peak = lejos ? 0.06 : 0.04;
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(peak, t0 + 2.5);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 8);
+        o.connect(g); g2.connect(g);
+        g.connect(panner(Math.random() * 1.8 - 0.9)).connect(lejos ? farBus : nearBus);
+        o.start(t0); o2.start(t0); o.stop(t0 + 8.2); o2.stop(t0 + 8.2);
+    }
+
+    function expandir() {
+        const espera = 2500 + Math.random() * 3000;
+        const id = setTimeout(() => {
+            if (!started) return;
+            playDimension(actx.currentTime + 0.05);
+            expandir();
+        }, espera);
+        timers.push(id);
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.7, actx.currentTime + 5);
+        playDimension(actx.currentTime + 0.5);
+        expandir();
+        const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
