@@ -8,7 +8,8 @@
         body {
             background: #000;
             color: #fff;
-            font-family: 'Times New Roman', serif;
+            /* Georgia: estándar de la serie (antes Times New Roman) */
+            font-family: 'Georgia', 'Times New Roman', serif;
             margin: 0;
             height: 100vh;
             display: flex;
@@ -25,21 +26,19 @@
         .presence-point {
             position: absolute;
             font-size: 0.9em;
-            opacity: 0;
-            animation: presence-manifest 12s infinite;
-            animation-delay: calc(var(--delay) * 1.5s);
             letter-spacing: 0.2em;
+            opacity: 0;
+            animation: presence-manifest 24s infinite ease-in-out;
+            animation-delay: calc(var(--delay) * -3s);
         }
         @keyframes presence-manifest {
-            0%, 80%, 100% { 
-                opacity: 0; 
-                transform: scale(0.5);
-            }
-            85%, 95% { 
-                opacity: 0.5; 
-                transform: scale(1);
-            }
+            0%   { opacity: 0; transform: scale(0.5); }
+            8%   { opacity: 0.55; transform: scale(1); }
+            30%  { opacity: 0.55; transform: scale(1); }
+            38%  { opacity: 0; transform: scale(0.85); }
+            100% { opacity: 0; transform: scale(0.85); }
         }
+        /* ◯ — antes animaba letter-spacing y filter:blur; ahora scale+opacity */
         .no-center {
             position: absolute;
             top: 50%;
@@ -50,41 +49,64 @@
             animation: center-dissolve 10s infinite ease-in-out;
         }
         @keyframes center-dissolve {
-            0%, 100% { 
-                opacity: 0.1; 
-                letter-spacing: 1em;
-                filter: blur(5px);
-            }
-            50% { 
-                opacity: 0.4; 
-                letter-spacing: 0.5em;
-                filter: blur(0);
-            }
+            0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.94); }
         }
+        /* Antes animaba width/height (reflow). Ahora scale, concéntrico. */
         .everywhere-circle {
             position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150vmax;
+            height: 150vmax;
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0.03);
             animation: expand-everywhere 15s infinite linear;
-            animation-delay: calc(var(--ring) * 3s);
+            animation-delay: calc(var(--ring) * -3s);
         }
         @keyframes expand-everywhere {
-            0% {
-                width: 50px;
-                height: 50px;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                opacity: 0.3;
-            }
-            100% {
-                width: 150vw;
-                height: 150vh;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                opacity: 0;
-            }
+            0%   { transform: translate(-50%, -50%) scale(0.03); opacity: 0.3; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+
+        .hint {
+            position: fixed;
+            bottom: 66px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe {
+            0%, 100% { opacity: 0.16; }
+            50% { opacity: 0.4; }
+        }
+        .infinito {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.6s ease;
+            z-index: 60;
+        }
+        .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .everywhere-circle { animation: none; opacity: 0; }
+            .presence-point    { animation: none; opacity: 0.45; transform: none; }
+            .no-center         { animation: none; opacity: 0.3; transform: translate(-50%, -50%); }
+            .hint              { animation: none; opacity: 0.3; }
         }
     </style>
 </head>
@@ -104,75 +126,112 @@
         <div class="presence-point" data-pan="0.2" style="top: 40%; left: 60%; --delay: 5;">Aquí</div>
         <div class="presence-point" data-pan="0.3" style="bottom: 45%; right: 35%; --delay: 6;">Aquí</div>
         <div class="presence-point" data-pan="0" style="top: 70%; left: 50%; --delay: 7;">Aquí</div>
-        
+
         <div class="no-center">◯</div>
-        
+
         <div style="position: absolute; bottom: 8%; width: 100%; text-align: center; opacity: 0.25; font-style: italic; letter-spacing: 0.3em; font-size: 0.9em;">
             El centro está en todas partes · La circunferencia en ninguna
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <div class="hint" id="hint">( tocá para que la presencia resuene )</div>
+    <a class="infinito" href="L2-Nodo7.html" title="Siguiente portal">∞</a>
+
     <script>
-        let soundInitialized = false;
+    // ============================================================
+    //  Web Audio API puro, SIN CDN.
+    //  Concepto preservado: campo binaural alpha, la respiración del
+    //  cosmos (graves que se hinchan y sueltan) y la lluvia de la
+    //  presencia: gotas que caen en cada punto del estéreo —presencia
+    //  en todas partes, sin centro—.
+    // ============================================================
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
 
-        async function initSound() {
-            if (soundInitialized) return;
-            await Tone.start();
-
-            const reverb = new Tone.Reverb({ decay: 15, wet: 0.6 }).toDestination();
-
-            // 1. El Campo de la Pura Conciencia (Binaural Alpha)
-            const baseFreq = 100;
-            const binauralBeat = 10; // 10 Hz
-            const oscL = new Tone.Oscillator(baseFreq, "sine").connect(new Tone.Panner(-1).connect(reverb)).start();
-            const oscR = new Tone.Oscillator(baseFreq + binauralBeat, "sine").connect(new Tone.Panner(1).connect(reverb)).start();
-            oscL.volume.value = -36;
-            oscR.volume.value = -36;
-            
-            // 2. La Respiración del Cosmos
-            const cosmicBreathSynth = new Tone.PolySynth(Tone.FMSynth, {
-                envelope: { attack: 5, release: 10 },
-                volume: -28
-            }).connect(reverb);
-            new Tone.Loop(time => {
-                const notes = ["C2", "G2"];
-                notes.forEach((note, index) => {
-                    cosmicBreathSynth.triggerAttackRelease(note, "15s", `+${index * 3}`);
-                });
-            }, "15s").start(0);
-
-            // 3. La Lluvia de la Presencia
-            const presenceSynth = new Tone.MetalSynth({
-                frequency: 800,
-                envelope: { attack: 0.001, decay: 0.8, release: 0.5 },
-                harmonicity: 8, modulationIndex: 15, resonance: 7000, octaves: 1.5,
-                volume: -20
-            }).toDestination();
-            
-            const presencePoints = document.querySelectorAll('.presence-point');
-            const presencePart = new Tone.Part((time, value) => {
-                const panner = new Tone.Panner(value.pan).connect(reverb);
-                presenceSynth.connect(panner);
-                presenceSynth.triggerAttack(time);
-            }, []).start(0);
-            
-            presencePart.loop = true;
-            presencePart.loopEnd = "12s";
-
-            presencePoints.forEach(point => {
-                const delay = parseFloat(point.style.getPropertyValue('--delay'));
-                const pan = parseFloat(point.getAttribute('data-pan'));
-                const appearanceTime = 12 * 0.85; // 85% de la animación
-                presencePart.add(delay * 1.5 + appearanceTime, { pan });
-            });
-
-            Tone.Transport.start();
-            soundInitialized = true;
-            console.log("La Sinfonía de la Ubicuidad ha comenzado.");
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate, len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++)
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
         }
+        return buf;
+    }
+    function panner(p) { const sp = actx.createStereoPanner(); sp.pan.value = p; return sp; }
 
-        document.body.addEventListener('click', initSound, { once: true });
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+
+        const dry = actx.createGain(); dry.gain.value = 0.65; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(10, 2.0);
+        const wet = actx.createGain(); wet.gain.value = 0.6; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Campo binaural alpha (~10 Hz)
+        const oscL = actx.createOscillator(); oscL.type = 'sine'; oscL.frequency.value = 100;
+        const oscR = actx.createOscillator(); oscR.type = 'sine'; oscR.frequency.value = 110;
+        const binGain = actx.createGain(); binGain.gain.value = 0.05;
+        oscL.connect(panner(-1)).connect(binGain);
+        oscR.connect(panner(1)).connect(binGain);
+        binGain.connect(fxIn);
+        oscL.start(); oscR.start();
+    }
+
+    // Respiración del cosmos: grave que se hincha y se suelta
+    function playBreath(freq, t0) {
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = freq;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.06, t0 + 5);
+        g.gain.linearRampToValueAtTime(0.0001, t0 + 14);
+        o.connect(g); g.connect(fxIn);
+        o.start(t0); o.stop(t0 + 14.5);
+    }
+
+    // Gota de presencia: metálica, breve, en un punto del estéreo
+    function playDrop(t0, pan) {
+        const base = 800, partials = [1, 2.7, 4.3], peak = 0.05;
+        const sp = panner(pan);
+        sp.connect(fxIn);
+        partials.forEach((r, i) => {
+            const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = base * r;
+            const g = actx.createGain();
+            g.gain.setValueAtTime(0.0001, t0);
+            g.gain.linearRampToValueAtTime(peak / (i + 1), t0 + 0.005);
+            g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.9 + i * 0.2);
+            o.connect(g); g.connect(sp);
+            o.start(t0); o.stop(t0 + 1.2 + i * 0.2);
+        });
+    }
+
+    function startScheduling() {
+        const pans = Array.from(document.querySelectorAll('.presence-point'))
+            .map(p => parseFloat(p.getAttribute('data-pan')) || 0);
+        const lluvia = () => {
+            const t = actx.currentTime;
+            pans.forEach((pan, i) => playDrop(t + i * 1.5, pan)); // una gota cada 1.5 s por el campo
+        };
+        lluvia(); timers.push(setInterval(lluvia, 12000));
+
+        const respira = () => {
+            const t = actx.currentTime;
+            playBreath(65.41, t);      // C2
+            playBreath(98.00, t + 3);  // G2
+        };
+        respira(); timers.push(setInterval(respira, 15000));
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.78, actx.currentTime + 5);
+        startScheduling();
+        const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
     </script>
-    </body>
+</body>
 </html>
