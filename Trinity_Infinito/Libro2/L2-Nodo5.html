@@ -15,79 +15,64 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: none;
         }
-        
+
         .motion-field {
             position: relative;
             width: 80vw;
             height: 80vh;
         }
-        
+
+        /* Las palabras orbitan (sólo transform). Delay negativo: la órbita
+           ya aparece poblada desde el primer fotograma. */
         .moving-nothing {
             position: absolute;
+            top: 50%;
+            left: 50%;
             color: rgba(255,255,255,0.4);
             font-size: 1.1em;
-            animation: circular-motion 15s infinite linear;
-            animation-delay: calc(var(--delay) * 2.5s);
             letter-spacing: 0.2em;
+            animation: circular-motion 15s infinite linear;
+            animation-delay: calc(var(--delay) * -3s);
         }
-        
         @keyframes circular-motion {
-            0% {
-                transform: rotate(0deg) translateX(200px) rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg) translateX(200px) rotate(-360deg);
-            }
+            0%   { transform: rotate(0deg) translateX(200px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(200px) rotate(-360deg); }
         }
-        
+
         .stillness-center {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
             font-size: 2em;
             letter-spacing: 0.5em;
-            animation: still-pulse 8s infinite;
+            animation: still-pulse 8s infinite ease-in-out;
         }
-        
         @keyframes still-pulse {
-            0%, 100% { 
-                opacity: 0.2; 
-                transform: translate(-50%, -50%) scale(0.9);
-            }
-            50% { 
-                opacity: 0.6; 
-                transform: translate(-50%, -50%) scale(1);
-            }
+            0%, 100% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.9); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
         }
-        
+
+        /* Línea de flujo: antes animaba width/left (reflow).
+           Ahora scaleX + translateX desde el borde izquierdo. */
         .flow-line {
             position: absolute;
+            left: 0;
+            width: 100%;
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: flow-across 10s infinite;
-            animation-delay: calc(var(--delay) * 1.5s);
+            transform-origin: left center;
+            opacity: 0;
+            animation: flow-across 10s infinite ease-in-out;
+            animation-delay: calc(var(--delay) * -1.5s);
         }
-        
         @keyframes flow-across {
-            0% {
-                width: 0;
-                left: 0;
-                opacity: 0;
-            }
-            50% {
-                width: 100%;
-                left: 0;
-                opacity: 0.5;
-            }
-            100% {
-                width: 0;
-                left: 100%;
-                opacity: 0;
-            }
+            0%   { transform: translateX(0) scaleX(0); opacity: 0; }
+            50%  { transform: translateX(0) scaleX(1); opacity: 0.5; }
+            100% { transform: translateX(100%) scaleX(0); opacity: 0; }
         }
-        
+
         .paradox-statement {
             position: absolute;
             bottom: 10%;
@@ -98,39 +83,149 @@
             letter-spacing: 0.3em;
             font-size: 0.9em;
         }
+
+        .hint {
+            position: fixed;
+            bottom: 66px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe {
+            0%, 100% { opacity: 0.16; }
+            50% { opacity: 0.4; }
+        }
+
+        .infinito {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.6s ease;
+            z-index: 60;
+        }
+        .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .moving-nothing   { animation: none; opacity: 0; }
+            .flow-line        { animation: none; opacity: 0; }
+            .stillness-center { animation: none; opacity: 0.6; transform: translate(-50%, -50%); }
+            .hint             { animation: none; opacity: 0.3; }
+        }
     </style>
 </head>
 <body>
     <div class="motion-field">
-        <div class="moving-nothing" style="top: 50%; left: 50%; --delay: 0;">
-            Fluir
-        </div>
-        <div class="moving-nothing" style="top: 50%; left: 50%; --delay: 1;">
-            Danzar
-        </div>
-        <div class="moving-nothing" style="top: 50%; left: 50%; --delay: 2;">
-            Girar
-        </div>
-        <div class="moving-nothing" style="top: 50%; left: 50%; --delay: 3;">
-            Cambiar
-        </div>
-        <div class="moving-nothing" style="top: 50%; left: 50%; --delay: 4;">
-            Devenir
-        </div>
-        
+        <div class="moving-nothing" style="--delay: 0;">Fluir</div>
+        <div class="moving-nothing" style="--delay: 1;">Danzar</div>
+        <div class="moving-nothing" style="--delay: 2;">Girar</div>
+        <div class="moving-nothing" style="--delay: 3;">Cambiar</div>
+        <div class="moving-nothing" style="--delay: 4;">Devenir</div>
+
         <div class="flow-line" style="top: 20%; --delay: 0;"></div>
         <div class="flow-line" style="top: 40%; --delay: 1;"></div>
         <div class="flow-line" style="top: 60%; --delay: 2;"></div>
         <div class="flow-line" style="top: 80%; --delay: 3;"></div>
-        
-        <div class="stillness-center">
-            QUIETUD
-        </div>
-        
+
+        <div class="stillness-center">QUIETUD</div>
+
         <div class="paradox-statement">
             El río fluye · Nada se mueve<br>
             Todo cambia · Todo permanece
         </div>
     </div>
+
+    <div class="hint" id="hint">( tocá para que el movimiento resuene )</div>
+    <a class="infinito" href="L2-Nodo6.html" title="Siguiente portal">∞</a>
+
+    <script>
+    // ============================================================
+    //  Web Audio API puro, SIN CDN.
+    //  Una quietud que no se mueve (drone estable, sin modulación) y,
+    //  alrededor, una voz que fluye y circula por el estéreo: el río
+    //  que corre mientras nada se mueve.
+    // ============================================================
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate, len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++)
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+        }
+        return buf;
+    }
+    function panner(p) { const sp = actx.createStereoPanner(); sp.pan.value = p; return sp; }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+
+        const dry = actx.createGain(); dry.gain.value = 0.7; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(8, 2.3);
+        const wet = actx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Quietud: drone perfectamente estable (sin LFO), fundamental + quinta
+        const o1 = actx.createOscillator(); o1.type = 'sine'; o1.frequency.value = 65.41; // C2
+        const o2 = actx.createOscillator(); o2.type = 'sine'; o2.frequency.value = 98.00; // G2
+        const dg = actx.createGain(); dg.gain.value = 0.05;
+        o1.connect(dg); o2.connect(dg); dg.connect(fxIn);
+        o1.start(); o2.start();
+
+        // El flujo: una voz que circula por el estéreo (pan LFO ~15s, como la órbita)
+        const flow = actx.createOscillator(); flow.type = 'triangle'; flow.frequency.value = 196; // G3
+        const flowGain = actx.createGain(); flowGain.gain.value = 0.035;
+        const circPan = panner(0);
+        const panLFO = actx.createOscillator(); panLFO.type = 'sine'; panLFO.frequency.value = 1 / 15;
+        const panDepth = actx.createGain(); panDepth.gain.value = 0.9;
+        panLFO.connect(panDepth); panDepth.connect(circPan.pan);
+        flow.connect(flowGain); flowGain.connect(circPan); circPan.connect(fxIn);
+        flow.start(); panLFO.start();
+    }
+
+    // Swell suave que cruza, en eco con las líneas de flujo
+    function playFlowSwell(t0) {
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = 293.66; // D4
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.04, t0 + 2.5);
+        g.gain.linearRampToValueAtTime(0.0001, t0 + 6);
+        const sp = panner(-0.8);
+        sp.pan.setValueAtTime(-0.8, t0);
+        sp.pan.linearRampToValueAtTime(0.8, t0 + 6);
+        o.connect(g); g.connect(sp); sp.connect(fxIn);
+        o.start(t0); o.stop(t0 + 6.2);
+    }
+
+    function startScheduling() {
+        const swell = () => playFlowSwell(actx.currentTime + 0.05);
+        swell(); timers.push(setInterval(swell, 5000));
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.75, actx.currentTime + 5);
+        startScheduling();
+        const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
