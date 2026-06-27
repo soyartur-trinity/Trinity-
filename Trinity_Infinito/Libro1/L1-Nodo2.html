@@ -5,58 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El No-Estado Primordial</title>
     <style>
+        :root {
+            /* Seña del nodo: el no-estado, lo anterior. Casi sin color. */
+            --tinta: #ffffff;
+            --respiro: 32s; /* ciclo de respiración de las frases */
+        }
+
         body {
             background: linear-gradient(180deg, #000000 0%, #050505 50%, #000000 100%);
-            color: #ffffff;
-            font-family: 'Garamond', serif;
+            color: var(--tinta);
+            /* Georgia: tipografía del estándar Trinity Infinito (antes Garamond) */
+            font-family: 'Georgia', 'Times New Roman', serif;
             margin: 0;
-            padding: 40px;
+            padding: 60px 40px 100px;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-sizing: border-box;
         }
-        
+
         .quantum-text {
             position: relative;
             max-width: 700px;
             text-align: center;
         }
-        
-        .state {
-            margin: 40px 0;
-            opacity: 0;
-            animation: state-flash 10s infinite;
-            animation-delay: calc(var(--index) * 1.5s);
-            font-size: 1.1em;
-            letter-spacing: 0.2em;
-        }
-        
-        @keyframes state-flash {
-            0%, 85%, 100% { opacity: 0; }
-            90%, 95% { opacity: 0.6; }
-        }
-        
-        .no-state {
-            font-size: 2em;
-            margin: 80px 0;
-            letter-spacing: 0.5em;
-            animation: dissolve 8s infinite;
-        }
-        
-        @keyframes dissolve {
-            0%, 100% { 
-                opacity: 0.1; 
-                letter-spacing: 0.5em;
-                filter: blur(2px);
-            }
-            50% { 
-                opacity: 0.8; 
-                letter-spacing: 0.3em;
-                filter: blur(0);
-            }
-        }
-        
+
+        /* === FILIGRANA: VACÍO === 
+           Respira muy lento, sólo opacidad. */
         .primordial {
             position: absolute;
             width: 100%;
@@ -65,52 +41,242 @@
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 5em;
-            opacity: 0.05;
             letter-spacing: 1em;
+            opacity: 0.05;
             pointer-events: none;
+            animation: vacio-respira 24s ease-in-out infinite;
         }
-        
+        @keyframes vacio-respira {
+            0%, 100% { opacity: 0.04; }
+            50%      { opacity: 0.075; }
+        }
+
+        /* === LAS FRASES (ESTADOS) ===
+           Cada una nace, se sostiene un tiempo legible y vuelve.
+           Onda continua: el vacío articulándose y retornando.
+           Sólo opacity + transform. Delay NEGATIVO para que el bucle
+           conserve el desfase en todas las iteraciones. */
+        .state {
+            margin: 38px 0;
+            font-size: 1.1em;
+            letter-spacing: 0.2em;
+            opacity: 0;
+            animation: estado-respira var(--respiro) linear infinite;
+            animation-delay: calc(var(--index) * -4s);
+            will-change: opacity, transform;
+        }
+        @keyframes estado-respira {
+            0%   { opacity: 0; transform: translateY(10px); }
+            6%   { opacity: 0.85; transform: translateY(0); }   /* aparece (~1.9s) */
+            25%  { opacity: 0.85; transform: translateY(0); }   /* se sostiene (~6s legibles) */
+            31%  { opacity: 0; transform: translateY(-6px); }   /* se retira */
+            100% { opacity: 0; transform: translateY(-6px); }   /* descansa en el vacío */
+        }
+
+        /* === NO-ESTADO: el corazón ===
+           Disuelve y coalesce con opacity + scale.
+           El glow es estático (text-shadow no animado) para no violar
+           la regla de animar sólo transform/opacity. */
+        .no-state {
+            font-size: 2em;
+            margin: 80px 0;
+            letter-spacing: 0.4em;
+            text-shadow: 0 0 24px rgba(255, 255, 255, 0.18);
+            animation: no-estado-disuelve 12s ease-in-out infinite;
+            will-change: opacity, transform;
+        }
+        @keyframes no-estado-disuelve {
+            0%, 100% { opacity: 0.12; transform: scale(0.985); }
+            50%      { opacity: 0.85; transform: scale(1); }
+        }
+
+        /* === LÍNEAS DEL VACÍO ===
+           Antes animaban width (reflow). Ahora scaleX (compositor). */
         .void-line {
             width: 100px;
             height: 1px;
-            background: white;
+            background: var(--tinta);
             margin: 60px auto;
             opacity: 0.2;
-            animation: expand-contract 6s infinite;
+            transform-origin: center;
+            animation: linea-respira 8s ease-in-out infinite;
+            will-change: opacity, transform;
         }
-        
-        @keyframes expand-contract {
-            0%, 100% { width: 100px; opacity: 0.2; }
-            50% { width: 300px; opacity: 0.4; }
+        @keyframes linea-respira {
+            0%, 100% { transform: scaleX(1);   opacity: 0.2; }
+            50%      { transform: scaleX(3);   opacity: 0.4; }
+        }
+
+        /* === CIERRE (el sentido) ===
+           Siempre legible, presencia serena. */
+        .cierre {
+            margin-top: 100px;
+            opacity: 0.32;
+            font-style: italic;
+            line-height: 1.9;
+            letter-spacing: 0.05em;
+        }
+
+        /* === CAPA SONORA (controles discretos) === */
+        .resonancia {
+            margin-top: 80px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+        }
+        .son-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.55);
+            padding: 14px 30px;
+            font-size: 13px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            transition: border-color 0.6s ease, color 0.6s ease, letter-spacing 0.6s ease;
+        }
+        .son-btn:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 5px;
+        }
+        .son-estado {
+            margin-top: 26px;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* === NAVEGACIÓN ∞ (respeta nomenclatura: L1-NodoN.html) === */
+        .infinito {
+            position: fixed;
+            bottom: 26px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            font-size: 26px;
+            letter-spacing: 0.1em;
+            transition: color 0.6s ease;
+            z-index: 20;
+        }
+        .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        /* === RESPETO POR prefers-reduced-motion ===
+           Todo se detiene en un estado legible y quieto. */
+        @media (prefers-reduced-motion: reduce) {
+            .primordial { animation: none; opacity: 0.06; }
+            .state      { animation: none; opacity: 0.78; transform: none; }
+            .no-state   { animation: none; opacity: 0.82; transform: none; }
+            .void-line  { animation: none; opacity: 0.3; transform: none; }
+        }
+
+        @media (max-width: 640px) {
+            .no-state   { font-size: 1.5em; letter-spacing: 0.3em; }
+            .primordial { font-size: 3em; }
+            .state      { font-size: 1em; }
         }
     </style>
 </head>
 <body>
     <div class="quantum-text">
         <div class="primordial">VACÍO</div>
-        
+
         <div class="state" style="--index: 0">No dormido</div>
         <div class="state" style="--index: 1">No despierto</div>
         <div class="state" style="--index: 2">No consciente</div>
         <div class="state" style="--index: 3">No inconsciente</div>
-        
+
         <div class="void-line"></div>
-        
+
         <div class="no-state">NO-ESTADO</div>
-        
+
         <div class="void-line"></div>
-        
+
         <div class="state" style="--index: 4">Anterior a la calma</div>
         <div class="state" style="--index: 5">Anterior al movimiento</div>
         <div class="state" style="--index: 6">Anterior a la existencia</div>
         <div class="state" style="--index: 7">Anterior a anterior</div>
-        
-        <div style="margin-top: 100px; opacity: 0.3; font-style: italic;">
+
+        <div class="cierre">
             El estado sin características<br>
-            Del cual surgen todos los estados<br>
-            Y al cual todos retornan<br>
-            Sin haber salido nunca
+            del cual surgen todos los estados<br>
+            y al cual todos retornan<br>
+            sin haber salido nunca
         </div>
+
+        <div class="resonancia">
+            <button class="son-btn" onclick="habitarResonancia()">HABITAR LA RESONANCIA</button>
+            <button class="son-btn" onclick="regresarAlSilencio()">REGRESAR AL SILENCIO</button>
+        </div>
+        <div class="son-estado" id="sonEstado">∿ silencio anterior al sonido ∿</div>
     </div>
+
+    <a class="infinito" href="L1-Nodo3.html" title="Siguiente portal">∞</a>
+
+    <script>
+    // === CAPA SONORA — Web Audio puro, sin CDN ===
+    // Concepto: el no-estado es anterior al sonido.
+    // Un fundamental grave que respira (LFO lentísimo), apenas presente.
+    // No hay autoplay: el sonido sólo nace con un gesto del usuario.
+    let actx = null, master = null, started = false;
+
+    function construirCampo() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+
+        master = actx.createGain();
+        master.gain.value = 0;
+        master.connect(actx.destination);
+
+        // Fundamental grave (~72 Hz): el peso del vacío
+        const drone = actx.createOscillator();
+        drone.type = 'sine';
+        drone.frequency.value = 72;
+
+        const droneGain = actx.createGain();
+        droneGain.gain.value = 0.5; // valor base del respiro
+        drone.connect(droneGain);
+        droneGain.connect(master);
+
+        // Octava apenas insinuada: un anhelo de forma
+        const octava = actx.createOscillator();
+        octava.type = 'sine';
+        octava.frequency.value = 144;
+        const octavaGain = actx.createGain();
+        octavaGain.gain.value = 0.18;
+        octava.connect(octavaGain);
+        octavaGain.connect(master);
+
+        // LFO: la respiración (~11 s por ciclo) modula la amplitud del drone
+        const lfo = actx.createOscillator();
+        lfo.type = 'sine';
+        lfo.frequency.value = 0.09;
+        const lfoDepth = actx.createGain();
+        lfoDepth.gain.value = 0.4; // el gain del drone oscila ~0.1 .. 0.9
+        lfo.connect(lfoDepth);
+        lfoDepth.connect(droneGain.gain);
+
+        drone.start();
+        octava.start();
+        lfo.start();
+        started = true;
+    }
+
+    function habitarResonancia() {
+        if (!started) construirCampo();
+        if (actx.state === 'suspended') actx.resume();
+        master.gain.cancelScheduledValues(actx.currentTime);
+        master.gain.linearRampToValueAtTime(0.18, actx.currentTime + 4);
+        document.getElementById('sonEstado').textContent = '∿ el no-estado resuena ∿';
+    }
+
+    function regresarAlSilencio() {
+        if (!started) return;
+        master.gain.cancelScheduledValues(actx.currentTime);
+        master.gain.linearRampToValueAtTime(0, actx.currentTime + 4);
+        document.getElementById('sonEstado').textContent = '∿ silencio anterior al sonido ∿';
+    }
+    </script>
 </body>
 </html>
