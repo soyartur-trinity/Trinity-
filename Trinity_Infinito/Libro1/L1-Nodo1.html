@@ -58,13 +58,14 @@ body {
   font-size: 120px;
   color: rgba(255, 255, 255, 0.9);
   margin: 60px 0;
+  /* Resplandor estático: el text-shadow ya no se anima (regla transform/opacity) */
+  text-shadow: 0 0 42px rgba(255, 255, 255, 0.4);
   animation: first-pulse 4s ease-in-out infinite;
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
 }
 
 @keyframes first-pulse {
   0%, 100% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.08); opacity: 1; text-shadow: 0 0 50px rgba(255, 255, 255, 0.6); }
+  50% { transform: scale(1.08); opacity: 1; }
 }
 
 .transmission {
@@ -113,7 +114,8 @@ body {
   font-size: 16px;
   letter-spacing: 4px;
   cursor: pointer;
-  transition: all 0.5s ease;
+  /* Transición acotada a propiedades concretas (antes: all) */
+  transition: border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease, letter-spacing 0.5s ease;
   font-family: 'Georgia', serif;
   margin: 15px;
 }
@@ -134,15 +136,6 @@ body {
   color: rgba(255, 255, 255, 0.3);
   letter-spacing: 3px;
   margin-top: 30px;
-}
-
-.void-particle {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  pointer-events: none;
 }
 
 .quantum-field {
@@ -205,6 +198,30 @@ body {
   50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
+/* === NAVEGACIÓN ∞ (respeta nomenclatura: L1-NodoN.html) === */
+.infinito {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.25);
+  text-decoration: none;
+  font-size: 26px;
+  z-index: 120;
+  transition: color 0.6s ease;
+}
+.infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+/* === RESPETO POR prefers-reduced-motion === */
+@media (prefers-reduced-motion: reduce) {
+  .content-layer   { animation: none; opacity: 1; transform: none; }
+  .transmission-line { animation: none; opacity: 1; transform: none; }
+  .om-seed         { animation: none; }
+  .activation-zone { animation: none; opacity: 1; }
+  .quantum-field, .emergence-ring { animation: none; }
+  .status-message  { animation: none; }
+}
+
 @media (max-width: 768px) {
   .om-seed { font-size: 80px; }
   .transmission { font-size: 14px; }
@@ -260,7 +277,7 @@ body {
     <button class="sonic-trigger" id="primordialBtn" onclick="playPrimordialSound()">
       ACTIVAR FRECUENCIA PRIMORDIAL
     </button>
-    
+
     <button class="sonic-trigger" id="omBtn" onclick="playOmFrequency()">
       RESONAR OM ORIGINAL
     </button>
@@ -275,12 +292,16 @@ body {
   </div>
 </div>
 
+<a class="infinito" href="L1-Nodo2.html" title="Siguiente portal">∞</a>
+
 <script>
 // === CANVAS DE VACÍO CUÁNTICO ===
 const canvas = document.getElementById('voidCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 let particles = [];
 let audioContext = null;
@@ -298,29 +319,41 @@ for(let i = 0; i < 80; i++) {
   });
 }
 
-function animate() {
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+function drawStatic() {
+  ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
   particles.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    
-    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-    
     ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
     ctx.fill();
   });
-  
+}
+
+function animate() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+    ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
   requestAnimationFrame(animate);
 }
 
-animate();
+// Si el usuario pide menos movimiento, el campo queda quieto.
+if (reduceMotion) { drawStatic(); } else { animate(); }
 
-// === SISTEMA DE AUDIO WEB ===
+// === SISTEMA DE AUDIO WEB === (Web Audio puro, sin CDN)
 function initAudio() {
   if(!audioContext) {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -334,63 +367,61 @@ function showStatus(text) {
   const msg = document.getElementById('statusMsg');
   msg.textContent = text;
   msg.classList.remove('active');
-  void msg.offsetWidth; // Trigger reflow
+  void msg.offsetWidth; // reinicia la animación
   msg.classList.add('active');
 }
 
 // === FRECUENCIA PRIMORDIAL ===
-// El primer pulso: 7.83 Hz (Resonancia Schumann) elevado a rango audible
+// El primer pulso: 7.83 Hz (resonancia Schumann) llevado a rango audible
 function playPrimordialSound() {
   initAudio();
   showStatus('∿ PRIMER PULSO ∿');
   document.getElementById('freqIndicator').textContent = '∿ 7.83 Hz × 64 = 501.12 Hz ∿';
-  
+
   const freq = 7.83 * 64; // 501.12 Hz
   const duration = 8;
-  
-  // Oscilador principal (onda sinusoidal pura)
+
   const osc1 = audioContext.createOscillator();
   const gain1 = audioContext.createGain();
   osc1.type = 'sine';
   osc1.frequency.value = freq;
   osc1.connect(gain1);
   gain1.connect(masterGain);
-  
-  // Fade in/out
+
   gain1.gain.setValueAtTime(0, audioContext.currentTime);
   gain1.gain.linearRampToValueAtTime(0.4, audioContext.currentTime + 3);
   gain1.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
-  
-  // Oscilador armónico (quinta perfecta)
+
   const osc2 = audioContext.createOscillator();
   const gain2 = audioContext.createGain();
   osc2.type = 'sine';
-  osc2.frequency.value = freq * 1.5; // Quinta perfecta
+  osc2.frequency.value = freq * 1.5; // quinta perfecta
   osc2.connect(gain2);
   gain2.connect(masterGain);
-  
+
   gain2.gain.setValueAtTime(0, audioContext.currentTime);
   gain2.gain.linearRampToValueAtTime(0.2, audioContext.currentTime + 4);
   gain2.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
-  
+
   osc1.start();
   osc2.start();
   osc1.stop(audioContext.currentTime + duration);
   osc2.stop(audioContext.currentTime + duration);
-  
-  // Pulsar partículas
+
   particles.forEach(p => {
     p.vx *= 1.5;
     p.vy *= 1.5;
     p.opacity = Math.min(p.opacity * 2, 0.6);
   });
-  
+  if (reduceMotion) drawStatic();
+
   setTimeout(() => {
     particles.forEach(p => {
       p.vx *= 0.7;
       p.vy *= 0.7;
       p.opacity *= 0.5;
     });
+    if (reduceMotion) drawStatic();
   }, duration * 1000);
 }
 
@@ -400,63 +431,61 @@ function playOmFrequency() {
   initAudio();
   showStatus('ॐ');
   document.getElementById('freqIndicator').textContent = '∿ OM: 136.1 Hz ∿';
-  
+
   const omFreq = 136.1;
   const duration = 12;
-  
-  // Fundamental OM
+
   const osc1 = audioContext.createOscillator();
   const gain1 = audioContext.createGain();
   osc1.type = 'sine';
   osc1.frequency.value = omFreq;
   osc1.connect(gain1);
   gain1.connect(masterGain);
-  
+
   gain1.gain.setValueAtTime(0, audioContext.currentTime);
   gain1.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 4);
   gain1.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 8);
   gain1.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
-  
-  // Armónico 2 (octava)
+
   const osc2 = audioContext.createOscillator();
   const gain2 = audioContext.createGain();
   osc2.type = 'sine';
   osc2.frequency.value = omFreq * 2;
   osc2.connect(gain2);
   gain2.connect(masterGain);
-  
+
   gain2.gain.setValueAtTime(0, audioContext.currentTime);
   gain2.gain.linearRampToValueAtTime(0.25, audioContext.currentTime + 5);
   gain2.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
-  
-  // Armónico 3 (quinta)
+
   const osc3 = audioContext.createOscillator();
   const gain3 = audioContext.createGain();
   osc3.type = 'sine';
   osc3.frequency.value = omFreq * 3;
   osc3.connect(gain3);
   gain3.connect(masterGain);
-  
+
   gain3.gain.setValueAtTime(0, audioContext.currentTime);
   gain3.gain.linearRampToValueAtTime(0.15, audioContext.currentTime + 6);
   gain3.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
-  
+
   osc1.start();
   osc2.start();
   osc3.start();
   osc1.stop(audioContext.currentTime + duration);
   osc2.stop(audioContext.currentTime + duration);
   osc3.stop(audioContext.currentTime + duration);
-  
-  // Expandir campo visual
+
   particles.forEach(p => {
     p.opacity = Math.min(p.opacity * 3, 0.8);
   });
-  
+  if (reduceMotion) drawStatic();
+
   setTimeout(() => {
     particles.forEach(p => {
       p.opacity *= 0.4;
     });
+    if (reduceMotion) drawStatic();
   }, duration * 1000);
 }
 
@@ -464,28 +493,28 @@ function playOmFrequency() {
 function returnToSilence() {
   showStatus('∅ RETORNO AL VACÍO ∅');
   document.getElementById('freqIndicator').textContent = '∿ Estado: Pre-existencia ∿';
-  
+
   if(audioContext) {
     masterGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 3);
     setTimeout(() => {
       masterGain.gain.value = 0.3;
     }, 3000);
   }
-  
+
   particles.forEach(p => {
     p.vx *= 0.5;
     p.vy *= 0.5;
     p.opacity *= 0.3;
   });
+  if (reduceMotion) drawStatic();
 }
 
-// Resize handler
 window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  if (reduceMotion) drawStatic();
 });
 
-// Mensaje inicial
 setTimeout(() => {
   showStatus('∅ EL VACÍO DESPIERTA ∅');
 }, 3000);
