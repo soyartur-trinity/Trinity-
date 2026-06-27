@@ -8,15 +8,17 @@
         body {
             background: radial-gradient(circle at center, #000, #030303, #000);
             color: #fff;
-            font-family: 'Times New Roman', serif;
+            /* Georgia: estándar de la serie (antes Times New Roman) */
+            font-family: 'Georgia', 'Times New Roman', serif;
             margin: 0;
             height: 100vh;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: none;
         }
-        
+
         .naming-void {
             position: relative;
             width: 100%;
@@ -27,88 +29,106 @@
             align-items: center;
             justify-content: center;
         }
-        
+
+        /* Cada nombre nace, se deja leer, y se disuelve girando.
+           Delay negativo (respirar persistente) + tiempo de lectura. */
         .name-attempt {
             position: absolute;
             font-size: 1.2em;
             opacity: 0;
-            animation: naming 8s infinite;
-            animation-delay: calc(var(--delay) * 1s);
             letter-spacing: 0.3em;
+            animation: naming 12s infinite ease-in-out;
+            animation-delay: calc(var(--delay) * -2s);
         }
-        
         @keyframes naming {
-            0%, 100% { 
-                opacity: 0; 
-                transform: scale(0.8) rotate(0deg);
-            }
-            20% { 
-                opacity: 0.5; 
-                transform: scale(1) rotate(5deg);
-            }
-            40% { 
-                opacity: 0.3; 
-                transform: scale(1.1) rotate(-5deg);
-            }
-            60% { 
-                opacity: 0; 
-                transform: scale(0.5) rotate(180deg);
-            }
+            0%   { opacity: 0; transform: scale(0.8) rotate(0deg); }
+            12%  { opacity: 0.55; transform: scale(1) rotate(3deg); }
+            35%  { opacity: 0.5; transform: scale(1.05) rotate(-3deg); }
+            50%  { opacity: 0; transform: scale(0.5) rotate(160deg); }
+            100% { opacity: 0; transform: scale(0.5) rotate(160deg); }
         }
-        
+
+        /* [ ? ] — antes animaba letter-spacing; ahora opacity + scale */
         .the-unnameable {
             font-size: 3em;
             letter-spacing: 1em;
             opacity: 0.1;
-            animation: unnameable-pulse 10s infinite;
+            animation: unnameable-pulse 10s infinite ease-in-out;
         }
-        
         @keyframes unnameable-pulse {
-            0%, 100% { 
-                opacity: 0.1; 
-                letter-spacing: 1em;
-            }
-            50% { 
-                opacity: 0.3; 
-                letter-spacing: 0.5em;
-            }
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.32; transform: scale(0.93); }
         }
-        
+
+        /* El poema-clímax: largo tiempo de lectura (antes ~1.5 s) */
         .naming-itself {
             margin-top: 100px;
             font-style: italic;
             opacity: 0;
-            animation: self-naming 15s infinite;
             text-align: center;
             line-height: 2;
+            animation: self-naming 48s infinite ease-in-out;
         }
-        
         @keyframes self-naming {
-            0%, 80%, 100% { opacity: 0; }
-            85%, 95% { opacity: 0.4; }
+            0%, 50%, 100% { opacity: 0; }
+            60%, 90% { opacity: 0.45; }
+            96% { opacity: 0; }
         }
-        
+
+        /* Los nombres fallidos suben como humo y se desvanecen */
         .failed-names {
             position: absolute;
             font-size: 0.8em;
-            color: #444;
-            animation: fade-away 6s infinite;
-            animation-delay: calc(var(--index) * 0.8s);
+            color: #555;
+            opacity: 0;
+            animation: fade-away 6s infinite ease-out;
+            animation-delay: calc(var(--index) * -1.2s);
         }
-        
         @keyframes fade-away {
-            0% { 
-                opacity: 0; 
-                transform: translateY(0);
-            }
-            10% { 
-                opacity: 0.6; 
-                transform: translateY(-10px);
-            }
-            100% { 
-                opacity: 0; 
-                transform: translateY(-100px);
-            }
+            0%   { opacity: 0; transform: translateY(0); }
+            12%  { opacity: 0.6; transform: translateY(-10px); }
+            100% { opacity: 0; transform: translateY(-100px); }
+        }
+
+        .hint {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe {
+            0%, 100% { opacity: 0.16; }
+            50% { opacity: 0.4; }
+        }
+
+        .infinito {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.6s ease;
+            z-index: 60;
+        }
+        .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .name-attempt  { animation: none; opacity: 0.4; transform: none; }
+            .the-unnameable{ animation: none; opacity: 0.2; transform: none; }
+            .naming-itself { animation: none; opacity: 0.42; }
+            .failed-names  { animation: none; opacity: 0.22; transform: none; }
+            .hint          { animation: none; opacity: 0.3; }
         }
     </style>
 </head>
@@ -120,15 +140,15 @@
         <div class="name-attempt" style="top: 40%; left: 40%; --delay: 3;">El Absoluto</div>
         <div class="name-attempt" style="bottom: 20%; right: 20%; --delay: 4;">La Fuente</div>
         <div class="name-attempt" style="top: 50%; right: 35%; --delay: 5;">El Uno</div>
-        
+
         <div class="failed-names" style="bottom: 10%; left: 30%; --index: 0;">vacío</div>
         <div class="failed-names" style="bottom: 10%; right: 40%; --index: 1;">nada</div>
         <div class="failed-names" style="bottom: 10%; left: 50%; --index: 2;">todo</div>
         <div class="failed-names" style="bottom: 10%; right: 20%; --index: 3;">ser</div>
         <div class="failed-names" style="bottom: 10%; left: 10%; --index: 4;">consciencia</div>
-        
+
         <div class="the-unnameable">[ ? ]</div>
-        
+
         <div class="naming-itself">
             Cada nombre falla<br>
             Cada símbolo señala y se desvanece<br>
@@ -146,5 +166,82 @@
             Nombrándome eternamente
         </div>
     </div>
+
+    <div class="hint" id="hint">( tocá para nombrar el silencio )</div>
+    <!-- Encadenamiento ∞ hacia el Libro 2 (verificá esta ruta relativa en tu repo) -->
+    <a class="infinito" href="../Libro2/L2-Nodo1.html" title="Siguiente portal">∞</a>
+
+    <script>
+    // ============================================================
+    //  Web Audio API puro, SIN CDN.
+    //  Lo Innombrable como presencia grave que respira; y, por encima,
+    //  flores de sonido que intentan "nombrar" —emergen y se disuelven,
+    //  un intento por cada nombre—, con larga reverberación.
+    // ============================================================
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate, len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++)
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+        }
+        return buf;
+    }
+    function panner(p) { const sp = actx.createStereoPanner(); sp.pan.value = p; return sp; }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+
+        const dry = actx.createGain(); dry.gain.value = 0.65; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(10, 2.0);
+        const wet = actx.createGain(); wet.gain.value = 0.55; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // La presencia innombrable: grave (~65 Hz) que respira
+        const drone = actx.createOscillator(); drone.type = 'sine'; drone.frequency.value = 65;
+        const droneGain = actx.createGain(); droneGain.gain.value = 0.05;
+        drone.connect(droneGain); droneGain.connect(fxIn);
+        const lfo = actx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.05;
+        const lfoDepth = actx.createGain(); lfoDepth.gain.value = 0.03;
+        lfo.connect(lfoDepth); lfoDepth.connect(droneGain.gain);
+        drone.start(); lfo.start();
+    }
+
+    // Un "nombre" que intenta formarse y se disuelve
+    function playNaming(t0) {
+        const freqs = [196.00, 220.00, 261.63, 293.66, 329.63]; // G3 A3 C4 D4 E4
+        const f = freqs[Math.floor(Math.random() * freqs.length)];
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+        const o2 = actx.createOscillator(); o2.type = 'sine'; o2.frequency.value = f * 2.001; // brillo leve
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.06, t0 + 1.5);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 6);
+        const g2 = actx.createGain(); g2.gain.value = 0.3;
+        o.connect(g); o2.connect(g2); g2.connect(g);
+        g.connect(panner(Math.random() * 1.4 - 0.7)).connect(fxIn);
+        o.start(t0); o2.start(t0); o.stop(t0 + 6.2); o2.stop(t0 + 6.2);
+    }
+
+    function startScheduling() {
+        const nombrar = () => playNaming(actx.currentTime + 0.05);
+        nombrar(); timers.push(setInterval(nombrar, 4500));
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.8, actx.currentTime + 5);
+        startScheduling();
+        const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
