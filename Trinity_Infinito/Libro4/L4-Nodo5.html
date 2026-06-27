@@ -1,255 +1,134 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Mapa Es el Territorio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            /* NUEVO: Prevenir destellos de hardware */
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Mapa Es el Territorio</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; backface-visibility: hidden; }
 
-        body {
-            background: linear-gradient(45deg, #000428, #001933);
-            color: #fff;
-            font-family: 'Courier New', monospace;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .territory-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-        }
-        
-        .map-layer {
-            position: absolute;
-            width: 80%;
-            height: 80%;
-            top: 10%;
-            left: 10%;
-            border: 1px solid rgba(200,200,200,0.2);
-            /* CORRECCIÓN: Gradiente más oscuro */
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(180,180,180,0.03) 10px,
-                rgba(180,180,180,0.03) 20px
-            );
-            transform: rotateX(60deg) rotateZ(45deg);
-            animation: mapShift 12s infinite alternate ease-in-out;
-        }
-        
-        @keyframes mapShift {
-            0% {
-                transform: rotateX(60deg) rotateZ(45deg) scale(1);
-                opacity: 0.2;
-            }
-            100% {
-                transform: rotateX(30deg) rotateZ(135deg) scale(1.2);
-                opacity: 0.6;
-            }
-        }
-        
-        .territory-layer {
-            position: absolute;
-            width: 80%;
-            height: 80%;
-            top: 10%;
-            left: 10%;
-            border: 2px solid rgba(0,200,200,0.4);
-            /* CORRECCIÓN: Gradiente más oscuro */
-            background: radial-gradient(circle at center, 
-                rgba(0,180,180,0.08), 
-                transparent 70%);
-            animation: territoryPulse 10s infinite alternate ease-in-out;
-        }
-        
-        @keyframes territoryPulse {
-            0% {
-                transform: scale(1) rotateZ(0deg);
-                /* CORRECCIÓN: Box-shadow más suave */
-                box-shadow: 0 0 40px rgba(0,200,200,0.3);
-            }
-            100% {
-                transform: scale(0.9) rotateZ(-45deg);
-                box-shadow: 0 0 80px rgba(0,200,200,0.5);
-            }
-        }
-        
-        /* CORRECCIÓN PRINCIPAL: Unity point sin blanco */
-        .unity-point {
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            /* GRADIENTE CORREGIDO: Sin blanco, tonos más oscuros */
-            background: radial-gradient(
-                circle,
-                rgba(220, 180, 100, 0.7) 0%,
-                rgba(150, 200, 200, 0.5) 40%,
-                rgba(80, 150, 180, 0.3) 70%,
-                transparent 100%
-            );
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            /* BOX-SHADOW CORREGIDO: Sin blanco puro */
-            box-shadow: 
-                0 0 20px rgba(220, 180, 100, 0.4),
-                0 0 40px rgba(150, 200, 200, 0.2);
-            animation: unityGlow 4s infinite ease-in-out;
-            /* NUEVO: Prevenir destellos */
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-        
-        @keyframes unityGlow {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1);
-                box-shadow: 
-                    0 0 20px rgba(220, 180, 100, 0.4),
-                    0 0 40px rgba(150, 200, 200, 0.2);
-                opacity: 0.7;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.3);
-                box-shadow: 
-                    0 0 40px rgba(220, 180, 100, 0.5),
-                    0 0 80px rgba(150, 200, 200, 0.3),
-                    0 0 120px rgba(120, 180, 200, 0.1);
-                opacity: 0.9;
-            }
-        }
-        
-        .coordinate {
-            position: absolute;
-            font-size: 11px;
-            /* CORRECCIÓN: Verde más oscuro */
-            color: rgba(0, 200, 0, 0.7);
-            font-family: monospace;
-            animation: coordinateFloat 18s infinite linear;
-            --endX: 0px;
-            --endY: 0px;
-            text-shadow: 0 0 3px rgba(0, 200, 0, 0.3);
-        }
-        
-        @keyframes coordinateFloat {
-            0% {
-                transform: translate(0, 0) scale(0.5);
-                opacity: 0;
-            }
-            15% {
-                opacity: 0.6;
-            }
-            80% {
-                opacity: 0.4;
-            }
-            100% {
-                transform: translate(var(--endX), var(--endY)) scale(1.5);
-                opacity: 0;
-            }
-        }
-        
-        .reality-grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            /* CORRECCIÓN: Grid más oscuro */
-            background-image: 
-                linear-gradient(rgba(0,180,0,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,180,0,0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridScroll 25s infinite linear;
-        }
-        
-        @keyframes gridScroll {
-            from { transform: translate(0, 0); }
-            to { transform: translate(50px, 50px); }
-        }
-        
-        .wisdom-territory {
-            position: absolute;
-            bottom: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            font-size: 18px;
-            /* CORRECCIÓN: Dorado más oscuro */
-            color: rgba(220, 180, 50, 0.8);
-            text-shadow: 0 0 15px rgba(220, 180, 50, 0.3);
-            animation: territoryWisdom 6s infinite ease-in-out;
-            width: 90%;
-            z-index: 100;
-        }
-        
-        @keyframes territoryWisdom {
-            0%, 100% { 
-                opacity: 0.3;
-                transform: translateX(-50%) scale(0.95);
-            }
-            50% { 
-                opacity: 0.8;
-                transform: translateX(-50%) scale(1);
-            }
-        }
-        
-        .borges-quote {
-            position: absolute;
-            top: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-style: italic;
-            /* CORRECCIÓN: Cyan más oscuro */
-            color: rgba(0, 180, 180, 0.7);
-            text-shadow: 0 0 10px rgba(0, 180, 180, 0.3);
-            font-size: 15px;
-            width: 80%;
-            text-align: center;
-        }
-        
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.2;
-        }
+    body {
+        background: linear-gradient(45deg, #000428, #001933);
+        color: #fff;
+        font-family: 'Georgia', serif;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: none;
+    }
 
-        /* NUEVO: Capa supresora de destellos */
-        .territory-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 50;
-            pointer-events: none;
-        }
-    </style>
+    .territory-container { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+
+    .map-layer {
+        position: absolute; width: 80%; height: 80%; top: 10%; left: 10%;
+        border: 1px solid rgba(200,200,200,0.2);
+        background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(180,180,180,0.03) 10px, rgba(180,180,180,0.03) 20px);
+        transform: rotateX(60deg) rotateZ(45deg);
+        animation: mapShift 14s infinite alternate ease-in-out;
+    }
+    @keyframes mapShift {
+        0%   { transform: rotateX(60deg) rotateZ(45deg) scale(1); opacity: 0.2; }
+        100% { transform: rotateX(30deg) rotateZ(135deg) scale(1.2); opacity: 0.6; }
+    }
+
+    .territory-layer {
+        position: absolute; width: 80%; height: 80%; top: 10%; left: 10%;
+        border: 2px solid rgba(0,200,200,0.4);
+        background: radial-gradient(circle at center, rgba(0,180,180,0.08), transparent 70%);
+        box-shadow: 0 0 55px rgba(0,200,200,0.35);
+        animation: territoryPulse 12s infinite alternate ease-in-out;
+    }
+    @keyframes territoryPulse {
+        0%   { transform: scale(1) rotateZ(0deg); opacity: 0.5; }
+        100% { transform: scale(0.9) rotateZ(-45deg); opacity: 0.85; }
+    }
+
+    .unity-point {
+        position: absolute; width: 16px; height: 16px;
+        background: radial-gradient(circle, rgba(220,180,100,0.7) 0%, rgba(150,200,200,0.5) 40%, rgba(80,150,180,0.3) 70%, transparent 100%);
+        border-radius: 50%; top: 50%; left: 50%;
+        box-shadow: 0 0 28px rgba(220,180,100,0.45), 0 0 56px rgba(150,200,200,0.22);
+        transform: translate(-50%, -50%);
+        animation: unityGlow 5s infinite ease-in-out;
+    }
+    @keyframes unityGlow {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        50% { transform: translate(-50%, -50%) scale(1.35); opacity: 0.95; }
+    }
+
+    .coordinate {
+        position: absolute; font-size: 11px; font-family: 'Courier New', monospace;
+        color: rgba(120, 215, 130, 0.7); text-shadow: 0 0 4px rgba(120, 215, 130, 0.3);
+        animation: coordinateFloat 18s infinite linear; --endX: 0px; --endY: 0px;
+    }
+    @keyframes coordinateFloat {
+        0%   { transform: translate(0,0) scale(0.5); opacity: 0; }
+        15%  { opacity: 0.6; }
+        80%  { opacity: 0.4; }
+        100% { transform: translate(var(--endX), var(--endY)) scale(1.5); opacity: 0; }
+    }
+
+    .reality-grid {
+        position: absolute; width: 100%; height: 100%;
+        background-image: linear-gradient(rgba(120,200,130,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(120,200,130,0.05) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: gridScroll 28s infinite linear;
+    }
+    @keyframes gridScroll { from { transform: translate(0,0); } to { transform: translate(50px,50px); } }
+
+    .wisdom-territory {
+        position: fixed; bottom: 7%; left: 50%; transform: translateX(-50%);
+        text-align: center; font-size: 1.05em; line-height: 1.9;
+        color: rgba(225, 190, 90, 0.88); text-shadow: 0 0 16px rgba(220, 180, 60, 0.3);
+        width: 90%; max-width: 640px; z-index: 100;
+        animation: territoryWisdom 13s infinite ease-in-out;
+    }
+    @keyframes territoryWisdom {
+        0%   { opacity: 0; }
+        12%  { opacity: 0.85; }
+        80%  { opacity: 0.85; }
+        92%  { opacity: 0; }
+        100% { opacity: 0; }
+    }
+
+    .borges-quote {
+        position: fixed; top: 6%; left: 50%; transform: translateX(-50%);
+        font-style: italic; color: rgba(120, 205, 215, 0.75); text-shadow: 0 0 10px rgba(0, 180, 180, 0.3);
+        font-size: 1em; line-height: 1.6; width: 80%; max-width: 600px; text-align: center;
+        opacity: 1; transition: opacity 1s ease; z-index: 100;
+    }
+
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.25; }
+
+    .hint {
+        position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+        font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+        animation: hint-breathe 4s ease-in-out infinite; transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
+    }
+    .hint.oculto { opacity: 0; }
+    @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+    .infinito {
+        position: fixed; bottom: 24px; right: 28px;
+        color: rgba(220,180,100,0.4); text-decoration: none; font-size: 24px;
+        cursor: pointer; transition: color 0.6s ease; z-index: 60;
+    }
+    .infinito:hover { color: rgba(220,180,100,0.95); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .map-layer { animation: none; opacity: 0.4; }
+        .territory-layer { animation: none; opacity: 0.6; }
+        .unity-point { animation: none; opacity: 0.9; }
+        .reality-grid { animation: none; }
+        .wisdom-territory { animation: none; opacity: 0.85; }
+    }
+</style>
 </head>
 <body>
     <canvas id="mapCanvas"></canvas>
 
-    <div class="borges-quote">
-        "El mapa del imperio tenía el tamaño del imperio..."
-    </div>
+    <div class="borges-quote">"El mapa del imperio tenía el tamaño del imperio..."</div>
 
     <div class="territory-container">
         <div class="reality-grid"></div>
@@ -264,133 +143,143 @@
         La descripción ES lo descrito
     </div>
 
+    <div class="hint" id="hint">( tocá: el mapa resuena )</div>
+    <a class="infinito" href="L4-Nodo6.html" title="Siguiente portal">∞</a>
+
     <script>
-        // Canvas para líneas de conexión
-        const canvas = document.getElementById('mapCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const points = [];
-        for (let i = 0; i < 15; i++) {
-            points.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 1.5,
-                vy: (Math.random() - 0.5) * 1.5
-            });
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ── Canvas: red de conexiones ──
+    const canvas = document.getElementById('mapCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const points = [];
+    for (let i = 0; i < 15; i++) points.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*1.2, vy: (Math.random()-0.5)*1.2 });
+    function drawConnections() {
+        ctx.fillStyle = 'rgba(0,0,0,0.04)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        points.forEach(p => {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            ctx.fillStyle = 'rgba(0,180,180,0.5)';
+            ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI*2); ctx.fill();
+        });
+        ctx.strokeStyle = 'rgba(0,180,180,0.15)'; ctx.lineWidth = 0.8;
+        for (let i = 0; i < points.length; i++) for (let j = i+1; j < points.length; j++) {
+            const d = Math.hypot(points[i].x-points[j].x, points[i].y-points[j].y);
+            if (d < 150) { ctx.beginPath(); ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(points[j].x, points[j].y); ctx.stroke(); }
         }
-        
-        function drawConnections() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Actualizar y dibujar puntos
-            points.forEach(point => {
-                point.x += point.vx;
-                point.y += point.vy;
-                
-                if (point.x < 0 || point.x > canvas.width) point.vx *= -1;
-                if (point.y < 0 || point.y > canvas.height) point.vy *= -1;
-                
-                // CORRECCIÓN: Puntos más oscuros
-                ctx.fillStyle = 'rgba(0, 180, 180, 0.5)';
-                ctx.beginPath();
-                ctx.arc(point.x, point.y, 1.5, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            
-            // Dibujar conexiones
-            ctx.strokeStyle = 'rgba(0, 180, 180, 0.15)';
-            ctx.lineWidth = 0.8;
-            
-            for (let i = 0; i < points.length; i++) {
-                for (let j = i + 1; j < points.length; j++) {
-                    const dist = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
-                    if (dist < 150) {
-                        ctx.beginPath();
-                        ctx.moveTo(points[i].x, points[i].y);
-                        ctx.lineTo(points[j].x, points[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            
-            requestAnimationFrame(drawConnections);
-        }
-        
-        drawConnections();
-        
-        // Crear coordenadas flotantes (menos frecuentes)
+        if (!reduce) requestAnimationFrame(drawConnections);
+    }
+    drawConnections();
+
+    const container = document.querySelector('.territory-container');
+    if (!reduce) {
         function createCoordinate() {
-            const coord = document.createElement('div');
-            coord.className = 'coordinate';
-            coord.textContent = `[${Math.floor(Math.random() * 800)}, ${Math.floor(Math.random() * 800)}]`;
-            
-            const startX = Math.random() * window.innerWidth;
-            const startY = Math.random() * window.innerHeight;
-            
-            coord.style.left = startX + 'px';
-            coord.style.top = startY + 'px';
-            coord.style.setProperty('--endX', (Math.random() - 0.5) * 400 + 'px');
-            coord.style.setProperty('--endY', (Math.random() - 0.5) * 400 + 'px');
-            
-            document.body.appendChild(coord);
-            
-            setTimeout(() => coord.remove(), 18000);
+            const c = document.createElement('div');
+            c.className = 'coordinate';
+            c.textContent = `[${Math.floor(Math.random()*800)}, ${Math.floor(Math.random()*800)}]`;
+            c.style.left = Math.random()*window.innerWidth + 'px';
+            c.style.top = Math.random()*window.innerHeight + 'px';
+            c.style.setProperty('--endX', (Math.random()-0.5)*400 + 'px');
+            c.style.setProperty('--endY', (Math.random()-0.5)*400 + 'px');
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 18000);
         }
-        
-        setInterval(createCoordinate, 1500);
-        
-        // Crear capas adicionales de mapa/territorio (menos frecuentes)
-        const container = document.querySelector('.territory-container');
-        
+        for (let i = 0; i < 8; i++) createCoordinate();
+        setInterval(createCoordinate, 2000);
+
         function createLayer(isMap) {
-            const layer = document.createElement('div');
-            layer.className = isMap ? 'map-layer' : 'territory-layer';
-            layer.style.width = (60 + Math.random() * 25) + '%';
-            layer.style.height = (60 + Math.random() * 25) + '%';
-            layer.style.top = (10 + Math.random() * 20) + '%';
-            layer.style.left = (10 + Math.random() * 20) + '%';
-            layer.style.opacity = '0.15';
-            layer.style.animationDuration = (10 + Math.random() * 5) + 's';
-            
-            container.appendChild(layer);
-            
-            setTimeout(() => layer.remove(), 12000);
+            const l = document.createElement('div');
+            l.className = isMap ? 'map-layer' : 'territory-layer';
+            l.style.width = (60 + Math.random()*25) + '%'; l.style.height = (60 + Math.random()*25) + '%';
+            l.style.top = (10 + Math.random()*20) + '%'; l.style.left = (10 + Math.random()*20) + '%';
+            l.style.animationDuration = (12 + Math.random()*5) + 's';
+            container.appendChild(l);
+            setTimeout(() => l.remove(), 12000);
         }
-        
-        setInterval(() => createLayer(Math.random() > 0.5), 4000);
-        
-        // Textos de sabiduría cambiantes
-        const wisdoms = [
-            "No hay representación y realidad<br>El mapa ES el territorio<br>La descripción ES lo descrito",
-            "El símbolo y lo simbolizado<br>Son uno y lo mismo<br>La dualidad es la ilusión",
-            "El nombre es la cosa<br>La palabra es el mundo<br>El pensamiento es la realidad",
-            "No buscas el territorio en el mapa<br>El mapa mismo es todo lo que hay<br>La búsqueda es el hallazgo",
-            "La conciencia no representa la realidad<br>La conciencia ES la realidad<br>No hay afuera del mapa"
-        ];
-        
-        let wisdomIndex = 0;
-        setInterval(() => {
-            wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
-            document.querySelector('.wisdom-territory').innerHTML = wisdoms[wisdomIndex];
-        }, 6000);
-        
-        // Cambiar cita de Borges
-        const quotes = [
-            '"El mapa del imperio tenía el tamaño del imperio..."',
-            '"En aquel Imperio, el Arte de la Cartografía logró tal Perfección..."',
-            '"...coincidía puntualmente con él"',
-            '"Las generaciones siguientes entendieron que ese dilatado Mapa era Inútil"',
-            '"En los desiertos del Oeste perduran despedazadas Ruinas del Mapa"'
-        ];
-        
-        let quoteIndex = 0;
-        setInterval(() => {
-            quoteIndex = (quoteIndex + 1) % quotes.length;
-            document.querySelector('.borges-quote').textContent = quotes[quoteIndex];
-        }, 8000);
+        setInterval(() => createLayer(Math.random() > 0.5), 5000);
+    }
+
+    // ── Sabiduría (con tiempo de lectura) ──
+    const wisdoms = [
+        "No hay representación y realidad<br>El mapa ES el territorio<br>La descripción ES lo descrito",
+        "El símbolo y lo simbolizado<br>son uno y lo mismo<br>La dualidad es la ilusión",
+        "El nombre es la cosa<br>la palabra es el mundo<br>el pensamiento es la realidad",
+        "No buscas el territorio en el mapa<br>el mapa mismo es todo lo que hay<br>La búsqueda es el hallazgo",
+        "La conciencia no representa la realidad<br>la conciencia ES la realidad<br>No hay afuera del mapa"
+    ];
+    let wIdx = 0;
+    setInterval(() => { wIdx = (wIdx + 1) % wisdoms.length; document.querySelector('.wisdom-territory').innerHTML = wisdoms[wIdx]; }, 13000);
+
+    // ── Cita de Borges (cross-fade, tiempo de lectura) ──
+    const quotes = [
+        '"El mapa del imperio tenía el tamaño del imperio..."',
+        '"En aquel Imperio, el Arte de la Cartografía logró tal Perfección..."',
+        '"...coincidía puntualmente con él"',
+        '"Las generaciones siguientes entendieron que ese dilatado Mapa era Inútil"',
+        '"En los desiertos del Oeste perduran despedazadas Ruinas del Mapa"'
+    ];
+    let qIdx = 0;
+    const quoteEl = document.querySelector('.borges-quote');
+    setInterval(() => {
+        quoteEl.style.opacity = '0';
+        setTimeout(() => { qIdx = (qIdx + 1) % quotes.length; quoteEl.textContent = quotes[qIdx]; quoteEl.style.opacity = '1'; }, 1000);
+    }, 9000);
+
+    // ── Audio (Web Audio puro, SIN CDN; nace al tocar) ──
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+    function makeReverbIR(s, d) {
+        const rate = actx.sampleRate, len = Math.floor(rate * s);
+        const b = actx.createBuffer(2, len, rate);
+        for (let c = 0; c < 2; c++) { const a = b.getChannelData(c); for (let i = 0; i < len; i++) a[i] = (Math.random()*2-1)*Math.pow(1-i/len, d); }
+        return b;
+    }
+    function panner(p) { const s = actx.createStereoPanner(); s.pan.value = p; return s; }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+        const dry = actx.createGain(); dry.gain.value = 0.55; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(13, 1.7); // vasto: el mapa del tamaño del imperio
+        const wet = actx.createGain(); wet.gain.value = 0.62; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Territorio: drone base
+        const terr = actx.createGain(); terr.gain.value = 0.05;
+        [65.41, 98.00].forEach(f => { const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f; o.connect(terr); o.start(); });
+        terr.connect(fxIn);
+
+        // Mapa: una capa que refleja al territorio (representación = realidad), apenas desfasada
+        const mapa = actx.createGain(); mapa.gain.value = 0.035;
+        const lp = actx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 600;
+        [65.41 * 1.003, 98.00 * 1.003].forEach(f => { const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f; o.connect(lp); o.start(); });
+        lp.connect(mapa); mapa.connect(fxIn);
+    }
+
+    // Coordenada: un ping suave (el signo y lo signado, mismo evento)
+    function playPing(t0) {
+        const f = 523.25 * Math.pow(2, Math.floor(Math.random() * 4) / 12 | 0) * [1, 1.122, 1.26, 1.498][Math.floor(Math.random()*4)];
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.03, t0 + 0.04);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 2.4);
+        o.connect(g); g.connect(panner(Math.random()*1.6-0.8)).connect(fxIn);
+        o.start(t0); o.stop(t0 + 2.6);
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.7, actx.currentTime + 5);
+        const p = () => playPing(actx.currentTime + 0.05);
+        p(); timers.push(setInterval(p, 4000));
+        const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
     </script>
 </body>
 </html>
