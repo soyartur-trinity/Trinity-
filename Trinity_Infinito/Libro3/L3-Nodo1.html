@@ -8,92 +8,76 @@
         body {
             background: linear-gradient(135deg, #000, #0a0a0a, #000);
             color: #fff;
-            font-family: 'Palatino', serif;
+            /* Georgia: estándar de la serie (antes Palatino) */
+            font-family: 'Georgia', 'Palatino', serif;
             margin: 0;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: none;
         }
 
         .game-board {
             position: relative;
             width: 600px;
             height: 600px;
+            max-width: 92vw;
+            max-height: 92vh;
         }
-        
+
+        /* Piezas que se mueven solas (transform/opacity). Delay negativo. */
         .game-piece {
             position: absolute;
             width: 40px;
             height: 40px;
             background: transparent;
             border-radius: 50%;
-            box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.2); 
-            animation: self-play 20s infinite;
-            animation-delay: calc(var(--delay) * 2s);
+            box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.2);
+            animation: self-play 20s infinite ease-in-out;
+            animation-delay: calc(var(--delay) * -5s);
         }
-        
         @keyframes self-play {
-            0% { 
-                transform: translate(var(--x1), var(--y1)) scale(0.5);
-                opacity: 0;
-            }
-            25% { 
-                transform: translate(var(--x2), var(--y2)) scale(1);
-                opacity: 0.6;
-            }
-            50% { 
-                transform: translate(var(--x3), var(--y3)) scale(0.8);
-                opacity: 0.4;
-            }
-            75% { 
-                transform: translate(var(--x4), var(--y4)) scale(1.2);
-                opacity: 0.5;
-            }
-            100% { 
-                transform: translate(var(--x1), var(--y1)) scale(0.5);
-                opacity: 0;
-            }
+            0%   { transform: translate(var(--x1), var(--y1)) scale(0.5); opacity: 0; }
+            25%  { transform: translate(var(--x2), var(--y2)) scale(1); opacity: 0.6; }
+            50%  { transform: translate(var(--x3), var(--y3)) scale(0.8); opacity: 0.4; }
+            75%  { transform: translate(var(--x4), var(--y4)) scale(1.2); opacity: 0.5; }
+            100% { transform: translate(var(--x1), var(--y1)) scale(0.5); opacity: 0; }
         }
-        
+
         .no-player {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
             font-size: 2em;
             letter-spacing: 0.5em;
             text-align: center;
-            animation: pulse-truth 8s infinite;
+            animation: pulse-truth 8s infinite ease-in-out;
         }
-        
         @keyframes pulse-truth {
-            0%, 100% { 
-                opacity: 0.2; 
-                transform: translate(-50%, -50%) scale(0.95);
-            }
-            50% { 
-                opacity: 0.6; 
-                transform: translate(-50%, -50%) scale(1);
-            }
+            0%, 100% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
         }
-        
+
+        /* Reglas con tiempo de lectura real (antes ~0.6 s). Sólo opacity. */
         .game-rules {
             position: absolute;
             font-size: 0.9em;
-            opacity: 0;
-            animation: rule-flash 15s infinite;
-            animation-delay: calc(var(--rule) * 3s);
             letter-spacing: 0.2em;
             font-style: italic;
+            opacity: 0;
+            animation: rule-breathe 28s infinite ease-in-out;
+            animation-delay: calc(var(--rule) * -5.6s);
         }
-        
-        @keyframes rule-flash {
-            0%, 90%, 100% { opacity: 0; }
-            93%, 97% { opacity: 0.4; }
+        @keyframes rule-breathe {
+            0%   { opacity: 0; }
+            8%   { opacity: 0.45; }
+            30%  { opacity: 0.45; }
+            38%  { opacity: 0; }
+            100% { opacity: 0; }
         }
-        
+
         .lila-text {
             position: absolute;
             top: 10%;
@@ -102,6 +86,51 @@
             letter-spacing: 0.8em;
             font-size: 1.5em;
             opacity: 0.15;
+            animation: lila-breathe 18s ease-in-out infinite;
+        }
+        @keyframes lila-breathe {
+            0%, 100% { opacity: 0.12; }
+            50% { opacity: 0.22; }
+        }
+
+        .hint {
+            position: fixed;
+            bottom: 66px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe {
+            0%, 100% { opacity: 0.16; }
+            50% { opacity: 0.4; }
+        }
+        .infinito {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.6s ease;
+            z-index: 60;
+        }
+        .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .game-piece { animation: none; opacity: 0; }
+            .game-rules { animation: none; opacity: 0.4; }
+            .no-player  { animation: none; opacity: 0.5; transform: translate(-50%, -50%); }
+            .lila-text  { animation: none; opacity: 0.18; }
+            .hint       { animation: none; opacity: 0.3; }
         }
     </style>
 </head>
@@ -112,17 +141,108 @@
         <div class="game-piece" style="--delay: 1; --x1: 500px; --y1: 100px; --x2: 450px; --y2: 400px; --x3: 100px; --y3: 450px; --x4: 200px; --y4: 100px;"></div>
         <div class="game-piece" style="--delay: 2; --x1: 300px; --y1: 500px; --x2: 100px; --y2: 300px; --x3: 500px; --y3: 200px; --x4: 300px; --y4: 100px;"></div>
         <div class="game-piece" style="--delay: 3; --x1: 50px; --y1: 250px; --x2: 550px; --y2: 250px; --x3: 300px; --y3: 50px; --x4: 300px; --y4: 550px;"></div>
-        
+
         <div class="no-player">
             NADIE<br>
             JUEGA
         </div>
-        
+
         <div class="game-rules" style="top: 25%; left: 10%; --rule: 0;">Sin jugador</div>
         <div class="game-rules" style="top: 35%; right: 10%; --rule: 1;">Sin objetivo</div>
         <div class="game-rules" style="bottom: 35%; left: 5%; --rule: 2;">Sin inicio</div>
         <div class="game-rules" style="bottom: 25%; right: 15%; --rule: 3;">Sin final</div>
         <div class="game-rules" style="top: 50%; left: 5%; --rule: 4;">Solo juego</div>
     </div>
+
+    <div class="hint" id="hint">( tocá: el juego se juega solo )</div>
+    <a class="infinito" href="L3-Nodo2.html" title="Siguiente portal">∞</a>
+
+    <script>
+    // ============================================================
+    //  Web Audio API puro, SIN CDN.
+    //  El juego que se juega a sí mismo = música que se toca sola.
+    //  Capa generativa: notas pentatónicas que surgen por su cuenta,
+    //  con tiempo, altura y paneo al azar. Nunca suena igual dos veces:
+    //  no hay compositor, no hay intérprete. Sólo juego.
+    // ============================================================
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+
+    const escala = [261.63, 293.66, 329.63, 392.00, 440.00,   // C4 D4 E4 G4 A4
+                    523.25, 587.33, 659.25, 783.99, 880.00];   // C5 D5 E5 G5 A5
+    const graves = [130.81, 146.83, 196.00, 220.00];           // C3 D3 G3 A3
+
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate, len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++)
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+        }
+        return buf;
+    }
+    function panner(p) { const sp = actx.createStereoPanner(); sp.pan.value = p; return sp; }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+
+        const dry = actx.createGain(); dry.gain.value = 0.65; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(9, 2.1);
+        const wet = actx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Drone de fondo: el tablero (fundamental + quinta), apenas presente
+        const o1 = actx.createOscillator(); o1.type = 'sine'; o1.frequency.value = 65.41; // C2
+        const o2 = actx.createOscillator(); o2.type = 'sine'; o2.frequency.value = 98.00; // G2
+        const dg = actx.createGain(); dg.gain.value = 0.04;
+        o1.connect(dg); o2.connect(dg); dg.connect(fxIn);
+        const lfo = actx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.05;
+        const lfoDepth = actx.createGain(); lfoDepth.gain.value = 0.015;
+        lfo.connect(lfoDepth); lfoDepth.connect(dg.gain);
+        o1.start(); o2.start(); lfo.start();
+    }
+
+    // Una nota-campana que aparece sola
+    function playNote(freq, t0, dur, peak, pan) {
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = freq;
+        const o2 = actx.createOscillator(); o2.type = 'sine'; o2.frequency.value = freq * 2;
+        const g2 = actx.createGain(); g2.gain.value = 0.22; o2.connect(g2);
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(peak, t0 + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        o.connect(g); g2.connect(g);
+        g.connect(panner(pan)).connect(fxIn);
+        o.start(t0); o2.start(t0); o.stop(t0 + dur + 0.1); o2.stop(t0 + dur + 0.1);
+    }
+
+    // El juego se juega solo: agenda la próxima jugada, siempre distinta
+    function jugar() {
+        const espera = 700 + Math.random() * 2000; // 0.7–2.7 s
+        const id = setTimeout(() => {
+            if (!started) return;
+            const f = escala[Math.floor(Math.random() * escala.length)];
+            playNote(f, actx.currentTime + 0.02, 4 + Math.random() * 3, 0.045, Math.random() * 1.6 - 0.8);
+            if (Math.random() < 0.18) { // de tanto en tanto, una jugada grave
+                const g = graves[Math.floor(Math.random() * graves.length)];
+                playNote(g, actx.currentTime + 0.02, 7 + Math.random() * 4, 0.05, Math.random() * 1.0 - 0.5);
+            }
+            jugar();
+        }, espera);
+        timers.push(id);
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.7, actx.currentTime + 4);
+        jugar();
+        const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
