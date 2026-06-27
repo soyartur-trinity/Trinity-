@@ -8,15 +8,17 @@
         body {
             background: #000;
             color: #fff;
-            font-family: 'Palatino', serif;
+            /* Georgia: estándar de la serie (antes Palatino) */
+            font-family: 'Georgia', 'Palatino', serif;
             margin: 0;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: none;
         }
-        
+
         .awareness-field {
             position: relative;
             width: 100vw;
@@ -25,56 +27,56 @@
             align-items: center;
             justify-content: center;
         }
-        
+
+        /* Ondas de consciencia: antes animaban width/height (reflow).
+           Ahora scale, concéntricas desde el centro. Delay negativo. */
         .awareness-ripple {
             position: absolute;
+            top: 50%;
+            left: 50%;
             width: 100px;
             height: 100px;
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 50%;
-            animation: expand 8s infinite;
-            animation-delay: calc(var(--delay) * 2s);
+            transform: translate(-50%, -50%) scale(1);
+            animation: expand 8s infinite ease-out;
+            animation-delay: calc(var(--delay) * -2s);
         }
-        
         @keyframes expand {
-            0% {
-                width: 100px;
-                height: 100px;
-                opacity: 0.5;
-            }
-            100% {
-                width: 800px;
-                height: 800px;
-                opacity: 0;
-            }
+            0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(8); opacity: 0; }
         }
-        
+
         .no-one {
             font-size: 2em;
             letter-spacing: 0.5em;
             opacity: 0;
-            animation: no-one-appear 12s infinite;
+            z-index: 5;
+            animation: no-one-appear 14s infinite ease-in-out;
         }
-        
         @keyframes no-one-appear {
-            0%, 40%, 60%, 100% { opacity: 0; }
-            45%, 55% { opacity: 0.6; }
+            0%, 30%, 72%, 100% { opacity: 0; }
+            40%, 62% { opacity: 0.6; }
         }
-        
+
+        /* Respirar persistente (delay negativo). Sólo opacity:
+           así se conservan los transform de centrado en línea. */
         .conscious-text {
             position: absolute;
             font-size: 1em;
-            opacity: 0;
-            animation: conscious-flash 10s infinite;
-            animation-delay: calc(var(--index) * 1.5s);
             letter-spacing: 0.2em;
+            opacity: 0;
+            animation: conscious-breathe 30s infinite ease-in-out;
+            animation-delay: calc(var(--index) * -5s);
         }
-        
-        @keyframes conscious-flash {
-            0%, 85%, 100% { opacity: 0; }
-            90%, 95% { opacity: 0.4; }
+        @keyframes conscious-breathe {
+            0%   { opacity: 0; }
+            8%   { opacity: 0.45; }
+            30%  { opacity: 0.45; }
+            38%  { opacity: 0; }
+            100% { opacity: 0; }
         }
-        
+
         .observer-void {
             position: absolute;
             top: 50%;
@@ -84,12 +86,52 @@
             height: 200px;
             border-radius: 50%;
             background: radial-gradient(circle, transparent, rgba(255,255,255,0.05));
-            animation: void-pulse 6s infinite;
+            animation: void-pulse 6s infinite ease-in-out;
         }
-        
         @keyframes void-pulse {
             0%, 100% { transform: translate(-50%, -50%) scale(1); }
             50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .hint {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe {
+            0%, 100% { opacity: 0.16; }
+            50% { opacity: 0.4; }
+        }
+
+        .infinito {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.6s ease;
+            z-index: 60;
+        }
+        .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .awareness-ripple { animation: none; opacity: 0; }
+            .no-one           { animation: none; opacity: 0.6; }
+            .conscious-text   { animation: none; opacity: 0.4; }
+            .observer-void    { animation: none; }
+            .hint             { animation: none; opacity: 0.3; }
         }
     </style>
 </head>
@@ -99,34 +141,109 @@
         <div class="awareness-ripple" style="--delay: 1;"></div>
         <div class="awareness-ripple" style="--delay: 2;"></div>
         <div class="awareness-ripple" style="--delay: 3;"></div>
-        
+
         <div class="observer-void"></div>
-        
+
         <div class="conscious-text" style="top: 20%; left: 50%; transform: translateX(-50%); --index: 0;">
             Consciencia ocurre
         </div>
-        
+
         <div class="conscious-text" style="top: 35%; left: 20%; --index: 1;">
             Sin sujeto
         </div>
-        
+
         <div class="conscious-text" style="top: 35%; right: 20%; --index: 2;">
             Sin objeto
         </div>
-        
+
         <div class="no-one">NADIE</div>
-        
+
         <div class="conscious-text" style="bottom: 35%; left: 25%; --index: 3;">
             Aware
         </div>
-        
+
         <div class="conscious-text" style="bottom: 35%; right: 25%; --index: 4;">
             Despierto
         </div>
-        
+
         <div class="conscious-text" style="bottom: 20%; left: 50%; transform: translateX(-50%); --index: 5;">
             El testigo sin rostro
         </div>
     </div>
+
+    <div class="hint" id="hint">( tocá para que la consciencia resuene )</div>
+    <a class="infinito" href="L2-Nodo2.html" title="Siguiente portal">∞</a>
+
+    <script>
+    // ============================================================
+    //  Web Audio API puro, SIN CDN.
+    //  Consciencia como campo sin centro: un drone espacioso que
+    //  se panea lento (sin sujeto fijo) y ondas suaves que se
+    //  expanden, en eco con las ondas visuales.
+    // ============================================================
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate, len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++)
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+        }
+        return buf;
+    }
+    function panner(p) { const sp = actx.createStereoPanner(); sp.pan.value = p; return sp; }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+
+        const dry = actx.createGain(); dry.gain.value = 0.7; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(8, 2.3);
+        const wet = actx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Drone espacioso (fundamental + quinta) con paneo lento, sin centro
+        const auto = panner(0);
+        const panLFO = actx.createOscillator(); panLFO.type = 'sine'; panLFO.frequency.value = 1 / 17;
+        const panDepth = actx.createGain(); panDepth.gain.value = 0.7;
+        panLFO.connect(panDepth); panDepth.connect(auto.pan);
+        auto.connect(fxIn);
+
+        const o1 = actx.createOscillator(); o1.type = 'sine'; o1.frequency.value = 90;
+        const o2 = actx.createOscillator(); o2.type = 'sine'; o2.frequency.value = 135; // quinta
+        const dg = actx.createGain(); dg.gain.value = 0.05;
+        o1.connect(dg); o2.connect(dg); dg.connect(auto);
+        o1.start(); o2.start(); panLFO.start();
+    }
+
+    // Onda de consciencia: swell suave que se expande y se va
+    function playSwell(t0) {
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = 180;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.05, t0 + 2.5);
+        g.gain.linearRampToValueAtTime(0.0001, t0 + 7);
+        o.connect(g); g.connect(panner(Math.random() * 1.6 - 0.8)).connect(fxIn);
+        o.start(t0); o.stop(t0 + 7.2);
+    }
+
+    function startScheduling() {
+        const swell = () => playSwell(actx.currentTime + 0.05);
+        swell(); timers.push(setInterval(swell, 4000));
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.75, actx.currentTime + 5);
+        startScheduling();
+        const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
