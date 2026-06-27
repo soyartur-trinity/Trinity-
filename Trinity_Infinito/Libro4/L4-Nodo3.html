@@ -1,287 +1,317 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hologramas del Ser</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hologramas del Ser</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-        background: black;
+        background: #000;
         color: #fff;
-        font-family: 'Courier New', monospace;
+        font-family: 'Georgia', serif;
         overflow: hidden;
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: none;
     }
-    
+
     .hologram-container {
         position: relative;
         width: 500px;
         height: 500px;
+        max-width: 92vw;
+        max-height: 92vh;
         transform-style: preserve-3d;
-        animation: hologramRotate 20s infinite linear;
+        animation: hologramRotate 26s infinite linear;
     }
-    
     @keyframes hologramRotate {
         from { transform: rotateY(0deg) rotateX(0deg); }
         to { transform: rotateY(360deg) rotateX(360deg); }
     }
-    
+
+    /* Fragmentos iridiscentes: flotan sólo con transform/opacity */
     .hologram-shard {
         position: absolute;
         width: 100px;
         height: 100px;
-        background: linear-gradient(45deg, 
-            rgba(0,255,255,0.3), 
-            rgba(255,0,255,0.3), 
-            rgba(255,255,0,0.3));
+        background: linear-gradient(45deg,
+            rgba(90, 210, 230, 0.30),
+            rgba(200, 120, 220, 0.28),
+            rgba(220, 200, 150, 0.26));
         clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
         transform-style: preserve-3d;
-        animation: shardFloat 6s infinite ease-in-out;
+        opacity: 0.5;
+        animation: shardFloat 7s infinite ease-in-out;
     }
-    
     @keyframes shardFloat {
-        0%, 100% {
-            transform: translateZ(0px) scale(1);
-            filter: brightness(1);
-        }
-        50% {
-            transform: translateZ(200px) scale(1.5);
-            filter: brightness(2);
-        }
+        0%, 100% { transform: translateZ(0px) scale(1); opacity: 0.4; }
+        50% { transform: translateZ(200px) scale(1.5); opacity: 0.85; }
     }
-    
+
     .whole-image {
         position: absolute;
         width: 200px;
         height: 200px;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
         border-radius: 50%;
-        background: radial-gradient(circle, 
-            rgba(255,255,255,0.8) 0%, 
-            rgba(255,255,255,0.4) 30%, 
-            transparent 70%);
-        animation: wholePulse 4s infinite;
+        background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(220,225,255,0.35) 30%, transparent 70%);
+        box-shadow: 0 0 70px rgba(255,255,255,0.3);
+        transform: translate(-50%, -50%);
+        animation: wholePulse 5s infinite ease-in-out;
     }
-    
     @keyframes wholePulse {
-        0%, 100% {
-            transform: translate(-50%, -50%) scale(1);
-            box-shadow: 0 0 50px white;
-        }
-        50% {
-            transform: translate(-50%, -50%) scale(1.2);
-            box-shadow: 0 0 100px white, 0 0 200px rgba(255,255,255,0.5);
-        }
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
     }
-    
+
     .fragment {
         position: absolute;
-        width: 30px;
-        height: 30px;
-        background: radial-gradient(circle, white, transparent);
+        width: 28px;
+        height: 28px;
+        background: radial-gradient(circle, rgba(255,255,255,0.85), transparent);
         border-radius: 50%;
+        top: 50%;
+        left: 50%;
         animation: fragmentOrbit 10s infinite linear;
     }
-    
     @keyframes fragmentOrbit {
-        from {
-            transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg) scale(1);
-        }
-        to {
-            transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg) scale(1);
-        }
+        from { transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg); }
+        to { transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg); }
     }
-    
+
     .wisdom-hologram {
-        position: absolute;
-        bottom: 10%;
+        position: fixed;
+        bottom: 70px;
         left: 50%;
         transform: translateX(-50%);
         text-align: center;
-        font-size: 18px;
-        color: cyan;
-        text-shadow: 0 0 20px cyan, 0 0 40px cyan;
-        animation: hologramText 5s infinite;
-        width: 80%;
+        font-size: 1.05em;
+        line-height: 1.9;
+        color: rgba(150, 225, 240, 0.9);
+        text-shadow: 0 0 18px rgba(120, 210, 235, 0.4);
+        width: 90%;
+        max-width: 640px;
+        z-index: 40;
+        animation: hologramText 13s infinite ease-in-out;
     }
-    
     @keyframes hologramText {
-        0%, 100% {
-            opacity: 0.3;
-            filter: blur(2px);
-        }
-        50% {
-            opacity: 1;
-            filter: blur(0px);
-        }
+        0%   { opacity: 0; }
+        12%  { opacity: 0.92; }
+        80%  { opacity: 0.92; }
+        92%  { opacity: 0; }
+        100% { opacity: 0; }
     }
-    
+
     .interference-pattern {
         position: absolute;
         width: 100%;
         height: 100%;
-        background: repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            rgba(0,255,255,0.1) 2px,
-            rgba(0,255,255,0.1) 4px
-        );
+        background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(110, 210, 235, 0.07) 2px, rgba(110, 210, 235, 0.07) 4px);
         animation: interferenceShift 3s infinite linear;
         mix-blend-mode: screen;
     }
-    
     @keyframes interferenceShift {
         from { transform: translateY(0); }
         to { transform: translateY(4px); }
     }
-    
+
     .laser-beam {
         position: absolute;
         width: 2px;
         height: 100%;
-        background: linear-gradient(to bottom, 
-            transparent, 
-            rgba(255,0,0,0.8), 
-            transparent);
+        background: linear-gradient(to bottom, transparent, rgba(230, 90, 90, 0.6), transparent);
         left: 50%;
         transform: translateX(-50%);
-        animation: laserScan 4s infinite linear;
-        box-shadow: 0 0 10px red, 0 0 20px red;
+        box-shadow: 0 0 8px rgba(230,90,90,0.4);
+        animation: laserScan 5s infinite linear;
     }
-    
     @keyframes laserScan {
         0%, 100% { transform: translateX(-50%) rotateZ(0deg); }
         50% { transform: translateX(-50%) rotateZ(180deg); }
     }
-    
-    canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.5;
+
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.4; }
+
+    .hint {
+        position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+        font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+        animation: hint-breathe 4s ease-in-out infinite;
+        transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
+    }
+    .hint.oculto { opacity: 0; }
+    @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+    .infinito {
+        position: fixed; bottom: 24px; right: 28px;
+        color: rgba(150,225,240,0.4); text-decoration: none; font-size: 24px;
+        cursor: pointer; transition: color 0.6s ease; z-index: 60;
+    }
+    .infinito:hover { color: rgba(150,225,240,0.95); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hologram-container { animation: none; }
+        .hologram-shard { animation: none; opacity: 0.5; }
+        .whole-image { animation: none; opacity: 0.9; }
+        .fragment { animation: none; }
+        .wisdom-hologram { animation: none; opacity: 0.9; }
+        .interference-pattern { animation: none; }
+        .laser-beam { animation: none; opacity: 0.4; }
     }
 </style>
-
-
 </head>
 <body>
     <canvas id="hologramCanvas"></canvas>
 
+    <div class="hologram-container">
+        <div class="interference-pattern"></div>
+        <div class="laser-beam"></div>
+        <div class="whole-image"></div>
+    </div>
 
-<div class="hologram-container">
-    <div class="interference-pattern"></div>
-    <div class="laser-beam"></div>
-    <div class="whole-image"></div>
-</div>
+    <div class="wisdom-hologram">
+        Rompe el holograma en mil pedazos<br>
+        Cada fragmento contiene la imagen completa<br>
+        Así es la conciencia: indivisible
+    </div>
 
-<div class="wisdom-hologram">
-    Rompe el holograma en mil pedazos<br>
-    Cada fragmento contiene la imagen completa<br>
-    Así es la conciencia: indivisible
-</div>
+    <div class="hint" id="hint">( tocá: el holograma resuena )</div>
+    <a class="infinito" href="L4-Nodo4.html" title="Siguiente portal">∞</a>
 
-<script>
-    // Canvas para patrones holográficos
+    <script>
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const container = document.querySelector('.hologram-container');
+
+    // ── Canvas: ondas de interferencia ──
     const canvas = document.getElementById('hologramCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     function drawHologramPattern() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillStyle = 'rgba(0,0,0,0.06)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
         const time = Date.now() * 0.001;
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
-        
-        // Dibujar ondas de interferencia
+        const cx = canvas.width / 2, cy = canvas.height / 2;
         for (let i = 0; i < 5; i++) {
             const radius = 100 + i * 50 + Math.sin(time + i) * 20;
-            ctx.strokeStyle = `rgba(0, 255, 255, ${0.3 - i * 0.05})`;
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = `rgba(110, 210, 235, ${0.22 - i * 0.04})`;
+            ctx.lineWidth = 1.4;
             ctx.beginPath();
-            ctx.arc(centerX + Math.cos(time) * 50, 
-                   centerY + Math.sin(time) * 50, 
-                   radius, 0, Math.PI * 2);
+            ctx.arc(cx + Math.cos(time) * 50, cy + Math.sin(time) * 50, radius, 0, Math.PI * 2);
             ctx.stroke();
         }
-        
-        requestAnimationFrame(drawHologramPattern);
+        if (!reduce) requestAnimationFrame(drawHologramPattern);
     }
-    
     drawHologramPattern();
-    
-    // Crear fragmentos holográficos
-    const container = document.querySelector('.hologram-container');
-    
+
+    // ── Fragmentos: cada uno contiene el todo ──
     for (let i = 0; i < 8; i++) {
         const shard = document.createElement('div');
         shard.className = 'hologram-shard';
         const angle = (i / 8) * Math.PI * 2;
-        const radius = 150;
-        shard.style.left = `${250 + Math.cos(angle) * radius - 50}px`;
-        shard.style.top = `${250 + Math.sin(angle) * radius - 50}px`;
-        shard.style.animationDelay = `${i * 0.75}s`;
-        shard.style.transform = `rotateZ(${i * 45}deg)`;
+        shard.style.left = `${250 + Math.cos(angle) * 150 - 50}px`;
+        shard.style.top = `${250 + Math.sin(angle) * 150 - 50}px`;
+        shard.style.animationDelay = `${i * 0.85}s`;
         container.appendChild(shard);
     }
-    
-    // Crear fragmentos orbitales
     for (let i = 0; i < 12; i++) {
-        const fragment = document.createElement('div');
-        fragment.className = 'fragment';
-        fragment.style.setProperty('--orbit-radius', `${100 + i * 20}px`);
-        fragment.style.left = '50%';
-        fragment.style.top = '50%';
-        fragment.style.animationDelay = `${i * 0.5}s`;
-        fragment.style.animationDuration = `${8 + i * 2}s`;
-        container.appendChild(fragment);
+        const fr = document.createElement('div');
+        fr.className = 'fragment';
+        fr.style.setProperty('--orbit-radius', `${100 + i * 18}px`);
+        fr.style.animationDelay = `${i * 0.5}s`;
+        fr.style.animationDuration = `${9 + i * 1.5}s`;
+        container.appendChild(fr);
     }
-    
-    // Textos de sabiduría holográfica
+
+    // ── Sabiduría holográfica (con tiempo de lectura) ──
     const wisdoms = [
         "Rompe el holograma en mil pedazos<br>Cada fragmento contiene la imagen completa<br>Así es la conciencia: indivisible",
-        "La información del todo<br>Está codificada en cada parte<br>No hay pérdida en la división",
-        "Cada punto del espacio<br>Contiene toda la información del universo<br>El registro holográfico de la existencia",
-        "Tu conciencia es un fragmento<br>Que contiene la conciencia total<br>Eres el universo mirándose a sí mismo",
-        "No hay observador y observado<br>Solo el holograma observándose<br>A través de infinitos puntos de vista"
+        "La información del todo<br>está codificada en cada parte<br>No hay pérdida en la división",
+        "Cada punto del espacio<br>contiene toda la información del universo<br>El registro holográfico de la existencia",
+        "Tu conciencia es un fragmento<br>que contiene la conciencia total<br>Eres el universo mirándose a sí mismo",
+        "No hay observador y observado<br>solo el holograma observándose<br>a través de infinitos puntos de vista"
     ];
-    
-    let wisdomIndex = 0;
+    let wIdx = 0;
     setInterval(() => {
-        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
-        document.querySelector('.wisdom-hologram').innerHTML = wisdoms[wisdomIndex];
-    }, 5000);
-    
-    // Crear patrones de interferencia adicionales
-    function createInterferenceWave() {
-        const wave = document.createElement('div');
-        wave.style.position = 'absolute';
-        wave.style.width = '100%';
-        wave.style.height = '2px';
-        wave.style.background = `linear-gradient(90deg, transparent, rgba(0,255,255,0.5), transparent)`;
-        wave.style.top = Math.random() * 100 + '%';
-        wave.style.animation = `interferenceShift ${2 + Math.random() * 3}s infinite linear`;
-        container.appendChild(wave);
-        
-        setTimeout(() => wave.remove(), 5000);
+        wIdx = (wIdx + 1) % wisdoms.length;
+        document.querySelector('.wisdom-hologram').innerHTML = wisdoms[wIdx];
+    }, 13000);
+
+    if (!reduce) {
+        setInterval(() => {
+            const wave = document.createElement('div');
+            wave.style.cssText = 'position:absolute;width:100%;height:2px;background:linear-gradient(90deg,transparent,rgba(110,210,235,0.4),transparent);';
+            wave.style.top = Math.random() * 100 + '%';
+            wave.style.animation = `interferenceShift ${2 + Math.random() * 3}s infinite linear`;
+            container.appendChild(wave);
+            setTimeout(() => wave.remove(), 5000);
+        }, 1400);
     }
-    
-    setInterval(createInterferenceWave, 500);
+
+    // ── Audio (Web Audio puro, SIN CDN; nace al tocar) ──
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+    function makeReverbIR(s, d) {
+        const rate = actx.sampleRate, len = Math.floor(rate * s);
+        const b = actx.createBuffer(2, len, rate);
+        for (let c = 0; c < 2; c++) { const a = b.getChannelData(c); for (let i = 0; i < len; i++) a[i] = (Math.random()*2-1)*Math.pow(1-i/len, d); }
+        return b;
+    }
+    function panner(p) { const s = actx.createStereoPanner(); s.pan.value = p; return s; }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+        const dry = actx.createGain(); dry.gain.value = 0.62; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(9, 2.0);
+        const wet = actx.createGain(); wet.gain.value = 0.55; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // El TODO: acorde con leve desafinación (chorus = iridiscencia)
+        [261.63, 329.63, 392.00].forEach(f => {
+            [f, f * 1.004, f * 0.997].forEach(ff => {
+                const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = ff;
+                const g = actx.createGain(); g.gain.value = 0.018;
+                o.connect(g); g.connect(fxIn); o.start();
+            });
+        });
+
+        // Interferencia: pares de frecuencias cercanas → batido audible
+        [[220, 222.5], [330, 333]].forEach(([a, b]) => {
+            const oa = actx.createOscillator(); oa.type = 'sine'; oa.frequency.value = a;
+            const ob = actx.createOscillator(); ob.type = 'sine'; ob.frequency.value = b;
+            const g = actx.createGain(); g.gain.value = 0.02;
+            oa.connect(g); ob.connect(g); g.connect(fxIn); oa.start(); ob.start();
+        });
+    }
+
+    // Fragmento: un tono que lleva la firma armónica del todo
+    function playFragment(t0) {
+        const base = [261.63, 329.63, 392.00][Math.floor(Math.random() * 3)];
+        const sp = panner(Math.random() * 1.6 - 0.8); sp.connect(fxIn);
+        [1, 1.5, 2].forEach((r, i) => { // fundamental + quinta + octava = el todo en la parte
+            const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = base * r;
+            const g = actx.createGain();
+            g.gain.setValueAtTime(0.0001, t0);
+            g.gain.linearRampToValueAtTime(0.03 / (i + 1), t0 + 1.2);
+            g.gain.exponentialRampToValueAtTime(0.0001, t0 + 5);
+            o.connect(g); g.connect(sp);
+            o.start(t0); o.stop(t0 + 5.2);
+        });
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.7, actx.currentTime + 5);
+        const f = () => playFragment(actx.currentTime + 0.05);
+        f(); timers.push(setInterval(f, 3500));
+        const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
+</body>
+</html>
