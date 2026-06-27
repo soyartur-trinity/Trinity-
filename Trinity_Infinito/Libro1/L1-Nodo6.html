@@ -8,36 +8,41 @@
         body {
             background: #000;
             color: #fff;
-            font-family: 'Garamond', serif;
+            /* Georgia: estándar de la serie (antes Garamond) */
+            font-family: 'Georgia', 'Garamond', serif;
             margin: 0;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
             cursor: none;
         }
-        
+
         .silence-container {
             width: 100%;
             max-width: 600px;
             text-align: center;
             padding: 40px;
         }
-        
+
+        /* Respirar persistente (delay negativo) con tiempo de lectura real */
         .word {
             opacity: 0;
             margin: 60px 0;
             font-size: 1.2em;
             letter-spacing: 0.5em;
-            animation: word-appearance 20s infinite;
-            animation-delay: calc(var(--delay) * 4s);
+            animation: word-appearance 32s infinite ease-in-out;
+            animation-delay: calc(var(--delay) * -8s);
         }
-        
         @keyframes word-appearance {
-            0%, 15%, 25%, 100% { opacity: 0; }
-            18%, 22% { opacity: 0.3; }
+            0%   { opacity: 0; transform: translateY(8px); }
+            8%   { opacity: 0.4; transform: translateY(0); }
+            28%  { opacity: 0.4; transform: translateY(0); }
+            34%  { opacity: 0; transform: translateY(-6px); }
+            100% { opacity: 0; transform: translateY(-6px); }
         }
-        
+
         .deep-silence {
             height: 200px;
             display: flex;
@@ -47,18 +52,19 @@
             opacity: 0.02;
             letter-spacing: 2em;
         }
-        
+
         .pre-silence {
             margin: 100px 0;
             opacity: 0;
-            animation: pre-silence-show 30s infinite;
+            line-height: 2;
+            animation: pre-silence-show 40s infinite ease-in-out;
         }
-        
         @keyframes pre-silence-show {
-            0%, 85%, 100% { opacity: 0; }
-            90%, 95% { opacity: 0.2; }
+            0%, 55%, 100% { opacity: 0; }
+            65%, 90% { opacity: 0.32; }
+            96% { opacity: 0; }
         }
-        
+
         .listening-instruction {
             position: fixed;
             bottom: 40px;
@@ -69,7 +75,8 @@
             font-size: 0.9em;
             letter-spacing: 0.3em;
         }
-        
+
+        /* Ondas del vacío: silencio que se propaga. Sólo opacity/transform. */
         .void-sound {
             position: absolute;
             width: 10px;
@@ -77,19 +84,52 @@
             background: white;
             border-radius: 50%;
             opacity: 0;
-            animation: void-ripple 8s infinite;
-            animation-delay: calc(var(--delay) * 2s);
+            animation: void-ripple 8s infinite ease-in-out;
+            animation-delay: calc(var(--delay) * -2.6s);
         }
-        
         @keyframes void-ripple {
-            0%, 100% { 
-                opacity: 0; 
-                transform: scale(0);
-            }
-            50% { 
-                opacity: 0.1; 
-                transform: scale(50);
-            }
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 0.1; transform: scale(50); }
+        }
+
+        .hint {
+            position: fixed;
+            bottom: 78px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe {
+            0%, 100% { opacity: 0.16; }
+            50% { opacity: 0.4; }
+        }
+
+        .infinito {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.25);
+            text-decoration: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.6s ease;
+            z-index: 60;
+        }
+        .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .word        { animation: none; opacity: 0.4; transform: none; }
+            .pre-silence { animation: none; opacity: 0.32; }
+            .void-sound  { animation: none; opacity: 0; }
+            .hint        { animation: none; opacity: 0.3; }
         }
     </style>
 </head>
@@ -97,30 +137,103 @@
     <div class="void-sound" style="top: 20%; left: 30%; --delay: 0;"></div>
     <div class="void-sound" style="top: 70%; right: 20%; --delay: 1;"></div>
     <div class="void-sound" style="top: 50%; left: 50%; --delay: 2;"></div>
-    
+
     <div class="silence-container">
         <div class="word" style="--delay: 0;">Antes del sonido</div>
-        
+
         <div class="word" style="--delay: 1;">Antes de la ausencia de sonido</div>
-        
+
         <div class="deep-silence">...</div>
-        
+
         <div class="word" style="--delay: 2;">Antes del primer Om</div>
-        
+
         <div class="word" style="--delay: 3;">Antes del espacio donde surge el sonido</div>
-        
+
         <div class="pre-silence">
             No el silencio entre palabras<br><br>
             No el silencio después del trueno<br><br>
-            No el silencio de la meditación<br><br>
+            No el silencio de la meditación<br>
             <br>
             El Silencio que permite<br>
             que exista el silencio
         </div>
     </div>
-    
+
     <div class="listening-instruction">
         Escucha... más profundo que escuchar
     </div>
+
+    <div class="hint" id="hint">( escuchá — tocá para entrar en el silencio )</div>
+    <a class="infinito" href="L1-Nodo7.html" title="Siguiente portal">∞</a>
+
+    <script>
+    // ============================================================
+    //  Web Audio API puro, SIN CDN.
+    //  Nodo del silencio: el sonido es casi subliminal —pide
+    //  escuchar más profundo que escuchar—. Un sub-grave que respira
+    //  y, muy de a ratos, una flor de sonido grave casi inaudible.
+    // ============================================================
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate, len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++)
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+        }
+        return buf;
+    }
+    function panner(p) { const sp = actx.createStereoPanner(); sp.pan.value = p; return sp; }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+
+        const dry = actx.createGain(); dry.gain.value = 0.7; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(9, 2.2);
+        const wet = actx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Sub-grave que respira (~55 Hz), apenas presente
+        const drone = actx.createOscillator(); drone.type = 'sine'; drone.frequency.value = 55;
+        const droneGain = actx.createGain(); droneGain.gain.value = 0.045;
+        drone.connect(droneGain); droneGain.connect(fxIn);
+        const lfo = actx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.06; // ~17s de respiración
+        const lfoDepth = actx.createGain(); lfoDepth.gain.value = 0.03;
+        lfo.connect(lfoDepth); lfoDepth.connect(droneGain.gain);
+        drone.start(); lfo.start();
+    }
+
+    // Flor de sonido grave: emerge lentísima y se disuelve
+    function playBloom(t0) {
+        const freqs = [55, 73.42, 82.41]; // A1, D2, E2
+        const f = freqs[Math.floor(Math.random() * freqs.length)];
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.04, t0 + 4);
+        g.gain.linearRampToValueAtTime(0.0001, t0 + 10);
+        o.connect(g); g.connect(panner(Math.random() * 1.2 - 0.6)).connect(fxIn);
+        o.start(t0); o.stop(t0 + 10.5);
+    }
+
+    function startScheduling() {
+        const bloom = () => playBloom(actx.currentTime + 0.05);
+        bloom(); timers.push(setInterval(bloom, 11000));
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.65, actx.currentTime + 6); // emerge muy lento
+        startScheduling();
+        const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
