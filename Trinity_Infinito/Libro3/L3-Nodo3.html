@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -9,136 +8,214 @@
         body {
             background: radial-gradient(circle at center, #000, #0a0000, #000);
             color: #fff;
-            font-family: 'Times New Roman', serif;
+            /* Georgia: estándar de la serie (antes Times New Roman) */
+            font-family: 'Georgia', 'Times New Roman', serif;
             margin: 0;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: none;
         }
 
+        .duality-field {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            max-width: 92vw;
+            max-height: 92vh;
+        }
 
-    .duality-field {
-        position: relative;
-        width: 600px;
-        height: 600px;
-    }
-    
-    .victory, .defeat {
-        position: absolute;
-        font-size: 2em;
-        letter-spacing: 0.3em;
-        animation: oscillate 10s infinite;
-    }
-    
-    .victory {
-        top: 30%;
-        left: 50%;
-        transform: translateX(-50%);
-        animation-delay: 0s;
-    }
-    
-    .defeat {
-        bottom: 30%;
-        left: 50%;
-        transform: translateX(-50%);
-        animation-delay: 5s;
-    }
-    
-    @keyframes oscillate {
-        0%, 100% { 
-            opacity: 0.1; 
-            transform: translateX(-50%) scale(0.8);
+        .victory, .defeat {
+            position: absolute;
+            font-size: 2em;
+            letter-spacing: 0.3em;
+            left: 50%;
+            animation: oscillate 10s infinite ease-in-out;
         }
-        25% { 
-            opacity: 0.7; 
-            transform: translateX(-50%) scale(1.2);
-        }
-        50% { 
-            opacity: 0.1; 
-            transform: translateX(-50%) scale(0.8);
-        }
-        75% { 
-            opacity: 0.7; 
-            transform: translateX(-50%) scale(1.2);
-        }
-    }
-    
-    .illusion-center {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 1.5em;
-        letter-spacing: 0.5em;
-        animation: reveal-truth 10s infinite;
-    }
-    
-    @keyframes reveal-truth {
-        0%, 40%, 60%, 100% { 
-            opacity: 0; 
-            transform: translate(-50%, -50%) rotate(0deg);
-        }
-        45%, 55% { 
-            opacity: 0.8; 
-            transform: translate(-50%, -50%) rotate(180deg);
-        }
-    }
-    
-    .score {
-        position: absolute;
-        font-size: 3em;
-        opacity: 0.1;
-        animation: score-meaningless 8s infinite;
-        animation-delay: calc(var(--delay) * 2s);
-    }
-    
-    @keyframes score-meaningless {
-        0%, 100% { 
-            opacity: 0.1; 
-            transform: scale(1);
-        }
-        50% { 
-            opacity: 0.3; 
-            transform: scale(1.5);
-        }
-    }
-    
-    .game-truth {
-        position: absolute;
-        bottom: 10%;
-        width: 100%;
-        text-align: center;
-        font-style: italic;
-        opacity: 0.3;
-        letter-spacing: 0.3em;
-        font-size: 0.9em;
-    }
-</style>
+        .victory { top: 30%; animation-delay: 0s; }
+        .defeat  { bottom: 30%; animation-delay: 5s; }
 
+        /* Un pulso legible por ciclo; victoria y derrota se alternan. */
+        @keyframes oscillate {
+            0%   { opacity: 0.1; transform: translateX(-50%) scale(0.85); }
+            15%  { opacity: 0.75; transform: translateX(-50%) scale(1.1); }
+            35%  { opacity: 0.75; transform: translateX(-50%) scale(1.1); }
+            55%  { opacity: 0.1; transform: translateX(-50%) scale(0.85); }
+            100% { opacity: 0.1; transform: translateX(-50%) scale(0.85); }
+        }
 
+        /* ILUSIÓN gira para revelarse, se sostiene legible, y gira al irse. */
+        .illusion-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 1.5em;
+            letter-spacing: 0.5em;
+            animation: reveal-truth 12s infinite ease-in-out;
+        }
+        @keyframes reveal-truth {
+            0%   { opacity: 0; transform: translate(-50%, -50%) rotate(180deg) scale(0.9); }
+            10%  { opacity: 0.85; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            32%  { opacity: 0.85; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            42%  { opacity: 0; transform: translate(-50%, -50%) rotate(-180deg) scale(0.9); }
+            100% { opacity: 0; transform: translate(-50%, -50%) rotate(-180deg) scale(0.9); }
+        }
+
+        .score {
+            position: absolute;
+            font-size: 3em;
+            opacity: 0.1;
+            animation: score-meaningless 8s infinite ease-in-out;
+            animation-delay: calc(var(--delay) * -2s);
+        }
+        @keyframes score-meaningless {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.5); }
+        }
+
+        .game-truth {
+            position: absolute;
+            bottom: 10%;
+            width: 100%;
+            text-align: center;
+            font-style: italic;
+            opacity: 0.3;
+            letter-spacing: 0.3em;
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+
+        .hint {
+            position: fixed; bottom: 66px; left: 50%; transform: translateX(-50%);
+            font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+            animation: hint-breathe 4s ease-in-out infinite;
+            transition: opacity 1.5s ease; pointer-events: none; z-index: 50;
+        }
+        .hint.oculto { opacity: 0; }
+        @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+        .infinito {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,0.25); text-decoration: none; font-size: 24px;
+            cursor: pointer; transition: color 0.6s ease; z-index: 60;
+        }
+        .infinito:hover { color: rgba(255,255,255,0.85); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .victory, .defeat   { animation: none; opacity: 0.55; transform: translateX(-50%); }
+            .illusion-center    { animation: none; opacity: 0.6; transform: translate(-50%, -50%); }
+            .score              { animation: none; opacity: 0.2; }
+            .hint               { animation: none; opacity: 0.3; }
+        }
+    </style>
 </head>
 <body>
     <div class="duality-field">
         <div class="victory">VICTORIA</div>
         <div class="defeat">DERROTA</div>
 
+        <div class="illusion-center">ILUSIÓN</div>
 
-    <div class="illusion-center">ILUSIÓN</div>
-    
-    <div class="score" style="top: 20%; left: 20%; --delay: 0;">∞</div>
-    <div class="score" style="top: 20%; right: 20%; --delay: 1;">0</div>
-    <div class="score" style="bottom: 20%; left: 20%; --delay: 2;">-∞</div>
-    <div class="score" style="bottom: 20%; right: 20%; --delay: 3;">?</div>
-    
-    <div class="game-truth">
-        No hay ganador porque no hay jugador<br>
-        No hay perdedor porque no hay competencia<br>
-        Solo el juego jugándose eternamente
+        <div class="score" style="top: 20%; left: 20%; --delay: 0;">∞</div>
+        <div class="score" style="top: 20%; right: 20%; --delay: 1;">0</div>
+        <div class="score" style="bottom: 20%; left: 20%; --delay: 2;">-∞</div>
+        <div class="score" style="bottom: 20%; right: 20%; --delay: 3;">?</div>
+
+        <div class="game-truth">
+            No hay ganador porque no hay jugador<br>
+            No hay perdedor porque no hay competencia<br>
+            Solo el juego jugándose eternamente
+        </div>
     </div>
-</div>
 
+    <div class="hint" id="hint">( tocá: victoria y derrota son una )</div>
+    <a class="infinito" href="L3-Nodo4.html" title="Siguiente portal">∞</a>
 
+    <script>
+    // ============================================================
+    //  Web Audio API puro, SIN CDN.
+    //  Victoria (Do→Sol, ascendente, brillante, a la derecha) y derrota
+    //  (Sol→Do, descendente, oscura, a la izquierda) están hechas de las
+    //  MISMAS notas: sonoramente, son la misma ilusión. Se alternan, y
+    //  cada tanto se revelan como un único acorde al unísono.
+    // ============================================================
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+    let ciclos = 0;
+
+    function makeReverbIR(seconds, decay) {
+        const rate = actx.sampleRate, len = Math.floor(rate * seconds);
+        const buf = actx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++)
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+        }
+        return buf;
+    }
+    function panner(p) { const sp = actx.createStereoPanner(); sp.pan.value = p; return sp; }
+
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+        const dry = actx.createGain(); dry.gain.value = 0.7; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(9, 2.2);
+        const wet = actx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Drone neutral: el juego, anterior a victoria y derrota
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = 65.41; // C2
+        const dg = actx.createGain(); dg.gain.value = 0.045; o.connect(dg); dg.connect(fxIn);
+        o.start();
+    }
+
+    function playMotif(notes, t0, step, peak, type, pan) {
+        const sp = panner(pan); sp.connect(fxIn);
+        notes.forEach((f, i) => {
+            const ts = t0 + i * step;
+            const o = actx.createOscillator(); o.type = type; o.frequency.value = f;
+            const g = actx.createGain();
+            g.gain.setValueAtTime(0.0001, ts);
+            g.gain.linearRampToValueAtTime(peak, ts + step * 0.5);
+            g.gain.exponentialRampToValueAtTime(0.0001, ts + step * 2);
+            o.connect(g); g.connect(sp);
+            o.start(ts); o.stop(ts + step * 2 + 0.1);
+        });
+    }
+
+    function playRevelacion(t0) {
+        [261.63, 392.00, 523.25].forEach(f => { // C4 G4 C5: la unidad
+            const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+            const g = actx.createGain();
+            g.gain.setValueAtTime(0.0001, t0);
+            g.gain.linearRampToValueAtTime(0.05, t0 + 3);
+            g.gain.exponentialRampToValueAtTime(0.0001, t0 + 9);
+            o.connect(g); g.connect(fxIn);
+            o.start(t0); o.stop(t0 + 9.2);
+        });
+    }
+
+    function startScheduling() {
+        const ciclo = () => {
+            const t = actx.currentTime;
+            playMotif([261.63, 392.00], t + 1, 1.5, 0.05, 'triangle', 0.45);  // VICTORIA: C→G
+            playMotif([196.00, 130.81], t + 6, 1.5, 0.05, 'sine', -0.45);     // DERROTA: G→C
+            ciclos++;
+            if (ciclos % 3 === 0) playRevelacion(t + 3); // cada tanto, la revelación
+        };
+        ciclo(); timers.push(setInterval(ciclo, 10000));
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.78, actx.currentTime + 4);
+        startScheduling();
+        const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
