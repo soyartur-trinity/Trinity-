@@ -1,314 +1,338 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recursión Infinita</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recursión Infinita</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
         background: #000;
         color: #fff;
-        font-family: 'Courier New', monospace;
+        font-family: 'Georgia', serif;
         overflow: hidden;
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
         perspective: 1000px;
+        cursor: none;
     }
-    
+
     .recursion-container {
         position: relative;
         width: 600px;
         height: 600px;
+        max-width: 92vw;
+        max-height: 92vh;
         transform-style: preserve-3d;
-        animation: recursionRotate 30s infinite linear;
+        animation: recursionRotate 34s infinite linear;
     }
-    
     @keyframes recursionRotate {
         from { transform: rotateY(0deg); }
         to { transform: rotateY(360deg); }
     }
-    
+
+    /* Cajas-espejo: transform/opacity + leve viraje teal↔violeta (el espejo refleja distinto) */
     .mirror-box {
         position: absolute;
-        border: 2px solid;
+        border: 1.5px solid;
         transform-style: preserve-3d;
         background: rgba(255,255,255,0.02);
-        animation: mirrorPulse 4s infinite alternate;
+        box-shadow: 0 0 22px rgba(150,180,230,0.12), inset 0 0 22px rgba(150,180,230,0.08);
+        animation: mirrorPulse 9s infinite alternate ease-in-out;
     }
-    
     @keyframes mirrorPulse {
-        0% {
-            transform: scale(1) rotateZ(0deg);
-            border-color: #00ffff;
-            box-shadow: 0 0 20px #00ffff, inset 0 0 20px #00ffff;
-        }
-        100% {
-            transform: scale(0.9) rotateZ(45deg);
-            border-color: #ff00ff;
-            box-shadow: 0 0 30px #ff00ff, inset 0 0 30px #ff00ff;
-        }
+        0%   { transform: scale(1) rotateZ(0deg); border-color: rgba(110, 210, 210, 0.7); opacity: 0.55; }
+        100% { transform: scale(0.9) rotateZ(45deg); border-color: rgba(190, 130, 220, 0.7); opacity: 0.9; }
     }
-    
+
     .ouroboros {
         position: absolute;
         width: 300px;
         height: 300px;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
         border: 3px solid transparent;
         border-radius: 50%;
-        border-top-color: gold;
-        border-right-color: gold;
-        animation: ouroborosSpin 3s infinite linear;
+        border-top-color: #d0c0a0;
+        border-right-color: #d0c0a0;
+        transform: translate(-50%, -50%);
+        animation: ouroborosSpin 6s infinite linear;
     }
-    
     @keyframes ouroborosSpin {
         from { transform: translate(-50%, -50%) rotate(0deg); }
         to { transform: translate(-50%, -50%) rotate(360deg); }
     }
-    
+
+    /* Código recursivo: monoespaciado a propósito (es código) */
     .recursive-text {
         position: absolute;
+        top: 50%; left: 50%;
+        font-family: 'Courier New', monospace;
         font-size: 16px;
-        color: #00ff00;
-        text-shadow: 0 0 10px #00ff00;
-        animation: recursiveEcho 8s infinite;
+        color: rgba(130, 230, 175, 0.9);
+        text-shadow: 0 0 12px rgba(120, 220, 165, 0.4);
         white-space: nowrap;
+        animation: recursiveEcho 9s infinite ease-in;
     }
-    
     @keyframes recursiveEcho {
-        0% {
-            transform: scale(0.1) rotate(0deg);
-            opacity: 0;
-        }
-        50% {
-            transform: scale(1) rotate(180deg);
-            opacity: 1;
-        }
-        100% {
-            transform: scale(10) rotate(360deg);
-            opacity: 0;
-        }
+        0%   { transform: translate(-50%, -50%) scale(0.1) rotate(0deg); opacity: 0; }
+        15%  { opacity: 0.9; }
+        50%  { transform: translate(-50%, -50%) scale(1) rotate(180deg); opacity: 0.9; }
+        100% { transform: translate(-50%, -50%) scale(9) rotate(360deg); opacity: 0; }
     }
-    
+
     .mandelbrot-point {
         position: absolute;
         width: 4px;
         height: 4px;
-        background: white;
         border-radius: 50%;
-        animation: mandelbrotDance 10s infinite;
+        background: rgba(255,255,255,0.9);
+        animation: mandelbrotDance 12s infinite ease-in-out;
     }
-    
     @keyframes mandelbrotDance {
-        0% {
-            transform: translate(0, 0);
-            background: white;
-        }
-        25% {
-            transform: translate(var(--x1), var(--y1));
-            background: cyan;
-        }
-        50% {
-            transform: translate(var(--x2), var(--y2));
-            background: magenta;
-        }
-        75% {
-            transform: translate(var(--x3), var(--y3));
-            background: yellow;
-        }
-        100% {
-            transform: translate(0, 0);
-            background: white;
-        }
+        0%   { transform: translate(0,0); background: rgba(255,255,255,0.9); }
+        25%  { transform: translate(var(--x1), var(--y1)); background: rgba(120,210,220,0.9); }
+        50%  { transform: translate(var(--x2), var(--y2)); background: rgba(195,140,220,0.9); }
+        75%  { transform: translate(var(--x3), var(--y3)); background: rgba(212,192,160,0.9); }
+        100% { transform: translate(0,0); background: rgba(255,255,255,0.9); }
     }
-    
+
     .infinity-loop {
-        position: absolute;
-        top: 10%;
+        position: fixed;
+        top: 9%;
         left: 50%;
+        font-size: 64px;
+        color: #d0c0a0;
+        text-shadow: 0 0 28px rgba(208,192,160,0.45);
         transform: translateX(-50%);
-        font-size: 72px;
-        color: gold;
-        animation: infinityTwist 5s infinite ease-in-out;
-        text-shadow: 0 0 30px gold;
+        animation: infinityTwist 7s infinite ease-in-out;
+        z-index: 30;
     }
-    
     @keyframes infinityTwist {
         0%, 100% { transform: translateX(-50%) rotateY(0deg) scale(1); }
-        50% { transform: translateX(-50%) rotateY(180deg) scale(1.5); }
+        50% { transform: translateX(-50%) rotateY(180deg) scale(1.4); }
     }
-    
+
     .wisdom-recursive {
-        position: absolute;
-        bottom: 10%;
+        position: fixed;
+        bottom: 70px;
         left: 50%;
         transform: translateX(-50%);
         text-align: center;
-        font-size: 18px;
-        color: #fff;
-        text-shadow: 0 0 20px rgba(255,255,255,0.8);
-        animation: wisdomFade 6s infinite;
-        width: 80%;
+        font-size: 1.05em;
+        line-height: 1.9;
+        color: rgba(255,255,255,0.88);
+        width: 90%;
+        max-width: 640px;
+        z-index: 40;
+        animation: wisdomFade 13s infinite ease-in-out;
     }
-    
     @keyframes wisdomFade {
-        0%, 100% { opacity: 0; }
-        50% { opacity: 1; }
+        0%   { opacity: 0; }
+        12%  { opacity: 0.88; }
+        80%  { opacity: 0.88; }
+        92%  { opacity: 0; }
+        100% { opacity: 0; }
     }
-    
-    canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.4;
+
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.4; }
+
+    .hint {
+        position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+        font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+        animation: hint-breathe 4s ease-in-out infinite;
+        transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
+    }
+    .hint.oculto { opacity: 0; }
+    @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+    .infinito {
+        position: fixed; bottom: 24px; right: 28px;
+        color: rgba(208,192,160,0.4); text-decoration: none; font-size: 24px;
+        cursor: pointer; transition: color 0.6s ease; z-index: 60;
+    }
+    .infinito:hover { color: rgba(208,192,160,0.95); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .recursion-container { animation: none; }
+        .mirror-box { animation: none; opacity: 0.7; border-color: rgba(150,180,220,0.7); }
+        .ouroboros { animation: none; }
+        .recursive-text { animation: none; opacity: 0; }
+        .mandelbrot-point { animation: none; }
+        .infinity-loop { animation: none; }
+        .wisdom-recursive { animation: none; opacity: 0.88; }
     }
 </style>
-
-
 </head>
 <body>
     <canvas id="recursionCanvas"></canvas>
 
+    <div class="infinity-loop">∞</div>
 
-<div class="infinity-loop">∞</div>
+    <div class="recursion-container">
+        <div class="ouroboros"></div>
+    </div>
 
-<div class="recursion-container">
-    <div class="ouroboros"></div>
-</div>
+    <div class="wisdom-recursive">
+        Para entenderse a sí misma<br>
+        la conciencia se mira en el espejo<br>
+        y encuentra otro espejo mirándola
+    </div>
 
-<div class="wisdom-recursive">
-    Para entenderse a sí misma<br>
-    La conciencia se mira en el espejo<br>
-    Y encuentra otro espejo mirándola
-</div>
+    <div class="hint" id="hint">( tocá: el eco se refleja )</div>
+    <a class="infinito" href="L4-Nodo5.html" title="Siguiente portal">∞</a>
 
-<script>
-    // Canvas para patrones recursivos
+    <script>
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const container = document.querySelector('.recursion-container');
+
+    // ── Canvas: cuadrados recursivos (oro→violeta, sin arcoíris) ──
     const canvas = document.getElementById('recursionCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     function drawRecursivePattern(x, y, size, depth) {
         if (depth === 0) return;
-        
-        ctx.strokeStyle = `hsla(${depth * 30}, 100%, 50%, 0.3)`;
+        const hue = 43 + (5 - depth) * 48; // oro → violeta según profundidad
+        ctx.strokeStyle = `hsla(${hue}, 55%, 62%, 0.28)`;
+        ctx.lineWidth = 1;
         ctx.strokeRect(x - size/2, y - size/2, size, size);
-        
-        const newSize = size * 0.7;
-        drawRecursivePattern(x - size/3, y - size/3, newSize, depth - 1);
-        drawRecursivePattern(x + size/3, y - size/3, newSize, depth - 1);
-        drawRecursivePattern(x - size/3, y + size/3, newSize, depth - 1);
-        drawRecursivePattern(x + size/3, y + size/3, newSize, depth - 1);
+        const ns = size * 0.7;
+        drawRecursivePattern(x - size/3, y - size/3, ns, depth - 1);
+        drawRecursivePattern(x + size/3, y - size/3, ns, depth - 1);
+        drawRecursivePattern(x - size/3, y + size/3, ns, depth - 1);
+        drawRecursivePattern(x + size/3, y + size/3, ns, depth - 1);
     }
-    
     function animate() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillStyle = 'rgba(0,0,0,0.06)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
         const time = Date.now() * 0.0005;
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
-        const size = 200 + Math.sin(time) * 50;
-        
-        drawRecursivePattern(centerX, centerY, size, 5);
-        
-        requestAnimationFrame(animate);
+        drawRecursivePattern(canvas.width/2, canvas.height/2, 200 + Math.sin(time) * 50, 5);
+        if (!reduce) requestAnimationFrame(animate);
     }
-    
     animate();
-    
-    // Crear cajas espejo recursivas
-    const container = document.querySelector('.recursion-container');
-    
+
+    // ── Cajas-espejo recursivas ──
     function createMirrorBox(x, y, size, depth) {
         if (depth === 0) return;
-        
         const box = document.createElement('div');
         box.className = 'mirror-box';
-        box.style.width = size + 'px';
-        box.style.height = size + 'px';
-        box.style.left = x + 'px';
-        box.style.top = y + 'px';
+        box.style.width = size + 'px'; box.style.height = size + 'px';
+        box.style.left = x + 'px'; box.style.top = y + 'px';
         box.style.animationDelay = depth * 0.5 + 's';
         container.appendChild(box);
-        
-        setTimeout(() => {
-            createMirrorBox(x + size * 0.25, y + size * 0.25, size * 0.5, depth - 1);
-        }, 500);
+        setTimeout(() => createMirrorBox(x + size * 0.25, y + size * 0.25, size * 0.5, depth - 1), 500);
     }
-    
     createMirrorBox(200, 200, 200, 4);
-    
-    // Textos recursivos
-    const recursiveTexts = [
-        "función(función(función(función(...))))",
-        "El que observa al observador observando",
-        "∞ = 1 + ∞",
-        "Fractal(Fractal(Fractal(...)))",
-        "La pregunta que se pregunta a sí misma"
-    ];
-    
-    recursiveTexts.forEach((text, i) => {
-        const element = document.createElement('div');
-        element.className = 'recursive-text';
-        element.textContent = text;
-        element.style.left = '50%';
-        element.style.top = '50%';
-        element.style.animationDelay = i * 1.6 + 's';
-        container.appendChild(element);
+
+    // ── Código recursivo ──
+    ['función(función(función(función(...))))',
+     'El que observa al observador observando',
+     '∞ = 1 + ∞',
+     'Fractal(Fractal(Fractal(...)))',
+     'La pregunta que se pregunta a sí misma']
+    .forEach((text, i) => {
+        const el = document.createElement('div');
+        el.className = 'recursive-text';
+        el.textContent = text;
+        el.style.animationDelay = i * 1.8 + 's';
+        container.appendChild(el);
     });
-    
-    // Puntos de Mandelbrot
+
+    // ── Puntos de Mandelbrot ──
     for (let i = 0; i < 20; i++) {
-        const point = document.createElement('div');
-        point.className = 'mandelbrot-point';
+        const p = document.createElement('div');
+        p.className = 'mandelbrot-point';
         const angle = (i / 20) * Math.PI * 2;
         const radius = 150 + Math.sin(i) * 50;
-        
-        point.style.left = `${300 + Math.cos(angle) * radius}px`;
-        point.style.top = `${300 + Math.sin(angle) * radius}px`;
-        point.style.setProperty('--x1', Math.random() * 200 - 100 + 'px');
-        point.style.setProperty('--y1', Math.random() * 200 - 100 + 'px');
-        point.style.setProperty('--x2', Math.random() * 200 - 100 + 'px');
-        point.style.setProperty('--y2', Math.random() * 200 - 100 + 'px');
-        point.style.setProperty('--x3', Math.random() * 200 - 100 + 'px');
-        point.style.setProperty('--y3', Math.random() * 200 - 100 + 'px');
-        point.style.animationDelay = i * 0.5 + 's';
-        
-        container.appendChild(point);
+        p.style.left = `${300 + Math.cos(angle) * radius}px`;
+        p.style.top = `${300 + Math.sin(angle) * radius}px`;
+        p.style.setProperty('--x1', Math.random()*200-100 + 'px');
+        p.style.setProperty('--y1', Math.random()*200-100 + 'px');
+        p.style.setProperty('--x2', Math.random()*200-100 + 'px');
+        p.style.setProperty('--y2', Math.random()*200-100 + 'px');
+        p.style.setProperty('--x3', Math.random()*200-100 + 'px');
+        p.style.setProperty('--y3', Math.random()*200-100 + 'px');
+        p.style.animationDelay = i * 0.5 + 's';
+        container.appendChild(p);
     }
-    
-    // Sabiduría recursiva cambiante
+
+    // ── Sabiduría recursiva (con tiempo de lectura) ──
     const wisdoms = [
-        "Para entenderse a sí misma<br>La conciencia se mira en el espejo<br>Y encuentra otro espejo mirándola",
-        "La serpiente que se come su cola<br>Descubre que ella es la cola<br>Y también la boca que come",
-        "Busca el origen del pensamiento<br>Y encontrarás otro pensamiento buscando<br>Ad infinitum",
-        "El código que se escribe a sí mismo<br>El programa que se programa<br>La mente que se piensa",
-        "Cada respuesta genera su pregunta<br>Cada pregunta contiene su respuesta<br>El círculo sin principio ni fin"
+        "Para entenderse a sí misma<br>la conciencia se mira en el espejo<br>y encuentra otro espejo mirándola",
+        "La serpiente que se come su cola<br>descubre que ella es la cola<br>y también la boca que come",
+        "Busca el origen del pensamiento<br>y encontrarás otro pensamiento buscando<br>ad infinitum",
+        "El código que se escribe a sí mismo<br>el programa que se programa<br>la mente que se piensa",
+        "Cada respuesta genera su pregunta<br>cada pregunta contiene su respuesta<br>el círculo sin principio ni fin"
     ];
-    
-    let wisdomIndex = 0;
+    let wIdx = 0;
     setInterval(() => {
-        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
-        document.querySelector('.wisdom-recursive').innerHTML = wisdoms[wisdomIndex];
-    }, 6000);
-</script>
+        wIdx = (wIdx + 1) % wisdoms.length;
+        document.querySelector('.wisdom-recursive').innerHTML = wisdoms[wIdx];
+    }, 13000);
 
+    // ── Audio (Web Audio puro, SIN CDN; nace al tocar) ──
+    let actx = null, master = null, fxIn = null, recIn = null, started = false;
+    const timers = [];
+    function makeReverbIR(s, d) {
+        const rate = actx.sampleRate, len = Math.floor(rate * s);
+        const b = actx.createBuffer(2, len, rate);
+        for (let c = 0; c < 2; c++) { const a = b.getChannelData(c); for (let i = 0; i < len; i++) a[i] = (Math.random()*2-1)*Math.pow(1-i/len, d); }
+        return b;
+    }
 
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+        const dry = actx.createGain(); dry.gain.value = 0.6; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(9, 2.0);
+        const wet = actx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // RECURSIÓN: delay con realimentación = espejo reflejando espejo
+        const delay = actx.createDelay(2.0); delay.delayTime.value = 0.55;
+        const fb = actx.createGain(); fb.gain.value = 0.58;
+        delay.connect(fb); fb.connect(delay);
+        // los ecos giran lento en el estéreo (ouroboros)
+        const echoPan = actx.createStereoPanner();
+        const panLfo = actx.createOscillator(); panLfo.type = 'sine'; panLfo.frequency.value = 0.05;
+        panLfo.connect(echoPan.pan); panLfo.start();
+        const echoWet = actx.createGain(); echoWet.gain.value = 0.5;
+        delay.connect(echoPan); echoPan.connect(echoWet); echoWet.connect(fxIn);
+        recIn = actx.createGain(); recIn.connect(delay); recIn.connect(fxIn);
+
+        // Drone base
+        [73.42, 110.00].forEach(f => {
+            const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+            const g = actx.createGain(); g.gain.value = 0.04; o.connect(g); g.connect(fxIn); o.start();
+        });
+    }
+
+    // Un motivo entra a la recursión y vuelve sobre sí mismo, cada vez más tenue
+    function playMirror(t0) {
+        const base = [146.83, 196.00, 220.00][Math.floor(Math.random() * 3)];
+        [1, 1.5].forEach((r, i) => {
+            const o = actx.createOscillator(); o.type = 'triangle'; o.frequency.value = base * r;
+            const g = actx.createGain();
+            g.gain.setValueAtTime(0.0001, t0);
+            g.gain.linearRampToValueAtTime(0.05 / (i + 1), t0 + 0.4);
+            g.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.6);
+            o.connect(g); g.connect(recIn);
+            o.start(t0); o.stop(t0 + 1.8);
+        });
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.7, actx.currentTime + 5);
+        const m = () => playMirror(actx.currentTime + 0.05);
+        m(); timers.push(setInterval(m, 5000));
+        const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
