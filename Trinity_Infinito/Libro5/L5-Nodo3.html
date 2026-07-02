@@ -1,418 +1,313 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Bardo Luminoso</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Bardo Luminoso</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
         background: #000;
         color: #fff;
-        font-family: 'Courier New', monospace;
+        font-family: 'Georgia', serif;
         overflow: hidden;
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: none;
     }
-    
+
     .bardo-container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at center, 
-            rgba(255,255,255,0.1) 0%, 
-            transparent 50%);
+        position: absolute; width: 100%; height: 100%;
+        background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 50%);
     }
-    
+
     .clear-light {
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: radial-gradient(circle,
-            rgba(255,255,255,1) 0%,
-            rgba(255,255,255,0.8) 10%,
-            rgba(255,255,255,0.5) 30%,
-            rgba(255,255,255,0.2) 50%,
-            transparent 70%);
+        position: absolute; width: 300px; height: 300px; top: 50%; left: 50%;
+        background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 10%, rgba(255,255,255,0.5) 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
         border-radius: 50%;
-        animation: clearLightPulse 6s infinite;
+        transform: translate(-50%, -50%);
+        animation: clearLightPulse 8s infinite ease-in-out;
     }
-    
     @keyframes clearLightPulse {
-        0%, 100% {
-            transform: translate(-50%, -50%) scale(1);
-            filter: brightness(1);
-        }
-        50% {
-            transform: translate(-50%, -50%) scale(1.5);
-            filter: brightness(2);
-        }
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        50%      { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
     }
-    
+
     .consciousness-stream {
-        position: absolute;
-        width: 2px;
-        height: 100%;
-        background: linear-gradient(to bottom,
-            transparent,
-            rgba(138,43,226,0.8),
-            rgba(255,255,255,1),
-            rgba(138,43,226,0.8),
-            transparent);
+        position: absolute; width: 2px; height: 100%;
+        background: linear-gradient(to bottom, transparent, rgba(138,43,226,0.8), rgba(255,255,255,1), rgba(138,43,226,0.8), transparent);
         left: 50%;
         transform: translateX(-50%);
         animation: streamFlow 8s infinite linear;
     }
-    
     @keyframes streamFlow {
         from { transform: translateX(-50%) translateY(-100%); }
-        to { transform: translateX(-50%) translateY(100%); }
+        to   { transform: translateX(-50%) translateY(100%); }
     }
-    
+
     .tibetan-mandala {
-        position: absolute;
-        width: 400px;
-        height: 400px;
-        top: 50%;
-        left: 50%;
+        position: absolute; width: 400px; height: 400px; top: 50%; left: 50%;
         transform: translate(-50%, -50%);
-        animation: mandalaRotate 60s infinite linear;
+        animation: mandalaRotate 70s infinite linear;
     }
-    
     @keyframes mandalaRotate {
         from { transform: translate(-50%, -50%) rotate(0deg); }
-        to { transform: translate(-50%, -50%) rotate(360deg); }
+        to   { transform: translate(-50%, -50%) rotate(360deg); }
     }
-    
-    .mandala-ring {
-        position: absolute;
-        border: 1px solid;
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    
+    .mandala-ring { position: absolute; border: 1px solid; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
     .transition-portal {
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background: conic-gradient(
-            from 0deg,
-            transparent,
-            rgba(255,0,255,0.5),
-            rgba(0,255,255,0.5),
-            transparent
-        );
+        position: absolute; width: 100px; height: 100px; border-radius: 50%;
+        background: conic-gradient(from 0deg, transparent, rgba(230,120,220,0.5), rgba(90,210,230,0.5), transparent);
         animation: portalSpin 4s infinite linear;
     }
-    
-    @keyframes portalSpin {
-        from { transform: rotate(0deg) scale(1); }
-        to { transform: rotate(360deg) scale(1); }
-    }
-    
+    @keyframes portalSpin { from { transform: rotate(0deg) scale(1); } to { transform: rotate(360deg) scale(1); } }
+
     .awareness-particle {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: white;
-        border-radius: 50%;
-        animation: awarenessFloat 10s infinite;
-        --x1: 0px;
-        --y1: 0px;
-        --x2: 0px;
-        --y2: 0px;
-        --x3: 0px;
-        --y3: 0px;
+        position: absolute; width: 3px; height: 3px; background: rgba(255,255,255,0.9); border-radius: 50%;
+        --x1:0px; --y1:0px; --x2:0px; --y2:0px; --x3:0px; --y3:0px;
+        animation: awarenessFloat 10s infinite ease-in-out;
     }
-    
     @keyframes awarenessFloat {
-        0% {
-            transform: translate(0, 0) scale(0);
-            opacity: 0;
-        }
-        25% {
-            transform: translate(var(--x1), var(--y1)) scale(1);
-            opacity: 1;
-        }
-        50% {
-            transform: translate(var(--x2), var(--y2)) scale(1.5);
-            opacity: 0.7;
-        }
-        75% {
-            transform: translate(var(--x3), var(--y3)) scale(1);
-            opacity: 1;
-        }
-        100% {
-            transform: translate(0, 0) scale(0);
-            opacity: 0;
-        }
+        0%   { transform: translate(0,0) scale(0); opacity: 0; }
+        25%  { transform: translate(var(--x1), var(--y1)) scale(1); opacity: 1; }
+        50%  { transform: translate(var(--x2), var(--y2)) scale(1.5); opacity: 0.7; }
+        75%  { transform: translate(var(--x3), var(--y3)) scale(1); opacity: 1; }
+        100% { transform: translate(0,0) scale(0); opacity: 0; }
     }
-    
+
     .dharma-wheel {
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 48px;
-        color: gold;
-        animation: wheelTurn 20s infinite linear;
-        text-shadow: 0 0 30px gold;
+        position: fixed; top: 9%; left: 50%; transform: translateX(-50%);
+        font-size: 44px; color: #d0c0a0; text-shadow: 0 0 28px rgba(208,192,160,0.5);
+        animation: wheelTurn 24s infinite linear; z-index: 30;
     }
-    
     @keyframes wheelTurn {
         from { transform: translateX(-50%) rotate(0deg); }
-        to { transform: translateX(-50%) rotate(360deg); }
+        to   { transform: translateX(-50%) rotate(360deg); }
     }
-    
+
     .bardo-wisdom {
-        position: absolute;
-        bottom: 8%;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        font-size: 18px;
-        color: rgba(255,255,255,0.9);
-        text-shadow: 0 0 20px rgba(255,255,255,0.8);
-        animation: wisdomEmerge 7s infinite;
-        width: 85%;
-        z-index: 100;
+        position: fixed; bottom: 8%; left: 50%; transform: translateX(-50%);
+        text-align: center; font-size: 1.05em; line-height: 1.9;
+        color: rgba(255,255,255,0.9); text-shadow: 0 0 20px rgba(255,255,255,0.4);
+        width: 88%; max-width: 640px; z-index: 100;
+        animation: wisdomEmerge 13s infinite ease-in-out;
     }
-    
     @keyframes wisdomEmerge {
-        0%, 100% { 
-            opacity: 0;
-            transform: translateX(-50%) translateY(20px);
-        }
-        50% { 
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+        0%   { opacity: 0; }
+        12%  { opacity: 0.9; }
+        80%  { opacity: 0.9; }
+        92%  { opacity: 0; }
+        100% { opacity: 0; }
     }
-    
+
     .rainbow-body {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        top: 50%;
-        left: 50%;
+        position: absolute; width: 200px; height: 200px; top: 50%; left: 50%;
+        background: conic-gradient(#c0405a, #d08040, #d0b040, #5aa060, #4a80c0, #6a5ac0, #9a5ac0, #c0405a);
+        border-radius: 50%; opacity: 0.3;
         transform: translate(-50%, -50%);
-        background: conic-gradient(
-            red, orange, yellow, green, blue, indigo, violet, red
-        );
-        border-radius: 50%;
-        opacity: 0.3;
-        animation: rainbowDissolve 12s infinite;
+        animation: rainbowDissolve 12s infinite ease-in-out;
     }
-    
     @keyframes rainbowDissolve {
-        0%, 100% {
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0;
-            filter: blur(20px);
-        }
-        50% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0.3;
-            filter: blur(0px);
-        }
+        0%, 100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        50%      { transform: translate(-50%, -50%) scale(1); opacity: 0.32; }
     }
-    
-    canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.5;
+
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.5; }
+
+    .hint {
+        position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+        font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+        animation: hint-breathe 4s ease-in-out infinite; transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
+    }
+    .hint.oculto { opacity: 0; }
+    @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+    .infinito {
+        position: fixed; bottom: 24px; right: 28px;
+        color: rgba(208,192,160,0.4); text-decoration: none; font-size: 24px;
+        cursor: pointer; transition: color 0.6s ease; z-index: 60;
+    }
+    .infinito:hover { color: rgba(208,192,160,0.95); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .clear-light { animation: none; opacity: 0.9; }
+        .consciousness-stream { animation: none; opacity: 0.3; }
+        .tibetan-mandala { animation: none; }
+        .transition-portal { animation: none; }
+        .awareness-particle { animation: none; opacity: 0; }
+        .dharma-wheel { animation: none; }
+        .bardo-wisdom { animation: none; opacity: 0.9; }
+        .rainbow-body { animation: none; opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
     }
 </style>
-
-
 </head>
 <body>
     <canvas id="bardoCanvas"></canvas>
 
+    <div class="dharma-wheel">☸</div>
 
-<div class="dharma-wheel">☸</div>
+    <div class="bardo-container">
+        <div class="consciousness-stream"></div>
+        <div class="tibetan-mandala"></div>
+        <div class="rainbow-body"></div>
+        <div class="clear-light"></div>
+    </div>
 
-<div class="bardo-container">
-    <div class="consciousness-stream"></div>
-    <div class="tibetan-mandala"></div>
-    <div class="rainbow-body"></div>
-    <div class="clear-light"></div>
-</div>
+    <div class="bardo-wisdom">
+        Entre la muerte y el renacer<br>
+        la clara luz de la conciencia pura<br>
+        el espacio donde nunca hubo muerte
+    </div>
 
-<div class="bardo-wisdom">
-    Entre la muerte y el renacer<br>
-    La clara luz de la conciencia pura<br>
-    El espacio donde nunca hubo muerte
-</div>
+    <div class="hint" id="hint">( tocá: la clara luz resuena )</div>
+    <a class="infinito" href="L5-Nodo4.html" title="Siguiente portal">∞</a>
 
-<script>
-    // Canvas para el espacio del bardo
+    <script>
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const container = document.querySelector('.bardo-container');
+
+    // ── Canvas: luz convergiendo al centro + rayos del mandala ──
     const canvas = document.getElementById('bardoCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    // Partículas de luz clara
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     const lightParticles = [];
-    
     class LightParticle {
-        constructor() {
-            this.reset();
-        }
-        
+        constructor() { this.reset(); }
         reset() {
-            const angle = Math.random() * Math.PI * 2;
-            const distance = Math.random() * 300;
-            this.x = canvas.width/2 + Math.cos(angle) * distance;
-            this.y = canvas.height/2 + Math.sin(angle) * distance;
-            this.targetX = canvas.width/2;
-            this.targetY = canvas.height/2;
-            this.speed = 0.02;
-            this.size = Math.random() * 3;
-            this.opacity = Math.random();
+            const a = Math.random() * Math.PI * 2, d = Math.random() * 300;
+            this.x = canvas.width/2 + Math.cos(a)*d; this.y = canvas.height/2 + Math.sin(a)*d;
+            this.speed = 0.02; this.size = Math.random()*3; this.opacity = Math.random();
         }
-        
         update() {
-            this.x += (this.targetX - this.x) * this.speed;
-            this.y += (this.targetY - this.y) * this.speed;
-            
-            const dist = Math.hypot(this.x - this.targetX, this.y - this.targetY);
-            if (dist < 5) {
-                this.reset();
-            }
+            this.x += (canvas.width/2 - this.x) * this.speed;
+            this.y += (canvas.height/2 - this.y) * this.speed;
+            if (Math.hypot(this.x - canvas.width/2, this.y - canvas.height/2) < 5) this.reset();
         }
-        
-        draw() {
-            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
+        draw() { ctx.fillStyle = `rgba(255,255,255,${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
     }
-    
-    // Crear partículas
-    for (let i = 0; i < 100; i++) {
-        lightParticles.push(new LightParticle());
-    }
-    
+    for (let i = 0; i < 80; i++) lightParticles.push(new LightParticle());
     function animateBardo() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        lightParticles.forEach(particle => {
-            particle.update();
-            particle.draw();
-        });
-        
-        // Dibujar mandala tibetano
+        ctx.fillStyle = 'rgba(0,0,0,0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        lightParticles.forEach(p => { p.update(); p.draw(); });
         const time = Date.now() * 0.0005;
-        ctx.strokeStyle = 'rgba(255, 215, 0, 0.2)';
-        ctx.lineWidth = 1;
-        
+        ctx.strokeStyle = 'rgba(208,192,160,0.18)'; ctx.lineWidth = 1;
         for (let i = 0; i < 8; i++) {
-            ctx.save();
-            ctx.translate(canvas.width/2, canvas.height/2);
-            ctx.rotate(i * Math.PI / 4 + time);
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(200, 0);
-            ctx.stroke();
-            ctx.restore();
+            ctx.save(); ctx.translate(canvas.width/2, canvas.height/2); ctx.rotate(i * Math.PI/4 + time);
+            ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(200, 0); ctx.stroke(); ctx.restore();
         }
-        
-        requestAnimationFrame(animateBardo);
+        if (!reduce) requestAnimationFrame(animateBardo);
     }
-    
     animateBardo();
-    
-    // Crear anillos del mandala
+
+    // ── Anillos del mandala (espectro joya) ──
     const mandala = document.querySelector('.tibetan-mandala');
-    const sizes = [100, 150, 200, 250, 300, 350, 400];
-    const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
-    
-    sizes.forEach((size, i) => {
-        const ring = document.createElement('div');
-        ring.className = 'mandala-ring';
-        ring.style.width = size + 'px';
-        ring.style.height = size + 'px';
-        ring.style.borderColor = colors[i];
-        ring.style.opacity = 0.3;
+    const ringColors = ['#c0405a','#d08040','#d0b040','#5aa060','#4a80c0','#6a5ac0','#9a5ac0'];
+    [100, 150, 200, 250, 300, 350, 400].forEach((size, i) => {
+        const ring = document.createElement('div'); ring.className = 'mandala-ring';
+        ring.style.width = size + 'px'; ring.style.height = size + 'px';
+        ring.style.borderColor = ringColors[i]; ring.style.opacity = 0.35;
         mandala.appendChild(ring);
     });
-    
-    // Crear múltiples flujos de conciencia
-    const container = document.querySelector('.bardo-container');
+
+    // ── Flujos de conciencia ──
     for (let i = 0; i < 5; i++) {
-        const stream = document.createElement('div');
-        stream.className = 'consciousness-stream';
-        stream.style.left = (20 + i * 15) + '%';
-        stream.style.animationDelay = i * 1.6 + 's';
-        stream.style.opacity = 0.3 - i * 0.05;
-        container.appendChild(stream);
+        const s = document.createElement('div'); s.className = 'consciousness-stream';
+        s.style.left = (20 + i * 15) + '%'; s.style.animationDelay = i * 1.6 + 's';
+        s.style.opacity = 0.3 - i * 0.05;
+        container.appendChild(s);
     }
-    
-    // Crear portales de transición
+
+    // ── Portales de transición ──
     for (let i = 0; i < 6; i++) {
-        const portal = document.createElement('div');
-        portal.className = 'transition-portal';
-        const angle = (i / 6) * Math.PI * 2;
-        const radius = 200;
-        portal.style.left = `${window.innerWidth/2 + Math.cos(angle) * radius - 50}px`;
-        portal.style.top = `${window.innerHeight/2 + Math.sin(angle) * radius - 50}px`;
+        const portal = document.createElement('div'); portal.className = 'transition-portal';
+        const a = (i / 6) * Math.PI * 2;
+        portal.style.left = `${window.innerWidth/2 + Math.cos(a)*200 - 50}px`;
+        portal.style.top = `${window.innerHeight/2 + Math.sin(a)*200 - 50}px`;
         portal.style.animationDelay = i * 0.66 + 's';
         container.appendChild(portal);
     }
-    
-    // Crear partículas de conciencia
+
+    // ── Partículas de conciencia ──
     for (let i = 0; i < 30; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'awareness-particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.top = Math.random() * 100 + '%';
-        particle.style.setProperty('--x1', (Math.random() - 0.5) * 300 + 'px');
-        particle.style.setProperty('--y1', (Math.random() - 0.5) * 300 + 'px');
-        particle.style.setProperty('--x2', (Math.random() - 0.5) * 400 + 'px');
-        particle.style.setProperty('--y2', (Math.random() - 0.5) * 400 + 'px');
-        particle.style.setProperty('--x3', (Math.random() - 0.5) * 300 + 'px');
-        particle.style.setProperty('--y3', (Math.random() - 0.5) * 300 + 'px');
-        particle.style.animationDelay = i * 0.33 + 's';
-        container.appendChild(particle);
+        const p = document.createElement('div'); p.className = 'awareness-particle';
+        p.style.left = Math.random()*100 + '%'; p.style.top = Math.random()*100 + '%';
+        p.style.setProperty('--x1', (Math.random()-0.5)*300 + 'px');
+        p.style.setProperty('--y1', (Math.random()-0.5)*300 + 'px');
+        p.style.setProperty('--x2', (Math.random()-0.5)*400 + 'px');
+        p.style.setProperty('--y2', (Math.random()-0.5)*400 + 'px');
+        p.style.setProperty('--x3', (Math.random()-0.5)*300 + 'px');
+        p.style.setProperty('--y3', (Math.random()-0.5)*300 + 'px');
+        p.style.animationDelay = i * 0.33 + 's';
+        container.appendChild(p);
     }
-    
-    // Sabiduría del Bardo cambiante
+
+    // ── Sabiduría del Bardo (con tiempo de lectura) ──
     const wisdoms = [
-        "Entre la muerte y el renacer<br>La clara luz de la conciencia pura<br>El espacio donde nunca hubo muerte",
-        "Este es el momento de reconocer<br>Tu naturaleza verdadera<br>La luz clara del vacío luminoso",
-        "No hay lugar a donde ir<br>No hay nada que dejar atrás<br>Solo la conciencia reconociéndose",
-        "El bardo: el espacio entre<br>Donde toda posibilidad existe<br>Antes de la siguiente manifestación",
-        "La muerte del cuerpo<br>El nacimiento de la libertad<br>La conciencia sin ataduras"
+        "Entre la muerte y el renacer<br>la clara luz de la conciencia pura<br>el espacio donde nunca hubo muerte",
+        "Este es el momento de reconocer<br>tu naturaleza verdadera<br>la luz clara del vacío luminoso",
+        "No hay lugar a donde ir<br>no hay nada que dejar atrás<br>solo la conciencia reconociéndose",
+        "El bardo: el espacio entre<br>donde toda posibilidad existe<br>antes de la siguiente manifestación",
+        "La muerte del cuerpo<br>el nacimiento de la libertad<br>la conciencia sin ataduras"
     ];
-    
-    let wisdomIndex = 0;
-    setInterval(() => {
-        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
-        document.querySelector('.bardo-wisdom').innerHTML = wisdoms[wisdomIndex];
-    }, 7000);
-</script>
+    let wIdx = 0;
+    setInterval(() => { wIdx = (wIdx + 1) % wisdoms.length; document.querySelector('.bardo-wisdom').innerHTML = wisdoms[wIdx]; }, 13000);
 
+    // ── Audio (Web Audio puro, SIN CDN; nace al tocar) ──
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+    function makeReverbIR(s, d) {
+        const rate = actx.sampleRate, len = Math.floor(rate * s);
+        const b = actx.createBuffer(2, len, rate);
+        for (let c = 0; c < 2; c++) { const a = b.getChannelData(c); for (let i = 0; i < len; i++) a[i] = (Math.random()*2-1)*Math.pow(1-i/len, d); }
+        return b;
+    }
+    function panner(p) { const s = actx.createStereoPanner(); s.pan.value = p; return s; }
 
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+        const dry = actx.createGain(); dry.gain.value = 0.5; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(14, 1.5); // espacio del bardo
+        const wet = actx.createGain(); wet.gain.value = 0.68; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // Clara luz: drone luminoso sostenido (agudo, puro)
+        [523.25, 783.99].forEach(f => {
+            [f, f * 1.002].forEach(ff => { const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = ff; const g = actx.createGain(); g.gain.value = 0.014; o.connect(g); g.connect(fxIn); o.start(); });
+        });
+        // Fondo: la base del ser
+        const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = 65.41; const g = actx.createGain(); g.gain.value = 0.045; o.connect(g); g.connect(fxIn); o.start();
+    }
+
+    // Cuenco tibetano: parciales inarmónicos, decaimiento largo, batido
+    function playBowl(t0) {
+        const base = [196.00, 261.63, 329.63][Math.floor(Math.random() * 3)];
+        const sp = panner(Math.random()*1.2-0.6); sp.connect(fxIn);
+        [[1, 0.5], [2.76, 0.24], [5.40, 0.12], [8.93, 0.06]].forEach(([ratio, amp]) => {
+            [base * ratio, base * ratio * 1.004].forEach(f => {
+                const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+                const g = actx.createGain();
+                g.gain.setValueAtTime(0.0001, t0);
+                g.gain.linearRampToValueAtTime(amp * 0.05, t0 + 0.03);
+                g.gain.exponentialRampToValueAtTime(0.0001, t0 + 8);
+                o.connect(g); g.connect(sp); o.start(t0); o.stop(t0 + 8.2);
+            });
+        });
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.7, actx.currentTime + 6);
+        const b = () => playBowl(actx.currentTime + 0.05);
+        b(); timers.push(setInterval(b, 7000));
+        const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
