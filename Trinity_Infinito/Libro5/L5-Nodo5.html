@@ -1,402 +1,316 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Fénix Cuántico</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Fénix Cuántico</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
         background: radial-gradient(ellipse at center, #1a0000, #000);
         color: #fff;
-        font-family: 'Courier New', monospace;
+        font-family: 'Georgia', serif;
         overflow: hidden;
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: none;
     }
-    
+
     .phoenix-container {
-        position: relative;
-        width: 600px;
-        height: 600px;
+        position: relative; width: 600px; height: 600px;
+        max-width: 92vw; max-height: 92vh;
         transform-style: preserve-3d;
-        animation: phoenixRotate 30s infinite linear;
+        animation: phoenixRotate 34s infinite linear;
     }
-    
     @keyframes phoenixRotate {
         from { transform: rotateY(0deg) rotateZ(0deg); }
-        to { transform: rotateY(360deg) rotateZ(360deg); }
+        to   { transform: rotateY(360deg) rotateZ(360deg); }
     }
-    
-    .quantum-phoenix {
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    
+
+    .quantum-phoenix { position: absolute; width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
     .phoenix-feather {
-        position: absolute;
-        width: 100px;
-        height: 20px;
-        background: linear-gradient(90deg,
-            transparent,
-            #ff0000,
-            #ff6600,
-            #ffcc00,
-            #ff6600,
-            #ff0000,
-            transparent);
+        position: absolute; width: 100px; height: 20px;
+        background: linear-gradient(90deg, transparent, #ff0000, #ff6600, #ffcc00, #ff6600, #ff0000, transparent);
         transform-origin: left center;
-        animation: featherBurn 6s infinite;
+        animation: featherBurn 7s infinite ease-in-out;
     }
-    
     @keyframes featherBurn {
-        0% {
-            transform: rotate(var(--angle)) scale(0);
-            opacity: 0;
-            filter: hue-rotate(0deg);
-        }
-        25% {
-            transform: rotate(var(--angle)) scale(1);
-            opacity: 1;
-            filter: hue-rotate(60deg);
-        }
-        50% {
-            transform: rotate(var(--angle)) scale(1.2);
-            opacity: 1;
-            filter: hue-rotate(120deg);
-        }
-        75% {
-            transform: rotate(var(--angle)) scale(0.8);
-            opacity: 0.5;
-            filter: hue-rotate(240deg);
-        }
-        100% {
-            transform: rotate(var(--angle)) scale(0);
-            opacity: 0;
-            filter: hue-rotate(360deg);
-        }
+        0%   { transform: rotate(var(--angle)) scale(0); opacity: 0; }
+        25%  { transform: rotate(var(--angle)) scale(1); opacity: 1; }
+        50%  { transform: rotate(var(--angle)) scale(1.2); opacity: 1; }
+        75%  { transform: rotate(var(--angle)) scale(0.8); opacity: 0.5; }
+        100% { transform: rotate(var(--angle)) scale(0); opacity: 0; }
     }
-    
+
+    /* Ceniza: color fijo del degradé brasa→ceniza; sólo transform/opacity */
     .ash-particle {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: #666;
-        border-radius: 50%;
-        animation: ashFall 8s infinite;
+        position: absolute; width: 3px; height: 3px; border-radius: 50%;
+        --drift: 0px; --drift2: 0px;
+        animation: ashFall 8s infinite ease-in;
     }
-    
     @keyframes ashFall {
-        0% {
-            transform: translate(0, -200px) scale(0);
-            background: #ff6600;
-            opacity: 1;
-        }
-        30% {
-            transform: translate(var(--drift), 0) scale(1);
-            background: #cc3300;
-            opacity: 0.8;
-        }
-        60% {
-            transform: translate(var(--drift2), 100px) scale(0.5);
-            background: #666;
-            opacity: 0.5;
-        }
-        100% {
-            transform: translate(0, 200px) scale(0);
-            background: #333;
-            opacity: 0;
-        }
+        0%   { transform: translate(0, -200px) scale(0); opacity: 1; }
+        30%  { transform: translate(var(--drift), 0) scale(1); opacity: 0.8; }
+        60%  { transform: translate(var(--drift2), 100px) scale(0.5); opacity: 0.5; }
+        100% { transform: translate(0, 200px) scale(0); opacity: 0; }
     }
-    
+
     .rebirth-flame {
-        position: absolute;
-        width: 50px;
-        height: 100px;
-        background: linear-gradient(to top,
-            #ff0000,
-            #ff6600,
-            #ffcc00,
-            transparent);
+        position: absolute; width: 50px; height: 100px;
+        background: linear-gradient(to top, #ff0000, #ff6600, #ffcc00, transparent);
         border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-        animation: flameRise 4s infinite;
         filter: blur(2px);
+        animation: flameRise 4s infinite ease-in-out;
     }
-    
     @keyframes flameRise {
-        0% {
-            transform: scale(0) translateY(50px);
-            opacity: 0;
-        }
-        50% {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
-        100% {
-            transform: scale(0.5) translateY(-50px);
-            opacity: 0;
-        }
+        0%   { transform: scale(0) translateY(50px); opacity: 0; }
+        50%  { transform: scale(1) translateY(0); opacity: 1; }
+        100% { transform: scale(0.5) translateY(-50px); opacity: 0; }
     }
-    
+
+    /* Estado cuántico: el borde colapsa entre estados (superposición) */
     .quantum-state {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        top: 50%;
-        left: 50%;
+        position: absolute; width: 200px; height: 200px; top: 50%; left: 50%;
+        border: 2px solid rgba(255,100,0,0.5); border-radius: 50%;
         transform: translate(-50%, -50%);
-        border: 2px solid rgba(255,100,0,0.5);
-        border-radius: 50%;
-        animation: quantumCollapse 10s infinite;
+        animation: quantumCollapse 10s infinite ease-in-out;
     }
-    
     @keyframes quantumCollapse {
-        0%, 100% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0.3;
-            border-color: rgba(255,100,0,0.5);
-        }
-        25% {
-            transform: translate(-50%, -50%) scale(1.5);
-            opacity: 0.8;
-            border-color: rgba(255,200,0,0.8);
-        }
-        50% {
-            transform: translate(-50%, -50%) scale(0.5);
-            opacity: 1;
-            border-color: rgba(255,255,255,1);
-        }
-        75% {
-            transform: translate(-50%, -50%) scale(1.2);
-            opacity: 0.6;
-            border-color: rgba(255,0,0,0.6);
-        }
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; border-color: rgba(255,100,0,0.5); }
+        25%      { transform: translate(-50%, -50%) scale(1.5); opacity: 0.8; border-color: rgba(255,200,0,0.8); }
+        50%      { transform: translate(-50%, -50%) scale(0.5); opacity: 1; border-color: rgba(255,255,255,1); }
+        75%      { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; border-color: rgba(255,60,0,0.6); }
     }
-    
+
     .eternal-cycle {
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 48px;
-        color: gold;
-        text-shadow: 0 0 30px gold;
-        animation: eternalSpin 15s infinite linear;
+        position: fixed; top: 9%; left: 50%; transform: translateX(-50%);
+        font-size: 44px; color: #d0c0a0; text-shadow: 0 0 28px rgba(208,192,160,0.5);
+        animation: eternalSpin 18s infinite linear; z-index: 30;
     }
-    
-    @keyframes eternalSpin {
-        from { transform: translateX(-50%) rotate(0deg); }
-        to { transform: translateX(-50%) rotate(360deg); }
-    }
-    
+    @keyframes eternalSpin { from { transform: translateX(-50%) rotate(0deg); } to { transform: translateX(-50%) rotate(360deg); } }
+
     .phoenix-wisdom {
-        position: absolute;
-        bottom: 8%;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        font-size: 18px;
-        color: #fff;
-        text-shadow: 0 0 20px rgba(255,100,0,0.8);
-        animation: wisdomGlow 7s infinite;
-        width: 85%;
-        z-index: 100;
+        position: fixed; bottom: 8%; left: 50%; transform: translateX(-50%);
+        text-align: center; font-size: 1.05em; line-height: 1.9;
+        color: rgba(255,255,255,0.9); text-shadow: 0 0 22px rgba(255,100,0,0.5);
+        width: 88%; max-width: 640px; z-index: 100;
+        animation: wisdomGlow 13s infinite ease-in-out;
     }
-    
     @keyframes wisdomGlow {
-        0%, 100% {
-            opacity: 0.4;
-            transform: translateX(-50%) scale(0.95);
-        }
-        50% {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
-        }
+        0% { opacity: 0; } 12% { opacity: 0.9; } 80% { opacity: 0.9; } 92% { opacity: 0; } 100% { opacity: 0; }
     }
-    
-    canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.6;
+
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.6; }
+
+    .hint {
+        position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+        font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+        animation: hint-breathe 4s ease-in-out infinite; transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
+    }
+    .hint.oculto { opacity: 0; }
+    @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+    .infinito {
+        position: fixed; bottom: 24px; right: 28px;
+        color: rgba(255,140,40,0.45); text-decoration: none; font-size: 24px;
+        cursor: pointer; transition: color 0.6s ease; z-index: 60;
+    }
+    .infinito:hover { color: rgba(255,170,70,0.95); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .phoenix-container { animation: none; }
+        .phoenix-feather { animation: none; opacity: 0.6; }
+        .ash-particle { animation: none; opacity: 0; }
+        .rebirth-flame { animation: none; opacity: 0.5; }
+        .quantum-state { animation: none; opacity: 0.5; }
+        .eternal-cycle { animation: none; }
+        .phoenix-wisdom { animation: none; opacity: 0.9; }
     }
 </style>
-
-
 </head>
 <body>
     <canvas id="phoenixCanvas"></canvas>
 
+    <div class="eternal-cycle">∞</div>
 
-<div class="eternal-cycle">∞</div>
+    <div class="phoenix-container">
+        <div class="quantum-phoenix"></div>
+        <div class="quantum-state"></div>
+    </div>
 
-<div class="phoenix-container">
-    <div class="quantum-phoenix"></div>
-    <div class="quantum-state"></div>
-</div>
+    <div class="phoenix-wisdom">
+        De las cenizas al fuego<br>
+        del fuego a las cenizas<br>
+        el ciclo que nunca comenzó ni terminará
+    </div>
 
-<div class="phoenix-wisdom">
-    De las cenizas al fuego<br>
-    Del fuego a las cenizas<br>
-    El ciclo que nunca comenzó ni terminará
-</div>
+    <div class="hint" id="hint">( tocá: el fuego resuena )</div>
+    <a class="infinito" href="L5-Nodo6.html" title="Siguiente portal">∞</a>
 
-<script>
-    // Canvas para el fuego cuántico
+    <script>
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const container = document.querySelector('.phoenix-container');
+
+    // ── Canvas: fuego real ──
     const canvas = document.getElementById('phoenixCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    // Sistema de partículas de fuego
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const fire = [];
     class FireParticle {
-        constructor(x, y) {
-            this.x = x;
-            this.y = y;
-            this.vx = (Math.random() - 0.5) * 2;
-            this.vy = -Math.random() * 3 - 1;
-            this.life = 1;
-            this.decay = Math.random() * 0.02 + 0.01;
-            this.size = Math.random() * 3 + 1;
-        }
-        
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            this.life -= this.decay;
-            this.vy -= 0.05;
-        }
-        
+        constructor(x, y) { this.x = x; this.y = y; this.vx = (Math.random()-0.5)*2; this.vy = -Math.random()*3-1; this.life = 1; this.decay = Math.random()*0.02+0.01; this.size = Math.random()*3+1; }
+        update() { this.x += this.vx; this.y += this.vy; this.life -= this.decay; this.vy -= 0.05; }
         draw() {
-            const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2);
-            gradient.addColorStop(0, `rgba(255, 255, 255, ${this.life})`);
-            gradient.addColorStop(0.3, `rgba(255, 200, 0, ${this.life * 0.8})`);
-            gradient.addColorStop(0.6, `rgba(255, 100, 0, ${this.life * 0.5})`);
-            gradient.addColorStop(1, `rgba(255, 0, 0, 0)`);
-            
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size * this.life * 2, 0, Math.PI * 2);
-            ctx.fill();
+            const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size*2);
+            g.addColorStop(0, `rgba(255,255,255,${this.life})`);
+            g.addColorStop(0.3, `rgba(255,200,0,${this.life*0.8})`);
+            g.addColorStop(0.6, `rgba(255,100,0,${this.life*0.5})`);
+            g.addColorStop(1, 'rgba(255,0,0,0)');
+            ctx.fillStyle = g; ctx.beginPath(); ctx.arc(this.x, this.y, this.size*this.life*2, 0, Math.PI*2); ctx.fill();
         }
     }
-    
-    const fireParticles = [];
-    
     function animateFire() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Crear nuevas partículas
-        if (Math.random() < 0.8) {
-            const x = canvas.width / 2 + (Math.random() - 0.5) * 100;
-            const y = canvas.height / 2 + 50;
-            fireParticles.push(new FireParticle(x, y));
-        }
-        
-        // Actualizar y dibujar partículas
-        for (let i = fireParticles.length - 1; i >= 0; i--) {
-            const particle = fireParticles[i];
-            particle.update();
-            
-            if (particle.life <= 0) {
-                fireParticles.splice(i, 1);
-            } else {
-                particle.draw();
-            }
-        }
-        
-        requestAnimationFrame(animateFire);
+        ctx.fillStyle = 'rgba(0,0,0,0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (Math.random() < 0.8) fire.push(new FireParticle(canvas.width/2 + (Math.random()-0.5)*100, canvas.height/2 + 50));
+        for (let i = fire.length - 1; i >= 0; i--) { fire[i].update(); if (fire[i].life <= 0) fire.splice(i, 1); else fire[i].draw(); }
+        if (!reduce) requestAnimationFrame(animateFire);
     }
-    
     animateFire();
-    
-    // Crear plumas del fénix
+
+    // ── Plumas del fénix ──
     const phoenix = document.querySelector('.quantum-phoenix');
-    const numFeathers = 12;
-    
-    for (let i = 0; i < numFeathers; i++) {
-        const feather = document.createElement('div');
-        feather.className = 'phoenix-feather';
-        feather.style.setProperty('--angle', (i * 360 / numFeathers) + 'deg');
-        feather.style.left = '150px';
-        feather.style.top = '150px';
-        feather.style.animationDelay = (i * 0.5) + 's';
-        phoenix.appendChild(feather);
+    for (let i = 0; i < 12; i++) {
+        const f = document.createElement('div'); f.className = 'phoenix-feather';
+        f.style.setProperty('--angle', (i * 360 / 12) + 'deg');
+        f.style.left = '150px'; f.style.top = '150px'; f.style.animationDelay = (i * 0.5) + 's';
+        phoenix.appendChild(f);
     }
-    
-    // Crear partículas de ceniza
-    const container = document.querySelector('.phoenix-container');
-    
-    function createAsh() {
-        const ash = document.createElement('div');
-        ash.className = 'ash-particle';
-        ash.style.left = (canvas.width / 2 + (Math.random() - 0.5) * 200) + 'px';
-        ash.style.top = (canvas.height / 2) + 'px';
-        ash.style.setProperty('--drift', (Math.random() - 0.5) * 100 + 'px');
-        ash.style.setProperty('--drift2', (Math.random() - 0.5) * 150 + 'px');
-        document.body.appendChild(ash);
-        
-        setTimeout(() => ash.remove(), 8000);
-    }
-    
-    setInterval(createAsh, 300);
-    
-    // Crear llamas de renacimiento
+
+    // ── Llamas de renacimiento ──
     for (let i = 0; i < 8; i++) {
-        const flame = document.createElement('div');
-        flame.className = 'rebirth-flame';
-        const angle = (i / 8) * Math.PI * 2;
-        const radius = 100;
-        flame.style.left = (300 + Math.cos(angle) * radius - 25) + 'px';
-        flame.style.top = (300 + Math.sin(angle) * radius - 50) + 'px';
+        const flame = document.createElement('div'); flame.className = 'rebirth-flame';
+        const a = (i / 8) * Math.PI * 2;
+        flame.style.left = (300 + Math.cos(a)*100 - 25) + 'px';
+        flame.style.top = (300 + Math.sin(a)*100 - 50) + 'px';
         flame.style.animationDelay = (i * 0.5) + 's';
-        flame.style.transform = `rotate(${angle}rad)`;
         container.appendChild(flame);
     }
-    
-    // Estados cuánticos adicionales
+
+    // ── Estados cuánticos ──
     for (let i = 0; i < 3; i++) {
-        const state = document.createElement('div');
-        state.className = 'quantum-state';
-        state.style.width = (150 + i * 50) + 'px';
-        state.style.height = (150 + i * 50) + 'px';
-        state.style.animationDelay = (i * 3.33) + 's';
-        state.style.opacity = 0.3 - i * 0.1;
-        container.appendChild(state);
+        const s = document.createElement('div'); s.className = 'quantum-state';
+        s.style.width = (150 + i*50) + 'px'; s.style.height = (150 + i*50) + 'px';
+        s.style.animationDelay = (i * 3.33) + 's';
+        container.appendChild(s);
     }
-    
-    // Sabiduría del Fénix cambiante
+
+    // ── Ceniza: brasa que se enfría (colores fijos) ──
+    if (!reduce) {
+        const cooling = ['#ff6600','#e04a1a','#a83a20','#7a5a4a','#666','#444'];
+        let ci = 0;
+        function createAsh() {
+            const ash = document.createElement('div'); ash.className = 'ash-particle';
+            ash.style.left = (canvas.width/2 + (Math.random()-0.5)*200) + 'px';
+            ash.style.top = (canvas.height/2) + 'px';
+            ash.style.background = cooling[ci++ % cooling.length];
+            ash.style.setProperty('--drift', (Math.random()-0.5)*100 + 'px');
+            ash.style.setProperty('--drift2', (Math.random()-0.5)*150 + 'px');
+            document.body.appendChild(ash);
+            setTimeout(() => ash.remove(), 8000);
+        }
+        setInterval(createAsh, 500);
+    }
+
+    // ── Sabiduría del Fénix (con tiempo de lectura) ──
     const wisdoms = [
-        "De las cenizas al fuego<br>Del fuego a las cenizas<br>El ciclo que nunca comenzó ni terminará",
-        "Muero cada instante<br>Nazco cada instante<br>Soy la eternidad danzando",
-        "La destrucción es creación<br>La creación es destrucción<br>Dos nombres para el mismo misterio",
-        "No hay muerte final<br>No hay nacimiento primero<br>Solo transformación infinita",
-        "En mi muerte está mi renacimiento<br>En mi fin, mi principio<br>Soy el círculo sin costuras"
+        "De las cenizas al fuego<br>del fuego a las cenizas<br>el ciclo que nunca comenzó ni terminará",
+        "Muero cada instante<br>nazco cada instante<br>soy la eternidad danzando",
+        "La destrucción es creación<br>la creación es destrucción<br>dos nombres para el mismo misterio",
+        "No hay muerte final<br>no hay nacimiento primero<br>solo transformación infinita",
+        "En mi muerte está mi renacimiento<br>en mi fin, mi principio<br>soy el círculo sin costuras"
     ];
-    
-    let wisdomIndex = 0;
-    setInterval(() => {
-        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
-        document.querySelector('.phoenix-wisdom').innerHTML = wisdoms[wisdomIndex];
-    }, 7000);
-</script>
+    let wIdx = 0;
+    setInterval(() => { wIdx = (wIdx + 1) % wisdoms.length; document.querySelector('.phoenix-wisdom').innerHTML = wisdoms[wIdx]; }, 13000);
 
+    // ── Audio (Web Audio puro, SIN CDN; nace al tocar) ──
+    let actx = null, master = null, fxIn = null, noiseBuf = null, started = false;
+    const timers = [];
+    function makeReverbIR(s, d) {
+        const rate = actx.sampleRate, len = Math.floor(rate * s);
+        const b = actx.createBuffer(2, len, rate);
+        for (let c = 0; c < 2; c++) { const a = b.getChannelData(c); for (let i = 0; i < len; i++) a[i] = (Math.random()*2-1)*Math.pow(1-i/len, d); }
+        return b;
+    }
+    function makeNoise() {
+        const len = actx.sampleRate * 2, b = actx.createBuffer(1, len, actx.sampleRate), d = b.getChannelData(0);
+        for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+        return b;
+    }
+    function panner(p) { const s = actx.createStereoPanner(); s.pan.value = p; return s; }
 
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+        const dry = actx.createGain(); dry.gain.value = 0.6; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(9, 1.9);
+        const wet = actx.createGain(); wet.gain.value = 0.5; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+        noiseBuf = makeNoise();
+
+        // Fuego: siseo (ruido pasabanda)
+        const src = actx.createBufferSource(); src.buffer = noiseBuf; src.loop = true;
+        const bp = actx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 750; bp.Q.value = 0.5;
+        const ng = actx.createGain(); ng.gain.value = 0.04;
+        src.connect(bp); bp.connect(ng); ng.connect(fxIn); src.start();
+
+        // Brasa: drone cálido
+        [87.31, 130.81].forEach(f => { const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f; const g = actx.createGain(); g.gain.value = 0.04; o.connect(g); g.connect(fxIn); o.start(); });
+    }
+
+    // Chispa: pop breve filtrado
+    function crackle(t0) {
+        const src = actx.createBufferSource(); src.buffer = noiseBuf; src.loop = true;
+        const hp = actx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 2200;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.03, t0 + 0.004);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.06);
+        src.connect(hp); hp.connect(g); g.connect(panner(Math.random()*1.6-0.8)).connect(fxIn);
+        src.start(t0); src.stop(t0 + 0.1);
+    }
+    function nextCrackle() {
+        if (!started) return;
+        crackle(actx.currentTime + 0.02);
+        timers.push(setTimeout(nextCrackle, 150 + Math.random() * 450));
+    }
+
+    // Fénix: tono que renace ascendiendo
+    function playPhoenix(t0) {
+        const base = [174.61, 220, 261.63][Math.floor(Math.random() * 3)];
+        const o = actx.createOscillator(); o.type = 'triangle';
+        o.frequency.setValueAtTime(base, t0);
+        o.frequency.exponentialRampToValueAtTime(base * 2, t0 + 4);
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(0.035, t0 + 1.5);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 4);
+        o.connect(g); g.connect(panner(Math.random()*1.2-0.6)).connect(fxIn);
+        o.start(t0); o.stop(t0 + 4.2);
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.7, actx.currentTime + 5);
+        nextCrackle();
+        const p = () => playPhoenix(actx.currentTime + 0.05);
+        p(); timers.push(setInterval(p, 6000));
+        const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
