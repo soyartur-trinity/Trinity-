@@ -1,382 +1,305 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Presente Eterno</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Presente Eterno</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
         background: #000;
         color: #fff;
-        font-family: 'Courier New', monospace;
+        font-family: 'Georgia', serif;
         overflow: hidden;
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
         perspective: 1500px;
+        cursor: none;
     }
-    
-    .eternal-now {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
+
+    .eternal-now { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+
     .now-point {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background: white;
+        position: absolute; width: 20px; height: 20px;
+        background: radial-gradient(circle, rgba(255,255,255,0.98), rgba(255,255,255,0.3));
         border-radius: 50%;
-        box-shadow: 0 0 100px white, 0 0 200px white, 0 0 300px white;
-        animation: nowPulse 3s infinite;
+        box-shadow: 0 0 60px rgba(255,255,255,0.5), 0 0 130px rgba(255,255,255,0.25);
+        animation: nowPulse 4s infinite ease-in-out;
     }
-    
     @keyframes nowPulse {
-        0%, 100% {
-            transform: scale(1);
-            box-shadow: 0 0 100px white, 0 0 200px white, 0 0 300px white;
-        }
-        50% {
-            transform: scale(1.5);
-            box-shadow: 0 0 200px white, 0 0 400px white, 0 0 600px rgba(255,255,255,0.5);
-        }
+        0%, 100% { transform: scale(1); opacity: 0.8; }
+        50%      { transform: scale(1.5); opacity: 1; }
     }
-    
+
     .time-ring {
-        position: absolute;
-        border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 50%;
-        animation: timeExpand 4s infinite;
+        position: absolute; top: 50%; left: 50%; width: 600px; height: 600px;
+        border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0.033);
+        animation: timeExpand 4s infinite ease-out;
     }
-    
     @keyframes timeExpand {
-        0% {
-            width: 20px;
-            height: 20px;
-            opacity: 1;
-        }
-        100% {
-            width: 600px;
-            height: 600px;
-            opacity: 0;
-        }
+        0%   { transform: translate(-50%, -50%) scale(0.033); opacity: 1; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
     }
-    
+
     .past-ghost {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        background: radial-gradient(circle, 
-            rgba(100,100,255,0.5), 
-            transparent);
+        position: absolute; width: 50px; height: 50px;
+        background: radial-gradient(circle, rgba(100,100,255,0.5), transparent);
         border-radius: 50%;
-        animation: pastFade 8s infinite;
+        animation: pastFade 8s infinite ease-in-out;
     }
-    
     @keyframes pastFade {
-        0% {
-            transform: translateX(-300px) scale(1);
-            opacity: 0;
-        }
-        50% {
-            transform: translateX(0) scale(1);
-            opacity: 0.5;
-        }
-        100% {
-            transform: translateX(300px) scale(0);
-            opacity: 0;
-        }
+        0%   { transform: translateX(-300px) scale(1); opacity: 0; }
+        50%  { transform: translateX(0) scale(1); opacity: 0.5; }
+        100% { transform: translateX(300px) scale(0); opacity: 0; }
     }
-    
+
     .future-shadow {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        background: radial-gradient(circle, 
-            rgba(255,100,100,0.5), 
-            transparent);
+        position: absolute; width: 50px; height: 50px;
+        background: radial-gradient(circle, rgba(255,100,100,0.5), transparent);
         border-radius: 50%;
-        animation: futureFade 8s infinite;
+        animation: futureFade 8s infinite ease-in-out;
     }
-    
     @keyframes futureFade {
-        0% {
-            transform: translateX(300px) scale(1);
-            opacity: 0;
-        }
-        50% {
-            transform: translateX(0) scale(1);
-            opacity: 0.5;
-        }
-        100% {
-            transform: translateX(-300px) scale(0);
-            opacity: 0;
-        }
+        0%   { transform: translateX(300px) scale(1); opacity: 0; }
+        50%  { transform: translateX(0) scale(1); opacity: 0.5; }
+        100% { transform: translateX(-300px) scale(0); opacity: 0; }
     }
-    
+
     .eternal-text {
-        position: absolute;
-        font-size: 24px;
-        color: gold;
-        text-shadow: 0 0 20px gold;
-        animation: eternalFloat 10s infinite;
+        position: absolute; top: 50%; left: 50%;
+        font-size: 24px; color: rgba(208,192,160,0.9); text-shadow: 0 0 20px rgba(208,192,160,0.5);
+        animation: eternalFloat 10s infinite ease-in-out;
     }
-    
     @keyframes eternalFloat {
-        0%, 100% {
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0;
-        }
-        50% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-        }
+        0%, 100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        50%      { transform: translate(-50%, -50%) scale(1); opacity: 1; }
     }
-    
+
     .moment-particle {
-        position: absolute;
-        width: 2px;
-        height: 2px;
-        background: white;
-        animation: momentDrift 6s infinite;
+        position: absolute; top: 50%; left: 50%; width: 2px; height: 2px; background: rgba(255,255,255,0.9);
+        --driftX: 0px; --driftY: 0px;
+        animation: momentDrift 6s infinite ease-in-out;
     }
-    
     @keyframes momentDrift {
-        0% {
-            transform: translate(0, 0) scale(0);
-            opacity: 0;
-        }
-        50% {
-            transform: translate(var(--driftX), var(--driftY)) scale(2);
-            opacity: 1;
-        }
-        100% {
-            transform: translate(calc(var(--driftX) * 2), calc(var(--driftY) * 2)) scale(0);
-            opacity: 0;
-        }
+        0%   { transform: translate(0,0) scale(0); opacity: 0; }
+        50%  { transform: translate(var(--driftX), var(--driftY)) scale(2); opacity: 1; }
+        100% { transform: translate(calc(var(--driftX) * 2), calc(var(--driftY) * 2)) scale(0); opacity: 0; }
     }
-    
+
     .clock-illusion {
-        position: absolute;
-        width: 400px;
-        height: 400px;
-        border: 2px solid rgba(255,255,255,0.1);
-        border-radius: 50%;
-        animation: clockDissolve 12s infinite;
+        position: absolute; width: 400px; height: 400px;
+        border: 2px solid rgba(255,255,255,0.1); border-radius: 50%;
+        animation: clockDissolve 12s infinite ease-in-out;
     }
-    
     @keyframes clockDissolve {
-        0%, 100% {
-            transform: rotate(0deg);
-            opacity: 0.5;
-            border-style: solid;
-        }
-        50% {
-            transform: rotate(180deg);
-            opacity: 0.1;
-            border-style: dashed;
-        }
+        0%, 100% { transform: rotate(0deg); opacity: 0.5; }
+        50%      { transform: rotate(180deg); opacity: 0.1; }
     }
-    
+
+    .clock-hand {
+        position: absolute; top: 50%; left: 50%; width: 2px;
+        transform-origin: center bottom;
+        transform: translate(-50%, -100%) rotate(var(--rot));
+        animation: handDissolve var(--dur) infinite ease-in-out;
+    }
+    @keyframes handDissolve {
+        0%, 100% { transform: translate(-50%, -100%) rotate(var(--rot)); opacity: 0.35; }
+        50%      { transform: translate(-50%, -100%) rotate(calc(var(--rot) + 25deg)); opacity: 0.08; }
+    }
+
     .eternal-wisdom {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        font-size: 20px;
-        color: #fff;
-        text-shadow: 0 0 30px rgba(255,255,255,0.8);
-        animation: wisdomPresent 6s infinite;
-        width: 85%;
-        z-index: 100;
+        position: fixed; bottom: 10%; left: 50%; transform: translateX(-50%);
+        text-align: center; font-size: 1.1em; line-height: 1.9;
+        color: rgba(255,255,255,0.92); text-shadow: 0 0 26px rgba(255,255,255,0.4);
+        width: 88%; max-width: 660px; z-index: 100;
+        animation: wisdomPresent 13s infinite ease-in-out;
     }
-    
     @keyframes wisdomPresent {
-        0%, 100% {
-            opacity: 0.3;
-            transform: translateX(-50%) scale(0.95);
-        }
-        50% {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
-        }
+        0% { opacity: 0; } 12% { opacity: 0.92; } 80% { opacity: 0.92; } 92% { opacity: 0; } 100% { opacity: 0; }
     }
-    
-    canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.4;
+
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.4; }
+
+    .hint {
+        position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+        font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
+        animation: hint-breathe 4s ease-in-out infinite; transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
+    }
+    .hint.oculto { opacity: 0; }
+    @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+    .infinito {
+        position: fixed; bottom: 24px; right: 28px;
+        color: rgba(208,192,160,0.4); text-decoration: none; font-size: 24px;
+        cursor: pointer; transition: color 0.6s ease; z-index: 60;
+    }
+    .infinito:hover { color: rgba(208,192,160,0.95); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .now-point { animation: none; opacity: 0.9; }
+        .time-ring { animation: none; opacity: 0; }
+        .past-ghost, .future-shadow { animation: none; opacity: 0; }
+        .eternal-text { animation: none; opacity: 0; }
+        .moment-particle { animation: none; opacity: 0; }
+        .clock-illusion { animation: none; }
+        .clock-hand { animation: none; opacity: 0.3; }
+        .eternal-wisdom { animation: none; opacity: 0.92; }
     }
 </style>
-
-
 </head>
 <body>
     <canvas id="nowCanvas"></canvas>
 
+    <div class="eternal-now">
+        <div class="clock-illusion"></div>
+        <div class="now-point"></div>
+    </div>
 
-<div class="eternal-now">
-    <div class="clock-illusion"></div>
-    <div class="now-point"></div>
-</div>
+    <div class="eternal-wisdom">
+        No hay pasado, no hay futuro<br>
+        solo este momento eterno<br>
+        donde la muerte nunca puede entrar
+    </div>
 
-<div class="eternal-wisdom">
-    No hay pasado, no hay futuro<br>
-    Solo este momento eterno<br>
-    Donde la muerte nunca puede entrar
-</div>
+    <div class="hint" id="hint">( tocá: el ahora resuena )</div>
+    <a class="infinito" href="L5-Nodo7.html" title="Siguiente portal">∞</a>
 
-<script>
-    // Canvas para el presente eterno
+    <script>
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const container = document.querySelector('.eternal-now');
+
+    // ── Canvas: líneas de tiempo convergiendo al ahora ──
     const canvas = document.getElementById('nowCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    
-    // Dibujar el flujo temporal
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const cx = canvas.width / 2, cy = canvas.height / 2;
     function drawTimeFlow() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
+        ctx.fillStyle = 'rgba(0,0,0,0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
         const time = Date.now() * 0.001;
-        
-        // Líneas de tiempo convergentes
         for (let i = 0; i < 12; i++) {
-            const angle = (i / 12) * Math.PI * 2;
-            const startRadius = 300 + Math.sin(time + i) * 50;
-            const endRadius = 10;
-            
-            const startX = centerX + Math.cos(angle) * startRadius;
-            const startY = centerY + Math.sin(angle) * startRadius;
-            const endX = centerX + Math.cos(angle) * endRadius;
-            const endY = centerY + Math.sin(angle) * endRadius;
-            
-            const gradient = ctx.createLinearGradient(startX, startY, endX, endY);
-            gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-            gradient.addColorStop(1, 'rgba(255, 255, 255, 0.5)');
-            
-            ctx.strokeStyle = gradient;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(endX, endY);
-            ctx.stroke();
+            const a = (i / 12) * Math.PI * 2;
+            const sr = 300 + Math.sin(time + i) * 50, er = 10;
+            const sx = cx + Math.cos(a)*sr, sy = cy + Math.sin(a)*sr, ex = cx + Math.cos(a)*er, ey = cy + Math.sin(a)*er;
+            const g = ctx.createLinearGradient(sx, sy, ex, ey);
+            g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(1, 'rgba(255,255,255,0.5)');
+            ctx.strokeStyle = g; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(ex, ey); ctx.stroke();
         }
-        
-        requestAnimationFrame(drawTimeFlow);
+        if (!reduce) requestAnimationFrame(drawTimeFlow);
     }
-    
     drawTimeFlow();
-    
-    // Crear anillos de tiempo
-    const container = document.querySelector('.eternal-now');
-    
-    setInterval(() => {
-        const ring = document.createElement('div');
-        ring.className = 'time-ring';
-        ring.style.left = '50%';
-        ring.style.top = '50%';
-        ring.style.transform = 'translate(-50%, -50%)';
-        container.appendChild(ring);
-        
-        setTimeout(() => ring.remove(), 4000);
-    }, 500);
-    
-    // Crear fantasmas del pasado
+
+    // ── Fantasmas del pasado / sombras del futuro ──
     for (let i = 0; i < 5; i++) {
-        const ghost = document.createElement('div');
-        ghost.className = 'past-ghost';
-        ghost.style.left = '50%';
-        ghost.style.top = (30 + i * 10) + '%';
-        ghost.style.animationDelay = i * 1.6 + 's';
-        container.appendChild(ghost);
+        const g = document.createElement('div'); g.className = 'past-ghost';
+        g.style.left = '50%'; g.style.top = (30 + i*10) + '%'; g.style.animationDelay = i*1.6 + 's';
+        container.appendChild(g);
+        const s = document.createElement('div'); s.className = 'future-shadow';
+        s.style.left = '50%'; s.style.top = (30 + i*10) + '%'; s.style.animationDelay = i*1.6 + 's';
+        container.appendChild(s);
     }
-    
-    // Crear sombras del futuro
-    for (let i = 0; i < 5; i++) {
-        const shadow = document.createElement('div');
-        shadow.className = 'future-shadow';
-        shadow.style.left = '50%';
-        shadow.style.top = (30 + i * 10) + '%';
-        shadow.style.animationDelay = i * 1.6 + 's';
-        container.appendChild(shadow);
-    }
-    
-    // Textos eternos flotantes
-    const eternalWords = ['AHORA', 'NOW', 'MAINTENANT', 'JETZT', '今'];
-    eternalWords.forEach((word, i) => {
-        const text = document.createElement('div');
-        text.className = 'eternal-text';
-        text.textContent = word;
-        text.style.left = '50%';
-        text.style.top = '50%';
-        text.style.animationDelay = i * 2 + 's';
-        container.appendChild(text);
+
+    // ── AHORA en muchas lenguas ──
+    ['AHORA', 'NOW', 'MAINTENANT', 'JETZT', '今'].forEach((word, i) => {
+        const t = document.createElement('div'); t.className = 'eternal-text';
+        t.textContent = word; t.style.animationDelay = i * 2 + 's';
+        container.appendChild(t);
     });
-    
-    // Partículas del momento
+
+    // ── Partículas del momento ──
     for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'moment-particle';
-        particle.style.left = '50%';
-        particle.style.top = '50%';
-        particle.style.setProperty('--driftX', (Math.random() - 0.5) * 400 + 'px');
-        particle.style.setProperty('--driftY', (Math.random() - 0.5) * 400 + 'px');
-        particle.style.animationDelay = Math.random() * 6 + 's';
-        container.appendChild(particle);
+        const p = document.createElement('div'); p.className = 'moment-particle';
+        p.style.setProperty('--driftX', (Math.random()-0.5)*400 + 'px');
+        p.style.setProperty('--driftY', (Math.random()-0.5)*400 + 'px');
+        p.style.animationDelay = Math.random()*6 + 's';
+        container.appendChild(p);
     }
-    
-    // Manecillas del reloj que se disuelven
+
+    // ── Manecillas que se disuelven ──
     for (let i = 0; i < 3; i++) {
-        const hand = document.createElement('div');
-        hand.style.position = 'absolute';
-        hand.style.width = '2px';
-        hand.style.height = (100 + i * 50) + 'px';
-        hand.style.background = `rgba(255, 255, 255, ${0.3 - i * 0.1})`;
-        hand.style.left = '50%';
-        hand.style.top = '50%';
-        hand.style.transformOrigin = 'bottom center';
-        hand.style.transform = `translateX(-50%) translateY(-100%) rotate(${i * 120}deg)`;
-        hand.style.animation = `clockDissolve ${4 + i * 2}s infinite`;
+        const hand = document.createElement('div'); hand.className = 'clock-hand';
+        hand.style.height = (100 + i*50) + 'px';
+        hand.style.background = `rgba(255,255,255,${0.3 - i*0.08})`;
+        hand.style.setProperty('--rot', (i * 120) + 'deg');
+        hand.style.setProperty('--dur', (8 + i*2) + 's');
         container.appendChild(hand);
     }
-    
-    // Sabiduría del presente eterno
+
+    // ── Anillos de tiempo ──
+    if (!reduce) {
+        setInterval(() => {
+            const ring = document.createElement('div'); ring.className = 'time-ring';
+            container.appendChild(ring); setTimeout(() => ring.remove(), 4000);
+        }, 600);
+    }
+
+    // ── Sabiduría (con tiempo de lectura) ──
     const wisdoms = [
-        "No hay pasado, no hay futuro<br>Solo este momento eterno<br>Donde la muerte nunca puede entrar",
-        "El ahora es todo lo que existe<br>El ahora es todo lo que existió<br>El ahora es todo lo que existirá",
-        "En este instante está la eternidad<br>En este punto, todo el tiempo<br>Aquí y ahora, siempre",
-        "La muerte existe en el tiempo<br>Pero el presente es atemporal<br>Aquí, eres inmortal",
-        "Cada momento muere para dar paso al siguiente<br>Pero el Ahora nunca muere<br>Es el escenario inmutable de todo cambio"
+        "No hay pasado, no hay futuro<br>solo este momento eterno<br>donde la muerte nunca puede entrar",
+        "El ahora es todo lo que existe<br>el ahora es todo lo que existió<br>el ahora es todo lo que existirá",
+        "En este instante está la eternidad<br>en este punto, todo el tiempo<br>aquí y ahora, siempre",
+        "La muerte existe en el tiempo<br>pero el presente es atemporal<br>aquí, eres inmortal",
+        "Cada momento muere para dar paso al siguiente<br>pero el Ahora nunca muere<br>es el escenario inmutable de todo cambio"
     ];
-    
-    let wisdomIndex = 0;
-    setInterval(() => {
-        wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
-        document.querySelector('.eternal-wisdom').innerHTML = wisdoms[wisdomIndex];
-    }, 6000);
-</script>
+    let wIdx = 0;
+    setInterval(() => { wIdx = (wIdx + 1) % wisdoms.length; document.querySelector('.eternal-wisdom').innerHTML = wisdoms[wIdx]; }, 13000);
 
+    // ── Audio (Web Audio puro, SIN CDN; nace al tocar) ──
+    let actx = null, master = null, fxIn = null, started = false;
+    const timers = [];
+    function makeReverbIR(s, d) {
+        const rate = actx.sampleRate, len = Math.floor(rate * s);
+        const b = actx.createBuffer(2, len, rate);
+        for (let c = 0; c < 2; c++) { const a = b.getChannelData(c); for (let i = 0; i < len; i++) a[i] = (Math.random()*2-1)*Math.pow(1-i/len, d); }
+        return b;
+    }
+    function panner(p) { const s = actx.createStereoPanner(); s.pan.value = p; return s; }
+    const CENTER = 261.63;
 
+    function buildGraph() {
+        actx = new (window.AudioContext || window.webkitAudioContext)();
+        master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+        const dry = actx.createGain(); dry.gain.value = 0.55; dry.connect(master);
+        const conv = actx.createConvolver(); conv.buffer = makeReverbIR(12, 1.6);
+        const wet = actx.createGain(); wet.gain.value = 0.6; conv.connect(wet); wet.connect(master);
+        fxIn = actx.createGain(); fxIn.connect(dry); fxIn.connect(conv);
+
+        // El Ahora: drone quieto, inmutable
+        [CENTER / 2, CENTER, CENTER * 1.5].forEach((f, i) => {
+            [f, f * 1.002].forEach(ff => { const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = ff; const g = actx.createGain(); g.gain.value = 0.02 / (i * 0.4 + 1); o.connect(g); g.connect(fxIn); o.start(); });
+        });
+    }
+
+    // Pasado y futuro convergen en el presente
+    function playConverge(t0) {
+        // futuro: desciende desde lo agudo
+        const a = actx.createOscillator(); a.type = 'sine';
+        a.frequency.setValueAtTime(CENTER * 2, t0); a.frequency.exponentialRampToValueAtTime(CENTER, t0 + 5);
+        // pasado: asciende desde lo grave
+        const b = actx.createOscillator(); b.type = 'sine';
+        b.frequency.setValueAtTime(CENTER / 2, t0); b.frequency.exponentialRampToValueAtTime(CENTER, t0 + 5);
+        [[a, 0.5], [b, -0.5]].forEach(([o, pan]) => {
+            const g = actx.createGain();
+            g.gain.setValueAtTime(0.0001, t0);
+            g.gain.linearRampToValueAtTime(0.028, t0 + 2.5);
+            g.gain.exponentialRampToValueAtTime(0.0001, t0 + 6);
+            o.connect(g); g.connect(panner(pan)).connect(fxIn);
+            o.start(t0); o.stop(t0 + 6.2);
+        });
+    }
+
+    async function initSound() {
+        if (started) return; started = true;
+        buildGraph();
+        if (actx.state === 'suspended') await actx.resume();
+        master.gain.linearRampToValueAtTime(0.7, actx.currentTime + 5);
+        const c = () => playConverge(actx.currentTime + 0.05);
+        c(); timers.push(setInterval(c, 7500));
+        const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
+    }
+    document.body.addEventListener('click', initSound, { once: true });
+    </script>
 </body>
 </html>
