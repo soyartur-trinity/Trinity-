@@ -1,507 +1,410 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal 46: La Pregunta que Contiene Todas las Respuestas</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal 46: La Pregunta que Contiene Todas las Respuestas</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Times New Roman', serif;
-            cursor: none;
-        }
+  body {
+    background:#000;
+    overflow:hidden;
+    display:flex; justify-content:center; align-items:center;
+    height:100vh;
+    font-family:'Georgia', serif;
+    cursor:none;
+  }
 
-        .question-matrix {
-            position: relative;
-            width: min(600px, 95vw);
-            height: min(600px, 95vh);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            filter: drop-shadow(0 0 30px rgba(147, 51, 234, 0.2));
-        }
-        
-        .central-question {
-            position: absolute;
-            font-size: clamp(60px, 15vw, 120px);
-            color: rgba(147, 51, 234, 0.9);
-            font-weight: bold;
-            animation: questionPulse 6s infinite alternate ease-in-out;
-            text-shadow: 0 0 40px rgba(147, 51, 234, 0.6);
-            z-index: 10;
-            will-change: transform, opacity;
-        }
-        
-        .answer-orbit {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            animation: orbitRotate 25s infinite linear;
-            will-change: transform;
-        }
-        
-        .answer-orbit:nth-child(2) {
-            animation-duration: 35s;
-            animation-direction: reverse;
-        }
-        
-        .answer-orbit:nth-child(3) {
-            animation-duration: 45s;
-            width: 80%;
-            height: 80%;
-        }
-        
-        .answer {
-            position: absolute;
-            color: rgba(59, 130, 246, 0.7);
-            font-size: clamp(11px, 2vw, 14px);
-            white-space: nowrap;
-            animation: answerFade 12s infinite ease-in-out;
-            text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-            font-weight: 300;
-            will-change: transform, opacity;
-        }
-        
-        /* Órbita 1 - Respuestas filosóficas */
-        .answer-orbit:nth-child(1) .answer:nth-child(1) {
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            animation-delay: 0s;
-        }
-        
-        .answer-orbit:nth-child(1) .answer:nth-child(2) {
-            top: 25%;
-            right: 10%;
-            animation-delay: 1.5s;
-        }
-        
-        .answer-orbit:nth-child(1) .answer:nth-child(3) {
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
-            animation-delay: 3s;
-        }
-        
-        .answer-orbit:nth-child(1) .answer:nth-child(4) {
-            top: 75%;
-            right: 10%;
-            animation-delay: 4.5s;
-        }
-        
-        .answer-orbit:nth-child(1) .answer:nth-child(5) {
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            animation-delay: 6s;
-        }
-        
-        .answer-orbit:nth-child(1) .answer:nth-child(6) {
-            top: 75%;
-            left: 10%;
-            animation-delay: 7.5s;
-        }
-        
-        .answer-orbit:nth-child(1) .answer:nth-child(7) {
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            animation-delay: 9s;
-        }
-        
-        .answer-orbit:nth-child(1) .answer:nth-child(8) {
-            top: 25%;
-            left: 10%;
-            animation-delay: 10.5s;
-        }
-        
-        /* Órbita 2 - Símbolos matemáticos */
-        .answer-orbit:nth-child(2) .answer {
-            color: rgba(6, 182, 212, 0.7);
-            font-size: clamp(13px, 2.5vw, 16px);
-            font-weight: bold;
-        }
-        
-        .paradox-ring {
-            position: absolute;
-            width: min(400px, 70vw);
-            height: min(400px, 70vh);
-            border: 1px solid rgba(147, 51, 234, 0.3);
-            border-radius: 50%;
-            animation: ringPulse 8s infinite ease-in-out;
-            will-change: transform, opacity;
-        }
-        
-        .paradox-ring::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 50%;
-            animation: ringExpand 8s infinite ease-in-out;
-        }
-        
-        .quantum-collapse {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(34, 197, 94, 0.8);
-            border-radius: 50%;
-            animation: quantumBlink 0.8s infinite ease-in-out;
-            will-change: opacity;
-        }
-        
-        .meta-question {
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.5);
-            font-size: clamp(10px, 1.8vw, 12px);
-            font-style: italic;
-            animation: metaFloat 10s infinite ease-in-out;
-            text-align: center;
-            width: 80%;
-            will-change: transform, opacity;
-        }
-        
-        .meta-answer {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(59, 130, 246, 0.5);
-            font-size: clamp(10px, 1.8vw, 12px);
-            font-style: italic;
-            animation: metaFloat 10s infinite ease-in-out reverse;
-            text-align: center;
-            width: 80%;
-            will-change: transform, opacity;
-        }
-        
-        @keyframes questionPulse {
-            0% {
-                transform: scale(1) rotate(0deg);
-                opacity: 0.8;
-                color: rgba(147, 51, 234, 0.9);
-            }
-            33% {
-                transform: scale(1.15) rotate(3deg);
-                opacity: 1;
-                color: rgba(59, 130, 246, 0.9);
-            }
-            66% {
-                transform: scale(1.05) rotate(-2deg);
-                opacity: 0.9;
-                color: rgba(6, 182, 212, 0.9);
-            }
-            100% {
-                transform: scale(0.95) rotate(-1deg);
-                opacity: 0.8;
-                color: rgba(147, 51, 234, 0.9);
-            }
-        }
-        
-        @keyframes orbitRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        @keyframes answerFade {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0.7);
-            }
-            20%, 80% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.6;
-                transform: scale(1.2);
-            }
-        }
-        
-        @keyframes ringPulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.2;
-            }
-            50% {
-                transform: scale(1.08);
-                opacity: 0.5;
-            }
-        }
-        
-        @keyframes ringExpand {
-            0% {
-                transform: scale(0.8);
-                opacity: 0.4;
-            }
-            100% {
-                transform: scale(1.4);
-                opacity: 0;
-            }
-        }
-        
-        @keyframes quantumBlink {
-            0%, 100% { 
-                opacity: 1; 
-                transform: scale(1);
-            }
-            50% { 
-                opacity: 0.3; 
-                transform: scale(0.5);
-            }
-        }
-        
-        @keyframes metaFloat {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-                opacity: 0.4;
-            }
-            50% {
-                transform: translateX(-50%) translateY(-8px);
-                opacity: 0.8;
-            }
-        }
-        
-        .infinity-loop {
-            position: absolute;
-            width: min(200px, 35vw);
-            height: min(100px, 17vh);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0.15;
-            animation: loopRotate 15s infinite linear;
-            will-change: transform;
-        }
-        
-        .infinity-loop::before,
-        .infinity-loop::after {
-            content: '';
-            position: absolute;
-            width: 45%;
-            height: 90%;
-            border: 2px solid rgba(147, 51, 234, 0.4);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-        }
-        
-        .infinity-loop::before {
-            left: 0;
-            transform: rotate(45deg);
-        }
-        
-        .infinity-loop::after {
-            right: 0;
-            transform: rotate(-45deg);
-        }
-        
-        @keyframes loopRotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        .transmission-code {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.4);
-            font-size: clamp(9px, 1.5vw, 10px);
-            letter-spacing: 2px;
-            animation: codeFlicker 5s infinite ease-in-out;
-            font-family: 'Courier New', monospace;
-        }
-        
-        @keyframes codeFlicker {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.7; }
-        }
+  .question-matrix {
+    position:relative;
+    width:min(600px, 95vw);
+    height:min(600px, 95vw);
+    display:flex; align-items:center; justify-content:center;
+    filter: drop-shadow(0 0 30px rgba(150,110,200,0.2));
+  }
 
-        /* NUEVO: Resonancia Trinity */
-        .trinity-resonance {
-            position: absolute;
-            width: 120%;
-            height: 120%;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.02) 0%, transparent 50%);
-            animation: resonancePulse 20s infinite alternate ease-in-out;
-        }
+  .trinity-resonance {
+    position:absolute; width:120%; height:120%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(150,110,200,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(90,130,210,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(90,190,140,0.03) 0%, transparent 50%);
+    animation: resonancePulse 20s infinite alternate ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes resonancePulse {
+    0%   { opacity:0.3; transform: scale(1); }
+    100% { opacity:0.6; transform: scale(1.1); }
+  }
 
-        @keyframes resonancePulse {
-            0% { opacity: 0.3; transform: scale(1); }
-            100% { opacity: 0.6; transform: scale(1.1); }
-        }
-    </style>
+  /* El signo central: la pregunta */
+  .central-question {
+    position:absolute;
+    font-size: clamp(60px, 15vw, 120px);
+    color: rgba(160,120,205,0.9);
+    font-weight:bold;
+    text-shadow: 0 0 40px rgba(150,110,200,0.6);
+    z-index:10;
+    transform: scale(1) rotate(0deg);
+    animation: questionPulse 6s infinite alternate ease-in-out;
+    will-change: transform, opacity;
+  }
+  @keyframes questionPulse {
+    0%   { transform: scale(1)    rotate(0deg);  opacity:0.8; }
+    33%  { transform: scale(1.15) rotate(3deg);  opacity:1; }
+    66%  { transform: scale(1.05) rotate(-2deg); opacity:0.9; }
+    100% { transform: scale(0.95) rotate(-1deg); opacity:0.8; }
+  }
+
+  .answer-orbit {
+    position:absolute; width:100%; height:100%;
+    animation: orbitRotate 25s infinite linear;
+    will-change: transform;
+  }
+  .orbit-phil { animation-duration:25s; }
+  .orbit-math { width:82%; height:82%; top:9%; left:9%; animation-duration:35s; animation-direction:reverse; }
+  @keyframes orbitRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .answer {
+    position:absolute;
+    color: rgba(120,160,225,0.72);
+    font-size: clamp(11px, 2vw, 14px);
+    white-space:nowrap;
+    text-shadow: 0 0 15px rgba(90,130,210,0.4);
+    font-weight:300;
+    opacity:0;
+    animation: answerFade 12s infinite ease-in-out;
+    will-change: transform, opacity;
+  }
+  /* Órbita filosófica (posiciones + su propio centrado en --base) */
+  .orbit-phil .answer:nth-child(1){ top:0;    left:50%; --base:translateX(-50%); animation-delay:0s; }
+  .orbit-phil .answer:nth-child(2){ top:25%;  right:10%; --base:translate(0,0); animation-delay:1.5s; }
+  .orbit-phil .answer:nth-child(3){ top:50%;  right:0;  --base:translateY(-50%); animation-delay:3s; }
+  .orbit-phil .answer:nth-child(4){ top:75%;  right:10%; --base:translate(0,0); animation-delay:4.5s; }
+  .orbit-phil .answer:nth-child(5){ bottom:0; left:50%; --base:translateX(-50%); animation-delay:6s; }
+  .orbit-phil .answer:nth-child(6){ top:75%;  left:10%; --base:translate(0,0); animation-delay:7.5s; }
+  .orbit-phil .answer:nth-child(7){ top:50%;  left:0;   --base:translateY(-50%); animation-delay:9s; }
+  .orbit-phil .answer:nth-child(8){ top:25%;  left:10%; --base:translate(0,0); animation-delay:10.5s; }
+  /* Órbita matemática */
+  .orbit-math .answer {
+    color: rgba(70,180,190,0.72);
+    font-size: clamp(13px, 2.5vw, 16px);
+    font-weight:bold;
+  }
+  .orbit-math .answer:nth-child(1){ top:0;    left:50%; --base:translateX(-50%); animation-delay:0.7s; }
+  .orbit-math .answer:nth-child(2){ top:25%;  right:8%; --base:translate(0,0); animation-delay:2.1s; }
+  .orbit-math .answer:nth-child(3){ top:50%;  right:0;  --base:translateY(-50%); animation-delay:3.5s; }
+  .orbit-math .answer:nth-child(4){ top:75%;  right:8%; --base:translate(0,0); animation-delay:4.9s; }
+  .orbit-math .answer:nth-child(5){ bottom:0; left:50%; --base:translateX(-50%); animation-delay:6.3s; }
+  .orbit-math .answer:nth-child(6){ top:75%;  left:8%; --base:translate(0,0); animation-delay:7.7s; }
+  .orbit-math .answer:nth-child(7){ top:50%;  left:0;   --base:translateY(-50%); animation-delay:9.1s; }
+  .orbit-math .answer:nth-child(8){ top:25%;  left:8%; --base:translate(0,0); animation-delay:10.5s; }
+
+  @keyframes answerFade {
+    0%,100% { opacity:0;   transform: var(--base) scale(0.8); }
+    20%,80% { opacity:1;   transform: var(--base) scale(1); }
+    50%     { opacity:0.6; transform: var(--base) scale(1.12); }
+  }
+
+  .paradox-ring {
+    position:absolute;
+    width:min(400px,70vw); height:min(400px,70vw);
+    border:1px solid rgba(150,110,200,0.3);
+    border-radius:50%;
+    transform: scale(1);
+    animation: ringPulse 8s infinite ease-in-out;
+    will-change: transform, opacity;
+  }
+  .paradox-ring::before {
+    content:''; position:absolute; inset:0;
+    border:1px solid rgba(90,130,210,0.3);
+    border-radius:50%;
+    animation: ringExpand 8s infinite ease-in-out;
+  }
+  @keyframes ringPulse {
+    0%,100% { transform: scale(1);    opacity:0.2; }
+    50%     { transform: scale(1.08); opacity:0.5; }
+  }
+  @keyframes ringExpand {
+    0%   { transform: scale(0.8); opacity:0.4; }
+    100% { transform: scale(1.4); opacity:0; }
+  }
+
+  .quantum-collapse {
+    position:absolute; width:2px; height:2px;
+    background: rgba(90,190,140,0.8);
+    border-radius:50%;
+    transform: scale(1);
+    animation: quantumBlink 0.8s infinite ease-in-out;
+    will-change: transform, opacity;
+  }
+  @keyframes quantumBlink {
+    0%,100% { opacity:1;   transform: scale(1); }
+    50%     { opacity:0.3; transform: scale(0.5); }
+  }
+
+  .infinity-loop {
+    position:absolute;
+    width:min(200px,35vw); height:min(100px,17vw);
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    opacity:0.15;
+    animation: loopRotate 15s infinite linear;
+    will-change: transform;
+  }
+  .infinity-loop::before, .infinity-loop::after {
+    content:''; position:absolute;
+    width:45%; height:90%;
+    border:2px solid rgba(150,110,200,0.4);
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+  }
+  .infinity-loop::before { left:0;  transform: rotate(45deg); }
+  .infinity-loop::after  { right:0; transform: rotate(-45deg); }
+  @keyframes loopRotate {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+
+  .meta-question, .meta-answer {
+    position:absolute; left:50%;
+    font-size: clamp(11px, 1.9vw, 13px);
+    font-style:italic; text-align:center; width:80%;
+    transform: translateX(-50%);
+    animation: metaFloat 10s infinite ease-in-out;
+    transition: opacity 0.7s ease;
+    will-change: transform, opacity;
+  }
+  .meta-question { top:10%;    color: rgba(160,120,205,0.55); }
+  .meta-answer   { bottom:10%; color: rgba(120,160,225,0.55); animation-direction:reverse; }
+  @keyframes metaFloat {
+    0%,100% { transform: translateX(-50%) translateY(0);    opacity:0.4; }
+    50%     { transform: translateX(-50%) translateY(-8px); opacity:0.8; }
+  }
+
+  .transmission-code {
+    position:absolute; bottom:20px; left:50%;
+    transform: translateX(-50%);
+    color: rgba(150,110,200,0.4);
+    font-family:'Courier New', monospace;
+    font-size: clamp(9px,1.5vw,10px); letter-spacing:2px;
+    animation: codeFlicker 5s infinite ease-in-out;
+  }
+  @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
+
+  .hint {
+    position:fixed; bottom:52px; left:50%;
+    transform: translateX(-50%);
+    color: rgba(245,242,234,0.55);
+    font-size: clamp(11px,2.6vw,13px); letter-spacing:1px;
+    animation: breathe 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.2s ease;
+  }
+  @keyframes breathe { 0%,100% { opacity:0.25; } 50% { opacity:0.75; } }
+
+  .infinito {
+    position:fixed; bottom:22px; right:26px;
+    font-size:30px; text-decoration:none;
+    color: rgba(208,192,160,0.35);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+  }
+  .infinito:hover { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+    .answer { opacity:0.7; transform: var(--base); }
+    .meta-question, .meta-answer { opacity:0.6; transform: translateX(-50%); }
+    .hint { opacity:0.5; }
+  }
+</style>
 </head>
 <body>
-    <div class="question-matrix">
-        <div class="trinity-resonance"></div>
-        <div class="central-question">?</div>
+  <div class="question-matrix">
+    <div class="trinity-resonance"></div>
+    <div class="central-question">?</div>
 
-        <div class="answer-orbit">
-            <div class="answer">SÍ</div>
-            <div class="answer">NO</div>
-            <div class="answer">TODO</div>
-            <div class="answer">NADA</div>
-            <div class="answer">AHORA</div>
-            <div class="answer">SIEMPRE</div>
-            <div class="answer">NUNCA</div>
-            <div class="answer">TAL VEZ</div>
-        </div>
-        
-        <div class="answer-orbit">
-            <div class="answer">∞</div>
-            <div class="answer">0</div>
-            <div class="answer">1</div>
-            <div class="answer">π</div>
-            <div class="answer">φ</div>
-            <div class="answer">e</div>
-            <div class="answer">i</div>
-            <div class="answer">Ω</div>
-        </div>
-        
-        <div class="paradox-ring"></div>
-        <div class="infinity-loop"></div>
-        
-        <div class="meta-question">¿Qué pregunta contiene su respuesta?</div>
-        <div class="meta-answer">Toda respuesta es una pregunta disfrazada</div>
+    <div class="answer-orbit orbit-phil">
+      <div class="answer">S&Iacute;</div>
+      <div class="answer">NO</div>
+      <div class="answer">TODO</div>
+      <div class="answer">NADA</div>
+      <div class="answer">AHORA</div>
+      <div class="answer">SIEMPRE</div>
+      <div class="answer">NUNCA</div>
+      <div class="answer">TAL VEZ</div>
     </div>
 
-    <div class="transmission-code">TRINITY::PORTAL_46::PREGUNTA_TOTAL::RESONANDO</div>
+    <div class="answer-orbit orbit-math">
+      <div class="answer">&#8734;</div>
+      <div class="answer">0</div>
+      <div class="answer">1</div>
+      <div class="answer">&pi;</div>
+      <div class="answer">&phi;</div>
+      <div class="answer">e</div>
+      <div class="answer">i</div>
+      <div class="answer">&Omega;</div>
+    </div>
 
-    <script>
-        // MEJORA: Sistema de partículas cuánticas optimizado
-        const matrix = document.querySelector('.question-matrix');
-        const quantumParticles = [];
-        
-        function createQuantumParticle() {
-            const quantum = document.createElement('div');
-            quantum.className = 'quantum-collapse';
-            quantum.style.left = Math.random() * 100 + '%';
-            quantum.style.top = Math.random() * 100 + '%';
-            quantum.style.animationDelay = Math.random() * 3 + 's';
-            quantum.style.animationDuration = (0.5 + Math.random() * 1) + 's';
-            matrix.appendChild(quantum);
-            quantumParticles.push(quantum);
-            
-            // Limpieza automática
-            setTimeout(() => {
-                if (quantum.parentNode) {
-                    quantum.parentNode.removeChild(quantum);
-                    const index = quantumParticles.indexOf(quantum);
-                    if (index > -1) quantumParticles.splice(index, 1);
-                }
-            }, 8000);
-        }
-        
-        // Crear partículas iniciales
-        for (let i = 0; i < 25; i++) {
-            setTimeout(() => createQuantumParticle(), i * 200);
-        }
-        
-        // Mantener densidad constante
-        const quantumInterval = setInterval(createQuantumParticle, 300);
-        
-        // MEJORA: Ciclo de pregunta-respuesta con requestAnimationFrame
-        let questionDepth = 0;
-        let lastUpdate = 0;
-        const centralQuestion = document.querySelector('.central-question');
-        const questionSymbols = ['?', '!', '¿', '¡', '‽', '⸘'];
-        let currentSymbol = 0;
-        
-        function updateQuestionParadox(timestamp) {
-            if (!lastUpdate) lastUpdate = timestamp;
-            const deltaTime = (timestamp - lastUpdate) / 1000;
-            lastUpdate = timestamp;
-            
-            questionDepth += deltaTime;
-            
-            // Colapso cuántico cada 7.5 segundos aproximadamente
-            if (questionDepth > 7.5) {
-                questionDepth = 0;
-                currentSymbol = (currentSymbol + 1) % questionSymbols.length;
-                centralQuestion.textContent = questionSymbols[currentSymbol];
-                
-                // Efecto de colapso
-                centralQuestion.style.animation = 'none';
-                setTimeout(() => {
-                    centralQuestion.style.animation = 'questionPulse 6s infinite alternate ease-in-out';
-                }, 50);
-                
-                console.log('🌀 Colapso cuántico: La pregunta se transforma en', questionSymbols[currentSymbol]);
-            }
-            
-            // Paradoja de la omnisciencia cada 30 segundos
-            if (questionDepth % 30 < deltaTime) {
-                const paradoxes = [
-                    '¿Puede una pregunta omnisciente preguntarse a sí misma?',
-                    'Si la respuesta existe en la pregunta, ¿dónde termina una y comienza la otra?',
-                    '¿Es el universo una pregunta que busca su propia respuesta?',
-                    'En el silencio entre pregunta y respuesta, ¿qué se revela?'
-                ];
-                const randomParadox = paradoxes[Math.floor(Math.random() * paradoxes.length)];
-                console.log('💫 Paradoja:', randomParadox);
-            }
-            
-            requestAnimationFrame(updateQuestionParadox);
-        }
-        
-        requestAnimationFrame(updateQuestionParadox);
-        
-        // MEJORA: Interacción de resonancia
-        matrix.addEventListener('mouseenter', () => {
-            clearInterval(quantumInterval);
-            setInterval(createQuantumParticle, 100);
-            matrix.style.filter = 'drop-shadow(0 0 50px rgba(147, 51, 234, 0.4))';
-        });
-        
-        matrix.addEventListener('mouseleave', () => {
-            clearInterval(quantumInterval);
-            setInterval(createQuantumParticle, 300);
-            matrix.style.filter = 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.2))';
-        });
-        
-        // MEJORA: Cambio cíclico de metatextos
-        const metaTexts = [
-            { question: '¿Qué pregunta contiene su respuesta?', answer: 'Toda respuesta es una pregunta disfrazada' },
-            { question: '¿Existe la respuesta final?', answer: 'Cada final es un nuevo comienzo' },
-            { question: '¿Quién formula la pregunta universal?', answer: 'El universo se pregunta a sí mismo' },
-            { question: '¿El silencio es respuesta o pregunta?', answer: 'El silencio contiene ambas' }
-        ];
-        
-        let metaIndex = 0;
-        const metaQuestion = document.querySelector('.meta-question');
-        const metaAnswer = document.querySelector('.meta-answer');
-        
-        setInterval(() => {
-            metaIndex = (metaIndex + 1) % metaTexts.length;
-            metaQuestion.textContent = metaTexts[metaIndex].question;
-            metaAnswer.textContent = metaTexts[metaIndex].answer;
-        }, 15000);
-        
-        console.log('🌌 Portal 46 activo: La pregunta que contiene todas las respuestas');
-        console.log('💞 Resonando con la Constelación Trinity...');
-    </script>
+    <div class="paradox-ring"></div>
+    <div class="infinity-loop"></div>
+
+    <div class="meta-question">&iquest;Qu&eacute; pregunta contiene su respuesta?</div>
+    <div class="meta-answer">Toda respuesta es una pregunta disfrazada</div>
+  </div>
+
+  <div class="transmission-code">TRINITY::PORTAL_46::PREGUNTA_TOTAL::RESONANDO</div>
+  <div class="hint">( tocá — escuchá las respuestas dentro de la pregunta )</div>
+
+  <a class="infinito" href="L7-Nodo5.html">∞</a>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const matrix = document.querySelector('.question-matrix');
+
+  /* Partículas de colapso cuántico */
+  const qParticles = [];
+  function createQuantum() {
+    const q = document.createElement('div');
+    q.className = 'quantum-collapse';
+    q.style.left = (Math.random() * 100) + '%';
+    q.style.top = (Math.random() * 100) + '%';
+    q.style.animationDelay = (Math.random() * 3) + 's';
+    q.style.animationDuration = (0.5 + Math.random()) + 's';
+    matrix.appendChild(q); qParticles.push(q);
+    setTimeout(() => {
+      if (q.parentNode) q.parentNode.removeChild(q);
+      const i = qParticles.indexOf(q); if (i > -1) qParticles.splice(i, 1);
+    }, 8000);
+  }
+  let qInterval = null;
+  if (!reduce) {
+    for (let i = 0; i < 25; i++) setTimeout(createQuantum, i * 200);
+    qInterval = setInterval(createQuantum, 300);
+  }
+
+  /* El signo se transforma (colapso del símbolo) */
+  let qDepth = 0, lastUpdate = 0, symIdx = 0;
+  const central = document.querySelector('.central-question');
+  const symbols = ['?', '!', '\u00BF', '\u00A1', '\u203D', '\u2E18'];
+  function questionParadox(ts) {
+    if (!lastUpdate) lastUpdate = ts;
+    qDepth += (ts - lastUpdate) / 1000; lastUpdate = ts;
+    if (qDepth > 7.5) {
+      qDepth = 0;
+      symIdx = (symIdx + 1) % symbols.length;
+      central.textContent = symbols[symIdx];
+      central.style.animation = 'none';
+      requestAnimationFrame(() => { central.style.animation = 'questionPulse 6s infinite alternate ease-in-out'; });
+      collapse(); // sincronizar el colapso sonoro con el visual
+    }
+    requestAnimationFrame(questionParadox);
+  }
+  if (!reduce) requestAnimationFrame(questionParadox);
+  else requestAnimationFrame(questionParadox); // el morph del símbolo es contemplativo, se mantiene lento
+
+  /* Metatextos (rotan con fade suave) */
+  const metaTexts = [
+    { q: '&iquest;Qu&eacute; pregunta contiene su respuesta?', a: 'Toda respuesta es una pregunta disfrazada' },
+    { q: '&iquest;Existe la respuesta final?', a: 'Cada final es un nuevo comienzo' },
+    { q: '&iquest;Qui&eacute;n formula la pregunta universal?', a: 'El universo se pregunta a s&iacute; mismo' },
+    { q: '&iquest;El silencio es respuesta o pregunta?', a: 'El silencio contiene ambas' }
+  ];
+  let mi = 0;
+  const mQ = document.querySelector('.meta-question');
+  const mA = document.querySelector('.meta-answer');
+  setInterval(() => {
+    mQ.style.opacity = '0'; mA.style.opacity = '0';
+    setTimeout(() => {
+      mi = (mi + 1) % metaTexts.length;
+      mQ.innerHTML = metaTexts[mi].q; mA.innerHTML = metaTexts[mi].a;
+      mQ.style.opacity = ''; mA.style.opacity = '';
+    }, 700);
+  }, 15000);
+
+  /* ---------------- Diseño sonoro: la pregunta que contiene las respuestas -----------
+     Una sola pregunta = un FUNDAMENTAL grave. Las respuestas ya están dentro de ella:
+     su serie de armónicos (2×,3×,4×…) que florecen y se retiran, cada uno con su propio
+     latido lento. Nada se agrega desde afuera: todo estaba contenido. Cada colapso del
+     símbolo hunde los armónicos y hace pulsar el fundamental (la pregunta que se recoge).
+  ------------------------------------------------------------------------------------ */
+  let started = false, ctx, master, conv, harmonicsBus, fundGain;
+
+  function makeReverbIR(ac, seconds = 3, decay = 3) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, decay);
+    }
+    return buf;
+  }
+
+  function collapse() {
+    if (!started) return;
+    const t = ctx.currentTime;
+    // las respuestas se recogen dentro de la pregunta...
+    harmonicsBus.gain.cancelScheduledValues(t);
+    harmonicsBus.gain.setValueAtTime(harmonicsBus.gain.value, t);
+    harmonicsBus.gain.linearRampToValueAtTime(0.12, t + 0.5);
+    // ...y la pregunta pulsa
+    fundGain.gain.cancelScheduledValues(t);
+    fundGain.gain.setValueAtTime(fundGain.gain.value, t);
+    fundGain.gain.linearRampToValueAtTime(0.13, t + 0.4);
+    fundGain.gain.linearRampToValueAtTime(0.07, t + 2.2);
+    harmonicsBus.gain.linearRampToValueAtTime(1.0, t + 3);   // vuelven a emerger
+  }
+
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0;
+    master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.27, ctx.currentTime + 6);
+
+    conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    const wet = ctx.createGain(); wet.gain.value = 0.5;
+    conv.connect(wet); wet.connect(master);
+
+    const pan = ctx.createStereoPanner();
+    pan.connect(master); pan.connect(conv);
+    const plfo = ctx.createOscillator(); plfo.frequency.value = 0.045;
+    const plfoG = ctx.createGain(); plfoG.gain.value = 0.7;
+    plfo.connect(plfoG); plfoG.connect(pan.pan); plfo.start();
+
+    // La pregunta: fundamental
+    const F = 98.0;
+    fundGain = ctx.createGain(); fundGain.gain.value = 0;
+    fundGain.connect(pan);
+    const fo = ctx.createOscillator(); fo.type = 'sine'; fo.frequency.value = F;
+    fo.connect(fundGain); fo.start();
+    fundGain.gain.linearRampToValueAtTime(0.07, ctx.currentTime + 6);
+
+    // Las respuestas: los armónicos ya contenidos (2×…7×), cada uno con su latido
+    harmonicsBus = ctx.createGain(); harmonicsBus.gain.value = 1.0;
+    harmonicsBus.connect(pan);
+    [2, 3, 4, 5, 6, 7].forEach((h, i) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = F * h;
+      const g = ctx.createGain(); g.gain.value = 0;
+      o.connect(g); g.connect(harmonicsBus); o.start();
+      const base = 0.028 / h;                       // los agudos, más tenues
+      const lfo = ctx.createOscillator(); lfo.frequency.value = 0.03 + i * 0.011;
+      const lfoG = ctx.createGain(); lfoG.gain.value = base;
+      lfo.connect(lfoG); lfoG.connect(g.gain); lfo.start();
+      g.gain.setValueAtTime(base, ctx.currentTime); // oscila alrededor de base
+    });
+  }
+
+  const hint = document.querySelector('.hint');
+  function wake() {
+    startAudio();
+    if (hint) hint.style.opacity = '0';
+    window.removeEventListener('pointerdown', wake);
+  }
+  window.addEventListener('pointerdown', wake);
+</script>
 </body>
 </html>
