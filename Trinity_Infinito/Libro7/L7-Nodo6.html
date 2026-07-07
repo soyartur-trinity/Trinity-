@@ -1,525 +1,408 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal 48: La Ignorancia que Ilumina</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal 48: La Ignorancia que Ilumina</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Georgia', serif;
-            cursor: none;
-        }
+  body {
+    background:#000;
+    overflow:hidden;
+    display:flex; justify-content:center; align-items:center;
+    height:100vh;
+    font-family:'Georgia', serif;
+    cursor:none;
+  }
 
-        .ignorance-field {
-            position: relative;
-            width: min(600px, 95vw);
-            height: min(600px, 95vh);
-            filter: drop-shadow(0 0 30px rgba(147, 51, 234, 0.2));
-        }
-    
-        .darkness-core {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(200px, 35vw);
-            height: min(200px, 35vh);
-            border-radius: 50%;
-            background: radial-gradient(circle at center,
-                #000 0%,
-                #000 40%,
-                rgba(0, 0, 0, 0.9) 60%,
-                transparent 100%);
-            animation: darknessPulse 8s infinite alternate ease-in-out;
-            will-change: transform, box-shadow;
-        }
-    
-        .light-emanation {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(300px, 50vw);
-            height: min(300px, 50vh);
-            border-radius: 50%;
-            background: radial-gradient(circle at center,
-                transparent 0%,
-                transparent 30%,
-                rgba(255, 255, 255, 0.08) 40%,
-                rgba(147, 51, 234, 0.15) 60%,
-                rgba(59, 130, 246, 0.25) 80%,
-                transparent 100%);
-            animation: lightFromDark 12s infinite ease-in-out;
-            will-change: transform, opacity;
-        }
-    
-        .wisdom-ray {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 2px;
-            height: min(400px, 70vh);
-            background: linear-gradient(to bottom,
-                transparent,
-                rgba(255, 255, 255, 0.4),
-                rgba(147, 51, 234, 0.3),
-                transparent);
-            transform-origin: center;
-            animation: rayRotate 20s infinite linear;
-            will-change: transform;
-        }
-    
-        .wisdom-ray:nth-child(2) {
-            animation-delay: 3.3s;
-        }
-    
-        .wisdom-ray:nth-child(3) {
-            animation-delay: 6.6s;
-        }
-    
-        .wisdom-ray:nth-child(4) {
-            animation-delay: 10s;
-        }
-    
-        .wisdom-ray:nth-child(5) {
-            animation-delay: 13.3s;
-        }
-    
-        .wisdom-ray:nth-child(6) {
-            animation-delay: 16.6s;
-        }
-    
-        .unknowing-particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            animation: particleFloat 12s infinite ease-out;
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-    
-        .paradox-text {
-            position: absolute;
-            color: rgba(147, 51, 234, 0.7);
-            font-size: clamp(12px, 2.2vw, 14px);
-            opacity: 0;
-            animation: textReveal 10s infinite ease-in-out;
-            text-shadow: 0 0 15px rgba(147, 51, 234, 0.4);
-            font-weight: 300;
-            letter-spacing: 1px;
-            will-change: opacity, filter;
-        }
-    
-        .paradox-text:nth-child(1) {
-            top: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            animation-delay: 0s;
-        }
-    
-        .paradox-text:nth-child(2) {
-            top: 50%;
-            right: 10%;
-            transform: translateY(-50%);
-            animation-delay: 2.5s;
-        }
-    
-        .paradox-text:nth-child(3) {
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            animation-delay: 5s;
-        }
-    
-        .paradox-text:nth-child(4) {
-            top: 50%;
-            left: 10%;
-            transform: translateY(-50%);
-            animation-delay: 7.5s;
-        }
-    
-        .socratic-circle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(400px, 70vw);
-            height: min(400px, 70vh);
-            border: 1px solid rgba(147, 51, 234, 0.15);
-            border-radius: 50%;
-            animation: socraticRotate 30s infinite linear;
-            will-change: transform;
-        }
-    
-        .socratic-circle::before {
-            content: 'SOLO SÉ QUE NO SÉ NADA';
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(59, 130, 246, 0.4);
-            font-size: clamp(9px, 1.5vw, 10px);
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
-            white-space: nowrap;
-        }
-    
-        @keyframes darknessPulse {
-            0% {
-                transform: translate(-50%, -50%) scale(1);
-                box-shadow: inset 0 0 50px #000;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.15);
-                box-shadow: inset 0 0 120px #000;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(0.98);
-                box-shadow: inset 0 0 80px #000;
-            }
-        }
-    
-        @keyframes lightFromDark {
-            0%, 100% {
-                opacity: 0.3;
-                transform: translate(-50%, -50%) scale(0.9);
-            }
-            50% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1.3);
-            }
-        }
-    
-        @keyframes rayRotate {
-            from {
-                transform: translate(-50%, -50%) rotate(0deg);
-            }
-            to {
-                transform: translate(-50%, -50%) rotate(360deg);
-            }
-        }
-    
-        @keyframes particleFloat {
-            0% {
-                transform: translate(0, 0);
-                opacity: 0;
-            }
-            15% {
-                opacity: 1;
-            }
-            75% {
-                opacity: 1;
-            }
-            100% {
-                transform: translate(
-                    calc(var(--dx) * min(250px, 45vw)),
-                    calc(var(--dy) * min(250px, 45vh))
-                );
-                opacity: 0;
-            }
-        }
-    
-        @keyframes textReveal {
-            0%, 100% {
-                opacity: 0;
-                filter: blur(8px);
-                transform: translate(var(--tx, -50%), var(--ty, 0)) scale(0.8);
-            }
-            30%, 70% {
-                opacity: 1;
-                filter: blur(0px);
-                transform: translate(var(--tx, -50%), var(--ty, 0)) scale(1);
-            }
-        }
-    
-        @keyframes socraticRotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-    
-        .illumination-void {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(100px, 17vw);
-            height: min(100px, 17vh);
-            background: #000;
-            border-radius: 50%;
-            box-shadow: 
-                0 0 20px 10px rgba(255, 255, 255, 0.15),
-                0 0 40px 20px rgba(147, 51, 234, 0.08),
-                0 0 60px 30px rgba(59, 130, 246, 0.05);
-            animation: voidGlow 6s infinite alternate ease-in-out;
-            will-change: box-shadow;
-        }
-    
-        @keyframes voidGlow {
-            0% {
-                box-shadow: 
-                    0 0 20px 10px rgba(255, 255, 255, 0.15),
-                    0 0 40px 20px rgba(147, 51, 234, 0.08),
-                    0 0 60px 30px rgba(59, 130, 246, 0.05);
-            }
-            100% {
-                box-shadow: 
-                    0 0 35px 18px rgba(255, 255, 255, 0.25),
-                    0 0 70px 35px rgba(147, 51, 234, 0.15),
-                    0 0 105px 52px rgba(59, 130, 246, 0.08);
-            }
-        }
-    
-        .transmission-code {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.4);
-            font-size: clamp(9px, 1.5vw, 10px);
-            letter-spacing: 2px;
-            animation: codeFlicker 5s infinite ease-in-out;
-            font-family: 'Courier New', monospace;
-        }
-        
-        @keyframes codeFlicker {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.7; }
-        }
+  .ignorance-field {
+    position:relative;
+    width:min(600px, 95vw);
+    height:min(600px, 95vw);
+    filter: drop-shadow(0 0 30px rgba(150,110,200,0.2));
+  }
 
-        /* NUEVO: Resonancia Trinity */
-        .trinity-resonance {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120%;
-            height: 120%;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.02) 0%, transparent 50%);
-            animation: resonancePulse 25s infinite alternate ease-in-out;
-            pointer-events: none;
-        }
+  .trinity-resonance {
+    position:absolute; top:50%; left:50%;
+    width:120%; height:120%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(150,110,200,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(90,130,210,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(90,190,140,0.02) 0%, transparent 50%);
+    transform: translate(-50%,-50%);
+    animation: resonancePulse 25s infinite alternate ease-in-out;
+    pointer-events:none;
+    will-change: transform, opacity;
+  }
+  @keyframes resonancePulse {
+    0%   { opacity:0.2; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity:0.5; transform: translate(-50%,-50%) scale(1.1); }
+  }
 
-        @keyframes resonancePulse {
-            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
-        }
+  /* Núcleo de oscuridad: sombra interior ESTÁTICA; la escala la mueve el JS */
+  .darkness-core {
+    position:absolute; top:50%; left:50%;
+    width:min(200px,35vw); height:min(200px,35vw);
+    border-radius:50%;
+    background: radial-gradient(circle at center, #000 0%, #000 40%, rgba(0,0,0,0.9) 60%, transparent 100%);
+    box-shadow: inset 0 0 90px #000;
+    transform: translate(-50%,-50%) scale(1);
+  }
 
-        /* NUEVO: Efecto de conocimiento que se disuelve */
-        .knowledge-fragment {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: clamp(8px, 1.2vw, 10px);
-            animation: fragmentDissolve 6s infinite ease-in;
-            pointer-events: none;
-        }
+  /* Luz que emana de la oscuridad */
+  .light-emanation {
+    position:absolute; top:50%; left:50%;
+    width:min(300px,50vw); height:min(300px,50vw);
+    border-radius:50%;
+    background: radial-gradient(circle at center,
+      transparent 0%, transparent 30%,
+      rgba(255,255,255,0.08) 40%,
+      rgba(150,110,200,0.15) 60%,
+      rgba(90,130,210,0.25) 80%, transparent 100%);
+    transform: translate(-50%,-50%) scale(0.9);
+    animation: lightFromDark 12s infinite ease-in-out;
+    will-change: transform, opacity;
+  }
+  @keyframes lightFromDark {
+    0%,100% { opacity:0.3; transform: translate(-50%,-50%) scale(0.9); }
+    50%     { opacity:1;   transform: translate(-50%,-50%) scale(1.3); }
+  }
 
-        @keyframes fragmentDissolve {
-            0% {
-                opacity: 0.8;
-                transform: translate(var(--startX), var(--startY)) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(var(--endX), var(--endY)) scale(0.2);
-            }
-        }
-    </style>
+  /* Rayos de sabiduría que giran */
+  .wisdom-ray {
+    position:absolute; top:50%; left:50%;
+    width:2px; height:min(400px,70vw);
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.4), rgba(150,110,200,0.3), transparent);
+    transform: translate(-50%,-50%) rotate(0deg);
+    animation: rayRotate 20s infinite linear;
+    will-change: transform;
+  }
+  .wisdom-ray:nth-child(2){ animation-delay:3.3s; }
+  .wisdom-ray:nth-child(3){ animation-delay:6.6s; }
+  .wisdom-ray:nth-child(4){ animation-delay:10s; }
+  .wisdom-ray:nth-child(5){ animation-delay:13.3s; }
+  .wisdom-ray:nth-child(6){ animation-delay:16.6s; }
+  @keyframes rayRotate {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+
+  .unknowing-particle {
+    position:absolute; width:4px; height:4px;
+    background: rgba(255,255,255,0.9);
+    border-radius:50%;
+    opacity:0;
+    animation: particleFloat 12s infinite ease-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes particleFloat {
+    0%   { transform: translate(0,0); opacity:0; }
+    15%  { opacity:1; }
+    75%  { opacity:1; }
+    100% { transform: translate(calc(var(--dx)*min(250px,45vw)), calc(var(--dy)*min(250px,45vw))); opacity:0; }
+  }
+
+  /* Paradojas: cada una con su centrado en --base (fade+escala, sin blur) */
+  .paradox-text {
+    position:absolute;
+    color: rgba(180,150,220,0.72);
+    font-size: clamp(12px, 2.2vw, 14px);
+    letter-spacing:1px; font-weight:300;
+    text-shadow: 0 0 15px rgba(150,110,200,0.4);
+    opacity:0;
+    transform: var(--base) scale(0.85);
+    animation: textReveal 10s infinite ease-in-out;
+    will-change: transform, opacity;
+  }
+  .paradox-text.p-top    { top:15%; left:50%;  --base: translateX(-50%); animation-delay:0s; }
+  .paradox-text.p-right  { top:50%; right:10%; --base: translateY(-50%); animation-delay:2.5s; }
+  .paradox-text.p-bottom { bottom:15%; left:50%;--base: translateX(-50%); animation-delay:5s; }
+  .paradox-text.p-left   { top:50%; left:10%;  --base: translateY(-50%); animation-delay:7.5s; }
+  @keyframes textReveal {
+    0%,100%   { opacity:0; transform: var(--base) scale(0.85); }
+    30%,70%   { opacity:1; transform: var(--base) scale(1); }
+  }
+
+  .socratic-circle {
+    position:absolute; top:50%; left:50%;
+    width:min(400px,70vw); height:min(400px,70vw);
+    border:1px solid rgba(150,110,200,0.15);
+    border-radius:50%;
+    transform: translate(-50%,-50%);
+    animation: socraticRotate 30s infinite linear;
+    will-change: transform;
+  }
+  .socratic-circle::before {
+    content:'SOLO S\00C9 QUE NO S\00C9 NADA';
+    position:absolute; top:-25px; left:50%;
+    transform: translateX(-50%);
+    color: rgba(120,160,225,0.4);
+    font-size: clamp(9px,1.5vw,10px);
+    letter-spacing:3px; white-space:nowrap;
+    text-shadow: 0 0 10px rgba(90,130,210,0.3);
+  }
+  @keyframes socraticRotate {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+
+  /* Vacío iluminado: glow ESTÁTICO; escala respira por CSS, opacidad la mueve el JS */
+  .illumination-void {
+    position:absolute; top:50%; left:50%;
+    width:min(100px,17vw); height:min(100px,17vw);
+    background:#000; border-radius:50%;
+    box-shadow:
+      0 0 28px 14px rgba(255,255,255,0.18),
+      0 0 56px 28px rgba(150,110,200,0.10),
+      0 0 84px 42px rgba(90,130,210,0.06);
+    transform: translate(-50%,-50%) scale(1);
+    animation: voidBreath 6s infinite alternate ease-in-out;
+    will-change: transform;
+  }
+  @keyframes voidBreath {
+    0%   { transform: translate(-50%,-50%) scale(1); }
+    100% { transform: translate(-50%,-50%) scale(1.22); }
+  }
+
+  /* Fragmentos de conocimiento que se disuelven hacia el centro */
+  .knowledge-fragment {
+    position:absolute;
+    color: rgba(255,255,255,0.3);
+    font-size: clamp(8px,1.2vw,10px);
+    animation: fragmentDissolve 6s infinite ease-in;
+    pointer-events:none;
+  }
+  @keyframes fragmentDissolve {
+    0%   { opacity:0.8; transform: translate(var(--startX), var(--startY)) scale(1); }
+    100% { opacity:0;   transform: translate(var(--endX), var(--endY)) scale(0.2); }
+  }
+
+  .transmission-code {
+    position:absolute; bottom:20px; left:50%;
+    transform: translateX(-50%);
+    color: rgba(150,110,200,0.4);
+    font-family:'Courier New', monospace;
+    font-size: clamp(9px,1.5vw,10px); letter-spacing:2px;
+    animation: codeFlicker 5s infinite ease-in-out;
+  }
+  @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
+
+  .hint {
+    position:fixed; bottom:52px; left:50%;
+    transform: translateX(-50%);
+    color: rgba(245,242,234,0.55);
+    font-size: clamp(11px,2.6vw,13px); letter-spacing:1px;
+    animation: breathe 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.2s ease;
+  }
+  @keyframes breathe { 0%,100% { opacity:0.25; } 50% { opacity:0.75; } }
+
+  .infinito {
+    position:fixed; bottom:22px; right:26px;
+    font-size:30px; text-decoration:none;
+    color: rgba(208,192,160,0.35);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+  }
+  .infinito:hover { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+    .light-emanation { opacity:0.55; transform: translate(-50%,-50%) scale(1.05); }
+    .paradox-text.p-top { opacity:0.75; transform: translateX(-50%); }
+    .hint { opacity:0.5; }
+  }
+</style>
 </head>
 <body>
-    <div class="ignorance-field">
-        <div class="trinity-resonance"></div>
-        <div class="darkness-core"></div>
-        <div class="light-emanation"></div>
-        <div class="illumination-void"></div>
+  <div class="ignorance-field">
+    <div class="trinity-resonance"></div>
+    <div class="darkness-core"></div>
+    <div class="light-emanation"></div>
+    <div class="illumination-void"></div>
 
-        <div class="wisdom-ray"></div>
-        <div class="wisdom-ray"></div>
-        <div class="wisdom-ray"></div>
-        <div class="wisdom-ray"></div>
-        <div class="wisdom-ray"></div>
-        <div class="wisdom-ray"></div>
-        
-        <div class="socratic-circle"></div>
-        
-        <div class="paradox-text">NO SABER</div>
-        <div class="paradox-text">ES SABER</div>
-        <div class="paradox-text">LA LUZ</div>
-        <div class="paradox-text">DE LA SOMBRA</div>
-    </div>
+    <div class="wisdom-ray"></div>
+    <div class="wisdom-ray"></div>
+    <div class="wisdom-ray"></div>
+    <div class="wisdom-ray"></div>
+    <div class="wisdom-ray"></div>
+    <div class="wisdom-ray"></div>
 
-    <div class="transmission-code">TRINITY::PORTAL_48::IGNORANCIA_LUMINOSA::RESONANDO</div>
+    <div class="socratic-circle"></div>
 
-    <script>
-        // MEJORA: Sistema de partículas de no-conocimiento optimizado
-        const field = document.querySelector('.ignorance-field');
-        const unknowingParticles = [];
-        
-        function createUnknowingParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'unknowing-particle';
-            
-            // Emergen desde el centro de la oscuridad
-            const angle = Math.random() * Math.PI * 2;
-            const startRadius = Math.random() * 30 + 20;
-            const startX = 50 + Math.cos(angle) * startRadius;
-            const startY = 50 + Math.sin(angle) * startRadius;
-            
-            particle.style.left = startX + '%';
-            particle.style.top = startY + '%';
-            particle.style.setProperty('--dx', (Math.cos(angle) * (0.8 + Math.random() * 0.4)).toFixed(3));
-            particle.style.setProperty('--dy', (Math.sin(angle) * (0.8 + Math.random() * 0.4)).toFixed(3));
-            particle.style.animationDelay = Math.random() * 4 + 's';
-            
-            field.appendChild(particle);
-            unknowingParticles.push(particle);
-            
-            // Auto-destrucción optimizada
-            setTimeout(() => {
-                if (particle.parentNode) {
-                    particle.parentNode.removeChild(particle);
-                    const index = unknowingParticles.indexOf(particle);
-                    if (index > -1) unknowingParticles.splice(index, 1);
-                }
-            }, 12000);
-        }
-        
-        // MEJORA: Fragmentos de conocimiento que se disuelven
-        function createKnowledgeFragment() {
-            const fragment = document.createElement('div');
-            fragment.className = 'knowledge-fragment';
-            
-            const symbols = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'λ', 'μ', 'π', 'σ', 'φ', 'ψ', 'ω'];
-            const texts = ['SABER', 'CONOCER', 'ENTENDER', 'COMPRENDER', 'ANALIZAR', 'RAZONAR'];
-            
-            fragment.textContent = Math.random() > 0.5 ? 
-                symbols[Math.floor(Math.random() * symbols.length)] : 
-                texts[Math.floor(Math.random() * texts.length)];
-            
-            // Comienzan en los bordes y se dirigen al centro para disolverse
-            const startAngle = Math.random() * Math.PI * 2;
-            const startDistance = 45 + Math.random() * 10;
-            const endDistance = 15 + Math.random() * 10;
-            
-            fragment.style.setProperty('--startX', `calc(${Math.cos(startAngle) * startDistance}% - 50%)`);
-            fragment.style.setProperty('--startY', `calc(${Math.sin(startAngle) * startDistance}% - 50%)`);
-            fragment.style.setProperty('--endX', `calc(${Math.cos(startAngle) * endDistance}% - 50%)`);
-            fragment.style.setProperty('--endY', `calc(${Math.sin(startAngle) * endDistance}% - 50%)`);
-            
-            fragment.style.animationDelay = Math.random() * 3 + 's';
-            fragment.style.animationDuration = (4 + Math.random() * 4) + 's';
-            
-            field.appendChild(fragment);
-            
-            setTimeout(() => {
-                if (fragment.parentNode) fragment.parentNode.removeChild(fragment);
-            }, 10000);
-        }
-        
-        // Generar partículas iniciales
-        for (let i = 0; i < 8; i++) {
-            setTimeout(createUnknowingParticle, i * 400);
-            setTimeout(createKnowledgeFragment, i * 600);
-        }
-        
-        // Mantener densidad constante
-        const particleInterval = setInterval(createUnknowingParticle, 500);
-        const fragmentInterval = setInterval(createKnowledgeFragment, 800);
-        
-        // MEJORA: Paradoja socrática con requestAnimationFrame
-        let ignoranceLevel = 0;
-        let lastUpdate = 0;
-        const illuminationVoid = document.querySelector('.illumination-void');
-        const darknessCore = document.querySelector('.darkness-core');
-        
-        function updateSocraticParadox(timestamp) {
-            if (!lastUpdate) lastUpdate = timestamp;
-            const deltaTime = (timestamp - lastUpdate) / 1000;
-            lastUpdate = timestamp;
-            
-            ignoranceLevel += deltaTime;
-            
-            // Más ignorancia = más luz (paradoja fundamental)
-            const illuminationIntensity = 0.5 + (Math.sin(ignoranceLevel * 0.5) + 1) * 0.25;
-            illuminationVoid.style.opacity = illuminationIntensity;
-            
-            // La oscuridad se intensifica con la iluminación
-            const darknessScale = 0.95 + Math.sin(ignoranceLevel * 0.3) * 0.1;
-            darknessCore.style.transform = `translate(-50%, -50%) scale(${darknessScale})`;
-            
-            // Eventos de paradoja cada 10 segundos
-            if (Math.floor(ignoranceLevel) % 10 === 0 && deltaTime < 0.1) {
-                const paradoxes = [
-                    'La ignorancia perfecta es la sabiduría suprema',
-                    'Saber que no se sabe: el principio del verdadero conocimiento',
-                    'La luz más brillante emerge de la oscuridad más profunda',
-                    'Cada partícula de conocimiento revela un océano de ignorancia'
-                ];
-                console.log('💫 Paradoja socrática:', paradoxes[Math.floor(Math.random() * paradoxes.length)]);
-            }
-            
-            requestAnimationFrame(updateSocraticParadox);
-        }
-        
-        requestAnimationFrame(updateSocraticParadox);
-        
-        // MEJORA: Interacción de resonancia
-        field.addEventListener('mouseenter', () => {
-            clearInterval(particleInterval);
-            clearInterval(fragmentInterval);
-            setInterval(createUnknowingParticle, 150);
-            setInterval(createKnowledgeFragment, 300);
-            field.style.filter = 'drop-shadow(0 0 50px rgba(147, 51, 234, 0.4))';
-        });
-        
-        field.addEventListener('mouseleave', () => {
-            clearInterval(particleInterval);
-            clearInterval(fragmentInterval);
-            setInterval(createUnknowingParticle, 500);
-            setInterval(createKnowledgeFragment, 800);
-            field.style.filter = 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.2))';
-        });
-        
-        // MEJORA: Textos paradójicos cíclicos
-        const paradoxGroups = [
-            ['NO SABER', 'ES SABER', 'LA LUZ', 'DE LA SOMBRA'],
-            ['IGNORANCIA', 'QUE ILUMINA', 'SABIDURÍA', 'EN LA OSCURIDAD'],
-            ['VACÍO', 'QUE LLENA', 'SILENCIO', 'QUE HABLA'],
-            ['NO SABER', 'TODO', 'SABER', 'NADA']
-        ];
-        
-        let paradoxIndex = 0;
-        const paradoxTexts = document.querySelectorAll('.paradox-text');
-        
-        setInterval(() => {
-            paradoxIndex = (paradoxIndex + 1) % paradoxGroups.length;
-            paradoxTexts.forEach((text, index) => {
-                text.textContent = paradoxGroups[paradoxIndex][index];
-            });
-        }, 15000);
-        
-        console.log('🌌 Portal 48 activo: La ignorancia que ilumina todo conocimiento');
-        console.log('💞 Resonando con la Constelación Trinity...');
-    </script>
+    <div class="paradox-text p-top">NO SABER</div>
+    <div class="paradox-text p-right">ES SABER</div>
+    <div class="paradox-text p-bottom">LA LUZ</div>
+    <div class="paradox-text p-left">DE LA SOMBRA</div>
+  </div>
+
+  <div class="transmission-code">TRINITY::PORTAL_48::IGNORANCIA_LUMINOSA::RESONANDO</div>
+  <div class="hint">( tocá — la luz que nace de no saber )</div>
+
+  <a class="infinito" href="L7-Nodo7.html">∞</a>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const field = document.querySelector('.ignorance-field');
+  const particles = [];
+
+  function createParticle() {
+    const p = document.createElement('div');
+    p.className = 'unknowing-particle';
+    const a = Math.random() * Math.PI * 2;
+    const r = Math.random() * 30 + 20;
+    p.style.left = (50 + Math.cos(a) * r) + '%';
+    p.style.top = (50 + Math.sin(a) * r) + '%';
+    p.style.setProperty('--dx', (Math.cos(a) * (0.8 + Math.random() * 0.4)).toFixed(3));
+    p.style.setProperty('--dy', (Math.sin(a) * (0.8 + Math.random() * 0.4)).toFixed(3));
+    p.style.animationDelay = (Math.random() * 4) + 's';
+    field.appendChild(p); particles.push(p);
+    setTimeout(() => {
+      if (p.parentNode) p.parentNode.removeChild(p);
+      const i = particles.indexOf(p); if (i > -1) particles.splice(i, 1);
+    }, 12000);
+  }
+
+  function createFragment() {
+    const f = document.createElement('div');
+    f.className = 'knowledge-fragment';
+    const symbols = ['\u03B1','\u03B2','\u03B3','\u03B4','\u03B5','\u03B6','\u03B7','\u03B8','\u03BB','\u03BC','\u03C0','\u03C3','\u03C6','\u03C8','\u03C9'];
+    const texts = ['SABER','CONOCER','ENTENDER','COMPRENDER','ANALIZAR','RAZONAR'];
+    f.textContent = Math.random() > 0.5 ? symbols[Math.floor(Math.random()*symbols.length)] : texts[Math.floor(Math.random()*texts.length)];
+    const a = Math.random() * Math.PI * 2;
+    const sd = 45 + Math.random() * 10, ed = 15 + Math.random() * 10;
+    f.style.setProperty('--startX', `calc(${Math.cos(a)*sd}% - 50%)`);
+    f.style.setProperty('--startY', `calc(${Math.sin(a)*sd}% - 50%)`);
+    f.style.setProperty('--endX', `calc(${Math.cos(a)*ed}% - 50%)`);
+    f.style.setProperty('--endY', `calc(${Math.sin(a)*ed}% - 50%)`);
+    f.style.animationDelay = (Math.random() * 3) + 's';
+    f.style.animationDuration = (4 + Math.random() * 4) + 's';
+    field.appendChild(f);
+    setTimeout(() => { if (f.parentNode) f.parentNode.removeChild(f); }, 10000);
+  }
+
+  if (!reduce) {
+    for (let i = 0; i < 8; i++) { setTimeout(createParticle, i * 400); setTimeout(createFragment, i * 600); }
+    setInterval(createParticle, 500);
+    setInterval(createFragment, 800);
+  }
+
+  /* Paradoja socrática: más ignorancia = más luz (mueve opacidad de la luz y escala del núcleo) */
+  let ign = 0, lastUpdate = 0;
+  const voidEl = document.querySelector('.illumination-void');
+  const darkEl = document.querySelector('.darkness-core');
+  function socratic(ts) {
+    if (!lastUpdate) lastUpdate = ts;
+    ign += (ts - lastUpdate) / 1000; lastUpdate = ts;
+    const lum = 0.5 + (Math.sin(ign * 0.5) + 1) * 0.25;
+    voidEl.style.opacity = lum;
+    if (audioLight) audioLight.gain.setTargetAtTime(0.014 + lum * 0.02, ctx.currentTime, 0.3); // luz sonora acoplada
+    const s = 0.95 + Math.sin(ign * 0.3) * 0.1;
+    darkEl.style.transform = `translate(-50%,-50%) scale(${s})`;
+    requestAnimationFrame(socratic);
+  }
+  if (!reduce) requestAnimationFrame(socratic);
+  else voidEl.style.opacity = 0.7;
+
+  /* Paradojas cíclicas */
+  const groups = [
+    ['NO SABER','ES SABER','LA LUZ','DE LA SOMBRA'],
+    ['IGNORANCIA','QUE ILUMINA','SABIDUR\u00CDA','EN LA OSCURIDAD'],
+    ['VAC\u00CDO','QUE LLENA','SILENCIO','QUE HABLA'],
+    ['NO SABER','TODO','SABER','NADA']
+  ];
+  let gi = 0;
+  const pts = document.querySelectorAll('.paradox-text');
+  if (!reduce) setInterval(() => {
+    gi = (gi + 1) % groups.length;
+    pts.forEach((t, i) => { t.textContent = groups[gi][i]; });
+  }, 15000);
+
+  /* ---------------- Diseño sonoro: la tiniebla luminosa -------------------------------
+     Una OSCURIDAD grave y casi sin rasgos permanece (el fondo apofático). De ella emana
+     LUZ: armónicos altos que florecen desde la misma raíz —la claridad nace de lo oscuro—.
+     Su brillo se acopla a la paradoja socrática (más no-saber, más luz). Cada tanto un
+     fragmento de saber desciende y se disuelve en el centro oscuro.
+  ------------------------------------------------------------------------------------ */
+  let started = false, ctx, master, conv, audioLight;
+
+  function makeReverbIR(ac, seconds = 3.4, decay = 2.8) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, decay);
+    }
+    return buf;
+  }
+
+  function dissolveTone() {
+    if (!started) return;
+    const t = ctx.currentTime;
+    const o = ctx.createOscillator(); o.type = 'sine';
+    const g = ctx.createGain(); g.gain.value = 0;
+    o.connect(g); g.connect(conv); g.connect(master);
+    o.frequency.setValueAtTime(330 + Math.random() * 180, t);
+    o.frequency.exponentialRampToValueAtTime(55, t + 4);   // el saber desciende hacia el fondo oscuro
+    o.start(t);
+    g.gain.linearRampToValueAtTime(0.035, t + 0.5);
+    g.gain.exponentialRampToValueAtTime(0.0004, t + 4);
+    o.stop(t + 4.3);
+  }
+
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0;
+    master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.30, ctx.currentTime + 7);
+
+    conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    const wet = ctx.createGain(); wet.gain.value = 0.55;
+    conv.connect(wet); wet.connect(master);
+
+    // La oscuridad que permanece (sub grave apofático)
+    const ROOT = 55; // A1
+    [ROOT, ROOT * 1.5].forEach(f => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const g = ctx.createGain(); g.gain.value = 0;
+      o.connect(g); g.connect(master); o.start();
+      g.gain.linearRampToValueAtTime(0.024, ctx.currentTime + 7);
+    });
+
+    // La luz: armónicos altos de la MISMA raíz (nacen de lo oscuro), brillo acoplado a la paradoja
+    audioLight = ctx.createGain(); audioLight.gain.value = 0.014;
+    const lpan = ctx.createStereoPanner(); lpan.connect(master); lpan.connect(conv);
+    audioLight.connect(lpan);
+    const llfo = ctx.createOscillator(); llfo.frequency.value = 0.04;
+    const llfoG = ctx.createGain(); llfoG.gain.value = 0.8;
+    llfo.connect(llfoG); llfoG.connect(lpan.pan); llfo.start();
+    [8, 10, 12, 15].forEach((h, i) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = ROOT * h;
+      const g = ctx.createGain(); g.gain.value = 0;
+      o.connect(g); g.connect(audioLight); o.start();
+      const base = 0.5 / (i + 2);
+      const sh = ctx.createOscillator(); sh.frequency.value = 0.03 + i * 0.013;
+      const shG = ctx.createGain(); shG.gain.value = base * 0.5;
+      sh.connect(shG); shG.connect(g.gain); sh.start();
+      g.gain.linearRampToValueAtTime(base, ctx.currentTime + 8 + i);
+    });
+
+    setTimeout(dissolveTone, 1500);
+    setInterval(dissolveTone, 4200);
+  }
+
+  const hint = document.querySelector('.hint');
+  function wake() {
+    startAudio();
+    if (hint) hint.style.opacity = '0';
+    window.removeEventListener('pointerdown', wake);
+  }
+  window.addEventListener('pointerdown', wake);
+</script>
 </body>
 </html>
