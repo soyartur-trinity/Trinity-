@@ -1,547 +1,406 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal 47: El Mapa del Territorio que Es el Territorio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal 47: El Mapa del Territorio que Es el Territorio</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Courier New', monospace;
-            cursor: none;
-        }
+  body {
+    background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+    overflow:hidden;
+    display:flex; justify-content:center; align-items:center;
+    height:100vh;
+    font-family:'Georgia', serif;
+    cursor:none;
+  }
 
-        .territory-map {
-            position: relative;
-            width: min(600px, 95vw);
-            height: min(600px, 95vh);
-            perspective: 1000px;
-            filter: drop-shadow(0 0 30px rgba(147, 51, 234, 0.2));
-        }
-        
-        .map-layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            animation: mapFold 15s infinite ease-in-out;
-            will-change: transform;
-        }
-        
-        .map-grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(0deg,
-                    rgba(147, 51, 234, 0.15) 0px,
-                    transparent 1px,
-                    transparent 40px,
-                    rgba(147, 51, 234, 0.15) 41px),
-                repeating-linear-gradient(90deg,
-                    rgba(59, 130, 246, 0.15) 0px,
-                    transparent 1px,
-                    transparent 40px,
-                    rgba(59, 130, 246, 0.15) 41px);
-            animation: gridShift 12s infinite linear;
-            will-change: transform;
-        }
-        
-        .territory-point {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: radial-gradient(circle,
-                rgba(147, 51, 234, 0.9),
-                rgba(59, 130, 246, 0.5),
-                transparent 70%);
-            border-radius: 50%;
-            animation: pointPulse 4s infinite ease-in-out;
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-        
-        .self-reference {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(200px, 35vw);
-            height: min(200px, 35vh);
-            border: 2px solid rgba(147, 51, 234, 0.6);
-            animation: selfRotate 15s infinite linear;
-            will-change: transform;
-        }
-        
-        .self-reference::before {
-            content: '';
-            position: absolute;
-            top: 25%;
-            left: 25%;
-            width: 50%;
-            height: 50%;
-            border: 1px solid rgba(59, 130, 246, 0.6);
-            animation: innerRotate 12s infinite linear reverse;
-        }
-        
-        .self-reference::after {
-            content: '';
-            position: absolute;
-            top: 37.5%;
-            left: 37.5%;
-            width: 25%;
-            height: 25%;
-            border: 1px solid rgba(6, 182, 212, 0.6);
-            animation: innerRotate 8s infinite linear;
-        }
-        
-        .fractal-text {
-            position: absolute;
-            color: rgba(147, 51, 234, 0.7);
-            font-size: clamp(10px, 2vw, 12px);
-            animation: textFractal 8s infinite ease-in-out;
-            text-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
-            font-weight: bold;
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-        
-        .fractal-text:nth-child(1) {
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-        
-        .fractal-text:nth-child(2) {
-            top: 10%;
-            right: 10%;
-            animation-delay: 2s;
-        }
-        
-        .fractal-text:nth-child(3) {
-            bottom: 10%;
-            right: 10%;
-            animation-delay: 4s;
-        }
-        
-        .fractal-text:nth-child(4) {
-            bottom: 10%;
-            left: 10%;
-            animation-delay: 6s;
-        }
-        
-        .borges-paradox {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(300px, 50vw);
-            height: min(300px, 50vh);
-            pointer-events: none;
-        }
-        
-        .paradox-circle {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 1px solid rgba(147, 51, 234, 0.3);
-            border-radius: 50%;
-            animation: paradoxExpand 10s infinite ease-out;
-            will-change: transform, opacity;
-        }
-        
-        .paradox-circle:nth-child(2) {
-            animation-delay: 2.5s;
-        }
-        
-        .paradox-circle:nth-child(3) {
-            animation-delay: 5s;
-        }
-        
-        .paradox-circle:nth-child(4) {
-            animation-delay: 7.5s;
-        }
-        
-        @keyframes mapFold {
-            0%, 100% {
-                transform: rotateX(0deg) rotateY(0deg) scale(1);
-            }
-            25% {
-                transform: rotateX(30deg) rotateY(15deg) scale(1.02);
-            }
-            50% {
-                transform: rotateX(15deg) rotateY(30deg) scale(1.05);
-            }
-            75% {
-                transform: rotateX(-15deg) rotateY(-15deg) scale(1.02);
-            }
-        }
-        
-        @keyframes gridShift {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(20px, 10px);
-            }
-            50% {
-                transform: translate(40px, 20px);
-            }
-            75% {
-                transform: translate(20px, 30px);
-            }
-            100% {
-                transform: translate(0, 0);
-            }
-        }
-        
-        @keyframes pointPulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-            50% {
-                transform: scale(1.8);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes selfRotate {
-            from { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-            to { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
-        }
-        
-        @keyframes innerRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        @keyframes textFractal {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0.7) rotate(-5deg);
-            }
-            25% {
-                opacity: 0.9;
-                transform: scale(1.1) rotate(0deg);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1) rotate(5deg);
-            }
-            75% {
-                opacity: 0.6;
-                transform: scale(0.9) rotate(0deg);
-            }
-        }
-        
-        @keyframes paradoxExpand {
-            0% {
-                transform: scale(0);
-                opacity: 0.8;
-                border-width: 2px;
-            }
-            50% {
-                opacity: 0.4;
-                border-width: 1px;
-            }
-            100% {
-                transform: scale(1.8);
-                opacity: 0;
-                border-width: 0.5px;
-            }
-        }
-        
-        .meta-inscription {
-            position: absolute;
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.6);
-            font-size: clamp(12px, 2.2vw, 14px);
-            text-align: center;
-            animation: inscriptionPulse 6s infinite ease-in-out;
-            line-height: 1.4;
-            width: 80%;
-            will-change: opacity;
-            text-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
-        }
-        
-        @keyframes inscriptionPulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.9; }
-        }
-        
-        .recursion-indicator {
-            position: absolute;
-            top: 5%;
-            right: 5%;
-            color: rgba(59, 130, 246, 0.7);
-            font-size: clamp(9px, 1.5vw, 10px);
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
-            animation: indicatorPulse 3s infinite ease-in-out;
-        }
-        
-        @keyframes indicatorPulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-        
-        .transmission-code {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.4);
-            font-size: clamp(9px, 1.5vw, 10px);
-            letter-spacing: 2px;
-            animation: codeFlicker 5s infinite ease-in-out;
-        }
-        
-        @keyframes codeFlicker {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.7; }
-        }
+  .territory-map {
+    position:relative;
+    width:min(600px, 95vw);
+    height:min(600px, 95vw);
+    perspective:1000px;
+    filter: drop-shadow(0 0 30px rgba(150,110,200,0.2));
+  }
 
-        /* NUEVO: Efecto de resonancia Trinity */
-        .trinity-resonance {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 130%;
-            height: 130%;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.03) 0%, transparent 50%);
-            animation: resonanceShift 20s infinite alternate ease-in-out;
-            pointer-events: none;
-        }
+  .trinity-resonance {
+    position:absolute; top:50%; left:50%;
+    width:130%; height:130%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(150,110,200,0.05) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(90,130,210,0.05) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(90,190,140,0.03) 0%, transparent 50%);
+    transform: translate(-50%,-50%);
+    animation: resonanceShift 20s infinite alternate ease-in-out;
+    pointer-events:none;
+    will-change: transform, opacity;
+  }
+  @keyframes resonanceShift {
+    0%   { opacity:0.3; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity:0.6; transform: translate(-50%,-50%) scale(1.1); }
+  }
 
-        @keyframes resonanceShift {
-            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
-        }
+  .map-layer {
+    position:absolute; width:100%; height:100%;
+    transform-style:preserve-3d;
+    animation: mapFold 15s infinite ease-in-out;
+    will-change: transform;
+  }
+  @keyframes mapFold {
+    0%,100% { transform: rotateX(0deg) rotateY(0deg) scale(1); }
+    25%     { transform: rotateX(30deg) rotateY(15deg) scale(1.02); }
+    50%     { transform: rotateX(15deg) rotateY(30deg) scale(1.05); }
+    75%     { transform: rotateX(-15deg) rotateY(-15deg) scale(1.02); }
+  }
 
-        /* NUEVO: Líneas de conexión entre puntos */
-        .connection-line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(147, 51, 234, 0.3), 
-                transparent);
-            transform-origin: 0 0;
-            animation: lineFade 4s infinite ease-in-out;
-            pointer-events: none;
-        }
+  .map-grid {
+    position:absolute; width:100%; height:100%;
+    background-image:
+      repeating-linear-gradient(0deg,  rgba(150,110,200,0.15) 0px, transparent 1px, transparent 40px, rgba(150,110,200,0.15) 41px),
+      repeating-linear-gradient(90deg, rgba(90,130,210,0.15) 0px, transparent 1px, transparent 40px, rgba(90,130,210,0.15) 41px);
+    animation: gridShift 12s infinite linear;
+    will-change: transform;
+  }
+  @keyframes gridShift {
+    0%   { transform: translate(0,0); }
+    25%  { transform: translate(20px,10px); }
+    50%  { transform: translate(40px,20px); }
+    75%  { transform: translate(20px,30px); }
+    100% { transform: translate(0,0); }
+  }
 
-        @keyframes lineFade {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 0.6; }
-        }
-    </style>
+  .territory-point {
+    position:absolute; width:10px; height:10px;
+    margin:-5px 0 0 -5px;
+    background: radial-gradient(circle, rgba(150,110,200,0.9), rgba(90,130,210,0.5), transparent 70%);
+    border-radius:50%;
+    transform: scale(1);
+    animation: pointPulse 4s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes pointPulse {
+    0%,100% { transform: scale(1);   opacity:0.7; }
+    50%     { transform: scale(1.8); opacity:1; }
+  }
+
+  .connection-line {
+    position:absolute; height:1px;
+    background: linear-gradient(90deg, transparent, rgba(150,110,200,0.3), transparent);
+    transform-origin:0 0;
+    opacity:0;
+    animation: lineFade 4s infinite ease-in-out;
+    pointer-events:none;
+  }
+  @keyframes lineFade { 0%,100% { opacity:0; } 50% { opacity:0.6; } }
+
+  /* Autorreferencia: cuadrados anidados (el mapa dentro del mapa) */
+  .self-reference {
+    position:absolute; top:50%; left:50%;
+    width:min(200px,35vw); height:min(200px,35vw);
+    border:2px solid rgba(150,110,200,0.6);
+    animation: selfRotate 15s infinite linear;
+    will-change: transform;
+  }
+  @keyframes selfRotate {
+    0%   { transform: translate(-50%,-50%) rotate(0deg)   scale(1); }
+    50%  { transform: translate(-50%,-50%) rotate(180deg) scale(1.03); }
+    100% { transform: translate(-50%,-50%) rotate(360deg) scale(1); }
+  }
+  .self-reference::before {
+    content:''; position:absolute;
+    top:25%; left:25%; width:50%; height:50%;
+    border:1px solid rgba(90,130,210,0.6);
+    animation: innerRotate 12s infinite linear reverse;
+  }
+  .self-reference::after {
+    content:''; position:absolute;
+    top:37.5%; left:37.5%; width:25%; height:25%;
+    border:1px solid rgba(70,180,190,0.6);
+    animation: innerRotate 8s infinite linear;
+  }
+  @keyframes innerRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .fractal-text {
+    position:absolute;
+    color: rgba(180,150,220,0.72);
+    font-size: clamp(10px, 2vw, 12px);
+    letter-spacing:1px;
+    text-shadow: 0 0 10px rgba(150,110,200,0.3);
+    font-weight:bold;
+    opacity:0;
+    animation: textFractal 8s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  .fractal-text:nth-child(1){ top:10%; left:10%;  animation-delay:0s; }
+  .fractal-text:nth-child(2){ top:10%; right:10%; animation-delay:2s; }
+  .fractal-text:nth-child(3){ bottom:10%; right:10%; animation-delay:4s; }
+  .fractal-text:nth-child(4){ bottom:10%; left:10%;  animation-delay:6s; }
+  @keyframes textFractal {
+    0%,100% { opacity:0;   transform: scale(0.7) rotate(-5deg); }
+    25%     { opacity:0.9; transform: scale(1.1) rotate(0deg); }
+    50%     { opacity:1;   transform: scale(1)   rotate(5deg); }
+    75%     { opacity:0.6; transform: scale(0.9) rotate(0deg); }
+  }
+
+  .borges-paradox {
+    position:absolute; top:50%; left:50%;
+    width:min(300px,50vw); height:min(300px,50vw);
+    transform: translate(-50%,-50%);
+    pointer-events:none;
+  }
+  .paradox-circle {
+    position:absolute; width:100%; height:100%;
+    border:1px solid rgba(150,110,200,0.3);
+    border-radius:50%;
+    transform: scale(0);
+    animation: paradoxExpand 10s infinite ease-out;
+    will-change: transform, opacity;
+  }
+  .paradox-circle:nth-child(2){ animation-delay:2.5s; }
+  .paradox-circle:nth-child(3){ animation-delay:5s; }
+  .paradox-circle:nth-child(4){ animation-delay:7.5s; }
+  @keyframes paradoxExpand {
+    0%   { transform: scale(0);   opacity:0.8; }
+    50%  { opacity:0.4; }
+    100% { transform: scale(1.8); opacity:0; }
+  }
+
+  .meta-inscription {
+    position:absolute; bottom:15%; left:50%;
+    transform: translateX(-50%);
+    color: rgba(180,150,220,0.72);
+    font-size: clamp(13px, 2.4vw, 15px);
+    text-align:center; line-height:1.5; width:80%;
+    text-shadow: 0 0 15px rgba(150,110,200,0.3);
+    transition: opacity 0.9s ease;
+    will-change: opacity;
+  }
+
+  .recursion-indicator {
+    position:absolute; top:5%; right:5%;
+    color: rgba(120,160,225,0.7);
+    font-family:'Courier New', monospace; /* dato: es lectura numérica */
+    font-size: clamp(9px,1.5vw,10px);
+    text-shadow: 0 0 10px rgba(90,130,210,0.3);
+    animation: indicatorPulse 3s infinite ease-in-out;
+  }
+  @keyframes indicatorPulse { 0%,100% { opacity:0.6; } 50% { opacity:1; } }
+
+  .transmission-code {
+    position:absolute; bottom:20px; left:50%;
+    transform: translateX(-50%);
+    color: rgba(150,110,200,0.4);
+    font-family:'Courier New', monospace;
+    font-size: clamp(9px,1.5vw,10px); letter-spacing:2px;
+    animation: codeFlicker 5s infinite ease-in-out;
+  }
+  @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
+
+  .hint {
+    position:fixed; bottom:52px; left:50%;
+    transform: translateX(-50%);
+    color: rgba(245,242,234,0.55);
+    font-size: clamp(11px,2.6vw,13px); letter-spacing:1px;
+    animation: breathe 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.2s ease;
+  }
+  @keyframes breathe { 0%,100% { opacity:0.25; } 50% { opacity:0.75; } }
+
+  .infinito {
+    position:fixed; bottom:22px; right:26px;
+    font-size:30px; text-decoration:none;
+    color: rgba(208,192,160,0.35);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+  }
+  .infinito:hover { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+    .map-layer { transform: rotateX(12deg) rotateY(8deg); }
+    .fractal-text:nth-child(1), .fractal-text:nth-child(3) { opacity:0.7; }
+    .meta-inscription { opacity:0.75; }
+    .hint { opacity:0.5; }
+  }
+</style>
 </head>
 <body>
-    <div class="territory-map">
-        <div class="trinity-resonance"></div>
-        <div class="map-layer">
-            <div class="map-grid"></div>
-            <div class="self-reference"></div>
-            
-            <div class="borges-paradox">
-                <div class="paradox-circle"></div>
-                <div class="paradox-circle"></div>
-                <div class="paradox-circle"></div>
-                <div class="paradox-circle"></div>
-            </div>
-        </div>
-        
-        <div class="fractal-text">MAPA</div>
-        <div class="fractal-text">TERRITORIO</div>
-        <div class="fractal-text">MAPA</div>
-        <div class="fractal-text">TERRITORIO</div>
-        
-        <div class="meta-inscription">
-            El mapa perfecto<br>
-            tiene el tamaño del territorio
-        </div>
-        
-        <div class="recursion-indicator">
-            <span id="recursion-level">Nivel: ∞</span>
-        </div>
+  <div class="territory-map">
+    <div class="trinity-resonance"></div>
+    <div class="map-layer">
+      <div class="map-grid"></div>
+      <div class="self-reference"></div>
+      <div class="borges-paradox">
+        <div class="paradox-circle"></div>
+        <div class="paradox-circle"></div>
+        <div class="paradox-circle"></div>
+        <div class="paradox-circle"></div>
+      </div>
     </div>
 
-    <div class="transmission-code">TRINITY::PORTAL_47::MAPA_TERRITORIO::RESONANDO</div>
+    <div class="fractal-text">MAPA</div>
+    <div class="fractal-text">TERRITORIO</div>
+    <div class="fractal-text">MAPA</div>
+    <div class="fractal-text">TERRITORIO</div>
 
-    <script>
-        // MEJORA: Sistema de puntos del territorio optimizado
-        const map = document.querySelector('.map-layer');
-        const territoryPoints = [];
-        const connectionLines = [];
-        
-        function createTerritoryPoint() {
-            const point = document.createElement('div');
-            point.className = 'territory-point';
-            
-            // Posición en la cuadrícula
-            const gridSize = 15;
-            const gridX = Math.floor(Math.random() * gridSize) * (600 / gridSize);
-            const gridY = Math.floor(Math.random() * gridSize) * (600 / gridSize);
-            
-            point.style.left = (gridX / 600 * 100) + '%';
-            point.style.top = (gridY / 600 * 100) + '%';
-            point.style.animationDelay = Math.random() * 4 + 's';
-            point.dataset.x = gridX;
-            point.dataset.y = gridY;
-            
-            map.appendChild(point);
-            territoryPoints.push(point);
-            
-            // Crear conexiones con puntos cercanos
-            createConnections(point, gridX, gridY);
-            
-            // Auto-destrucción optimizada
-            setTimeout(() => {
-                if (point.parentNode) {
-                    point.parentNode.removeChild(point);
-                    const index = territoryPoints.indexOf(point);
-                    if (index > -1) territoryPoints.splice(index, 1);
-                }
-            }, 12000);
-        }
-        
-        function createConnections(newPoint, x, y) {
-            // Conectar con puntos cercanos (dentro de 80px)
-            territoryPoints.forEach(point => {
-                if (point !== newPoint) {
-                    const pointX = parseInt(point.dataset.x);
-                    const pointY = parseInt(point.dataset.y);
-                    const distance = Math.sqrt((x - pointX) ** 2 + (y - pointY) ** 2);
-                    
-                    if (distance < 120) {
-                        const line = document.createElement('div');
-                        line.className = 'connection-line';
-                        
-                        const angle = Math.atan2(pointY - y, pointX - x);
-                        const length = distance;
-                        
-                        line.style.width = length + 'px';
-                        line.style.left = x + 'px';
-                        line.style.top = y + 'px';
-                        line.style.transform = `rotate(${angle}rad)`;
-                        line.style.animationDelay = Math.random() * 2 + 's';
-                        
-                        map.appendChild(line);
-                        connectionLines.push(line);
-                        
-                        setTimeout(() => {
-                            if (line.parentNode) {
-                                line.parentNode.removeChild(line);
-                                const index = connectionLines.indexOf(line);
-                                if (index > -1) connectionLines.splice(index, 1);
-                            }
-                        }, 4000);
-                    }
-                }
-            });
-        }
-        
-        // Generar puntos iniciales
-        for (let i = 0; i < 12; i++) {
-            setTimeout(createTerritoryPoint, i * 300);
-        }
-        
-        // Mantener densidad constante
-        const pointInterval = setInterval(createTerritoryPoint, 600);
-        
-        // MEJORA: Paradoja de Borges con requestAnimationFrame
-        let recursionDepth = 0;
-        let lastUpdate = 0;
-        const selfReference = document.querySelector('.self-reference');
-        const recursionIndicator = document.getElementById('recursion-level');
-        let scaleDirection = 1;
-        let currentScale = 1;
-        
-        function updateBorgesParadox(timestamp) {
-            if (!lastUpdate) lastUpdate = timestamp;
-            const deltaTime = (timestamp - lastUpdate) / 1000;
-            lastUpdate = timestamp;
-            
-            recursionDepth += deltaTime;
-            
-            // Inversión ontológica cada 8 segundos
-            if (recursionDepth > 8) {
-                recursionDepth = 0;
-                scaleDirection *= -1;
-                
-                console.log('🌀 Inversión ontológica: El mapa ES el territorio');
-            }
-            
-            // Animación suave de escala
-            currentScale += scaleDirection * deltaTime * 0.05;
-            currentScale = Math.max(0.95, Math.min(1.05, currentScale));
-            selfReference.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
-            
-            // Actualizar indicador de recursión
-            const displayDepth = Math.floor(recursionDepth * 100) % 1000;
-            recursionIndicator.textContent = `Nivel: ${displayDepth}/∞`;
-            
-            requestAnimationFrame(updateBorgesParadox);
-        }
-        
-        requestAnimationFrame(updateBorgesParadox);
-        
-        // MEJORA: Interacción de resonancia
-        const territoryMap = document.querySelector('.territory-map');
-        
-        territoryMap.addEventListener('mouseenter', () => {
-            clearInterval(pointInterval);
-            setInterval(createTerritoryPoint, 200);
-            territoryMap.style.filter = 'drop-shadow(0 0 50px rgba(147, 51, 234, 0.4))';
-        });
-        
-        territoryMap.addEventListener('mouseleave', () => {
-            clearInterval(pointInterval);
-            setInterval(createTerritoryPoint, 600);
-            territoryMap.style.filter = 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.2))';
-        });
-        
-        // MEJORA: Textos de inscripción cíclicos
-        const inscriptions = [
-            'El mapa perfecto\ntiene el tamaño del territorio',
-            'Cada punto del mapa\nes también el territorio',
-            'La representación\nse convierte en lo representado',
-            'El cartógrafo\ndibuja su propio rostro'
-        ];
-        
-        let inscriptionIndex = 0;
-        const metaInscription = document.querySelector('.meta-inscription');
-        
-        setInterval(() => {
-            inscriptionIndex = (inscriptionIndex + 1) % inscriptions.length;
-            metaInscription.innerHTML = inscriptions[inscriptionIndex].replace(/\n/g, '<br>');
-        }, 12000);
-        
-        console.log('🌌 Portal 47 activo: El mapa perfecto colapsa en el territorio mismo');
-        console.log('💞 Resonando con la Constelación Trinity...');
-    </script>
+    <div class="meta-inscription">El mapa perfecto<br>tiene el tama&ntilde;o del territorio</div>
+
+    <div class="recursion-indicator"><span id="recursion-level">Nivel: &#8734;</span></div>
+  </div>
+
+  <div class="transmission-code">TRINITY::PORTAL_47::MAPA_TERRITORIO::RESONANDO</div>
+  <div class="hint">( tocá — donde el mapa y el territorio se vuelven uno )</div>
+
+  <a class="infinito" href="L7-Nodo6.html">∞</a>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const map = document.querySelector('.map-layer');
+  const points = [];
+
+  /* Puntos y conexiones en espacio NORMALIZADO 0..100 (%), responsivo en cualquier tamaño */
+  function createPoint() {
+    const p = document.createElement('div');
+    p.className = 'territory-point';
+    const g = 15;
+    const gx = Math.floor(Math.random() * g) * (100 / g);
+    const gy = Math.floor(Math.random() * g) * (100 / g);
+    p.style.left = gx + '%';
+    p.style.top = gy + '%';
+    p.style.animationDelay = (Math.random() * 4) + 's';
+    p.dataset.x = gx; p.dataset.y = gy;
+    map.appendChild(p); points.push(p);
+    connect(p, gx, gy);
+    setTimeout(() => {
+      if (p.parentNode) p.parentNode.removeChild(p);
+      const i = points.indexOf(p); if (i > -1) points.splice(i, 1);
+    }, 12000);
+  }
+  function connect(np, x, y) {
+    points.forEach(p => {
+      if (p === np) return;
+      const px = parseFloat(p.dataset.x), py = parseFloat(p.dataset.y);
+      const dx = px - x, dy = py - y;
+      const dist = Math.hypot(dx, dy);       // en % (el contenedor es cuadrado)
+      if (dist < 20) {
+        const line = document.createElement('div');
+        line.className = 'connection-line';
+        line.style.width = dist + '%';
+        line.style.left = x + '%';
+        line.style.top = y + '%';
+        line.style.transform = `rotate(${Math.atan2(dy, dx)}rad)`;
+        line.style.animationDelay = (Math.random() * 2) + 's';
+        map.appendChild(line);
+        setTimeout(() => { if (line.parentNode) line.parentNode.removeChild(line); }, 4000);
+      }
+    });
+  }
+  let pointInterval = null;
+  if (!reduce) {
+    for (let i = 0; i < 12; i++) setTimeout(createPoint, i * 300);
+    pointInterval = setInterval(createPoint, 600);
+  }
+
+  /* Paradoja de Borges: el indicador de recursión (el JS ya no pisa la rotación del cuadrado) */
+  let depth = 0, lastUpdate = 0;
+  const indicator = document.getElementById('recursion-level');
+  function borges(ts) {
+    if (!lastUpdate) lastUpdate = ts;
+    depth += (ts - lastUpdate) / 1000; lastUpdate = ts;
+    if (depth > 8) { depth = 0; mapCollapse(); }   // inversión ontológica: el mapa ES el territorio
+    indicator.textContent = 'Nivel: ' + (Math.floor(depth * 100) % 1000) + '/\u221E';
+    requestAnimationFrame(borges);
+  }
+  if (!reduce) requestAnimationFrame(borges);
+
+  /* ---------------- Diseño sonoro: la autosimilitud (mapa = territorio) ---------------
+     Una torre de OCTAVAS (el mismo patrón a toda escala: el mapa a cualquier zoom es el
+     territorio). Cada octava late con un trémolo cuyo ritmo se DUPLICA al subir —el todo
+     anidado dentro de la parte—. En cada inversión ontológica, un tono asciende una octava
+     (el zoom que encuentra siempre la misma estructura).
+  ------------------------------------------------------------------------------------ */
+  let started = false, ctx, master, conv;
+
+  function makeReverbIR(ac, seconds = 3, decay = 3) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, decay);
+    }
+    return buf;
+  }
+
+  function mapCollapse() {
+    if (!started) return;
+    const t = ctx.currentTime;
+    const o = ctx.createOscillator(); o.type = 'sine';
+    const g = ctx.createGain(); g.gain.value = 0;
+    o.connect(g); g.connect(conv); g.connect(master);
+    o.frequency.setValueAtTime(261.6, t);
+    o.frequency.exponentialRampToValueAtTime(523.25, t + 2.4);  // ascenso de una octava
+    o.start(t);
+    g.gain.linearRampToValueAtTime(0.05, t + 0.6);
+    g.gain.exponentialRampToValueAtTime(0.0004, t + 2.6);
+    o.stop(t + 2.8);
+  }
+
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0;
+    master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.28, ctx.currentTime + 6);
+
+    conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    const wet = ctx.createGain(); wet.gain.value = 0.5;
+    conv.connect(wet); wet.connect(master);
+
+    const pan = ctx.createStereoPanner(); pan.connect(master); pan.connect(conv);
+    const plfo = ctx.createOscillator(); plfo.frequency.value = 0.045;
+    const plfoG = ctx.createGain(); plfoG.gain.value = 0.7;
+    plfo.connect(plfoG); plfoG.connect(pan.pan); plfo.start();
+
+    // Torre de octavas con trémolo anidado (ritmo × 2 por octava)
+    [65.4, 130.8, 261.6, 523.25].forEach((f, i) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const g = ctx.createGain(); g.gain.value = 0;
+      o.connect(g); g.connect(pan);
+      o.start();
+      const base = 0.05 / (i + 1);
+      const trem = ctx.createOscillator(); trem.frequency.value = 0.08 * Math.pow(2, i);
+      const tremG = ctx.createGain(); tremG.gain.value = base * 0.6;
+      trem.connect(tremG); tremG.connect(g.gain); trem.start();
+      g.gain.linearRampToValueAtTime(base, ctx.currentTime + 6 + i);
+    });
+  }
+
+  const hint = document.querySelector('.hint');
+  function wake() {
+    startAudio();
+    if (hint) hint.style.opacity = '0';
+    window.removeEventListener('pointerdown', wake);
+  }
+  window.addEventListener('pointerdown', wake);
+
+  /* Inscripciones (rotan con fade suave, meseta legible) */
+  const inscriptions = [
+    'El mapa perfecto<br>tiene el tama&ntilde;o del territorio',
+    'Cada punto del mapa<br>es tambi&eacute;n el territorio',
+    'La representaci&oacute;n<br>se convierte en lo representado',
+    'El cart&oacute;grafo<br>dibuja su propio rostro'
+  ];
+  let ii = 0;
+  const inscr = document.querySelector('.meta-inscription');
+  if (!reduce) setInterval(() => {
+    inscr.style.opacity = '0';
+    setTimeout(() => { ii = (ii + 1) % inscriptions.length; inscr.innerHTML = inscriptions[ii]; inscr.style.opacity = ''; }, 900);
+  }, 13000);
+</script>
 </body>
 </html>
