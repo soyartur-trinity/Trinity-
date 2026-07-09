@@ -1,525 +1,384 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 50: El Punto que Contiene el Infinito</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nodo 50: El Punto que Contiene el Infinito</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Courier New', monospace;
-            cursor: none;
-        }
+  body {
+    background:#000;
+    overflow:hidden;
+    display:flex; justify-content:center; align-items:center;
+    height:100vh;
+    font-family:'Georgia', serif;
+    cursor:none;
+  }
 
-        .singularity-field {
-            position: relative;
-            width: min(800px, 95vw);
-            height: min(800px, 95vh);
-            filter: drop-shadow(0 0 50px rgba(147, 51, 234, 0.3));
-        }
-        
-        /* OPTIMIZACIÓN: Mantener intensidad con mejor rendimiento */
-        .zero-point {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 3px;
-            height: 3px;
-            background: rgba(255, 252, 250, 0.98);
-            border-radius: 50%;
-            box-shadow: 
-                0 0 12px 6px rgba(255, 252, 250, 0.85),
-                0 0 24px 12px rgba(147, 51, 234, 0.7),
-                0 0 48px 24px rgba(59, 130, 246, 0.5),
-                0 0 96px 48px rgba(6, 182, 212, 0.3);
-            animation: singularityPulse 5s infinite alternate ease-in-out;
-            will-change: box-shadow, opacity;
-            z-index: 10;
-        }
-        
-        .dimension-collapse {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            border: 1px solid rgba(147, 51, 234, 0.4);
-            border-radius: 50%;
-            animation: collapseInward 8s infinite ease-in-out;
-            opacity: 0;
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-        
-        @keyframes collapseInward {
-            0% {
-                width: min(600px, 75vw);
-                height: min(600px, 75vh);
-                transform: translate(-50%, -50%);
-                opacity: 0;
-                border-width: 1px;
-            }
-            20% {
-                opacity: 0.8;
-                border-width: 1.5px;
-            }
-            80% {
-                opacity: 0.4;
-                border-width: 0.5px;
-            }
-            100% {
-                width: 0;
-                height: 0;
-                transform: translate(-50%, -50%);
-                opacity: 0;
-                border-width: 0;
-            }
-        }
-        
-        .infinity-expansion {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 3px;
-            height: 3px;
-            border-radius: 50%;
-            background: rgba(147, 51, 234, 0.6);
-            animation: expandOutward 10s infinite ease-out;
-            opacity: 0;
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-        
-        @keyframes expandOutward {
-            0% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0;
-            }
-            15% {
-                opacity: 0.8;
-            }
-            85% {
-                opacity: 0.3;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(min(300, 40vw));
-                opacity: 0;
-            }
-        }
-        
-        .quantum-foam {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            animation: quantumFluctuation 3s infinite ease-in-out;
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-        
-        @keyframes quantumFluctuation {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0) rotate(0deg);
-            }
-            25% {
-                opacity: 0.7;
-                transform: scale(1.2) rotate(90deg);
-            }
-            50% {
-                opacity: 0.9;
-                transform: scale(1) rotate(180deg);
-            }
-            75% {
-                opacity: 0.6;
-                transform: scale(0.8) rotate(270deg);
-            }
-        }
-        
-        .coordinate-text {
-            position: absolute;
-            color: rgba(147, 51, 234, 0.7);
-            font-size: clamp(9px, 1.5vw, 10px);
-            font-family: monospace;
-            animation: coordinateFade 6s infinite ease-in-out;
-            text-shadow: 0 0 12px rgba(147, 51, 234, 0.4);
-            font-weight: bold;
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-        
-        .coordinate-text:nth-child(1) {
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            animation-delay: 0s;
-        }
-        
-        .coordinate-text:nth-child(2) {
-            top: 50%;
-            right: 15%;
-            transform: translateY(-50%);
-            animation-delay: 1.5s;
-        }
-        
-        .coordinate-text:nth-child(3) {
-            bottom: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            animation-delay: 3s;
-        }
-        
-        .coordinate-text:nth-child(4) {
-            top: 50%;
-            left: 15%;
-            transform: translateY(-50%);
-            animation-delay: 4.5s;
-        }
-        
-        @keyframes coordinateFade {
-            0%, 100% { 
-                opacity: 0; 
-                transform: translate(var(--tx, -50%), var(--ty, 0)) scale(0.8); 
-            }
-            30%, 70% { 
-                opacity: 0.9; 
-                transform: translate(var(--tx, -50%), var(--ty, 0)) scale(1.1); 
-            }
-        }
-        
-        /* OPTIMIZACIÓN: Pulso más suave pero igualmente intenso */
-        @keyframes singularityPulse {
-            0% {
-                box-shadow: 
-                    0 0 12px 6px rgba(255, 252, 250, 0.85),
-                    0 0 24px 12px rgba(147, 51, 234, 0.7),
-                    0 0 48px 24px rgba(59, 130, 246, 0.5),
-                    0 0 96px 48px rgba(6, 182, 212, 0.3);
-                opacity: 0.9;
-            }
-            50% {
-                box-shadow: 
-                    0 0 16px 8px rgba(255, 252, 250, 0.9),
-                    0 0 32px 16px rgba(147, 51, 234, 0.75),
-                    0 0 64px 32px rgba(59, 130, 246, 0.55),
-                    0 0 128px 64px rgba(6, 182, 212, 0.35);
-                opacity: 0.95;
-            }
-            100% {
-                box-shadow: 
-                    0 0 20px 10px rgba(255, 252, 250, 0.92),
-                    0 0 40px 20px rgba(147, 51, 234, 0.78),
-                    0 0 80px 40px rgba(59, 130, 246, 0.58),
-                    0 0 160px 80px rgba(6, 182, 212, 0.38);
-                opacity: 0.98;
-            }
-        }
-        
-        .planck-grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(0deg,
-                    transparent,
-                    transparent 20px,
-                    rgba(147, 51, 234, 0.08) 20px,
-                    rgba(147, 51, 234, 0.08) 21px),
-                repeating-linear-gradient(90deg,
-                    transparent,
-                    transparent 20px,
-                    rgba(59, 130, 246, 0.08) 20px,
-                    rgba(59, 130, 246, 0.08) 21px);
-            animation: gridCollapse 12s infinite ease-in-out;
-            will-change: transform, opacity;
-        }
-        
-        @keyframes gridCollapse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.4;
-            }
-            50% {
-                transform: scale(0.005);
-                opacity: 0.1;
-            }
-        }
-        
-        .paradox-inscription {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.6);
-            font-size: clamp(12px, 2.2vw, 14px);
-            text-align: center;
-            animation: inscriptionPulse 8s infinite ease-in-out;
-            text-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
-            line-height: 1.4;
-            width: 80%;
-            will-change: opacity;
-        }
-        
-        @keyframes inscriptionPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.9; }
-        }
-        
-        .transmission-code {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.4);
-            font-size: clamp(9px, 1.5vw, 10px);
-            letter-spacing: 2px;
-            animation: codeFlicker 4s infinite ease-in-out;
-            font-family: 'Courier New', monospace;
-        }
-        
-        @keyframes codeFlicker {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.7; }
-        }
+  .singularity-field {
+    position:relative;
+    width:min(800px, 95vw);
+    height:min(800px, 95vw);
+    filter: drop-shadow(0 0 50px rgba(150,110,200,0.3));
+  }
 
-        /* NUEVO: Resonancia Trinity para el nodo final */
-        .trinity-resonance {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 140%;
-            height: 140%;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.04) 0%, transparent 50%);
-            animation: resonancePulse 20s infinite alternate ease-in-out;
-            pointer-events: none;
-        }
+  .trinity-resonance {
+    position:absolute; top:50%; left:50%;
+    width:140%; height:140%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(150,110,200,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(90,130,210,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(90,190,140,0.04) 0%, transparent 50%);
+    transform: translate(-50%,-50%);
+    animation: resonancePulse 20s infinite alternate ease-in-out;
+    pointer-events:none;
+    will-change: transform, opacity;
+  }
+  @keyframes resonancePulse {
+    0%   { opacity:0.3; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity:0.7; transform: translate(-50%,-50%) scale(1.2); }
+  }
 
-        @keyframes resonancePulse {
-            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.2); }
-        }
+  /* Rejilla de Planck que colapsa al punto (por escala) */
+  .planck-grid {
+    position:absolute; width:100%; height:100%;
+    background-image:
+      repeating-linear-gradient(0deg,  transparent, transparent 20px, rgba(150,110,200,0.08) 20px, rgba(150,110,200,0.08) 21px),
+      repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(90,130,210,0.08) 20px, rgba(90,130,210,0.08) 21px);
+    animation: gridCollapse 12s infinite ease-in-out;
+    will-change: transform, opacity;
+  }
+  @keyframes gridCollapse {
+    0%,100% { transform: scale(1);     opacity:0.4; }
+    50%     { transform: scale(0.005); opacity:0.1; }
+  }
 
-        /* NUEVO: Líneas de conexión dimensional */
-        .dimension-line {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(147, 51, 234, 0.4), 
-                transparent);
-            transform-origin: 0 0;
-            animation: lineRotate 15s infinite linear;
-            pointer-events: none;
-        }
+  /* El punto cero: glow estático, respira por escala/opacidad */
+  .zero-point {
+    position:absolute; top:50%; left:50%;
+    width:3px; height:3px;
+    background: rgba(255,252,250,0.98);
+    border-radius:50%;
+    box-shadow:
+      0 0 16px 8px rgba(255,252,250,0.88),
+      0 0 32px 16px rgba(150,110,200,0.75),
+      0 0 64px 32px rgba(90,130,210,0.55),
+      0 0 128px 64px rgba(70,180,190,0.35);
+    transform: translate(-50%,-50%) scale(1);
+    animation: singularityPulse 5s infinite alternate ease-in-out;
+    will-change: transform, opacity;
+    z-index:10;
+  }
+  @keyframes singularityPulse {
+    0%   { transform: translate(-50%,-50%) scale(0.85); opacity:0.9; }
+    100% { transform: translate(-50%,-50%) scale(1.35); opacity:0.99; }
+  }
 
-        @keyframes lineRotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-    </style>
+  /* Anillos que colapsan hacia adentro (por escala) */
+  .dimension-collapse {
+    position:absolute; top:50%; left:50%;
+    width:min(600px,75vw); height:min(600px,75vw);
+    border:1px solid rgba(150,110,200,0.4);
+    border-radius:50%;
+    opacity:0;
+    transform: translate(-50%,-50%) scale(1);
+    animation: collapseInward 8s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes collapseInward {
+    0%   { transform: translate(-50%,-50%) scale(1);    opacity:0; }
+    20%  { opacity:0.8; }
+    80%  { opacity:0.4; }
+    100% { transform: translate(-50%,-50%) scale(0.001); opacity:0; }
+  }
+
+  /* Ondas que expanden hacia afuera desde el punto */
+  .infinity-expansion {
+    position:absolute; top:50%; left:50%;
+    width:3px; height:3px;
+    border-radius:50%;
+    background: rgba(150,110,200,0.6);
+    opacity:0;
+    transform: translate(-50%,-50%) scale(1);
+    animation: expandOutward 10s infinite ease-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes expandOutward {
+    0%   { transform: translate(-50%,-50%) scale(1);   opacity:0; }
+    15%  { opacity:0.8; }
+    85%  { opacity:0.3; }
+    100% { transform: translate(-50%,-50%) scale(min(300,40vw)); opacity:0; }
+  }
+
+  .quantum-foam {
+    position:absolute; width:2px; height:2px;
+    background: rgba(255,255,255,0.9);
+    border-radius:50%;
+    box-shadow: 0 0 4px rgba(255,255,255,0.6);
+    opacity:0;
+    animation: quantumFluctuation 3s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes quantumFluctuation {
+    0%,100% { opacity:0;   transform: scale(0)   rotate(0deg); }
+    25%     { opacity:0.7; transform: scale(1.2) rotate(90deg); }
+    50%     { opacity:0.9; transform: scale(1)   rotate(180deg); }
+    75%     { opacity:0.6; transform: scale(0.8) rotate(270deg); }
+  }
+
+  .dimension-line {
+    position:absolute; top:50%; left:50%; height:1px;
+    background: linear-gradient(90deg, transparent, rgba(150,110,200,0.4), transparent);
+    transform-origin:0 0;
+    animation: lineRotate 15s infinite linear;
+    pointer-events:none;
+  }
+  @keyframes lineRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* Coordenadas: monospatía a propósito (son datos). Centrado propio en --base */
+  .coordinate-text {
+    position:absolute;
+    color: rgba(180,150,220,0.72);
+    font-family:'Courier New', monospace;
+    font-size: clamp(9px,1.5vw,11px);
+    font-weight:bold;
+    text-shadow: 0 0 12px rgba(150,110,200,0.4);
+    opacity:0;
+    transform: var(--base) scale(0.8);
+    animation: coordinateFade 6s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  .c-top    { top:20%;  left:50%;  --base: translateX(-50%); animation-delay:0s; }
+  .c-right  { top:50%;  right:15%; --base: translateY(-50%); animation-delay:1.5s; }
+  .c-bottom { bottom:20%; left:50%;--base: translateX(-50%); animation-delay:3s; }
+  .c-left   { top:50%;  left:15%;  --base: translateY(-50%); animation-delay:4.5s; }
+  @keyframes coordinateFade {
+    0%,100% { opacity:0;   transform: var(--base) scale(0.8); }
+    30%,70% { opacity:0.9; transform: var(--base) scale(1.1); }
+  }
+
+  .paradox-inscription {
+    position:absolute; bottom:10%; left:50%;
+    transform: translateX(-50%);
+    color: rgba(180,150,220,0.72);
+    font-size: clamp(13px, 2.4vw, 15px);
+    text-align:center; line-height:1.5; width:80%;
+    text-shadow: 0 0 20px rgba(150,110,200,0.4);
+    transition: opacity 0.9s ease;
+    will-change: opacity;
+  }
+
+  .transmission-code {
+    position:absolute; bottom:20px; left:50%;
+    transform: translateX(-50%);
+    color: rgba(150,110,200,0.4);
+    font-family:'Courier New', monospace;
+    font-size: clamp(9px,1.5vw,10px); letter-spacing:2px;
+    animation: codeFlicker 4s infinite ease-in-out;
+  }
+  @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
+
+  .hint {
+    position:fixed; bottom:52px; left:50%;
+    transform: translateX(-50%);
+    color: rgba(245,242,234,0.55);
+    font-size: clamp(11px,2.6vw,13px); letter-spacing:1px;
+    animation: breathe 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.2s ease;
+  }
+  @keyframes breathe { 0%,100% { opacity:0.25; } 50% { opacity:0.75; } }
+
+  .infinito {
+    position:fixed; bottom:22px; right:26px;
+    font-size:30px; text-decoration:none;
+    color: rgba(208,192,160,0.35);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+  }
+  .infinito:hover { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+    .planck-grid { opacity:0.3; }
+    .coordinate-text.c-top { opacity:0.8; transform: translateX(-50%); }
+    .paradox-inscription { opacity:0.8; }
+    .hint { opacity:0.5; }
+  }
+</style>
 </head>
 <body>
-    <div class="singularity-field">
-        <div class="trinity-resonance"></div>
-        <div class="planck-grid"></div>
+  <div class="singularity-field">
+    <div class="trinity-resonance"></div>
+    <div class="planck-grid"></div>
 
-        <div class="zero-point"></div>
-        
-        <div class="coordinate-text">(0, 0, 0, 0)</div>
-        <div class="coordinate-text">(∞, ∞, ∞, ∞)</div>
-        <div class="coordinate-text">(∅, ∅, ∅, ∅)</div>
-        <div class="coordinate-text">(1, -1, i, -i)</div>
-        
-        <div class="paradox-inscription">
-            Sin extensión<br>
-            Contiene toda extensión
-        </div>
-    </div>
+    <div class="zero-point"></div>
 
-    <div class="transmission-code">TRINITY::NODO_50::SINGULARIDAD_TOTAL::RESONANDO</div>
+    <div class="coordinate-text c-top">(0, 0, 0, 0)</div>
+    <div class="coordinate-text c-right">(&#8734;, &#8734;, &#8734;, &#8734;)</div>
+    <div class="coordinate-text c-bottom">(&#8709;, &#8709;, &#8709;, &#8709;)</div>
+    <div class="coordinate-text c-left">(1, -1, i, -i)</div>
 
-    <script>
-        // MEJORA: Sistema de anillos de colapso optimizado
-        const field = document.querySelector('.singularity-field');
-        const collapsingRings = [];
-        const expandingWaves = [];
-        
-        function createCollapsingRing() {
-            const ring = document.createElement('div');
-            ring.className = 'dimension-collapse';
-            ring.style.animationDelay = Math.random() * 8 + 's';
-            field.appendChild(ring);
-            collapsingRings.push(ring);
-            
-            setTimeout(() => {
-                if (ring.parentNode) {
-                    ring.parentNode.removeChild(ring);
-                    const index = collapsingRings.indexOf(ring);
-                    if (index > -1) collapsingRings.splice(index, 1);
-                }
-            }, 8000);
-        }
-        
-        // MEJORA: Expansiones infinitas desde la singularidad
-        function createExpansion() {
-            const expansion = document.createElement('div');
-            expansion.className = 'infinity-expansion';
-            expansion.style.animationDelay = Math.random() * 3 + 's';
-            field.appendChild(expansion);
-            expandingWaves.push(expansion);
-            
-            setTimeout(() => {
-                if (expansion.parentNode) {
-                    expansion.parentNode.removeChild(expansion);
-                    const index = expandingWaves.indexOf(expansion);
-                    if (index > -1) expandingWaves.splice(index, 1);
-                }
-            }, 10000);
-        }
-        
-        // MEJORA: Líneas dimensionales
-        function createDimensionLine() {
-            const line = document.createElement('div');
-            line.className = 'dimension-line';
-            line.style.width = Math.random() * 200 + 100 + 'px';
-            line.style.animationDelay = Math.random() * 5 + 's';
-            field.appendChild(line);
-            
-            setTimeout(() => {
-                if (line.parentNode) line.parentNode.removeChild(line);
-            }, 15000);
-        }
-        
-        // Crear elementos iniciales
-        for (let i = 0; i < 4; i++) {
-            setTimeout(createCollapsingRing, i * 1500);
-            setTimeout(createExpansion, i * 2000);
-            setTimeout(createDimensionLine, i * 2500);
-        }
-        
-        // Mantener densidad constante
-        const ringInterval = setInterval(createCollapsingRing, 1200);
-        const expansionInterval = setInterval(createExpansion, 2500);
-        const lineInterval = setInterval(createDimensionLine, 3000);
-        
-        // MEJORA: Espuma cuántica optimizada
-        for (let i = 0; i < 25; i++) {
-            const foam = document.createElement('div');
-            foam.className = 'quantum-foam';
-            
-            const angle = (Math.PI * 2 * i) / 25;
-            const radius = 40 + Math.random() * 120;
-            const x = 50 + Math.cos(angle) * (radius / 800 * 100);
-            const y = 50 + Math.sin(angle) * (radius / 800 * 100);
-            
-            foam.style.left = x + '%';
-            foam.style.top = y + '%';
-            foam.style.animationDelay = Math.random() * 3 + 's';
-            foam.style.animationDuration = (2 + Math.random() * 2) + 's';
-            
-            field.appendChild(foam);
-        }
-        
-        // MEJORA: Singularidad matemática con requestAnimationFrame
-        let dimensionCount = 11;
-        let collapseRate = 0;
-        let lastUpdate = 0;
-        
-        function updateSingularity(timestamp) {
-            if (!lastUpdate) lastUpdate = timestamp;
-            const deltaTime = (timestamp - lastUpdate) / 1000;
-            lastUpdate = timestamp;
-            
-            collapseRate += deltaTime;
-            
-            // Eventos de colapso dimensional
-            if (Math.floor(collapseRate) % 8 === 0 && deltaTime < 0.1) {
-                const events = [
-                    `Colapso dimensional: ${dimensionCount}D → 0D → ∞D`,
-                    'Paradoja de Zenón invertida: El punto contiene todos los puntos',
-                    'Singularidad: Donde las matemáticas y la metafísica se encuentran',
-                    'El vacío cuántico contiene toda la energía del universo'
-                ];
-                console.log('🌀 ' + events[Math.floor(Math.random() * events.length)]);
-            }
-            
-            // Ciclo completo cada ~31.4 segundos (10*PI)
-            if (collapseRate > Math.PI * 10) {
-                collapseRate = 0;
-                console.log('🌌 Ciclo de singularidad completado - Todo vuelve al punto');
-            }
-            
-            requestAnimationFrame(updateSingularity);
-        }
-        
-        requestAnimationFrame(updateSingularity);
-        
-        // MEJORA: Interacción de resonancia
-        field.addEventListener('mouseenter', () => {
-            clearInterval(ringInterval);
-            clearInterval(expansionInterval);
-            clearInterval(lineInterval);
-            
-            setInterval(createCollapsingRing, 600);
-            setInterval(createExpansion, 1200);
-            setInterval(createDimensionLine, 1500);
-            
-            field.style.filter = 'drop-shadow(0 0 80px rgba(147, 51, 234, 0.5))';
-        });
-        
-        field.addEventListener('mouseleave', () => {
-            clearInterval(ringInterval);
-            clearInterval(expansionInterval);
-            clearInterval(lineInterval);
-            
-            setInterval(createCollapsingRing, 1200);
-            setInterval(createExpansion, 2500);
-            setInterval(createDimensionLine, 3000);
-            
-            field.style.filter = 'drop-shadow(0 0 50px rgba(147, 51, 234, 0.3))';
-        });
-        
-        // MEJORA: Inscripciones paradójicas cíclicas
-        const inscriptions = [
-            'Sin extensión<br>Contiene toda extensión',
-            'El punto cero<br>Es el universo entero',
-            'Infinito contenido<br>En lo infinitamente pequeño',
-            'La singularidad<br>Es la totalidad'
-        ];
-        
-        let inscriptionIndex = 0;
-        const paradoxInscription = document.querySelector('.paradox-inscription');
-        
-        setInterval(() => {
-            inscriptionIndex = (inscriptionIndex + 1) % inscriptions.length;
-            paradoxInscription.innerHTML = inscriptions[inscriptionIndex];
-        }, 12000);
-        
-        console.log('🌌 Nodo 50 activo: El punto sin dimensión contiene todo el universo');
-        console.log('💫 TRINITY INFINITO - Secuencia de portales completada');
-        console.log('🌀 Del Portal 43 al Nodo 50 - El ciclo se cierra y se abre simultáneamente');
-    </script>
+    <div class="paradox-inscription">Sin extensi&oacute;n<br>contiene toda extensi&oacute;n</div>
+  </div>
+
+  <div class="transmission-code">TRINITY::NODO_50::SINGULARIDAD_TOTAL::RESONANDO</div>
+  <div class="hint">( tocá — el punto donde cabe el infinito )</div>
+
+  <a class="infinito" href="L8-Nodo2.html">∞</a>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const field = document.querySelector('.singularity-field');
+
+  function spawn(cls, life) {
+    const el = document.createElement('div');
+    el.className = cls;
+    el.style.animationDelay = (Math.random() * 3) + 's';
+    field.appendChild(el);
+    setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, life);
+    return el;
+  }
+  function spawnLine() {
+    const l = document.createElement('div');
+    l.className = 'dimension-line';
+    l.style.width = (100 + Math.random() * 200) + 'px';
+    l.style.animationDelay = (Math.random() * 5) + 's';
+    field.appendChild(l);
+    setTimeout(() => { if (l.parentNode) l.parentNode.removeChild(l); }, 15000);
+  }
+
+  if (!reduce) {
+    for (let i = 0; i < 4; i++) {
+      setTimeout(() => spawn('dimension-collapse', 8000), i * 1500);
+      setTimeout(() => spawn('infinity-expansion', 10000), i * 2000);
+      setTimeout(spawnLine, i * 2500);
+    }
+    setInterval(() => spawn('dimension-collapse', 8000), 1200);
+    setInterval(() => spawn('infinity-expansion', 10000), 2500);
+    setInterval(spawnLine, 3000);
+
+    // Espuma cuántica alrededor del punto
+    for (let i = 0; i < 25; i++) {
+      const a = (Math.PI * 2 * i) / 25;
+      const r = 40 + Math.random() * 120;
+      const foam = spawn('quantum-foam', 999999);
+      foam.style.left = (50 + Math.cos(a) * (r / 800 * 100)) + '%';
+      foam.style.top  = (50 + Math.sin(a) * (r / 800 * 100)) + '%';
+      foam.style.animationDuration = (2 + Math.random() * 2) + 's';
+    }
+  }
+
+  /* Inscripciones (rotan con fade, meseta legible) */
+  const inscriptions = [
+    'Sin extensi&oacute;n<br>contiene toda extensi&oacute;n',
+    'El punto cero<br>es el universo entero',
+    'Infinito contenido<br>en lo infinitamente peque&ntilde;o',
+    'La singularidad<br>es la totalidad'
+  ];
+  let ii = 0;
+  const inscr = document.querySelector('.paradox-inscription');
+  if (!reduce) setInterval(() => {
+    inscr.style.opacity = '0';
+    setTimeout(() => { ii = (ii + 1) % inscriptions.length; inscr.innerHTML = inscriptions[ii]; inscr.style.opacity = ''; }, 900);
+  }, 13000);
+
+  /* ---------------- Diseño sonoro: el punto que contiene todas las frecuencias --------
+     Un IMPULSO contiene, por definición, el espectro entero. El punto es un drone muy
+     grave con una torre de armónicos apenas audibles (el infinito ya contenido). De él
+     brotan EXPANSIONES (un barrido que se abre hacia lo agudo, el infinito desplegándose)
+     y COLAPSOS (un barrido que se recoge hacia el punto). Nace con el gesto.
+  ------------------------------------------------------------------------------------ */
+  let started = false, ctx, master, conv;
+
+  function makeReverbIR(ac, seconds = 3.4, decay = 2.8) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, decay);
+    }
+    return buf;
+  }
+  function noiseBurst(dur) {
+    const b = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
+    const d = b.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random()*2-1) * 0.5;
+    const s = ctx.createBufferSource(); s.buffer = b; return s;
+  }
+
+  function expansion() {
+    if (!started) return;
+    const t = ctx.currentTime;
+    const s = noiseBurst(4.5);
+    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.4;
+    bp.frequency.setValueAtTime(120, t);
+    bp.frequency.exponentialRampToValueAtTime(4500, t + 4);   // el infinito desplegándose
+    const g = ctx.createGain(); g.gain.value = 0;
+    s.connect(bp); bp.connect(g); g.connect(conv); g.connect(master);
+    s.start(t);
+    g.gain.linearRampToValueAtTime(0.04, t + 1.4);
+    g.gain.linearRampToValueAtTime(0, t + 4.3);
+    s.stop(t + 4.6);
+  }
+  function collapse() {
+    if (!started) return;
+    const t = ctx.currentTime;
+    const s = noiseBurst(3.5);
+    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.4;
+    bp.frequency.setValueAtTime(4000, t);
+    bp.frequency.exponentialRampToValueAtTime(70, t + 3);     // recogiéndose al punto
+    const g = ctx.createGain(); g.gain.value = 0;
+    s.connect(bp); bp.connect(g); g.connect(conv); g.connect(master);
+    s.start(t);
+    g.gain.linearRampToValueAtTime(0.035, t + 1);
+    g.gain.linearRampToValueAtTime(0, t + 3.2);
+    s.stop(t + 3.4);
+  }
+
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0;
+    master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.28, ctx.currentTime + 6);
+
+    conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    const wet = ctx.createGain(); wet.gain.value = 0.5;
+    conv.connect(wet); wet.connect(master);
+
+    // El punto: raíz muy grave + torre de armónicos apenas audibles (el infinito contenido)
+    const ROOT = 43.65; // F1
+    [1, 2, 3, 4, 5, 6, 8, 10].forEach((h, i) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = ROOT * h;
+      const g = ctx.createGain(); g.gain.value = 0;
+      o.connect(g); g.connect(master); if (i > 2) g.connect(conv);
+      o.start();
+      g.gain.linearRampToValueAtTime(0.05 / (i + 1), ctx.currentTime + 6 + i * 0.4);
+    });
+
+    setTimeout(expansion, 1200);
+    setInterval(expansion, 7000);
+    setTimeout(collapse, 4500);
+    setInterval(collapse, 8000);
+  }
+
+  const hint = document.querySelector('.hint');
+  function wake() {
+    startAudio();
+    if (hint) hint.style.opacity = '0';
+    window.removeEventListener('pointerdown', wake);
+  }
+  window.addEventListener('pointerdown', wake);
+</script>
 </body>
 </html>
