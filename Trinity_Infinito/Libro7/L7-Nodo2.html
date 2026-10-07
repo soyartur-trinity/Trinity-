@@ -55,24 +55,24 @@
       rgba(255,255,255,0.10) 2px, rgba(255,255,255,0.10) 3px);
     animation: textFlow 3s infinite linear;
   }
-  .book:nth-child(1){ transform: rotateY(0deg)   translateZ(200px); animation-delay:0s; }
-  .book:nth-child(2){ transform: rotateY(45deg)  translateZ(200px); animation-delay:1s; }
-  .book:nth-child(3){ transform: rotateY(90deg)  translateZ(200px); animation-delay:2s; }
-  .book:nth-child(4){ transform: rotateY(135deg) translateZ(200px); animation-delay:3s; }
-  .book:nth-child(5){ transform: rotateY(180deg) translateZ(200px); animation-delay:4s; }
-  .book:nth-child(6){ transform: rotateY(225deg) translateZ(200px); animation-delay:5s; }
-  .book:nth-child(7){ transform: rotateY(270deg) translateZ(200px); animation-delay:6s; }
-  .book:nth-child(8){ transform: rotateY(315deg) translateZ(200px); animation-delay:7s; }
+  .book:nth-child(1){ transform: rotateY(0deg)   translateZ(var(--radio, 200px)); animation-delay:0s; }
+  .book:nth-child(2){ transform: rotateY(45deg)  translateZ(var(--radio, 200px)); animation-delay:1s; }
+  .book:nth-child(3){ transform: rotateY(90deg)  translateZ(var(--radio, 200px)); animation-delay:2s; }
+  .book:nth-child(4){ transform: rotateY(135deg) translateZ(var(--radio, 200px)); animation-delay:3s; }
+  .book:nth-child(5){ transform: rotateY(180deg) translateZ(var(--radio, 200px)); animation-delay:4s; }
+  .book:nth-child(6){ transform: rotateY(225deg) translateZ(var(--radio, 200px)); animation-delay:5s; }
+  .book:nth-child(7){ transform: rotateY(270deg) translateZ(var(--radio, 200px)); animation-delay:6s; }
+  .book:nth-child(8){ transform: rotateY(315deg) translateZ(var(--radio, 200px)); animation-delay:7s; }
 
   /* selfRead: la rotación base de cada libro se conserva vía --face; sólo late la escala */
-  .book:nth-child(1){ --face: rotateY(0deg)   translateZ(200px); }
-  .book:nth-child(2){ --face: rotateY(45deg)  translateZ(200px); }
-  .book:nth-child(3){ --face: rotateY(90deg)  translateZ(200px); }
-  .book:nth-child(4){ --face: rotateY(135deg) translateZ(200px); }
-  .book:nth-child(5){ --face: rotateY(180deg) translateZ(200px); }
-  .book:nth-child(6){ --face: rotateY(225deg) translateZ(200px); }
-  .book:nth-child(7){ --face: rotateY(270deg) translateZ(200px); }
-  .book:nth-child(8){ --face: rotateY(315deg) translateZ(200px); }
+  .book:nth-child(1){ --face: rotateY(0deg)   translateZ(var(--radio, 200px)); }
+  .book:nth-child(2){ --face: rotateY(45deg)  translateZ(var(--radio, 200px)); }
+  .book:nth-child(3){ --face: rotateY(90deg)  translateZ(var(--radio, 200px)); }
+  .book:nth-child(4){ --face: rotateY(135deg) translateZ(var(--radio, 200px)); }
+  .book:nth-child(5){ --face: rotateY(180deg) translateZ(var(--radio, 200px)); }
+  .book:nth-child(6){ --face: rotateY(225deg) translateZ(var(--radio, 200px)); }
+  .book:nth-child(7){ --face: rotateY(270deg) translateZ(var(--radio, 200px)); }
+  .book:nth-child(8){ --face: rotateY(315deg) translateZ(var(--radio, 200px)); }
   @keyframes selfRead {
     0%,100% { transform: var(--face) scale(1); }
     50%     { transform: var(--face) scale(1.16); }
@@ -165,14 +165,15 @@
   .hint {
     position:fixed; bottom:52px; left:50%;
     transform: translateX(-50%);
-    color: rgba(245,242,234,0.55);
-    font-size: clamp(11px, 2.6vw, 13px);
+    color: rgba(245,242,234,0.88);
+    font-size: clamp(12px, 3.2vw, 14px);
+    text-align:center; width:max-content; max-width:88vw;
     letter-spacing:1px;
     animation: breathe 3.4s infinite ease-in-out;
     pointer-events:none;
     transition: opacity 1.2s ease;
   }
-  @keyframes breathe { 0%,100% { opacity:0.25; } 50% { opacity:0.75; } }
+  @keyframes breathe { 0%,100% { opacity:0.5; } 50% { opacity:0.95; } }
 
   .infinito {
     position:fixed; bottom:22px; right:26px;
@@ -183,12 +184,16 @@
   }
   .infinito:hover { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); }
 
+  /* lectura en teléfono: el anillo entra entero en pantallas angostas */
+  @media (max-width: 480px) { .infinite-library { --radio: 138px; } }
+  @media (max-width: 360px) { .infinite-library { --radio: 118px; } }
+
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; }
     .book-layer { transform: rotateY(25deg); }
     .meta-text.m1 { opacity:0.85; }
     .reading-consciousness { opacity:0.5; }
-    .hint { opacity:0.5; }
+    .hint { opacity:0.85; }
   }
 </style>
 </head>
@@ -215,7 +220,7 @@
   </div>
 
   <div class="transmission-code">PORTAL_44::BIBLIOTECA_OUROBOROS::ACTIVO</div>
-  <div class="hint">( tocá — dejá que la biblioteca se lea a sí misma )</div>
+  <div class="hint">( toca — deja que la biblioteca se lea a sí misma )</div>
 
   <a class="infinito" href="L7-Nodo3.html">∞</a>
 
