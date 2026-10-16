@@ -2,11 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Libro 12 - Nodo 5: El Lenguaje Del Cuerpo</title>
+<!-- Adaptado al teléfono en octubre de 2026, para el «Para ver» de Arquitectura del Destino, Libro 4.
+     Saneamiento acotado: sin fuentes externas (Georgia, estándar de la serie), animaciones solo con
+     transform y opacity, versión quieta para quien reduce el movimiento, invitación a tocar y ∞.
+     La gráfica, la paleta y las frases son las del original. -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
-
 * {
   margin: 0;
   padding: 0;
@@ -15,13 +17,16 @@
 
 body {
   background: radial-gradient(ellipse at center, #0a0608 0%, #000000 70%);
+  background-color: #000;
   overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
+  font-family: 'Georgia', 'Palatino', serif;
   color: #fff;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: none;
 }
 
 .body-field {
@@ -58,12 +63,10 @@ body {
   0%, 100% {
     transform: scale(0.8) translate(0, 0) rotate(0deg);
     opacity: 0.5;
-    border-radius: 45% 55% 50% 50%;
   }
   50% {
     transform: scale(1.3) translate(var(--bx), var(--by)) rotate(var(--br));
     opacity: 0.9;
-    border-radius: 50% 50% 45% 55%;
   }
 }
 
@@ -153,8 +156,9 @@ body {
   position: absolute;
   width: 300px;
   height: 300px;
+  margin: -150px 0 0 -150px;
   border: 2px solid rgba(240,200,180,0.2);
-  border-radius: 50%;
+  border-radius: 48% 52% 50% 50%;
   animation: wave-express 15s ease-in-out infinite;
   opacity: 0;
 }
@@ -163,12 +167,10 @@ body {
   0%, 100% {
     transform: scale(0.4) rotate(0deg);
     opacity: 0;
-    border-radius: 50%;
   }
   50% {
     transform: scale(2.2) rotate(180deg);
     opacity: 0.7;
-    border-radius: 48% 52% 50% 50%;
   }
 }
 
@@ -177,6 +179,7 @@ body {
   top: 60px;
   left: 50%;
   transform: translateX(-50%);
+  width: 92%;
   font-size: 2em;
   letter-spacing: 0.4em;
   opacity: 0.9;
@@ -191,6 +194,8 @@ body {
   top: 113px;
   left: 50%;
   transform: translateX(-50%);
+  width: 92%;
+  text-align: center;
   font-size: 1em;
   letter-spacing: 0.3em;
   opacity: 0.5;
@@ -202,6 +207,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 90%;
   transform: translate(-50%, -50%);
   font-size: 1.5em;
   letter-spacing: 0.4em;
@@ -211,6 +217,7 @@ body {
   text-shadow: 0 0 20px rgba(255,255,255,0.4);
   line-height: 2.3;
   z-index: 10;
+  pointer-events: none;
 }
 
 @keyframes text-embody {
@@ -229,6 +236,7 @@ body {
   bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
   font-size: 0.95em;
   letter-spacing: 0.2em;
   opacity: 0.6;
@@ -238,6 +246,7 @@ body {
   padding: 0 40px;
   font-style: italic;
   z-index: 100;
+  pointer-events: none;
 }
 
 .somatic-glow {
@@ -246,7 +255,7 @@ body {
   height: 440px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  margin: -220px 0 0 -220px;
   background: radial-gradient(circle, rgba(240,200,180,0.1), transparent);
   border-radius: 50%;
   animation: glow-somatic 18s ease-in-out infinite;
@@ -255,13 +264,79 @@ body {
 
 @keyframes glow-somatic {
   0%, 100% {
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: scale(0.9);
     opacity: 0.35;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.6);
+    transform: scale(1.6);
     opacity: 0.6;
   }
+}
+
+.hint {
+  position: fixed;
+  bottom: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+  animation: hint-breathe 4s ease-in-out infinite;
+  transition: opacity 1.5s ease;
+  pointer-events: none;
+  z-index: 110;
+}
+.hint.oculto { opacity: 0; animation: none; }
+@keyframes hint-breathe {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.45; }
+}
+
+.infinito {
+  position: fixed;
+  bottom: 14px;
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.25);
+  text-decoration: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.6s ease;
+  z-index: 120;
+}
+.infinito:hover, .infinito:focus-visible { color: rgba(255,255,255,0.85); }
+
+/* Lectura en teléfono: título que cabe, versos legibles en el centro, sin cortes por altura */
+@media (max-width: 600px) {
+  .title { top: calc(34px + env(safe-area-inset-top, 0px)); font-size: 1.32em; letter-spacing: 0.18em; line-height: 1.45; }
+  .subtitle { top: calc(108px + env(safe-area-inset-top, 0px)); font-size: 0.95em; letter-spacing: 0.16em; opacity: 0.6; }
+  .somatic-space { width: 94vw; height: 94vw; }
+  .central-text { font-size: 1.32em; letter-spacing: 0.14em; line-height: 1.75; animation-name: text-embody-m; text-shadow: 0 0 18px rgba(255,255,255,0.45); }
+  .contemplation { bottom: calc(92px + env(safe-area-inset-bottom, 0px)); font-size: 1em; letter-spacing: 0.04em; line-height: 1.6; opacity: 0.72; padding: 0 24px; }
+  .hint { font-size: 13px; letter-spacing: 2px; bottom: calc(56px + env(safe-area-inset-bottom, 0px)); }
+}
+@keyframes text-embody-m {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+  15%, 85% {
+    opacity: 0.92;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+/* Pantallas bajas: el texto contemplativo cede su lugar antes que los versos */
+@media (max-width: 600px) and (max-height: 640px) {
+  .contemplation { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .body-form, .posture-line, .kinetic-particle, .movement-trace, .expression-wave { animation: none; opacity: 0; }
+  .somatic-glow { animation: none; opacity: 0.45; transform: scale(1.2); }
+  .central-text { animation: none; opacity: 0.85; transform: translate(-50%, -50%); }
+  .hint { animation: none; opacity: 0.3; }
 }
 </style>
 </head>
@@ -274,17 +349,17 @@ body {
   <div class="somatic-space">
     <!-- Resplandor somático -->
     <div class="somatic-glow"></div>
-    
+
     <!-- Ondas de expresión -->
-    <div class="expression-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
-    <div class="expression-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 5s; width: 250px; height: 250px;"></div>
-    <div class="expression-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 10s; width: 350px; height: 350px;"></div>
-    
+    <div class="expression-wave" style="top: 50%; left: 50%; animation-delay: 0s;"></div>
+    <div class="expression-wave" style="top: 50%; left: 50%; animation-delay: 5s; width: 250px; height: 250px; margin: -125px 0 0 -125px;"></div>
+    <div class="expression-wave" style="top: 50%; left: 50%; animation-delay: 10s; width: 350px; height: 350px; margin: -175px 0 0 -175px;"></div>
+
     <!-- Formas corporales -->
     <div class="body-form" style="top: 30%; left: 35%; --bx: 45px; --by: -40px; --br: 15deg; animation-delay: 0s;"></div>
     <div class="body-form" style="top: 60%; left: 65%; --bx: -40px; --by: 45px; --br: -20deg; animation-delay: 4.7s;"></div>
     <div class="body-form" style="top: 45%; left: 18%; --bx: 50px; --by: 35px; --br: 10deg; animation-delay: 9.3s;"></div>
-    
+
     <!-- Texto central -->
     <div class="central-text" style="animation-delay: 2.5s;">
       Cada postura<br>
@@ -302,39 +377,46 @@ body {
   Lo que el cuerpo sabe decir sin recurrir a las palabras
 </div>
 
+<div class="hint" id="hint">( toca: el cuerpo responde )</div>
+<a class="infinito" href="L_12-Nodo6.html" title="Siguiente portal" aria-label="Siguiente portal">∞</a>
+
 <script>
 const somatic = document.querySelector('.somatic-space');
+const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Escala de las distancias: el espacio mide 650 px en pantalla grande y se achica en el teléfono
+const S = () => Math.max(0.5, somatic.getBoundingClientRect().width / 650);
 
 // Crear líneas de postura
 function createPostureLine() {
   const line = document.createElement('div');
   line.className = 'posture-line';
-  
+
   const angle = Math.random() * 360;
-  
+
   line.style.cssText = `
     left: ${25 + Math.random() * 50}%;
     top: ${25 + Math.random() * 50}%;
     --angle: ${angle}deg;
     animation-delay: ${Math.random() * 5}s;
   `;
-  
+
   somatic.appendChild(line);
   setTimeout(() => line.remove(), 11000);
 }
 
 // Crear partículas cinéticas
 function createKineticParticles() {
+  const s = S();
   for(let i = 0; i < 15; i++) {
     setTimeout(() => {
       const particle = document.createElement('div');
       particle.className = 'kinetic-particle';
-      
+
       const angle = (i / 15) * Math.PI * 2;
-      const distance = 75 + Math.random() * 125;
+      const distance = (75 + Math.random() * 125) * s;
       const kx = Math.cos(angle) * distance;
       const ky = Math.sin(angle) * distance;
-      
+
       particle.style.cssText = `
         left: 50%;
         top: 50%;
@@ -342,7 +424,7 @@ function createKineticParticles() {
         --ky: ${ky}px;
         animation-delay: ${Math.random() * 4}s;
       `;
-      
+
       somatic.appendChild(particle);
       setTimeout(() => particle.remove(), 9000);
     }, i * 85);
@@ -351,13 +433,14 @@ function createKineticParticles() {
 
 // Crear trazos de movimiento
 function createMovementTrace() {
+  const s = S();
   const trace = document.createElement('div');
   trace.className = 'movement-trace';
-  
-  const ty = 70 + Math.random() * 140;
-  const tx = (Math.random() - 0.5) * 110;
+
+  const ty = (70 + Math.random() * 140) * s;
+  const tx = (Math.random() - 0.5) * 110 * s;
   const tr = (Math.random() - 0.5) * 90;
-  
+
   trace.style.cssText = `
     left: ${25 + Math.random() * 50}%;
     top: ${20 + Math.random() * 60}%;
@@ -366,40 +449,49 @@ function createMovementTrace() {
     --tr: ${tr}deg;
     animation-delay: ${Math.random() * 6}s;
   `;
-  
+
   somatic.appendChild(trace);
   setTimeout(() => trace.remove(), 12000);
 }
 
-// Generar elementos continuamente
-setInterval(createPostureLine, 2400);
-setInterval(createKineticParticles, 6800);
-setInterval(createMovementTrace, 2700);
+if (!quieto) {
+  // Generar elementos continuamente
+  setInterval(createPostureLine, 2400);
+  setInterval(createKineticParticles, 6800);
+  setInterval(createMovementTrace, 2700);
 
-// Crear elementos iniciales
-for(let i = 0; i < 7; i++) {
-  setTimeout(createPostureLine, i * 850);
-}
-createKineticParticles();
-for(let i = 0; i < 7; i++) {
-  setTimeout(createMovementTrace, i * 740);
+  // Crear elementos iniciales
+  for(let i = 0; i < 7; i++) {
+    setTimeout(createPostureLine, i * 850);
+  }
+  createKineticParticles();
+  for(let i = 0; i < 7; i++) {
+    setTimeout(createMovementTrace, i * 740);
+  }
 }
 
-// Interactividad - Click crea expresión corporal
-somatic.addEventListener('click', (e) => {
+// Interactividad - tocar crea expresión corporal
+document.body.addEventListener('click', (e) => {
+  if (e.target.closest('.infinito')) return;
+  const hint = document.getElementById('hint');
+  if (hint) hint.classList.add('oculto');
+  if (quieto) return;
+
   const rect = somatic.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
-  
+  const s = S();
+
   // Ondas de expresión
   for(let i = 0; i < 6; i++) {
     setTimeout(() => {
       const wave = document.createElement('div');
       wave.className = 'expression-wave';
-      const size = 90 + i * 55;
+      const size = (90 + i * 55) * s;
       wave.style.cssText = `
         width: ${size}px;
         height: ${size}px;
+        margin: ${-size / 2}px 0 0 ${-size / 2}px;
         left: ${x}px;
         top: ${y}px;
         animation: wave-express ${10 - i}s ease-out forwards;
@@ -409,17 +501,18 @@ somatic.addEventListener('click', (e) => {
       setTimeout(() => wave.remove(), (10 - i) * 1000);
     }, i * 230);
   }
-  
+
   // Formas corporales
   for(let i = 0; i < 6; i++) {
     setTimeout(() => {
       const body = document.createElement('div');
       body.className = 'body-form';
       const angle = (i / 6) * Math.PI * 2;
-      const distance = 60 + Math.random() * 75;
+      const distance = (60 + Math.random() * 75) * s;
       body.style.cssText = `
         left: ${x}px;
         top: ${y}px;
+        margin: -100px 0 0 -60px;
         --bx: ${Math.cos(angle) * distance}px;
         --by: ${Math.sin(angle) * distance}px;
         --br: ${(Math.random() - 0.5) * 50}deg;
@@ -429,7 +522,7 @@ somatic.addEventListener('click', (e) => {
       setTimeout(() => body.remove(), 5000);
     }, i * 140);
   }
-  
+
   // Líneas de postura radiales
   for(let i = 0; i < 12; i++) {
     setTimeout(() => {
@@ -446,14 +539,14 @@ somatic.addEventListener('click', (e) => {
       setTimeout(() => line.remove(), 5000);
     }, i * 75);
   }
-  
+
   // Partículas cinéticas
   for(let i = 0; i < 20; i++) {
     setTimeout(() => {
       const particle = document.createElement('div');
       particle.className = 'kinetic-particle';
       const angle = Math.random() * Math.PI * 2;
-      const distance = 55 + Math.random() * 95;
+      const distance = (55 + Math.random() * 95) * s;
       particle.style.cssText = `
         left: ${x}px;
         top: ${y}px;
