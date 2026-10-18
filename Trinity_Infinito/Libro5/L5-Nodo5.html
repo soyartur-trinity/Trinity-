@@ -2,8 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>El Fénix Cuántico</title>
+<!-- Adaptado al teléfono en octubre de 2026, para el «Para ver» de Arquitectura del Destino, Libro 5 (La Grieta).
+     Saneamiento acotado: invitación a tocar en tuteo, escena escalada al ancho de la pantalla (las llamas y
+     plumas se ubican en píxeles dentro de un recinto de 600 px), textos más grandes y lejos de los bordes,
+     lienzo que se ajusta al girar el teléfono y el ∞ fuera del alcance del toque que enciende el sonido.
+     La gráfica, la paleta, el sonido y las frases son las del original. -->
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -13,15 +18,17 @@
         font-family: 'Georgia', serif;
         overflow: hidden;
         height: 100vh;
+        height: 100dvh;
+        background-color: #000;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: none;
     }
 
+    .escala { width: 600px; height: 600px; flex: none; transform-origin: center; }
     .phoenix-container {
         position: relative; width: 600px; height: 600px;
-        max-width: 92vw; max-height: 92vh;
         transform-style: preserve-3d;
         animation: phoenixRotate 34s infinite linear;
     }
@@ -120,6 +127,17 @@
     }
     .infinito:hover { color: rgba(255,170,70,0.95); }
 
+    @media (max-width: 640px) {
+        .escala { transform: scale(0.58); }
+        .eternal-cycle { top: calc(26px + env(safe-area-inset-top, 0px)); font-size: 36px; }
+        .phoenix-wisdom { bottom: calc(96px + env(safe-area-inset-bottom, 0px)); font-size: 1.22em; line-height: 1.75; letter-spacing: 0.02em; width: 90%; }
+        .hint { font-size: 13px; letter-spacing: 2px; bottom: calc(52px + env(safe-area-inset-bottom, 0px)); }
+        .infinito { bottom: calc(18px + env(safe-area-inset-bottom, 0px)); right: 22px; font-size: 28px; padding: 6px; }
+    }
+    @media (max-width: 640px) and (max-height: 640px) {
+        .escala { transform: scale(0.48); }
+        .phoenix-wisdom { bottom: calc(80px + env(safe-area-inset-bottom, 0px)); font-size: 1.08em; }
+    }
     @media (prefers-reduced-motion: reduce) {
         .phoenix-container { animation: none; }
         .phoenix-feather { animation: none; opacity: 0.6; }
@@ -136,9 +154,11 @@
 
     <div class="eternal-cycle">∞</div>
 
+    <div class="escala">
     <div class="phoenix-container">
         <div class="quantum-phoenix"></div>
         <div class="quantum-state"></div>
+    </div>
     </div>
 
     <div class="phoenix-wisdom">
@@ -147,8 +167,8 @@
         el ciclo que nunca comenzó ni terminará
     </div>
 
-    <div class="hint" id="hint">( tocá: el fuego resuena )</div>
-    <a class="infinito" href="L5-Nodo6.html" title="Siguiente portal">∞</a>
+    <div class="hint" id="hint">( toca: el fuego resuena )</div>
+    <a class="infinito" href="L5-Nodo6.html" title="Siguiente portal" aria-label="Siguiente portal">∞</a>
 
     <script>
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -157,7 +177,8 @@
     // ── Canvas: fuego real ──
     const canvas = document.getElementById('phoenixCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    function ajustar() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    ajustar(); window.addEventListener('resize', ajustar);
     const fire = [];
     class FireParticle {
         constructor(x, y) { this.x = x; this.y = y; this.vx = (Math.random()-0.5)*2; this.vy = -Math.random()*3-1; this.life = 1; this.decay = Math.random()*0.02+0.01; this.size = Math.random()*3+1; }
@@ -310,7 +331,10 @@
         p(); timers.push(setInterval(p, 6000));
         const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    document.body.addEventListener('click', function (e) {
+        if (e.target.closest('.infinito')) return;
+        initSound();
+    });
     </script>
 </body>
 </html>
