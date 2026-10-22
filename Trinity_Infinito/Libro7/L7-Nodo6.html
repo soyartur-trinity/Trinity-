@@ -2,8 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Portal 48: La Ignorancia que Ilumina</title>
+<!-- Adaptado al teléfono en octubre de 2026, para el «Para ver» de Arquitectura del Destino, Libro 7 (No Saber).
+     Saneamiento acotado: invitación a tocar en tuteo; el campo y sus piezas se miden en proporción del campo,
+     que cabe entero también con el teléfono acostado; paradojas, lema y rótulo más grandes y lejos de los bordes
+     en pantallas angostas; corregida la errata del lema circular («SÉQUE», «SÉNADA»); el rótulo sin el prefijo de producción, como en el Portal 44; el ∞ fuera del toque
+     que enciende el sonido. La gráfica, la paleta, el sonido y las frases son las del original. -->
 <style>
   * { margin:0; padding:0; box-sizing:border-box;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
@@ -12,15 +17,15 @@
     background:#000;
     overflow:hidden;
     display:flex; justify-content:center; align-items:center;
-    height:100vh;
+    height:100vh; height:100dvh;
     font-family:'Georgia', serif;
     cursor:none;
   }
 
   .ignorance-field {
     position:relative;
-    width:min(600px, 95vw);
-    height:min(600px, 95vw);
+    width:min(600px, 95vw, 86vh);
+    height:min(600px, 95vw, 86vh);
     filter: drop-shadow(0 0 30px rgba(150,110,200,0.2));
   }
 
@@ -44,7 +49,7 @@
   /* Núcleo de oscuridad: sombra interior ESTÁTICA; la escala la mueve el JS */
   .darkness-core {
     position:absolute; top:50%; left:50%;
-    width:min(200px,35vw); height:min(200px,35vw);
+    width:33.3%; height:33.3%;
     border-radius:50%;
     background: radial-gradient(circle at center, #000 0%, #000 40%, rgba(0,0,0,0.9) 60%, transparent 100%);
     box-shadow: inset 0 0 90px #000;
@@ -54,7 +59,7 @@
   /* Luz que emana de la oscuridad */
   .light-emanation {
     position:absolute; top:50%; left:50%;
-    width:min(300px,50vw); height:min(300px,50vw);
+    width:50%; height:50%;
     border-radius:50%;
     background: radial-gradient(circle at center,
       transparent 0%, transparent 30%,
@@ -73,7 +78,7 @@
   /* Rayos de sabiduría que giran */
   .wisdom-ray {
     position:absolute; top:50%; left:50%;
-    width:2px; height:min(400px,70vw);
+    width:2px; height:66.7%;
     background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.4), rgba(150,110,200,0.3), transparent);
     transform: translate(-50%,-50%) rotate(0deg);
     animation: rayRotate 20s infinite linear;
@@ -128,7 +133,7 @@
 
   .socratic-circle {
     position:absolute; top:50%; left:50%;
-    width:min(400px,70vw); height:min(400px,70vw);
+    width:66.7%; height:66.7%;
     border:1px solid rgba(150,110,200,0.15);
     border-radius:50%;
     transform: translate(-50%,-50%);
@@ -136,7 +141,7 @@
     will-change: transform;
   }
   .socratic-circle::before {
-    content:'SOLO S\00C9 QUE NO S\00C9 NADA';
+    content:'SOLO SÉ QUE NO SÉ NADA';
     position:absolute; top:-25px; left:50%;
     transform: translateX(-50%);
     color: rgba(120,160,225,0.4);
@@ -152,7 +157,7 @@
   /* Vacío iluminado: glow ESTÁTICO; escala respira por CSS, opacidad la mueve el JS */
   .illumination-void {
     position:absolute; top:50%; left:50%;
-    width:min(100px,17vw); height:min(100px,17vw);
+    width:16.7%; height:16.7%;
     background:#000; border-radius:50%;
     box-shadow:
       0 0 28px 14px rgba(255,255,255,0.18),
@@ -181,7 +186,7 @@
   }
 
   .transmission-code {
-    position:absolute; bottom:20px; left:50%;
+    position:fixed; bottom:calc(20px + env(safe-area-inset-bottom, 0px)); left:50%;
     transform: translateX(-50%);
     color: rgba(150,110,200,0.4);
     font-family:'Courier New', monospace;
@@ -191,7 +196,7 @@
   @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
 
   .hint {
-    position:fixed; bottom:52px; left:50%;
+    position:fixed; bottom:calc(52px + env(safe-area-inset-bottom, 0px)); left:50%;
     transform: translateX(-50%);
     color: rgba(245,242,234,0.55);
     font-size: clamp(11px,2.6vw,13px); letter-spacing:1px;
@@ -202,14 +207,24 @@
   @keyframes breathe { 0%,100% { opacity:0.25; } 50% { opacity:0.75; } }
 
   .infinito {
-    position:fixed; bottom:22px; right:26px;
-    font-size:30px; text-decoration:none;
+    position:fixed; bottom:calc(22px + env(safe-area-inset-bottom, 0px)); right:26px;
+    font-size:30px; text-decoration:none; padding:6px;
     color: rgba(208,192,160,0.35);
     transition: color 0.8s ease, text-shadow 0.8s ease;
     z-index:20;
   }
   .infinito:hover { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); }
 
+  @media (max-width: 640px) {
+    .paradox-text { font-size:15px; letter-spacing:0.5px; white-space:nowrap; }
+    .paradox-text.p-right { right:3%; }
+    .paradox-text.p-left  { left:3%; }
+    .socratic-circle::before { font-size:11px; letter-spacing:2px; top:-22px; }
+    .knowledge-fragment { font-size:10px; }
+    .hint { font-size:14px; letter-spacing:0.5px; width:max-content; max-width:92vw; text-align:center; }
+    .transmission-code { font-size:9px; letter-spacing:1px; }
+    .infinito { right:18px; font-size:28px; }
+  }
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; }
     .light-emanation { opacity:0.55; transform: translate(-50%,-50%) scale(1.05); }
@@ -240,10 +255,10 @@
     <div class="paradox-text p-left">DE LA SOMBRA</div>
   </div>
 
-  <div class="transmission-code">TRINITY::PORTAL_48::IGNORANCIA_LUMINOSA::RESONANDO</div>
-  <div class="hint">( tocá — la luz que nace de no saber )</div>
+  <div class="transmission-code">PORTAL_48::IGNORANCIA_LUMINOSA::ACTIVO</div>
+  <div class="hint">( toca — la luz que nace de no saber )</div>
 
-  <a class="infinito" href="L7-Nodo7.html">∞</a>
+  <a class="infinito" href="L7-Nodo7.html" title="Siguiente portal" aria-label="Siguiente portal">∞</a>
 
 <script>
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -397,7 +412,8 @@
   }
 
   const hint = document.querySelector('.hint');
-  function wake() {
+  function wake(e) {
+    if (e && e.target && e.target.closest && e.target.closest('.infinito')) return;
     startAudio();
     if (hint) hint.style.opacity = '0';
     window.removeEventListener('pointerdown', wake);
