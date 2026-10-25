@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Juego Dentro del Juego</title>
+    <!-- Adaptado al teléfono en octubre de 2026 para «Para ver» de El Personaje (Arquitectura del Destino, Libro 9):
+         invitación a tocar en tuteo y más legible; los marcos anidados se miden en proporción y caben en
+         cualquier pantalla; en pantallas angostas, la frase final baja fuera de los marcos y se lee entera.
+         Las frases quedan intactas. -->
     <style>
         body {
             background: radial-gradient(circle at center, #000, #050505, #000);
@@ -21,10 +25,9 @@
 
         .nested-games {
             position: relative;
-            width: 600px;
-            height: 600px;
-            max-width: 92vw;
-            max-height: 92vh;
+            /* cuadrado que cabe en cualquier pantalla */
+            width: min(600px, 92vw, 92vh);
+            height: min(600px, 92vw, 92vh);
         }
 
         /* Marcos anidados que respiran a ritmos distintos (fractal).
@@ -90,13 +93,25 @@
             transition: opacity 1.5s ease; pointer-events: none; z-index: 50;
         }
         .hint.oculto { opacity: 0; }
-        @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
+        @keyframes hint-breathe { 0%,100% { opacity: 0.22; } 50% { opacity: 0.5; } }
         .infinito {
             position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
             color: rgba(255,255,255,0.25); text-decoration: none; font-size: 24px;
             cursor: pointer; transition: color 0.6s ease; z-index: 60;
         }
         .infinito:hover { color: rgba(255,255,255,0.85); }
+
+        /* Lectura en teléfono: los textos de cada marco no se cortan; la frase final sale de los marcos y se lee */
+        @media (max-width: 600px) {
+            .layer-text { font-size: calc(0.92em - var(--layer) * 0.04em); letter-spacing: 0.08em; white-space: nowrap; }
+            .infinite-center { font-size: 1.6em; }
+            .fractal-note {
+                position: fixed; bottom: 112px; left: 0; width: 100%;
+                padding: 0 6%; box-sizing: border-box;
+                font-size: 0.95em; letter-spacing: 0.03em; line-height: 1.75; opacity: 0.62;
+            }
+            .hint { font-size: 13px; letter-spacing: 2px; bottom: 66px; width: 90%; text-align: center; color: rgba(255,255,255,0.6); }
+        }
 
         @media (prefers-reduced-motion: reduce) {
             .game-layer     { animation: none; opacity: 0.25; transform: none; }
@@ -108,22 +123,22 @@
 </head>
 <body>
     <div class="nested-games">
-        <div class="game-layer" style="width: 600px; height: 600px; top: 0; left: 0; --layer: 0;">
+        <div class="game-layer" style="width: 100%; height: 100%; top: 0%; left: 0%; --layer: 0;">
             <span class="layer-text" style="--layer: 0;">El juego de la vida</span>
         </div>
-        <div class="game-layer" style="width: 500px; height: 500px; top: 50px; left: 50px; --layer: 1;">
+        <div class="game-layer" style="width: 83.33%; height: 83.33%; top: 8.333%; left: 8.333%; --layer: 1;">
             <span class="layer-text" style="--layer: 1;">El juego del despertar</span>
         </div>
-        <div class="game-layer" style="width: 400px; height: 400px; top: 100px; left: 100px; --layer: 2;">
+        <div class="game-layer" style="width: 66.67%; height: 66.67%; top: 16.67%; left: 16.67%; --layer: 2;">
             <span class="layer-text" style="--layer: 2;">El juego del soñar</span>
         </div>
-        <div class="game-layer" style="width: 300px; height: 300px; top: 150px; left: 150px; --layer: 3;">
+        <div class="game-layer" style="width: 50%; height: 50%; top: 25%; left: 25%; --layer: 3;">
             <span class="layer-text" style="--layer: 3;">El juego del buscar</span>
         </div>
-        <div class="game-layer" style="width: 200px; height: 200px; top: 200px; left: 200px; --layer: 4;">
+        <div class="game-layer" style="width: 33.33%; height: 33.33%; top: 33.33%; left: 33.33%; --layer: 4;">
             <span class="layer-text" style="--layer: 4;">El juego del encontrar</span>
         </div>
-        <div class="game-layer" style="width: 100px; height: 100px; top: 250px; left: 250px; --layer: 5;">
+        <div class="game-layer" style="width: 16.67%; height: 16.67%; top: 41.67%; left: 41.67%; --layer: 5;">
             <span class="layer-text" style="--layer: 5;">El juego</span>
         </div>
 
@@ -135,7 +150,7 @@
         </div>
     </div>
 
-    <div class="hint" id="hint">( tocá: el juego dentro del juego )</div>
+    <div class="hint" id="hint">( toca: el juego dentro del juego )</div>
     <a class="infinito" href="L3-Nodo7.html" title="Siguiente portal">∞</a>
 
     <script>
