@@ -1,0 +1,714 @@
+<!-- ===========================
+     PARTE A · ENCABEZADO
+     =========================== -->
+<!doctype html>
+<!-- Depurado en octubre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4), con el veto de Arturo en cada nodo. El original se conserva en la etiqueta quantum-original del repositorio. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 10 · Campos de Torsión — Nodo 3</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+  <style>
+    /* ============================================================
+       Depuración · octubre 2026
+       Letra más grande en el teléfono y bloque fijo de las puertas.
+       La puerta lleva el color de la serie a la que conduce.
+       ============================================================ */
+    .puerta{
+      margin: 26px 0 8px;
+      padding: 18px 20px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--p-borde);
+      background: var(--p-fondo);
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    }
+    .puerta.arquitectura{
+      --p-fondo: linear-gradient(180deg, rgba(6,13,26,.94), rgba(6,13,26,.74));
+      --p-borde: rgba(168,196,224,.42);
+      --p-acento: #a8c4e0;
+      --p-texto: #e8eef6;
+    }
+    .puerta.portal{
+      --p-fondo: linear-gradient(180deg, rgba(13,12,11,.94), rgba(13,12,11,.74));
+      --p-borde: rgba(201,168,76,.42);
+      --p-acento: #c9a84c;
+      --p-texto: #e8e0d0;
+    }
+    .content .puerta .p-nombre{
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-style: italic;
+      letter-spacing: .06em;
+      color: var(--p-acento);
+    }
+    .content .puerta .p-texto{
+      margin: 0 0 14px;
+      color: var(--p-texto);
+    }
+    .puerta .cruzar{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--p-borde);
+      color: var(--p-acento);
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .puerta .cruzar:hover{ border-color: var(--p-acento); background: rgba(255,255,255,.04); }
+    .puerta .cruzar:focus-visible{ outline: 2px solid var(--p-acento); outline-offset: 3px; }
+
+    @media (max-width: 640px){
+      .content p, .content li{ font-size: 18px; line-height: 1.7; }
+      .content p.signature{ font-size: 15px; }
+      .puerta{ padding: 16px 16px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .puerta .cruzar{ transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 10 · Campos de Torsión · Nodo 3</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="nodo_02.html">⟵ Nodo anterior</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 10 · CAMPOS DE TORSIÓN</p>
+        <h1 class="node">Nodo 3 · La Doble Hélice</h1>
+        <p class="subnode">El Código Viviente en Espiral</p>
+      </header>
+      <!-- ===========================
+           PARTE B · CONTENIDO
+           (Markdown convertido a HTML)
+           =========================== -->
+      <section class="content">
+
+        <h4>EL CÓDIGO VIVIENTE EN ESPIRAL</h4>
+
+        <p>Tu ADN no es solo una molécula. Es una escalera que se retuerce en doble hélice, la forma que Rosalind Franklin fotografió y que James Watson y Francis Crick describieron en 1953. Cada peldaño es una letra en el alfabeto de la vida. Cada tres letras, una palabra. Cada gen, una frase. Y todo el genoma junto es la biblioteca de Alejandría de tu potencial, esperando ser leída y expresada.</p>
+
+        <p>Y aquí está lo que la ciencia de las últimas décadas confirmó: la secuencia que heredaste cambia poco a lo largo de tu vida, pero su lectura no está fija. Qué genes hablan y cuáles callan depende también de lo que vives. Lo llaman epigenética. En 2004, el equipo de Michael Meaney lo vio en ratas: las crías que sus madres lamían y acicalaban más mostraban marcas distintas en un gen que regula el estrés, y crecían más serenas. Tu ADN es un texto antiguo que se lee de una manera viva.</p>
+
+        <p>Has sentido que la vida te escribe por dentro cuando:</p>
+
+        <ul>
+          <li>Una experiencia profunda te cambió hasta el cuerpo</li>
+          <li>Un hábito nuevo, sostenido, te volvió otra persona</li>
+          <li>Tu manera de percibir se amplió y no volvió atrás</li>
+          <li>Aprendiste algo que creías imposible para ti</li>
+          <li>Supiste que algo fundamental había cambiado</li>
+        </ul>
+
+        <h4>LA ESTRUCTURA DE LA ESPIRAL</h4>
+
+        <ul>
+          <li>Dos hebras que se enroscan una en torno a la otra y corren en sentidos opuestos</li>
+          <li>Unidas por pares de letras que siempre se eligen igual: A con T, C con G</li>
+          <li>Cada hebra es el molde de la otra: por eso la vida puede copiarse</li>
+          <li>Unos tres mil millones de pares de letras en cada juego de cromosomas</li>
+          <li>Estirado, el ADN de una sola célula mediría unos dos metros</li>
+        </ul>
+
+        <p>Dos hebras que se abrazan sin confundirse<br>
+        y que, al separarse,<br>
+        dan origen a dos abrazos nuevos:<br>
+        una imagen del amor<br>
+        escrita en cada célula.</p>
+
+        <h4>LO QUE TU ADN ESCUCHA</h4>
+
+        <p>La lectura de tus genes responde a:</p>
+        <ul>
+          <li>La luz: la de la mañana pone en hora los relojes de cada célula</li>
+          <li>El movimiento: el ejercicio modifica lo que se expresa en el músculo</li>
+          <li>El sueño: una semana durmiendo poco altera cientos de lecturas</li>
+          <li>El cuidado y los vínculos: el afecto deja huella, como en las crías de Meaney</li>
+          <li>La quietud: la meditación, según los primeros estudios, aquieta genes ligados a la inflamación</li>
+          <li>Y también el estrés que no cede, que deja sus propias marcas</li>
+        </ul>
+
+        <p>Lo que tu ADN escucha es la vida que llevas.</p>
+
+        <h4>EL ADN “BASURA”: EL TESORO ESCONDIDO</h4>
+
+        <p>Menos del dos por ciento de tu genoma escribe proteínas. Al resto, durante años, se lo llamó “ADN basura”; la expresión la popularizó en 1972 el genetista Susumu Ohno. Hoy se sabe que una parte de ese material trabaja: hay interruptores que encienden y apagan genes, regiones que deciden cuándo y dónde se lee cada frase, restos de virus antiguos que la evolución domesticó; uno de ellos ayuda a formar la placenta. Cuánto de él cumple una función sigue en discusión.</p>
+
+        <p>Lo que parecía sobrante<br>
+        resultó ser, en parte, gramática:<br>
+        no las palabras,<br>
+        sino el orden en que se dicen.</p>
+
+        <h4>LA TORSIÓN DEL ADN</h4>
+
+        <p>En tu ADN, la torsión es literal. Cuando la doble hélice se abre para ser leída o copiada, por delante de la abertura se retuerce de más, como un cordel que se enrosca sobre sí mismo. Si nada la aflojara, la lectura se detendría. Unas enzimas, las topoisomerasas, hacen ese trabajo: cortan una hebra o las dos, dejan que el giro se suelte y vuelven a unirlas. Sin descanso, en cada célula, algo afloja la tensión para que la vida pueda leerse.</p>
+
+        <p>Y la espiral sostiene más:</p>
+        <ul>
+          <li><strong>En la célula:</strong> se copia entera antes de cada división, y unas enzimas reparadoras corrigen sus errores sin pausa</li>
+          <li><strong>En el cuerpo:</strong> el mismo texto, leído de maneras distintas, hace una neurona, una célula de la piel, una fibra del corazón</li>
+          <li><strong>En la especie:</strong> guarda la memoria de los que vinieron antes</li>
+        </ul>
+
+        <h4>CUIDAR LO QUE SE LEE</h4>
+
+        <p>Lo que tu cuerpo lee cada día es tu vida. Se cuida en cuatro gestos:</p>
+        <ul>
+          <li><strong>Descanso:</strong> horarios regulares, la luz de la mañana, la oscuridad de la noche</li>
+          <li><strong>Movimiento:</strong> caminar, bailar, lo que tu cuerpo agradezca</li>
+          <li><strong>Vínculo:</strong> tiempo con quienes te cuidan y con quienes cuidas</li>
+          <li><strong>Quietud:</strong> unos minutos de silencio cada día</li>
+        </ul>
+
+        <p>Paciencia con el proceso: la lectura cambia despacio. Y cuando el cuerpo habla —un hormigueo que no cede, un dolor que migra, un cambio de apetito o de sueño—, se lo escucha con un médico al lado.</p>
+
+        <h4>LA MÚSICA DEL ADN</h4>
+
+        <p>Tu ADN es un instrumento musical:</p>
+        <ul>
+          <li>Cada base nitrogenada es una nota</li>
+          <li>Cada codón es un acorde</li>
+          <li>Cada gen es una melodía</li>
+          <li>Cada cromosoma es una sinfonía</li>
+          <li>Todo tu genoma es una ópera cósmica</li>
+        </ul>
+
+        <p>En 1986, catorce años después de hablar de “basura”, Susumu Ohno lo tomó al pie de la letra: con su esposa, Midori, asignó notas a las letras del ADN y escuchó. El gen de una enzima que ayuda a descomponer el azúcar le sonó como una canción de cuna.</p>
+
+        <p>Y como toda partitura, la tuya se interpreta: el mismo texto suena distinto según la vida que lo toca.</p>
+
+        <h4>EL ADN COMPARTIDO</h4>
+
+        <p>Tu ADN no está aislado. Está emparentado con:</p>
+        <ul>
+          <li>El de tu familia: la mitad de tu texto llegó de cada uno de tus padres</li>
+          <li>El de tu especie: con cualquier otro ser humano compartes casi todas las letras</li>
+          <li>El de toda vida en la Tierra: el mismo alfabeto de cuatro letras escribe al roble, a la ballena y a ti</li>
+          <li>El de los que vinieron antes: en tus células viaja la historia de migraciones antiguas</li>
+        </ul>
+
+        <p>Lo que recibiste no termina en ti.<br>
+        Lo que cuidas pasa a otros:<br>
+        no siempre en los genes,<br>
+        sí en los gestos,<br>
+        en el tono de una casa,<br>
+        en la manera de mirar.</p>
+
+        <h4>PARA HABITAR EL SONIDO</h4>
+
+        <p><strong>Práctica: Canto de las Cinco Vocales</strong></p>
+
+        <p>Siéntate con la columna erguida.<br>
+        Imagina tu doble hélice desde la base hasta la coronilla.<br>
+        Respira hondo.</p>
+
+        <p>Entona estas vocales, una por respiración, y deja que cada sonido dure toda la salida del aire:</p>
+
+        <p>“AHHH” por tu cuerpo<br>
+        “EEEE” por lo que sientes<br>
+        “IIII” por lo que piensas<br>
+        “OOOO” por lo que buscas<br>
+        “UUUU” por lo que te sostiene</p>
+
+        <p>Repite el ciclo tres veces.<br>
+        Siente cómo vibra el pecho.<br>
+        Cómo se alarga la respiración.<br>
+        Cómo cada célula, aunque no la oigas, participa del canto.</p>
+
+        <h4>LA ESPIRAL Y SUS NÚMEROS</h4>
+
+        <p>La doble hélice mide unos 20 angstroms de ancho y da una vuelta completa cada 34: una relación cercana a 1.7, vecina de la proporción dorada sin ser ella. La serie de Fibonacci sí está en los girasoles y en las piñas de los pinos, cuyas espirales se cuentan en pares como 21 y 34, u 8 y 13.</p>
+
+        <p>La espiral no necesita un número exacto para ser bella:<br>
+        la tuya se lee,<br>
+        se copia,<br>
+        se repara,<br>
+        y eso basta para el asombro.</p>
+
+        <h4>EL FUTURO DEL ADN HUMANO</h4>
+
+        <p>En 2003 se terminó de leer casi todo el genoma humano; en 2022, por primera vez, de un extremo al otro. Hoy se aprende a corregir algunas de sus erratas, las que causan enfermedades graves.</p>
+
+        <p>No es ciencia ficción.<br>
+        Está sucediendo ahora.<br>
+        Y pide algo que ninguna técnica trae consigo:<br>
+        la sabiduría para usarla.</p>
+
+        <h4>LA RESPONSABILIDAD DE LO RECIBIDO</h4>
+
+        <p>Con lo recibido viene una responsabilidad:</p>
+        <ul>
+          <li>Eres guardián de un código que no inventaste</li>
+          <li>Tu ánimo afecta a otros</li>
+          <li>Tus hábitos conversan con tu cuerpo</li>
+          <li>Tu cuidado acompaña a quienes crecen cerca de ti</li>
+          <li>Eres un eslabón de una cadena que sigue después de ti</li>
+        </ul>
+
+        <p>Usa lo que eres para:</p>
+        <ul>
+          <li>Cuidar (a ti y a otros)</li>
+          <li>Elevar (el tono de tus lugares)</li>
+          <li>Crear (lo que todavía no existe)</li>
+          <li>Servir (a la vida que continúa)</li>
+          <li>Amar (incondicionalmente)</li>
+        </ul>
+
+        <h4>EL CÓDIGO MAESTRO</h4>
+
+        <p>Existe un código maestro,<br>
+        y no está escrito en ninguna célula:<br>
+        el del amor incondicional.<br>
+        Cuando lo vives, todo lo demás se ordena.<br>
+        Es la llave maestra.<br>
+        La contraseña universal.<br>
+        El “ábrete sésamo” de tu potencial.</p>
+
+        <p>Ama tus células.<br>
+        Ama tu ADN.<br>
+        Ama tu cuerpo.<br>
+        Ama tu humanidad.<br>
+        Ama tu divinidad.</p>
+
+        <p>Y observa cómo las espirales danzan,<br>
+        cómo la vida se lee en ti con otra voz,<br>
+        cómo te vuelves<br>
+        lo que siempre fuiste destinado a ser:</p>
+
+        <p>Un ser de luz<br>
+        codificado en materia,<br>
+        girando en espirales de torsión,<br>
+        trayendo el cielo<br>
+        a la Tierra<br>
+        célula por célula,<br>
+        gen por gen,<br>
+        espiral<br>
+        por<br>
+        espiral<br>
+        sagrada.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“Tu ADN es la escalera en espiral entre el cielo y la tierra. Cada peldaño que habitas te acerca más a tu naturaleza divina.”</p>
+        </div>
+
+        <p class="signature"><strong>— Trinity Quantum · Campos de Torsión</strong></p>
+
+      </section>
+<!-- ===========================
+     PARTE C · CIERRE + NAVEGACIÓN
+     =========================== -->
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_02.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="index.html">Volver al Índice ⟶</a>
+            <a class="btn primary" href="nodo_04.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 10 · Campos de Torsión · Nodo 3</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

@@ -1,0 +1,928 @@
+<!-- ===========================
+     PARTE A · ENCABEZADO
+     =========================== -->
+<!doctype html>
+<!-- Depurado en octubre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4), con el veto de Arturo en cada nodo. El original se conserva en la etiqueta quantum-original del repositorio. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 10 · Campos de Torsión — Nodo 2</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+  <style>
+    /* ============================================================
+       Depuración · octubre 2026
+       Letra más grande en el teléfono y bloque fijo de las puertas.
+       La puerta lleva el color de la serie a la que conduce.
+       ============================================================ */
+    .puerta{
+      margin: 26px 0 8px;
+      padding: 18px 20px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--p-borde);
+      background: var(--p-fondo);
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    }
+    .puerta.arquitectura{
+      --p-fondo: linear-gradient(180deg, rgba(6,13,26,.94), rgba(6,13,26,.74));
+      --p-borde: rgba(168,196,224,.42);
+      --p-acento: #a8c4e0;
+      --p-texto: #e8eef6;
+    }
+    .puerta.portal{
+      --p-fondo: linear-gradient(180deg, rgba(13,12,11,.94), rgba(13,12,11,.74));
+      --p-borde: rgba(201,168,76,.42);
+      --p-acento: #c9a84c;
+      --p-texto: #e8e0d0;
+    }
+    .content .puerta .p-nombre{
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-style: italic;
+      letter-spacing: .06em;
+      color: var(--p-acento);
+    }
+    .content .puerta .p-texto{
+      margin: 0 0 14px;
+      color: var(--p-texto);
+    }
+    .puerta .cruzar{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--p-borde);
+      color: var(--p-acento);
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .puerta .cruzar:hover{ border-color: var(--p-acento); background: rgba(255,255,255,.04); }
+    .puerta .cruzar:focus-visible{ outline: 2px solid var(--p-acento); outline-offset: 3px; }
+
+    @media (max-width: 640px){
+      .content p, .content li{ font-size: 18px; line-height: 1.7; }
+      .content p.signature{ font-size: 15px; }
+      .puerta{ padding: 16px 16px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .puerta .cruzar{ transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 10 · Campos de Torsión · Nodo 2</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="nodo_01.html">⟵ Nodo anterior</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 10 · CAMPOS DE TORSIÓN</p>
+        <h1 class="node">Nodo 2 · Vórtices de Transformación</h1>
+        <p class="subnode">Los Remolinos del Cambio</p>
+      </header>
+      <!-- ===========================
+           PARTE B · CONTENIDO
+           (Markdown convertido a HTML)
+           =========================== -->
+      <section class="content">
+
+        <h4>LOS REMOLINOS DEL CAMBIO</h4>
+
+        <p>Un vórtice es la forma que toma la energía cuando busca transformarse. Es el patrón universal del cambio: el agua descendiendo por el desagüe, las galaxias girando en el espacio, los huracanes reorganizando la atmósfera, los pensamientos circulando hacia comprensión. Cuando algo en tu vida pide transformarse, aparece un vórtice: un remolino de experiencias que te arrastra, te desarma, te reorganiza y te devuelve renovado del otro lado.</p>
+
+        <p>No son castigos.<br>
+        Pueden volverse transformación.<br>
+        Son, muchas veces, la manera en que la vida mueve lo que se resistía a moverse.</p>
+
+        <p>Has estado en un vórtice de transformación cuando:</p>
+
+        <ul>
+          <li>Todo en tu vida comenzó a girar fuera de control</li>
+          <li>Sentiste que eras arrastrado hacia algo que no podías detener</li>
+          <li>Las viejas estructuras colapsaron en espiral descendente</li>
+          <li>Emergiste del caos completamente cambiado</li>
+          <li>El proceso fue aterrador y liberador simultáneamente</li>
+        </ul>
+
+        <h4>ANATOMÍA DE UN VÓRTICE TRANSFORMADOR</h4>
+
+        <p>Todo vórtice tiene estructura precisa:</p>
+
+        <p><strong>El Borde Exterior:</strong> Donde comienzas a sentir la succión</p>
+        <ul>
+          <li>Primeras señales de cambio</li>
+          <li>Resistencia inicial</li>
+          <li>Todavía puedes elegir cómo entrar</li>
+          <li>La vida se acelera sutilmente</li>
+        </ul>
+
+        <p><strong>La Espiral Descendente:</strong> Aceleración hacia el centro</p>
+        <ul>
+          <li>Pérdida de control</li>
+          <li>Viejas estructuras disolviéndose</li>
+          <li>Tiempo acelerándose</li>
+          <li>Lo que termina se vuelve claro</li>
+        </ul>
+
+        <p><strong>El Ojo del Vórtice:</strong> El punto de máxima transformación</p>
+        <ul>
+          <li>Muerte y renacimiento simultáneos</li>
+          <li>Quietud en medio del caos</li>
+          <li>El momento fuera del tiempo</li>
+          <li>La singularidad personal</li>
+        </ul>
+
+        <p><strong>La Espiral Ascendente:</strong> Emergencia renovada</p>
+        <ul>
+          <li>Nueva configuración integrándose</li>
+          <li>Claridad emergente</li>
+          <li>Poder renovado</li>
+          <li>Renacimiento completado</li>
+        </ul>
+
+        <p><strong>La Expulsión:</strong> Salida del vórtice</p>
+        <ul>
+          <li>Nueva realidad estabilizándose</li>
+          <li>Integración de lo aprendido</li>
+          <li>Gratitud por lo que te sostuvo</li>
+          <li>Preparación para el próximo vórtice</li>
+        </ul>
+
+        <h4>LOS TIPOS DE VÓRTICES</h4>
+
+        <p><strong>Vórtices Kármicos:</strong> <em>karma</em>, en sánscrito, quiere decir acción</p>
+        <ul>
+          <li>Creados por lo que hicimos y quedó sin cerrar</li>
+          <li>Vuelven mientras no se mira</li>
+          <li>Se repiten si se evita</li>
+          <li>Se aflojan cuando se atiende</li>
+          <li>Pueden volver sabiduría el dolor</li>
+        </ul>
+
+        <p><strong>Vórtices Evolutivos:</strong></p>
+        <ul>
+          <li>Creados por presión de crecimiento</li>
+          <li>Aparecen cuando una etapa cambia</li>
+          <li>Llegan con las edades de la vida</li>
+          <li>Te hacen crecer</li>
+          <li>Transforman potencial en actual</li>
+        </ul>
+
+        <p><strong>Vórtices Iniciáticos:</strong></p>
+        <ul>
+          <li>Nacidos de tu búsqueda</li>
+          <li>Marcan transiciones mayores</li>
+          <li>Requieren muerte del viejo yo</li>
+          <li>Nacimiento de nueva identidad</li>
+          <li>Te devuelven a lo esencial</li>
+        </ul>
+
+        <p><strong>Vórtices Colectivos:</strong></p>
+        <ul>
+          <li>Creados por lo que vive un grupo</li>
+          <li>Succionan comunidades enteras</li>
+          <li>Crisis familiares, culturales, globales</li>
+          <li>Transformación sistémica</li>
+          <li>Transforman colectivos completos</li>
+        </ul>
+
+        <p><strong>Vórtices de Asombro:</strong></p>
+        <ul>
+          <li>Nacidos ante lo inmenso: un cielo estrellado, un nacimiento, la muerte de alguien cercano</li>
+          <li>Te sacan de tu escala</li>
+          <li>El tiempo se detiene</li>
+          <li>Vuelves más pequeño y más entero</li>
+          <li>Transforman la manera de mirar</li>
+        </ul>
+
+        <h4>LA FÍSICA DE LOS VÓRTICES</h4>
+
+        <p>Los vórtices obedecen leyes precisas:</p>
+
+        <p><strong>Conservación del Momento Angular:</strong></p>
+        <ul>
+          <li>Mientras más te acercas al centro, más rápido giras</li>
+          <li>Pelear gasta la fuerza que necesitas</li>
+          <li>La rendición permite navegación</li>
+          <li>Y no todo llega al fondo: el remolino tiene su hora</li>
+        </ul>
+
+        <p><strong>Presión Baja en el Centro:</strong></p>
+        <ul>
+          <li>El ojo del vórtice succiona</li>
+          <li>Crea vacío que debe llenarse</li>
+          <li>Atrae nueva energía/información</li>
+          <li>Genera el cambio</li>
+        </ul>
+
+        <p><strong>Flujo Toroidal:</strong></p>
+        <ul>
+          <li>La energía desciende por el centro</li>
+          <li>Asciende por los bordes</li>
+          <li>Crea circulación mientras dura</li>
+          <li>Mantiene el vórtice activo</li>
+        </ul>
+
+        <h4>NAVEGANDO VÓRTICES DE TRANSFORMACIÓN</h4>
+
+        <p><strong>Errores Comunes:</strong></p>
+        <ul>
+          <li>Resistir la succión (agota y prolonga)</li>
+          <li>Aferrarse a los bordes (impide transformación)</li>
+          <li>Luchar en la espiral (crea caos adicional)</li>
+          <li>Huir de lo que pide ser vivido (vuelve)</li>
+          <li>Negar el proceso (amplifica la intensidad)</li>
+        </ul>
+
+        <p><strong>Navegación Maestra:</strong></p>
+        <ol>
+          <li><strong>Reconoce el vórtice temprano</strong>
+            <ul>
+              <li>Lee las señales</li>
+              <li>Acepta lo inevitable</li>
+              <li>Prepárate por dentro</li>
+            </ul>
+          </li>
+          <li><strong>Suéltate conscientemente</strong>
+            <ul>
+              <li>Deja de resistir</li>
+              <li>Fluye con la espiral</li>
+              <li>Confía en el proceso</li>
+            </ul>
+          </li>
+          <li><strong>Mantén consciencia en el descenso</strong>
+            <ul>
+              <li>Observa sin identificarte</li>
+              <li>Aprende mientras giras</li>
+              <li>Recoge los regalos del caos</li>
+            </ul>
+          </li>
+          <li><strong>Ríndete en el ojo</strong>
+            <ul>
+              <li>Muerte consciente del viejo yo</li>
+              <li>Vacío total</li>
+              <li>Renacimiento permitido</li>
+            </ul>
+          </li>
+          <li><strong>Intégrate en el ascenso</strong>
+            <ul>
+              <li>Asienta lo nuevo en hábitos</li>
+              <li>Estabiliza nueva configuración</li>
+              <li>Agradece la transformación</li>
+            </ul>
+          </li>
+        </ol>
+
+        <p>Hay remolinos de los que sí se sale, y cuanto antes mejor: cuando alguien te daña una y otra vez, lo sabio no es rendirse al giro sino alejarse y pedir ayuda.</p>
+
+        <p>Edgar Allan Poe lo contó en 1841, en «Un descenso al Maelström». Un pescador noruego cae con su barca en el gran remolino de las islas Lofoten. Su hermano se aferra a una argolla de hierro. Él, en cambio, deja que el terror se vuelva curiosidad y empieza a mirar: advierte que lo grande baja más rápido que lo pequeño y que, entre dos cosas del mismo tamaño, la cilíndrica es la que más tarda. Se ata a un barril vacío y se suelta al agua. El hermano, aferrado, se hunde con la barca. El tonel apenas desciende, y cuando llega la hora de la marea quieta, el remolino se aplaca y lo devuelve a la superficie. Se salvó el que soltó el borde y miró.</p>
+
+        <h4>LOS GIROS QUE PUEDES ELEGIR</h4>
+
+        <p>No todo vórtice llega solo. Hay giros que puedes elegir:</p>
+
+        <p><strong>Vórtice de Sanación:</strong></p>
+        <ul>
+          <li>Vuelve a tu dolor con tiempo y compañía</li>
+          <li>Deja que dé las vueltas que necesita</li>
+          <li>Escribe lo que aparece</li>
+          <li>Suelta lo que ya se dijo</li>
+        </ul>
+
+        <p><strong>Vórtice de Intención:</strong></p>
+        <ul>
+          <li>Elige una dirección</li>
+          <li>Da un paso por día</li>
+          <li>Deja que lo necesario llegue a su ritmo</li>
+          <li>Mira lo que crece</li>
+        </ul>
+
+        <p><strong>Vórtice de Orden:</strong></p>
+        <ul>
+          <li>Gira por tu espacio</li>
+          <li>Ordena un rincón</li>
+          <li>Abre las ventanas</li>
+          <li>Deja que entre el aire</li>
+        </ul>
+
+        <p><strong>Vórtice de Conexión:</strong></p>
+        <ul>
+          <li>Gira con otro ser: bailar, caminar al lado, conversar sin apuro</li>
+          <li>Crea un campo compartido</li>
+          <li>Afloja la separación</li>
+          <li>Genera unión profunda</li>
+        </ul>
+
+        <h4>LOS VÓRTICES CHAKRA</h4>
+
+        <p>Así los describe el yoga tal como llegó a Occidente: cada chakra es un vórtice de transformación.</p>
+
+        <p><strong>Muladhara (Raíz):</strong> Vórtice de encarnación</p>
+        <ul>
+          <li>Transforma espíritu en materia</li>
+          <li>Succiona energía cósmica hacia la tierra</li>
+          <li>Gira lento pero poderoso</li>
+          <li>Color: Rojo profundo girando</li>
+        </ul>
+
+        <p><strong>Svadhisthana (Sacro):</strong> Vórtice de creatividad</p>
+        <ul>
+          <li>Transforma energía en creación</li>
+          <li>Succiona potencial hacia forma</li>
+          <li>Gira fluido y sensual</li>
+          <li>Color: Naranja líquido girando</li>
+        </ul>
+
+        <p><strong>Manipura (Solar):</strong> Vórtice de poder</p>
+        <ul>
+          <li>Transforma intención en acción</li>
+          <li>Succiona voluntad hacia manifestación</li>
+          <li>Gira como sol interno</li>
+          <li>Color: Amarillo fuego girando</li>
+        </ul>
+
+        <p><strong>Anahata (Corazón):</strong> Vórtice de amor</p>
+        <ul>
+          <li>Transforma separación en unión</li>
+          <li>Succiona todo hacia el centro</li>
+          <li>Gira en todas direcciones</li>
+          <li>Color: Verde esmeralda girando</li>
+        </ul>
+
+        <p><strong>Vishuddha (Garganta):</strong> Vórtice de expresión</p>
+        <ul>
+          <li>Transforma silencio en sonido</li>
+          <li>Succiona verdad hacia expresión</li>
+          <li>Gira vibracionalmente</li>
+          <li>Color: Azul cielo girando</li>
+        </ul>
+
+        <p><strong>Ajna (Tercer Ojo):</strong> Vórtice de visión</p>
+        <ul>
+          <li>Transforma invisible en visible</li>
+          <li>Succiona información del campo</li>
+          <li>Gira multidimensionalmente</li>
+          <li>Color: Índigo profundo girando</li>
+        </ul>
+
+        <p><strong>Sahasrara (Corona):</strong> Vórtice de trascendencia</p>
+        <ul>
+          <li>Transforma individual en universal</li>
+          <li>Succiona consciencia hacia el infinito</li>
+          <li>Gira más allá del tiempo-espacio</li>
+          <li>Color: Violeta blanco girando</li>
+        </ul>
+
+        <h4>CÓMO SE SIENTE ESTAR EN UN VÓRTICE</h4>
+
+        <p><strong>En el cuerpo:</strong></p>
+        <ul>
+          <li>Cansancio</li>
+          <li>Sensación de ser arrastrado</li>
+          <li>Inquietud</li>
+        </ul>
+
+        <p><strong>En las emociones:</strong></p>
+        <ul>
+          <li>Montaña rusa emocional</li>
+          <li>Mezcla de miedo y excitación</li>
+          <li>Rendición que asoma</li>
+        </ul>
+
+        <p><strong>En la mente:</strong></p>
+        <ul>
+          <li>Pensamientos que dan vueltas</li>
+          <li>Claridad súbita tras la confusión</li>
+          <li>Comprensiones que llegan de golpe</li>
+        </ul>
+
+        <p><strong>En lo espiritual:</strong></p>
+        <ul>
+          <li>Sensación de destino</li>
+          <li>Coincidencias que llaman la atención</li>
+          <li>Tiempo elástico</li>
+          <li>Presencia intensificada</li>
+        </ul>
+
+        <p>Un vórtice se atraviesa con el cuerpo cuidado. El mareo, el agotamiento que no cede o una energía que no deja dormir se consultan con un médico; y si la realidad empieza a sentirse ajena, como detrás de un vidrio, se pide ayuda esa misma semana.</p>
+
+        <h4>EL VÓRTICE DE ESTE TIEMPO</h4>
+
+        <p>Muchos sienten hoy que el mundo gira cada vez más rápido: crisis que se encadenan, noticias sin respiro, posiciones que se alejan unas de otras. Nadie conoce el rumbo de este giro. Pero quien atravesó un vórtice sabe dónde buscar el centro.</p>
+
+        <p>No es el fin del mundo.<br>
+        Es un tiempo que pide ojos quietos.<br>
+        Cada persona que encuentra el suyo<br>
+        le da al remolino un lugar donde aquietarse.</p>
+
+        <h4>LOS MAESTROS DEL VÓRTICE</h4>
+
+        <p>Algunos seres dominan la navegación de vórtices:</p>
+        <ul>
+          <li>Chamanes que viajan entre mundos</li>
+          <li>Surfistas de olas gigantes</li>
+          <li>Artistas en proceso creativo</li>
+          <li>Místicos en transformación</li>
+          <li>Sanadores trabajando con crisis</li>
+        </ul>
+
+        <p>Los reconoces porque:</p>
+        <ul>
+          <li>Respetan el caos sin temerle</li>
+          <li>Abrazan la transformación</li>
+          <li>Navegan con gracia</li>
+          <li>Ayudan a otros en vórtices</li>
+          <li>Saben cuándo no entrar</li>
+        </ul>
+
+        <h4>PRÁCTICA: CREANDO UN VÓRTICE DE TRANSFORMACIÓN PERSONAL</h4>
+
+        <p>Identifica qué está cambiando en tu vida, aunque todavía no sepas hacia dónde.</p>
+
+        <p>De pie, en un lugar amplio, camina en círculo, despacio.<br>
+        Primera vuelta: reconoce lo que está terminando.<br>
+        Segunda vuelta: acepta lo que todavía no sabes.<br>
+        Tercera vuelta: mira lo que sigue en pie.</p>
+
+        <p>Camina luego en espiral hacia el centro, sin apurar el paso.<br>
+        Párate ahí.<br>
+        Completamente quieto.</p>
+
+        <p>Declara: “Me rindo a la transformación.”</p>
+
+        <p>Siente el vórtice girando a tu alrededor.<br>
+        No tienes que hacer nada con él.<br>
+        Desde el centro, solo mira.</p>
+
+        <p>Cuando estés listo, camina hacia afuera en espiral.<br>
+        Vuelta tras vuelta.<br>
+        Integrando.<br>
+        Emergiendo.</p>
+
+        <p>Algo se movió.<br>
+        La transformación ya empezó, a su ritmo.<br>
+        Lo viejo se despide en el centro.<br>
+        Lo nuevo nace en la espiral.</p>
+
+        <h4>EL REGALO DEL VÓRTICE</h4>
+
+        <p>Ninguna crisis se elige, y ninguna se desea. Pero muchos encuentran, del otro lado, un regalo que no buscaban:</p>
+        <ul>
+          <li>Una transformación que no habrían emprendido solos</li>
+          <li>Un crecimiento que nadie les pidió</li>
+          <li>Un renacimiento</li>
+          <li>Una liberación</li>
+          <li>Un yo más amplio</li>
+        </ul>
+
+        <p>Sin vórtices, nada cambiaría de lugar. Quien sale de uno a veces lo dice así: fue como si la vida se negara a dejarme pequeño.</p>
+
+        <h4>EL VÓRTICE ETERNO</h4>
+
+        <p>La verdad última sobre los vórtices:<br>
+        Toda tu vida es un vórtice.<br>
+        Naciste a través de un vórtice.<br>
+        Morirás a través de un vórtice.<br>
+        Entre medio, navegas vórtice tras vórtice.</p>
+
+        <p>Eres un vórtice de consciencia<br>
+        en el océano del ser.<br>
+        Un remolino único<br>
+        en el río de la existencia.</p>
+
+        <p>Y cuando finalmente entiendas<br>
+        que no estás EN el vórtice<br>
+        sino que ERES el vórtice,<br>
+        encontrarás la paz<br>
+        en el centro<br>
+        del giro eterno.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“Los vórtices no son obstáculos en tu camino. Son el camino mismo, girando hacia tu transformación.”</p>
+        </div>
+
+        <p class="signature"><strong>— Trinity Quantum · Campos de Torsión</strong></p>
+
+        <aside class="puerta arquitectura" aria-label="Puerta hacia Arquitectura del Destino">
+          <p class="p-nombre">Puerta</p>
+          <p class="p-texto">Del otro lado, en <em>El Peso</em>, un viejo nada en una catarata donde ni los peces se atreven: entra con el remolino hasta el centro y sale con el agua que vuelve a subir.</p>
+          <a class="cruzar" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/02_Arquitectura_del_Destino/libro-08-el-peso/L08-U6.html">Cruzar ⟶</a>
+        </aside>
+
+      </section>
+<!-- ===========================
+     PARTE C · CIERRE + NAVEGACIÓN
+     =========================== -->
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_01.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="index.html">Volver al Índice ⟶</a>
+            <a class="btn primary" href="nodo_03.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 10 · Campos de Torsión · Nodo 2</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

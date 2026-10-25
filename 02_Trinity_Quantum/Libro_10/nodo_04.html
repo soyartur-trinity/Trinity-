@@ -1,0 +1,827 @@
+<!-- ===========================
+     PARTE A · ENCABEZADO
+     =========================== -->
+<!doctype html>
+<!-- Depurado en octubre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4), con el veto de Arturo en cada nodo. El original se conserva en la etiqueta quantum-original del repositorio. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 10 · Campos de Torsión — Nodo 4</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+  <style>
+    /* ============================================================
+       Depuración · octubre 2026
+       Letra más grande en el teléfono y bloque fijo de las puertas.
+       La puerta lleva el color de la serie a la que conduce.
+       ============================================================ */
+    .puerta{
+      margin: 26px 0 8px;
+      padding: 18px 20px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--p-borde);
+      background: var(--p-fondo);
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    }
+    .puerta.arquitectura{
+      --p-fondo: linear-gradient(180deg, rgba(6,13,26,.94), rgba(6,13,26,.74));
+      --p-borde: rgba(168,196,224,.42);
+      --p-acento: #a8c4e0;
+      --p-texto: #e8eef6;
+    }
+    .puerta.portal{
+      --p-fondo: linear-gradient(180deg, rgba(13,12,11,.94), rgba(13,12,11,.74));
+      --p-borde: rgba(201,168,76,.42);
+      --p-acento: #c9a84c;
+      --p-texto: #e8e0d0;
+    }
+    .content .puerta .p-nombre{
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-style: italic;
+      letter-spacing: .06em;
+      color: var(--p-acento);
+    }
+    .content .puerta .p-texto{
+      margin: 0 0 14px;
+      color: var(--p-texto);
+    }
+    .puerta .cruzar{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--p-borde);
+      color: var(--p-acento);
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .puerta .cruzar:hover{ border-color: var(--p-acento); background: rgba(255,255,255,.04); }
+    .puerta .cruzar:focus-visible{ outline: 2px solid var(--p-acento); outline-offset: 3px; }
+
+    @media (max-width: 640px){
+      .content p, .content li{ font-size: 18px; line-height: 1.7; }
+      .content p.signature{ font-size: 15px; }
+      .puerta{ padding: 16px 16px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .puerta .cruzar{ transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 10 · Campos de Torsión · Nodo 4</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="nodo_03.html">⟵ Nodo anterior</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 10 · CAMPOS DE TORSIÓN</p>
+        <h1 class="node">Nodo 4 · Campos Torsionales del Corazón</h1>
+        <p class="subnode">El Vórtice Maestro</p>
+      </header>
+      <!-- ===========================
+           PARTE B · CONTENIDO
+           (Markdown convertido a HTML)
+           =========================== -->
+      <section class="content">
+
+        <h4>EL VÓRTICE MAESTRO</h4>
+
+        <p>Tu corazón no es solo una bomba. Es un vórtice. En cada latido, el ventrículo izquierdo se retuerce: visto desde la punta, la base gira en el sentido de las agujas del reloj y la punta en el contrario, como quien escurre un paño. Al soltarse, esa torsión aspira la sangre del latido siguiente, y la que entra forma dentro un remolino anular que la orienta hacia la salida. Leonardo da Vinci, hacia 1513, ya había dibujado los torbellinos de la sangre junto a la válvula aórtica; más de cuatro siglos después, los experimentos y la resonancia magnética los encontraron donde él los puso.</p>
+
+        <p>Y no solo mueve sangre. Su campo eléctrico es el más intenso del cuerpo: llega a la piel de las muñecas y los tobillos, y por eso existe el electrocardiograma.</p>
+
+        <p>Tu corazón es:</p>
+        <ul>
+          <li>El sol de tu sistema personal</li>
+          <li>El agujero negro de tu amor</li>
+          <li>El portal entre dimensiones</li>
+          <li>El trono de tu consciencia</li>
+          <li>El vórtice donde Dios entra en ti</li>
+        </ul>
+
+        <p>Has sentido los campos torsionales de tu corazón cuando:</p>
+        <ul>
+          <li>El amor te hizo sentir que girabas sin moverte</li>
+          <li>Tu pecho se convirtió en un portal de calor infinito</li>
+          <li>Pensaste en alguien lejano y se te llenó el pecho</li>
+          <li>Tu amor cambió la atmósfera de un lugar</li>
+          <li>El tiempo se detuvo en un momento de apertura total del corazón</li>
+        </ul>
+
+        <h4>LA GEOMETRÍA TOROIDAL DEL CORAZÓN</h4>
+
+        <p>Imagina el campo de tu corazón como un anillo de luz, con la forma de un anillo de humo, que sale y vuelve a entrar:</p>
+        <ul>
+          <li>Gira hacia adentro por el frente</li>
+          <li>Sale por la espalda</li>
+          <li>Vuelve a entrar por el frente</li>
+          <li>Crea una circulación que no cesa mientras vives</li>
+          <li>Sostiene tu centro</li>
+        </ul>
+
+        <p>Ese anillo respira con lo que sientes:</p>
+        <ul>
+          <li>Se abre cuando amas</li>
+          <li>Se ensancha en la confianza</li>
+          <li>Se encoge con el miedo</li>
+          <li>Se cierra cuando algo duele demasiado</li>
+          <li>Y con el tiempo vuelve a abrirse</li>
+        </ul>
+
+        <p>Es tu manera de estar entre otros. Lo que tu corazón siente se asoma al gesto y a la voz, y quienes se acercan lo perciben.</p>
+
+        <h4>LOS RITMOS DEL CORAZÓN</h4>
+
+        <p>Tu corazón tiene múltiples ritmos:</p>
+
+        <p><strong>Ritmo Físico:</strong> 60-100 latidos/minuto</p>
+        <ul>
+          <li>Mueve sangre</li>
+          <li>Mantiene vida biológica</li>
+          <li>Crea pulso electromagnético</li>
+          <li>Base de todos los otros ritmos</li>
+        </ul>
+
+        <p><strong>Ritmo Emocional:</strong> Variable</p>
+        <ul>
+          <li>Acelera con excitación</li>
+          <li>Desacelera con calma</li>
+          <li>Se agita con el miedo</li>
+          <li>Se calma con el afecto</li>
+          <li>Crea el clima emocional</li>
+        </ul>
+
+        <p><strong>Ritmo Compartido:</strong> Con los otros</p>
+        <ul>
+          <li>Se acompasa con el de quienes están cerca</li>
+          <li>En un coro, en un ritual, en un abrazo largo</li>
+          <li>Sin palabras</li>
+          <li>Sin proponérselo</li>
+        </ul>
+
+        <p><strong>Ritmo de la Vida Entera:</strong> De principio a fin</p>
+        <ul>
+          <li>Empezó a latir unas semanas después de la concepción</li>
+          <li>Late unos tres mil millones de veces en una vida larga</li>
+          <li>Se aquieta en el sueño</li>
+          <li>Baja su ritmo de la infancia a la adultez</li>
+        </ul>
+
+        <h4>LA COHERENCIA CARDÍACA</h4>
+
+        <p>Cuando respiras despacio, unas seis veces por minuto, el pulso empieza a subir y bajar con el aire en una ola suave y regular: se acelera un poco al inhalar y se aquieta al soltar. Los investigadores la llaman coherencia, o respiración de resonancia, y la estudian desde hace décadas.</p>
+
+        <p>Cómo crear coherencia:</p>
+        <ol>
+          <li>Respira como si el aire entrara y saliera por el pecho</li>
+          <li>Inhala en cuatro tiempos y suelta en seis</li>
+          <li>Trae un sentimiento cálido (gratitud, cariño, compasión)</li>
+          <li>Mantén de tres a cinco minutos</li>
+          <li>Deja que el ritmo se asiente solo</li>
+        </ol>
+
+        <p>En coherencia cardíaca:</p>
+        <ul>
+          <li>Te serenas</li>
+          <li>El pensamiento se aclara</li>
+          <li>La ansiedad baja, según los estudios de biorretroalimentación</li>
+          <li>Escuchas mejor</li>
+          <li>Vuelves al centro</li>
+        </ul>
+
+        <h4>EL CORAZÓN COMO CEREBRO</h4>
+
+        <p>Tu corazón tiene su propia red de neuronas: unas cuarenta mil en un adulto, según el recuento de Dainius Pauza en 2000, y más del doble en los niños. J. Andrew Armour la llamó el “pequeño cerebro del corazón”. Ajusta el latido por su cuenta, sin esperar órdenes. Por el nervio vago, que lo une al cerebro, la mayoría de las fibras suben en lugar de bajar. Y lo que el corazón hace se vuelve sentimiento: Antonio Damasio llamó marcadores somáticos a esas señales del cuerpo que tiñen las decisiones.</p>
+
+        <p>Por eso el corazón:</p>
+        <ul>
+          <li>Siente antes de pensar</li>
+          <li>Sabe sin argumentos</li>
+          <li>Ama sin razón</li>
+        </ul>
+
+        <p>Pascal lo escribió en sus <em>Pensamientos</em>: el corazón tiene razones que la razón no conoce.</p>
+
+        <h4>LOS TRES VÓRTICES DEL CORAZÓN</h4>
+
+        <p>Dentro del corazón hay tres vórtices anidados:</p>
+
+        <p><strong>Vórtice Exterior:</strong> Corazón personal</p>
+        <ul>
+          <li>Tus emociones individuales</li>
+          <li>Tus relaciones cercanas</li>
+          <li>Tu amor humano</li>
+          <li>Gira en sentido horario</li>
+          <li>Color: Verde esmeralda</li>
+        </ul>
+
+        <p><strong>Vórtice Medio:</strong> Corazón transpersonal</p>
+        <ul>
+          <li>Amor por la humanidad</li>
+          <li>Compasión universal</li>
+          <li>Servicio desinteresado</li>
+          <li>Gira en sentido antihorario</li>
+          <li>Color: Rosa dorado</li>
+        </ul>
+
+        <p><strong>Vórtice Interior:</strong> Corazón cósmico</p>
+        <ul>
+          <li>Amor incondicional puro</li>
+          <li>Unión con la Fuente</li>
+          <li>Consciencia crística</li>
+          <li>Gira en todas direcciones</li>
+          <li>Color: Blanco diamante</li>
+        </ul>
+
+        <p>Cuando los tres vórtices se alinean,<br>
+        el corazón se vuelve una puerta abierta.</p>
+
+        <h4>EL LENGUAJE DEL CORAZÓN</h4>
+
+        <p>Tu corazón habla a través de sus campos:</p>
+
+        <p><strong>Expansión:</strong> “Sí, esto resuena”<br>
+        <strong>Contracción:</strong> “No, esto no sirve”<br>
+        <strong>Aceleración:</strong> “Presta atención”<br>
+        <strong>Calma:</strong> “Todo está bien”<br>
+        <strong>Calor:</strong> “Amor presente”<br>
+        <strong>Frío:</strong> “Desconexión”<br>
+        <strong>Presión:</strong> “Algo necesita expresarse”<br>
+        <strong>Ligereza:</strong> “Alineación perfecta”</p>
+
+        <p>Aprende a leer tu corazón. Es tu brújula interior: no decide por ti, pero te dice hacia dónde mirar. Y cuando el pecho aprieta, duele o el latido se desboca sin motivo, la brújula pide un médico, no una interpretación.</p>
+
+        <h4>PARA HABITAR EL CORAZÓN</h4>
+
+        <p><strong>Ejercicio: El Anillo de Luz</strong></p>
+
+        <p>Siéntate cómodo, mano en el corazón. Respira profundamente hacia el centro del pecho.</p>
+
+        <p>Visualiza una esfera de luz dorada en tu corazón. Con cada latido, se expande. Con cada respiración, gira a su ritmo.</p>
+
+        <p>Ahora ve cómo la esfera se convierte en toroide:</p>
+        <ul>
+          <li>La energía sale por tu espalda</li>
+          <li>Hace un arco sobre tu cabeza</li>
+          <li>Entra por tu frente</li>
+          <li>Atraviesa tu corazón</li>
+          <li>Sale por tu espalda nuevamente</li>
+        </ul>
+
+        <p>Deja que el flujo encuentre su ritmo: cuatro tiempos al tomar aire, seis al soltarlo. Siente el anillo expandiéndose. Girando. Abrazando. Creando.</p>
+
+        <p>Ahora activa un sentimiento de amor puro.<br>
+        Por alguien.<br>
+        Por algo.<br>
+        Por todo.</p>
+
+        <p>Observa cómo el campo se ilumina. Se expande. Toca todo a tu alrededor. Bendice todo lo que toca.</p>
+
+        <p>Mantén cinco minutos. Eres un vórtice de amor. Tu corazón está dando forma a este momento.</p>
+
+        <h4>EL CORAZÓN COLECTIVO</h4>
+
+        <p>Tu corazón no late solo:</p>
+        <ul>
+          <li>Se acompasa con otros corazones</li>
+          <li>Forma redes de calma</li>
+          <li>Crea atmósferas de grupo</li>
+          <li>Toca el ánimo de una comunidad</li>
+          <li>Participa del pulso de todo lo vivo</li>
+        </ul>
+
+        <p>Se ha medido: en un coro, los corazones de los cantores se aceleran y se frenan juntos, guiados por la respiración del canto; en un pueblo de Soria, la noche de San Juan, los allegados de quien cruza las brasas laten con él, y los visitantes que no lo conocen, no.</p>
+
+        <p>Cuando muchos corazones se aquietan juntos:</p>
+        <ul>
+          <li>El miedo circula menos</li>
+          <li>Quien llega agitado encuentra dónde calmarse</li>
+          <li>Un grupo puede sostener a uno de los suyos</li>
+          <li>La realidad compartida cambia de tono</li>
+          <li>La ternura se vuelve contagiosa</li>
+        </ul>
+
+        <p>Ese es el poder de la meditación en grupo, de la oración en común, del amor de muchos.</p>
+
+        <h4>ACOMPAÑAR DESDE EL CORAZÓN</h4>
+
+        <p>Tu corazón acompaña cualquier tratamiento y no lo reemplaza, pero puede estar con quien sufre, cerca o lejos. La tradición budista lo llama <em>metta</em>: desear el bien.</p>
+        <ol>
+          <li>Entra en coherencia</li>
+          <li>Piensa en quien necesita compañía</li>
+          <li>Siente afecto por esa persona</li>
+          <li>Desea su bien con palabras simples: que estés en paz, que no te sientas solo</li>
+          <li>No fuerces: solo ama</li>
+          <li>Y después, si puedes, haz algo: una llamada, una visita, un mensaje</li>
+          <li>Suelta y confía</li>
+        </ol>
+
+        <p>Tu amor ES compañía. Tu calma ES refugio. Tu presencia ES el vehículo.</p>
+
+        <h4>EL CORAZÓN COMO PORTAL</h4>
+
+        <p>En estados de amor profundo, el corazón se convierte en portal:</p>
+        <ul>
+          <li>Portal entre tiempos</li>
+          <li>Portal entre almas</li>
+          <li>Portal hacia la Fuente</li>
+        </ul>
+
+        <p>Por eso el amor puede:</p>
+        <ul>
+          <li>Trascender la muerte</li>
+          <li>Unir a través de distancias</li>
+          <li>Consolar lo que no se cura</li>
+          <li>Abrir el cielo</li>
+        </ul>
+
+        <h4>EL SECRETO DEL GIRO CERO</h4>
+
+        <p>En el centro exacto del vórtice de tu corazón<br>
+        existe un punto de giro cero:</p>
+        <ul>
+          <li>No hay movimiento</li>
+          <li>No hay tiempo</li>
+          <li>No hay espacio</li>
+          <li>Solo SER puro</li>
+          <li>Solo AMOR puro</li>
+        </ul>
+
+        <p>Este es el sanctasanctórum de tu templo interior. El trono donde la divinidad se sienta. El punto donde eres uno con Todo.</p>
+
+        <p>Encontrar este punto es encontrar a Dios en ti. Mantenerlo es mantener el cielo en la tierra. Ser este punto es la iluminación.</p>
+
+        <h4>EL CORAZÓN DEL FUTURO</h4>
+
+        <p>Muchos sueñan con una humanidad que aprenda:</p>
+        <ul>
+          <li>La calma compartida</li>
+          <li>La conversación de corazón a corazón</li>
+          <li>Decisiones que escuchen también al cuerpo</li>
+          <li>Técnicas al servicio del cuidado</li>
+          <li>Una civilización del corazón</li>
+        </ul>
+
+        <p>El corazón ya se mide: el electrocardiograma tiene más de un siglo, y la variación del pulso se usa hoy en la medicina y en el deporte.</p>
+
+        <p>Pero no necesitas esperar. Tu corazón ya sabe hacerlo. Ya es este portal. Ya es esta fuerza.</p>
+
+        <h4>LA INVITACIÓN DEL CORAZÓN</h4>
+
+        <p>Tu corazón te invita:</p>
+        <ul>
+          <li>A girar en amor</li>
+          <li>A crear desde el vórtice</li>
+          <li>A cuidar desde tu calma</li>
+          <li>A conectar más allá del espacio</li>
+          <li>A ser el cambio torsional</li>
+        </ul>
+
+        <p>Cada latido es una oportunidad. Cada respiración, un regreso. Cada momento de amor, una revolución.</p>
+
+        <p>Tu corazón no es solo un órgano. Es un vórtice de creación. Un campo de torsión divino. Un portal del amor infinito.</p>
+
+        <p>Úsalo.<br>
+        Confía en él.<br>
+        Sé él.</p>
+
+        <p>Y observa cómo tu mundo<br>
+        —y el mundo—<br>
+        gira hacia el amor<br>
+        latido a latido,<br>
+        vórtice a vórtice,<br>
+        corazón<br>
+        a<br>
+        corazón.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“El corazón es el vórtice maestro donde el amor se convierte en realidad y la realidad se convierte en amor.”</p>
+        </div>
+
+        <p class="signature"><strong>— Trinity Quantum · Campos de Torsión</strong></p>
+
+        <aside class="puerta portal" aria-label="Puerta hacia el Portal Público">
+          <p class="p-nombre">Puerta</p>
+          <p class="p-texto">Del otro lado, en <em>Los muchos</em>, la historia completa: quince estudiantes que cantan en Gotemburgo y un pueblo que mira a los suyos cruzar el fuego.</p>
+          <a class="cruzar" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/01_Libros/35_Los_Muchos/umbral-03.html">Cruzar ⟶</a>
+        </aside>
+
+      </section>
+<!-- ===========================
+     PARTE C · CIERRE + NAVEGACIÓN
+     =========================== -->
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_03.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="index.html">Volver al Índice ⟶</a>
+            <a class="btn primary" href="nodo_05.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 10 · Campos de Torsión · Nodo 4</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

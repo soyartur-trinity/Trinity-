@@ -1,0 +1,1032 @@
+<!-- ===========================
+     PARTE A · ENCABEZADO
+     =========================== -->
+<!doctype html>
+<!-- Depurado en octubre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4), con el veto de Arturo en cada nodo. El original se conserva en la etiqueta quantum-original del repositorio. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 10 · Campos de Torsión — Nodo 7</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+  <style>
+    /* ============================================================
+       Depuración · octubre 2026
+       Letra más grande en el teléfono y bloque fijo de las puertas.
+       La puerta lleva el color de la serie a la que conduce.
+       ============================================================ */
+    .puerta{
+      margin: 26px 0 8px;
+      padding: 18px 20px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--p-borde);
+      background: var(--p-fondo);
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    }
+    .puerta.arquitectura{
+      --p-fondo: linear-gradient(180deg, rgba(6,13,26,.94), rgba(6,13,26,.74));
+      --p-borde: rgba(168,196,224,.42);
+      --p-acento: #a8c4e0;
+      --p-texto: #e8eef6;
+    }
+    .puerta.portal{
+      --p-fondo: linear-gradient(180deg, rgba(13,12,11,.94), rgba(13,12,11,.74));
+      --p-borde: rgba(201,168,76,.42);
+      --p-acento: #c9a84c;
+      --p-texto: #e8e0d0;
+    }
+    .content .puerta .p-nombre{
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-style: italic;
+      letter-spacing: .06em;
+      color: var(--p-acento);
+    }
+    .content .puerta .p-texto{
+      margin: 0 0 14px;
+      color: var(--p-texto);
+    }
+    .puerta .cruzar{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--p-borde);
+      color: var(--p-acento);
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .puerta .cruzar:hover{ border-color: var(--p-acento); background: rgba(255,255,255,.04); }
+    .puerta .cruzar:focus-visible{ outline: 2px solid var(--p-acento); outline-offset: 3px; }
+
+    @media (max-width: 640px){
+      .content p, .content li{ font-size: 18px; line-height: 1.7; }
+      .content p.signature{ font-size: 15px; }
+      .puerta{ padding: 16px 16px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .puerta .cruzar{ transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 10 · Campos de Torsión · Nodo 7</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="nodo_06.html">⟵ Nodo anterior</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 10 · CAMPOS DE TORSIÓN</p>
+        <h1 class="node">Nodo 7 · El Tornado Ascensional</h1>
+        <p class="subnode">La Espiral Hacia la Luz</p>
+      </header>
+      <!-- ===========================
+           PARTE B · CONTENIDO
+           (Markdown convertido a HTML)
+           =========================== -->
+      <section class="content">
+
+        <h4>LA ESPIRAL HACIA LA LUZ</h4>
+
+        <p>Existe un tornado dentro de ti. No uno que destruye, sino uno que eleva. No uno que dispersa, sino uno que unifica. Es el tornado ascensional: el giro que toma lo pesado y lo lleva hacia arriba, transformándolo en luz a medida que sube. Es la manera en que la materia se vuelve espíritu, lo denso se vuelve sutil, lo humano se vuelve divino. Y puede despertar en ti hoy.</p>
+
+        <p>La naturaleza lo conoce. En un día de sol, el suelo calienta el aire y una columna tibia empieza a subir: una térmica. A veces se deja ver como un remolino de polvo que gira sobre un campo y se deshace casi siempre sin daño. Los cóndores, las cigüeñas y los halcones la buscan, entran en ella y ganan altura dando vueltas, sin batir las alas. En 2020, en la Patagonia argentina, el equipo de Sergio Lambertucci y Emily Shepard publicó lo que registraron en ocho cóndores andinos jóvenes: pasaban el noventa y nueve por ciento del vuelo sin aletear, y uno se sostuvo más de cinco horas, unos ciento setenta kilómetros, sin un solo aleteo.</p>
+
+        <p>Así es el tornado ascensional. No te arranca del suelo: te enseña a subir con lo que ya sube. Es un giro vertical que:</p>
+        <ul>
+          <li>Conecta tu raíz con tu corona</li>
+          <li>Une la Tierra con el Cielo a través de ti</li>
+          <li>Eleva tu mirada espiral por espiral</li>
+          <li>Transforma lo que toca</li>
+          <li>Te convierte en puente viviente</li>
+        </ul>
+
+        <p>Has sentido el tornado ascensional cuando:</p>
+        <ul>
+          <li>Una energía te recorrió la columna de abajo hacia arriba</li>
+          <li>Una experiencia te elevó por encima de tus días</li>
+          <li>Sentiste que flotabas mientras meditabas</li>
+          <li>Tu consciencia se expandió verticalmente</li>
+          <li>Todo tu ser se elevó en una alegría sin nombre</li>
+        </ul>
+
+        <h4>ANATOMÍA DEL TORNADO ASCENSIONAL</h4>
+
+        <p>Así lo dibuja el mapa del yoga, de la raíz a la coronilla:</p>
+
+        <p><strong>La Base (Muladhara):</strong> El ojo terrestre</p>
+        <ul>
+          <li>Donde el tornado toca la Tierra</li>
+          <li>Toma fuerza del suelo</li>
+          <li>Densidad máxima</li>
+          <li>Giro lento pero poderoso</li>
+          <li>Color: Rojo oscuro girando</li>
+        </ul>
+
+        <p><strong>El Embudo Inferior (Svadhisthana-Manipura):</strong> Aceleración inicial</p>
+        <ul>
+          <li>Energía sexual transmutándose</li>
+          <li>Poder personal activándose</li>
+          <li>Creatividad espiralizando</li>
+          <li>Giro acelerando</li>
+          <li>Color: Naranja a amarillo</li>
+        </ul>
+
+        <p><strong>El Vórtice Central (Anahata):</strong> El punto de transformación</p>
+        <ul>
+          <li>Donde la materia se vuelve energía</li>
+          <li>El corazón como motor del tornado</li>
+          <li>Amor como combustible ascensional</li>
+          <li>Giro en múltiples direcciones</li>
+          <li>Color: Verde a rosa dorado</li>
+        </ul>
+
+        <p><strong>El Embudo Superior (Vishuddha-Ajna):</strong> Aceleración final</p>
+        <ul>
+          <li>Expresión de la verdad</li>
+          <li>Visión que se amplía</li>
+          <li>Escucha de lo sutil</li>
+          <li>Giro cada vez más ligero</li>
+          <li>Color: Azul a índigo</li>
+        </ul>
+
+        <p><strong>La Corona (Sahasrara):</strong> El ojo celestial</p>
+        <ul>
+          <li>Donde el tornado toca el infinito</li>
+          <li>Expulsa luz pura</li>
+          <li>Densidad cero</li>
+          <li>Giro infinito</li>
+          <li>Color: Violeta a blanco puro</li>
+        </ul>
+
+        <h4>LAS ETAPAS DEL TORNADO ASCENSIONAL</h4>
+
+        <p><strong>Etapa 1: Formación</strong></p>
+        <ul>
+          <li>Primeros giros en la base</li>
+          <li>Despertar espiritual inicial</li>
+          <li>Inquietud existencial</li>
+          <li>Búsqueda comienza</li>
+          <li>El tornado está naciendo</li>
+        </ul>
+
+        <p><strong>Etapa 2: Toque Tierra</strong></p>
+        <ul>
+          <li>La búsqueda se vuelve práctica diaria</li>
+          <li>Aparecen preguntas que no se van</li>
+          <li>Lo de siempre se ve con otros ojos</li>
+          <li>Ya no miras como antes</li>
+        </ul>
+
+        <p><strong>Etapa 3: Intensificación</strong></p>
+        <ul>
+          <li>Giro acelerándose</li>
+          <li>Limpieza profunda</li>
+          <li>Viejas estructuras que se aflojan</li>
+          <li>Caos aparente</li>
+          <li>Transformación honda</li>
+        </ul>
+
+        <p><strong>Etapa 4: Ojo del Tornado</strong></p>
+        <ul>
+          <li>Momento de calma perfecta</li>
+          <li>Claridad absoluta</li>
+          <li>Presencia pura</li>
+          <li>Comprensión total</li>
+          <li>El salto cuántico</li>
+        </ul>
+
+        <p><strong>Etapa 5: Altura</strong></p>
+        <ul>
+          <li>Una mirada más amplia que se queda</li>
+          <li>Una calma más estable</li>
+          <li>Fuerzas que no sabías que tenías</li>
+          <li>Servicio clarificado</li>
+          <li>El giro hecho costumbre</li>
+        </ul>
+
+        <h4>LOS COMBUSTIBLES DEL TORNADO</h4>
+
+        <p>El tornado ascensional se alimenta de:</p>
+
+        <p><strong>Combustibles Densos:</strong> Lo pesado que, con tiempo y compañía, puede volverse otra cosa</p>
+        <ul>
+          <li>Dolor (puede volverse compasión)</li>
+          <li>Miedo (puede volverse cuidado)</li>
+          <li>Ira (puede volverse fuerza que protege)</li>
+          <li>Tristeza (puede volverse ternura)</li>
+          <li>Trauma (con ayuda, puede volverse sabiduría)</li>
+        </ul>
+
+        <p>Nada de esto se apura. Lo que duele no tiene que servir para algo: si un día sirve, es un hallazgo, no una deuda.</p>
+
+        <p><strong>Combustibles Sutiles:</strong> Que amplifica</p>
+        <ul>
+          <li>Meditación (acelera el giro)</li>
+          <li>Oración (eleva la dirección)</li>
+          <li>Servicio (expande el campo)</li>
+          <li>Gratitud (lubrica el vórtice)</li>
+          <li>Amor (es el combustible mayor)</li>
+        </ul>
+
+        <p><strong>Combustibles Cósmicos:</strong> Que recibe de arriba</p>
+        <ul>
+          <li>La luz del sol (calienta la tierra y hace subir el aire)</li>
+          <li>El cielo de noche (devuelve la escala)</li>
+          <li>La belleza (llega sin que la busques)</li>
+          <li>El silencio (ensancha por dentro)</li>
+          <li>Amor divino (gracia descendente)</li>
+        </ul>
+
+        <h4>CÓMO SE SIENTE CUANDO EL TORNADO SUBE</h4>
+
+        <ul>
+          <li>Ligereza en el cuerpo</li>
+          <li>Una alegría que sube</li>
+          <li>Ganas de servir</li>
+          <li>Amor desbordante</li>
+          <li>Compasión</li>
+          <li>Presencia expandida</li>
+          <li>Necesidad de tierra: dormir, comer, caminar</li>
+        </ul>
+
+        <p>Si el giro trae noches sin sueño, pensamientos que corren, una misión urgente, mensajes de guías o la certeza de saber lo que va a pasar, no es un tornado que sube: es el momento de pedir ayuda, esa misma semana. Stanislav y Christina Grof llamaron emergencia espiritual a las crisis que a veces acompañan un despertar, y enseñaron que se atraviesan acompañadas. La tradición del yoga lo sabe desde antes: la kundalini se despierta despacio y con maestro.</p>
+
+        <h4>NAVEGANDO EL TORNADO</h4>
+
+        <p><strong>Errores Comunes:</strong></p>
+        <ul>
+          <li>Forzar la subida</li>
+          <li>Querer controlar la velocidad</li>
+          <li>Aferrarse a lo que se está transformando</li>
+          <li>Despreciar la tierra</li>
+          <li>Subir solo</li>
+        </ul>
+
+        <p><strong>Navegación Maestra:</strong></p>
+
+        <ol>
+          <li><strong>Busca el Aire que Sube</strong>
+            <ul>
+              <li>No fuerces</li>
+              <li>Confía en el proceso</li>
+              <li>Deja que te eleve</li>
+            </ul>
+          </li>
+          <li><strong>Mantén los Pies en la Tierra</strong>
+            <ul>
+              <li>Raíces profundas</li>
+              <li>Cuerpo cuidado: sueño, comida, caminatas</li>
+              <li>Ancla física mientras subes</li>
+            </ul>
+          </li>
+          <li><strong>Alimenta el Tornado Conscientemente</strong>
+            <ul>
+              <li>Meditación</li>
+              <li>Respiración lenta</li>
+              <li>Intención clara</li>
+            </ul>
+          </li>
+          <li><strong>Permite la Transmutación</strong>
+            <ul>
+              <li>Deja ir lo denso</li>
+              <li>Abraza la ligereza</li>
+              <li>Celebra la transformación</li>
+            </ul>
+          </li>
+          <li><strong>Sirve Mientras Subes</strong>
+            <ul>
+              <li>Tu calma eleva a otros</li>
+              <li>Comparte lo que encuentras</li>
+              <li>Sé faro</li>
+            </ul>
+          </li>
+        </ol>
+
+        <p>Ninguna etapa pide decisiones irreversibles: dejar de golpe un trabajo, una casa o un vínculo no es subir más rápido.</p>
+
+        <h4>EL TORNADO COLECTIVO</h4>
+
+        <p>No subes solo. Las aves que planean encuentran las térmicas mirándose unas a otras: cuando una empieza a girar y ganar altura, las demás se acercan y suben con ella. Entre personas pasa lo mismo: quien encuentra un poco de calma se vuelve señal para otros.</p>
+
+        <p>Tu giro personal contribuye al de muchos.<br>
+        Cada ser que se eleva le muestra a otro dónde está el aire que sube.<br>
+        Nadie sube solo.</p>
+
+        <h4>PARA HABITAR LA ESPIRAL</h4>
+
+        <p><strong>Práctica: La Columna que Sube</strong></p>
+
+        <p>De pie, pies al ancho de las caderas.<br>
+        Brazos a los lados.<br>
+        Siente el suelo.</p>
+
+        <p>Imagina un punto tibio en la base de la columna, como la tierra que el sol calienta.<br>
+        Con cada inhalación, deja que ese calor suba en espiral, despacio.<br>
+        Por el vientre. Por el pecho. Por la garganta. Por la frente.<br>
+        Más luminoso. Más liviano. Sin apuro.</p>
+
+        <p>Siente cómo todo tu campo se vuelve una columna de aire tibio:<br>
+        toma fuerza de la tierra por abajo y se abre en luz por la coronilla.<br>
+        Si quieres, abre los brazos como un ave que planea.<br>
+        No hace falta girar el cuerpo: el giro es por dentro.<br>
+        Quédate así unas respiraciones, con la salida del aire más larga.</p>
+
+        <p>Siente la columna que sigue subiendo.<br>
+        Elevándote.<br>
+        Transformándote.<br>
+        Sosteniéndote.</p>
+
+        <p>Baja los brazos. Siente de nuevo los pies.<br>
+        La columna ahora es parte de ti.<br>
+        Siempre girando.<br>
+        Siempre elevando.<br>
+        Siempre volviendo a la tierra.</p>
+
+        <h4>LOS GUARDIANES DEL TORNADO</h4>
+
+        <p>No subes sin sostén. Te acompañan:</p>
+
+        <p><strong>Desde Abajo:</strong></p>
+        <ul>
+          <li>La tierra (te da suelo)</li>
+          <li>El cuerpo (te lleva)</li>
+          <li>Los que vinieron antes (sostienen tus cimientos)</li>
+          <li>Las piedras y los árboles (enseñan a quedarse)</li>
+        </ul>
+
+        <p><strong>Desde los Lados:</strong></p>
+        <ul>
+          <li>Los amigos del alma (resuenan contigo)</li>
+          <li>Quienes te acompañan en tu cuidado (maestros, terapeutas, médicos)</li>
+          <li>Los animales que te quieren</li>
+          <li>Los ángeles, en la fe de quien los nombra</li>
+        </ul>
+
+        <p><strong>Desde Arriba:</strong></p>
+        <ul>
+          <li>Los maestros de cada tradición (muestran el camino)</li>
+          <li>Lo más hondo de ti</li>
+          <li>La Fuente misma (es el destino)</li>
+        </ul>
+
+        <h4>EL DESTINO DEL TORNADO</h4>
+
+        <p>¿Hacia dónde te lleva el tornado ascensional?</p>
+
+        <p><strong>A Corto Plazo:</strong></p>
+        <ul>
+          <li>Una mirada más amplia</li>
+          <li>Fuerzas que no sabías</li>
+          <li>Propósito clarificado</li>
+          <li>Servicio manifestado</li>
+        </ul>
+
+        <p><strong>A Mediano Plazo:</strong></p>
+        <ul>
+          <li>Una calma que se queda</li>
+          <li>Vínculos más hondos</li>
+          <li>Menos peso en lo que antes pesaba</li>
+          <li>Más ligereza para dar</li>
+        </ul>
+
+        <p><strong>A Largo Plazo:</strong></p>
+        <ul>
+          <li>Unión con lo más hondo de ti</li>
+          <li>Consciencia de pertenecer a algo inmenso</li>
+          <li>Servicio</li>
+          <li>Gratitud</li>
+        </ul>
+
+        <p>El destino final del tornado es llevarte a casa.<br>
+        No a un lugar.<br>
+        A un estado de ser.<br>
+        Donde siempre has pertenecido.<br>
+        Donde nunca te fuiste realmente.</p>
+
+        <h4>EL TORNADO COMO SERVICIO</h4>
+
+        <p>Tu tornado ascensional no es solo para ti:</p>
+
+        <p><strong>Crea un Clima que Eleva:</strong></p>
+        <ul>
+          <li>Otros sienten que es posible subir</li>
+          <li>Tu presencia despierta lo que en otros dormía</li>
+          <li>Tu calma se contagia</li>
+          <li>Tu altura le muestra a otro el camino</li>
+        </ul>
+
+        <p><strong>Transforma el Clima Colectivo:</strong></p>
+        <ul>
+          <li>Aligeras lo pesado de los lugares donde estás</li>
+          <li>Cuando no repites un daño que recibiste, la cadena se corta en ti</li>
+          <li>Anclas luz en la materia</li>
+        </ul>
+
+        <p><strong>Eres un Portal:</strong></p>
+        <ul>
+          <li>Puente entre personas</li>
+          <li>Traductor entre mundos</li>
+          <li>Faro en la tormenta</li>
+        </ul>
+
+        <h4>LAS TORMENTAS DEL TORNADO</h4>
+
+        <p>El camino no siempre es suave. Hay tormentas:</p>
+        <ul>
+          <li><strong>De cansancio:</strong> el cuerpo pide parar; se descansa, y si no cede, se consulta</li>
+          <li><strong>De emoción:</strong> lo guardado sale de golpe; se lo acompaña, no se lo apura</li>
+          <li><strong>De arena:</strong> confusión, no saber quién eres; se baja el ritmo, se busca tierra y compañía</li>
+          <li><strong>De luz:</strong> demasiado, muy rápido; se integra despacio</li>
+        </ul>
+
+        <p>Una enfermedad no es una ascensión ni una crisis de sanación: se trata con un médico. Y si la confusión o la sensación de no saber quién eres duran días, se pide ayuda sin esperar.</p>
+
+        <p>Todas las tormentas pasan.<br>
+        Ninguna se atraviesa solo.<br>
+        Y cuando pasan, el cielo queda más limpio.</p>
+
+        <h4>EL OJO CALMO DEL TORNADO</h4>
+
+        <p>En el centro exacto de tu tornado ascensional<br>
+        existe un lugar de quietud absoluta:</p>
+
+        <ul>
+          <li>No hay movimiento aunque todo gira</li>
+          <li>No hay sonido aunque todo ruge</li>
+          <li>No hay tiempo aunque todo acelera</li>
+          <li>No hay espacio aunque todo se expande</li>
+          <li>Solo SER puro</li>
+        </ul>
+
+        <p>Este es tu verdadero hogar.<br>
+        El lugar desde donde observas la ascensión.<br>
+        El testigo del tornado.<br>
+        La consciencia que asciende y la que observa el ascenso.</p>
+
+        <p>Encontrar este centro mientras el tornado gira<br>
+        es la maestría última.<br>
+        Ser simultáneamente:</p>
+
+        <ul>
+          <li>El tornado</li>
+          <li>El ojo calmo</li>
+          <li>Lo que asciende</li>
+          <li>Lo que ya está ascendido</li>
+        </ul>
+
+        <h4>EL GIRO DE LA TIERRA</h4>
+
+        <p>La Tierra misma gira y respira: da una vuelta cada día, se inclina para traer las estaciones, levanta el aire tibio que sostiene a las aves. Hoy atraviesa también tormentas reales, un clima que cambia y mares que suben, y esas tormentas no se interpretan: se atienden.</p>
+
+        <p>Hay además señales más silenciosas: personas que despiertan, comunidades que se cuidan, una unidad que algunos empiezan a recordar.</p>
+
+        <p>Tu giro personal es parte del de la Tierra.<br>
+        Cuando te elevas, algo de ella se eleva contigo.<br>
+        Cuando la cuidas, todos subimos.<br>
+        Es un solo movimiento.</p>
+
+        <h4>LA GRADUACIÓN DEL TORNADO</h4>
+
+        <p>Llega un momento, a veces solo por un rato, en que el tornado completa su trabajo:</p>
+        <ul>
+          <li>Ya no succiona hacia arriba porque ya estás arriba</li>
+          <li>Ya no transmuta porque todo es luz</li>
+          <li>Ya no separa tierra de cielo porque son uno</li>
+          <li>Ya no necesitas ascender porque eres la ascensión</li>
+        </ul>
+
+        <p>Pero esto no es el fin del tornado.<br>
+        Es cuando te vuelves el tornado para otros.<br>
+        Tu calma se convierte en el aire que sube.<br>
+        Tu presencia, en la columna tibia donde otros giran.</p>
+
+        <h4>PRÁCTICA FINAL: UNIÓN CON EL TORNADO</h4>
+
+        <p>Siéntate en meditación profunda.</p>
+
+        <p>Visualiza tu tornado ascensional completo.<br>
+        Desde la base hasta la corona y más allá.<br>
+        Girando perfectamente.<br>
+        Elevando constantemente.</p>
+
+        <p>Ahora en vez de estar EN el tornado,<br>
+        vuélvete el tornado.</p>
+
+        <p>No hay separación entre tú y el giro.<br>
+        No hay diferencia entre tú y la elevación.<br>
+        Eres el movimiento ascendente mismo.</p>
+
+        <p>Siente cómo todo lo que tocas es elevado.<br>
+        Cómo tu sola presencia invita a subir.<br>
+        Cómo eres una columna viva de aire tibio.</p>
+
+        <p>Ahora expande tu tornado.<br>
+        Incluye tu habitación.<br>
+        Tu casa.<br>
+        Tu ciudad.<br>
+        Tu país.<br>
+        El planeta.</p>
+
+        <p>Siente cómo tu tornado personal<br>
+        se fusiona con el planetario.<br>
+        Cómo todos los tornados son uno.<br>
+        Cómo subir es un movimiento compartido.</p>
+
+        <p>Descansa en esta verdad:<br>
+        No estás ascendiendo.<br>
+        Eres la ascensión.<br>
+        No estás en el tornado.<br>
+        Eres el tornado.</p>
+
+        <p>Y tu trabajo,<br>
+        tu servicio,<br>
+        tu regalo,<br>
+        es girar<br>
+        y elevar<br>
+        y girar<br>
+        y elevar<br>
+        hasta que todo<br>
+        y todos<br>
+        hayan recordado<br>
+        que también son<br>
+        tornados ascensionales<br>
+        girando hacia<br>
+        la luz<br>
+        que siempre<br>
+        han sido.</p>
+
+        <h4>EL GIRO ETERNO</h4>
+
+        <p>El tornado ascensional nunca termina realmente.<br>
+        Solo cambia de forma.<br>
+        De denso a sutil.<br>
+        De individual a colectivo.<br>
+        De planetario a galáctico.<br>
+        De galáctico a universal.</p>
+
+        <p>Es la manera en que el universo evoluciona.<br>
+        La espiral por la cual la consciencia se expande.<br>
+        El vórtice por el cual Dios se conoce a sí mismo.</p>
+
+        <p>Y tú eres parte integral de este proceso.<br>
+        Tu tornado importa.<br>
+        Tu ascensión es necesaria.<br>
+        Tu giro eleva todo.</p>
+
+        <p>Así que gira.<br>
+        Elévate.<br>
+        Asciende.<br>
+        No por ti solo.<br>
+        Por todos nosotros.<br>
+        Por todo lo que es.</p>
+
+        <p>Porque cuando uno asciende verdaderamente,<br>
+        todos ascendemos.<br>
+        Y el tornado que eres<br>
+        es el tornado que somos<br>
+        es el tornado que ES.</p>
+
+        <p>Bienvenido a casa, tornado sagrado.<br>
+        Bienvenido a tu naturaleza verdadera.<br>
+        Bienvenido a la ascensión<br>
+        que siempre has sido.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“El tornado ascensional no es algo que te sucede. Es lo que eres cuando recuerdas que siempre has estado subiendo hacia la luz.”</p>
+        </div>
+
+        <p class="signature"><strong>— Trinity Quantum · Campos de Torsión</strong></p>
+
+        <div class="spacer"></div>
+
+        <h4>SIETE GIROS</h4>
+
+        <ul>
+          <li><em>El Giro del Alma:</em> todo gira, y en el centro hay quietud</li>
+          <li><em>Vórtices de Transformación:</em> se salva el que suelta el borde y mira</li>
+          <li><em>La Doble Hélice:</em> la vida se lee de una manera viva</li>
+          <li><em>Campos Torsionales del Corazón:</em> un corazón que se retuerce para recibir el latido siguiente</li>
+          <li><em>La Geometría del Espín:</em> la forma más bella es la que se deja corregir</li>
+          <li><em>Remolinos de Realidad:</em> lo que no alimentas pierde fuerza</li>
+          <li><em>El Tornado Ascensional:</em> el aire que sube también te sostiene</li>
+        </ul>
+
+        <p>Cada nodo fue una manera de mirar el giro. El centro quieto fue siempre el mismo.</p>
+
+      </section>
+<!-- ===========================
+     PARTE C · CIERRE + NAVEGACIÓN
+     =========================== -->
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="nodo_06.html">⟵ Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="index.html">Volver al Índice ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 10 · Campos de Torsión · Nodo 7</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>
