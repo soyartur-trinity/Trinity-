@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piezas Que Se Mueven Solas</title>
+    <!-- Adaptado al teléfono en octubre de 2026 para «Para ver» de La Corriente (Arquitectura del Destino, Libro 10):
+         invitación a tocar en tuteo y más legible; el campo y los recorridos de las piezas se miden en
+         proporción al lado del campo, de modo que las piezas no salen de la pantalla en un teléfono.
+         Las frases quedan intactas. -->
     <style>
         body {
             background: #000;
@@ -19,11 +23,11 @@
         }
 
         .autonomous-field {
+            /* lado del campo: 700px como máximo, y siempre dentro de la pantalla */
+            --s: min(700px, 96vw, 96vh);
             position: relative;
-            width: 700px;
-            height: 700px;
-            max-width: 96vw;
-            max-height: 96vh;
+            width: var(--s);
+            height: var(--s);
         }
 
         /* Antes animaba left/top (reflow) y background (paint).
@@ -31,22 +35,22 @@
            Orbes luminosos blancos, unificados con el resto de la serie. */
         .piece {
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: calc(var(--s) * 0.043);
+            height: calc(var(--s) * 0.043);
             border-radius: 50%;
             background: radial-gradient(circle, rgba(255,255,255,0.85), rgba(255,255,255,0.1));
             box-shadow: 0 0 22px 8px rgba(255,255,255,0.14);
-            left: var(--x0);
-            top: var(--y0);
+            left: calc(var(--x0) * var(--s));
+            top: calc(var(--y0) * var(--s));
             transform: translate(0, 0);
             animation: autonomous-move 20s infinite ease-in-out;
             animation-delay: calc(var(--piece) * -4s);
         }
         @keyframes autonomous-move {
             0%   { transform: translate(0, 0) scale(1); }
-            25%  { transform: translate(calc(var(--x1) - var(--x0)), calc(var(--y1) - var(--y0))) scale(1.2); }
-            50%  { transform: translate(calc(var(--x2) - var(--x0)), calc(var(--y2) - var(--y0))) scale(0.8); }
-            75%  { transform: translate(calc(var(--x3) - var(--x0)), calc(var(--y3) - var(--y0))) scale(1.1); }
+            25%  { transform: translate(calc((var(--x1) - var(--x0)) * var(--s)), calc((var(--y1) - var(--y0)) * var(--s))) scale(1.2); }
+            50%  { transform: translate(calc((var(--x2) - var(--x0)) * var(--s)), calc((var(--y2) - var(--y0)) * var(--s))) scale(0.8); }
+            75%  { transform: translate(calc((var(--x3) - var(--x0)) * var(--s)), calc((var(--y3) - var(--y0)) * var(--s))) scale(1.1); }
             100% { transform: translate(0, 0) scale(1); }
         }
 
@@ -97,6 +101,12 @@
         }
         .infinito:hover { color: rgba(255,255,255,0.85); }
 
+        @media (max-width: 600px) {
+            .no-mover      { font-size: 1.25em; letter-spacing: 0.3em; white-space: nowrap; }
+            .movement-text { font-size: 0.85em; letter-spacing: 0.1em; white-space: nowrap; }
+            .hint { font-size: 13px; letter-spacing: 2px; bottom: 66px; width: 90%; text-align: center; color: rgba(255,255,255,0.6); }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .piece         { animation: none; }
             .no-mover      { animation: none; opacity: 0.45; transform: translate(-50%, -50%); }
@@ -107,11 +117,11 @@
 </head>
 <body>
     <div class="autonomous-field">
-        <div class="piece" style="--piece: 0; --x0: 100px; --y0: 100px; --x1: 500px; --y1: 200px; --x2: 400px; --y2: 500px; --x3: 200px; --y3: 400px;"></div>
-        <div class="piece" style="--piece: 1; --x0: 600px; --y0: 100px; --x1: 400px; --y1: 300px; --x2: 100px; --y2: 400px; --x3: 300px; --y3: 200px;"></div>
-        <div class="piece" style="--piece: 2; --x0: 350px; --y0: 600px; --x1: 200px; --y1: 400px; --x2: 500px; --y2: 300px; --x3: 600px; --y3: 500px;"></div>
-        <div class="piece" style="--piece: 3; --x0: 100px; --y0: 350px; --x1: 600px; --y1: 350px; --x2: 350px; --y2: 100px; --x3: 350px; --y3: 600px;"></div>
-        <div class="piece" style="--piece: 4; --x0: 500px; --y0: 500px; --x1: 100px; --y1: 100px; --x2: 600px; --y2: 600px; --x3: 100px; --y3: 600px;"></div>
+        <div class="piece" style="--piece: 0; --x0: 0.143; --y0: 0.143; --x1: 0.714; --y1: 0.286; --x2: 0.571; --y2: 0.714; --x3: 0.286; --y3: 0.571;"></div>
+        <div class="piece" style="--piece: 1; --x0: 0.857; --y0: 0.143; --x1: 0.571; --y1: 0.429; --x2: 0.143; --y2: 0.571; --x3: 0.429; --y3: 0.286;"></div>
+        <div class="piece" style="--piece: 2; --x0: 0.5; --y0: 0.857; --x1: 0.286; --y1: 0.571; --x2: 0.714; --y2: 0.429; --x3: 0.857; --y3: 0.714;"></div>
+        <div class="piece" style="--piece: 3; --x0: 0.143; --y0: 0.5; --x1: 0.857; --y1: 0.5; --x2: 0.5; --y2: 0.143; --x3: 0.5; --y3: 0.857;"></div>
+        <div class="piece" style="--piece: 4; --x0: 0.714; --y0: 0.714; --x1: 0.143; --y1: 0.143; --x2: 0.857; --y2: 0.857; --x3: 0.143; --y3: 0.857;"></div>
 
         <div class="no-mover">
             NADIE<br>
@@ -124,7 +134,7 @@
         <div class="movement-text" style="bottom: 15%; right: 20%; --text: 3;">Danza espontánea</div>
     </div>
 
-    <div class="hint" id="hint">( tocá: las piezas danzan solas )</div>
+    <div class="hint" id="hint">( toca: las piezas danzan solas )</div>
     <a class="infinito" href="L3-Nodo6.html" title="Siguiente portal">∞</a>
 
     <script>
