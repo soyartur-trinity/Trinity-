@@ -2,8 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>El Abrazo Sin Brazos</title>
+<!-- Adaptado al teléfono en octubre de 2026, para el «Para ver» de Arquitectura del Destino, Libro 11 (La Red).
+     Saneamiento acotado: invitación a tocar en tuteo, textos más grandes y lejos de los bordes en el teléfono,
+     lienzo que se ajusta al girar el teléfono, el ∞ fuera del alcance del toque que enciende el sonido
+     y el voseo de uno de los versos en tuteo («entre tú y todo»).
+     La gráfica, la paleta, el sonido y las demás frases son las del original. -->
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -13,6 +18,7 @@
         font-family: 'Georgia', serif;
         overflow: hidden;
         height: 100vh;
+        height: 100dvh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -116,6 +122,16 @@
     }
     .infinito:hover { color: rgba(255,182,193,0.95); }
 
+    @media (max-width: 640px) {
+        .rumi-verse { top: calc(9% + env(safe-area-inset-top, 0px)); font-size: 1.16em; width: 90%; }
+        .embrace-wisdom { bottom: calc(96px + env(safe-area-inset-bottom, 0px)); font-size: 1.2em; line-height: 1.75; letter-spacing: 0.02em; width: 90%; }
+        .hint { font-size: 13px; letter-spacing: 2px; bottom: calc(52px + env(safe-area-inset-bottom, 0px)); }
+        .infinito { bottom: calc(18px + env(safe-area-inset-bottom, 0px)); right: 22px; font-size: 28px; padding: 6px; }
+    }
+    @media (max-width: 640px) and (max-height: 640px) {
+        .embrace-wisdom { bottom: calc(80px + env(safe-area-inset-bottom, 0px)); font-size: 1.06em; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .infinite-embrace { animation: none; opacity: 0.6; }
         .space-embrace { animation: none; opacity: 0; }
@@ -145,8 +161,8 @@
         el universo sosteniéndose en amor
     </div>
 
-    <div class="hint" id="hint">( tocá: el abrazo resuena )</div>
-    <a class="infinito" href="L6-Nodo5.html" title="Siguiente portal">∞</a>
+    <div class="hint" id="hint">( toca: el abrazo resuena )</div>
+    <a class="infinito" href="L6-Nodo5.html" title="Siguiente portal" aria-label="Siguiente portal">∞</a>
 
     <script>
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -155,8 +171,9 @@
     // ── Canvas: curvas del abrazo ──
     const canvas = document.getElementById('embraceCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const cx = canvas.width / 2, cy = canvas.height / 2;
+    let cx = 0, cy = 0;
+    function ajustar() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; cx = canvas.width / 2; cy = canvas.height / 2; }
+    ajustar(); window.addEventListener('resize', ajustar);
     function drawEmbraceCurves() {
         ctx.fillStyle = 'rgba(0,0,0,0.02)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
         const time = Date.now() * 0.0005;
@@ -199,7 +216,7 @@
         '"El espacio vacío está lleno de amor"',
         '"Cierra los ojos y verás claramente"',
         '"No busques el amor, remueve las barreras"',
-        '"El amor es el puente entre vos y todo"'
+        '"El amor es el puente entre tú y todo"'
     ];
     let vIdx = 0;
     setInterval(() => { vIdx = (vIdx + 1) % verses.length; document.querySelector('.rumi-verse').textContent = verses[vIdx]; }, 12000);
@@ -279,7 +296,10 @@
         n(); timers.push(setInterval(n, 7000));
         const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    document.body.addEventListener('click', function (e) {
+        if (e.target.closest('.infinito')) return;
+        initSound();
+    });
     </script>
 </body>
 </html>
