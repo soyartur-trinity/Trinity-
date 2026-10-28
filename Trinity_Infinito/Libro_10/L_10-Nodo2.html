@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- Adaptado al teléfono en octubre de 2026 (Arquitectura del Destino, Libro 12, «La Obra»): página en proporción a la pantalla, textos legibles y lejos de los bordes, invitación en tuteo y doble toque que funciona en el teléfono. El contenido no cambia. -->
 <title>Libro 10 - Nodo 65: La Obra Sin Autor</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
@@ -19,6 +20,7 @@ body {
   font-family: 'Crimson Text', 'Palatino', serif;
   color: #fff;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,8 +37,12 @@ body {
 
 .manuscript {
   position: relative;
-  width: 500px;
-  height: 700px;
+  width: min(500px, 86vw, calc((100vh - 330px) * 0.714));
+  width: min(500px, 86vw, calc((100dvh - 330px) * 0.714));
+  aspect-ratio: 5 / 7;
+  overflow: hidden;
+  touch-action: manipulation;
+  cursor: pointer;
   background: radial-gradient(ellipse at center, rgba(20,20,30,0.6), transparent);
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 0 60px rgba(100,100,255,0.15);
@@ -197,11 +203,12 @@ body {
 
 .title {
   position: fixed;
-  top: 60px;
+  top: calc(env(safe-area-inset-top, 0px) + clamp(18px, 5vh, 60px));
   left: 50%;
   transform: translateX(-50%);
-  font-size: 2.2em;
-  letter-spacing: 0.5em;
+  width: 94vw;
+  font-size: clamp(1.25rem, 5.6vw, 2.2em);
+  letter-spacing: clamp(0.12em, 1.6vw, 0.5em);
   opacity: 0.9;
   text-shadow: 0 0 30px rgba(150,100,255,0.5);
   font-weight: 600;
@@ -210,10 +217,12 @@ body {
 
 .subtitle {
   position: fixed;
-  top: 120px;
+  top: calc(env(safe-area-inset-top, 0px) + clamp(52px, 5vh + 44px, 120px));
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1em;
+  width: 94vw;
+  text-align: center;
+  font-size: clamp(0.9rem, 3.6vw, 1em);
   letter-spacing: 0.3em;
   opacity: 0.5;
   font-style: italic;
@@ -221,16 +230,17 @@ body {
 
 .contemplation {
   position: fixed;
-  bottom: 80px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(16px, 4vh, 80px));
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
+  width: 94vw;
+  font-size: clamp(0.86rem, 3.5vw, 0.95em);
+  letter-spacing: clamp(0.04em, 0.7vw, 0.2em);
+  opacity: 0.72;
   text-align: center;
   max-width: 700px;
-  line-height: 1.9;
-  padding: 0 40px;
+  line-height: 1.7;
+  padding: 0 4vw;
   font-style: italic;
 }
 
@@ -340,6 +350,27 @@ body {
   }
 }
 
+.authorship-void {
+  padding: calc(env(safe-area-inset-top, 0px) + clamp(86px, 13vh, 150px)) 0 calc(env(safe-area-inset-bottom, 0px) + clamp(120px, 22vh, 190px));
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .subtitle { display: none; }
+  .title { top: calc(env(safe-area-inset-top, 0px) + 10px); font-size: clamp(1.1rem, 4.4vh, 1.6rem); }
+  .contemplation { bottom: calc(env(safe-area-inset-bottom, 0px) + 8px); font-size: 0.8rem; line-height: 1.5; }
+  .authorship-void { padding: calc(env(safe-area-inset-top, 0px) + 46px) 0 calc(env(safe-area-inset-bottom, 0px) + 92px); }
+  .manuscript { aspect-ratio: 7 / 5; width: min(500px, 80vw, calc((100vh - 150px) * 1.4)); width: min(500px, 80vw, calc((100dvh - 150px) * 1.4)); }
+}
+
+.invitacion {
+  display: block;
+  margin-top: 0.7em;
+  font-size: 0.92em;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+  font-style: normal;
+}
+
 .eternal-manuscript {
   position: absolute;
   width: 100%;
@@ -412,6 +443,7 @@ body {
 <div class="contemplation">
   Ningún nombre al pie de la página · La obra se escribe a sí misma<br>
   Como el universo que no necesitó firma para comenzar a existir
+  <span class="invitacion">Toca la página. Con dos toques, revela lo que guarda.</span>
 </div>
 
 <script>
@@ -530,7 +562,10 @@ for(let i = 0; i < 3; i++) {
 createCreativeSparks();
 
 // Interactividad - Click crea cascada de palabras
+let ultimoToque = 0;
 manuscript.addEventListener('click', (e) => {
+  const ahora = Date.now();
+  if (ahora - ultimoToque < 420) { revelar(); ultimoToque = 0; } else { ultimoToque = ahora; }
   const rect = manuscript.getBoundingClientRect();
   const x = ((e.clientX - rect.left) / rect.width) * 100;
   const y = ((e.clientY - rect.top) / rect.height) * 100;
@@ -613,16 +648,17 @@ manuscript.addEventListener('mousemove', (e) => {
   setTimeout(() => ink.remove(), 4000);
 });
 
-// Doble click revela el secreto
-manuscript.addEventListener('dblclick', (e) => {
+// Doble toque revela el secreto
+function revelar() {
   const revelation = document.createElement('div');
   revelation.className = 'word-emergence';
   revelation.textContent = "LA OBRA ES EL ÚNICO AUTOR";
   revelation.style.cssText = `
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.8em;
+    left: 6%;
+    top: 44%;
+    width: 88%;
+    text-align: center;
+    font-size: clamp(1.1rem, 5vw, 1.8em);
     animation: word-write 8s ease-out forwards;
     color: rgba(255,255,255,0.9);
     text-shadow: 0 0 30px rgba(150,100,255,0.8);
@@ -631,7 +667,7 @@ manuscript.addEventListener('dblclick', (e) => {
   
   manuscript.appendChild(revelation);
   setTimeout(() => revelation.remove(), 8000);
-});
+}
 </script>
 
 </body>
