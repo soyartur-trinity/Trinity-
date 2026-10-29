@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Saneamiento acotado en octubre de 2026 para Habitar (Arquitectura del Destino, Libro 13): enlace al índice de Infinito, letra más grande en el teléfono y pantalla encendida mientras se contempla. -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -365,11 +366,13 @@
 
   @media (max-width: 600px) {
     .figure-wrap { width: 76vmin; height: 76vmin; }
-    .phrases span { max-width: 44vw; font-size: 0.82rem; }
+    .phrases span { max-width: 46vw; font-size: 1rem; }
     .phrases span:nth-child(1) { top: 13%; left: 5%; }
     .phrases span:nth-child(2) { top: 24%; right: 5%; }
     .phrases span:nth-child(3) { bottom: 20%; left: 7%; }
-    .title { bottom: 8vh; letter-spacing: 0.18em; }
+    .title { bottom: 8vh; letter-spacing: 0.18em; font-size: 1.05rem; }
+    #completion p { font-size: 1.05rem; }
+    #exit { font-size: 0.95rem; color: rgba(232, 217, 176, 0.38); }
   }
 </style>
 </head>
@@ -694,7 +697,7 @@
   El libro se escribe al ser observado.
 </div>
 
-<a href="../" id="exit">← índice</a>
+<a href="../../infinito.html" id="exit">← índice</a>
 
 <div id="a11y-status" class="sr-only" role="status" aria-live="polite"></div>
 
@@ -961,6 +964,20 @@
   }, 1500);
 
   requestAnimationFrame(tick);
+
+  /* Pantalla encendida mientras el libro se escribe: estos portales piden quietud, y muchos teléfonos
+     apagan la pantalla antes de los dos minutos. Se pide solo si el navegador lo permite, y se renueva
+     al volver a la página. */
+  let wakeLock = null;
+  async function pedirPantalla() {
+    try {
+      if ('wakeLock' in navigator && !document.hidden) {
+        wakeLock = await navigator.wakeLock.request('screen');
+      }
+    } catch (e) { wakeLock = null; }
+  }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) pedirPantalla(); });
+  pedirPantalla();
 })();
 </script>
 </body>
