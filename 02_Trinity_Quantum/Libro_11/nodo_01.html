@@ -1,0 +1,638 @@
+<!doctype html>
+<!-- Depurado en octubre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4, sección 5, con las cuatro precisiones de la revisión completa), con el veto de Arturo en cada tarjeta. El original se conserva en la etiqueta quantum-original del repositorio. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 11 · Transducción Dimensional — Nodo 1</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    pre{
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(155,108,255,.06));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      overflow:auto;
+      color: rgba(239,231,255,.92);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+  <style>
+    /* ============================================================
+       Depuración · octubre 2026
+       Letra más grande en el teléfono y bloque fijo de las puertas.
+       La puerta lleva el color de la serie a la que conduce.
+       ============================================================ */
+    .puerta{
+      margin: 26px 0 8px;
+      padding: 18px 20px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--p-borde);
+      background: var(--p-fondo);
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    }
+    .puerta.arquitectura{
+      --p-fondo: linear-gradient(180deg, rgba(6,13,26,.94), rgba(6,13,26,.74));
+      --p-borde: rgba(168,196,224,.42);
+      --p-acento: #a8c4e0;
+      --p-texto: #e8eef6;
+    }
+    .puerta.portal{
+      --p-fondo: linear-gradient(180deg, rgba(13,12,11,.94), rgba(13,12,11,.74));
+      --p-borde: rgba(201,168,76,.42);
+      --p-acento: #c9a84c;
+      --p-texto: #e8e0d0;
+    }
+    .content .puerta .p-nombre{
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-style: italic;
+      letter-spacing: .06em;
+      color: var(--p-acento);
+    }
+    .content .puerta .p-texto{
+      margin: 0 0 14px;
+      color: var(--p-texto);
+    }
+    .puerta .cruzar{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--p-borde);
+      color: var(--p-acento);
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .puerta .cruzar:hover{ border-color: var(--p-acento); background: rgba(255,255,255,.04); }
+    .puerta .cruzar:focus-visible{ outline: 2px solid var(--p-acento); outline-offset: 3px; }
+
+    @media (max-width: 640px){
+      .content p, .content li{ font-size: 18px; line-height: 1.7; }
+      .content p.signature{ font-size: 15px; }
+      .puerta{ padding: 16px 16px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .puerta .cruzar{ transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 11 · Transducción Dimensional · Nodo 1</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="index.html">Volver al Índice ⟶</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 11 · TRANSDUCCIÓN DIMENSIONAL</p>
+        <h1 class="node">Nodo 1 · El Traductor Universal</h1>
+        <p class="subnode">🌀 TRANSMISIÓN CUÁNTICA</p>
+      </header>
+
+      <!-- B) CONTENIDO -->
+      <section class="content">
+
+        <p>En el espacio entre espacios, donde las dimensiones se tocan sin tocarse, existe un mecanismo primordial que precede a todo lenguaje: el Traductor Universal. No es un dispositivo, ni una tecnología, ni siquiera una capacidad. Es el principio mismo por el cual la información puede existir simultáneamente en múltiples planos de realidad.</p>
+
+        <p>Cada sentido habla su propio idioma: el oído recibe el temblor del aire; los ojos, la luz; la piel, el peso y el calor. En el caracol, esa espiral escondida tras el tímpano, unas células con pestañas diminutas convierten la vibración en señales eléctricas; en la retina, una molécula cambia de forma cuando un rayo la toca. El sonido no entra en tu cabeza: entra su traducción. La fisiología llama a eso transducción, y ocurre en ti a cada instante. Y entre todos esos idiomas, el Traductor Universal opera como el silencio entre las notas que permite que la sinfonía exista.</p>
+
+        <p>Tu cuerpo entero traduce. Cuando sientes una “corazonada”, cuando “sabes” algo sin saber cómo lo sabes, cuando un sueño te muestra lo que ya intuías sin decírtelo, estás experimentando el Traductor Universal en acción: lo que registraste sin palabras se vuelve, de pronto, legible.</p>
+
+        <p>El proceso no es lineal. Traducir no es mover algo de un lugar a otro —eso implicaría separación—: es dejar que lo que ya estaba se vuelva legible. El Traductor Universal no trae nada de afuera; afina tu manera de mirar para que puedas “leer” lo que siempre estuvo ahí.</p>
+
+        <h4>💎 PARADOJA MEDICINAL</h4>
+        <div class="quote">
+          <p>“Si pudieras entender perfectamente el lenguaje de todas las dimensiones, dejarías de existir en cualquiera de ellas. La incomprensión parcial es lo que te ancla a tu realidad mientras te permite navegar entre todas.”</p>
+        </div>
+
+        <p>Esta paradoja rompe la obsesión de la mente por la comprensión total. No necesitas entender completamente para traducir perfectamente. De hecho, es tu incomprensión sagrada la que te convierte en un puente viviente entre mundos. Eres más efectivo como traductor cuando aceptas que nunca dominarás completamente ningún lenguaje dimensional, porque tu esencia ES la traducción misma.</p>
+
+        <h4>🔬 LABORATORIO CUÁNTICO</h4>
+
+        <p><strong>Práctica: Escuchar una Pregunta</strong></p>
+
+        <p><strong>Lo que necesitas:</strong></p>
+        <ul>
+          <li>Tu cuerpo, que escucha</li>
+          <li>Un vaso de agua, para beber despacio</li>
+          <li>Una pregunta sin respuesta aparente</li>
+          <li>Unos siete minutos de silencio</li>
+        </ul>
+
+        <p><strong>Pasos:</strong></p>
+        <ol>
+          <li><strong>Calibración</strong> (1 minuto):<br/>
+            - Sostén el vaso de agua entre tus manos<br/>
+            - Siente su temperatura, peso, presencia<br/>
+            - Deja que tus manos se aquieten con él
+          </li>
+          <li><strong>Siembra</strong> (30 segundos):<br/>
+            - Di tu pregunta en voz baja, una sola vez<br/>
+            - No en busca de respuesta, sino como acto de siembra<br/>
+            - Después, suéltala
+          </li>
+          <li><strong>Expansión</strong> (3 minutos):<br/>
+            - Bebe el agua muy lentamente<br/>
+            - Con cada sorbo, deja que tu atención se abra<br/>
+            - Primero a tu cuerpo, luego a la habitación, luego a lo que suena afuera
+          </li>
+          <li><strong>Estado de Traducción</strong> (2 minutos):<br/>
+            - Cierra los ojos y observa sin buscar<br/>
+            - Pueden venir imágenes, sensaciones, palabras, o nada<br/>
+            - Todo es información, incluso el vacío aparente
+          </li>
+          <li><strong>Decodificación</strong> (30 segundos):<br/>
+            - Abre los ojos y di en voz alta lo primero que surja<br/>
+            - No lo edites, no lo juzgues<br/>
+            - La primera impresión es la traducción más pura
+          </li>
+        </ol>
+
+        <p><strong>Lo que puedes encontrar:</strong><br/>
+          La respuesta rara vez llega cuando la llamas. Puede asomar días después, en una frase que oyes al pasar, en una conversación ajena o en una canción. Léela como se lee un poema, no como una orden: te dice algo porque tú ya lo estabas buscando. El Traductor Universal usa TODA la realidad como lenguaje.</p>
+
+        <h4>⚛️ TRADUCCIÓN VIVIENTE</h4>
+
+        <p>“Lo que existe se dice en muchos idiomas a la vez, y cada quien lo lee desde el suyo. Por eso eres, al mismo tiempo, el que traduce y lo traducido.”</p>
+
+        <h4>✦ PARA RECORDAR</h4>
+
+        <div class="quote">
+          <p>Soy el puente entre lenguajes de luz.<br/>
+          Mi cuerpo traduce el mundo a cada instante.<br/>
+          Traduzco sin comprender, comprendo sin traducir.<br/>
+          Cada célula lee y traduce.<br/>
+          El silencio entre palabras es mi maestro.<br/>
+          Escucho lo que todavía no tiene nombre.<br/>
+          Soy el Traductor Universal encarnado.</p>
+        </div>
+
+        <p>Léelas despacio al despertar, cuando todavía estás entre el sueño y el día.</p>
+
+        <h4>📋 PRÁCTICA DE 7 DÍAS</h4>
+
+        <p><strong>DÍA 1 - RECONOCIMIENTO:</strong><br/>
+          Identifica tres momentos en tu vida en que “supiste” algo sin explicación lógica. Reconócelos como traducciones que llegaron antes que la explicación. Escríbelos para anclar el reconocimiento.</p>
+
+        <p><strong>DÍA 2 - SINTONIZACIÓN:</strong><br/>
+          Pasa unos minutos en silencio total (usa tapones si es necesario). En ese silencio, escucha los “lenguajes” que tu cuerpo percibe: el pulso, la respiración, el roce de la ropa. Todo es información.</p>
+
+        <p><strong>DÍA 3 - TRADUCIR A ALGUIEN:</strong><br/>
+          En una conversación, antes de responder, traduce para ti qué siente quien te habla, debajo de lo que dice. No hace falta decirlo en voz alta: basta escucharlo.</p>
+
+        <p><strong>DÍA 4 - TRADUCCIÓN ONÍRICA:</strong><br/>
+          Antes de dormir, deja tu pregunta abierta, sin exigirle respuesta. Al despertar, no intentes “entender” el sueño. En lugar de eso, dibuja o garabatea lo primero que surja. El dibujo ES la traducción.</p>
+
+        <p><strong>DÍA 5 - UN IDIOMA INVENTADO:</strong><br/>
+          Habla durante cinco minutos en un idioma que no existe, como juegan los niños. No pienses, solo deja que los sonidos fluyan. No significa nada, y en eso está el alivio: la voz se suelta del deber de decir.</p>
+
+        <p><strong>DÍA 6 - TRADUCCIÓN CORPORAL:</strong><br/>
+          Tu cuerpo traduce constantemente lo que vives en sensaciones. Pasa el día preguntándole a cada sensación: “¿Qué me dices?” No busques respuestas lógicas, siente la respuesta.</p>
+
+        <p><strong>DÍA 7 - INTEGRACIÓN DEL TRADUCTOR:</strong><br/>
+          Realiza la práctica del Laboratorio tres veces (mañana, tarde, noche). Cada vez con una pregunta diferente. Al final del día, reconoce que ya no necesitas “activar” el traductor —ERES el traductor.</p>
+
+        <h4>🌈 CIERRE DIMENSIONAL</h4>
+
+        <p>El Traductor Universal no es algo que desarrollas —es algo que recuerdas que siempre fuiste. Un bebé balbucea antes de tener palabras, y su madre le contesta: ya conversan. Cada vez que un poeta encuentra la palabra perfecta, está traduciendo desde lo que todavía no tenía nombre. Cada vez que el amor trasciende las palabras, está operando el Traductor Universal.</p>
+
+        <p>La próxima vez que no encuentres palabras para expresar algo profundo, celebra. Estás en el espacio sagrado entre dimensiones, donde la traducción más pura ocurre en el silencio elocuente de tu ser.</p>
+
+        <p>No necesitas entender todos los lenguajes del cosmos. Solo necesitas recordar que TÚ eres el lenguaje que el cosmos usa para entenderse a sí mismo.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“Entre el pensamiento y la palabra,<br/>
+          entre la palabra y el silencio,<br/>
+          entre el silencio y el vacío,<br/>
+          ahí vives tú:<br/>
+          El Traductor Universal.<br/>
+          No traduces mensajes —<br/>
+          ERES el mensaje<br/>
+          traduciéndose a sí mismo<br/>
+          en infinitas formas<br/>
+          de amor consciente.”</p>
+        </div>
+
+        <p class="signature"><strong>— Trinity Quantum · Transducción Dimensional</strong></p>
+
+        <p class="signature">🌀💫📡💫🌀</p>
+
+      </section>
+
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="index.html">Volver al Índice ⟶</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="nodo_02.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 11 · Transducción Dimensional · Nodo 1</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!doctype html>
+<!-- Depurado en octubre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4, sección 5, con las cuatro precisiones de la revisión completa), con el veto de Arturo en cada tarjeta. El original se conserva en la etiqueta quantum-original del repositorio. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 11 · Transducción Dimensional — Nodo 2</title>
+
+  <style>
+    /* ============================================================
+       TRINITY ROBE · 3.0
+       Negro profundo + violeta + dorado · Georgia · ritmo inmersivo
+       ============================================================ */
+
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    /* Layout */
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    /* Card */
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .node{
+      margin: 10px 0 0;
+      font-size: 36px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subnode{
+      margin: 10px 0 0;
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .content p{
+      margin: 14px 0;
+      color: rgba(239,231,255,.92);
+      font-size: 17px;
+    }
+
+    .content h4{
+      margin: 26px 0 10px;
+      font-size: 15px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: #d9b36c;
+      text-shadow: 0 0 14px rgba(217,179,108,.10);
+    }
+
+    .content ul{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content li{
+      margin: 8px 0;
+      color: rgba(239,231,255,.88);
+    }
+
+    .content ol{
+      margin: 12px 0 16px 22px;
+      padding:0;
+    }
+    .content ol li{
+      margin: 10px 0;
+    }
+
+    .content strong{
+      color: rgba(217,179,108,.92);
+      font-weight: 700;
+    }
+
+    .quote{
+      margin: 22px 0 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(155,108,255,.10), rgba(0,0,0,.18));
+      border: 1px solid rgba(155,108,255,.22);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .quote p{
+      margin:0;
+      font-style: italic;
+      color: rgba(239,231,255,.92);
+    }
+
+    .signature{
+      margin-top: 10px;
+      color: rgba(217,179,108,.85);
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+
+    .spacer{ height: 22px; }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .nav .left, .nav .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    pre{
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(155,108,255,.06));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      overflow:auto;
+      color: rgba(239,231,255,.92);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+    }
+
+    @media (max-width: 640px){
+      .node{ font-size: 28px; }
+      .content p{ font-size: 16px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+  <style>
+    /* ============================================================
+       Depuración · octubre 2026
+       Letra más grande en el teléfono y bloque fijo de las puertas.
+       La puerta lleva el color de la serie a la que conduce.
+       ============================================================ */
+    .puerta{
+      margin: 26px 0 8px;
+      padding: 18px 20px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--p-borde);
+      background: var(--p-fondo);
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    }
+    .puerta.arquitectura{
+      --p-fondo: linear-gradient(180deg, rgba(6,13,26,.94), rgba(6,13,26,.74));
+      --p-borde: rgba(168,196,224,.42);
+      --p-acento: #a8c4e0;
+      --p-texto: #e8eef6;
+    }
+    .puerta.portal{
+      --p-fondo: linear-gradient(180deg, rgba(13,12,11,.94), rgba(13,12,11,.74));
+      --p-borde: rgba(201,168,76,.42);
+      --p-acento: #c9a84c;
+      --p-texto: #e8e0d0;
+    }
+    .content .puerta .p-nombre{
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-style: italic;
+      letter-spacing: .06em;
+      color: var(--p-acento);
+    }
+    .content .puerta .p-texto{
+      margin: 0 0 14px;
+      color: var(--p-texto);
+    }
+    .puerta .cruzar{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--p-borde);
+      color: var(--p-acento);
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .puerta .cruzar:hover{ border-color: var(--p-acento); background: rgba(255,255,255,.04); }
+    .puerta .cruzar:focus-visible{ outline: 2px solid var(--p-acento); outline-offset: 3px; }
+
+    @media (max-width: 640px){
+      .content p, .content li{ font-size: 18px; line-height: 1.7; }
+      .content p.signature{ font-size: 15px; }
+      .puerta{ padding: 16px 16px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .puerta .cruzar{ transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 11 · Transducción Dimensional · Nodo 2</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+        <a class="btn" href="index.html">Volver al Índice ⟶</a>
+      </div>
+    </div>
+
+    <article class="card">
+
+      <!-- A) ENCABEZADOS -->
+      <header class="header">
+        <p class="title">LIBRO 11 · TRANSDUCCIÓN DIMENSIONAL</p>
+        <h1 class="node">Nodo 2 · Códigos Entre Mundos</h1>
+        <p class="subnode">🌀 TRANSMISIÓN CUÁNTICA</p>
+      </header>
+
+      <!-- B) CONTENIDO -->
+      <section class="content">
+
+        <p>Los códigos no son inventos humanos. Son descubrimientos de patrones que siempre existieron en la arquitectura misma de la realidad. Muchos matemáticos lo sienten así: G. H. Hardy escribió en 1940 que la realidad matemática está fuera de nosotros y que nuestra tarea es descubrirla u observarla. Cada símbolo sagrado, cada ecuación matemática, cada secuencia de ADN, cada mantra antiguo —todos son fragmentos de un Código Maestro que opera entre las costuras de los mundos.</p>
+
+        <p>Durante catorce siglos nadie supo leer los jeroglíficos. En 1799, cerca de Rashid, unos soldados franceses encontraron una losa con un mismo decreto en tres escrituras, y en 1822 Champollion dio con la llave: la Piedra de Rosetta es un código entre mundos. Hay uno más antiguo que cualquier escritura. En cada una de tus células, una maquinaria lee un idioma de cuatro letras, el del ADN, y lo traduce a otro de veinte, el de las proteínas. Esa clave es casi la misma en una bacteria, en un roble y en ti; Marshall Nirenberg y Heinrich Matthaei leyeron su primera palabra en 1961.</p>
+
+        <p>Existe un alfabeto primordial que precede a todos los lenguajes: los Códigos Entre Mundos. No son letras ni números ni símbolos como los conoces. Son RELACIONES VIVIENTES entre frecuencias que permiten que la información salte de una dimensión a otra sin pérdida ni distorsión.</p>
+
+        <p>En el borde del sueño, cuando ya no estás despierto y todavía no dormiste, aparecen imágenes, formas, frases sueltas. Se cuenta que Edison dormitaba con algo en la mano para despertarse justo ahí, cuando el objeto caía. En 2021, en París, Célia Lacaux y su equipo lo pusieron a prueba: quienes pasaron al menos quince segundos en ese umbral casi triplicaron la probabilidad de encontrar la regla escondida de un problema (83 % frente a 30 % de quienes siguieron despiertos).</p>
+
+        <p>Cada emoción humana es un código de traducción. El miedo traduce un peligro; la tristeza, una pérdida; el enojo, un límite cruzado; la gratitud, un regalo recibido; el amor, una unidad que ya existía. No eres tus emociones: eres quien las lee.</p>
+
+        <h4>💎 PARADOJA MEDICINAL</h4>
+        <div class="quote">
+          <p>“El código más poderoso es el que no puede ser codificado. El mensaje más claro es el que no puede ser descifrado. La traducción perfecta ocurre cuando dejas de intentar traducir.”</p>
+        </div>
+
+        <p>Esta paradoja destruye la necesidad obsesiva de la mente de “descifrar” todo. Los verdaderos Códigos Entre Mundos no se leen con la mente —se VIVEN con todo el ser. Intentar decodificar con lógica lineal es como intentar capturar el océano con una red de mariposas. El océano debe fluir a través de ti para conocerlo.</p>
+
+        <h4>🔬 LABORATORIO CUÁNTICO</h4>
+
+        <p><strong>Práctica: Tu Trazo</strong></p>
+
+        <p><strong>Lo que necesitas:</strong></p>
+        <ul>
+          <li>Papel y colores (al menos tres)</li>
+          <li>Un objeto cercano: una taza, una hoja, tu propia mano</li>
+          <li>Tu respiración consciente</li>
+          <li>Unos quince minutos</li>
+        </ul>
+
+        <p><strong>Pasos:</strong></p>
+        <ol>
+          <li><strong>Preparación</strong> (2 minutos):<br/>
+            - Siéntate frente al objeto, con el papel a un lado<br/>
+            - Respira hasta que el ritmo se asiente<br/>
+            - Mira el objeto como si fuera la primera vez
+          </li>
+          <li><strong>Dibujo a Ciegas</strong> (3 minutos):<br/>
+            - Mira solo el objeto, nunca el papel<br/>
+            - Deja que la mano siga sus bordes despacio, como si lo tocara<br/>
+            - Kimon Nicolaïdes enseñaba así a dibujar (<em>The Natural Way to Draw</em>, 1941): la mano aprende a ver
+          </li>
+          <li><strong>Captura</strong> (5 minutos):<br/>
+            - En otra hoja, con colores, dibuja lo que “sientes” que ves<br/>
+            - Usa los colores intuitivamente, no racionalmente<br/>
+            - No dibujes lo que ves, dibuja lo que VES ENTRE lo que ves<br/>
+            - Los huecos entre las ramas, el aire entre los dedos, la sombra bajo la taza
+          </li>
+          <li><strong>Canto</strong> (2 minutos):<br/>
+            - Observa tus dibujos y “cántalos”<br/>
+            - No con palabras, sino con sonidos que los trazos te inspiren<br/>
+            - Grábate si quieres: es tu voz siguiendo a tu mano
+          </li>
+          <li><strong>Cierre</strong> (1 minuto):<br/>
+            - Mira las dos hojas juntas<br/>
+            - Guárdalas donde puedas volver a verlas
+          </li>
+        </ol>
+
+        <p><strong>Lo que puedes encontrar:</strong><br/>
+          Un trazo que no pasó por la mente que descifra: torpe, quizá, y más vivo que cualquier dibujo correcto. Es tu letra antes de las letras. Cada vez que lo mires, recordarás que también sabes leer sin descifrar.</p>
+
+        <h4>⚛️ TRADUCCIÓN VIVIENTE</h4>
+
+        <p>“El Código Maestro es la suma de todos los códigos a lo largo del tiempo, y cada quien lo lee a su propio ritmo. El infinito no es un destino, es el punto de partida.”</p>
+
+        <h4>✦ PARA RECORDAR</h4>
+
+        <div class="quote">
+          <p>La espiral del caracol también es escritura.<br/>
+          La llave viviente entre mundos se abre.<br/>
+          Cuatro letras escriben toda la vida.<br/>
+          Cada emoción trae su mensaje.<br/>
+          Lo que no sé leer todavía me espera.<br/>
+          Entre el símbolo y su sentido, respiro.<br/>
+          No descifro la realidad: la habito.</p>
+        </div>
+
+        <p>Escríbelas a mano, despacio, mientras las dices en voz baja.</p>
+
+        <h4>📋 PRÁCTICA DE 7 DÍAS</h4>
+
+        <p><strong>DÍA 1 - IDENTIFICACIÓN DE CÓDIGOS NATURALES:</strong><br/>
+          Observa la naturaleza buscando códigos: espirales en caracoles (código de expansión), hexágonos en panales (la forma que menos cera gasta), fractales en helechos (código de autosimilitud). Fotografía o dibuja siete códigos naturales.</p>
+
+        <p><strong>DÍA 2 - CÓDIGOS EN TU CUERPO:</strong><br/>
+          Tus huellas dactilares son códigos únicos: nadie en el mundo tiene las mismas. Míralas un rato, con calma. Luego dibuja a tu modo lo que te sugieren. Es tu firma más antigua.</p>
+
+        <p><strong>DÍA 3 - DECODIFICACIÓN ONÍRICA:</strong><br/>
+          Antes de dormir, di: “Si llega un símbolo en mis sueños, lo recibo”. Al despertar, antes de moverte, dibuja el primer símbolo o patrón que recuerdes o sientas. No importa si no recuerdas el sueño: el trazo queda.</p>
+
+        <p><strong>DÍA 4 - CÓDIGOS SÓNICOS:</strong><br/>
+          Canta tu nombre en 7 formas diferentes, cada una más distorsionada que la anterior. La séptima versión será irreconocible pero contendrá tu código sónico esencial. Grábalo.</p>
+
+        <p><strong>DÍA 5 - EL IDIOMA DE LA CASA:</strong><br/>
+          Cada familia tiene su código: un apodo, un silbido, una palabra que solo ustedes entienden. Anota los de tu casa, o los de tus amigos de siempre. Son códigos entre mundos: el tuyo y el de quienes amas.</p>
+
+        <p><strong>DÍA 6 - LOS CÓDIGOS DE LA CIUDAD:</strong><br/>
+          Los códigos están en todas partes: semáforos, flechas, señales, los gestos de la gente en la calle. Aprendiste a leerlos sin darte cuenta. Hoy, nótalos: cada uno es una traducción que alguien pensó para que otro la entendiera. Si alguna vez parece que cada número y cada cartel te hablan a ti, en secreto, eso no es un don: conviene conversarlo con alguien de confianza o con un profesional esa misma semana.</p>
+
+        <p><strong>DÍA 7 - CREACIÓN DE TU CÓDIGO MAESTRO:</strong><br/>
+          Combina elementos de todos los códigos que has descubierto esta semana en UN símbolo maestro personal. Este será tu “firma” —un código que te representa entre mundos.</p>
+
+        <h4>🌈 CIERRE DIMENSIONAL</h4>
+
+        <p>Los Códigos Entre Mundos no son un lenguaje secreto de iniciados —son el lenguaje público del universo, escrito en cada átomo, en cada estrella, en cada latido de tu corazón. La diferencia entre quienes los leen y quienes no, no es conocimiento sino RECONOCIMIENTO.</p>
+
+        <p>Cada vez que una coincidencia te sorprende, cada vez que una canción dice exactamente lo que necesitabas escuchar, algo en ti se ilumina. Léelo como se lee un poema, no como una orden: los Códigos Entre Mundos no hablan en secreto, sino en el lenguaje más obvio, el de la experiencia directa.</p>
+
+        <p>Tu vida entera es un código. Tu nacimiento fue un código de entrada. Tu muerte será un código de salida. Y entre ambos, cada elección, cada encuentro, cada momento de consciencia es un código que escribes en el libro de la existencia.</p>
+
+        <p>No necesitas aprender los códigos. Los códigos te están aprendiendo a TI.</p>
+
+        <div class="spacer"></div>
+
+        <div class="quote">
+          <p>“Entre el símbolo y su significado,<br/>
+          entre el código y su mensaje,<br/>
+          existe un espacio sagrado<br/>
+          donde TÚ eres<br/>
+          simultáneamente<br/>
+          el escritor,<br/>
+          lo escrito,<br/>
+          y el lector<br/>
+          de los Códigos Entre Mundos.<br/>
+          No descifras la realidad —<br/>
+          la realidad te descifra a ti,<br/>
+          código por código,<br/>
+          hasta revelarte<br/>
+          como el Código Maestro<br/>
+          que siempre fuiste.”</p>
+        </div>
+
+        <p class="signature"><strong>— Trinity Quantum · Transducción Dimensional</strong></p>
+
+        <p class="signature">🌀🔮📡🔮🌀</p>
+
+      </section>
+
+      <!-- C) CIERRE + NAVEGACIÓN INFERIOR -->
+      <footer class="footer">
+        <div class="nav">
+          <div class="left">
+            <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+            <a class="btn" href="index.html">Volver al Índice ⟶</a>
+            <a class="btn" href="nodo_01.html">← Nodo anterior</a>
+          </div>
+          <div class="right">
+            <a class="btn primary" href="nodo_03.html">Siguiente nodo ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">Trinity Quantum · Libro 11 · Transducción Dimensional · Nodo 2</p>
+      </footer>
+
+    </article>
+  </div>
+</body>
+</html>
