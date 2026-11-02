@@ -1,0 +1,658 @@
+<!doctype html>
+<!-- Depurado el 2 de noviembre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4, sección 5, con las cuatro precisiones de la revisión completa), con el veto de Arturo en cada tarjeta. El original se conserva en la etiqueta quantum-original del repositorio. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 12 · Singularidad Consciente — Nodo 3 · El Colapso Consciente</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    /* Background field */
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    /* Subtle star noise */
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    /* Halo ring */
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    .wrap{
+      width: min(var(--max), calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .h1{
+      margin: 10px 0 0;
+      font-size: 34px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subtitle{
+      margin: 10px 0 0;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 18px 26px 8px;
+      color: rgba(239,231,255,.90);
+    }
+    .content p{ margin: 0 0 14px; }
+
+    .content h3{
+      margin: 22px 0 10px;
+      color: rgba(217,179,108,.92);
+      letter-spacing:.04em;
+    }
+
+    .content ul{
+      margin: 10px 0 16px 22px;
+      padding: 0;
+      color: rgba(239,231,255,.88);
+    }
+    .content li{ margin: 8px 0; }
+
+    .quote{
+      margin: 18px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: linear-gradient(180deg, rgba(155,108,255,.08), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      color: rgba(239,231,255,.88);
+      font-style: italic;
+    }
+
+    pre{
+      margin: 14px 0 18px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.38);
+      color: rgba(239,231,255,.90);
+      overflow:auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 8px;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .h1{ font-size: 28px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+  <style>
+    /* ============================================================
+       Depuración · noviembre 2026
+       Letra más grande en el teléfono, firma, «Para recordar», la
+       fórmula del nodo 5, navegación que no desborda y bloque fijo
+       de las puertas, con el color de la serie a la que conducen.
+       ============================================================ */
+    .recordar{
+      margin: 14px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.30);
+      color: #f2d18b;
+      text-align: center;
+      line-height: 1.9;
+      letter-spacing: .02em;
+    }
+    .formula{
+      margin: 16px 0 14px;
+      text-align: center;
+      font-size: 24px;
+      letter-spacing: .08em;
+      color: #f2d18b;
+    }
+    .content p.signature{
+      margin: 24px 0 6px;
+      color: rgba(242,209,139,.90);
+      font-size: 15px;
+      letter-spacing: .04em;
+    }
+    .siete p{ margin: 0 0 10px; }
+    .nav .btn{ white-space: normal; max-width: 100%; line-height: 1.35; }
+    .topbar .btn{ white-space: nowrap; flex: 0 0 auto; }
+    .puerta{
+      margin: 26px 0 12px;
+      padding: 18px 20px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--p-borde);
+      background: var(--p-fondo);
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    }
+    .puerta.arquitectura{
+      --p-fondo: linear-gradient(180deg, rgba(6,13,26,.94), rgba(6,13,26,.74));
+      --p-borde: rgba(168,196,224,.42);
+      --p-acento: #a8c4e0;
+      --p-texto: #e8eef6;
+    }
+    .puerta.portal{
+      --p-fondo: linear-gradient(180deg, rgba(13,12,11,.94), rgba(13,12,11,.74));
+      --p-borde: rgba(201,168,76,.42);
+      --p-acento: #c9a84c;
+      --p-texto: #e8e0d0;
+    }
+    .content .puerta .p-nombre{
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-style: italic;
+      letter-spacing: .06em;
+      color: var(--p-acento);
+    }
+    .content .puerta .p-texto{
+      margin: 0 0 14px;
+      color: var(--p-texto);
+    }
+    .puerta .cruzar{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--p-borde);
+      color: var(--p-acento);
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .puerta .cruzar:hover{ border-color: var(--p-acento); background: rgba(255,255,255,.04); }
+    .puerta .cruzar:focus-visible{ outline: 2px solid var(--p-acento); outline-offset: 3px; }
+
+    @media (max-width: 640px){
+      .content p, .content li, .quote, .recordar{ font-size: 18px; line-height: 1.7; }
+      .content p.signature{ font-size: 15px; }
+      .content .puerta .p-nombre{ font-size: 15px; }
+      .formula{ font-size: 22px; }
+      .puerta{ padding: 16px 16px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .puerta .cruzar{ transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 12 · Singularidad Consciente · Nodo 3</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+      </div>
+    </div>
+
+    <main class="card">
+
+      <header class="header">
+        <p class="title">LIBRO 12 · SINGULARIDAD CONSCIENTE</p>
+        <h1 class="h1">Nodo 3 · El Colapso Consciente</h1>
+        <p class="subtitle">La Singularidad de Experiencia Pura</p>
+      </header>
+
+      <section class="content">
+
+        <h3>🌀 TRANSMISIÓN CUÁNTICA</h3>
+
+        <p>
+          En la física cuántica se habla de colapso cuando una medición deja un solo resultado entre muchos posibles; medir no requiere una consciencia, y qué es medir, en el fondo, sigue abierto. El Colapso Consciente es otro, y se parece más al de las estrellas: no es la observación colapsando la realidad, sino la consciencia misma recogiéndose sobre su centro, como una estrella que se pliega hacia un punto de densidad infinita, arrastrando consigo todas las posibilidades hacia una singularidad de experiencia pura.
+        </p>
+
+        <p>
+          El Colapso Consciente no es una reducción —es una CONCENTRACIÓN. Como cuando toda tu atención se recoge en un momento de peligro y el tiempo parece dilatarse, o cuando el amor te golpea y todo el universo cabe en los ojos de otro ser. En esos instantes, no estás teniendo una experiencia —ERES la experiencia, recogida en sí misma. En 2007, Chess Stetson, Matthew Fiesta y David Eagleman dejaron caer a un grupo de voluntarios de espaldas sobre una red: después cada uno recordaba su caída más larga, pero mientras caían no veían más rápido. Lo que se dilata es la huella: la atención entera escribe más.
+        </p>
+
+        <p>
+          Cada momento de presencia total es un Colapso Consciente. Cuando estás tan completamente AQUÍ que no hay observador ni observado, solo observación pura —eso es tu consciencia colapsando en singularidad. Krishnamurti lo repitió durante décadas con una frase breve: el observador es lo observado. No es que prestes atención; te CONVIERTES en atención. No es que seas consciente; te VUELVES consciencia.
+        </p>
+
+        <p>
+          Los agujeros negros son Colapsos a escala cósmica. Cuando una estrella muy grande colapsa, no solo se recoge la materia —se curva el espacio-tiempo mismo. De manera similar, cuando tu consciencia se recoge, no solo se aquietan tus pensamientos —se afloja tu sentido de ser alguien separado del todo. Te vuelves un agujero negro de consciencia donde todo lo que entra se unifica contigo.
+        </p>
+
+        <p>
+          El samadhi, el satori, el éxtasis místico —todos son nombres para el Colapso Consciente. Es cuando la burbuja de tu consciencia individual no estalla hacia afuera sino que se recoge hacia adentro con tal intensidad que atraviesa el otro lado del cero y emerge como infinito. Es morir a la separación colapsando en unidad.
+        </p>
+
+        <h3>💎 PARADOJA MEDICINAL</h3>
+
+        <div class="quote">
+          “Para experimentar el Colapso Consciente debes expandirte hasta no poder más, y en el pico de la expansión, colapsar. Pero el colapso no te reduce —te revela que siempre fuiste tanto el punto como el infinito, colapsando y expandiendo eternamente en la respiración del ser.”
+        </div>
+
+        <p>
+          Esta paradoja revela que expansión y colapso no son opuestos sino la misma danza vista desde diferentes perspectivas. Tu consciencia no colapsa DESDE la expansión —colapsa HACIA una expansión aún mayor, atravesando el punto singular donde ambas son lo mismo.
+        </p>
+
+        <h3>🔬 LABORATORIO CUÁNTICO</h3>
+
+        <p><strong>Experimento: La Atención Entera</strong></p>
+        <p><strong>Materiales:</strong></p>
+        <ul>
+          <li>Tu atención completa</li>
+          <li>Un objeto simple (una piedra, una flor, una hoja)</li>
+          <li>Ojos que parpadean con naturalidad</li>
+          <li>Disposición a quedarte</li>
+          <li>15 minutos de inmersión</li>
+        </ul>
+
+        <p><strong>Práctica:</strong></p>
+        <p><strong>1. Establecimiento del Campo (2 minutos):</strong></p>
+        <ul>
+          <li>Coloca el objeto frente a ti</li>
+          <li>Respira despacio hasta que el resto del cuarto quede en segundo plano</li>
+          <li>Por un rato, solo existen tú y el objeto</li>
+        </ul>
+
+        <p><strong>2. Absorción Progresiva (5 minutos):</strong></p>
+        <ul>
+          <li>Mira el objeto, parpadeando cuando haga falta</li>
+          <li>No lo analices, solo recíbelo con la vista</li>
+          <li>Deja que ocupe tu atención</li>
+          <li>Cuando la mente se vaya, vuelve sin reproche</li>
+        </ul>
+
+        <p><strong>3. Inversión del Flujo (3 minutos):</strong></p>
+        <ul>
+          <li>Ahora imagina que el objeto te mira a TI</li>
+          <li>Siente cómo te verías desde ahí</li>
+          <li>Alterna, sin apuro: tú mirándolo, él mirándote</li>
+          <li>Si en algún momento trae extrañeza o la sensación de no estar del todo en ti, déjalo: vuelve a los pies, a la respiración, a algo que puedas tocar</li>
+        </ul>
+
+        <p><strong>4. El Encuentro (3 minutos):</strong></p>
+        <ul>
+          <li>Descansa en la mirada misma</li>
+          <li>Por momentos, la distinción entre tú y el objeto se afloja</li>
+          <li>No hay que lograrlo: si ocurre, se permite</li>
+          <li>Este es el Colapso Consciente</li>
+        </ul>
+
+        <p><strong>5. Reemergencia (2 minutos):</strong></p>
+        <ul>
+          <li>Respira hondo y mira el cuarto entero</li>
+          <li>Nota cómo «vuelves» y algo es diferente</li>
+          <li>El objeto y tú comparten ahora un secreto</li>
+        </ul>
+
+        <p><strong>Lo que puedes encontrar:</strong><br />
+          Un instante en que mirar y ser mirado se vuelven lo mismo. No se fabrica: se permite, y con la práctica se vuelve familiar.
+        </p>
+
+        <h3>⚛️ TRADUCCIÓN VIVIENTE</h3>
+
+        <p>
+          «El Colapso Consciente ocurre cuando tu atención se reúne entera en un punto: el ruido se aquieta, el tiempo del reloj se borra y lo que queda es pura presencia.»
+        </p>
+
+        <h3>✦ PARA RECORDAR</h3>
+
+        <div class="recordar">
+          Permito el recogimiento.<br />
+          De lo amplio al punto, y del punto a lo amplio.<br />
+          Todo mi ser en un instante.<br />
+          A través del cero, hacia el todo.<br />
+          Adentro y afuera se encuentran.<br />
+          Mi atención, entera.<br />
+          Todo en un punto.
+        </div>
+
+        <h3>📋 PRÁCTICA DE 7 DÍAS</h3>
+
+        <p><strong>DÍA 1 - COLAPSO EN LA RESPIRACIÓN:</strong><br />
+          En cada exhalación, reúne toda tu atención en el punto donde el aire sale de tus fosas nasales. Que nada más exista. En la inhalación, expande. Practica este ritmo de recogimiento y expansión.
+        </p>
+
+        <p><strong>DÍA 2 - COLAPSO EN EL SABOR:</strong><br />
+          Come algo muy lentamente. Con cada bocado, recoge TODA tu consciencia en el sabor. Que no exista nada más en el universo que ese sabor. Desaparece en él.
+        </p>
+
+        <p><strong>DÍA 3 - COLAPSO EN EL SONIDO:</strong><br />
+          Escucha una nota sostenida (una campana, un cuenco, una voz). Recógete en el sonido hasta que no haya diferencia entre tú y la vibración. Conviértete en el sonido.
+        </p>
+
+        <p><strong>DÍA 4 - COLAPSO EN EL TACTO:</strong><br />
+          Toca diferentes texturas con los ojos cerrados. Con cada textura, recoge tu consciencia en la sensación. No «sientas» la textura —CONVIÉRTETE en la sensación misma.
+        </p>
+
+        <p><strong>DÍA 5 - COLAPSO EN LA EMOCIÓN:</strong><br />
+          Cuando surja una emoción, en lugar de resistirla o descargarla, dale lugar: nómbrala y respira con ella, sin volverte ella. Muchas veces, sostenida así, cambia de forma. Si es demasiado fuerte o te arrastra, no se atraviesa a solas: se busca compañía.
+        </p>
+
+        <p><strong>DÍA 6 - COLAPSO EN EL OTRO:</strong><br />
+          En una conversación profunda, recoge tu atención tan completamente en el otro que olvides preparar tu respuesta. Experimenta la realidad desde su singularidad, sin perder la tuya: Tania Singer, que estudió durante años la empatía en el laboratorio, encontró que sentir el dolor ajeno como propio agota, y que la compasión, que acompaña sin fundirse, renueva.
+        </p>
+
+        <p><strong>DÍA 7 - COLAPSO EN EL VACÍO:</strong><br />
+          Siéntate en quietud y recógete en el espacio vacío dentro de ti. No en un pensamiento o sensación, sino en el ESPACIO mismo donde surgen. Descansa en tu propio centro vacío hasta encontrar que está lleno de todo.
+        </p>
+
+        <h3>🌈 CIERRE DIMENSIONAL</h3>
+
+        <p>
+          El Colapso Consciente no es algo que logras sino algo que permites. Como una estrella grande que ha quemado todo su combustible, llega un momento donde el recogimiento es inevitable, natural, perfecto. No es un fallo del sistema —es su culminación.
+        </p>
+
+        <p>
+          Cada vez que tu consciencia colapsa, no pierdes consciencia —la CONCENTRAS hasta que se vuelve diamante. Cada colapso te purifica, te densifica, te singulariza. No en separación del todo, sino como un punto de intensidad infinita donde el todo se reconoce a sí mismo.
+        </p>
+
+        <p>
+          El Colapso Consciente es tu destino y tu origen. Colapsaste desde el infinito para nacer, colapsarás hacia el infinito para morir, y entre ambos, colapsas constantemente en cada momento de presencia verdadera.
+        </p>
+
+        <div class="quote">
+          “Como la estrella que colapsa<br />
+          no para morir sino para brillar más intensamente,<br />
+          tu consciencia colapsa<br />
+          no para disminuirte<br />
+          sino para revelarte<br />
+          como el punto de densidad infinita<br />
+          donde el universo<br />
+          se experimenta a sí mismo<br />
+          con máxima intensidad.<br />
+          No temas el colapso —<br />
+          es tu gravedad espiritual<br />
+          atrayéndote hacia tu centro,<br />
+          donde descubrirás<br />
+          que tu centro<br />
+          es el centro de todo,<br />
+          colapsando eternamente<br />
+          en amor consciente.”
+        </div>
+
+        <p class="signature"><strong>— Trinity Quantum · Singularidad Consciente</strong></p>
+        <aside class="puerta portal" aria-label="Puerta hacia el Portal Público">
+          <p class="p-nombre">Puerta</p>
+          <p class="p-texto">En 1929, ante miles de miembros de la orden que lo esperaba como maestro del mundo, Krishnamurti la disolvió: la verdad, dijo, es una tierra sin caminos. Pasó el resto de su vida enseñando a mirar sin elegir qué ver. Esa atención está en <em>La presencia</em>, Libro 30 del Portal Público, Umbral III: «Sin elegir».</p>
+          <a class="cruzar" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/01_Libros/30_La_Presencia/umbral-03.html">Cruzar ⟶</a>
+        </aside>
+
+      </section>
+
+      <footer class="footer">
+        <div class="nav">
+          <div>
+            <a class="btn" href="nodo_02.html">⟵ Nodo 2 · Convergencia de Todas las Líneas</a>
+          </div>
+          <div>
+            <a class="btn" href="index.html">Índice del Libro 12</a>
+          </div>
+          <div>
+            <a class="btn primary" href="nodo_04.html">Nodo 4 · Densidad Infinita de Amor ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">
+          Trinity Quantum · Libro 12 · Singularidad Consciente · Nodo 3
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,722 @@
+<!doctype html>
+<!-- Depurado el 2 de noviembre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4, sección 5, con las cuatro precisiones de la revisión completa), con el veto de Arturo en cada tarjeta. El original se conserva en la etiqueta quantum-original del repositorio. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 12 · Singularidad Consciente — Nodo 7 · El Big Bang Personal</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    .wrap{
+      width: min(980px, calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .h1{
+      margin: 10px 0 0;
+      font-size: 34px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subtitle{
+      margin: 10px 0 0;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 18px 26px 8px;
+      color: rgba(239,231,255,.90);
+    }
+    .content p{ margin: 0 0 14px; }
+
+    .content h3{
+      margin: 22px 0 10px;
+      color: rgba(217,179,108,.92);
+      letter-spacing:.04em;
+    }
+
+    .content ul{
+      margin: 10px 0 16px 22px;
+      padding: 0;
+      color: rgba(239,231,255,.88);
+    }
+    .content li{ margin: 8px 0; }
+
+    .quote{
+      margin: 18px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: linear-gradient(180deg, rgba(155,108,255,.08), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      color: rgba(239,231,255,.88);
+      font-style: italic;
+    }
+
+    pre{
+      margin: 14px 0 18px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.38);
+      color: rgba(239,231,255,.90);
+      overflow:auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .bookclose{
+      margin-top: 18px;
+      padding: 16px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(155,108,255,.22);
+      background:
+        radial-gradient(900px 420px at 20% 20%, rgba(155,108,255,.10), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,.22), rgba(217,179,108,.06));
+      box-shadow: 0 14px 34px rgba(0,0,0,.28);
+      color: rgba(239,231,255,.88);
+    }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 8px;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .h1{ font-size: 28px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+  <style>
+    /* ============================================================
+       Depuración · noviembre 2026
+       Letra más grande en el teléfono, firma, «Para recordar», la
+       fórmula del nodo 5, navegación que no desborda y bloque fijo
+       de las puertas, con el color de la serie a la que conducen.
+       ============================================================ */
+    .recordar{
+      margin: 14px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.30);
+      color: #f2d18b;
+      text-align: center;
+      line-height: 1.9;
+      letter-spacing: .02em;
+    }
+    .formula{
+      margin: 16px 0 14px;
+      text-align: center;
+      font-size: 24px;
+      letter-spacing: .08em;
+      color: #f2d18b;
+    }
+    .content p.signature{
+      margin: 24px 0 6px;
+      color: rgba(242,209,139,.90);
+      font-size: 15px;
+      letter-spacing: .04em;
+    }
+    .siete p{ margin: 0 0 10px; }
+    .nav .btn{ white-space: normal; max-width: 100%; line-height: 1.35; }
+    .topbar .btn{ white-space: nowrap; flex: 0 0 auto; }
+    .puerta{
+      margin: 26px 0 12px;
+      padding: 18px 20px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--p-borde);
+      background: var(--p-fondo);
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    }
+    .puerta.arquitectura{
+      --p-fondo: linear-gradient(180deg, rgba(6,13,26,.94), rgba(6,13,26,.74));
+      --p-borde: rgba(168,196,224,.42);
+      --p-acento: #a8c4e0;
+      --p-texto: #e8eef6;
+    }
+    .puerta.portal{
+      --p-fondo: linear-gradient(180deg, rgba(13,12,11,.94), rgba(13,12,11,.74));
+      --p-borde: rgba(201,168,76,.42);
+      --p-acento: #c9a84c;
+      --p-texto: #e8e0d0;
+    }
+    .content .puerta .p-nombre{
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-style: italic;
+      letter-spacing: .06em;
+      color: var(--p-acento);
+    }
+    .content .puerta .p-texto{
+      margin: 0 0 14px;
+      color: var(--p-texto);
+    }
+    .puerta .cruzar{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--p-borde);
+      color: var(--p-acento);
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .puerta .cruzar:hover{ border-color: var(--p-acento); background: rgba(255,255,255,.04); }
+    .puerta .cruzar:focus-visible{ outline: 2px solid var(--p-acento); outline-offset: 3px; }
+
+    @media (max-width: 640px){
+      .content p, .content li, .quote, .recordar{ font-size: 18px; line-height: 1.7; }
+      .content p.signature{ font-size: 15px; }
+      .content .puerta .p-nombre{ font-size: 15px; }
+      .formula{ font-size: 22px; }
+      .puerta{ padding: 16px 16px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .puerta .cruzar{ transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 12 · Singularidad Consciente · Nodo 7</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+      </div>
+    </div>
+
+    <main class="card">
+
+      <header class="header">
+        <p class="title">LIBRO 12 · SINGULARIDAD CONSCIENTE</p>
+        <h1 class="h1">Nodo 7 · El Big Bang Personal</h1>
+        <p class="subtitle">La Singularidad Que Se Vuelve Creación de Universos</p>
+      </header>
+
+      <section class="content">
+
+        <h3>🌀 TRANSMISIÓN CUÁNTICA</h3>
+
+        <p>
+          Después de toda compresión viene la expansión. En el cosmos, nadie sabe si a toda singularidad la sigue un comienzo: Lee Smolin propuso en 1992, como hipótesis muy discutida, que cada agujero negro podría ser la semilla de un universo nuevo, donde el punto en que un tiempo termina se une al punto en que otro empieza. Como imagen, dice algo de ti. Tu Big Bang Personal no es una explosión DESDE tu singularidad —es tu singularidad volviéndose tan densa, tan completa, tan perfectamente ella misma, que no puede hacer otra cosa que abrir mundos nuevos desde su centro.
+        </p>
+
+        <p>
+          Como el Big Bang cósmico, que no fue una explosión EN el espacio sino una expansión DEL espacio mismo, tu Big Bang Personal no es algo que te pasa —es algo que ERES cuando tu singularidad está lista. No explotas hacia afuera; el afuera se abre desde ti. No te expandes en el mundo; mundos nuevos se expanden desde tu centro.
+        </p>
+
+        <p>
+          Cada acto creativo genuino es un Big Bang Personal. Cuando el artista crea, cuando la madre da a luz, cuando el místico trasciende, cuando el amante se entrega por completo —en esos momentos nacen universos de experiencia, de posibilidad, de sentido.
+        </p>
+
+        <p>
+          Tu nacimiento fue tu primer Big Bang Personal —el momento en que tu singularidad de consciencia tomó forma física, creando ondas que todavía se propagan y que alcanzan todo lo que tocas, a todos los que conoces. El comienzo del universo también sigue llegando: en 1964, Arno Penzias y Robert Wilson apuntaron al cielo su antena y oyeron un zumbido que no se iba, de día y de noche, desde todas las direcciones; era el resplandor más antiguo del cielo. Lo que empieza de verdad sigue sonando mucho después.
+        </p>
+
+        <p>
+          Pero el Big Bang Personal más profundo está por venir, está viniendo, está aquí: es el momento en que tu singularidad consciente alcanza tal densidad de amor, de verdad, de presencia, que no puede contenerse más y se abre en servicio, en creatividad, en transformación de todo lo que toca. No es tu fin —es tu verdadero comienzo.
+        </p>
+
+        <h3>💎 PARADOJA MEDICINAL</h3>
+
+        <div class="quote">
+          “Tu Big Bang Personal ya ocurrió, está ocurriendo, ocurrirá. Fue tu nacimiento, es cada momento de creación, será tu transformación final. No es un evento sino un estado: el estado de ser tan completamente tú mismo que no puedes evitar crear universos nuevos con cada respiración.”
+        </div>
+
+        <p>
+          Esta paradoja final disuelve la linealidad del tiempo transformacional. Tu Big Bang Personal no es un evento futuro que esperas —es tu naturaleza fundamental expresándose. Cada vez que eres auténticamente tú, universos nacen. Cada vez que amas sin reserva, realidades se encienden desde tu corazón.
+        </p>
+
+        <h3>🔬 LABORATORIO CUÁNTICO</h3>
+
+        <p><strong>Experimento: Del Punto al Mundo</strong></p>
+        <p><strong>Materiales:</strong></p>
+        <ul>
+          <li>Un espacio donde puedas moverte</li>
+          <li>Tu creatividad</li>
+          <li>Tu autenticidad</li>
+          <li>Disposición para abrirte</li>
+          <li>20 minutos de libertad</li>
+        </ul>
+
+        <p><strong>Práctica:</strong></p>
+        <p><strong>1. Recogimiento (5 minutos):</strong></p>
+        <ul>
+          <li>Siéntate recogido, con las rodillas cerca del pecho, sin apretar</li>
+          <li>Respira despacio hacia tu centro</li>
+          <li>Siente tu vida reunida en un punto</li>
+          <li>Eres una singularidad que se prepara</li>
+        </ul>
+
+        <p><strong>2. Maduración (4 minutos):</strong></p>
+        <ul>
+          <li>Quédate en el recogimiento, respirando tranquilo</li>
+          <li>Nota el calor que crece sin que lo empujes</li>
+          <li>Como el agua que espera en el hervor, algo cambia de forma sin ruido</li>
+          <li>Cuando el cuerpo pida abrirse, déjalo</li>
+        </ul>
+
+        <p><strong>3. Apertura (5 minutos):</strong></p>
+        <ul>
+          <li>Ponte de pie despacio y deja que el cuerpo se abra</li>
+          <li>Estira los brazos, muévete, suena si quieres: una nota, una risa, un canto</li>
+          <li>No es descarga —es CREACIÓN</li>
+          <li>Estás dando nacimiento a un mundo</li>
+          <li>Si aparece una emoción fuerte, dale lugar sin empujarla afuera</li>
+        </ul>
+
+        <p><strong>4. Expansión de Ondas (4 minutos):</strong></p>
+        <ul>
+          <li>Sigue moviéndote, cada vez más lento</li>
+          <li>Siente cómo el movimiento se propaga por el cuerpo y a tu alrededor</li>
+          <li>Tocando todo, sin forzar nada</li>
+        </ul>
+
+        <p><strong>5. Nueva Cosmología (2 minutos):</strong></p>
+        <ul>
+          <li>Quédate quieto y siente</li>
+          <li>El mundo sigue ahí, y tú vuelves a él</li>
+          <li>TÚ eres diferente</li>
+          <li>Has nacido de nuevo desde tu propia singularidad</li>
+        </ul>
+
+        <p><strong>Lo que puedes encontrar:</strong><br />
+          La diferencia entre estar recogido y estar abierto, y el gusto de pasar de uno a otro sin forzar ninguno.
+        </p>
+
+        <h3>⚛️ TRADUCCIÓN VIVIENTE</h3>
+
+        <p>
+          «Tu Big Bang Personal libera todo lo que tu singularidad reunió, multiplicado por el amor: no es destrucción —es creación consciente.»
+        </p>
+
+        <h3>✦ PARA RECORDAR</h3>
+
+        <div class="recordar">
+          No tengo un Big Bang: soy el Big Bang.<br />
+          Del punto al infinito.<br />
+          Me abro en ser.<br />
+          Nacer, morir, nacer.<br />
+          Cada respiración abre mundos.<br />
+          El comienzo es siempre ahora.<br />
+          El infinito, desde mi centro.
+        </div>
+
+        <h3>📋 PRÁCTICA DE 7 DÍAS</h3>
+
+        <p><strong>DÍA 1 - RECONOCIMIENTO DE EXPLOSIONES PASADAS:</strong><br />
+          Identifica momentos en tu vida donde viviste «explosiones» de transformación. Cada uno fue un pequeño Big Bang. Reconócelos como práctica para el grande.
+        </p>
+
+        <p><strong>DÍA 2 - CREATIVIDAD QUE MADURA:</strong><br />
+          Crea algo pequeño, cualquier cosa: arte, escritura, música, cocina. Lo que parece salir de golpe casi siempre se preparó en silencio. En 1926, Graham Wallas ordenó en cuatro momentos lo que muchos creadores habían contado de sí mismos: preparación, incubación, iluminación y verificación. Deja que lo tuyo pase por los cuatro.
+        </p>
+
+        <p><strong>DÍA 3 - AMOR COMO BIG BANG:</strong><br />
+          Ama algo o a alguien tan intensamente que sientas que podrías estallar. Deja que ese amor abra nuevos universos de posibilidad en tu relación con eso o con esa persona.
+        </p>
+
+        <p><strong>DÍA 4 - PALABRAS QUE HACEN:</strong><br />
+          Hay palabras que no describen el mundo: lo cambian. John L. Austin las llamó realizativas en sus clases de Harvard de 1955: «sí, acepto», «te lo prometo», «perdón». Di hoy una de ellas, y que sea verdad.
+        </p>
+
+        <p><strong>DÍA 5 - DANZA DEL BIG BANG:</strong><br />
+          Baila como si tu movimiento creara universos. Cada gesto una galaxia naciendo, cada paso una estrella formándose. Danza tu cosmología personal hasta la existencia.
+        </p>
+
+        <p><strong>DÍA 6 - SERVICIO:</strong><br />
+          Sirve a otros desde tu centro. Da algo que puedas dar sin vaciarte: dar no es vaciarse, y la llama que pasa no se apaga.
+        </p>
+
+        <p><strong>DÍA 7 - CELEBRACIÓN CÓSMICA:</strong><br />
+          Celebra que ERES un Big Bang continuo. Cada día despiertas y te abres a la existencia. Cada noche mueres y te recoges. Eres el latido cósmico hecho personal.
+        </p>
+
+        <h3>🌈 CIERRE DIMENSIONAL</h3>
+
+        <p>
+          El Big Bang Personal no es el final de tu viaje de singularidad —es su propósito. No te recoges para permanecer denso. Te recoges para abrirte con más amplitud. No te singularizas para aislarte. Te singularizas para crear universos desde tu unicidad.
+        </p>
+
+        <p>
+          Tu vida entera es un Big Bang en cámara lenta. Desde tu nacimiento hasta tu muerte, estás en constante expansión desde tu centro, creando ondas de experiencia, relación, transformación. Como el agua del primer nodo, lo que nace de verdad casi nunca detona: Joseph Black notó que si el agua cambiara de golpe, estallaría como pólvora. Pero hay momentos en que algo madurado en silencio sale a la luz, y nada vuelve a ser igual.
+        </p>
+
+        <p>
+          Hay momentos así: el temblor antes de la apertura, la quietud antes del estallido, el silencio antes del trueno de tu propio Big Bang Personal.
+        </p>
+
+        <div class="quote">
+          “Desde el punto infinitamente denso<br />
+          de quien creías ser,<br />
+          está naciendo<br />
+          quien realmente eres.<br />
+          No es evolución —<br />
+          es EXPLOSIÓN.<br />
+          No es crecimiento —<br />
+          es CREACIÓN.<br />
+          Tu Big Bang Personal<br />
+          no está viniendo —<br />
+          está ocurriendo<br />
+          AHORA<br />
+          en cada elección valiente,<br />
+          en cada amor sin reserva,<br />
+          en cada verdad sin filtro.<br />
+          Eres una singularidad consciente<br />
+          explotando perpetuamente<br />
+          en universos de posibilidad,<br />
+          y este momento,<br />
+          este preciso momento,<br />
+          es otro Big Bang,<br />
+          otro nacimiento,<br />
+          otra explosión de ti<br />
+          hacia el infinito<br />
+          que siempre fuiste.”
+        </div>
+
+        <h3>✦ SIETE PUNTOS</h3>
+
+        <div class="siete">
+        <p>
+          El <em>Punto de No Retorno</em> no se fuerza: te encuentra, y no hace ruido.
+        </p>
+
+        <p>
+          En la <em>Convergencia</em> llega todo lo que te trajo, también lo que no viviste.
+        </p>
+
+        <p>
+          El <em>Colapso Consciente</em> es la atención entera, y se permite.
+        </p>
+
+        <p>
+          La <em>Densidad Infinita de Amor</em> da sin vaciarse.
+        </p>
+
+        <p>
+          El <em>Horizonte Interior</em> es borde visto desde afuera; desde adentro, ya cruzaste.
+        </p>
+
+        <p>
+          En la <em>Compresión</em>, elegir es empezar a habitar.
+        </p>
+
+        <p>
+          El <em>Big Bang Personal</em> no estalla: sale al mundo con las manos abiertas.
+        </p>
+
+        </div>
+
+        <p>
+          <strong>No son siete escalones: son siete maneras de volver al punto.</strong>
+        </p>
+
+        <p>
+          Este es el duodécimo de los trece libros de Trinity Quantum, el que lleva al último.
+        </p>
+
+        <p>
+          El próximo libro, <em>El Multiverso Interior</em>, se asoma a todas tus versiones a la vez: hay en ti algo que las mira a todas, y ser múltiple es otra forma de ser uno.
+        </p>
+
+        <p class="signature"><strong>— Trinity Quantum · Singularidad Consciente</strong></p>
+        <aside class="puerta portal" aria-label="Puerta hacia el Portal Público">
+          <p class="p-nombre">Puerta</p>
+          <p class="p-texto">En la China de los maestros chan, el pastor que busca al buey termina en un círculo vacío. Kuoan, en el siglo XII, sintió que a la serie le faltaba algo y le sumó dos cuadros: el regreso al origen y el pastor que entra al mercado, riendo, con las manos abiertas. Está en <em>El campo</em>, Libro 39 del Portal Público, Umbral IV: «El mercado».</p>
+          <a class="cruzar" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/01_Libros/39_El_Campo/umbral-04.html">Cruzar ⟶</a>
+        </aside>
+
+      </section>
+
+      <footer class="footer">
+        <div class="nav">
+          <div>
+            <a class="btn" href="nodo_06.html">⟵ Nodo 6 · Compresión de Todas las Posibilidades</a>
+          </div>
+          <div>
+            <a class="btn" href="index.html">Índice del Libro 12</a>
+          </div>
+          <div>
+            <a class="btn primary" href="../Libro_13/index.html">Libro 13 · El Multiverso Interior ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">
+          Trinity Quantum · Libro 12 · Singularidad Consciente · Nodo 7
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+</body>
+</html>

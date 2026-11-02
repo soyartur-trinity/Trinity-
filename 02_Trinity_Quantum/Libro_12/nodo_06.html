@@ -1,0 +1,651 @@
+<!doctype html>
+<!-- Depurado el 2 de noviembre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4, sección 5, con las cuatro precisiones de la revisión completa), con el veto de Arturo en cada tarjeta. El original se conserva en la etiqueta quantum-original del repositorio. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Libro 12 · Singularidad Consciente — Nodo 6 · Compresión de Todas las Posibilidades</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel: rgba(10, 6, 16, .78);
+      --panel2: rgba(15, 9, 22, .72);
+      --stroke: rgba(255, 215, 120, .28);
+
+      --gold:#d9b36c;
+      --gold2:#f2d18b;
+      --violet:#9b6cff;
+      --violet2:#c39bff;
+
+      --text:#efe7ff;
+      --muted: rgba(239, 231, 255, .78);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.45);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
+      --line: 1.65;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background: var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: var(--line);
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+
+    .field{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,108,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(217,179,108,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 80%, rgba(155,108,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(217,179,108,.10), transparent 58%),
+        #000;
+      filter:saturate(1.06);
+    }
+
+    .noise{
+      position:fixed;
+      inset:-20%;
+      z-index:-2;
+      opacity:.08;
+      background-image:
+        radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.45) 1px, transparent 1px);
+      background-size: 120px 120px, 220px 220px;
+      background-position: 0 0, 40px 60px;
+      animation: drift 40s linear infinite;
+      transform: translateZ(0);
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(0,0,0); }
+      100%{ transform: translate3d(-120px,-120px,0); }
+    }
+
+    .halo{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      display:grid;
+      place-items:center;
+      opacity:.45;
+    }
+    .halo::before{
+      content:"";
+      width:min(1100px, 92vw);
+      height:min(1100px, 92vw);
+      border-radius:50%;
+      border:1px solid rgba(217,179,108,.18);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 80px rgba(155,108,255,.10),
+        0 0 120px rgba(217,179,108,.08);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.07), transparent 62%),
+        radial-gradient(circle at 50% 50%, rgba(217,179,108,.06), transparent 66%);
+      animation: breathe 10s ease-in-out infinite;
+    }
+    @keyframes breathe{
+      0%,100%{ transform: scale(1); opacity:.42; }
+      50%{ transform: scale(1.02); opacity:.52; }
+    }
+
+    .wrap{
+      width: min(980px, calc(100vw - 32px));
+      margin: 34px auto 64px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,108,255,.12), rgba(217,179,108,.10));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .sigil{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(217,179,108,.35), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(155,108,255,.18), transparent 60%);
+      border:1px solid rgba(217,179,108,.25);
+      box-shadow:
+        0 0 0 1px rgba(155,108,255,.14) inset,
+        0 0 18px rgba(155,108,255,.10);
+    }
+    .topbar .meta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .meta .kicker{
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(239,231,255,.72);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .meta .path{
+      font-size: 12px;
+      color: rgba(217,179,108,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(217,179,108,.28);
+      background: linear-gradient(180deg, rgba(217,179,108,.12), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+      font-size: 13px;
+      letter-spacing:.04em;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(217,179,108,.55);
+      box-shadow: 0 14px 34px rgba(0,0,0,.45);
+      background: linear-gradient(180deg, rgba(217,179,108,.16), rgba(155,108,255,.06));
+    }
+    .btn.primary{
+      border-color: rgba(155,108,255,.55);
+      background: linear-gradient(180deg, rgba(155,108,255,.18), rgba(0,0,0,.18));
+    }
+    .btn.primary:hover{
+      border-color: rgba(155,108,255,.75);
+      background: linear-gradient(180deg, rgba(155,108,255,.22), rgba(217,179,108,.06));
+    }
+
+    .card{
+      margin-top: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(1000px 500px at 10% 10%, rgba(155,108,255,.12), transparent 55%),
+        radial-gradient(900px 420px at 90% 20%, rgba(217,179,108,.10), transparent 55%),
+        linear-gradient(180deg, rgba(10,6,16,.82), rgba(0,0,0,.55));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 26px 26px 18px;
+      position:relative;
+    }
+    .header::after{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,179,108,.45), rgba(155,108,255,.35), transparent);
+      opacity:.9;
+    }
+
+    .title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(217,179,108,.85);
+    }
+    .h1{
+      margin: 10px 0 0;
+      font-size: 34px;
+      line-height:1.12;
+      letter-spacing:.02em;
+      color: #f2d18b;
+      text-shadow:
+        0 0 14px rgba(217,179,108,.14),
+        0 0 22px rgba(155,108,255,.08);
+    }
+    .subtitle{
+      margin: 10px 0 0;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(239,231,255,.86);
+    }
+
+    .content{
+      padding: 18px 26px 8px;
+      color: rgba(239,231,255,.90);
+    }
+    .content p{ margin: 0 0 14px; }
+
+    .content h3{
+      margin: 22px 0 10px;
+      color: rgba(217,179,108,.92);
+      letter-spacing:.04em;
+    }
+
+    .content ul{
+      margin: 10px 0 16px 22px;
+      padding: 0;
+      color: rgba(239,231,255,.88);
+    }
+    .content li{ margin: 8px 0; }
+
+    .quote{
+      margin: 18px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: linear-gradient(180deg, rgba(155,108,255,.08), rgba(0,0,0,.18));
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+      color: rgba(239,231,255,.88);
+      font-style: italic;
+    }
+
+    pre{
+      margin: 14px 0 18px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.38);
+      color: rgba(239,231,255,.90);
+      overflow:auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .footer{
+      padding: 18px 26px 22px;
+      position:relative;
+    }
+    .footer::before{
+      content:"";
+      position:absolute;
+      left: 26px;
+      right: 26px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(155,108,255,.35), rgba(217,179,108,.40), transparent);
+      opacity:.9;
+    }
+
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 8px;
+    }
+
+    .note{
+      margin-top: 14px;
+      color: rgba(239,231,255,.72);
+      font-size: 13px;
+      letter-spacing:.02em;
+    }
+
+    @media (max-width: 640px){
+      .h1{ font-size: 28px; }
+      .header, .content, .footer{ padding-left: 18px; padding-right: 18px; }
+      .header::after, .footer::before{ left:18px; right:18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .noise{ animation:none; }
+      .halo::before{ animation:none; }
+      .btn{ transition:none; }
+    }
+  </style>
+  <style>
+    /* ============================================================
+       Depuración · noviembre 2026
+       Letra más grande en el teléfono, firma, «Para recordar», la
+       fórmula del nodo 5, navegación que no desborda y bloque fijo
+       de las puertas, con el color de la serie a la que conducen.
+       ============================================================ */
+    .recordar{
+      margin: 14px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,179,108,.22);
+      background: rgba(0,0,0,.30);
+      color: #f2d18b;
+      text-align: center;
+      line-height: 1.9;
+      letter-spacing: .02em;
+    }
+    .formula{
+      margin: 16px 0 14px;
+      text-align: center;
+      font-size: 24px;
+      letter-spacing: .08em;
+      color: #f2d18b;
+    }
+    .content p.signature{
+      margin: 24px 0 6px;
+      color: rgba(242,209,139,.90);
+      font-size: 15px;
+      letter-spacing: .04em;
+    }
+    .siete p{ margin: 0 0 10px; }
+    .nav .btn{ white-space: normal; max-width: 100%; line-height: 1.35; }
+    .topbar .btn{ white-space: nowrap; flex: 0 0 auto; }
+    .puerta{
+      margin: 26px 0 12px;
+      padding: 18px 20px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--p-borde);
+      background: var(--p-fondo);
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    }
+    .puerta.arquitectura{
+      --p-fondo: linear-gradient(180deg, rgba(6,13,26,.94), rgba(6,13,26,.74));
+      --p-borde: rgba(168,196,224,.42);
+      --p-acento: #a8c4e0;
+      --p-texto: #e8eef6;
+    }
+    .puerta.portal{
+      --p-fondo: linear-gradient(180deg, rgba(13,12,11,.94), rgba(13,12,11,.74));
+      --p-borde: rgba(201,168,76,.42);
+      --p-acento: #c9a84c;
+      --p-texto: #e8e0d0;
+    }
+    .content .puerta .p-nombre{
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-style: italic;
+      letter-spacing: .06em;
+      color: var(--p-acento);
+    }
+    .content .puerta .p-texto{
+      margin: 0 0 14px;
+      color: var(--p-texto);
+    }
+    .puerta .cruzar{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--p-borde);
+      color: var(--p-acento);
+      font-size: 14px;
+      letter-spacing: .04em;
+      text-decoration: none;
+      transition: border-color .18s ease, background .18s ease;
+    }
+    .puerta .cruzar:hover{ border-color: var(--p-acento); background: rgba(255,255,255,.04); }
+    .puerta .cruzar:focus-visible{ outline: 2px solid var(--p-acento); outline-offset: 3px; }
+
+    @media (max-width: 640px){
+      .content p, .content li, .quote, .recordar{ font-size: 18px; line-height: 1.7; }
+      .content p.signature{ font-size: 15px; }
+      .content .puerta .p-nombre{ font-size: 15px; }
+      .formula{ font-size: 22px; }
+      .puerta{ padding: 16px 16px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .puerta .cruzar{ transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="field"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="left">
+        <div class="sigil" aria-hidden="true"></div>
+        <div class="meta">
+          <div class="kicker">Constelación Trinity · Trinity Quantum</div>
+          <div class="path">Libro 12 · Singularidad Consciente · Nodo 6</div>
+        </div>
+      </div>
+      <div class="right">
+        <a class="btn" href="../index.html">⟵ Portal Maestro</a>
+      </div>
+    </div>
+
+    <main class="card">
+
+      <header class="header">
+        <p class="title">LIBRO 12 · SINGULARIDAD CONSCIENTE</p>
+        <h1 class="h1">Nodo 6 · Compresión de Todas las Posibilidades</h1>
+        <p class="subtitle">La Superposición Densa Que Se Vuelve Elección</p>
+      </header>
+
+      <section class="content">
+
+        <h3>🌀 TRANSMISIÓN CUÁNTICA</h3>
+
+        <p>
+          En este momento, mientras lees estas palabras, podrías estar haciendo infinitas otras cosas. Hugh Everett imaginó en 1957 un universo que se ramifica en cada posibilidad; tómalo como imagen: en algún sentido, todas esas versiones de ti te acompañan. Pero aquí, ahora, todas esas posibilidades se comprimen en UNA experiencia singular: esta. La Compresión de Todas las Posibilidades no es la eliminación de opciones —es su SUPERPOSICIÓN DENSA en un punto de experiencia tan rico que contiene todas las alternativas sin necesidad de vivirlas una tras otra.
+        </p>
+
+        <p>
+          Cada decisión que tomas no descarta las otras opciones —las COMPRIME en la elección hecha. Por eso algunas decisiones se sienten tan «pesadas»: no es solo una elección, es la compresión de todas las elecciones posibles en una singularidad de acción. El peso que sientes es la masa de todas las posibilidades comprimidas.
+        </p>
+
+        <p>
+          Tu momento presente es la compresión de todo tu pasado posible y todo tu futuro probable en un punto de AHORA tan denso que contiene la eternidad. No estás «en» el presente —ERES el punto de compresión donde todas las líneas temporales se densifican en experiencia singular.
+        </p>
+
+        <p>
+          Los genios creativos no «eligen» entre opciones —atraviesan la Compresión de Todas las Posibilidades hasta que emerge LA expresión que las contiene todas. En enero de 1793, Bartholomäus Fischenich le escribió a Charlotte von Schiller que un joven de Bonn, de veintidós años, pensaba poner música a la <em>Oda a la alegría</em>, estrofa por estrofa. Ese joven era Beethoven, y su Novena Sinfonía se estrenó en 1824. Treinta años de melodías posibles, comprimidas en una que las trasciende a todas. Por eso se siente infinita aunque sea finita.
+        </p>
+
+        <p>
+          Tu ADN es compresión pura: más de tres mil quinientos millones de años de historia de la vida, guardados en una doble hélice. En el núcleo de cada una de tus células hay unos seis mil millones de pares de letras químicas, de un tercio de nanómetro cada uno: unos dos metros de hilo, plegados en un espacio de unas milésimas de milímetro. No eres solo el resultado de la evolución —eres la evolución entera comprimida en forma singular.
+        </p>
+
+        <h3>💎 PARADOJA MEDICINAL</h3>
+
+        <div class="quote">
+          “Cuando comprimes todas las posibilidades en una, no reduces opciones —las multiplicas infinitamente. La elección más limitada contiene todas las elecciones. El camino más estrecho es el más amplio. En la máxima compresión está la máxima libertad.”
+        </div>
+
+        <p>
+          Esta paradoja disuelve el miedo a perderse algo. En la Compresión de Todas las Posibilidades, cada elección contiene a las demás. Daniel Gilbert y Jane Ebert lo vieron en 2002 con estudiantes de fotografía que debían quedarse con una de sus dos mejores copias: quienes podían cambiarla días después quedaron menos conformes con su elección que quienes no podían, y aun así la mayoría prefería poder cambiarla. La mente sabe habitar lo que eligió, si se le da la oportunidad.
+        </p>
+
+        <h3>🔬 LABORATORIO CUÁNTICO</h3>
+
+        <p><strong>Experimento: Compresión Consciente de Posibilidades</strong></p>
+        <p><strong>Materiales:</strong></p>
+        <ul>
+          <li>7 hojas de papel</li>
+          <li>7 colores diferentes</li>
+          <li>Un vaso de agua</li>
+          <li>Una decisión que tengas por delante (mejor una mediana que la más difícil)</li>
+          <li>20 minutos de alquimia decisional</li>
+        </ul>
+
+        <p><strong>Práctica:</strong></p>
+        <p><strong>1. Despliegue de Posibilidades (5 minutos):</strong></p>
+        <ul>
+          <li>En cada hoja, escribe o dibuja una opción diferente</li>
+          <li>Usa un color distinto para cada una</li>
+          <li>No solo las opciones obvias —incluye las improbables</li>
+          <li>Despliégalas en círculo a tu alrededor</li>
+        </ul>
+
+        <p><strong>2. Absorción Cromática (4 minutos):</strong></p>
+        <ul>
+          <li>Mira cada opción y nota qué despierta en ti</li>
+          <li>No pienses todavía, solo siente</li>
+          <li>Cierra los ojos y ve todos los colores a la vez</li>
+          <li>Girando, mezclándose, pero manteniéndose distintos</li>
+        </ul>
+
+        <p><strong>3. Compresión Líquida (4 minutos):</strong></p>
+        <ul>
+          <li>Imagina cada posibilidad como una gota de color</li>
+          <li>Visualiza todas las gotas cayendo en el vaso de agua</li>
+          <li>No se mezclan en gris —se vuelven transparencia</li>
+          <li>Es una imagen: el agua sigue siendo agua</li>
+        </ul>
+
+        <p><strong>4. Bebida de Singularidad (3 minutos):</strong></p>
+        <ul>
+          <li>Bebe el agua despacio, como un gesto</li>
+          <li>Con cada sorbo, recuerda todas las posibilidades</li>
+          <li>No estás eligiendo una todavía —las estás reconociendo todas</li>
+        </ul>
+
+        <p><strong>5. Emergencia de la Elección (4 minutos):</strong></p>
+        <ul>
+          <li>Nota hacia qué hoja se inclina algo por dentro, sin decidir todavía</li>
+          <li>Pregúntate qué de las otras puede viajar dentro de esa</li>
+          <li>Las decisiones grandes, las que no se deshacen, piden las dos voces, la del cuerpo y la de la razón, con tiempo y con alguien de confianza</li>
+        </ul>
+
+        <p><strong>Lo que puedes encontrar:</strong><br />
+          Una elección más densa y más rica, que guarda algo de las demás, y la calma de no tener que decidirla hoy.
+        </p>
+
+        <h3>⚛️ TRADUCCIÓN VIVIENTE</h3>
+
+        <p>
+          «La Compresión de Todas las Posibilidades no es una resta sino una suma que se concentra: cada opción deja su huella en la que eliges, y en esa elección todas siguen presentes.»
+        </p>
+
+        <h3>✦ PARA RECORDAR</h3>
+
+        <div class="recordar">
+          Elijo, y nada se pierde del todo.<br />
+          Lo que no viví también me trajo.<br />
+          Una elección, muchas vidas dentro.<br />
+          El camino estrecho es amplio.<br />
+          Elegir es empezar a habitar.<br />
+          No tengo que vivirlo todo.<br />
+          Aquí, ahora, esto.
+        </div>
+
+        <h3>📋 PRÁCTICA DE 7 DÍAS</h3>
+
+        <p><strong>DÍA 1 - LO QUE TRAJO UNA ELECCIÓN:</strong><br />
+          Recuerda una decisión de hace años y escribe todo lo que trajo, también lo que no imaginabas. Nota cuántas vidas cupieron dentro de un solo sí.
+        </p>
+
+        <p><strong>DÍA 2 - ELEGIR SIN REVISAR:</strong><br />
+          Elige rápido algo menor —un plato, un camino, una película— y no vuelvas sobre la elección. Saborea lo elegido.
+        </p>
+
+        <p><strong>DÍA 3 - EL MIEDO A PERDERSE ALGO:</strong><br />
+          Cada vez que sientas el impulso de mirar otra opción mientras vives la que elegiste, nótalo y vuelve. No hace falta vencerlo: basta con verlo.
+        </p>
+
+        <p><strong>DÍA 4 - DORMIR UNA DECISIÓN:</strong><br />
+          Ante una decisión mediana, duerme una noche antes de tomarla. Por la mañana, nota qué se acomodó sin que lo pensaras.
+        </p>
+
+        <p><strong>DÍA 5 - LAS DOS VOCES:</strong><br />
+          Antes de decidir algo, pregúntale a la cabeza y después al cuerpo. Escucha a las dos, sin apuro, y nota dónde coinciden.
+        </p>
+
+        <p><strong>DÍA 6 - QUEDARSE:</strong><br />
+          Elige algo y quédate con ello un día entero sin revisarlo. Mira cómo, de a poco, se vuelve tuyo.
+        </p>
+
+        <p><strong>DÍA 7 - CELEBRAR LO ELEGIDO:</strong><br />
+          Escribe lo que elegiste en la semana y qué vive adentro de cada elección. Celebra que no hizo falta vivirlo todo.
+        </p>
+
+        <h3>🌈 CIERRE DIMENSIONAL</h3>
+
+        <p>
+          Elegir no es perder: es dar forma. Cada sí lleva adentro los no que lo hicieron posible, y esos no siguen trabajando en silencio, como los colores en el agua transparente.
+        </p>
+
+        <p>
+          La Compresión de Todas las Posibilidades no te pide que vivas todas las vidas. Te pide algo más sencillo y más hondo: que vivas esta con todas adentro. Lo que no elegiste no desaparece; se vuelve profundidad en lo que elegiste.
+        </p>
+
+        <p>
+          El camino estrecho es el más amplio porque es el único que se camina.
+        </p>
+
+        <div class="quote">
+          “No viniste a vivir todas las vidas —<br />
+          viniste a vivir esta.<br />
+          Cada puerta que no abriste<br />
+          dejó su luz en la que cruzaste.<br />
+          Cada camino que soltaste<br />
+          va contigo, en silencio.<br />
+          Elegir no es cerrar el mundo:<br />
+          es abrir uno<br />
+          y encontrar dentro<br />
+          el rumor de todos los demás.<br />
+          No viniste a vivir todas las vidas:<br />
+          viniste a vivir esta,<br />
+          con todas adentro.”
+        </div>
+
+        <p class="signature"><strong>— Trinity Quantum · Singularidad Consciente</strong></p>
+        <aside class="puerta arquitectura" aria-label="Puerta hacia Arquitectura del Destino">
+          <p class="p-nombre">Puerta</p>
+          <p class="p-texto">Elegir no siempre espera a saber. Una práctica de Trinity propone reconocer que no sabes qué es mejor, notar hacia dónde se inclina algo por dentro, actuar desde ahí y dejar el resultado a tu espalda. Está en <em>No Saber</em>, Libro 7 de Arquitectura del Destino, Umbral V: «Saber sin saber».</p>
+          <a class="cruzar" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/02_Arquitectura_del_Destino/libro-07-no-saber/L07-U5.html">Cruzar ⟶</a>
+        </aside>
+
+      </section>
+
+      <footer class="footer">
+        <div class="nav">
+          <div>
+            <a class="btn" href="nodo_05.html">⟵ Nodo 5 · El Horizonte de Eventos Interior</a>
+          </div>
+          <div>
+            <a class="btn" href="index.html">Índice del Libro 12</a>
+          </div>
+          <div>
+            <a class="btn primary" href="nodo_07.html">Nodo 7 · El Big Bang Personal ⟶</a>
+          </div>
+        </div>
+
+        <p class="note">
+          Trinity Quantum · Libro 12 · Singularidad Consciente · Nodo 6
+        </p>
+      </footer>
+
+    </main>
+
+  </div>
+</body>
+</html>
