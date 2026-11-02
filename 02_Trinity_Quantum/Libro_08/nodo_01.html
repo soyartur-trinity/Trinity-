@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<!-- Depurado el 1 de noviembre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4, sección 5, con las cuatro precisiones de la revisión completa), con el veto de Arturo en cada tarjeta. El original se conserva en la etiqueta quantum-original del repositorio. -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trinity Quantum · Libro 8 · Nodo 1 — El Fuego Frío Interior</title>
+
+  <style>
+    :root{
+      --bg:#000000;
+      --panel:#07040c;
+      --panel2:#0b0612;
+      --ink:#f2ecff;
+      --muted:#cdbfe8;
+      --violet:#7a39ff;
+      --violet2:#b58cff;
+      --gold:#d6b25e;
+      --gold2:#f3d27a;
+      --line:rgba(214,178,94,.25);
+      --glow:rgba(181,140,255,.18);
+      --glow2:rgba(214,178,94,.12);
+      --shadow:0 24px 80px rgba(0,0,0,.65);
+      --radius:22px;
+      --radius2:28px;
+      --max:980px;
+      --font:Georgia, "Times New Roman", serif;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--ink);
+      background:
+        radial-gradient(900px 520px at 12% 10%, rgba(122,57,255,.14), transparent 62%),
+        radial-gradient(760px 560px at 88% 22%, rgba(214,178,94,.10), transparent 60%),
+        radial-gradient(820px 620px at 52% 92%, rgba(181,140,255,.10), transparent 62%),
+        linear-gradient(180deg, #000 0%, #05020a 45%, #000 100%);
+      letter-spacing:.1px;
+    }
+
+    /* Shell / Frame */
+    .portal-shell{
+      min-height:100%;
+      padding:34px 18px 44px;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+    }
+    .portal-frame{
+      width:100%;
+      max-width:var(--max);
+      background:
+        radial-gradient(1200px 640px at 50% 0%, rgba(122,57,255,.10), transparent 60%),
+        radial-gradient(980px 680px at 50% 100%, rgba(214,178,94,.09), transparent 62%),
+        linear-gradient(180deg, rgba(8,4,14,.96) 0%, rgba(4,2,8,.94) 100%);
+      border:1px solid rgba(214,178,94,.20);
+      border-radius:var(--radius2);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .portal-frame:before{
+      content:"";
+      position:absolute; inset:-2px;
+      border-radius:var(--radius2);
+      pointer-events:none;
+      background:
+        radial-gradient(780px 220px at 50% 0%, rgba(214,178,94,.18), transparent 60%),
+        radial-gradient(680px 220px at 22% 16%, rgba(181,140,255,.18), transparent 55%),
+        radial-gradient(680px 220px at 78% 16%, rgba(181,140,255,.14), transparent 55%);
+      opacity:.75;
+      mix-blend-mode:screen;
+    }
+
+    /* Header */
+    .portal-header{
+      position:relative;
+      padding:26px 26px 18px;
+      border-bottom:1px solid rgba(214,178,94,.18);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 100%);
+    }
+    .portal-header-main{
+      display:flex;
+      gap:12px;
+      align-items:baseline;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .portal-logo{
+      font-weight:700;
+      letter-spacing:.18em;
+      font-size:.95rem;
+      color:var(--gold2);
+      text-transform:uppercase;
+      text-shadow:0 0 22px rgba(214,178,94,.18);
+    }
+    .portal-badge{
+      font-size:.92rem;
+      color:var(--muted);
+      padding:8px 12px;
+      border:1px solid rgba(181,140,255,.22);
+      border-radius:999px;
+      background:rgba(10,6,18,.55);
+      box-shadow:0 0 30px rgba(122,57,255,.08);
+      white-space:nowrap;
+    }
+    .portal-subtitle{
+      margin-top:10px;
+      color:rgba(242,236,255,.86);
+      font-size:1.02rem;
+      line-height:1.45;
+    }
+
+    /* Meta */
+    .node-meta{
+      padding:18px 26px 6px;
+    }
+    .node-book-title{
+      color:rgba(242,236,255,.78);
+      font-size:1.0rem;
+      letter-spacing:.04em;
+      margin-bottom:10px;
+    }
+    .node-heading{
+      margin:0;
+      font-size:2.05rem;
+      line-height:1.12;
+      color:var(--gold2);
+      text-shadow:0 0 28px rgba(214,178,94,.16);
+    }
+    .node-index{
+      margin-top:10px;
+      color:rgba(205,191,232,.85);
+      font-size:.98rem;
+      padding:10px 12px;
+      border-left:3px solid rgba(122,57,255,.55);
+      background:rgba(10,6,18,.38);
+      border-radius:14px;
+    }
+
+    /* Content */
+    .node-content{
+      padding:16px 26px 10px;
+    }
+    .panel{
+      border:1px solid rgba(214,178,94,.18);
+      border-radius:var(--radius);
+      background:
+        radial-gradient(760px 420px at 50% 0%, rgba(181,140,255,.08), transparent 62%),
+        linear-gradient(180deg, rgba(9,5,16,.88) 0%, rgba(5,3,10,.86) 100%);
+      box-shadow:0 0 60px rgba(181,140,255,.06);
+      padding:18px 18px 6px;
+    }
+
+    .h2{
+      margin:6px 2px 10px;
+      font-size:1.34rem;
+      color:var(--gold2);
+      letter-spacing:.02em;
+    }
+    .h3{
+      margin:18px 2px 8px;
+      font-size:1.12rem;
+      color:var(--gold);
+      letter-spacing:.015em;
+    }
+
+    p{
+      margin:10px 2px;
+      color:rgba(242,236,255,.90);
+      font-size:1.05rem;
+      line-height:1.72;
+    }
+
+    .divider{
+      border:0;
+      height:1px;
+      margin:16px 0;
+      background:linear-gradient(90deg, transparent, rgba(214,178,94,.28), transparent);
+    }
+
+    .list{
+      margin:10px 0 12px 22px;
+      padding:0;
+    }
+    .list li{
+      margin:8px 0;
+      color:rgba(242,236,255,.88);
+      line-height:1.55;
+    }
+
+    .spec{
+      margin:12px 2px;
+      padding:14px 14px;
+      border:1px solid rgba(122,57,255,.22);
+      background:rgba(8,4,14,.55);
+      border-radius:18px;
+      box-shadow:0 0 40px rgba(122,57,255,.08);
+    }
+    .spec p{ margin:8px 0; color:rgba(242,236,255,.90); }
+
+    .seals{
+      display:grid;
+      gap:12px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      margin-top:10px;
+    }
+    .seal{
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid rgba(214,178,94,.18);
+      background:rgba(6,3,12,.62);
+      box-shadow:0 0 40px rgba(214,178,94,.06);
+    }
+    .h4{
+      margin:0 0 8px;
+      font-size:1.02rem;
+      color:var(--gold2);
+      letter-spacing:.01em;
+    }
+    .seal p{ margin:0; }
+
+    .practice{
+      margin:10px 2px 14px;
+      padding:16px 16px;
+      border-radius:18px;
+      border:1px solid rgba(214,178,94,.22);
+      background:
+        radial-gradient(520px 240px at 50% 0%, rgba(214,178,94,.10), transparent 62%),
+        rgba(8,4,14,.55);
+      box-shadow:0 0 55px rgba(214,178,94,.06);
+    }
+
+    /* Quote / Footer */
+    .quote{
+      margin:14px 0 10px;
+      padding:14px 16px;
+      border-left:3px solid rgba(214,178,94,.65);
+      background:rgba(10,6,18,.45);
+      border-radius:18px;
+    }
+    .quote p{ margin:0; color:rgba(242,236,255,.92); font-style:italic; }
+    .signature{
+      margin:0;
+      color:rgba(205,191,232,.92);
+      padding:0 2px 6px;
+    }
+
+    .node-nav{
+      padding:16px 26px 22px;
+      border-top:1px solid rgba(214,178,94,.14);
+    }
+    .node-nav-group{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .nav-link{
+      text-decoration:none;
+      color:rgba(242,236,255,.92);
+      border:1px solid rgba(214,178,94,.18);
+      background:rgba(0,0,0,.25);
+      padding:10px 14px;
+      border-radius:999px;
+      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+      box-shadow:0 0 34px rgba(181,140,255,.06);
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+    }
+    .nav-link:hover{
+      transform:translateY(-1px);
+      border-color:rgba(214,178,94,.32);
+      box-shadow:0 0 50px rgba(214,178,94,.10);
+    }
+    .nav-link-main{
+      border-color:rgba(181,140,255,.26);
+      box-shadow:0 0 46px rgba(122,57,255,.10);
+    }
+
+    .portal-footer{
+      padding:14px 26px 18px;
+      color:rgba(205,191,232,.78);
+      font-size:.92rem;
+      border-top:1px solid rgba(122,57,255,.14);
+      background:rgba(0,0,0,.20);
+    }
+
+    @media (max-width:820px){
+      .node-heading{font-size:1.8rem}
+      .seals{grid-template-columns:1fr}
+      .portal-shell{padding:22px 12px 34px}
+      .portal-header,.node-meta,.node-content,.node-nav,.portal-footer{padding-left:18px;padding-right:18px}
+    }
+  </style>
+  <style>
+    /* ============================================================
+       Depuración · noviembre 2026
+       Letra más grande en el teléfono, firma, versos, prácticas y
+       bloque fijo de las puertas, con el color de la serie a la que conducen.
+       ============================================================ */
+    .list{ margin:10px 0 12px 22px; padding:0; }
+    .list li{ margin:8px 0; color:rgba(242,236,255,.88); line-height:1.55; }
+    .practice{
+      margin:10px 2px 14px;
+      padding:16px 16px;
+      border-radius:18px;
+      border:1px solid rgba(214,178,94,.22);
+      background:
+        radial-gradient(520px 240px at 50% 0%, rgba(214,178,94,.10), transparent 62%),
+        rgba(8,4,14,.55);
+      box-shadow:0 0 55px rgba(214,178,94,.06);
+    }
+    .practice p{ margin:8px 0; }
+    .panel p.verso{
+      margin:16px 2px;
+      text-align:center;
+      color:var(--gold2);
+      line-height:1.8;
+    }
+    .panel p.signature{
+      margin:20px 2px 6px;
+      color:rgba(243,210,122,.88);
+      font-size:.92rem;
+      letter-spacing:.04em;
+    }
+    .node-nav-group + .node-nav-group{ margin-top:10px; }
+    .puerta{
+      margin:26px 0 12px;
+      padding:18px 20px 16px;
+      border-radius:16px;
+      border:1px solid var(--p-borde);
+      background:var(--p-fondo);
+      box-shadow:0 10px 24px rgba(0,0,0,.28);
+    }
+    .puerta.arquitectura{
+      --p-fondo: linear-gradient(180deg, rgba(6,13,26,.94), rgba(6,13,26,.74));
+      --p-borde: rgba(168,196,224,.42);
+      --p-acento: #a8c4e0;
+      --p-texto: #e8eef6;
+    }
+    .puerta.portal{
+      --p-fondo: linear-gradient(180deg, rgba(13,12,11,.94), rgba(13,12,11,.74));
+      --p-borde: rgba(201,168,76,.42);
+      --p-acento: #c9a84c;
+      --p-texto: #e8e0d0;
+    }
+    .panel .puerta .p-nombre{
+      margin:0 0 6px;
+      font-size:15px;
+      font-style:italic;
+      letter-spacing:.06em;
+      color:var(--p-acento);
+    }
+    .panel .puerta .p-texto{
+      margin:0 0 14px;
+      color:var(--p-texto);
+    }
+    .puerta .cruzar{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:9px 16px;
+      border-radius:999px;
+      border:1px solid var(--p-borde);
+      color:var(--p-acento);
+      font-size:14px;
+      letter-spacing:.04em;
+      text-decoration:none;
+      transition:border-color .18s ease, background .18s ease;
+    }
+    .puerta .cruzar:hover{ border-color:var(--p-acento); background:rgba(255,255,255,.04); }
+    .puerta .cruzar:focus-visible{ outline:2px solid var(--p-acento); outline-offset:3px; }
+
+    @media (max-width: 640px){
+      .panel p, .panel li{ font-size:18px; line-height:1.7; }
+      .panel p.signature{ font-size:15px; }
+      .puerta{ padding:16px 16px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .puerta .cruzar{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="portal-shell">
+    <div class="portal-frame">
+
+      <!-- CABECERA -->
+      <header class="portal-header">
+        <div class="portal-header-main">
+          <div class="portal-logo">TRINITY QUANTUM</div>
+          <div class="portal-badge">Libro 8 · Nodo 1</div>
+        </div>
+        <div class="portal-subtitle">
+          Plasma Consciente · El Fuego Frío Interior
+        </div>
+      </header>
+
+      <!-- META -->
+      <section class="node-meta">
+        <div class="node-book-title">Libro 8 · Plasma Consciente</div>
+        <h1 class="node-heading">Nodo 1 · El Fuego Frío Interior</h1>
+        <div class="node-index">Nodo 1 de 7 · El calor que no quema</div>
+      </section>
+
+      <!-- CONTENIDO -->
+      <main class="node-content" id="contenido">
+        <section class="panel">
+
+          <h2 class="h2">La Paradoja del Plasma Interno</h2>
+
+          <p>Existe un fuego que no quema. Un calor que detiene el tiempo. Una llama que ilumina desde adentro sin consumir. Es el plasma consciente, el cuarto estado de tu materia espiritual, vibrando en el centro mismo de tu ser.</p>
+          <p>Los antiguos lo llamaron fuego sagrado. Los alquimistas, el azoth. Los yoguis, el fuego serpentino. Cada tradición le dio su nombre y su camino. Aquí lleva el de un estado de la materia, como imagen: cuando un gas se calienta tanto que los electrones se sueltan de sus átomos, la materia empieza a brillar.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">La Física del Fuego Frío</h3>
+
+          <p>En el plasma físico, los electrones se liberan de sus átomos. En el plasma consciente, tus pensamientos se liberan de sus estructuras. Tus emociones flotan libres de sus anclajes. Tu identidad misma se vuelve un campo de posibilidades.</p>
+          <p>Y el fuego frío existe. En un tubo fluorescente, los electrones del plasma se mueven como si estuvieran a más de diez mil grados, y aun así el vidrio apenas se entibia: son tan pocos que no alcanzan a quemar. Los laboratorios llaman plasma frío a esa llama que se puede tocar, y la medicina ya la ensaya para limpiar heridas. La luciérnaga, a su modo, hace lo mismo: enciende su luz casi sin calor.</p>
+          <p>Una intensidad que no destruye: puede tocarlo todo sin quemar nada, y transformarlo todo.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Despertar del Plasma</h3>
+
+          <p>La tradición del yoga cuenta que, cuando la kundalini sube, la consciencia cambia de estado como cambia la materia: de sólido (cuerpo) a líquido (emociones), a gas (pensamientos), a plasma (consciencia pura). Hace veinticinco siglos, Empédocles enseñó que todo está hecho de cuatro raíces: tierra, agua, aire y fuego. La física llegó a cuatro estados que se le parecen: sólido, líquido, gas y plasma. En las dos listas, el último es el fuego.</p>
+          <p>En ese instante de ignición, el cuerpo encuentra sus propias imágenes:</p>
+          <ul class="list">
+            <li>Tus neuronas se vuelven estrellas</li>
+            <li>Tu sangre se convierte en luz líquida</li>
+            <li>Tu respiración se hace viento solar</li>
+            <li>Tu corazón late con pulsos de quásar</li>
+          </ul>
+          <p>Así se siente desde adentro. Por eso la tradición pide que la kundalini se despierte despacio y con maestro.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Los Portadores del Fuego Frío</h3>
+
+          <p>Las tradiciones guardan relatos de personas que ardían así. En 1141, a sus cuarenta y dos años, Hildegarda de Bingen escribió que una luz de fuego, bajada del cielo abierto, le había atravesado la mente y el pecho «como una llama que no quema sino que calienta», del modo en que el sol calienta aquello sobre lo que pone sus rayos.</p>
+          <p>Casi siete siglos después, en noviembre de 1831, en un bosque nevado de Rusia, Nikolái Motovílov conversaba con el monje Serafín de Sarov. Contó que el rostro del anciano se volvió más brillante que el sol, y que él mismo sentía un calor como el de un baño de vapor. Serafín le hizo notar que la nieve no se derretía, ni sobre ellos ni bajo sus pies: ese calor, le dijo, no estaba en el aire, sino en ellos.</p>
+          <p>Son relatos de la tradición. Lo que cualquiera puede reconocer está más cerca: hay personas cuya presencia calienta sin apurar. Las reconoces por:</p>
+          <ul class="list">
+            <li>Una atención que no tiene prisa</li>
+            <li>Una calma que no es frialdad</li>
+            <li>Su capacidad de quedarse quietas mientras arden por dentro</li>
+            <li>La forma en que, a su lado, uno respira más hondo</li>
+          </ul>
+          <p>No son una casta aparte. Cualquiera lleva ese fuego, y a ratos lo deja ver.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Cuatro Gestos</h3>
+
+          <p>Para dejar de taparlo:</p>
+          <div class="seals">
+            <div class="seal">
+              <h4 class="h4">Primer gesto</h4>
+              <p>Reconoce que ya está ardiendo. Siempre ha estado ardiendo. Solo faltaba mirarlo.</p>
+            </div>
+            <div class="seal">
+              <h4 class="h4">Segundo gesto</h4>
+              <p>Deja de intentar «elevar» tu energía. El fuego frío no sube ni baja: está en todas partes a la vez.</p>
+            </div>
+            <div class="seal">
+              <h4 class="h4">Tercer gesto</h4>
+              <p>Abandona el miedo a ser consumido. El fuego frío no destruye: revela lo indestructible.</p>
+            </div>
+            <div class="seal">
+              <h4 class="h4">Cuarto gesto</h4>
+              <p>Permite que cada célula sea un pequeño sol, irradiando su propia luz.</p>
+            </div>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Metabolismo del Fuego</h3>
+
+          <p>Tu cuerpo ya arde, sin llama. En el invierno de 1783, Antoine Lavoisier y Pierre-Simon Laplace pusieron un cobayo en un recipiente rodeado de hielo y midieron el agua que su calor derretía y el aire que exhalaba. Lo compararon con un carbón encendido y concluyeron que respirar es una combustión, muy lenta. Cada célula quema lo que comes paso a paso, tan despacio que no hay llama: ese es tu fuego frío de todos los días.</p>
+          <p>Y no solo de pan vives. Ese fuego también se alimenta de:</p>
+          <ul class="list">
+            <li>La atención que lo mira</li>
+            <li>El amor que lo aviva</li>
+            <li>La belleza que lo enciende sin pedirlo</li>
+            <li>El descanso que lo cuida</li>
+          </ul>
+          <p>Ningún fuego vive sin combustible. El cuerpo pide pan, agua y sueño, y no hay práctica que lo exima.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">La Leyenda y la Medida</h3>
+
+          <p>En el Tíbet hay una práctica que se llama tummo, fuego interior. Cuenta la tradición que quienes la dominan secan sábanas mojadas sobre la espalda en noches heladas. En 1982, Herbert Benson midió a tres monjes que la practicaban: la temperatura de sus dedos de manos y pies subió varios grados, aunque la del centro del cuerpo no cambió. Treinta años después, Maria Kozhevnikov estudió a monjas de un monasterio del este del Tíbet y vio subir también el calor del centro, hasta una fiebre leve, solo durante una respiración forzada que la tradición enseña con maestro; la imagen del fuego, sostenida en la mente, lo hacía durar. Tituló su trabajo «Leyenda y realidad».</p>
+          <p>Esa respiración se aprende con maestro, no en una página. Lo que la leyenda y la medida dicen juntas ya alcanza: hay un calor que nace de adentro, y la atención lo sostiene.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">La Corona de Plasma</h3>
+
+          <p>Alrededor de tu cuerpo hay una luz que el ojo no ve. Una cámara térmica la muestra: brillas en calor, todo el tiempo. Y cada cuerpo emite además una luz muy débil, mil veces más tenue de lo que el ojo alcanza a ver (Kobayashi, 2009). Es una buena imagen de lo que cada persona irradia. Esa corona:</p>
+          <ul class="list">
+            <li>Cambia con tus estados</li>
+            <li>Se ensancha en la calma</li>
+            <li>Llega a quien está cerca, aunque no se vea</li>
+            <li>Es tu manera de estar en el mundo</li>
+          </ul>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Cómo se Siente</h3>
+
+          <p>Cuando ese fuego se deja ver:</p>
+          <ul class="list">
+            <li>Calor sin fiebre</li>
+            <li>Luces y formas con los ojos cerrados, como cuando se aprietan los párpados</li>
+            <li>Una ligereza al caminar</li>
+            <li>La sensación de que el cuerpo es más amplio que su contorno</li>
+            <li>Ganas de mirar a los otros con más calma</li>
+          </ul>
+          <p>Otra cosa es que aparezcan de golpe destellos o sombras en un ojo, que un zumbido no se vaya o que el piso parezca moverse: eso no es el fuego, y pide un médico, no una interpretación. Y otra, sentir que ya no eres tú, que el mundo parece irreal o que pierdes horas sin recuerdo: eso tampoco es el fuego, y pide consulta esa misma semana.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Plasma Como Estado Natural</h3>
+
+          <p>La verdad más radical: el plasma no es un estado alterado. En el universo, lo raro es lo sólido. Las estrellas son plasma, y en ellas está casi toda la materia que brilla; la tierra firme que pisas es la excepción.</p>
+          <p>Vienes de ahí. El universo fue plasma durante sus primeros cientos de miles de años, tan caliente que la luz no podía viajar. Cuando se enfrió lo bastante, la luz se soltó, y todavía llega: es el zumbido que Arno Penzias y Robert Wilson oyeron en su antena en 1964, el resplandor más antiguo del cielo. El hidrógeno del agua que bebes se formó en ese fuego.</p>
+          <p>Vienes del fuego. Ahora recuerdas cómo arder sin quemarte.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">La Danza del Fuego Frío</h3>
+
+          <p>En el centro de cada estrella arde plasma. En cada aurora, ese plasma baila en el cielo de los polos. En el centro de tu ser, el mismo fuego espera.</p>
+          <p>No necesitas viajar al sol. Eres el sol. Siempre lo has sido.</p>
+
+          <hr class="divider" />
+
+          <h3 class="h3">Práctica: Encendiendo el Plasma Interior</h3>
+
+          <div class="practice">
+            <p>Siéntate en quietud. Visualiza un punto de luz en tu corazón. No un punto caliente: un punto de fuego frío. Denso como un agujero negro. Brillante como un big bang.</p>
+            <p>Permite que ese punto se expanda. No hacia afuera: hacia todas las direcciones a la vez, hasta que todo tu cuerpo lo sienta.</p>
+            <p>No te muevas. No conduzcas la respiración. Deja que respire sola.</p>
+            <p>Quédate así unos minutos. Eres el fuego frío. Eres la llama que no consume.</p>
+            <p>Antes de levantarte, siente los pies en el suelo.</p>
+          </div>
+
+          <hr class="divider" />
+
+          <h3 class="h3">El Secreto Final del Fuego Frío</h3>
+
+          <p>El fuego frío interior no es algo que desarrollas. Es algo que dejas de suprimir.</p>
+          <p>Toda tu vida has estado apagando tu fuego natural, bajando tu voltaje, disminuyendo tu luminosidad para encajar en un mundo de materia densa.</p>
+          <p>Ahora, simplemente… deja de apagarte.</p>
+          <p>Permite que el fuego frío que siempre has sido arda libre, salvaje, sin consumirte.</p>
+          <p>Bienvenido al estado plasmático. Bienvenido a casa.</p>
+
+          <hr class="divider" />
+
+          <blockquote class="quote">
+            <p>“En el corazón de cada ser arde un sol. La iluminación no es encenderlo: es dejar de fingir que está apagado.”</p>
+          </blockquote>
+
+          <p class="signature"><strong>— Trinity Quantum · Plasma Consciente</strong></p>
+
+        </section>
+      </main>
+
+      <!-- NAVEGACIÓN -->
+      <nav class="node-nav" aria-label="Navegación inferior">
+        <div class="node-nav-group">
+          <a class="nav-link" href="index.html">← Índice del Libro 8</a>
+          <a class="nav-link nav-link-main" href="nodo_02.html">Nodo 2: Estados Plasmáticos →</a>
+        </div>
+        <div class="node-nav-group">
+          <a class="nav-link" href="index.html">Índice del Libro 8</a>
+          <a class="nav-link" href="../index.html">Portal Maestro Trinity Quantum</a>
+        </div>
+      </nav>
+
+      <footer class="portal-footer">
+        Trinity Quantum · Libro 8 · Plasma Consciente · Nodo 1
+      </footer>
+
+    </div>
+  </div>
+</body>
+</html>
