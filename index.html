@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 7 de noviembre de 2026, a pedido de Arturo: sale el botón sonoro («Activar Frecuencia» y «Frecuencia») con su audio y su script; confundía y daba problemas en los navegadores. Lo demás queda igual. -->
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -115,17 +116,6 @@
     .btn-primary{
       background:radial-gradient(circle at top left, rgba(180,120,255,.40), rgba(20,10,40,.85));
       border-color:rgba(220,180,255,.55);
-    }
-    .btn-audio{ position:relative; }
-    .btn-audio::after{
-      content:""; position:absolute; inset:-2px;
-      border-radius:18px; border:1px solid rgba(220,180,255,.18);
-      opacity:.6; pointer-events:none;
-    }
-    .btn-audio.pulse{ animation:glow 2.2s ease-in-out infinite; }
-    @keyframes glow{
-      0%,100%{box-shadow:0 0 18px rgba(160,90,230,.20);}
-      50%{box-shadow:0 0 34px rgba(200,150,255,.45);}
     }
 
     /* Atrio */
@@ -254,9 +244,6 @@
         <div class="micro">Entra sin prisa. Elige con presencia.</div>
         <div class="actions">
           <button class="btn btn-primary" id="btn-enter" type="button">Entrar</button>
-          <button class="btn btn-audio pulse" id="btn-audio" type="button">
-            <span id="audio-ico">🎵</span> Activar Frecuencia
-          </button>
         </div>
         <div class="mini">Trinity © 2024–2026 · No es mío, vino a través de mí</div>
       </section>
@@ -301,17 +288,11 @@
 
         <div class="actions" style="margin-top:18px;">
           <button class="btn" id="btn-back" type="button">← Volver</button>
-          <button class="btn btn-audio" id="btn-audio-2" type="button">
-            <span id="audio-ico-2">🎵</span> Frecuencia
-          </button>
         </div>
 
         <div class="mini">El misterio se revela por presencia, no por volumen.</div>
       </section>
 
-      <audio id="audio" loop preload="none">
-        <source src="sonidos/frecuencia-432hz.mp3" type="audio/mpeg">
-      </audio>
     </div>
   </div>
 
@@ -338,29 +319,6 @@
       s2.classList.add('hidden');
       s1.classList.remove('hidden');
     });
-
-    const audio = document.getElementById('audio');
-    const btnA1 = document.getElementById('btn-audio');
-    const btnA2 = document.getElementById('btn-audio-2');
-    const ico1  = document.getElementById('audio-ico');
-    const ico2  = document.getElementById('audio-ico-2');
-    let audioOn = false;
-
-    async function toggleAudio(){
-      try{
-        if(!audioOn){
-          audio.preload="auto"; await audio.play();
-          audioOn=true; ico1.textContent="🔊"; ico2.textContent="🔊";
-          btnA1.classList.remove('pulse');
-        }else{
-          audio.pause();
-          audioOn=false; ico1.textContent="🎵"; ico2.textContent="🎵";
-          btnA1.classList.add('pulse');
-        }
-      }catch(e){ console.warn("Audio bloqueado:",e); }
-    }
-    btnA1.addEventListener('click', toggleAudio);
-    btnA2.addEventListener('click', toggleAudio);
 
     const canvas = document.getElementById('field');
     const ctx = canvas.getContext('2d');
