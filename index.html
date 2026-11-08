@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 7 de noviembre de 2026, a pedido de Arturo (maestro v4 de Arquitectura del Destino, sección 19): sale el botón sonoro («Activar Frecuencia» y «Frecuencia») con su audio y su script, que confundía y daba problemas en los navegadores. Sale también la imagen de fondo, que cumplió su ciclo: en su lugar, las siete órbitas de la Red, tenues, con sus noventa y un puntos girando despacio alrededor del centro vacío. En el Atrio, la línea «Trayectoria» pasa a ser la miniatura de la Red (los siete anillos, sin hilos), que lleva al mapa completo. «#atrio» abre directo el Atrio. Los textos quedan igual. -->
+<!-- 7 de noviembre de 2026, a pedido de Arturo (maestro v4 de Arquitectura del Destino, sección 19): sale el botón sonoro («Activar Frecuencia» y «Frecuencia») con su audio y su script, que confundía y daba problemas en los navegadores. Sale también la imagen de fondo, que cumplió su ciclo: en su lugar, las siete órbitas de la Red, tenues, con sus noventa y un puntos girando despacio alrededor del centro vacío. En el Atrio, la línea «Trayectoria» pasa a ser la miniatura de la Red (los siete anillos, sin hilos), que lleva al mapa completo. «#atrio» abre directo el Atrio. Los textos quedan igual. 8 de noviembre: el Atrio suma el Portal Público (sus tres constelaciones y Arquitectura del Destino) antes de la serie mayor, y pasa a «Siete Puertas». -->
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -136,6 +136,7 @@
     .red-desc{ margin-top:4px; font-size:.85rem; font-style:italic; color:rgba(245,242,255,.6); }
     #screen-atrium.abre .ar{ opacity:0; transform:scale(.92); }
     @media (prefers-reduced-motion: reduce){
+      .door{ animation:none; opacity:1; }
       .red-mini .ar, .red-mini svg, #field{ transition:none; }
       #screen-atrium.abre .ar{ opacity:1; transform:none; }
     }
@@ -165,9 +166,21 @@
       opacity:0;
       animation:emerge 0.8s cubic-bezier(0.2,0.8,0.2,1) forwards;
     }
-    .door:nth-child(1){ animation-delay:0.2s; }
-    .door:nth-child(2){ animation-delay:0.4s; }
-    .door:nth-child(3){ animation-delay:0.6s; }
+    .doors-portal .door:nth-child(1){ animation-delay:0.15s; }
+    .doors-portal .door:nth-child(2){ animation-delay:0.3s; }
+    .doors-portal .door:nth-child(3){ animation-delay:0.45s; }
+    .doors-portal .door:nth-child(4){ animation-delay:0.6s; }
+    .doors-mayor .door:nth-child(1){ animation-delay:0.8s; }
+    .doors-mayor .door:nth-child(2){ animation-delay:0.95s; }
+    .doors-mayor .door:nth-child(3){ animation-delay:1.1s; }
+
+    /* Los dos grupos del Atrio: primero el Portal Público, después la serie mayor */
+    .grupo{
+      margin-top:34px;
+      font-size:.72rem; letter-spacing:.2em; text-transform:uppercase;
+      color:rgba(245,242,255,.5);
+    }
+    .grupo + .doors{ margin-top:10px; }
 
     @keyframes emerge{
       0%{opacity:0; transform:scale(0.95) translateY(10px); filter:blur(3px);}
@@ -198,9 +211,11 @@
       line-height:1.3;
     }
     /* Color por puerta */
-    .door:nth-child(1) .name{ color:#e8e4ff; }
+    .doors-mayor .door:nth-child(1) .name{ color:#e8e4ff; }
     .door-primary .name{ color:var(--color-origen); }
-    .door:nth-child(3) .name{ color:var(--color-infinito); }
+    .doors-mayor .door:nth-child(3) .name{ color:var(--color-infinito); }
+    .doors-portal .name{ color:#e6dfcf; }
+    .doors-portal .door-arq .name{ color:#a8c8ee; }
 
     /* desc oculta siempre */
     .door .desc{ display:none; }
@@ -250,7 +265,7 @@
 
       <!-- Pantalla 2: Atrio -->
       <section class="panel hidden" id="screen-atrium">
-        <div class="atrium-title">Atrio · Tres Puertas</div>
+        <div class="atrium-title">Atrio · Siete Puertas</div>
         <div class="micro">La Puerta guía. El viajero elige.</div>
 
         <a class="red-mini" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/03_La_Red/" aria-label="La Red: toda la constelación en un solo plano">
@@ -259,7 +274,33 @@
           <span class="red-desc">Toda la constelación en un solo plano</span>
         </a>
 
-        <div class="doors">
+        <div class="grupo">Portal Público</div>
+        <div class="doors doors-portal">
+
+          <a class="door" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/#la-vida-interior">
+            <div class="kicker">Primera constelación</div>
+            <div class="name">La Vida Interior</div>
+          </a>
+
+          <a class="door" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/#la-trama">
+            <div class="kicker">Segunda constelación</div>
+            <div class="name">La Trama</div>
+          </a>
+
+          <a class="door" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/#el-campo">
+            <div class="kicker">Tercera constelación</div>
+            <div class="name">El Campo</div>
+          </a>
+
+          <a class="door door-arq" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/02_Arquitectura_del_Destino/index.html">
+            <div class="kicker">Sistema operativo</div>
+            <div class="name">Arquitectura del Destino</div>
+          </a>
+
+        </div>
+
+        <div class="grupo">Serie mayor</div>
+        <div class="doors doors-mayor">
 
           <a class="door" href="00_Portal_Trinity/index.html">
             <div class="kicker">Comienza aquí</div>
