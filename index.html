@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!-- 7 de noviembre de 2026, a pedido de Arturo: sale el botón sonoro («Activar Frecuencia» y «Frecuencia») con su audio y su script; confundía y daba problemas en los navegadores. Lo demás queda igual. -->
+<!-- 7 de noviembre de 2026, a pedido de Arturo (maestro v4 de Arquitectura del Destino, sección 19): sale el botón sonoro («Activar Frecuencia» y «Frecuencia») con su audio y su script, que confundía y daba problemas en los navegadores. Sale también la imagen de fondo, que cumplió su ciclo: en su lugar, las siete órbitas de la Red, tenues, con sus noventa y un puntos girando despacio alrededor del centro vacío. En el Atrio, la línea «Trayectoria» pasa a ser la miniatura de la Red (los siete anillos, sin hilos), que lleva al mapa completo. «#atrio» abre directo el Atrio. Los textos quedan igual. -->
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>TRINITY · STARGATE</title>
   <meta name="description" content="Trinity: Portal de Transformación de Consciencia — STARGATE" />
 
@@ -18,34 +18,26 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-    html, body{ height:100%; }
+    html, body{ min-height:100%; }
     body{
       font-family: Georgia, serif;
-      background: var(--bg);
+      background: radial-gradient(ellipse at 50% 46%, #0c0818 0%, #060410 48%, #020104 100%) fixed, var(--bg);
       color: var(--text);
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
-    .bg{
-      position:fixed; inset:0;
-      background: url("./assets/img/stargate_bg.jpg") center/cover no-repeat;
-      z-index:0;
-    }
-    .overlay{
-      position:fixed; inset:0;
-      background: transparent;
-      z-index:1; pointer-events:none;
-    }
     #field{
       position:fixed; inset:0;
-      z-index:2; pointer-events:none; opacity:.55;
+      z-index:0; pointer-events:none;
+      transition:opacity 1.4s ease;
     }
+    body.en-atrio #field{ opacity:.4; }
 
     .wrap{
       position:relative; z-index:3;
-      height:100%;
+      min-height:100vh; min-height:100svh;
       display:flex; align-items:center; justify-content:center;
-      padding:24px;
+      padding:max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
     }
 
     .stage{
@@ -128,15 +120,25 @@
       letter-spacing:1px;
     }
 
-    /* Mapa de trayectoria */
-    .trinity-map{
-      margin-top:10px;
-      font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase;
-      color:rgba(245,242,255,.7);
-      display:flex; justify-content:center; align-items:center;
-      gap:6px; flex-wrap:wrap;
+    /* La Red, en miniatura: los siete anillos de la constelación, sin hilos */
+    .red-mini{
+      display:inline-flex; flex-direction:column; align-items:center;
+      margin-top:22px; text-decoration:none; color:var(--text);
+      border-radius:50%;
     }
-    .map-sep{ opacity:.3; }
+    .red-mini svg{ width:min(240px, 64vw); height:auto; display:block; overflow:visible; }
+    .red-mini .orb{ fill:none; stroke:rgba(255,255,255,.07); stroke-width:.5; }
+    .red-mini .ar{ transition:opacity .9s ease, transform .9s ease; transform-box:view-box; transform-origin:50% 50%; }
+    .red-mini svg{ transition:transform .5s ease; }
+    .red-mini:hover svg, .red-mini:focus-visible svg{ transform:scale(1.03); }
+    .red-mini:focus-visible{ outline:1px solid rgba(217,181,106,.6); outline-offset:6px; }
+    .red-nombre{ margin-top:12px; font-size:clamp(1.1rem, 2.2vw, 1.3rem); letter-spacing:.6px; color:#d9b56a; }
+    .red-desc{ margin-top:4px; font-size:.85rem; font-style:italic; color:rgba(245,242,255,.6); }
+    #screen-atrium.abre .ar{ opacity:0; transform:scale(.92); }
+    @media (prefers-reduced-motion: reduce){
+      .red-mini .ar, .red-mini svg, #field{ transition:none; }
+      #screen-atrium.abre .ar{ opacity:1; transform:none; }
+    }
 
     /* ── PUERTAS SIN TARJETA ── */
     .doors{
@@ -229,9 +231,7 @@
 </head>
 
 <body>
-  <div class="bg"></div>
-  <div class="overlay"></div>
-  <canvas id="field"></canvas>
+  <canvas id="field" aria-hidden="true"></canvas>
 
   <div class="wrap">
     <div class="stage" role="application" aria-label="Trinity Stargate">
@@ -250,20 +250,14 @@
 
       <!-- Pantalla 2: Atrio -->
       <section class="panel hidden" id="screen-atrium">
-        <div class="sigil" style="font-size:44px;">◈</div>
         <div class="atrium-title">Atrio · Tres Puertas</div>
         <div class="micro">La Puerta guía. El viajero elige.</div>
 
-        <div class="trinity-map">
-          <span class="map-label">Trayectoria:</span>
-          <span class="map-item">Puerta</span>
-          <span class="map-sep">→</span>
-          <span class="map-item">Origen</span>
-          <span class="map-sep">→</span>
-          <span class="map-item">Quantum</span>
-          <span class="map-sep">→</span>
-          <span class="map-item">Infinito</span>
-        </div>
+        <a class="red-mini" href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/03_La_Red/" aria-label="La Red: toda la constelación en un solo plano">
+          <svg viewBox="-100 -100 200 200" aria-hidden="true"><g class="ar" style="--i:0"><circle class="orb" r="27.6"/><g fill="#a48fe0"><circle cx="0.0" cy="-27.6" r="2.5"/><circle cx="12.8" cy="-24.4" r="2.5"/><circle cx="22.7" cy="-15.7" r="2.5"/><circle cx="27.4" cy="-3.3" r="2.5"/><circle cx="25.8" cy="9.8" r="2.5"/><circle cx="18.3" cy="20.7" r="2.5"/><circle cx="6.6" cy="26.8" r="2.5"/><circle cx="-6.6" cy="26.8" r="2.5"/><circle cx="-18.3" cy="20.7" r="2.5"/><circle cx="-25.8" cy="9.8" r="2.5"/><circle cx="-27.4" cy="-3.3" r="2.5"/><circle cx="-22.7" cy="-15.7" r="2.5"/><circle cx="-12.8" cy="-24.4" r="2.5"/></g></g><g class="ar" style="--i:1"><circle class="orb" r="38.3"/><g fill="#4fbf9f"><circle cx="0.0" cy="-38.3" r="2.5"/><circle cx="17.8" cy="-33.9" r="2.5"/><circle cx="31.5" cy="-21.8" r="2.5"/><circle cx="38.1" cy="-4.6" r="2.5"/><circle cx="35.8" cy="13.6" r="2.5"/><circle cx="25.4" cy="28.7" r="2.5"/><circle cx="9.2" cy="37.2" r="2.5"/><circle cx="-9.2" cy="37.2" r="2.5"/><circle cx="-25.4" cy="28.7" r="2.5"/><circle cx="-35.8" cy="13.6" r="2.5"/><circle cx="-38.1" cy="-4.6" r="2.5"/><circle cx="-31.5" cy="-21.8" r="2.5"/><circle cx="-17.8" cy="-33.9" r="2.5"/></g></g><g class="ar" style="--i:2"><circle class="orb" r="49.1"/><g fill="#e0759d"><circle cx="0.0" cy="-49.1" r="2.5"/><circle cx="22.8" cy="-43.4" r="2.5"/><circle cx="40.4" cy="-27.9" r="2.5"/><circle cx="48.7" cy="-5.9" r="2.5"/><circle cx="45.9" cy="17.4" r="2.5"/><circle cx="32.5" cy="36.7" r="2.5"/><circle cx="11.7" cy="47.6" r="2.5"/><circle cx="-11.7" cy="47.6" r="2.5"/><circle cx="-32.5" cy="36.7" r="2.5"/><circle cx="-45.9" cy="17.4" r="2.5"/><circle cx="-48.7" cy="-5.9" r="2.5"/><circle cx="-40.4" cy="-27.9" r="2.5"/><circle cx="-22.8" cy="-43.4" r="2.5"/></g></g><g class="ar" style="--i:3"><circle class="orb" r="59.8"/><g fill="#b3ab9b"><circle cx="0.0" cy="-59.8" r="2"/><circle cx="27.8" cy="-53.0" r="2"/><circle cx="49.2" cy="-34.0" r="2"/><circle cx="59.4" cy="-7.2" r="2"/><circle cx="55.9" cy="21.2" r="2"/><circle cx="39.7" cy="44.8" r="2"/><circle cx="14.3" cy="58.1" r="2"/><circle cx="-14.3" cy="58.1" r="2"/><circle cx="-39.7" cy="44.8" r="2"/><circle cx="-55.9" cy="21.2" r="2"/><circle cx="-59.4" cy="-7.2" r="2"/><circle cx="-49.2" cy="-34.0" r="2"/><circle cx="-27.8" cy="-53.0" r="2"/></g></g><g class="ar" style="--i:4"><circle class="orb" r="70.5"/><g fill="#b3ab9b"><circle cx="0.0" cy="-70.5" r="2"/><circle cx="32.8" cy="-62.5" r="2"/><circle cx="58.0" cy="-40.1" r="2"/><circle cx="70.0" cy="-8.5" r="2"/><circle cx="65.9" cy="25.0" r="2"/><circle cx="46.8" cy="52.8" r="2"/><circle cx="16.9" cy="68.5" r="2"/><circle cx="-16.9" cy="68.5" r="2"/><circle cx="-46.8" cy="52.8" r="2"/><circle cx="-65.9" cy="25.0" r="2"/><circle cx="-70.0" cy="-8.5" r="2"/><circle cx="-58.0" cy="-40.1" r="2"/><circle cx="-32.8" cy="-62.5" r="2"/></g></g><g class="ar" style="--i:5"><circle class="orb" r="81.3"/><g fill="#b3ab9b"><circle cx="0.0" cy="-81.3" r="2"/><circle cx="37.8" cy="-72.0" r="2"/><circle cx="66.9" cy="-46.2" r="2"/><circle cx="80.7" cy="-9.8" r="2"/><circle cx="76.0" cy="28.8" r="2"/><circle cx="53.9" cy="60.8" r="2"/><circle cx="19.4" cy="78.9" r="2"/><circle cx="-19.4" cy="78.9" r="2"/><circle cx="-53.9" cy="60.8" r="2"/><circle cx="-76.0" cy="28.8" r="2"/><circle cx="-80.7" cy="-9.8" r="2"/><circle cx="-66.9" cy="-46.2" r="2"/><circle cx="-37.8" cy="-72.0" r="2"/></g></g><g class="ar" style="--i:6"><circle class="orb" r="92.0"/><g fill="#64a2e4"><circle cx="0.0" cy="-92.0" r="2.5"/><circle cx="42.8" cy="-81.5" r="2.5"/><circle cx="75.7" cy="-52.3" r="2.5"/><circle cx="91.3" cy="-11.1" r="2.5"/><circle cx="86.0" cy="32.6" r="2.5"/><circle cx="61.0" cy="68.9" r="2.5"/><circle cx="22.0" cy="89.3" r="2.5"/><circle cx="-22.0" cy="89.3" r="2.5"/><circle cx="-61.0" cy="68.9" r="2.5"/><circle cx="-86.0" cy="32.6" r="2.5"/><circle cx="-91.3" cy="-11.1" r="2.5"/><circle cx="-75.7" cy="-52.3" r="2.5"/><circle cx="-42.8" cy="-81.5" r="2.5"/></g></g></svg>
+          <span class="red-nombre">La Red</span>
+          <span class="red-desc">Toda la constelación en un solo plano</span>
+        </a>
 
         <div class="doors">
 
@@ -310,41 +304,66 @@
     const s2 = document.getElementById('screen-atrium');
     const whisperEl = document.getElementById('whisper');
 
-    document.getElementById('btn-enter').addEventListener('click', ()=>{
+    const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function abrirAtrio(){
       s1.classList.add('hidden');
       s2.classList.remove('hidden');
+      document.body.classList.add('en-atrio');
       whisperEl.textContent = randomWhisper();
-    });
-    document.getElementById('btn-back').addEventListener('click', ()=>{
+      if(!quieto){
+        const anillos = s2.querySelectorAll('.ar');
+        s2.classList.add('abre');
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          anillos.forEach((a,j)=>{ a.style.transitionDelay = (j*0.18)+'s'; });
+          s2.classList.remove('abre');
+        }));
+      }
+    }
+    function cerrarAtrio(){
       s2.classList.add('hidden');
       s1.classList.remove('hidden');
-    });
+      document.body.classList.remove('en-atrio');
+      if(location.hash==='#atrio') history.replaceState(null,'',location.pathname);
+    }
+    document.getElementById('btn-enter').addEventListener('click', abrirAtrio);
+    document.getElementById('btn-back').addEventListener('click', cerrarAtrio);
+    if(location.hash==='#atrio') abrirAtrio();
 
+    // El fondo: las siete órbitas de la Red, tenues, con sus noventa y un puntos.
+    // Giran despacio alrededor del centro vacío, que no se mueve.
     const canvas = document.getElementById('field');
     const ctx = canvas.getContext('2d');
-    function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-    window.addEventListener('resize', resize); resize();
-
-    const colors = ["rgba(156,39,176,.65)","rgba(0,188,212,.55)","rgba(255,215,0,.35)"];
-    function rand(a,b){ return Math.random()*(b-a)+a; }
-    const dots = Array.from({length:42},()=>({
-      x:rand(0,canvas.width), y:rand(0,canvas.height),
-      vx:rand(-0.18,0.18), vy:rand(-0.18,0.18),
-      r:rand(0.9,2.1), a:rand(0.15,0.7),
-      c:colors[Math.floor(Math.random()*colors.length)]
-    }));
-
-    (function tick(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for(const d of dots){
-        d.x+=d.vx; d.y+=d.vy;
-        if(d.x<0) d.x=canvas.width; if(d.x>canvas.width) d.x=0;
-        if(d.y<0) d.y=canvas.height; if(d.y>canvas.height) d.y=0;
-        ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
-        ctx.globalAlpha=d.a; ctx.fillStyle=d.c; ctx.fill();
+    const COLORES = ['#a48fe0','#4fbf9f','#e0759d','#b3ab9b','#b3ab9b','#b3ab9b','#64a2e4'];
+    let W=0, H=0, dpr=1;
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio||1, 2);
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = W*dpr; canvas.height = H*dpr;
+      canvas.style.width = W+'px'; canvas.style.height = H+'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      if(quieto) dibujar(0);
+    }
+    function dibujar(t){
+      ctx.clearRect(0,0,W,H);
+      const cx = W/2, cy = H/2, R = Math.max(W,H)*0.56;
+      for(let j=0;j<7;j++){
+        const r = R*(0.30+0.70*j/6);
+        ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+        ctx.strokeStyle = 'rgba(255,255,255,0.045)'; ctx.lineWidth = 1; ctx.stroke();
+        const giro = t*0.000012*(1-j*0.09);
+        ctx.fillStyle = COLORES[j];
+        ctx.globalAlpha = 0.55;
+        for(let i=0;i<13;i++){
+          const a = -Math.PI/2 + 2*Math.PI*i/13 + giro;
+          ctx.beginPath(); ctx.arc(cx+r*Math.cos(a), cy+r*Math.sin(a), j>=3&&j<=5?1.6:2, 0, Math.PI*2); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
       }
-      ctx.globalAlpha=1; requestAnimationFrame(tick);
-    })();
+    }
+    window.addEventListener('resize', resize); resize();
+    if(!quieto){
+      (function tick(t){ dibujar(t); requestAnimationFrame(tick); })(0);
+    }
   </script>
 </body>
 </html>
