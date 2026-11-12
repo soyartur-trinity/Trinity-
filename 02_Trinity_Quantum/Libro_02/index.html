@@ -1,396 +1,139 @@
 <!DOCTYPE html>
-<!-- Índice general de Trinity Quantum, rehecho el 2 de noviembre de 2026, al cerrar la pasada final por los trece
-     libros depurados (maestro v4 de Arquitectura del Destino, sección 5). Los trece libros originales, tal como
-     estaban antes de la depuración, se guardan en la etiqueta quantum-original de este repositorio. -->
+<!-- Depurado en octubre de 2026 según la guía de depuración de Quantum (Arquitectura del Destino, maestro v4, sección 5, con las cuatro precisiones de la revisión completa), con el veto de Arturo en cada tarjeta. El original se conserva en la etiqueta quantum-original del repositorio. -->
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trinity Quantum — Portal Maestro · Los trece libros</title>
-  <meta name="description" content="Trinity Quantum: trece libros y noventa y un nodos que toman de la física sus imágenes más hondas y las vuelven espejos de la vida interior." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Libro 2 · Entrelazamiento Sagrado — Índice | Trinity Quantum</title>
+
+  <!-- Estilos Trinity Quantum -->
+  <link rel="stylesheet" href="../assets/css/trinity-quantum.css" />
   <style>
-    :root {
-      color-scheme: dark;
-      --noche: #06020e;
-      --noche-alta: #120729;
-      --violeta: #bb7bff;
-      --violeta-tenue: rgba(187, 123, 255, 0.3);
-      --oro: #f3d17a;
-      --oro-tenue: rgba(243, 209, 122, 0.55);
-      --texto: #f4eefc;
-      --texto-suave: rgba(244, 238, 252, 0.76);
-      --texto-leve: rgba(244, 238, 252, 0.54);
+    /* Depuración · octubre 2026: letra más grande en el teléfono y firma. */
+    .node-content p.signature{
+      margin: 22px 0 8px;
+      color: rgba(243, 209, 122, .85);
+      font-size: 14px;
+      letter-spacing: .04em;
     }
-    * { box-sizing: border-box; }
-    html { font-size: 17px; scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--texto);
-      font-family: Georgia, "Times New Roman", serif;
-      line-height: 1.62;
-      background:
-        radial-gradient(ellipse 110% 55% at 50% 0%, #22103f 0%, rgba(34, 16, 63, 0) 70%),
-        var(--noche);
-    }
-    a { color: inherit; }
-    a:focus-visible, summary:focus-visible { outline: 2px solid var(--oro); outline-offset: 3px; border-radius: 4px; }
-    .marco { max-width: 780px; margin: 0 auto; padding: 22px 22px 56px; }
-
-    .volver {
-      display: inline-block; font-size: 0.86rem; color: var(--oro); text-decoration: none;
-      border: 1px solid rgba(243, 209, 122, 0.25); border-radius: 999px; padding: 7px 15px;
-    }
-    .volver:hover { border-color: var(--oro-tenue); }
-
-    /* Portada */
-    .portada { text-align: center; padding: 26px 0 10px; }
-    .portada h1 {
-      margin: 0.15em 0 0.3em; font-weight: normal; text-transform: uppercase;
-      font-size: clamp(2.1rem, 8.4vw, 3.5rem); letter-spacing: 0.2em; padding-left: 0.2em; line-height: 1.15;
-    }
-    .lema { text-wrap: balance; margin: 0 auto 0.9em; font-size: 1.2rem; font-style: italic; color: var(--oro); }
-    .intro { text-wrap: pretty; margin: 0 auto; max-width: 33em; color: var(--texto-suave); }
-
-    .mandala { display: block; width: min(100%, 470px); margin: 26px auto 4px; overflow: visible; }
-    .orbita { fill: none; stroke: var(--violeta-tenue); stroke-width: 1; }
-    .estrella { fill: none; stroke: rgba(187, 123, 255, 0.4); stroke-width: 1; stroke-linejoin: round; }
-    .nucleo-aro { fill: none; stroke: var(--oro-tenue); stroke-width: 1; }
-    .nucleo { fill: var(--oro); }
-    .nodo circle { fill: var(--noche-alta); stroke: var(--violeta); stroke-width: 1.3; transition: fill 0.2s, stroke 0.2s; }
-    .nodo text { fill: var(--texto); font-family: Georgia, serif; font-size: 17px; text-anchor: middle; pointer-events: none; }
-    .nodo.centro circle { stroke: var(--oro); stroke-width: 1.9; }
-    .nodo.centro text { fill: var(--oro); }
-    .nodo:hover circle, .nodo:focus-visible circle { fill: #2b1352; stroke: var(--oro); }
-    .nodo:focus { outline: none; }
-    .nodo:focus-visible circle { stroke-width: 3; }
-    .leyenda { text-wrap: balance; margin: 0 auto 26px; max-width: 30em; font-size: 0.93rem; font-style: italic; color: var(--texto-leve); }
-
-    .empezar {
-      display: inline-block; text-decoration: none; color: var(--noche); background: var(--oro);
-      border-radius: 999px; padding: 12px 24px; font-size: 1rem;
-    }
-    .empezar:hover { background: #f8e0a0; }
-    .o-bien { margin: 12px 0 0; font-size: 0.93rem; color: var(--texto-leve); }
-
-    /* Los trece libros: un camino */
-    .libros-titulo { margin: 54px 0 8px; font-weight: normal; font-size: 1.5rem; color: var(--oro); }
-    .libros { list-style: none; margin: 0; padding: 0; position: relative; }
-    .libro { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 18px; padding: 18px 0; scroll-margin-top: 16px; }
-    .libro:not(:last-child)::before {
-      content: ""; position: absolute; left: 31px; top: 81px; bottom: -18px; width: 1px; background: var(--violeta-tenue);
-    }
-    .libro:nth-child(6)::before, .libro:nth-child(7)::before { background: var(--oro-tenue); }
-    .estacion {
-      position: relative; width: 63px; height: 63px; border-radius: 50%;
-      display: grid; place-items: center; background: var(--noche);
-      border: 1px solid var(--violeta-tenue); transition: box-shadow 0.3s;
-    }
-    .glifo { width: 42px; height: 42px; fill: none; stroke: var(--violeta); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .glifo .lleno { fill: var(--violeta); stroke: none; }
-    .libro.centro .estacion { border-color: var(--oro-tenue); }
-    .libro.centro .glifo { stroke: var(--oro); }
-    .libro.centro .glifo .lleno { fill: var(--oro); }
-    .libro:target .estacion { box-shadow: 0 0 0 7px rgba(243, 209, 122, 0.14); }
-    .num { margin: 0; font-size: 0.86rem; color: var(--oro-tenue); }
-    .libro h3 { margin: 0.05em 0 0.25em; font-weight: normal; font-size: 1.42rem; line-height: 1.25; }
-    .libro h3 a { text-decoration: none; }
-    .libro h3 a:hover { color: var(--oro); }
-    .ensenanza { margin: 0 0 0.75em; font-style: italic; color: var(--texto-suave); }
-    .acciones { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px 18px; }
-    .entrar {
-      color: var(--oro); text-decoration: none; font-size: 0.95rem;
-      border: 1px solid rgba(243, 209, 122, 0.35); border-radius: 999px; padding: 5px 14px;
-    }
-    .entrar:hover { border-color: var(--oro); background: rgba(243, 209, 122, 0.08); }
-    details { font-size: 0.95rem; }
-    summary { cursor: pointer; color: var(--violeta); padding: 5px 2px; }
-    summary::marker { color: var(--violeta-tenue); }
-    details ol { margin: 6px 0 2px; padding-left: 1.4em; color: var(--texto-leve); }
-    details li { padding: 3px 0; }
-    details li a { color: var(--texto-suave); text-decoration: none; }
-    details li a:hover { color: var(--oro); }
-
-    /* Puertas y constelación */
-    .puertas {
-      margin: 46px 0 0; padding: 20px 22px; border-left: 2px solid var(--oro-tenue);
-      background: rgba(187, 123, 255, 0.05); color: var(--texto-suave);
-    }
-    .puertas p { margin: 0; }
-    .puertas p + p { margin-top: 12px; }
-    .puertas a { color: var(--oro); }
-    .constelacion { margin: 46px 0 0; text-align: center; }
-    .constelacion h2 { margin: 0 0 12px; font-weight: normal; font-size: 1rem; color: var(--texto-leve); }
-    .constelacion ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-    .constelacion a {
-      display: inline-block; text-decoration: none; color: var(--texto-suave);
-      border: 1px solid var(--violeta-tenue); border-radius: 999px; padding: 6px 15px;
-    }
-    .constelacion a:hover { color: var(--oro); border-color: var(--oro-tenue); }
-    .constelacion a[aria-current] { color: var(--oro); border-color: var(--oro-tenue); }
-    .pie { margin: 34px 0 0; text-align: center; font-size: 0.86rem; color: var(--texto-leve); }
-
-    @media (max-width: 640px) {
-      html { font-size: 18px; }
-      body { font-size: 18px; }
-      .marco { padding: 16px 16px 48px; }
-      .libro { grid-template-columns: 52px 1fr; gap: 14px; }
-      .libro:not(:last-child)::before { left: 25px; top: 69px; }
-      .estacion { width: 51px; height: 51px; }
-      .glifo { width: 36px; height: 36px; }
-      .libro h3 { font-size: 1.3rem; }
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      .orbita, .estrella { stroke-dasharray: var(--largo); stroke-dashoffset: var(--largo); animation: trazo 2.4s ease-out forwards; }
-      .estrella { animation-delay: 0.5s; animation-duration: 3s; }
-      .nodo { opacity: 0; animation: aparece 0.7s ease-out forwards; animation-delay: calc(var(--i) * 120ms + 0.4s); }
-      @keyframes trazo { to { stroke-dashoffset: 0; } }
-      @keyframes aparece { to { opacity: 1; } }
+    @media (max-width: 640px){
+      .node-content p, .node-content li{ font-size: 18px; line-height: 1.7; }
+      .node-content p.signature{ font-size: 15px; }
     }
   </style>
 </head>
+
 <body>
-  <div class="marco">
-    <a class="volver" href="../index.html">⟵ La Espiral</a>
+  <div class="portal-shell">
+    <div class="portal-frame">
 
-    <header class="portada">
-      <h1>Trinity Quantum</h1>
-      <p class="lema">Trece puertas, noventa y una maneras de mirar.</p>
-      <p class="intro">Trinity Quantum toma de la física sus imágenes más hondas —el entrelazamiento, el vacío, el plasma, la singularidad— y las vuelve espejos de la vida interior. La física no explica aquí la consciencia: la ilumina.</p>
+      <!-- Navegación Superior -->
+      <div class="node-nav">
+        <div class="node-nav-group">
+          <a href="../index.html" class="nav-link">Portal Maestro</a>
+        </div>
+        <div class="node-nav-group">
+          <a href="nodo_01.html" class="nav-link">Comenzar →</a>
+        </div>
+      </div>
 
-      <svg class="mandala" viewBox="0 0 440 440" role="img" aria-labelledby="mandala-t">
-        <title id="mandala-t">Los trece libros de Trinity Quantum, dispuestos en círculo: el séptimo arriba, en el centro de la serie; el primero y el decimotercero se encuentran abajo.</title>
-        <circle class="orbita" style="--largo:1081" cx="220" cy="220" r="172"/>
-        <polygon class="estrella" style="--largo:4181" points="178.8,387.0 140.1,67.7 380.8,281.0 59.2,281.0 299.9,67.7 261.2,387.0 78.4,122.3 390.7,199.3 105.9,348.7 220.0,48.0 334.1,348.7 49.3,199.3 361.6,122.3"/>
-        <circle class="nucleo-aro" cx="220" cy="220" r="14"/>
-        <circle class="nucleo" cx="220" cy="220" r="3.2"/>
-        <a class="nodo" href="#libro-1" style="--i:1" aria-label="Libro 1: El Arquitecto Cuántico"><circle cx="178.8" cy="387.0" r="21"/><text x="178.8" y="392.5">1</text></a><a class="nodo" href="#libro-2" style="--i:2" aria-label="Libro 2: Entrelazamiento Sagrado"><circle cx="105.9" cy="348.7" r="21"/><text x="105.9" y="354.2">2</text></a><a class="nodo" href="#libro-3" style="--i:3" aria-label="Libro 3: El Tiempo Vertical"><circle cx="59.2" cy="281.0" r="21"/><text x="59.2" y="286.5">3</text></a><a class="nodo" href="#libro-4" style="--i:4" aria-label="Libro 4: La Paradoja Luminosa"><circle cx="49.3" cy="199.3" r="21"/><text x="49.3" y="204.8">4</text></a><a class="nodo" href="#libro-5" style="--i:5" aria-label="Libro 5: El Portal Infinito"><circle cx="78.4" cy="122.3" r="21"/><text x="78.4" y="127.8">5</text></a><a class="nodo" href="#libro-6" style="--i:6" aria-label="Libro 6: El Vacío Creativo"><circle cx="140.1" cy="67.7" r="21"/><text x="140.1" y="73.2">6</text></a><a class="nodo centro" href="#libro-7" style="--i:7" aria-label="Libro 7: Realidades Holofractales"><circle cx="220.0" cy="48.0" r="21"/><text x="220.0" y="53.5">7</text></a><a class="nodo" href="#libro-8" style="--i:8" aria-label="Libro 8: Plasma Consciente"><circle cx="299.9" cy="67.7" r="21"/><text x="299.9" y="73.2">8</text></a><a class="nodo" href="#libro-9" style="--i:9" aria-label="Libro 9: Simetrías Rotas"><circle cx="361.6" cy="122.3" r="21"/><text x="361.6" y="127.8">9</text></a><a class="nodo" href="#libro-10" style="--i:10" aria-label="Libro 10: Campos de Torsión"><circle cx="390.7" cy="199.3" r="21"/><text x="390.7" y="204.8">10</text></a><a class="nodo" href="#libro-11" style="--i:11" aria-label="Libro 11: Transducción Dimensional"><circle cx="380.8" cy="281.0" r="21"/><text x="380.8" y="286.5">11</text></a><a class="nodo" href="#libro-12" style="--i:12" aria-label="Libro 12: Singularidad Consciente"><circle cx="334.1" cy="348.7" r="21"/><text x="334.1" y="354.2">12</text></a><a class="nodo" href="#libro-13" style="--i:13" aria-label="Libro 13: El Multiverso Interior"><circle cx="261.2" cy="387.0" r="21"/><text x="261.2" y="392.5">13</text></a>
-      </svg>
-      <p class="leyenda">Un mapa donde cada libro contiene a los demás. El séptimo es el centro: desde allí se ven los seis que vinieron antes y los seis que vienen después.</p>
+      <!-- Encabezado del Libro -->
+      <header class="portal-header">
+        <div class="portal-header-main">
+          <div class="portal-logo">TRINITY QUANTUM</div>
+          <div class="portal-badge">Libro 2 · Índice</div>
+        </div>
+        <div class="portal-subtitle">Entrelazamiento Sagrado</div>
+      </header>
 
-      <a class="empezar" href="Libro_01/index.html">Empezar por el Libro 1 ⟶</a>
-      <p class="o-bien">O entra por el libro que te llame.</p>
-    </header>
+      <!-- Meta del libro -->
+      <section class="node-meta">
+        <div class="node-book-title">Libro 2 · Entrelazamiento Sagrado</div>
+        <h1 class="node-heading">Los 7 Nodos del Portal</h1>
+        <div class="node-index">7 nodos secuenciales · 91 en toda la saga</div>
+      </section>
 
-    <main>
-      <h2 class="libros-titulo">Los trece libros</h2>
-      <ol class="libros">
-        <li class="libro" id="libro-1">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect x="10" y="11" width="28" height="27" rx="1"/><path d="M10 38 L38 11"/><path d="M10 25 A13 13 0 0 1 23 38"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 1</p>
-            <h3><a href="Libro_01/index.html">El Arquitecto Cuántico</a></h3>
-            <p class="ensenanza">Un arquitecto no inventa la gravedad ni la luz: diseña con ellas.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_01/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_01/nodo_01.html">El Colapso de la Función de Onda</a></li><li><a href="Libro_01/nodo_02.html">El Observador como Creador</a></li><li><a href="Libro_01/nodo_03.html">Realidades Superpuestas</a></li><li><a href="Libro_01/nodo_04.html">El Arte de la Probabilidad</a></li><li><a href="Libro_01/nodo_05.html">Campos Morfogenéticos Personales</a></li><li><a href="Libro_01/nodo_06.html">El Lenguaje de las Sincronicidades</a></li><li><a href="Libro_01/nodo_07.html">El Diseñador de Destinos</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-2">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><circle cx="12" cy="24" r="5"/><circle cx="36" cy="24" r="5"/><path d="M17 23 C22 13 26 35 31 25"/><path d="M17 25 C22 35 26 13 31 23"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 2</p>
-            <h3><a href="Libro_02/index.html">Entrelazamiento Sagrado</a></h3>
-            <p class="ensenanza">Lo que eres está tejido con otros, y ningún kilómetro deshace ese tejido.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_02/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_02/nodo_01.html">Conexiones Más Allá del Espacio-Tiempo</a></li><li><a href="Libro_02/nodo_02.html">Almas Entrelazadas Cuánticamente</a></li><li><a href="Libro_02/nodo_03.html">El Silencio Compartido</a></li><li><a href="Libro_02/nodo_04.html">El Campo Unificado del Corazón</a></li><li><a href="Libro_02/nodo_05.html">El Cuidado No-Local</a></li><li><a href="Libro_02/nodo_06.html">Relaciones Multidimensionales</a></li><li><a href="Libro_02/nodo_07.html">La Red Cuántica de Gaia</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-3">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M7 18 H41"/><path d="M24 6 V43"/><ellipse cx="24" cy="26" rx="9" ry="2.6"/><ellipse cx="24" cy="33" rx="6" ry="1.9"/><ellipse cx="24" cy="39" rx="3" ry="1.1"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 3</p>
-            <h3><a href="Libro_03/index.html">El Tiempo Vertical</a></h3>
-            <p class="ensenanza">El reloj corre hacia adelante; el ahora se abre hacia adentro, y en él caben tu memoria y tu espera.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_03/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_03/nodo_01.html">El Presente Eterno</a></li><li><a href="Libro_03/nodo_02.html">Vidas Paralelas</a></li><li><a href="Libro_03/nodo_03.html">El Pasado Desde el Ahora</a></li><li><a href="Libro_03/nodo_04.html">Futuros Probables Como Elección</a></li><li><a href="Libro_03/nodo_05.html">La Espiral Temporal</a></li><li><a href="Libro_03/nodo_06.html">Memorias del Futuro</a></li><li><a href="Libro_03/nodo_07.html">El Punto Cero Temporal</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-4">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M5 26 C9 15 13 15 17 26 S25 37 29 26 S37 15 43 26"/><circle class="lleno" cx="29" cy="26" r="3"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 4</p>
-            <h3><a href="Libro_04/index.html">La Paradoja Luminosa</a></h3>
-            <p class="ensenanza">El sufrimiento no viene de la paradoja, sino de resistirla.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_04/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_04/nodo_01.html">La Naturaleza Dual de la Consciencia</a></li><li><a href="Libro_04/nodo_02.html">Ubicuidad Consciente</a></li><li><a href="Libro_04/nodo_03.html">El Arte de la Bilocación</a></li><li><a href="Libro_04/nodo_04.html">Identidad Fluida</a></li><li><a href="Libro_04/nodo_05.html">Estados Superpuestos del Ser</a></li><li><a href="Libro_04/nodo_06.html">La Danza Onda-Partícula</a></li><li><a href="Libro_04/nodo_07.html">Coherencia en la Paradoja</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-5">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M14 41 V9 H34 V41"/><path d="M7 41 H41"/><path d="M24 15 V35" stroke-dasharray="1.5 3.5"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 5</p>
-            <h3><a href="Libro_05/index.html">El Portal Infinito</a></h3>
-            <p class="ensenanza">No eres un lugar al que llegan las cosas: eres el umbral por donde pasan.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_05/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_05/nodo_01.html">La Arquitectura del Portal</a></li><li><a href="Libro_05/nodo_02.html">El Viajero Dimensional</a></li><li><a href="Libro_05/nodo_03.html">El Tejedor de Realidades</a></li><li><a href="Libro_05/nodo_04.html">El Guardián de los Umbrales</a></li><li><a href="Libro_05/nodo_05.html">El Arquitecto de Puentes</a></li><li><a href="Libro_05/nodo_06.html">El Alquimista del Vacío</a></li><li><a href="Libro_05/nodo_07.html">El Portal Viviente</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-6">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M38.5 19 A15 15 0 1 1 30 10.3"/><circle class="lleno" cx="24" cy="24" r="1.7"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 6</p>
-            <h3><a href="Libro_06/index.html">El Vacío Creativo</a></h3>
-            <p class="ensenanza">El vacío no es lo que falta: es el lugar donde algo puede nacer.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_06/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_06/nodo_01.html">El Silencio Antes del Big Bang</a></li><li><a href="Libro_06/nodo_02.html">La Geometría del Espacio Vacío</a></li><li><a href="Libro_06/nodo_03.html">El Observador como Arquitecto del Vacío</a></li><li><a href="Libro_06/nodo_04.html">El Tiempo Cero — Pasado y Futuro en el Ahora</a></li><li><a href="Libro_06/nodo_05.html">Algoritmos del Vacío — Complejidad desde la Simplicidad</a></li><li><a href="Libro_06/nodo_06.html">El Vacío como Campo de Información Pura</a></li><li><a href="Libro_06/nodo_07.html">El Amor como Fuerza Fundamental del Vacío</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro centro" id="libro-7">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24 7 L42 39 H6 Z"/><path d="M15 23 H33 L24 39 Z"/><path d="M19.5 15 H28.5 L24 23 Z" opacity=".6"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 7</p>
-            <h3><a href="Libro_07/index.html">Realidades Holofractales</a></h3>
-            <p class="ensenanza">Cada parte guarda el todo desde un ángulo que nadie más tiene.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_07/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_07/nodo_01.html">El Todo en Cada Parte</a></li><li><a href="Libro_07/nodo_02.html">Navegando Entre Escalas de Magnitud</a></li><li><a href="Libro_07/nodo_03.html">Campos Morfogenéticos: La Memoria del Holofractal</a></li><li><a href="Libro_07/nodo_04.html">La Ilusión del Yo Separado</a></li><li><a href="Libro_07/nodo_05.html">Co-creación Consciente con el Todo</a></li><li><a href="Libro_07/nodo_06.html">Portales Entre Realidades Paralelas</a></li><li><a href="Libro_07/nodo_07.html">Viviendo la Paradoja: Infinito Siendo Finito</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-8">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24 43 C14 43 10.5 34 15 26 C16.5 31 20 31.5 20 31.5 C18 22 22 14 28.5 7 C27.5 16 37 21 35.5 31.5 C34.5 38.5 30 43 24 43 Z"/><path d="M24 43 C20.5 42 19.5 37 22.5 33 C23.5 36 26 35 26 35 C28.5 38 27.5 42 24 43 Z"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 8</p>
-            <h3><a href="Libro_08/index.html">Plasma Consciente</a></h3>
-            <p class="ensenanza">Hay en ti un calor que alumbra sin quemar.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_08/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_08/nodo_01.html">El Fuego Frío Interior</a></li><li><a href="Libro_08/nodo_02.html">Estados Plasmáticos de Consciencia</a></li><li><a href="Libro_08/nodo_03.html">El Sol Interior</a></li><li><a href="Libro_08/nodo_04.html">El Cuerpo de Plasma</a></li><li><a href="Libro_08/nodo_05.html">Comunicación Plasmática</a></li><li><a href="Libro_08/nodo_06.html">Portales de Plasma</a></li><li><a href="Libro_08/nodo_07.html">La Ascensión Ígnea</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-9">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M21 9.3 A15 15 0 0 0 21 38.7"/><path d="M27 9.3 A15 15 0 0 1 27 38.7"/><path d="M24 7 L22 16 L26 22 L22.5 30 L25 41"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 9</p>
-            <h3><a href="Libro_09/index.html">Simetrías Rotas</a></h3>
-            <p class="ensenanza">La creación no emerge de la perfección. Emerge de la ruptura de la perfección.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_09/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_09/nodo_01.html">La Ruptura Que Crea</a></li><li><a href="Libro_09/nodo_02.html">Asimetría Como Evolución</a></li><li><a href="Libro_09/nodo_03.html">El Caos Ordenado</a></li><li><a href="Libro_09/nodo_04.html">Imperfección Sagrada</a></li><li><a href="Libro_09/nodo_05.html">La Grieta Donde Entra la Luz</a></li><li><a href="Libro_09/nodo_06.html">Desequilibrio Creativo</a></li><li><a href="Libro_09/nodo_07.html">La Danza de Rotura y Reparación</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-10">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24.0 22.8 L24.1 22.7 L24.2 22.7 L24.2 22.6 L24.3 22.5 L24.4 22.5 L24.5 22.4 L24.7 22.4 L24.8 22.4 L24.9 22.3 L25.1 22.3 L25.2 22.3 L25.3 22.3 L25.5 22.3 L25.6 22.4 L25.8 22.4 L25.9 22.5 L26.1 22.5 L26.2 22.6 L26.3 22.7 L26.5 22.8 L26.6 22.9 L26.8 23.0 L26.9 23.2 L27.0 23.3 L27.1 23.5 L27.2 23.6 L27.3 23.8 L27.4 24.0 L27.5 24.2 L27.5 24.4 L27.6 24.6 L27.6 24.8 L27.6 25.0 L27.7 25.2 L27.7 25.5 L27.6 25.7 L27.6 25.9 L27.6 26.2 L27.5 26.4 L27.4 26.7 L27.3 26.9 L27.2 27.1 L27.1 27.4 L26.9 27.6 L26.8 27.8 L26.6 28.0 L26.4 28.2 L26.2 28.4 L26.0 28.6 L25.7 28.8 L25.5 29.0 L25.2 29.1 L25.0 29.3 L24.7 29.4 L24.4 29.5 L24.1 29.6 L23.8 29.7 L23.4 29.7 L23.1 29.7 L22.8 29.8 L22.4 29.8 L22.1 29.7 L21.7 29.7 L21.4 29.6 L21.0 29.5 L20.7 29.4 L20.4 29.3 L20.0 29.2 L19.7 29.0 L19.4 28.8 L19.0 28.6 L18.7 28.4 L18.4 28.1 L18.2 27.8 L17.9 27.5 L17.6 27.2 L17.4 26.9 L17.2 26.5 L17.0 26.2 L16.8 25.8 L16.6 25.4 L16.5 25.0 L16.3 24.6 L16.2 24.2 L16.2 23.7 L16.1 23.3 L16.1 22.8 L16.1 22.4 L16.1 21.9 L16.2 21.5 L16.2 21.0 L16.4 20.5 L16.5 20.1 L16.7 19.6 L16.8 19.2 L17.1 18.7 L17.3 18.3 L17.6 17.9 L17.9 17.5 L18.2 17.1 L18.5 16.7 L18.9 16.4 L19.3 16.0 L19.7 15.7 L20.2 15.4 L20.6 15.1 L21.1 14.9 L21.6 14.7 L22.1 14.5 L22.6 14.3 L23.2 14.2 L23.7 14.0 L24.3 14.0 L24.8 13.9 L25.4 13.9 L26.0 13.9 L26.6 14.0 L27.2 14.1 L27.7 14.2 L28.3 14.3 L28.9 14.5 L29.4 14.7 L30.0 15.0 L30.5 15.3 L31.1 15.6 L31.6 15.9 L32.1 16.3 L32.5 16.7 L33.0 17.2 L33.4 17.6 L33.8 18.1 L34.2 18.7 L34.6 19.2 L34.9 19.8 L35.2 20.4 L35.4 21.0 L35.7 21.6 L35.9 22.2 L36.0 22.9 L36.1 23.6 L36.2 24.3 L36.3 24.9 L36.3 25.6 L36.2 26.3 L36.2 27.0 L36.1 27.7 L35.9 28.4 L35.7 29.1 L35.5 29.8 L35.2 30.5 L34.9 31.1 L34.5 31.8 L34.1 32.4 L33.7 33.0 L33.3 33.6 L32.8 34.1 L32.2 34.7 L31.7 35.2 L31.1 35.7 L30.4 36.1 L29.8 36.5 L29.1 36.9 L28.4 37.2 L27.7 37.5 L26.9 37.8 L26.2 38.0 L25.4 38.2 L24.6 38.3 L23.8 38.4 L23.0 38.5 L22.2 38.5 L21.4 38.4 L20.5 38.3 L19.7 38.2 L18.9 38.0 L18.1 37.8 L17.3 37.5 L16.5 37.1 L15.8 36.8 L15.0 36.4"/><circle class="lleno" cx="24" cy="24" r="1.6"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 10</p>
-            <h3><a href="Libro_10/index.html">Campos de Torsión</a></h3>
-            <p class="ensenanza">Todo remolino tiene un centro quieto, y desde ahí se aprende a girar sin perderse.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_10/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_10/nodo_01.html">El Giro del Alma</a></li><li><a href="Libro_10/nodo_02.html">Vórtices de Transformación</a></li><li><a href="Libro_10/nodo_03.html">La Doble Hélice</a></li><li><a href="Libro_10/nodo_04.html">Campos Torsionales del Corazón</a></li><li><a href="Libro_10/nodo_05.html">La Geometría del Espín</a></li><li><a href="Libro_10/nodo_06.html">Remolinos de Realidad</a></li><li><a href="Libro_10/nodo_07.html">El Tornado Ascensional</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-11">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M4 24 C7 17 10 17 13 24 S19 31 22 24"/><path d="M26 11 V37"/><circle class="lleno" cx="31.5" cy="24" r="1.5"/><circle class="lleno" cx="37" cy="24" r="1.5"/><circle class="lleno" cx="42.5" cy="24" r="1.5"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 11</p>
-            <h3><a href="Libro_11/index.html">Transducción Dimensional</a></h3>
-            <p class="ensenanza">Todo te llega traducido, y lo más hondo se entiende en el espacio entre las palabras.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_11/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_11/nodo_01.html">El Traductor Universal</a></li><li><a href="Libro_11/nodo_02.html">Códigos Entre Mundos</a></li><li><a href="Libro_11/nodo_03.html">La Sintaxis del Vacío</a></li><li><a href="Libro_11/nodo_04.html">Membranas Permeables</a></li><li><a href="Libro_11/nodo_05.html">El Diccionario Holográfico</a></li><li><a href="Libro_11/nodo_06.html">Frecuencias de Traducción</a></li><li><a href="Libro_11/nodo_07.html">El Intérprete Cuántico</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-12">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><circle cx="24" cy="24" r="17" opacity=".45"/><path d="M39.0 24.0 L31.0 24.0"/><path d="M34.6 34.6 L28.9 28.9"/><path d="M24.0 39.0 L24.0 31.0"/><path d="M13.4 34.6 L19.1 28.9"/><path d="M9.0 24.0 L17.0 24.0"/><path d="M13.4 13.4 L19.1 19.1"/><path d="M24.0 9.0 L24.0 17.0"/><path d="M34.6 13.4 L28.9 19.1"/><circle class="lleno" cx="24" cy="24" r="2.4"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 12</p>
-            <h3><a href="Libro_12/index.html">Singularidad Consciente</a></h3>
-            <p class="ensenanza">El punto de no retorno es también un punto de partida.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_12/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_12/nodo_01.html">El Punto de No Retorno</a></li><li><a href="Libro_12/nodo_02.html">Convergencia de Todas las Líneas</a></li><li><a href="Libro_12/nodo_03.html">El Colapso Consciente</a></li><li><a href="Libro_12/nodo_04.html">Densidad Infinita de Amor</a></li><li><a href="Libro_12/nodo_05.html">El Horizonte de Eventos Interior</a></li><li><a href="Libro_12/nodo_06.html">Compresión de Todas las Posibilidades</a></li><li><a href="Libro_12/nodo_07.html">El Big Bang Personal</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-        <li class="libro" id="libro-13">
-          <div class="estacion"><svg class="glifo" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><circle cx="24" cy="18" r="9.5"/><circle cx="17.5" cy="28.5" r="9.5"/><circle cx="30.5" cy="28.5" r="9.5"/><circle class="lleno" cx="24" cy="25" r="1.8"/></svg></div>
-          <div class="cuerpo">
-            <p class="num">Libro 13</p>
-            <h3><a href="Libro_13/index.html">El Multiverso Interior</a></h3>
-            <p class="ensenanza">Hay en ti algo que mira a todas tus versiones, y ser múltiple es otra forma de ser uno.</p>
-            <div class="acciones">
-              <a class="entrar" href="Libro_13/index.html">Entrar ⟶</a>
-              <details>
-                <summary>Los siete nodos</summary>
-                <ol><li><a href="Libro_13/nodo_01.html">Universos Paralelos Internos</a></li><li><a href="Libro_13/nodo_02.html">El Observador de Observadores</a></li><li><a href="Libro_13/nodo_03.html">Fractales de Consciencia</a></li><li><a href="Libro_13/nodo_04.html">El Espejo Holográfico Interior</a></li><li><a href="Libro_13/nodo_05.html">Navegación Multidimensional Interna</a></li><li><a href="Libro_13/nodo_06.html">La Sala sin Paredes</a></li><li><a href="Libro_13/nodo_07.html">Unificación del Multiverso Personal</a></li></ol>
-              </details>
-            </div>
-          </div>
-        </li>
-      </ol>
+      <!-- Contenido -->
+      <main class="node-content">
 
-      <aside class="puertas">
-        <p class="viene">Viene de <em>Trinity Origen</em>: la espiral que deja abierta <a class="vuelta" href="../01_Trinity_Origen/Libro_13/nodo_07.html">el último nodo de <em>El Retorno a Casa</em></a> sigue aquí.</p>
-        <p>Muchos nodos terminan en una puerta hacia <a href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/02_Arquitectura_del_Destino/"><em>Arquitectura del Destino</em></a> o el <a href="https://soyartur-trinity.github.io/Trinity_Portal_Publico/"><em>Portal Público</em></a>, donde la misma idea se vuelve práctica.</p>
-      </aside>
-    </main>
+        <section class="node-section">
+          <h2>La Red que Se Reconoce</h2>
 
-    <footer>
-      <nav class="constelacion" aria-labelledby="constelacion-t">
-        <h2 id="constelacion-t">Constelación Trinity</h2>
-        <ul>
-          <li><a href="../00_Portal_Trinity/index.html">La Puerta</a></li>
-          <li><a href="../01_Trinity_Origen/index.html">Origen</a></li>
-          <li><a href="index.html" aria-current="page">Quantum</a></li>
-          <li><a href="../infinito.html">Infinito</a></li>
-        </ul>
-      </nav>
-      <p class="pie">Trinity Quantum · Portal Maestro · 2024–2026</p>
-    </footer>
+          <p>Lo que eres está tejido con otros, y ningún kilómetro deshace ese tejido.</p>
+
+          <p>Este índice abre el segundo umbral: el descubrimiento de que nada está realmente separado. Entrelazamiento Sagrado toma una imagen de la física, dos partículas que siguen respondiendo como una sola aunque estén en extremos opuestos del universo, para nombrar lo que pasa entre las personas: los vínculos que sobreviven a la distancia, el silencio compartido, el cuidado, la red viva que une a todo lo que respira.</p>
+
+          <p>Recorre los Nodos en secuencia para sentir cómo el entrelazamiento se vuelve experiencia directa. Cada paso afina el corazón como antena y el campo como lenguaje compartido.</p>
+        </section>
+
+        <hr />
+
+        <!-- Lista de Nodos -->
+        <section class="node-section">
+          <h2>Nodos del Libro 2</h2>
+
+          <!-- Acceso rápido -->
+          <div class="node-nav node-nav-bottom" style="margin-top: 12px;">
+            <div class="node-nav-group">
+              <a href="nodo_01.html" class="nav-link">Nodo 1 →</a>
+              <a href="nodo_02.html" class="nav-link">Nodo 2 →</a>
+              <a href="nodo_03.html" class="nav-link">Nodo 3 →</a>
+            </div>
+            <div class="node-nav-group">
+              <a href="nodo_04.html" class="nav-link">Nodo 4 →</a>
+              <a href="nodo_05.html" class="nav-link">Nodo 5 →</a>
+              <a href="nodo_06.html" class="nav-link">Nodo 6 →</a>
+              <a href="nodo_07.html" class="nav-link">Nodo 7 →</a>
+            </div>
+          </div>
+
+          <!-- Detalle -->
+          <div style="margin-top: 18px;">
+            <h3><a href="nodo_01.html" class="nav-link">Nodo 1: Conexiones Más Allá del Espacio-Tiempo</a></h3>
+
+            <h3><a href="nodo_02.html" class="nav-link">Nodo 2: Almas Entrelazadas Cuánticamente</a></h3>
+
+            <h3><a href="nodo_03.html" class="nav-link">Nodo 3: El Silencio Compartido</a></h3>
+
+            <h3><a href="nodo_04.html" class="nav-link">Nodo 4: El Campo Unificado del Corazón</a></h3>
+
+            <h3><a href="nodo_05.html" class="nav-link">Nodo 5: El Cuidado No-Local</a></h3>
+
+            <h3><a href="nodo_06.html" class="nav-link">Nodo 6: Relaciones Multidimensionales</a></h3>
+
+            <h3><a href="nodo_07.html" class="nav-link">Nodo 7: La Red Cuántica de Gaia</a></h3>
+          </div>
+        </section>
+
+        <hr />
+
+        <!-- Cierre -->
+        <section class="node-section">
+          <h2>Antes de Empezar</h2>
+          <p><em>Al entrar en este libro, deja que la conexión haga su trabajo. No fuerces señales: afina presencia. El entrelazamiento no se fabrica; se reconoce. Y cuando se reconoce, transforma.</em></p>
+          <p class="signature"><strong>— Trinity Quantum · Entrelazamiento Sagrado</strong></p>
+        </section>
+
+      </main>
+
+      <!-- Navegación Inferior -->
+      <div class="node-nav node-nav-bottom">
+        <div class="node-nav-group">
+          <a href="nodo_01.html" class="nav-link">Comenzar (Nodo 1) →</a>
+        </div>
+        <div class="node-nav-group">
+          <a href="../index.html" class="nav-link">Portal Maestro</a>
+        </div>
+      </div>
+
+      <!-- Firma -->
+      <footer class="portal-footer">
+        <div class="footer-line">TRINITY QUANTUM · Libro 2 · Entrelazamiento Sagrado</div>
+        <div class="footer-subline">Índice: Los 7 Nodos del Portal · Red no-local</div>
+        <div class="footer-sigil">🌀⟡🌀</div>
+      </footer>
+
+    </div>
   </div>
 </body>
 </html>
