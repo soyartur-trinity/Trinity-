@@ -2,507 +2,592 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Libro 11 - Nodo 1: El Futuro Causando el Pasado</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Libro 11 - Nodo 71: El Futuro Causando el Pasado</title>
+<!-- Portal 71. Saneado en noviembre de 2026 sobre el original: los nodos de efecto (azules) y de causa
+     (naranjas) que laten a contratiempo, los dos lazos, las flechas del tiempo que se invierten, las
+     partículas retrógradas, los flujos hacia atrás y las ondas que se cierran en lugar de abrirse.
+     Sonido nuevo: el espejo de inversión temporal (Mathias Fink, 1992). Una campana que suena al revés:
+     primero la resonancia de la sala, que crece, y al final el golpe. Las ondas se cierran sobre el
+     nodo de causa en el instante exacto en que llega. -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: radial-gradient(ellipse at center, #0a0a15 0%, #000000 70%);
-  overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.temporal-field {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.causality-loop {
-  position: relative;
-  width: 700px;
-  height: 700px;
-}
-
-.time-arrow {
-  position: absolute;
-  width: 200px;
-  height: 4px;
-  background: linear-gradient(90deg,
-    rgba(100,150,255,0.8),
-    rgba(150,100,255,0.6)
-  );
-  animation: arrow-reverse 15s ease-in-out infinite;
-  transform-origin: left center;
-  filter: blur(1px);
-}
-
-@keyframes arrow-reverse {
-  0%, 100% {
-    transform: rotate(0deg) scaleX(0);
-    opacity: 0;
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(ellipse at center, #0a0a15 0%, #05050b 55%, #000 80%);
+    background-color:#000;
+    color:#fff;
+    font-family: Georgia, serif;
+    overflow:hidden;
+    height:100vh; height:100dvh;
+    display:flex; align-items:center; justify-content:center;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    -webkit-user-select:none; user-select:none;
   }
-  25% {
-    transform: rotate(var(--angle)) scaleX(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: rotate(var(--angle)) scaleX(1) translateX(var(--distance));
-    opacity: 1;
-  }
-  75% {
-    transform: rotate(var(--angle)) scaleX(-1) translateX(var(--distance));
-    opacity: 0.8;
-  }
-}
 
-.effect-node {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border: 2px solid rgba(100,150,255,0.6);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(100,150,255,0.2), transparent);
-  animation: node-pulse 12s ease-in-out infinite;
-}
+  #ondas { position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
 
-@keyframes node-pulse {
-  0%, 100% {
-    transform: scale(0.8);
-    opacity: 0.4;
-    box-shadow: 0 0 20px rgba(100,150,255,0.3);
+  .cabecera {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top, 0px) + 5.5vh);
+    transform:translateX(-50%);
+    width:max-content; max-width:92vw; text-align:center;
+    z-index:5; pointer-events:none;
   }
-  50% {
-    transform: scale(1.3);
-    opacity: 0.9;
-    box-shadow: 0 0 40px rgba(100,150,255,0.7);
+  .titulo {
+    font-size: clamp(16px, 4.8vw, 30px);
+    font-weight:bold;
+    letter-spacing: clamp(0.14em, 1.1vw, 0.38em);
+    padding-left: clamp(0.14em, 1.1vw, 0.38em);
+    line-height:1.45;
+    color: rgba(246,242,255,0.92);
+    text-shadow: 0 0 30px rgba(150,100,255,0.5);
   }
-}
+  .subtitulo {
+    margin-top:0.6em;
+    font-size: clamp(11px, 2.9vw, 15px);
+    letter-spacing:0.3em; padding-left:0.3em; font-style:italic;
+    color: rgba(225,218,250,0.5);
+  }
 
-.cause-node {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border: 2px solid rgba(255,150,100,0.6);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,150,100,0.2), transparent);
-  animation: cause-pulse 12s ease-in-out infinite;
-}
-
-@keyframes cause-pulse {
-  0%, 100% {
-    transform: scale(1.2);
-    opacity: 0.9;
-    box-shadow: 0 0 30px rgba(255,150,100,0.6);
+  /* El bucle causal: todo en proporción al lado de la escena */
+  .escena {
+    --L: min(66vh, 640px, 92vw);
+    position:relative;
+    width:var(--L); height:var(--L);
+    margin-top:-5vh;
+    z-index:1;
   }
-  50% {
-    transform: scale(0.8);
-    opacity: 0.4;
-    box-shadow: 0 0 15px rgba(255,150,100,0.3);
-  }
-}
 
-.retrograde-particle {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(150,100,255,0.8);
-  animation: particle-reverse 10s linear infinite;
-}
-
-@keyframes particle-reverse {
-  0% {
-    transform: translate(var(--startX), var(--startY));
-    opacity: 0;
+  .resplandor {
+    position:absolute; left:50%; top:50%;
+    width:78%; height:78%;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(150,100,255,0.18), rgba(150,100,255,0.07) 38%, transparent 68%);
+    animation: resplandor 16s ease-in-out infinite;
   }
-  10% {
-    opacity: 1;
+  @keyframes resplandor {
+    0%,100% { transform:translate(-50%,-50%) scale(0.8); opacity:0.45; }
+    50%     { transform:translate(-50%,-50%) scale(1.3); opacity:0.85; }
   }
-  50% {
-    transform: translate(var(--endX), var(--endY));
-    opacity: 0.9;
+
+  .lazo {
+    position:absolute; left:50%; top:50%;
+    border-radius:50%;
+    border:2px solid rgba(150,100,255,0.2);
+    animation: lazo 25s linear infinite;
   }
-  100% {
-    transform: translate(var(--startX), var(--startY));
-    opacity: 0;
+  .lazo.l1 { width:57%; height:57%; }
+  .lazo.l2 { width:43%; height:43%; animation-duration:20s; animation-direction:reverse; }
+  @keyframes lazo {
+    from { transform:translate(-50%,-50%) rotate(0deg); }
+    to   { transform:translate(-50%,-50%) rotate(360deg); }
   }
-}
 
-.temporal-wave {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border: 1px solid rgba(150,100,255,0.3);
-  border-radius: 50%;
-  animation: wave-invert 18s ease-in-out infinite;
-  opacity: 0;
-}
-
-@keyframes wave-invert {
-  0% {
-    transform: scale(3);
-    opacity: 0;
+  /* Nodos de efecto (azules, a la izquierda) y de causa (naranjas, a la derecha) */
+  .nodo {
+    position:absolute;
+    width:11.4%; height:11.4%;
+    margin:-5.7% 0 0 -5.7%;
   }
-  50% {
-    transform: scale(1);
-    opacity: 0.6;
+  .nodo .cuerpo { position:absolute; inset:0; border-radius:50%; }
+  .efecto .cuerpo {
+    border:2px solid rgba(100,150,255,0.6);
+    background: radial-gradient(circle, rgba(100,150,255,0.24), transparent 70%);
+    box-shadow: 0 0 calc(var(--L) * 0.04) rgba(100,150,255,0.45);
+    animation: efecto 12s ease-in-out infinite;
   }
-  100% {
-    transform: scale(3);
-    opacity: 0;
+  @keyframes efecto {
+    0%,100% { transform:scale(0.8); opacity:0.4; }
+    50%     { transform:scale(1.3); opacity:0.9; }
   }
-}
-
-.backward-flow {
-  position: absolute;
-  width: 250px;
-  height: 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(200,150,255,0.7),
-    transparent
-  );
-  animation: flow-backward 14s ease-in-out infinite;
-  filter: blur(1.5px);
-}
-
-@keyframes flow-backward {
-  0% {
-    transform: translateX(200px) scaleX(0);
-    opacity: 0;
+  .causa .cuerpo {
+    border:2px solid rgba(255,150,100,0.6);
+    background: radial-gradient(circle, rgba(255,150,100,0.24), transparent 70%);
+    box-shadow: 0 0 calc(var(--L) * 0.045) rgba(255,150,100,0.5);
+    animation: causa 12s ease-in-out infinite;
   }
-  50% {
-    transform: translateX(0) scaleX(1);
-    opacity: 0.8;
+  @keyframes causa {
+    0%,100% { transform:scale(1.2); opacity:0.9; }
+    50%     { transform:scale(0.8); opacity:0.4; }
   }
-  100% {
-    transform: translateX(-200px) scaleX(0);
-    opacity: 0;
+  .nodo .brillo {
+    position:absolute; inset:-70%;
+    border-radius:50%;
+    opacity:0;
+    pointer-events:none;
   }
-}
+  .efecto .brillo { background: radial-gradient(circle, rgba(150,185,255,0.55), rgba(100,150,255,0.16) 32%, transparent 62%); }
+  .causa .brillo  { background: radial-gradient(circle, rgba(255,226,185,0.9), rgba(255,160,105,0.32) 28%, transparent 60%); }
 
-.title {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2em;
-  letter-spacing: 0.4em;
-  opacity: 0.9;
-  text-shadow: 0 0 30px rgba(150,100,255,0.5);
-  font-weight: 600;
-  text-align: center;
-  z-index: 100;
-}
-
-.subtitle {
-  position: fixed;
-  top: 115px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1em;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  font-style: italic;
-  z-index: 100;
-}
-
-.central-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5em;
-  letter-spacing: 0.3em;
-  text-align: center;
-  opacity: 0;
-  animation: text-flicker 13s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255,255,255,0.4);
-  line-height: 2.2;
-  z-index: 10;
-}
-
-@keyframes text-flicker {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
+  /* Flechas del tiempo que crecen, avanzan y se dan vuelta */
+  .flecha {
+    position:absolute;
+    width:28.6%; height:3px; margin-top:-1.5px;
+    border-radius:2px;
+    background: linear-gradient(90deg, rgba(100,150,255,0.85), rgba(150,100,255,0.55) 70%, transparent);
+    transform-origin:left center;
+    opacity:0;
+    animation: flecha 15s ease-in-out forwards;
+    pointer-events:none;
   }
-  20%, 80% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1);
+  @keyframes flecha {
+    0%   { transform:rotate(0deg) translateX(0) scaleX(0); opacity:0; }
+    25%  { transform:rotate(var(--a)) translateX(0) scaleX(1); opacity:0.8; }
+    50%  { transform:rotate(var(--a)) translateX(var(--d)) scaleX(1); opacity:1; }
+    75%  { transform:rotate(var(--a)) translateX(var(--d)) scaleX(-1); opacity:0.8; }
+    100% { transform:rotate(0deg) translateX(0) scaleX(0); opacity:0; }
   }
-}
 
-.contemplation {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  text-align: center;
-  max-width: 750px;
-  line-height: 1.9;
-  padding: 0 40px;
-  font-style: italic;
-  z-index: 100;
-}
-
-.loop-connector {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border: 2px solid rgba(150,100,255,0.2);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: loop-spin 25s linear infinite;
-}
-
-@keyframes loop-spin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-.paradox-glow {
-  position: absolute;
-  width: 350px;
-  height: 350px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(150,100,255,0.15), transparent);
-  border-radius: 50%;
-  animation: glow-paradox 16s ease-in-out infinite;
-  filter: blur(60px);
-}
-
-@keyframes glow-paradox {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0.3;
+  /* Partículas que van a su antípoda y regresan */
+  .retro {
+    position:absolute; left:50%; top:50%;
+    width:5px; height:5px; margin:-2.5px 0 0 -2.5px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 0 12px rgba(150,100,255,0.85);
+    opacity:0;
+    animation: retro 10s linear forwards;
+    pointer-events:none;
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.5);
-    opacity: 0.6;
+  @keyframes retro {
+    0%   { transform:translate(var(--sx), var(--sy)); opacity:0; }
+    10%  { opacity:1; }
+    50%  { transform:translate(var(--ex), var(--ey)); opacity:0.9; }
+    100% { transform:translate(var(--sx), var(--sy)); opacity:0; }
   }
-}
+
+  /* Flujos que corren hacia atrás */
+  .flujo {
+    position:absolute;
+    width:35.7%; height:2px; margin:-1px 0 0 -17.85%;
+    background: linear-gradient(90deg, transparent, rgba(200,150,255,0.7), transparent);
+    opacity:0;
+    animation: flujo 14s ease-in-out forwards;
+    pointer-events:none;
+  }
+  @keyframes flujo {
+    0%   { transform:rotate(var(--rot)) translateX(calc(var(--L) * 0.286)) scaleX(0); opacity:0; }
+    50%  { transform:rotate(var(--rot)) translateX(0) scaleX(1); opacity:0.8; }
+    100% { transform:rotate(var(--rot)) translateX(calc(var(--L) * -0.286)) scaleX(0); opacity:0; }
+  }
+
+  /* Las partículas que acuden al lugar tocado */
+  .acude {
+    position:fixed;
+    width:5px; height:5px; margin:-2.5px 0 0 -2.5px;
+    border-radius:50%;
+    background: rgba(255,240,225,0.95);
+    box-shadow: 0 0 12px rgba(255,170,120,0.8);
+    opacity:0;
+    pointer-events:none;
+    z-index:2;
+    animation: acude 3.6s cubic-bezier(0.55, 0, 0.85, 0.4) forwards;
+  }
+  @keyframes acude {
+    0%   { transform:translate(var(--sx), var(--sy)); opacity:0; }
+    15%  { opacity:0.9; }
+    96%  { transform:translate(0, 0); opacity:1; }
+    100% { transform:translate(0, 0); opacity:0; }
+  }
+
+  .centro { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:3; }
+  .texto-central {
+    text-align:center;
+    font-size: clamp(14px, 3.9vw, 22px);
+    letter-spacing:0.3em; padding-left:0.3em;
+    line-height:2.1;
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0 0 18px rgba(255,255,255,0.35), 0 0 10px rgba(0,0,0,0.85);
+    opacity:0;
+    animation: texto 13s ease-in-out infinite;
+    animation-delay:-2.6s;
+  }
+  @keyframes texto {
+    0%,100% { opacity:0;   transform:scale(0.9); }
+    20%,80% { opacity:0.82; transform:scale(1); }
+  }
+
+  .frases {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh);
+    transform:translateX(-50%);
+    width:90vw; max-width:640px; height:3.4em;
+    text-align:center;
+    pointer-events:none;
+    z-index:4;
+  }
+  .frase {
+    position:absolute; left:0; right:0; bottom:0;
+    font-size: clamp(14px, 3.8vw, 19px);
+    line-height:1.6;
+    letter-spacing:0.06em;
+    font-style:italic;
+    color: rgba(240,236,252,0.9);
+    text-shadow: 0 0 18px rgba(150,100,255,0.35);
+    opacity:0;
+    animation: frase 20s ease-in-out infinite;
+  }
+  .frase.f2 { animation-delay:10s; }
+  @keyframes frase {
+    0%   { opacity:0; transform:translateY(6px); }
+    7%   { opacity:1; transform:translateY(0); }
+    43%  { opacity:1; transform:translateY(0); }
+    50%  { opacity:0; transform:translateY(-4px); }
+    100% { opacity:0; transform:translateY(-4px); }
+  }
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform:translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(240,236,252,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+    z-index:4;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(200,185,240,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(255,214,175,0.95); text-shadow:0 0 18px rgba(255,160,110,0.55); outline:none; }
+
+  @media (max-width: 480px) {
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 14.5vh); height:4.9em; }
+  }
+  @media (orientation: landscape) and (max-height: 500px) {
+    .subtitulo { display:none; }
+    .titulo { font-size:17px; letter-spacing:0.2em; padding-left:0.2em; }
+    .cabecera { top:calc(env(safe-area-inset-top, 0px) + 10px); }
+    .escena { --L: min(62vh, 620px); margin-top:-4vh; }
+    .texto-central { font-size:12px; line-height:1.8; }
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 30px); height:3.3em; }
+    .frase { font-size:13px; line-height:1.45; }
+    .hint { bottom:calc(env(safe-area-inset-bottom, 0px) + 8px); font-size:11px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; transition:none !important; }
+    .resplandor { transform:translate(-50%,-50%); opacity:0.7; }
+    .lazo { transform:translate(-50%,-50%); }
+    .efecto .cuerpo { opacity:0.7; }
+    .causa .cuerpo { opacity:0.8; }
+    .texto-central { opacity:0.82; }
+    .frases { height:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 9vh); }
+    .frase { position:static; opacity:0.92; margin-bottom:0.35em; font-size: clamp(12px, 3.4vw, 16px); }
+    .escena { margin-top:-12vh; }
+    .hint { opacity:0.8; bottom:calc(env(safe-area-inset-bottom, 0px) + 18px); }
+  }
 </style>
 </head>
 <body>
+  <canvas id="ondas"></canvas>
 
-<div class="title">EL FUTURO CAUSANDO EL PASADO</div>
-<div class="subtitle">Libro 11 - Nodo 1</div>
+  <div class="cabecera">
+    <div class="titulo">EL FUTURO CAUSANDO EL PASADO</div>
+    <div class="subtitulo">Libro 11 - Nodo 71</div>
+  </div>
 
-<div class="temporal-field">
-  <div class="causality-loop">
-    <!-- Resplandor paradójico -->
-    <div class="paradox-glow"></div>
-    
-    <!-- Conectores del bucle -->
-    <div class="loop-connector"></div>
-    <div class="loop-connector" style="width: 300px; height: 300px; animation-duration: 20s; animation-direction: reverse;"></div>
-    
-    <!-- Nodos de efecto y causa -->
-    <div class="effect-node" style="top: 20%; left: 30%; animation-delay: 0s;"></div>
-    <div class="cause-node" style="top: 20%; left: 70%; animation-delay: 0s;"></div>
-    
-    <div class="effect-node" style="top: 80%; left: 30%; animation-delay: 4s;"></div>
-    <div class="cause-node" style="top: 80%; left: 70%; animation-delay: 4s;"></div>
-    
-    <div class="effect-node" style="top: 50%; left: 15%; animation-delay: 8s;"></div>
-    <div class="cause-node" style="top: 50%; left: 85%; animation-delay: 8s;"></div>
-    
-    <!-- Ondas temporales invertidas -->
-    <div class="temporal-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
-    <div class="temporal-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 6s;"></div>
-    <div class="temporal-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 12s;"></div>
-    
-    <!-- Texto central -->
-    <div class="central-text" style="animation-delay: 2s;">
-      El efecto<br>
-      llama<br>
-      a su causa<br><br>
-      El futuro<br>
-      crea el pasado
+  <div class="escena" id="escena">
+    <div class="resplandor"></div>
+    <div class="lazo l1"></div>
+    <div class="lazo l2"></div>
+
+    <div class="nodo efecto" style="left:30%; top:20%;"><div class="brillo"></div><div class="cuerpo" style="animation-delay:0s;"></div></div>
+    <div class="nodo causa"  style="left:70%; top:20%;"><div class="brillo"></div><div class="cuerpo" style="animation-delay:0s;"></div></div>
+    <div class="nodo efecto" style="left:30%; top:80%;"><div class="brillo"></div><div class="cuerpo" style="animation-delay:-4s;"></div></div>
+    <div class="nodo causa"  style="left:70%; top:80%;"><div class="brillo"></div><div class="cuerpo" style="animation-delay:-4s;"></div></div>
+    <div class="nodo efecto" style="left:15%; top:50%;"><div class="brillo"></div><div class="cuerpo" style="animation-delay:-8s;"></div></div>
+    <div class="nodo causa"  style="left:85%; top:50%;"><div class="brillo"></div><div class="cuerpo" style="animation-delay:-8s;"></div></div>
+
+    <div class="centro">
+      <div class="texto-central">El efecto<br>llama<br>a su causa<br><br>El futuro<br>crea el pasado</div>
     </div>
   </div>
-</div>
 
-<div class="contemplation">
-  La flecha del tiempo no apunta · Forma un círculo<br>
-  Lo que será convoca lo que fue · Causalidad en bucle eterno
-</div>
+  <div class="frases" aria-live="off">
+    <p class="frase f1">La flecha del tiempo no apunta<br>Forma un círculo</p>
+    <p class="frase f2">Lo que será convoca lo que fue<br>Causalidad en bucle eterno</p>
+  </div>
+
+  <div class="hint" id="hint">( toca: la onda vuelve a su origen )</div>
+
+  <a class="infinito" href="L_11-Nodo2.html" aria-label="Siguiente portal">∞</a>
 
 <script>
-const loop = document.querySelector('.causality-loop');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const escena = document.getElementById('escena');
+  const hint = document.getElementById('hint');
+  const lienzo = document.getElementById('ondas');
+  const g2 = lienzo.getContext('2d');
+  const efectos = [...document.querySelectorAll('.efecto')];
+  const causas = [...document.querySelectorAll('.causa')];
+  // El sonido se declara arriba
+  let ctx = null, master, seco, sala;
+  const campanas = {};                    // prima → campana ya invertida
+  const eventos = [];                     // ondas que convergen: { k | x,y, t1, D, prima, pan, sonado }
 
-// Crear flechas de tiempo invertidas
-function createTimeArrow() {
-  const arrow = document.createElement('div');
-  arrow.className = 'time-arrow';
-  
-  const angle = Math.random() * 360;
-  const distance = 50 + Math.random() * 150;
-  
-  arrow.style.cssText = `
-    left: ${30 + Math.random() * 40}%;
-    top: ${30 + Math.random() * 40}%;
-    --angle: ${angle}deg;
-    --distance: ${distance}px;
-    animation-delay: ${Math.random() * 7}s;
-  `;
-  
-  loop.appendChild(arrow);
-  setTimeout(() => arrow.remove(), 15000);
-}
+  let dpr = 1, W = 0, H = 0;
+  function medir() {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = innerWidth; H = innerHeight;
+    lienzo.width = Math.round(W * dpr); lienzo.height = Math.round(H * dpr);
+  }
+  medir();
+  addEventListener('resize', () => { medir(); if (reduce) dibujarQuieto(); });
+  const lado = () => escena.clientWidth;
+  function centroDe(el) { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }
 
-// Crear partículas retrógradas
-function createRetrogradeParticles() {
-  for(let i = 0; i < 20; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'retrograde-particle';
-      
-      const angle = (i / 20) * Math.PI * 2;
-      const radius = 150;
-      const startX = Math.cos(angle) * radius;
-      const startY = Math.sin(angle) * radius;
-      const endX = Math.cos(angle + Math.PI) * radius;
-      const endY = Math.sin(angle + Math.PI) * radius;
-      
-      particle.style.cssText = `
-        left: 50%;
-        top: 50%;
-        --startX: ${startX}px;
-        --startY: ${startY}px;
-        --endX: ${endX}px;
-        --endY: ${endY}px;
-        animation-delay: ${Math.random() * 5}s;
-      `;
-      
-      loop.appendChild(particle);
-      setTimeout(() => particle.remove(), 10000);
+  /* ---------------- El espejo de inversión temporal ---------------------------------------------
+     Mathias Fink (1992): si una onda que se aleja de su fuente se graba y se vuelve a emitir al revés,
+     desanda su camino y se concentra en el punto exacto donde nació. Aquí, una campana grabada con la
+     sala y puesta al revés: primero llega la cola de la resonancia, que crece; al final, el golpe, y
+     ahí todo se corta. Las ondas del lienzo se cierran sobre el nodo de causa en el mismo instante. El
+     efecto llama a su causa: el sonido viaja del lado de los efectos (izquierda) al de su causa.
+  ------------------------------------------------------------------------------------------- */
+  const PRIMAS = [261.63, 174.61, 220.0];          // causa de arriba: Do; de abajo: Fa; de la derecha: La
+  const PERIODO = 7000, D = 5000;
+
+  function makeReverbIR(ac, seconds = 3.2, decay = 2.4) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
+  }
+
+  // Una campana de tercera mayor (zumbido, prima, tercera, quinta, nominal...), cada parcial doble
+  function campanaSeca(sr, prima) {
+    const dur = 5.2, n = Math.floor(sr * dur), d = new Float32Array(n);
+    const P = [[0.5, 0.5, 2.6, -4], [1, 0.45, 1.9, 0], [1.25, 0.33, 1.4, 5], [1.5, 0.2, 1.1, -4],
+               [2, 0.4, 1.2, 0], [2.52, 0.16, 0.8, 0], [3.01, 0.13, 0.6, 0], [4.2, 0.09, 0.35, 0], [5.4, 0.05, 0.2, 0]];
+    for (const [r, a, tau, c] of P) {
+      const f = prima * r * Math.pow(2, c / 1200);
+      const w1 = 2 * Math.PI * f / sr, w2 = 2 * Math.PI * f * 1.0016 / sr, k = Math.exp(-1 / (tau * sr));
+      let env = a * 0.5;
+      for (let i = 0; i < n; i++) { d[i] += env * (Math.sin(w1 * i) + Math.sin(w2 * i)); env *= k; }
+    }
+    const nc = Math.floor(sr * 0.012);                            // el chasquido del badajo
+    for (let i = 0; i < nc; i++) d[i] += (Math.random() * 2 - 1) * 0.3 * Math.exp(-i / (sr * 0.003));
+    const nf = Math.floor(sr * 1.2);                              // cola suave: al revés no debe empezar de golpe
+    for (let i = 0; i < nf; i++) d[n - 1 - i] *= 0.5 - 0.5 * Math.cos(Math.PI * i / nf);
+    let m = 0; for (let i = 0; i < n; i++) m = Math.max(m, Math.abs(d[i]));
+    for (let i = 0; i < n; i++) d[i] *= 0.8 / m;
+    return d;
+  }
+
+  async function campanaInvertida(prima) {
+    const sr = ctx.sampleRate;
+    const seca = campanaSeca(sr, prima), ir = makeReverbIR(ctx);
+    const off = new OfflineAudioContext(2, seca.length + ir.length, sr);
+    const b = off.createBuffer(1, seca.length, sr); b.getChannelData(0).set(seca);
+    const s = off.createBufferSource(); s.buffer = b;
+    const dry = off.createGain(); dry.gain.value = 0.55;
+    const cv = off.createConvolver(); cv.buffer = ir;
+    const wet = off.createGain(); wet.gain.value = 0.75;
+    s.connect(dry); dry.connect(off.destination);
+    s.connect(cv); cv.connect(wet); wet.connect(off.destination);
+    s.start();
+    const r = await off.startRendering();
+    for (let c = 0; c < r.numberOfChannels; c++) r.getChannelData(c).reverse();
+    return r;
+  }
+
+  function sonar(ev) {
+    if (!ctx || ev.sonado) return;
+    const buf = campanas[ev.prima]; if (!buf) return;
+    const falta = (ev.t1 - performance.now()) / 1000;
+    if (falta < 0.2) return;
+    ev.sonado = true;
+    const ahora = ctx.currentTime;
+    const golpe = ahora + falta, inicio = golpe - buf.duration;
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const p = ctx.createStereoPanner();
+    const g = ctx.createGain(); g.gain.value = ev.vol || 1;
+    src.connect(p); p.connect(g); g.connect(master);
+    const desde = Math.max(ahora + 0.02, inicio);
+    const frac = Math.min(1, Math.max(0, (desde - inicio) / buf.duration));
+    const pIni = -0.55 + (ev.pan + 0.55) * frac;               // de los efectos hacia su causa
+    p.pan.setValueAtTime(pIni, desde);
+    p.pan.linearRampToValueAtTime(ev.pan, golpe);
+    if (inicio >= ahora + 0.02) src.start(inicio);
+    else src.start(ahora + 0.02, ahora + 0.02 - inicio);
+    src.onended = () => { src.disconnect(); p.disconnect(); g.disconnect(); };
+  }
+
+  async function startAudio() {
+    if (ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    master.gain.setValueAtTime(0, ctx.currentTime);
+    master.gain.linearRampToValueAtTime(0.17, ctx.currentTime + 6);
+    seco = ctx.createGain(); seco.gain.value = 0.7; seco.connect(master);
+    sala = ctx.createGain(); sala.gain.value = 0.5;
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx, 4.5, 2.2);
+    sala.connect(conv); conv.connect(master);
+    // Debajo, Fa y Do graves, casi quietos
+    [[87.31, -0.2], [130.81, 0.2]].forEach(([f, pan]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const g = ctx.createGain(); g.gain.value = 0;
+      const p = ctx.createStereoPanner(); p.pan.value = pan;
+      o.connect(g); g.connect(p); p.connect(seco); p.connect(sala); o.start();
+      g.gain.setValueAtTime(0, ctx.currentTime);
+      g.gain.linearRampToValueAtTime(0.03, ctx.currentTime + 7);
+    });
+    for (const prima of PRIMAS) {
+      campanas[prima] = await campanaInvertida(prima);
+      eventos.forEach((ev) => { if (ev.prima === prima) sonar(ev); });
+    }
+  }
+
+  /* ---------------- Las convergencias ------------------------------------------------------- */
+  let proxima = performance.now() + 2600 + D, turno = 0;
+
+  function brillo(nodo, ms, pico) {
+    if (reduce) return;
+    nodo.querySelector('.brillo').animate(
+      [{ opacity: 0, transform: 'scale(0.6)' }, { opacity: 1, transform: 'scale(1.05)', offset: pico }, { opacity: 0, transform: 'scale(1.45)' }],
+      { duration: ms, easing: 'ease-out' });
+  }
+
+  function lanzar(ev) {
+    eventos.push(ev);
+    const ahora = performance.now();
+    if (ev.k != null) {
+      setTimeout(() => brillo(efectos[ev.k], ev.D * 0.85, 0.18), Math.max(0, ev.t1 - ev.D - ahora));
+      setTimeout(() => brillo(causas[ev.k], 1900, 0.1), Math.max(0, ev.t1 - ahora - 60));
+    }
+    sonar(ev);
+  }
+
+  function programar() {
+    const ahora = performance.now();
+    if (reduce) for (let i = eventos.length - 1; i >= 0; i--) if (eventos[i].t1 < ahora - 2000) eventos.splice(i, 1);
+    while (proxima - D - 300 <= ahora) {
+      const k = turno % 3; turno++;
+      const [cx] = centroDe(causas[k]);
+      lanzar({ k, t1: proxima, D, prima: PRIMAS[k], pan: Math.max(-0.7, Math.min(0.7, (cx / W) * 1.4 - 0.7)) });
+      proxima += PERIODO;
+    }
+  }
+  setInterval(programar, 200);
+
+  function dibujar(ahora) {
+    g2.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g2.clearRect(0, 0, W, H);
+    const R0 = lado() * 0.6;
+    for (let i = eventos.length - 1; i >= 0; i--) {
+      const ev = eventos[i];
+      const u = 1 - (ev.t1 - ahora) / ev.D;
+      if (u > 1.3) { eventos.splice(i, 1); continue; }
+      if (u < 0) continue;
+      const [x, y] = ev.k != null ? centroDe(causas[ev.k]) : [ev.x, ev.y];
+      if (u <= 1) {
+        const c = `${Math.round(150 + 105 * u)},${Math.round(100 + 72 * u)},${Math.round(255 - 140 * u)}`;
+        for (let j = 0; j < 5; j++) {
+          const r = R0 * Math.pow(1 - u, 1.1) * (1 + 0.3 * j);
+          if (r < 0.8) continue;
+          const a = Math.min(1, u / 0.15) * (0.1 + 0.62 * u * u) * (1 - j * 0.16);
+          g2.strokeStyle = `rgba(${c},${a.toFixed(3)})`;
+          g2.lineWidth = 1 + 1.3 * u;
+          g2.beginPath(); g2.arc(x, y, r, 0, Math.PI * 2); g2.stroke();
+        }
+      } else {
+        const v = 1 - (u - 1) / 0.3, rr = lado() * 0.07;
+        const gr = g2.createRadialGradient(x, y, 0, x, y, rr);
+        gr.addColorStop(0, `rgba(255,236,210,${(0.9 * v).toFixed(3)})`);
+        gr.addColorStop(0.35, `rgba(255,170,110,${(0.35 * v).toFixed(3)})`);
+        gr.addColorStop(1, 'rgba(255,150,100,0)');
+        g2.fillStyle = gr; g2.beginPath(); g2.arc(x, y, rr, 0, Math.PI * 2); g2.fill();
+      }
+    }
+    requestAnimationFrame(dibujar);
+  }
+
+  function dibujarQuieto() {                          // con movimiento reducido: una convergencia detenida
+    g2.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g2.clearRect(0, 0, W, H);
+    const [x, y] = centroDe(causas[0]), R0 = lado() * 0.6;
+    for (let j = 0; j < 5; j++) {
+      g2.strokeStyle = `rgba(215,140,190,${(0.4 - j * 0.06).toFixed(2)})`;
+      g2.lineWidth = 1.4;
+      g2.beginPath(); g2.arc(x, y, R0 * 0.35 * (1 + 0.3 * j), 0, Math.PI * 2); g2.stroke();
+    }
+  }
+
+  /* ---------------- Lo que se mueve en el bucle -------------------------------------------- */
+  function quitar(el) { el.addEventListener('animationend', () => el.remove(), { once: true }); }
+  function flecha() {
+    const a = document.createElement('div'); a.className = 'flecha';
+    const Lp = lado();
+    a.style.cssText = `left:${30 + Math.random() * 40}%;top:${30 + Math.random() * 40}%;--a:${(Math.random() * 360).toFixed(1)}deg;--d:${((0.07 + Math.random() * 0.215) * Lp).toFixed(1)}px;animation-delay:${(Math.random() * 7).toFixed(2)}s;`;
+    escena.appendChild(a); quitar(a);
+  }
+  function retrogradas() {
+    const R = lado() * 0.214;
+    for (let i = 0; i < 20; i++) setTimeout(() => {
+      const p = document.createElement('div'); p.className = 'retro';
+      const a = (i / 20) * Math.PI * 2;
+      p.style.cssText = `--sx:${(Math.cos(a) * R).toFixed(1)}px;--sy:${(Math.sin(a) * R).toFixed(1)}px;--ex:${(Math.cos(a + Math.PI) * R).toFixed(1)}px;--ey:${(Math.sin(a + Math.PI) * R).toFixed(1)}px;animation-delay:${(Math.random() * 5).toFixed(2)}s;`;
+      escena.appendChild(p); quitar(p);
     }, i * 80);
   }
-}
-
-// Crear flujos hacia atrás
-function createBackwardFlow() {
-  const flow = document.createElement('div');
-  flow.className = 'backward-flow';
-  
-  flow.style.cssText = `
-    left: ${20 + Math.random() * 60}%;
-    top: ${20 + Math.random() * 60}%;
-    transform: rotate(${Math.random() * 360}deg);
-    animation-delay: ${Math.random() * 6}s;
-  `;
-  
-  loop.appendChild(flow);
-  setTimeout(() => flow.remove(), 14000);
-}
-
-// Generar elementos continuamente
-setInterval(createTimeArrow, 2500);
-setInterval(createRetrogradeParticles, 8000);
-setInterval(createBackwardFlow, 3500);
-
-// Crear elementos iniciales
-for(let i = 0; i < 6; i++) {
-  setTimeout(createTimeArrow, i * 900);
-}
-createRetrogradeParticles();
-for(let i = 0; i < 4; i++) {
-  setTimeout(createBackwardFlow, i * 1200);
-}
-
-// Interactividad - Click invierte el flujo temporal
-loop.addEventListener('click', (e) => {
-  const rect = loop.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  // Ondas invertidas desde el punto
-  for(let i = 0; i < 5; i++) {
-    setTimeout(() => {
-      const wave = document.createElement('div');
-      wave.className = 'temporal-wave';
-      wave.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        animation: wave-invert ${12 - i * 2}s ease-out forwards;
-        animation-delay: 0s;
-      `;
-      loop.appendChild(wave);
-      setTimeout(() => wave.remove(), (12 - i * 2) * 1000);
-    }, i * 400);
+  function flujo() {
+    const f = document.createElement('div'); f.className = 'flujo';
+    f.style.cssText = `left:${20 + Math.random() * 60}%;top:${20 + Math.random() * 60}%;--rot:${(Math.random() * 360).toFixed(1)}deg;animation-delay:${(Math.random() * 6).toFixed(2)}s;`;
+    escena.appendChild(f); quitar(f);
   }
-  
-  // Explosión de partículas retrógradas
-  for(let i = 0; i < 16; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'retrograde-particle';
-      
-      const angle = (i / 16) * Math.PI * 2;
-      const distance = 80 + Math.random() * 100;
-      const startX = Math.cos(angle) * distance;
-      const startY = Math.sin(angle) * distance;
-      
-      particle.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --startX: ${startX}px;
-        --startY: ${startY}px;
-        --endX: 0px;
-        --endY: 0px;
-        animation: particle-reverse 5s ease-out forwards;
-      `;
-      
-      loop.appendChild(particle);
-      setTimeout(() => particle.remove(), 5000);
-    }, i * 60);
+
+  if (!reduce) {
+    setInterval(flecha, 2500);
+    setInterval(retrogradas, 8000);
+    setInterval(flujo, 3500);
+    for (let i = 0; i < 6; i++) setTimeout(flecha, i * 900);
+    retrogradas();
+    for (let i = 0; i < 4; i++) setTimeout(flujo, i * 1200);
+    requestAnimationFrame(dibujar);
+  } else {
+    dibujarQuieto();
   }
-  
-  // Flechas radiales invertidas
-  for(let i = 0; i < 8; i++) {
-    setTimeout(() => {
-      const arrow = document.createElement('div');
-      arrow.className = 'time-arrow';
-      const angle = (i / 8) * 360;
-      arrow.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --angle: ${angle}deg;
-        --distance: 120px;
-        animation: arrow-reverse 6s ease-out forwards;
-      `;
-      loop.appendChild(arrow);
-      setTimeout(() => arrow.remove(), 6000);
-    }, i * 100);
+
+  /* ---------------- El toque: una onda que vuelve al punto tocado ---------------------------- */
+  function tocar(cx, cy) {
+    const Dt = 3600;
+    const prima = cy < H * 0.42 ? 261.63 : cy < H * 0.6 ? 220.0 : 174.61;
+    lanzar({ x: cx, y: cy, t1: performance.now() + Dt, D: Dt, prima, vol: 0.9,
+             pan: Math.max(-0.7, Math.min(0.7, (cx / W) * 1.4 - 0.7)) });
+    if (reduce) return;
+    const Lp = lado();
+    for (let i = 0; i < 16; i++) {
+      const p = document.createElement('div'); p.className = 'acude';
+      const a = (i / 16) * Math.PI * 2, d = (0.13 + Math.random() * 0.15) * Lp;
+      p.style.cssText = `left:${cx}px;top:${cy}px;--sx:${(Math.cos(a) * d).toFixed(1)}px;--sy:${(Math.sin(a) * d).toFixed(1)}px;`;
+      document.body.appendChild(p); quitar(p);
+    }
   }
-});
+
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    hint.classList.add('oculto');
+    tocar(e.clientX, e.clientY);
+  });
 </script>
-
 </body>
 </html>

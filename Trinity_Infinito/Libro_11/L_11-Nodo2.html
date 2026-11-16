@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Libro 11 - Nodo 2: Causa Sin Precedente</title>
+<title>Libro 11 - Nodo 72: Causa Sin Precedente</title>
+<!-- Portal 72. Construido en octubre de 2026 (el original faltaba); ajustado en noviembre de 2026 con el
+     resto del libro: la cadena suena desde donde va la chispa, sin esperar la vuelta siguiente, y
+     sigue a la animación misma; invitación que se apaga con la clase .oculto. -->
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
 
@@ -199,6 +202,7 @@
     pointer-events:none;
     transition: opacity 1.2s ease;
   }
+  .hint.oculto { animation:none; opacity:0; }
   @keyframes invita { 0%,100% { opacity:0.5; } 50% { opacity:0.95; } }
 
   .infinito {
@@ -232,7 +236,7 @@
 </head>
 <body>
   <div class="titulo">CAUSA SIN PRECEDENTE</div>
-  <div class="subtitulo">Libro 11 - Nodo 2</div>
+  <div class="subtitulo">Libro 11 - Nodo 72</div>
 
   <div class="campo" id="campo">
     <div class="resplandor"></div>
@@ -248,7 +252,7 @@
   </div>
 
   <div class="codigo">PORTAL_72::CAUSA_SIN_PRECEDENTE</div>
-  <div class="hint">( toca — empieza algo que nada empujó )</div>
+  <div class="hint" id="hint">( toca: empieza algo que nada empujó )</div>
 
   <a class="infinito" href="L_11-Nodo3.html" aria-label="Siguiente portal">∞</a>
 
@@ -276,10 +280,10 @@
      primero: la causa sin precedente era el círculo entero.
      Al tocar, suena una campana limpia que nada anunció: un comienzo propio.
   ------------------------------------------------------------------------------------------- */
-  let started = false, ctx, master, verb, vuelta = null, inicio = 0;
+  let started = false, ctx, master, verb, inicio = performance.now(), ultimo = -1;
   const NOTAS = [392.0, 349.2, 293.7, 261.6, 220.0, 196.0, 174.6]; // un descenso suave
 
-  function makeIR(ac, seconds = 3.2, decay = 3) {
+  function makeReverbIR(ac, seconds = 3.2, decay = 3) {
     const len = Math.floor(ac.sampleRate * seconds);
     const buf = ac.createBuffer(2, len, ac.sampleRate);
     for (let ch = 0; ch < 2; ch++) {
@@ -306,10 +310,21 @@
     o.start(cuando); o.stop(cuando + 3.6);
   }
 
-  function unaVuelta() {
+  /* La chispa manda: se lee el tiempo de su propia animación, y cada eslabón suena cuando ella lo
+     alcanza. Al primer toque la cadena sigue desde donde va, sin esperar la vuelta siguiente. */
+  const recorrido = document.querySelector('.recorrido');
+  function faseChispa() {
+    const an = (!reduce && recorrido.getAnimations) ? recorrido.getAnimations()[0] : null;
+    if (an && an.currentTime != null) return (an.currentTime / 1000) % CICLO;
+    return ((performance.now() - inicio) / 1000) % CICLO;
+  }
+  function vigilar() {
     if (!started) return;
-    const t = ctx.currentTime + 0.05;
-    for (let i = 0; i < N; i++) nota(NOTAS[i], t + i * CICLO / N, i === 0);
+    const i = Math.floor(faseChispa() / (CICLO / N)) % N;
+    if (i !== ultimo) {
+      if (ultimo !== -1) nota(NOTAS[i], ctx.currentTime + 0.02, i === 0);
+      ultimo = i;
+    }
   }
 
   function campana(f) {
@@ -331,7 +346,7 @@
     master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
     master.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 5);
 
-    const conv = ctx.createConvolver(); conv.buffer = makeIR(ctx);
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
     verb = ctx.createGain(); verb.gain.value = 0.55;
     verb.connect(conv); conv.connect(master);
 
@@ -343,10 +358,9 @@
       g.gain.linearRampToValueAtTime(0.022, ctx.currentTime + 6);
     });
 
-    // Sincronizar la cadena sonora con la vuelta visible de la chispa
-    const transcurrido = (performance.now() - inicio) / 1000;
-    const espera = (CICLO - (transcurrido % CICLO)) % CICLO;
-    setTimeout(() => { unaVuelta(); vuelta = setInterval(unaVuelta, CICLO * 1000); }, espera * 1000);
+    // La cadena sigue a la chispa desde el eslabón que viene
+    ultimo = Math.floor(faseChispa() / (CICLO / N)) % N;
+    setInterval(vigilar, 30);
   }
 
   function onda(x, y) {
@@ -358,17 +372,15 @@
     setTimeout(() => { w.remove(); p.remove(); }, 3300);
   }
 
-  const hint = document.querySelector('.hint');
-  let despierto = false;
+  const hint = document.getElementById('hint');
   window.addEventListener('pointerdown', (e) => {
     if (e.target.closest('.infinito')) return;
     startAudio();
-    if (!despierto) { despierto = true; if (hint) { hint.style.animation = 'none'; hint.style.opacity = '0.9'; requestAnimationFrame(() => { hint.style.opacity = '0'; }); } }
+    hint.classList.add('oculto');
     if (!reduce) onda(e.clientX, e.clientY);
     if (ctx) campana(NOTAS[Math.floor(Math.random() * 3)] * 2);
   });
 
-  inicio = performance.now();
 </script>
 </body>
 </html>

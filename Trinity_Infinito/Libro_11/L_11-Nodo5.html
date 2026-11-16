@@ -2,428 +2,486 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Libro 11 - Nodo 5: El Karma Circular</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Libro 11 - Nodo 75: El Karma Circular</title>
+<!-- Portal 75. Saneado en noviembre de 2026 sobre el original: las dos ruedas que giran en sentidos
+     contrarios, los doce rayos, las semillas arriba y abajo, los frutos a los lados, los flujos causales
+     y las partículas kármicas en órbita. Sonido nuevo: la cuerda pulsada como rueda (Karplus y Strong,
+     1983). Una cuerda se modela como un anillo de muestras en el que cada salida es la entrada de la
+     vuelta siguiente: el impulso de ruido, la acción, madura en tono, el fruto. Cada rayo que pasa
+     arriba pulsa una cuerda, sembrada con lo que dejó la anterior. -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: radial-gradient(ellipse at center, #0a0510 0%, #000000 70%);
-  overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.karma-field {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.wheel-of-action {
-  position: relative;
-  width: 650px;
-  height: 650px;
-}
-
-.karma-wheel {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border: 3px solid rgba(200,150,100,0.4);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: wheel-turn 28s linear infinite;
-  box-shadow: inset 0 0 50px rgba(200,150,100,0.15),
-              0 0 50px rgba(200,150,100,0.15);
-}
-
-@keyframes wheel-turn {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-.spoke {
-  position: absolute;
-  width: 2px;
-  height: 200px;
-  background: linear-gradient(to bottom,
-    rgba(200,150,100,0.6),
-    rgba(150,100,80,0.3)
-  );
-  top: 50%;
-  left: 50%;
-  transform-origin: top center;
-  filter: blur(0.5px);
-}
-
-.action-seed {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  background: radial-gradient(circle,
-    rgba(255,200,100,0.5),
-    rgba(200,150,100,0.3),
-    transparent
-  );
-  border-radius: 50%;
-  animation: seed-grow 10s ease-in-out infinite;
-  filter: blur(12px);
-}
-
-@keyframes seed-grow {
-  0%, 100% {
-    transform: scale(0.6);
-    opacity: 0.4;
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(ellipse at center, #0a0510 0%, #06030a 55%, #000 80%);
+    background-color:#000;
+    color:#fff;
+    font-family: Georgia, serif;
+    overflow:hidden;
+    height:100vh; height:100dvh;
+    display:flex; align-items:center; justify-content:center;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    -webkit-user-select:none; user-select:none;
   }
-  50% {
-    transform: scale(1.5);
-    opacity: 0.8;
+
+  .cabecera {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top, 0px) + 5.5vh);
+    transform:translateX(-50%);
+    width:max-content; max-width:92vw; text-align:center;
+    z-index:5; pointer-events:none;
   }
-}
-
-.fruit-result {
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  background: radial-gradient(circle,
-    rgba(150,255,150,0.5),
-    rgba(100,200,100,0.3),
-    transparent
-  );
-  border-radius: 50%;
-  animation: fruit-ripen 10s ease-in-out infinite;
-  filter: blur(15px);
-}
-
-@keyframes fruit-ripen {
-  0%, 100% {
-    transform: scale(1.4);
-    opacity: 0.8;
+  .titulo {
+    font-size: clamp(17px, 5vw, 32px);
+    font-weight:bold;
+    letter-spacing: clamp(0.16em, 1.2vw, 0.4em);
+    padding-left: clamp(0.16em, 1.2vw, 0.4em);
+    line-height:1.45;
+    color: rgba(255,246,236,0.92);
+    text-shadow: 0 0 30px rgba(200,150,100,0.5);
   }
-  50% {
-    transform: scale(0.7);
-    opacity: 0.4;
+  .subtitulo {
+    margin-top:0.6em;
+    font-size: clamp(11px, 2.9vw, 15px);
+    letter-spacing:0.3em; padding-left:0.3em; font-style:italic;
+    color: rgba(245,230,215,0.5);
   }
-}
 
-.causal-flow {
-  position: absolute;
-  width: 180px;
-  height: 3px;
-  background: linear-gradient(90deg,
-    rgba(255,200,100,0.7),
-    rgba(150,255,150,0.6)
-  );
-  animation: flow-circle 13s ease-in-out infinite;
-  filter: blur(1px);
-  transform-origin: left center;
-}
-
-@keyframes flow-circle {
-  0%, 100% {
-    transform: rotate(0deg) scaleX(0);
-    opacity: 0;
+  .escena {
+    --L: min(66vh, 640px, 92vw);
+    position:relative;
+    width:var(--L); height:var(--L);
+    margin-top:-5vh;
   }
-  50% {
-    transform: rotate(var(--angle)) scaleX(1);
-    opacity: 0.9;
+
+  .resplandor {
+    position:absolute; left:50%; top:50%;
+    width:88%; height:88%;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(200,150,100,0.14), rgba(200,150,100,0.05) 40%, transparent 68%);
+    animation: resplandor 19s ease-in-out infinite;
   }
-}
-
-.karmic-particle {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(200,150,100,0.8);
-  animation: orbit-karma 15s linear infinite;
-}
-
-@keyframes orbit-karma {
-  from {
-    transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
+  @keyframes resplandor {
+    0%,100% { transform:translate(-50%,-50%) scale(0.85) rotate(0deg);  opacity:0.4; }
+    50%     { transform:translate(-50%,-50%) scale(1.4) rotate(180deg); opacity:0.75; }
   }
-  to {
-    transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
+
+  /* Las ruedas */
+  .rueda {
+    position:absolute; left:50%; top:50%;
+    border-radius:50%;
+    border:3px solid rgba(200,150,100,0.4);
+    box-shadow: inset 0 0 calc(var(--L) * 0.077) rgba(200,150,100,0.15), 0 0 calc(var(--L) * 0.077) rgba(200,150,100,0.15);
+    animation: gira 28s linear infinite;
   }
-}
-
-.title {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2.1em;
-  letter-spacing: 0.4em;
-  opacity: 0.9;
-  text-shadow: 0 0 30px rgba(200,150,100,0.5);
-  font-weight: 600;
-  text-align: center;
-  z-index: 100;
-}
-
-.subtitle {
-  position: fixed;
-  top: 115px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1em;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  font-style: italic;
-  z-index: 100;
-}
-
-.central-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5em;
-  letter-spacing: 0.35em;
-  text-align: center;
-  opacity: 0;
-  animation: text-spin 14s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255,255,255,0.4);
-  line-height: 2.2;
-  z-index: 10;
-}
-
-@keyframes text-spin {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(-3deg);
+  .rueda.r1 { width:61.5%; height:61.5%; }
+  .rueda.r2 { width:49.2%; height:49.2%; animation-duration:22s; animation-direction:reverse; }
+  @keyframes gira {
+    from { transform:translate(-50%,-50%) rotate(0deg); }
+    to   { transform:translate(-50%,-50%) rotate(360deg); }
   }
-  20%, 80% {
-    opacity: 0.75;
-    transform: translate(-50%, -50%) rotate(0deg);
+  .rayo {
+    position:absolute; left:50%; top:50%;
+    width:2px; height:50%; margin-left:-1px;
+    transform-origin:top center;
+    background: linear-gradient(to bottom, rgba(220,170,110,0.04), rgba(220,170,110,0.6) 42%, rgba(160,110,85,0.4));
+    opacity:0.8;
   }
-}
 
-.contemplation {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  text-align: center;
-  max-width: 750px;
-  line-height: 1.9;
-  padding: 0 40px;
-  font-style: italic;
-  z-index: 100;
-}
-
-.wheel-glow {
-  position: absolute;
-  width: 450px;
-  height: 450px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(200,150,100,0.12), transparent);
-  border-radius: 50%;
-  animation: glow-wheel 19s ease-in-out infinite;
-  filter: blur(70px);
-}
-
-@keyframes glow-wheel {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.85) rotate(0deg);
-    opacity: 0.3;
+  /* Las cuatro estaciones: semillas arriba y abajo, frutos a los lados */
+  .semilla, .fruto { position:absolute; border-radius:50%; pointer-events:none; }
+  .semilla {
+    width:13%; height:13%; margin:-6.5% 0 0 -6.5%;
+    background: radial-gradient(circle, rgba(255,205,110,0.5), rgba(200,150,100,0.2) 40%, transparent 68%);
+    animation: crece 10s ease-in-out infinite;
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
-    opacity: 0.6;
+  @keyframes crece {
+    0%,100% { transform:scale(0.6); opacity:0.4; }
+    50%     { transform:scale(1.5); opacity:0.8; }
   }
-}
+  .fruto {
+    width:15%; height:15%; margin:-7.5% 0 0 -7.5%;
+    background: radial-gradient(circle, rgba(160,255,155,0.5), rgba(100,200,100,0.2) 40%, transparent 68%);
+    animation: madura 10s ease-in-out infinite;
+  }
+  @keyframes madura {
+    0%,100% { transform:scale(1.4); opacity:0.8; }
+    50%     { transform:scale(0.7); opacity:0.4; }
+  }
+  .acto {
+    position:absolute; left:50%; top:19.2%;
+    width:16%; height:16%; margin:-8% 0 0 -8%;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,232,180,0.85), rgba(255,190,110,0.3) 30%, transparent 62%);
+    opacity:0;
+    pointer-events:none;
+  }
+
+  .flujo {
+    position:absolute; left:50%; top:50%;
+    width:27.7%; height:3px; margin-top:-1.5px;
+    background: linear-gradient(90deg, rgba(255,200,100,0.7), rgba(150,255,150,0.6));
+    transform-origin:left center;
+    opacity:0;
+    animation: flujo 13s ease-in-out forwards;
+    pointer-events:none;
+  }
+  @keyframes flujo {
+    0%,100% { transform:rotate(0deg) scaleX(0);     opacity:0; }
+    50%     { transform:rotate(var(--a)) scaleX(1); opacity:0.9; }
+  }
+
+  .karma {
+    position:absolute; left:50%; top:50%;
+    width:5px; height:5px; margin:-2.5px 0 0 -2.5px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 0 12px rgba(200,150,100,0.85);
+    animation: karma 15s linear infinite;
+  }
+  @keyframes karma {
+    from { transform:rotate(0deg)   translateX(var(--r)) rotate(0deg); }
+    to   { transform:rotate(360deg) translateX(var(--r)) rotate(-360deg); }
+  }
+
+  /* El toque: semillas que se dispersan, frutos que brotan */
+  .brote {
+    position:absolute;
+    width:9.2%; height:9.2%; margin:-4.6% 0 0 -4.6%;
+    border-radius:50%;
+    pointer-events:none;
+    opacity:0;
+    animation: brote 4s ease-out forwards;
+  }
+  .brote.s { background: radial-gradient(circle, rgba(255,205,110,0.55), rgba(200,150,100,0.2) 40%, transparent 68%); }
+  .brote.f { background: radial-gradient(circle, rgba(160,255,155,0.5), rgba(100,200,100,0.2) 40%, transparent 68%); animation-duration:5s; }
+  @keyframes brote {
+    0%   { transform:translate(0, 0) scale(0.5);                     opacity:0; }
+    25%  { opacity:0.85; }
+    100% { transform:translate(var(--bx), var(--by)) scale(1.5);    opacity:0; }
+  }
+
+  .centro { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:3; }
+  .texto-central {
+    text-align:center;
+    font-size: clamp(13px, 3.6vw, 21px);
+    letter-spacing:0.3em; padding-left:0.3em;
+    line-height:1.95;
+    color: rgba(255,255,255,0.96);
+    text-shadow: 0 0 10px rgba(0,0,0,0.95), 0 0 18px rgba(0,0,0,0.8), 0 0 22px rgba(255,255,255,0.25);
+    opacity:0;
+    animation: texto 14s ease-in-out infinite;
+    animation-delay:-2.8s;
+  }
+  @keyframes texto {
+    0%,100% { opacity:0;    transform:rotate(-3deg); }
+    20%,80% { opacity:0.85; transform:rotate(0deg); }
+  }
+
+  .frases {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh);
+    transform:translateX(-50%);
+    width:90vw; max-width:660px; height:3.4em;
+    text-align:center;
+    pointer-events:none;
+  }
+  .frase {
+    position:absolute; left:0; right:0; bottom:0;
+    font-size: clamp(14px, 3.8vw, 19px);
+    line-height:1.6;
+    letter-spacing:0.06em;
+    font-style:italic;
+    color: rgba(252,244,234,0.9);
+    text-shadow: 0 0 18px rgba(200,150,100,0.3);
+    opacity:0;
+    animation: frase 20s ease-in-out infinite;
+  }
+  .frase.f2 { animation-delay:10s; }
+  @keyframes frase {
+    0%   { opacity:0; transform:translateY(6px); }
+    7%   { opacity:1; transform:translateY(0); }
+    43%  { opacity:1; transform:translateY(0); }
+    50%  { opacity:0; transform:translateY(-4px); }
+    100% { opacity:0; transform:translateY(-4px); }
+  }
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform:translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(252,244,234,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(235,210,180,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(255,228,190,0.95); text-shadow:0 0 18px rgba(220,160,100,0.6); outline:none; }
+
+  @media (max-width: 480px) {
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 14.5vh); height:4.9em; }
+  }
+  @media (orientation: landscape) and (max-height: 500px) {
+    .subtitulo { display:none; }
+    .titulo { font-size:17px; letter-spacing:0.2em; padding-left:0.2em; }
+    .cabecera { top:calc(env(safe-area-inset-top, 0px) + 10px); }
+    .escena { --L: min(62vh, 620px); margin-top:-4vh; }
+    .texto-central { font-size:11px; line-height:1.7; }
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 30px); height:3.3em; }
+    .frase { font-size:13px; line-height:1.45; }
+    .hint { bottom:calc(env(safe-area-inset-bottom, 0px) + 8px); font-size:11px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; transition:none !important; }
+    .resplandor, .rueda { transform:translate(-50%,-50%); }
+    .resplandor { opacity:0.6; }
+    .semilla { opacity:0.7; }
+    .fruto { opacity:0.65; }
+    .karma { display:none; }
+    .texto-central { opacity:0.85; }
+    .frases { height:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 9vh); }
+    .frase { position:static; opacity:0.92; margin-bottom:0.35em; font-size: clamp(12px, 3.4vw, 16px); }
+    .escena { margin-top:-12vh; }
+    .hint { opacity:0.8; bottom:calc(env(safe-area-inset-bottom, 0px) + 18px); }
+  }
 </style>
 </head>
 <body>
+  <div class="cabecera">
+    <div class="titulo">EL KARMA CIRCULAR</div>
+    <div class="subtitulo">Libro 11 - Nodo 75</div>
+  </div>
 
-<div class="title">EL KARMA CIRCULAR</div>
-<div class="subtitle">Libro 11 - Nodo 5</div>
+  <div class="escena" id="escena">
+    <div class="resplandor"></div>
+    <div class="rueda r1" id="rueda"></div>
+    <div class="rueda r2"></div>
 
-<div class="karma-field">
-  <div class="wheel-of-action">
-    <!-- Resplandor de la rueda -->
-    <div class="wheel-glow"></div>
-    
-    <!-- Rueda kármica -->
-    <div class="karma-wheel"></div>
-    <div class="karma-wheel" style="width: 320px; height: 320px; animation-duration: 22s; animation-direction: reverse;"></div>
-    
-    <!-- Semillas de acción -->
-    <div class="action-seed" style="top: 18%; left: 50%; transform: translateX(-50%); animation-delay: 0s;"></div>
-    <div class="action-seed" style="top: 82%; left: 50%; transform: translateX(-50%); animation-delay: 3.3s;"></div>
-    
-    <!-- Frutos de resultado -->
-    <div class="fruit-result" style="top: 50%; left: 15%; transform: translateY(-50%); animation-delay: 0s;"></div>
-    <div class="fruit-result" style="top: 50%; right: 15%; transform: translateY(-50%); animation-delay: 3.3s;"></div>
-    
-    <!-- Texto central -->
-    <div class="central-text" style="animation-delay: 2.3s;">
-      La acción<br>
-      crea el resultado<br><br>
-      El resultado<br>
-      crea la acción<br><br>
-      Rueda<br>
-      sin principio
+    <div class="semilla" style="left:50%;   top:19.2%;"></div>
+    <div class="semilla" style="left:50%;   top:80.8%; animation-delay:-3.3s;"></div>
+    <div class="fruto"   style="left:19.2%; top:50%;"></div>
+    <div class="fruto"   style="left:80.8%; top:50%;   animation-delay:-3.3s;"></div>
+    <div class="acto" id="acto"></div>
+
+    <div class="centro">
+      <div class="texto-central">La acción<br>crea el resultado<br><br>El resultado<br>crea la acción<br><br>Rueda<br>sin principio</div>
     </div>
   </div>
-</div>
 
-<div class="contemplation">
-  Cada acción planta semillas · Cada semilla da frutos · Cada fruto planta semillas<br>
-  La rueda del karma gira sin fin · Causa y efecto en danza eterna
-</div>
+  <div class="frases" aria-live="off">
+    <p class="frase f1">Cada acción planta semillas · Cada semilla da frutos<br>Cada fruto planta semillas</p>
+    <p class="frase f2">La rueda del karma gira sin fin<br>Causa y efecto en danza eterna</p>
+  </div>
+
+  <div class="hint" id="hint">( toca: siembra un acto )</div>
+
+  <a class="infinito" href="L_11-Nodo6.html" aria-label="Siguiente portal">∞</a>
 
 <script>
-const wheel = document.querySelector('.wheel-of-action');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const escena = document.getElementById('escena');
+  const rueda = document.getElementById('rueda');
+  const acto = document.getElementById('acto');
+  const hint = document.getElementById('hint');
+  // El sonido se declara arriba
+  let ctx = null, master, seco, sala, herencia = null;
 
-// Crear radios de la rueda
-function createWheelSpokes() {
-  for(let i = 0; i < 12; i++) {
-    const spoke = document.createElement('div');
-    spoke.className = 'spoke';
-    spoke.style.cssText = `
-      transform: translate(-50%, 0) rotate(${i * 30}deg);
-    `;
-    document.querySelector('.karma-wheel').appendChild(spoke);
+  /* Los doce rayos: cada uno apunta, al nacer, hacia abajo girado 30° más que el anterior */
+  const rayos = [];
+  for (let i = 0; i < 12; i++) {
+    const r = document.createElement('div'); r.className = 'rayo';
+    r.style.transform = `rotate(${i * 30}deg)`;
+    rueda.appendChild(r); rayos.push(r);
   }
-}
 
-// Crear partículas kármicas en órbita
-function createKarmicOrbit() {
-  for(let i = 0; i < 16; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'karmic-particle';
-      
-      const radius = 150 + (i % 3) * 30;
-      
-      particle.style.cssText = `
-        left: 50%;
-        top: 50%;
-        --radius: ${radius}px;
-        animation-delay: ${i * -0.9375}s;
-      `;
-      
-      wheel.appendChild(particle);
-    }, i * 100);
-  }
-}
+  /* ---------------- La cuerda pulsada como rueda -------------------------------------------------
+     Karplus y Strong (1983): una cuerda se modela como un anillo de muestras del largo de un período.
+     Se lo llena de ruido (el acto) y en cada vuelta cada muestra sale y vuelve a entrar promediada con
+     su vecina, un poco más tenue: el ruido madura en tono (el fruto) y el anillo, con su largo, decide
+     la nota. Es lo que hace una cuerda real: la onda va y vuelve, y cada pasada es la causa de la
+     siguiente. Aquí cada rayo que pasa por lo alto pulsa una cuerda, y no la llena de ruido nuevo sino
+     de lo que quedaba de la anterior (con una pizca de azar): el timbre se va limando de acto en acto.
+     Al tocar, una semilla nueva: ruido fresco, un ataque brillante cuya huella siguen los siguientes.
+     La rueda da una vuelta en 28 s; un rayo cada 2,33 s; la melodía de doce notas no tiene principio.
+  ------------------------------------------------------------------------------------------- */
+  const VUELTA = 28;
+  const N = { F3: 174.61, G3: 196.0, A3: 220.0, C4: 261.63, D4: 293.66, F4: 349.23, G4: 392.0 };
+  const MELODIA = [N.F3, N.C4, N.A3, N.D4, N.C4, N.F4, N.G4, N.F4, N.D4, N.C4, N.A3, N.G3];
 
-// Crear flujos causales
-function createCausalFlow() {
-  const flow = document.createElement('div');
-  flow.className = 'causal-flow';
-  
-  const angle = Math.random() * 360;
-  
-  flow.style.cssText = `
-    left: 50%;
-    top: 50%;
-    --angle: ${angle}deg;
-    animation-delay: ${Math.random() * 6}s;
-  `;
-  
-  wheel.appendChild(flow);
-  setTimeout(() => flow.remove(), 13000);
-}
-
-// Generar elementos
-createWheelSpokes();
-createKarmicOrbit();
-
-setInterval(createCausalFlow, 2600);
-
-// Crear flujos iniciales
-for(let i = 0; i < 6; i++) {
-  setTimeout(createCausalFlow, i * 900);
-}
-
-// Interactividad - Click hace girar la rueda
-wheel.addEventListener('click', (e) => {
-  const rect = wheel.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  // Explosión de semillas
-  for(let i = 0; i < 12; i++) {
-    setTimeout(() => {
-      const seed = document.createElement('div');
-      seed.className = 'action-seed';
-      const angle = (i / 12) * Math.PI * 2;
-      const distance = 60 + Math.random() * 80;
-      seed.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        animation: seed-grow 4s ease-out forwards;
-        transform: translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px);
-      `;
-      wheel.appendChild(seed);
-      setTimeout(() => seed.remove(), 4000);
-    }, i * 80);
-  }
-  
-  // Brote de frutos
-  setTimeout(() => {
-    for(let i = 0; i < 8; i++) {
-      setTimeout(() => {
-        const fruit = document.createElement('div');
-        fruit.className = 'fruit-result';
-        const angle = (i / 8) * Math.PI * 2;
-        const distance = 80 + Math.random() * 100;
-        fruit.style.cssText = `
-          left: ${x}px;
-          top: ${y}px;
-          animation: fruit-ripen 5s ease-out forwards;
-          transform: translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px);
-        `;
-        wheel.appendChild(fruit);
-        setTimeout(() => fruit.remove(), 5000);
-      }, i * 100);
+  function makeReverbIR(ac, seconds = 4.2, decay = 2.4) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
     }
-  }, 1200);
-  
-  // Flujos radiales
-  for(let i = 0; i < 16; i++) {
-    setTimeout(() => {
-      const flow = document.createElement('div');
-      flow.className = 'causal-flow';
-      const angle = (i / 16) * 360;
-      flow.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --angle: ${angle}deg;
-        animation: flow-circle 6s ease-out forwards;
-      `;
-      wheel.appendChild(flow);
-      setTimeout(() => flow.remove(), 6000);
-    }, i * 70);
+    return buf;
   }
-});
-</script>
 
+  function rms(a) { let s = 0; for (let i = 0; i < a.length; i++) s += a[i] * a[i]; return Math.sqrt(s / a.length) || 1e-9; }
+
+  function cuerda(f, fresca) {
+    const sr = ctx.sampleRate;
+    const P = Math.max(8, Math.round(sr / f - 0.5));           // el largo del anillo
+    const T60 = 2.4 + 300 / f;
+    const rho = Math.pow(0.001, 1 / (f * T60));
+    const n = Math.floor(sr * (T60 + 0.2));
+    const y = new Float32Array(n);
+    const ruido = new Float32Array(P);
+    for (let k = 0; k < P; k++) ruido[k] = Math.random() * 2 - 1;
+    const rr = rms(ruido);
+    let semilla;
+    if (herencia && !fresca) {                                  // lo que dejó la anterior, al largo de esta
+      const M = herencia.length; semilla = new Float32Array(P);
+      let media = 0;
+      for (let k = 0; k < P; k++) {
+        const x = k * M / P, i0 = Math.floor(x) % M, i1 = (i0 + 1) % M, u = x - Math.floor(x);
+        semilla[k] = herencia[i0] * (1 - u) + herencia[i1] * u; media += semilla[k];
+      }
+      media /= P;
+      for (let k = 0; k < P; k++) semilla[k] -= media;
+      const rh = rms(semilla);
+      for (let k = 0; k < P; k++) semilla[k] = 0.82 * semilla[k] / rh + 0.18 * ruido[k] / rr;
+    } else {
+      semilla = ruido;
+    }
+    const rs = rms(semilla);
+    for (let k = 0; k < P; k++) y[k] = 0.32 * semilla[k] / rs;
+    for (let i = P; i < n; i++) y[i] = rho * 0.5 * (y[i - P] + (i - P - 1 >= 0 ? y[i - P - 1] : 0));
+    const nf = Math.floor(sr * 0.2);
+    for (let i = 0; i < nf; i++) y[n - 1 - i] *= i / nf;
+    // La huella para el acto siguiente: un período, tal como queda cuando pasa el próximo rayo
+    const k = Math.min(n - 1, Math.floor(sr * VUELTA / 12));
+    herencia = y.slice(k - P, k);
+    return y;
+  }
+
+  function pulsar(f, pan, fresca) {
+    if (!ctx) return;
+    const y = cuerda(f, fresca);
+    const b = ctx.createBuffer(1, y.length, ctx.sampleRate); b.getChannelData(0).set(y);
+    const s = ctx.createBufferSource(); s.buffer = b;
+    const p = ctx.createStereoPanner(); p.pan.value = pan;
+    s.connect(p); p.connect(seco); p.connect(sala);
+    s.start(ctx.currentTime + 0.01);
+    s.onended = () => { s.disconnect(); p.disconnect(); };
+  }
+
+  function startAudio() {
+    if (ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    const t = ctx.currentTime;
+    master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    master.gain.setValueAtTime(0, t);
+    master.gain.linearRampToValueAtTime(0.19, t + 5);
+    seco = ctx.createGain(); seco.gain.value = 0.75; seco.connect(master);
+    sala = ctx.createGain(); sala.gain.value = 0.42;
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    sala.connect(conv); conv.connect(master);
+    // Debajo, Fa y Do graves: el eje de la rueda
+    [[87.31, -0.2], [130.81, 0.2]].forEach(([f, pan]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const g = ctx.createGain(); g.gain.value = 0;
+      const p = ctx.createStereoPanner(); p.pan.value = pan;
+      o.connect(g); g.connect(p); p.connect(seco); p.connect(sala); o.start();
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.025, t + 7);
+    });
+  }
+
+  /* ---------------- La rueda manda: se lee su propio giro ------------------------------------- */
+  const T0 = performance.now();
+  function angulo() {
+    const an = (!reduce && rueda.getAnimations) ? rueda.getAnimations()[0] : null;
+    const s = (an && an.currentTime != null) ? an.currentTime / 1000 : (performance.now() - T0) / 1000;
+    return 360 * ((s % VUELTA) / VUELTA);
+  }
+  function rayoArriba(paso) { return ((-6 - paso) % 12 + 12) % 12; }
+  function encender(i) {
+    if (reduce) return;
+    rayos[i].animate([{ opacity: 1 }, { opacity: 0.8 }], { duration: 7000, easing: 'ease-out' });
+    acto.animate([{ opacity: 0, transform: 'scale(0.6)' }, { opacity: 1, transform: 'scale(1.05)', offset: 0.08 }, { opacity: 0, transform: 'scale(1.5)' }],
+                 { duration: 2200, easing: 'ease-out' });
+  }
+  let pasoPrevio = Math.floor(angulo() / 30);
+  setInterval(() => {
+    const paso = Math.floor(angulo() / 30);
+    if (paso === pasoPrevio) return;
+    pasoPrevio = paso;
+    encender(rayoArriba(paso));
+    pulsar(MELODIA[paso], (Math.random() - 0.5) * 0.4, false);
+  }, 30);
+
+  /* ---------------- Lo que gira alrededor --------------------------------------------------- */
+  function quitar(el) { el.addEventListener('animationend', () => el.remove(), { once: true }); }
+  function flujo(x, y, a, extra) {
+    const f = document.createElement('div'); f.className = 'flujo';
+    f.style.cssText = `left:${x};top:${y};--a:${a.toFixed(1)}deg;` + (extra || `animation-delay:${(Math.random() * 6).toFixed(2)}s;`);
+    escena.appendChild(f); quitar(f);
+  }
+  if (!reduce) {
+    for (let i = 0; i < 16; i++) {
+      const p = document.createElement('div'); p.className = 'karma';
+      p.style.cssText = `--r:calc(var(--L) * ${(0.231 + (i % 3) * 0.046).toFixed(3)});animation-delay:${(-i * 0.9375).toFixed(3)}s;`;
+      escena.appendChild(p);
+    }
+    const azar = () => flujo('50%', '50%', Math.random() * 360);
+    setInterval(azar, 2600);
+    for (let i = 0; i < 6; i++) setTimeout(azar, i * 900);
+  }
+
+  /* ---------------- El toque: una semilla nueva ---------------------------------------------- */
+  function tocar(cx, cy) {
+    const r = escena.getBoundingClientRect(), L = r.width;
+    const dx = cx - (r.left + r.width / 2), dy = cy - (r.top + r.height / 2);
+    // El rayo que está bajo el dedo, y la nota que le toca
+    const aDedo = (Math.atan2(dx, -dy) * 180 / Math.PI + 360) % 360;
+    const i = ((Math.round((aDedo - 180 - angulo()) / 30) % 12) + 12) % 12;
+    const paso = ((6 - i) % 12 + 12) % 12;
+    pulsar(MELODIA[paso], Math.max(-0.7, Math.min(0.7, (cx / innerWidth) * 1.4 - 0.7)), true);
+    if (reduce) return;
+    rayos[i].animate([{ opacity: 1 }, { opacity: 0.8 }], { duration: 7000, easing: 'ease-out' });
+    const x = ((cx - r.left) / r.width * 100).toFixed(2) + '%', y = ((cy - r.top) / r.height * 100).toFixed(2) + '%';
+    for (let k = 0; k < 12; k++) setTimeout(() => {
+      const b = document.createElement('div'); b.className = 'brote s';
+      const a = (k / 12) * Math.PI * 2, d = (0.092 + Math.random() * 0.123) * L;
+      b.style.cssText = `left:${x};top:${y};--bx:${(Math.cos(a) * d).toFixed(1)}px;--by:${(Math.sin(a) * d).toFixed(1)}px;`;
+      escena.appendChild(b); quitar(b);
+    }, k * 80);
+    setTimeout(() => {
+      for (let k = 0; k < 8; k++) setTimeout(() => {
+        const b = document.createElement('div'); b.className = 'brote f';
+        const a = (k / 8) * Math.PI * 2 + 0.4, d = (0.123 + Math.random() * 0.154) * L;
+        b.style.cssText = `left:${x};top:${y};--bx:${(Math.cos(a) * d).toFixed(1)}px;--by:${(Math.sin(a) * d).toFixed(1)}px;`;
+        escena.appendChild(b); quitar(b);
+      }, k * 100);
+    }, 1200);
+    for (let k = 0; k < 16; k++) setTimeout(() => flujo(x, y, k * 22.5, 'animation-duration:6s;'), k * 70);
+  }
+
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    hint.classList.add('oculto');
+    tocar(e.clientX, e.clientY);
+  });
+</script>
 </body>
 </html>

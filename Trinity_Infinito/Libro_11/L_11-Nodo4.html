@@ -2,455 +2,517 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Libro 11 - Nodo 4: La Respuesta Precediendo la Pregunta</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Libro 11 - Nodo 74: La Respuesta Precediendo la Pregunta</title>
+<!-- Portal 74. Saneado en noviembre de 2026 sobre el original: las formas verdes de la respuesta y las
+     rosadas de la pregunta, los signos ! y ?, las flechas de la lógica invertida y las partículas de la
+     indagación. Sonido nuevo: la pregunta vive dentro de la respuesta. Un Fa grave contiene, en su
+     tercer armónico, el Do, la dominante, la nota que en la música tonal pregunta (sobre ese cuerpo
+     sonoro fundó Rameau la armonía). El Do canta dentro del Fa, se desprende, sube hasta el Mi y el
+     Fa responde. La imagen sigue al sonido: el ? nace del ! y vuelve a él. -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: radial-gradient(ellipse at center, #0a0a12 0%, #000000 70%);
-  overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.inquiry-field {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dialogue-void {
-  position: relative;
-  width: 650px;
-  height: 650px;
-}
-
-.answer-form {
-  position: absolute;
-  width: 140px;
-  height: 180px;
-  background: radial-gradient(ellipse,
-    rgba(100,200,150,0.3),
-    rgba(100,255,150,0.15),
-    transparent
-  );
-  border-radius: 50%;
-  animation: answer-present 13s ease-in-out infinite;
-  filter: blur(25px);
-  border: 1px solid rgba(100,200,150,0.2);
-}
-
-@keyframes answer-present {
-  0%, 100% {
-    transform: scale(1.3) translate(0, 0);
-    opacity: 0.9;
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(ellipse at center, #0a0a12 0%, #05060a 55%, #000 80%);
+    background-color:#000;
+    color:#fff;
+    font-family: Georgia, serif;
+    overflow:hidden;
+    height:100vh; height:100dvh;
+    display:flex; align-items:center; justify-content:center;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    -webkit-user-select:none; user-select:none;
   }
-  50% {
-    transform: scale(0.7) translate(var(--ax), var(--ay));
-    opacity: 0.4;
+
+  .cabecera {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top, 0px) + 5.5vh);
+    transform:translateX(-50%);
+    width:max-content; max-width:92vw; text-align:center;
+    z-index:5; pointer-events:none;
   }
-}
-
-.question-form {
-  position: absolute;
-  width: 120px;
-  height: 160px;
-  background: radial-gradient(ellipse,
-    rgba(255,150,200,0.2),
-    rgba(200,100,255,0.1),
-    transparent
-  );
-  border-radius: 50%;
-  animation: question-emerge 13s ease-in-out infinite;
-  filter: blur(20px);
-  border: 1px solid rgba(255,150,200,0.15);
-}
-
-@keyframes question-emerge {
-  0%, 100% {
-    transform: scale(0.6) translate(0, 0);
-    opacity: 0.3;
+  .titulo {
+    font-size: clamp(16px, 4.8vw, 29px);
+    font-weight:bold;
+    letter-spacing: clamp(0.14em, 1.1vw, 0.34em);
+    padding-left: clamp(0.14em, 1.1vw, 0.34em);
+    line-height:1.45;
+    color: rgba(240,255,248,0.92);
+    text-shadow: 0 0 30px rgba(100,200,150,0.5);
   }
-  50% {
-    transform: scale(1.2) translate(var(--qx), var(--qy));
-    opacity: 0.8;
+  .subtitulo {
+    margin-top:0.6em;
+    font-size: clamp(11px, 2.9vw, 15px);
+    letter-spacing:0.3em; padding-left:0.3em; font-style:italic;
+    color: rgba(220,245,232,0.5);
   }
-}
 
-.logic-arrow {
-  position: absolute;
-  width: 150px;
-  height: 3px;
-  background: linear-gradient(90deg,
-    rgba(100,200,150,0.7),
-    rgba(255,150,200,0.6),
-    transparent
-  );
-  animation: arrow-backward 11s ease-in-out infinite;
-  filter: blur(1px);
-  transform-origin: left center;
-}
-
-@keyframes arrow-backward {
-  0%, 100% {
-    transform: scaleX(0) rotate(0deg);
-    opacity: 0;
+  .escena {
+    --L: min(66vh, 640px, 92vw);
+    position:relative;
+    width:var(--L); height:var(--L);
+    margin-top:-5vh;
   }
-  50% {
-    transform: scaleX(-1) rotate(var(--angle));
-    opacity: 0.9;
+
+  .resplandor {
+    position:absolute; left:50%; top:50%;
+    width:82%; height:82%;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(100,200,150,0.14), rgba(100,200,150,0.05) 40%, transparent 68%);
+    animation: resplandor 17s ease-in-out infinite;
   }
-}
-
-.inquiry-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  box-shadow: 0 0 12px rgba(100,200,150,0.7);
-  animation: particle-inquiry 9s ease-in-out infinite;
-}
-
-@keyframes particle-inquiry {
-  0% {
-    transform: translate(var(--ix1), var(--iy1));
-    opacity: 0;
+  @keyframes resplandor {
+    0%,100% { transform:translate(-50%,-50%) scale(0.9); opacity:0.4; }
+    50%     { transform:translate(-50%,-50%) scale(1.4); opacity:0.75; }
   }
-  50% {
-    transform: translate(var(--ix2), var(--iy2));
-    opacity: 1;
+
+  /* Las formas: la de afuera deriva (como en el original); la luz de adentro sigue al sonido */
+  .forma { position:absolute; pointer-events:none; }
+  .forma .luz { position:absolute; inset:0; border-radius:50%; opacity:0.6; }
+  .respuesta { width:21.5%; height:27.7%; margin:-13.85% 0 0 -10.75%; animation: presente 13s ease-in-out infinite; }
+  .respuesta .luz {
+    background: radial-gradient(ellipse, rgba(110,215,160,0.55), rgba(100,255,150,0.19) 42%, transparent 70%);
+    box-shadow: 0 0 0 1px rgba(100,200,150,0.12);
   }
-  100% {
-    transform: translate(var(--ix1), var(--iy1));
-    opacity: 0;
+  @keyframes presente {
+    0%,100% { transform:scale(1.3) translate(0, 0); }
+    50%     { transform:scale(0.7) translate(var(--dx), var(--dy)); }
   }
-}
-
-.symbol-question {
-  position: absolute;
-  font-size: 3em;
-  color: rgba(255,150,200,0.4);
-  opacity: 0;
-  animation: symbol-fade 12s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255,150,200,0.5);
-}
-
-@keyframes symbol-fade {
-  0%, 100% {
-    opacity: 0;
-    transform: scale(0.5) rotate(0deg);
+  .pregunta { width:18.5%; height:24.6%; margin:-12.3% 0 0 -9.25%; animation: emerge 13s ease-in-out infinite; }
+  .pregunta .luz {
+    background: radial-gradient(ellipse, rgba(255,160,205,0.48), rgba(200,100,255,0.17) 42%, transparent 70%);
+    box-shadow: 0 0 0 1px rgba(255,150,200,0.1);
+    opacity:0.3;
   }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.2) rotate(15deg);
+  @keyframes emerge {
+    0%,100% { transform:scale(0.6) translate(0, 0); }
+    50%     { transform:scale(1.2) translate(var(--dx), var(--dy)); }
   }
-}
 
-.symbol-answer {
-  position: absolute;
-  font-size: 3em;
-  color: rgba(100,200,150,0.5);
-  opacity: 0;
-  animation: symbol-glow 12s ease-in-out infinite;
-  text-shadow: 0 0 25px rgba(100,200,150,0.6);
-}
-
-@keyframes symbol-glow {
-  0%, 100% {
-    opacity: 0;
-    transform: scale(1.5) rotate(0deg);
+  /* Los signos: el ! de la respuesta y el ? que nace de él */
+  .signo {
+    position:absolute;
+    font-size: calc(var(--L) * 0.075);
+    line-height:1;
+    width:1em; height:1em; margin:-0.5em 0 0 -0.5em;
+    text-align:center;
+    opacity:0;
+    pointer-events:none;
   }
-  50% {
-    opacity: 0.8;
-    transform: scale(1) rotate(-15deg);
+  .signo.exc { color: rgba(110,215,160,0.75); text-shadow: 0 0 22px rgba(100,200,150,0.6); }
+  .signo.int { color: rgba(255,160,205,0.7);  text-shadow: 0 0 20px rgba(255,150,200,0.55); }
+
+  .flecha {
+    position:absolute;
+    width:23%; height:3px; margin-top:-1.5px;
+    background: linear-gradient(90deg, rgba(100,200,150,0.75), rgba(255,150,200,0.6), transparent);
+    transform-origin:left center;
+    opacity:0;
+    animation: flecha 11s ease-in-out forwards;
+    pointer-events:none;
   }
-}
-
-.title {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.8em;
-  letter-spacing: 0.35em;
-  opacity: 0.9;
-  text-shadow: 0 0 30px rgba(100,200,150,0.5);
-  font-weight: 600;
-  text-align: center;
-  z-index: 100;
-}
-
-.subtitle {
-  position: fixed;
-  top: 110px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1em;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  font-style: italic;
-  z-index: 100;
-}
-
-.central-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5em;
-  letter-spacing: 0.35em;
-  text-align: center;
-  opacity: 0;
-  animation: text-reverse 14s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255,255,255,0.4);
-  line-height: 2.2;
-  z-index: 10;
-}
-
-@keyframes text-reverse {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.85);
+  @keyframes flecha {
+    0%,100% { transform:scaleX(0) rotate(0deg);          opacity:0; }
+    50%     { transform:scaleX(-1) rotate(var(--a));     opacity:0.9; }
   }
-  20%, 80% {
-    opacity: 0.75;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
 
-.contemplation {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  text-align: center;
-  max-width: 750px;
-  line-height: 1.9;
-  padding: 0 40px;
-  font-style: italic;
-  z-index: 100;
-}
-
-.paradox-glow {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(100,200,150,0.12), transparent);
-  border-radius: 50%;
-  animation: glow-logic 17s ease-in-out infinite;
-  filter: blur(75px);
-}
-
-@keyframes glow-logic {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.3;
+  .indaga {
+    position:absolute; left:50%; top:50%;
+    width:4px; height:4px; margin:-2px 0 0 -2px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 0 10px rgba(100,200,150,0.75);
+    opacity:0;
+    animation: indaga 9s ease-in-out forwards;
+    pointer-events:none;
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.5);
-    opacity: 0.6;
+  @keyframes indaga {
+    0%   { transform:translate(var(--x1), var(--y1)); opacity:0; }
+    50%  { transform:translate(var(--x2), var(--y2)); opacity:1; }
+    100% { transform:translate(var(--x1), var(--y1)); opacity:0; }
   }
-}
+
+  .destello {
+    position:absolute;
+    font-size: calc(var(--L) * 0.1);
+    line-height:1;
+    width:1em; height:1em; margin:-0.5em 0 0 -0.5em;
+    text-align:center;
+    pointer-events:none;
+    opacity:0;
+  }
+  .destello.exc { color: rgba(130,230,175,0.9); text-shadow: 0 0 25px rgba(100,200,150,0.7); animation: aparece-exc 3s ease-out forwards; }
+  .destello.int { color: rgba(255,170,210,0.85); text-shadow: 0 0 22px rgba(255,150,200,0.65); animation: aparece-int 3s ease-out forwards; }
+  @keyframes aparece-exc {
+    0%   { transform:scale(1.5) rotate(0deg);   opacity:0; }
+    50%  { transform:scale(1) rotate(-15deg);   opacity:0.85; }
+    100% { transform:scale(1.5) rotate(0deg);   opacity:0; }
+  }
+  @keyframes aparece-int {
+    0%   { transform:scale(0.5) rotate(0deg);   opacity:0; }
+    50%  { transform:scale(1.2) rotate(15deg);  opacity:0.75; }
+    100% { transform:scale(0.5) rotate(0deg);   opacity:0; }
+  }
+
+  .centro { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:3; }
+  .texto-central {
+    text-align:center;
+    font-size: clamp(14px, 3.9vw, 22px);
+    letter-spacing:0.32em; padding-left:0.32em;
+    line-height:2.1;
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0 0 18px rgba(255,255,255,0.35), 0 0 10px rgba(0,0,0,0.85);
+    opacity:0;
+    animation: texto 14s ease-in-out infinite;
+    animation-delay:-2.8s;
+  }
+  @keyframes texto {
+    0%,100% { opacity:0;    transform:scale(0.85); }
+    20%,80% { opacity:0.8;  transform:scale(1); }
+  }
+
+  .frases {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh);
+    transform:translateX(-50%);
+    width:90vw; max-width:640px; height:3.4em;
+    text-align:center;
+    pointer-events:none;
+  }
+  .frase {
+    position:absolute; left:0; right:0; bottom:0;
+    font-size: clamp(14px, 3.8vw, 19px);
+    line-height:1.6;
+    letter-spacing:0.06em;
+    font-style:italic;
+    color: rgba(236,250,242,0.9);
+    text-shadow: 0 0 18px rgba(100,200,150,0.3);
+    opacity:0;
+    animation: frase 20s ease-in-out infinite;
+  }
+  .frase.f2 { animation-delay:10s; }
+  @keyframes frase {
+    0%   { opacity:0; transform:translateY(6px); }
+    7%   { opacity:1; transform:translateY(0); }
+    43%  { opacity:1; transform:translateY(0); }
+    50%  { opacity:0; transform:translateY(-4px); }
+    100% { opacity:0; transform:translateY(-4px); }
+  }
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform:translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(236,250,242,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(190,230,210,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(215,255,235,0.95); text-shadow:0 0 18px rgba(100,200,150,0.6); outline:none; }
+
+  @media (max-width: 480px) {
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 14.5vh); height:4.9em; }
+  }
+  @media (orientation: landscape) and (max-height: 500px) {
+    .subtitulo { display:none; }
+    .titulo { font-size:17px; letter-spacing:0.2em; padding-left:0.2em; }
+    .cabecera { top:calc(env(safe-area-inset-top, 0px) + 10px); }
+    .escena { --L: min(62vh, 620px); margin-top:-4vh; }
+    .texto-central { font-size:12px; line-height:1.8; }
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 30px); height:3.3em; }
+    .frase { font-size:13px; line-height:1.45; }
+    .hint { bottom:calc(env(safe-area-inset-bottom, 0px) + 8px); font-size:11px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; transition:none !important; }
+    .resplandor { transform:translate(-50%,-50%); opacity:0.6; }
+    .respuesta .luz { opacity:0.8; }
+    .pregunta .luz { opacity:0.55; }
+    .signo { opacity:0.6; }
+    .texto-central { opacity:0.8; }
+    .frases { height:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 9vh); }
+    .frase { position:static; opacity:0.92; margin-bottom:0.35em; font-size: clamp(12px, 3.4vw, 16px); }
+    .escena { margin-top:-12vh; }
+    .hint { opacity:0.8; bottom:calc(env(safe-area-inset-bottom, 0px) + 18px); }
+  }
 </style>
 </head>
 <body>
+  <div class="cabecera">
+    <div class="titulo">LA RESPUESTA PRECEDIENDO LA PREGUNTA</div>
+    <div class="subtitulo">Libro 11 - Nodo 74</div>
+  </div>
 
-<div class="title">LA RESPUESTA PRECEDIENDO LA PREGUNTA</div>
-<div class="subtitle">Libro 11 - Nodo 4</div>
+  <div class="escena" id="escena">
+    <div class="resplandor"></div>
 
-<div class="inquiry-field">
-  <div class="dialogue-void">
-    <!-- Resplandor paradójico -->
-    <div class="paradox-glow"></div>
-    
-    <!-- Formas de respuesta y pregunta -->
-    <div class="answer-form" style="top: 30%; left: 35%; --ax: 50px; --ay: -40px; animation-delay: 0s;"></div>
-    <div class="question-form" style="top: 50%; left: 65%; --qx: -40px; --qy: 50px; animation-delay: 0s;"></div>
-    
-    <div class="answer-form" style="top: 70%; left: 55%; --ax: -45px; --ay: 35px; animation-delay: 4.3s;"></div>
-    <div class="question-form" style="top: 40%; left: 25%; --qx: 50px; --qy: -45px; animation-delay: 4.3s;"></div>
-    
-    <!-- Símbolos -->
-    <div class="symbol-answer" style="top: 20%; left: 25%; animation-delay: 0s;">!</div>
-    <div class="symbol-question" style="top: 30%; left: 70%; animation-delay: 2s;">?</div>
-    
-    <div class="symbol-answer" style="top: 75%; left: 65%; animation-delay: 6s;">!</div>
-    <div class="symbol-question" style="top: 60%; left: 20%; animation-delay: 8s;">?</div>
-    
-    <!-- Texto central -->
-    <div class="central-text" style="animation-delay: 2s;">
-      La solución<br>
-      invoca<br>
-      el problema<br><br>
-      La respuesta<br>
-      genera la pregunta
+    <div class="forma respuesta" style="left:42%; top:40%; --dx:calc(var(--L) * 0.077);  --dy:calc(var(--L) * -0.062);"><div class="luz"></div></div>
+    <div class="forma pregunta"  style="left:74%; top:60%; --dx:calc(var(--L) * -0.062); --dy:calc(var(--L) * 0.077);"><div class="luz"></div></div>
+    <div class="forma respuesta" style="left:62%; top:74%; --dx:calc(var(--L) * -0.069); --dy:calc(var(--L) * 0.054); animation-delay:-4.3s;"><div class="luz"></div></div>
+    <div class="forma pregunta"  style="left:34%; top:52%; --dx:calc(var(--L) * 0.077);  --dy:calc(var(--L) * -0.069); animation-delay:-4.3s;"><div class="luz"></div></div>
+
+    <div class="signo exc" style="left:25%; top:22%;">!</div>
+    <div class="signo exc" style="left:70%; top:76%;">!</div>
+    <div class="signo int" style="left:70%; top:30%;" data-desde="70,76">?</div>
+    <div class="signo int" style="left:24%; top:64%;" data-desde="25,22">?</div>
+
+    <div class="centro">
+      <div class="texto-central">La solución<br>invoca<br>el problema<br><br>La respuesta<br>genera la pregunta</div>
     </div>
   </div>
-</div>
 
-<div class="contemplation">
-  Primero el saber, luego la duda · La solución existe antes que el enigma<br>
-  Cada respuesta crea la pregunta que la necesita
-</div>
+  <div class="frases" aria-live="off">
+    <p class="frase f1">Primero el saber, luego la duda<br>La solución existe antes que el enigma</p>
+    <p class="frase f2">Cada respuesta crea la pregunta<br>que la necesita</p>
+  </div>
+
+  <div class="hint" id="hint">( toca: primero la respuesta )</div>
+
+  <a class="infinito" href="L_11-Nodo5.html" aria-label="Siguiente portal">∞</a>
 
 <script>
-const dialogue = document.querySelector('.dialogue-void');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const escena = document.getElementById('escena');
+  const hint = document.getElementById('hint');
+  const lucesR = [...document.querySelectorAll('.respuesta .luz')];
+  const lucesP = [...document.querySelectorAll('.pregunta .luz')];
+  const excl = [...document.querySelectorAll('.signo.exc')];
+  const inter = [...document.querySelectorAll('.signo.int')];
+  // El sonido se declara arriba
+  let ctx = null, master, seco, sala, dron, refuerzo3, refuerzo4, vib3, voz, vozG, vozO2, bajo;
 
-// Crear flechas lógicas invertidas
-function createLogicArrow() {
-  const arrow = document.createElement('div');
-  arrow.className = 'logic-arrow';
-  
-  const angle = Math.random() * 360;
-  
-  arrow.style.cssText = `
-    left: ${25 + Math.random() * 50}%;
-    top: ${25 + Math.random() * 50}%;
-    --angle: ${angle}deg;
-    animation-delay: ${Math.random() * 5}s;
-  `;
-  
-  dialogue.appendChild(arrow);
-  setTimeout(() => arrow.remove(), 11000);
-}
+  /* ---------------- La pregunta vive dentro de la respuesta -------------------------------------
+     Toda nota grave trae sus armónicos: el doble, el triple, el cuádruple de su frecuencia. El tercero
+     de un Fa es un Do, la dominante: en la música tonal, la nota que pregunta y pide volver. Rameau
+     fundó la armonía en ese cuerpo sonoro: la pregunta ya está adentro de la respuesta. En cada ciclo
+     de veinte segundos el Fa (la respuesta) suena con sus doce armónicos; el tercero empieza a
+     temblar por su cuenta y el oído lo separa, como en el canto difónico; una voz lo toma en la misma
+     altura, se desprende, pasa por Re y queda en Mi, la nota que más pide, sobre un Do grave. Entonces
+     el Fa responde y la voz sube al Fa de arriba, que es su cuarto armónico: se funde en la respuesta
+     de donde había salido. Al tocar, primero la respuesta.
+  ------------------------------------------------------------------------------------------- */
+  const F2 = 87.307, CICLO = 20;
+  const C4 = F2 * 3, D4 = C4 * 9 / 8, E4 = C4 * 5 / 4, F4 = F2 * 4;   // entonación justa sobre Fa
 
-// Crear partículas de investigación
-function createInquiryParticles() {
-  for(let i = 0; i < 12; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'inquiry-particle';
-      
-      const angle1 = Math.random() * Math.PI * 2;
-      const angle2 = Math.random() * Math.PI * 2;
-      const radius1 = 120;
-      const radius2 = 200;
-      
-      const ix1 = Math.cos(angle1) * radius1;
-      const iy1 = Math.sin(angle1) * radius1;
-      const ix2 = Math.cos(angle2) * radius2;
-      const iy2 = Math.sin(angle2) * radius2;
-      
-      particle.style.cssText = `
-        left: 50%;
-        top: 50%;
-        --ix1: ${ix1}px;
-        --iy1: ${iy1}px;
-        --ix2: ${ix2}px;
-        --iy2: ${iy2}px;
-        animation-delay: ${Math.random() * 4}s;
-      `;
-      
-      dialogue.appendChild(particle);
-      setTimeout(() => particle.remove(), 9000);
+  function tramo(p, pts) {
+    for (let i = 1; i < pts.length; i++) if (p <= pts[i][0]) {
+      const [t0, v0] = pts[i - 1], [t1, v1] = pts[i];
+      const u = t1 > t0 ? (p - t0) / (t1 - t0) : 1, s = u * u * (3 - 2 * u);
+      return v0 + (v1 - v0) * s;
+    }
+    return pts[pts.length - 1][1];
+  }
+  const RESPUESTA = [[0, 1], [8.5, 1], [10.5, 0.3], [13.6, 0.3], [14.4, 1], [20, 1]];
+  const ARMONICO3 = [[0, 0], [2, 0], [6, 1], [8, 1], [9.6, 0], [20, 0]];
+  const VOZ       = [[0, 0], [7.4, 0], [8.6, 1], [14.2, 1], [16.6, 0], [20, 0]];
+  const TONO      = [[0, C4], [10, C4], [10.4, D4], [11.6, D4], [12, E4], [14, E4], [14.25, F4], [20, F4]];
+  const BAJO      = [[0, 0], [9.6, 0], [11, 1], [13.8, 1], [14.6, 0], [20, 0]];
+  const ARMONICO4 = [[0, 0], [14, 0], [15, 1], [17, 1], [19, 0], [20, 0]];
+  // La imagen: el ! brilla cuando llega la respuesta; el ? nace del ! mientras la pregunta crece
+  const EXCLAMA   = [[0, 0.55], [1.2, 0.85], [3, 0.4], [8, 0.22], [13.8, 0.12], [14.6, 1], [16.5, 0.6], [20, 0.55]];
+  const INTERROGA = [[0, 0], [3, 0], [6, 0.45], [9, 0.85], [13.9, 0.85], [14.6, 0.1], [15.5, 0], [20, 0]];
+
+  let t0 = performance.now();
+  const fase = () => (((performance.now() - t0) / 1000) % CICLO + CICLO) % CICLO;
+
+  function makeReverbIR(ac, seconds = 4.8, decay = 2.3) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
+  }
+
+  function startAudio() {
+    if (ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    const t = ctx.currentTime;
+    master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    master.gain.setValueAtTime(0, t);
+    master.gain.linearRampToValueAtTime(0.07, t + 6);
+    seco = ctx.createGain(); seco.gain.value = 0.7; seco.connect(master);
+    sala = ctx.createGain(); sala.gain.value = 0.45;
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    sala.connect(conv); conv.connect(master);
+    const salida = ctx.createBiquadFilter(); salida.type = 'lowpass'; salida.frequency.value = 2600; salida.Q.value = -3;
+    salida.connect(seco); salida.connect(sala);
+
+    // La respuesta: Fa grave con sus doce armónicos
+    dron = ctx.createGain(); dron.gain.value = 0; dron.connect(salida);
+    let osc3 = null, osc4 = null;
+    for (let n = 1; n <= 12; n++) {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = F2 * n;
+      const g = ctx.createGain(); g.gain.value = 0.2 / Math.pow(n, 1.05) * (n > 7 ? 0.7 : 1);
+      o.connect(g); g.connect(dron); o.start();
+      if (n === 3) osc3 = o;
+      if (n === 4) osc4 = o;
+    }
+    // El tercer armónico tiembla por su cuenta y se refuerza: el oído lo separa
+    vib3 = ctx.createGain(); vib3.gain.value = 0;
+    const lfo3 = ctx.createOscillator(); lfo3.frequency.value = 5.3;
+    lfo3.connect(vib3); vib3.connect(osc3.detune); lfo3.start();
+    refuerzo3 = ctx.createGain(); refuerzo3.gain.value = 0;
+    osc3.connect(refuerzo3); refuerzo3.connect(salida);
+    refuerzo4 = ctx.createGain(); refuerzo4.gain.value = 0;
+    osc4.connect(refuerzo4); refuerzo4.connect(salida);
+
+    // La voz que pregunta
+    voz = ctx.createOscillator(); voz.type = 'sine'; voz.frequency.value = C4;
+    vozO2 = ctx.createOscillator(); vozO2.type = 'sine'; vozO2.frequency.value = C4 * 2;
+    const o2g = ctx.createGain(); o2g.gain.value = 0.1;
+    vozG = ctx.createGain(); vozG.gain.value = 0;
+    const vlfo = ctx.createOscillator(); vlfo.frequency.value = 4.8;
+    const vlg = ctx.createGain(); vlg.gain.value = 5;
+    vlfo.connect(vlg); vlg.connect(voz.detune); vlg.connect(vozO2.detune); vlfo.start();
+    const vp = ctx.createStereoPanner(); vp.pan.value = 0.18;
+    voz.connect(vozG); vozO2.connect(o2g); o2g.connect(vozG); vozG.connect(vp); vp.connect(salida);
+    voz.start(); vozO2.start();
+
+    // El Do grave bajo la pregunta: la dominante
+    bajo = ctx.createGain(); bajo.gain.value = 0;
+    const bp = ctx.createStereoPanner(); bp.pan.value = -0.15;
+    bajo.connect(bp); bp.connect(salida);
+    for (let n = 1; n <= 6; n++) {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = F2 * 1.5 * n;
+      const g = ctx.createGain(); g.gain.value = 0.11 / n;
+      o.connect(g); g.connect(bajo); o.start();
+    }
+    setInterval(gobernar, 40);
+    gobernar();
+  }
+
+  function gobernar() {
+    const p = fase(), t = ctx.currentTime;
+    dron.gain.setTargetAtTime(tramo(p, RESPUESTA), t, 0.15);
+    const h3 = tramo(p, ARMONICO3);
+    refuerzo3.gain.setTargetAtTime(0.17 * h3, t, 0.12);
+    vib3.gain.setTargetAtTime(9 * h3, t, 0.2);
+    refuerzo4.gain.setTargetAtTime(0.09 * tramo(p, ARMONICO4), t, 0.15);
+    const v = tramo(p, VOZ);
+    vozG.gain.setTargetAtTime(0.16 * v, t, 0.08);
+    if (v > 0.002) {
+      const f = tramo(p, TONO);
+      voz.frequency.setTargetAtTime(f, t, 0.035);
+      vozO2.frequency.setTargetAtTime(f * 2, t, 0.035);
+    }
+    bajo.gain.setTargetAtTime(tramo(p, BAJO), t, 0.15);
+  }
+
+  function campanita() {                              // el ! del toque: Fa, La y Do agudos, breves
+    const t = ctx.currentTime + 0.01;
+    [[4, 0.07], [5, 0.05], [6, 0.04]].forEach(([n, a], k) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = F2 * n * 2;
+      const g = ctx.createGain(); g.gain.value = 0;
+      o.connect(g); g.connect(seco); g.connect(sala);
+      g.gain.setValueAtTime(0, t + k * 0.04);
+      g.gain.linearRampToValueAtTime(a, t + k * 0.04 + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0005, t + k * 0.04 + 2.2);
+      o.start(t + k * 0.04); o.stop(t + k * 0.04 + 2.3);
+      o.onended = () => { o.disconnect(); g.disconnect(); };
+    });
+  }
+
+  /* ---------------- La imagen sigue al sonido ------------------------------------------------- */
+  const desde = inter.map((el) => el.dataset.desde.split(',').map(Number));
+  function pintar() {
+    const p = fase(), L = escena.clientWidth;
+    const r = tramo(p, RESPUESTA), q = Math.max(0.8 * tramo(p, ARMONICO3), tramo(p, VOZ));
+    lucesR.forEach((el) => { el.style.opacity = (0.25 + 0.7 * r).toFixed(3); });
+    lucesP.forEach((el) => { el.style.opacity = (0.22 + 0.7 * q).toFixed(3); });
+    const e = tramo(p, EXCLAMA);
+    excl.forEach((el) => {
+      el.style.opacity = e.toFixed(3);
+      el.style.transform = `scale(${(1.5 - 0.5 * e).toFixed(3)}) rotate(${(-15 * e).toFixed(2)}deg)`;
+    });
+    const iv = tramo(p, INTERROGA), avance = Math.max(0, Math.min(1, (p - 3) / 7));
+    const s = avance * avance * (3 - 2 * avance);
+    inter.forEach((el, k) => {
+      const fx = parseFloat(el.style.left), fy = parseFloat(el.style.top);
+      const dx = (desde[k][0] - fx) / 100 * L * (1 - s), dy = (desde[k][1] - fy) / 100 * L * (1 - s);
+      el.style.opacity = iv.toFixed(3);
+      el.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) scale(${(0.5 + 0.7 * iv).toFixed(3)}) rotate(${(15 * iv).toFixed(2)}deg)`;
+    });
+    requestAnimationFrame(pintar);
+  }
+
+  /* ---------------- La indagación ------------------------------------------------------------- */
+  function quitar(el) { el.addEventListener('animationend', () => el.remove(), { once: true }); }
+  function flecha(x, y, a, extra) {
+    const f = document.createElement('div'); f.className = 'flecha';
+    f.style.cssText = `left:${x};top:${y};--a:${a.toFixed(1)}deg;` + (extra || `animation-delay:${(Math.random() * 5).toFixed(2)}s;`);
+    escena.appendChild(f); quitar(f);
+  }
+  function indagar() {
+    const L = escena.clientWidth;
+    for (let i = 0; i < 12; i++) setTimeout(() => {
+      const p = document.createElement('div'); p.className = 'indaga';
+      const a1 = Math.random() * Math.PI * 2, a2 = Math.random() * Math.PI * 2, r1 = 0.185 * L, r2 = 0.308 * L;
+      p.style.cssText = `--x1:${(Math.cos(a1) * r1).toFixed(1)}px;--y1:${(Math.sin(a1) * r1).toFixed(1)}px;--x2:${(Math.cos(a2) * r2).toFixed(1)}px;--y2:${(Math.sin(a2) * r2).toFixed(1)}px;animation-delay:${(Math.random() * 4).toFixed(2)}s;`;
+      escena.appendChild(p); quitar(p);
     }, i * 100);
   }
-}
-
-// Generar elementos continuamente
-setInterval(createLogicArrow, 2200);
-setInterval(createInquiryParticles, 6500);
-
-// Crear elementos iniciales
-for(let i = 0; i < 6; i++) {
-  setTimeout(createLogicArrow, i * 800);
-}
-createInquiryParticles();
-
-// Interactividad - Click genera diálogo inverso
-dialogue.addEventListener('click', (e) => {
-  const rect = dialogue.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  // Crear símbolo de exclamación
-  const answer = document.createElement('div');
-  answer.className = 'symbol-answer';
-  answer.textContent = '!';
-  answer.style.cssText = `
-    left: ${x}px;
-    top: ${y}px;
-    animation: symbol-glow 3s ease-out forwards;
-    font-size: 4em;
-  `;
-  dialogue.appendChild(answer);
-  setTimeout(() => answer.remove(), 3000);
-  
-  // Seguido por interrogación
-  setTimeout(() => {
-    const question = document.createElement('div');
-    question.className = 'symbol-question';
-    question.textContent = '?';
-    question.style.cssText = `
-      left: ${x + 30}px;
-      top: ${y + 30}px;
-      animation: symbol-fade 3s ease-out forwards;
-      font-size: 3.5em;
-    `;
-    dialogue.appendChild(question);
-    setTimeout(() => question.remove(), 3000);
-  }, 800);
-  
-  // Flechas radiales invertidas
-  for(let i = 0; i < 10; i++) {
-    setTimeout(() => {
-      const arrow = document.createElement('div');
-      arrow.className = 'logic-arrow';
-      const angle = (i / 10) * 360;
-      arrow.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --angle: ${angle}deg;
-        animation: arrow-backward 5s ease-out forwards;
-      `;
-      dialogue.appendChild(arrow);
-      setTimeout(() => arrow.remove(), 5000);
-    }, i * 90);
+  if (!reduce) {
+    const azar = () => flecha(`${25 + Math.random() * 50}%`, `${25 + Math.random() * 50}%`, Math.random() * 360);
+    setInterval(azar, 2200);
+    for (let i = 0; i < 6; i++) setTimeout(azar, i * 800);
+    setInterval(indagar, 6500);
+    indagar();
+    requestAnimationFrame(pintar);
   }
-  
-  // Partículas convergentes
-  for(let i = 0; i < 16; i++) {
+
+  /* ---------------- El toque: primero la respuesta ------------------------------------------- */
+  function tocar(cx, cy) {
+    const p = fase();
+    if (p >= 8.5 && p < 14.4) t0 = performance.now() - 13.8 * 1000;       // la pregunta recibe su respuesta ya
+    else if (p >= 16.6 || p < 8.5) t0 = performance.now();                 // la respuesta vuelve a empezar
+    if (ctx) campanita();
+    if (reduce) return;
+    const r = escena.getBoundingClientRect(), L = r.width;
+    const x = ((cx - r.left) / r.width * 100), y = ((cy - r.top) / r.height * 100);
+    const ex = document.createElement('div'); ex.className = 'destello exc'; ex.textContent = '!';
+    ex.style.cssText = `left:${x.toFixed(2)}%;top:${y.toFixed(2)}%;`;
+    escena.appendChild(ex); quitar(ex);
     setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'inquiry-particle';
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 100 + Math.random() * 80;
-      particle.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --ix1: ${Math.cos(angle) * distance}px;
-        --iy1: ${Math.sin(angle) * distance}px;
-        --ix2: 0px;
-        --iy2: 0px;
-        animation: particle-inquiry 4s ease-out forwards;
-      `;
-      dialogue.appendChild(particle);
-      setTimeout(() => particle.remove(), 4000);
+      const it = document.createElement('div'); it.className = 'destello int'; it.textContent = '?';
+      it.style.cssText = `left:${(x + 4.6).toFixed(2)}%;top:${(y + 4.6).toFixed(2)}%;`;
+      escena.appendChild(it); quitar(it);
+    }, 800);
+    for (let i = 0; i < 10; i++) setTimeout(() => flecha(`${x.toFixed(2)}%`, `${y.toFixed(2)}%`, i * 36, 'animation-duration:5s;'), i * 90);
+    for (let i = 0; i < 16; i++) setTimeout(() => {
+      const q = document.createElement('div'); q.className = 'indaga';
+      const a = Math.random() * Math.PI * 2, d = (0.154 + Math.random() * 0.123) * L;
+      q.style.cssText = `left:${x.toFixed(2)}%;top:${y.toFixed(2)}%;margin:-2px 0 0 -2px;--x1:${(Math.cos(a) * d).toFixed(1)}px;--y1:${(Math.sin(a) * d).toFixed(1)}px;--x2:0px;--y2:0px;animation-duration:4s;`;
+      escena.appendChild(q); quitar(q);
     }, i * 50);
   }
-});
-</script>
 
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    hint.classList.add('oculto');
+    tocar(e.clientX, e.clientY);
+  });
+</script>
 </body>
 </html>

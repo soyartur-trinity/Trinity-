@@ -2,451 +2,458 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Libro 11 - Nodo 6: El Observador Creado por lo Observado</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Libro 11 - Nodo 76: El Observador Creado por lo Observado</title>
+<!-- Portal 76. Saneado en noviembre de 2026 sobre el original: los ojos azules y los objetos naranjas,
+     los bucles recíprocos en forma de ojo, las miradas que se invierten y las partículas de la
+     percepción. Sonido nuevo: el tercer sonido. Con dos notas cercanas aparece una tercera que no está
+     en el aire: la fabrica el oído (Tartini la llamó terzo suono), y desde Kemp (1978) se sabe que además
+     la emite. Una nota fija y otra que sube; la tercera, la de quien escucha, baja. El ojo de la
+     izquierda sigue esa voz: solo existe mientras suena lo visto. -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: radial-gradient(ellipse at center, #080a15 0%, #000000 70%);
-  overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.observation-field {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.witness-void {
-  position: relative;
-  width: 650px;
-  height: 650px;
-}
-
-.eye-form {
-  position: absolute;
-  width: 100px;
-  height: 60px;
-  background: radial-gradient(ellipse,
-    rgba(100,150,255,0.3),
-    rgba(150,200,255,0.15),
-    transparent
-  );
-  border-radius: 50%;
-  animation: eye-blink 12s ease-in-out infinite;
-  filter: blur(15px);
-  border: 1px solid rgba(100,150,255,0.2);
-}
-
-@keyframes eye-blink {
-  0%, 100% {
-    transform: scale(0.7) translate(0, 0);
-    opacity: 0.4;
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(ellipse at center, #080a15 0%, #04050b 55%, #000 80%);
+    background-color:#000;
+    color:#fff;
+    font-family: Georgia, serif;
+    overflow:hidden;
+    height:100vh; height:100dvh;
+    display:flex; align-items:center; justify-content:center;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    -webkit-user-select:none; user-select:none;
   }
-  50% {
-    transform: scale(1.3) translate(var(--ex), var(--ey));
-    opacity: 0.9;
+
+  .cabecera {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top, 0px) + 5.5vh);
+    transform:translateX(-50%);
+    width:max-content; max-width:92vw; text-align:center;
+    z-index:5; pointer-events:none;
   }
-}
-
-.object-form {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle,
-    rgba(255,150,100,0.4),
-    rgba(200,100,150,0.2),
-    transparent
-  );
-  border-radius: 50%;
-  animation: object-manifest 12s ease-in-out infinite;
-  filter: blur(20px);
-  border: 1px solid rgba(255,150,100,0.2);
-}
-
-@keyframes object-manifest {
-  0%, 100% {
-    transform: scale(1.4) translate(0, 0);
-    opacity: 0.9;
+  .titulo {
+    font-size: clamp(16px, 4.6vw, 28px);
+    font-weight:bold;
+    letter-spacing: clamp(0.12em, 1vw, 0.3em);
+    padding-left: clamp(0.12em, 1vw, 0.3em);
+    line-height:1.45;
+    color: rgba(240,244,255,0.92);
+    text-shadow: 0 0 30px rgba(100,150,255,0.5);
   }
-  50% {
-    transform: scale(0.6) translate(var(--ox), var(--oy));
-    opacity: 0.3;
+  .subtitulo {
+    margin-top:0.6em;
+    font-size: clamp(11px, 2.9vw, 15px);
+    letter-spacing:0.3em; padding-left:0.3em; font-style:italic;
+    color: rgba(215,225,250,0.5);
   }
-}
 
-.gaze-beam {
-  position: absolute;
-  width: 200px;
-  height: 3px;
-  background: linear-gradient(90deg,
-    rgba(100,150,255,0.7),
-    rgba(255,150,100,0.6)
-  );
-  animation: gaze-reverse 11s ease-in-out infinite;
-  filter: blur(1px);
-  transform-origin: right center;
-}
-
-@keyframes gaze-reverse {
-  0%, 100% {
-    transform: scaleX(0) rotate(0deg);
-    opacity: 0;
+  .escena {
+    --L: min(66vh, 640px, 92vw);
+    position:relative;
+    width:var(--L); height:var(--L);
+    margin-top:-5vh;
   }
-  50% {
-    transform: scaleX(-1) rotate(var(--angle));
-    opacity: 0.9;
+
+  .resplandor {
+    position:absolute; left:50%; top:50%;
+    width:82%; height:82%;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(100,150,255,0.15), rgba(100,150,255,0.05) 40%, transparent 68%);
+    animation: resplandor 17s ease-in-out infinite;
   }
-}
-
-.perception-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  box-shadow: 0 0 12px rgba(100,150,255,0.7);
-  animation: particle-perceive 9s ease-in-out infinite;
-}
-
-@keyframes particle-perceive {
-  0% {
-    transform: translate(var(--px1), var(--py1));
-    opacity: 0;
+  @keyframes resplandor {
+    0%,100% { transform:translate(-50%,-50%) scale(0.9); opacity:0.4; }
+    50%     { transform:translate(-50%,-50%) scale(1.4); opacity:0.75; }
   }
-  50% {
-    transform: translate(var(--px2), var(--py2));
-    opacity: 1;
+
+  /* Los bucles recíprocos: elipses con forma de ojo que giran y respiran */
+  .bucle {
+    position:absolute; left:50%; top:50%;
+    width:53.8%; height:30.8%;
+    border:2px solid rgba(150,150,255,0.2);
+    border-radius:50%;
+    animation: bucle 20s ease-in-out infinite;
   }
-  100% {
-    transform: translate(var(--px1), var(--py1));
-    opacity: 0;
+  .bucle.b2 { width:43%; height:24.6%; animation-delay:-6.7s; }
+  @keyframes bucle {
+    0%,100% { transform:translate(-50%,-50%) rotate(0deg)   scale(1); }
+    50%     { transform:translate(-50%,-50%) rotate(180deg) scale(1.3); }
   }
-}
 
-.reciprocal-loop {
-  position: absolute;
-  width: 350px;
-  height: 200px;
-  border: 2px solid rgba(150,150,255,0.2);
-  border-radius: 50%;
-  animation: loop-reciprocal 20s ease-in-out infinite;
-  transform-origin: center;
-}
-
-@keyframes loop-reciprocal {
-  0%, 100% {
-    transform: rotate(0deg) scale(1);
-    border-radius: 50%;
+  /* Ojos y objetos: la forma de afuera deriva como en el original; adentro, lo que sigue al sonido */
+  .forma { position:absolute; pointer-events:none; }
+  .forma .mov, .forma .luz { position:absolute; inset:0; border-radius:50%; }
+  .ojo { width:15.4%; height:9.2%; margin:-4.6% 0 0 -7.7%; animation: parpadeo 12s ease-in-out infinite; }
+  .ojo .luz { background: radial-gradient(ellipse, rgba(130,170,255,0.5), rgba(150,200,255,0.16) 45%, transparent 72%); box-shadow: 0 0 0 1px rgba(100,150,255,0.15); }
+  @keyframes parpadeo {
+    0%,100% { transform:scale(0.8) translate(0, 0); }
+    50%     { transform:scale(1.25) translate(var(--dx), var(--dy)); }
   }
-  50% {
-    transform: rotate(180deg) scale(1.3);
-    border-radius: 45% 55% 50% 50%;
+  .objeto { width:18.5%; height:18.5%; margin:-9.25% 0 0 -9.25%; animation: manifiesta 12s ease-in-out infinite; }
+  .objeto .luz { background: radial-gradient(circle, rgba(255,165,115,0.5), rgba(200,100,150,0.18) 45%, transparent 72%); box-shadow: 0 0 0 1px rgba(255,150,100,0.14); }
+  @keyframes manifiesta {
+    0%,100% { transform:scale(1.25) translate(0, 0); }
+    50%     { transform:scale(0.75) translate(var(--dx), var(--dy)); }
   }
-}
+  .ojo.tercero .luz { opacity:0; }
+  .objeto.par .luz { opacity:0.15; }
 
-.title {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.7em;
-  letter-spacing: 0.3em;
-  opacity: 0.9;
-  text-shadow: 0 0 30px rgba(100,150,255,0.5);
-  font-weight: 600;
-  text-align: center;
-  z-index: 100;
-}
-
-.subtitle {
-  position: fixed;
-  top: 108px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1em;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  font-style: italic;
-  z-index: 100;
-}
-
-.central-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.4em;
-  letter-spacing: 0.3em;
-  text-align: center;
-  opacity: 0;
-  animation: text-witness 14s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255,255,255,0.4);
-  line-height: 2.2;
-  z-index: 10;
-}
-
-@keyframes text-witness {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
+  .mirada {
+    position:absolute;
+    width:30.8%; height:3px; margin:-1.5px 0 0 -30.8%;
+    background: linear-gradient(90deg, rgba(100,150,255,0.7), rgba(255,150,100,0.6));
+    transform-origin:right center;
+    opacity:0;
+    animation: mirada 11s ease-in-out forwards;
+    pointer-events:none;
   }
-  20%, 80% {
-    opacity: 0.75;
-    transform: translate(-50%, -50%) scale(1);
+  @keyframes mirada {
+    0%,100% { transform:scaleX(0) rotate(0deg);       opacity:0; }
+    50%     { transform:scaleX(-1) rotate(var(--a));  opacity:0.9; }
   }
-}
 
-.contemplation {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  text-align: center;
-  max-width: 780px;
-  line-height: 1.9;
-  padding: 0 40px;
-  font-style: italic;
-  z-index: 100;
-}
-
-.witness-glow {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(100,150,255,0.12), transparent);
-  border-radius: 50%;
-  animation: glow-witness 17s ease-in-out infinite;
-  filter: blur(70px);
-}
-
-@keyframes glow-witness {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.3;
+  .percibe {
+    position:absolute; left:50%; top:50%;
+    width:4px; height:4px; margin:-2px 0 0 -2px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 0 10px rgba(100,150,255,0.75);
+    opacity:0;
+    animation: percibe 9s ease-in-out forwards;
+    pointer-events:none;
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.5);
-    opacity: 0.6;
+  @keyframes percibe {
+    0%   { transform:translate(var(--x1), var(--y1)); opacity:0; }
+    50%  { transform:translate(var(--x2), var(--y2)); opacity:1; }
+    100% { transform:translate(var(--x1), var(--y1)); opacity:0; }
   }
-}
+
+  .lazo-toque {
+    position:absolute;
+    width:var(--w); height:calc(var(--w) * 0.6);
+    margin:calc(var(--w) * -0.3) 0 0 calc(var(--w) / -2);
+    border:2px solid rgba(150,150,255,0.35);
+    border-radius:50%;
+    pointer-events:none;
+    animation: lazo-toque 6s ease-out forwards;
+  }
+  @keyframes lazo-toque {
+    0%   { transform:rotate(0deg) scale(0.6);   opacity:0; }
+    20%  { opacity:0.7; }
+    100% { transform:rotate(180deg) scale(1.4); opacity:0; }
+  }
+  .chispa-toque {
+    position:absolute;
+    width:15.4%; height:9.2%; margin:-4.6% 0 0 -7.7%;
+    border-radius:50%;
+    pointer-events:none;
+    opacity:0;
+    animation: chispa-toque 3s ease-out forwards;
+  }
+  .chispa-toque.o { background: radial-gradient(ellipse, rgba(140,180,255,0.6), rgba(150,200,255,0.18) 45%, transparent 72%); }
+  .chispa-toque.b { width:18.5%; height:18.5%; margin:-9.25% 0 0 -9.25%; background: radial-gradient(circle, rgba(255,170,120,0.55), rgba(200,100,150,0.18) 45%, transparent 72%); }
+  @keyframes chispa-toque {
+    0%   { transform:scale(0.7); opacity:0; }
+    40%  { transform:scale(1.3); opacity:0.9; }
+    100% { transform:scale(1.5); opacity:0; }
+  }
+
+  .centro { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:3; }
+  .texto-central {
+    text-align:center;
+    font-size: clamp(14px, 3.7vw, 21px);
+    letter-spacing:0.3em; padding-left:0.3em;
+    line-height:2.05;
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0 0 18px rgba(255,255,255,0.35), 0 0 10px rgba(0,0,0,0.85);
+    opacity:0;
+    animation: texto 14s ease-in-out infinite;
+    animation-delay:-2.8s;
+  }
+  @keyframes texto {
+    0%,100% { opacity:0;   transform:scale(0.9); }
+    20%,80% { opacity:0.8; transform:scale(1); }
+  }
+
+  .frases {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh);
+    transform:translateX(-50%);
+    width:90vw; max-width:660px; height:3.4em;
+    text-align:center;
+    pointer-events:none;
+  }
+  .frase {
+    position:absolute; left:0; right:0; bottom:0;
+    font-size: clamp(14px, 3.8vw, 19px);
+    line-height:1.6;
+    letter-spacing:0.06em;
+    font-style:italic;
+    color: rgba(236,240,252,0.9);
+    text-shadow: 0 0 18px rgba(100,150,255,0.32);
+    opacity:0;
+    animation: frase 20s ease-in-out infinite;
+  }
+  .frase.f2 { animation-delay:10s; }
+  @keyframes frase {
+    0%   { opacity:0; transform:translateY(6px); }
+    7%   { opacity:1; transform:translateY(0); }
+    43%  { opacity:1; transform:translateY(0); }
+    50%  { opacity:0; transform:translateY(-4px); }
+    100% { opacity:0; transform:translateY(-4px); }
+  }
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform:translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(236,240,252,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(185,200,240,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(215,228,255,0.95); text-shadow:0 0 18px rgba(100,150,255,0.6); outline:none; }
+
+  @media (max-width: 480px) {
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 14.5vh); height:4.9em; }
+  }
+  @media (orientation: landscape) and (max-height: 500px) {
+    .subtitulo { display:none; }
+    .titulo { font-size:17px; letter-spacing:0.2em; padding-left:0.2em; }
+    .cabecera { top:calc(env(safe-area-inset-top, 0px) + 10px); }
+    .escena { --L: min(62vh, 620px); margin-top:-4vh; }
+    .texto-central { font-size:12px; line-height:1.75; }
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 30px); height:3.3em; }
+    .frase { font-size:13px; line-height:1.45; }
+    .hint { bottom:calc(env(safe-area-inset-bottom, 0px) + 8px); font-size:11px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; transition:none !important; }
+    .resplandor, .bucle { transform:translate(-50%,-50%); }
+    .resplandor { opacity:0.6; }
+    .ojo.tercero .luz { opacity:0.6; }
+    .objeto.par .luz { opacity:0.7; }
+    .texto-central { opacity:0.8; }
+    .frases { height:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 9vh); }
+    .frase { position:static; opacity:0.92; margin-bottom:0.35em; font-size: clamp(12px, 3.4vw, 16px); }
+    .escena { margin-top:-12vh; }
+    .hint { opacity:0.8; bottom:calc(env(safe-area-inset-bottom, 0px) + 18px); }
+  }
 </style>
 </head>
 <body>
+  <div class="cabecera">
+    <div class="titulo">EL OBSERVADOR CREADO POR LO OBSERVADO</div>
+    <div class="subtitulo">Libro 11 - Nodo 76</div>
+  </div>
 
-<div class="title">EL OBSERVADOR CREADO POR LO OBSERVADO</div>
-<div class="subtitle">Libro 11 - Nodo 6</div>
+  <div class="escena" id="escena">
+    <div class="resplandor"></div>
+    <div class="bucle"></div>
+    <div class="bucle b2"></div>
 
-<div class="observation-field">
-  <div class="witness-void">
-    <!-- Resplandor del testigo -->
-    <div class="witness-glow"></div>
-    
-    <!-- Bucles recíprocos -->
-    <div class="reciprocal-loop" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
-    <div class="reciprocal-loop" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 6.7s; width: 280px; height: 160px;"></div>
-    
-    <!-- Ojos y objetos -->
-    <div class="eye-form" style="top: 35%; left: 30%; --ex: 40px; --ey: -30px; animation-delay: 0s;"></div>
-    <div class="object-form" style="top: 55%; left: 70%; --ox: -50px; --oy: 40px; animation-delay: 0s;"></div>
-    
-    <div class="eye-form" style="top: 70%; left: 60%; --ex: -35px; --ey: 25px; animation-delay: 4s;"></div>
-    <div class="object-form" style="top: 25%; left: 40%; --ox: 45px; --oy: -35px; animation-delay: 4s;"></div>
-    
-    <!-- Texto central -->
-    <div class="central-text" style="animation-delay: 2s;">
-      Lo visto<br>
-      crea<br>
-      al vidente<br><br>
-      El objeto<br>
-      genera<br>
-      al sujeto
+    <!-- Lo visto: una nota fija (arriba) y otra que sube y baja (derecha) -->
+    <div class="forma objeto par" id="objA" style="left:49%; top:31%; --dx:calc(var(--L) * 0.069); --dy:calc(var(--L) * -0.054);"><div class="mov"><div class="luz"></div></div></div>
+    <div class="forma objeto par" id="objB" style="left:79%; top:55%; --dx:calc(var(--L) * -0.06); --dy:calc(var(--L) * 0.03); animation-delay:-4s;"><div class="mov"><div class="luz"></div></div></div>
+    <!-- El que ve: la tercera voz, que solo existe mientras suenan las dos -->
+    <div class="forma ojo tercero" id="ojo" style="left:22%; top:55%; --dx:calc(var(--L) * 0.062); --dy:calc(var(--L) * -0.046);"><div class="mov"><div class="luz"></div></div></div>
+    <div class="forma ojo" style="left:62%; top:82%; --dx:calc(var(--L) * -0.054); --dy:calc(var(--L) * 0.038); animation-delay:-4s;"><div class="mov"><div class="luz"></div></div></div>
+
+    <div class="centro">
+      <div class="texto-central">Lo visto<br>crea<br>al vidente<br><br>El objeto<br>genera<br>al sujeto</div>
     </div>
   </div>
-</div>
 
-<div class="contemplation">
-  No hay ojo antes de lo visible · La percepción nace de lo percibido<br>
-  El observador emerge del acto de observar · Sujeto y objeto co-surgiendo
-</div>
+  <div class="frases" aria-live="off">
+    <p class="frase f1">No hay ojo antes de lo visible<br>La percepción nace de lo percibido</p>
+    <p class="frase f2">El observador emerge del acto de observar<br>Sujeto y objeto co-surgiendo</p>
+  </div>
+
+  <div class="hint" id="hint">( toca: mueve lo visto )</div>
+
+  <a class="infinito" href="L_11-Nodo7.html" aria-label="Siguiente portal">∞</a>
 
 <script>
-const witness = document.querySelector('.witness-void');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const escena = document.getElementById('escena');
+  const hint = document.getElementById('hint');
+  const objA = document.querySelector('#objA .luz'), objB = document.getElementById('objB'), ojo = document.getElementById('ojo');
+  // El sonido se declara arriba
+  let ctx = null, master, seco, sala, o1, o2, parG;
 
-// Crear rayos de mirada invertidos
-function createGazeBeam() {
-  const beam = document.createElement('div');
-  beam.className = 'gaze-beam';
-  
-  const angle = Math.random() * 360;
-  
-  beam.style.cssText = `
-    left: ${30 + Math.random() * 40}%;
-    top: ${30 + Math.random() * 40}%;
-    --angle: ${angle}deg;
-    animation-delay: ${Math.random() * 5}s;
-  `;
-  
-  witness.appendChild(beam);
-  setTimeout(() => beam.remove(), 11000);
-}
+  /* ---------------- El tercer sonido ------------------------------------------------------------
+     Cuando entran al oído dos notas cercanas, f1 y f2, se oye también una tercera, 2·f1 − f2, que no
+     está en el aire: la fabrica la cóclea, que no es lineal (Tartini la llamó terzo suono; Helmholtz y
+     después Plomp la estudiaron). David Kemp descubrió en 1978 que el oído además emite sonido, y un
+     micrófono en el canal auditivo registra justamente esa tercera nota. Lo escuchado hace sonar a
+     quien escucha. Aquí suenan un Fa fijo y otra nota que sube despacio hasta casi una tercera mayor
+     arriba y vuelve; la tercera voz, la del oído, baja mientras la otra sube. Las dos van juntas a
+     los dos oídos (si se separaran, no habría tercera). Se oye mejor con auriculares. El ojo de la
+     izquierda sigue esa voz; los objetos, a las dos que suenan. Al tocar, lo visto se mueve hacia la
+     altura del toque y quien escucha se mueve al revés.
+  ------------------------------------------------------------------------------------------- */
+  const F1 = 349.23, CICLO = 30;
+  const PAR   = [[0, 0], [2, 1], [25, 1], [27, 0], [30, 0]];
+  const RAZON = [[0, 1.12], [2, 1.12], [12, 1.32], [15, 1.32], [25, 1.12], [30, 1.12]];
+  function tramo(p, pts) {
+    for (let i = 1; i < pts.length; i++) if (p <= pts[i][0]) {
+      const [t0, v0] = pts[i - 1], [t1, v1] = pts[i];
+      const u = t1 > t0 ? (p - t0) / (t1 - t0) : 1, s = u * u * (3 - 2 * u);
+      return v0 + (v1 - v0) * s;
+    }
+    return pts[pts.length - 1][1];
+  }
+  let t0 = performance.now() - 1000;
+  const fase = () => (((performance.now() - t0) / 1000) % CICLO + CICLO) % CICLO;
+  const est = { par: 0, r: 1.12 };
+  let manual = null, ultimo = performance.now();
 
-// Crear partículas de percepción
-function createPerceptionParticles() {
-  for(let i = 0; i < 14; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'perception-particle';
-      
-      const angle1 = Math.random() * Math.PI * 2;
-      const angle2 = Math.random() * Math.PI * 2;
-      const radius1 = 100;
-      const radius2 = 180;
-      
-      const px1 = Math.cos(angle1) * radius1;
-      const py1 = Math.sin(angle1) * radius1;
-      const px2 = Math.cos(angle2) * radius2;
-      const py2 = Math.sin(angle2) * radius2;
-      
-      particle.style.cssText = `
-        left: 50%;
-        top: 50%;
-        --px1: ${px1}px;
-        --py1: ${py1}px;
-        --px2: ${px2}px;
-        --py2: ${py2}px;
-        animation-delay: ${Math.random() * 4}s;
-      `;
-      
-      witness.appendChild(particle);
-      setTimeout(() => particle.remove(), 9000);
+  function makeReverbIR(ac, seconds = 3.5, decay = 2.5) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
+  }
+
+  function startAudio() {
+    if (ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    const t = ctx.currentTime;
+    master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    master.gain.setValueAtTime(0, t);
+    master.gain.linearRampToValueAtTime(0.036, t + 5);
+    seco = ctx.createGain(); seco.gain.value = 0.85; seco.connect(master);
+    sala = ctx.createGain(); sala.gain.value = 0.22;
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    sala.connect(conv); conv.connect(master);
+    parG = ctx.createGain(); parG.gain.value = 0;
+    parG.connect(seco); parG.connect(sala);
+    o1 = ctx.createOscillator(); o1.type = 'sine'; o1.frequency.value = F1;
+    o2 = ctx.createOscillator(); o2.type = 'sine'; o2.frequency.value = F1 * est.r;
+    o1.connect(parG); o2.connect(parG);
+    o1.start(); o2.start();
+  }
+
+  /* El estado común a la imagen y al sonido */
+  function gobernar() {
+    const ahora = performance.now(), dt = Math.min(0.2, (ahora - ultimo) / 1000); ultimo = ahora;
+    let objetivo;
+    if (manual && ahora < manual.hasta) objetivo = { par: 1, r: manual.r, tau: 0.7 };
+    else {
+      if (manual) {                                   // retoma el ciclo bajando desde donde quedó
+        let a = 15, b = 25;
+        const r = Math.max(1.12, Math.min(1.32, est.r));
+        for (let k = 0; k < 30; k++) { const m = (a + b) / 2; if (tramo(m, RAZON) > r) a = m; else b = m; }
+        t0 = ahora - ((a + b) / 2) * 1000;
+        manual = null;
+      }
+      const p = fase();
+      objetivo = { par: tramo(p, PAR), r: tramo(p, RAZON), tau: 0.12 };
+    }
+    est.par += (objetivo.par - est.par) * (1 - Math.exp(-dt / 0.3));
+    est.r += (objetivo.r - est.r) * (1 - Math.exp(-dt / objetivo.tau));
+    if (ctx) {
+      const t = ctx.currentTime;
+      parG.gain.setTargetAtTime(0.5 * est.par, t, 0.05);
+      o2.frequency.setTargetAtTime(F1 * est.r, t, 0.03);
+    }
+  }
+  setInterval(gobernar, 30);
+
+  function pintar() {
+    const L = escena.clientWidth;
+    const u = (est.r - 1.12) / 0.2;                    // 0 abajo, 1 arriba
+    objA.style.opacity = (0.12 + 0.75 * est.par).toFixed(3);
+    objB.querySelector('.luz').style.opacity = (0.12 + 0.75 * est.par).toFixed(3);
+    objB.querySelector('.mov').style.transform = `translateY(${(L * (0.15 - 0.3 * u)).toFixed(1)}px)`;
+    ojo.querySelector('.luz').style.opacity = (0.85 * est.par).toFixed(3);
+    ojo.querySelector('.mov').style.transform = `translateY(${(L * (-0.15 + 0.3 * u)).toFixed(1)}px)`;
+    requestAnimationFrame(pintar);
+  }
+
+  /* ---------------- Miradas y percepciones ---------------------------------------------------- */
+  function quitar(el) { el.addEventListener('animationend', () => el.remove(), { once: true }); }
+  function mirada(x, y, a, extra) {
+    const m = document.createElement('div'); m.className = 'mirada';
+    m.style.cssText = `left:${x};top:${y};--a:${a.toFixed(1)}deg;` + (extra || `animation-delay:${(Math.random() * 5).toFixed(2)}s;`);
+    escena.appendChild(m); quitar(m);
+  }
+  function percibir() {
+    const L = escena.clientWidth;
+    for (let i = 0; i < 14; i++) setTimeout(() => {
+      const p = document.createElement('div'); p.className = 'percibe';
+      const a1 = Math.random() * Math.PI * 2, a2 = Math.random() * Math.PI * 2, r1 = 0.154 * L, r2 = 0.277 * L;
+      p.style.cssText = `--x1:${(Math.cos(a1) * r1).toFixed(1)}px;--y1:${(Math.sin(a1) * r1).toFixed(1)}px;--x2:${(Math.cos(a2) * r2).toFixed(1)}px;--y2:${(Math.sin(a2) * r2).toFixed(1)}px;animation-delay:${(Math.random() * 4).toFixed(2)}s;`;
+      escena.appendChild(p); quitar(p);
     }, i * 90);
   }
-}
-
-// Generar elementos continuamente
-setInterval(createGazeBeam, 2300);
-setInterval(createPerceptionParticles, 6800);
-
-// Crear elementos iniciales
-for(let i = 0; i < 6; i++) {
-  setTimeout(createGazeBeam, i * 850);
-}
-createPerceptionParticles();
-
-// Interactividad - Click crea bucle perceptivo
-witness.addEventListener('click', (e) => {
-  const rect = witness.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  // Crear ojo en el punto
-  const eye = document.createElement('div');
-  eye.className = 'eye-form';
-  eye.style.cssText = `
-    left: ${x}px;
-    top: ${y}px;
-    --ex: 0px;
-    --ey: 0px;
-    animation: eye-blink 3s ease-out forwards;
-  `;
-  witness.appendChild(eye);
-  setTimeout(() => eye.remove(), 3000);
-  
-  // Seguido por objeto
-  setTimeout(() => {
-    const object = document.createElement('div');
-    object.className = 'object-form';
-    object.style.cssText = `
-      left: ${x + 50}px;
-      top: ${y + 50}px;
-      --ox: 0px;
-      --oy: 0px;
-      animation: object-manifest 3s ease-out forwards;
-    `;
-    witness.appendChild(object);
-    setTimeout(() => object.remove(), 3000);
-  }, 800);
-  
-  // Rayos radiales
-  for(let i = 0; i < 12; i++) {
-    setTimeout(() => {
-      const beam = document.createElement('div');
-      beam.className = 'gaze-beam';
-      const angle = (i / 12) * 360;
-      beam.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --angle: ${angle}deg;
-        animation: gaze-reverse 5s ease-out forwards;
-      `;
-      witness.appendChild(beam);
-      setTimeout(() => beam.remove(), 5000);
-    }, i * 85);
+  if (!reduce) {
+    const azar = () => mirada(`${30 + Math.random() * 40}%`, `${30 + Math.random() * 40}%`, Math.random() * 360);
+    setInterval(azar, 2300);
+    for (let i = 0; i < 6; i++) setTimeout(azar, i * 850);
+    setInterval(percibir, 6800);
+    percibir();
+    requestAnimationFrame(pintar);
   }
-  
-  // Bucles recíprocos
-  for(let i = 0; i < 4; i++) {
+
+  /* ---------------- El toque: mueve lo visto ------------------------------------------------- */
+  function tocar(cx, cy) {
+    const H = innerHeight;
+    const v = Math.max(0, Math.min(1, (cy - H * 0.2) / (H * 0.6)));
+    manual = { r: 1.32 - 0.2 * v, hasta: performance.now() + 7000 };
+    if (reduce) return;
+    const r = escena.getBoundingClientRect(), L = r.width;
+    const x = (cx - r.left) / r.width * 100, y = (cy - r.top) / r.height * 100;
+    const o = document.createElement('div'); o.className = 'chispa-toque o';
+    o.style.cssText = `left:${x.toFixed(2)}%;top:${y.toFixed(2)}%;`;
+    escena.appendChild(o); quitar(o);
     setTimeout(() => {
-      const loop = document.createElement('div');
-      loop.className = 'reciprocal-loop';
-      const size = 120 + i * 60;
-      loop.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        width: ${size}px;
-        height: ${size * 0.6}px;
-        animation: loop-reciprocal ${8 - i}s ease-out forwards;
-      `;
-      witness.appendChild(loop);
-      setTimeout(() => loop.remove(), (8 - i) * 1000);
+      const b = document.createElement('div'); b.className = 'chispa-toque b';
+      b.style.cssText = `left:${(x + 7.7).toFixed(2)}%;top:${(y + 7.7).toFixed(2)}%;`;
+      escena.appendChild(b); quitar(b);
+    }, 800);
+    for (let i = 0; i < 12; i++) setTimeout(() => mirada(`${x.toFixed(2)}%`, `${y.toFixed(2)}%`, i * 30, 'animation-duration:5s;'), i * 85);
+    for (let i = 0; i < 3; i++) setTimeout(() => {
+      const l = document.createElement('div'); l.className = 'lazo-toque';
+      l.style.cssText = `left:${x.toFixed(2)}%;top:${y.toFixed(2)}%;--w:${((0.185 + i * 0.092) * L).toFixed(1)}px;`;
+      escena.appendChild(l); quitar(l);
     }, i * 250);
-  }
-  
-  // Partículas convergentes
-  for(let i = 0; i < 18; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'perception-particle';
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 90 + Math.random() * 80;
-      particle.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --px1: ${Math.cos(angle) * distance}px;
-        --py1: ${Math.sin(angle) * distance}px;
-        --px2: 0px;
-        --py2: 0px;
-        animation: particle-perceive 4s ease-out forwards;
-      `;
-      witness.appendChild(particle);
-      setTimeout(() => particle.remove(), 4000);
+    for (let i = 0; i < 18; i++) setTimeout(() => {
+      const p = document.createElement('div'); p.className = 'percibe';
+      const a = Math.random() * Math.PI * 2, d = (0.138 + Math.random() * 0.123) * L;
+      p.style.cssText = `left:${x.toFixed(2)}%;top:${y.toFixed(2)}%;--x1:${(Math.cos(a) * d).toFixed(1)}px;--y1:${(Math.sin(a) * d).toFixed(1)}px;--x2:0px;--y2:0px;animation-duration:4s;`;
+      escena.appendChild(p); quitar(p);
     }, i * 55);
   }
-});
-</script>
 
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    hint.classList.add('oculto');
+    tocar(e.clientX, e.clientY);
+  });
+</script>
 </body>
 </html>
