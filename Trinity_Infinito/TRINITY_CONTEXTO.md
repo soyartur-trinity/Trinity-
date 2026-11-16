@@ -5,8 +5,8 @@
 > Para el resto de la constelación (Origen, Quantum, Portal Público, La Red), la referencia es el maestro:
 > https://github.com/soyartur-trinity/Trinity_Portal_Publico/blob/main/02_Arquitectura_del_Destino/maestro.md
 >
-> **Estado al 16 de noviembre de 2026:** Libros 1 a 8 saneados; el 8 entero con lectura en el teléfono, y la reserva del portal 49 resuelta. Libros 9 a 11 por sanear, salvo el portal 72 (construido). Libro 12 saneado entero, con imagen y sonido propios en cada nodo y lectura en el teléfono. Libro 13 adaptado al teléfono.
-> **Próximo: Libro 9, *Tiempo Antes del Tiempo*, empezando por su primer nodo (portal 57).**
+> **Estado al 16 de noviembre de 2026:** Libros 1 a 9 saneados; el 8 y el 9 enteros con lectura en el teléfono, y la reserva del portal 49 resuelta. Libros 10 y 11 por sanear, salvo el portal 72 (construido). Libro 12 saneado entero, con imagen y sonido propios en cada nodo y lectura en el teléfono. Libro 13 adaptado al teléfono.
+> **Próximo: Libro 10, *La Creatividad Increada*, empezando por su primer nodo (portal 64), que recibe enlaces de otras series.**
 
 ---
 
@@ -52,8 +52,9 @@ Trinity Infinito son **13 libros de 7 nodos: 91 portales** contemplativos en HTM
 2. **Tres salidas por nodo:** conservar con arreglos puntuales, refinar o reconstruir. Reconstruir es la excepción, no la regla.
 3. **Lo que se conserva siempre:** las frases, la paradoja, la paleta y el símbolo.
 4. **La lección de julio de 2026.** En el Libro 8, Claude reconstruyó los nodos 3 y 4 y perdió complejidad gráfica: el entramado de líneas sutiles entre los puntos luminosos y las formas que danzaban libres, sin coordenadas fijas. Arturo objetó: «El original es muy superior». Desde entonces, antes de entregar, la versión nueva se mira al lado del original. Si tiene menos vida, no está terminada. En noviembre se confirmó: las versiones de julio del 52 y el 53, rehechas después de la objeción, todavía perdían frente a los originales (el 52 había perdido las circunferencias que se expanden; el 53 cambió los planos de color por polígonos de línea). Se partió de los originales y de julio quedaron solo los sonidos.
-5. **Los atractores.** El mismo modelo tiende a repetir las mismas soluciones ante el mismo concepto. El Libro 12 era el ejemplo: siete nodos con una misma escena. Lo que funcionó para rehacerlo (noviembre de 2026): proponer primero las siete imágenes juntas, antes de escribir código, y buscar para cada nodo un fenómeno real, de la percepción o de la física, que diga lo mismo que su paradoja en la vista y en el oído. Así las imágenes salen distintas porque los fenómenos lo son.
+5. **Los atractores.** El mismo modelo tiende a repetir las mismas soluciones ante el mismo concepto. El Libro 12 era el ejemplo: siete nodos con una misma escena. Lo que funcionó para rehacerlo (noviembre de 2026): proponer primero las siete imágenes juntas, antes de escribir código, y buscar para cada nodo un fenómeno real, de la percepción o de la física, que diga lo mismo que su paradoja en la vista y en el oído. Así las imágenes salen distintas porque los fenómenos lo son. En el Libro 9 el atractor eran los anillos que se abren o se cierran sobre un centro (57, 60, 62, 63); no hizo falta rehacer: bastó con que cada sonido tuviera su fenómeno y con afinar la imagen hacia él (en el 60, los anillos a la mitad de la distancia del anterior).
 6. **El repositorio es la fuente de verdad** para nombres, títulos, orden y enlaces.
+7. **Leer la estructura del libro antes de proponer.** El Libro 9 está armado en espejo: 57 ↔ 62 (el instante eterno, la eternidad instantánea), 59 ↔ 60 (el futuro que ya fue, el pasado que no ha llegado), 58 ↔ 61 (dura sin pasar, pasa sin estar), y el 63 cierra y reabre. Los sonidos siguieron esos pares. Conviene buscar el mismo tipo de estructura en los libros que faltan.
 
 ---
 
@@ -72,7 +73,7 @@ Trinity Infinito son **13 libros de 7 nodos: 91 portales** contemplativos en HTM
 11. **Teléfono:** medidas en proporción (`%`, `vmin`, `clamp()`), textos grandes y lejos de los bordes, nada cortado por la altura, lienzos que se ajustan al girar la pantalla. Se prueba a 390 × 844.
 12. **Plantilla del Libro 12** (noviembre de 2026), que sirve de modelo junto con el portal 72: título y subtítulo dentro de un mismo bloque (`.cabecera`), para que un título de dos líneas no pise al subtítulo; imagen al centro, algo por encima de la mitad; debajo, cuatro frases en rotación de 40 s (`0%{opacity:0} 3.5%{opacity:1} 22%{opacity:1} 25%{opacity:0}`, con retrasos de 10, 20 y 30 s), cada una legible unos nueve segundos y media; con movimiento reducido, las cuatro apiladas. Si la pantalla es alta, la imagen puede ponerse de pie (la cuerda del 81 es horizontal en la computadora y vertical en el teléfono).
 13. **Imágenes que solo existen en movimiento** (el cuerpo de puntos del 82, la espiral del 83): con movimiento reducido necesitan una pista quieta que deje leerlas, como unos huesos tenues o la figura apenas más clara.
-14. **Volumen:** los saneados suenan entre −36 y −43 dB de RMS medio (medido con un analizador inyectado antes del destino, durante 30 s después del primer toque). El Libro 12 quedó entre −42 y −44; el Libro 8, entre −38 y −42. El 49 de julio sonaba a −60 dB y se subió a −40.
+14. **Volumen:** los saneados suenan entre −36 y −43 dB de RMS medio (medido con un analizador inyectado antes del destino, durante 30 s después del primer toque). El Libro 12 quedó entre −42 y −44; el Libro 8, entre −38 y −42; el Libro 9, entre −38 y −42. El 49 de julio sonaba a −60 dB y se subió a −40.
 15. **Textos que rotan:** cada elemento cambia su texto en su propio evento `animationiteration`, es decir, mientras está invisible. Un `setInterval` aparte termina cambiando la frase a la vista.
 16. **Trampas de código encontradas en el Libro 8:**
     - Un `animation:` abreviado en una regla más específica (`.forma polygon`) borra los `animation-delay` de clases sueltas (`.f1`): todas las piezas quedan en la misma fase. Los retrasos van con la misma especificidad (`.forma polygon.f1`).
@@ -81,6 +82,15 @@ Trinity Infinito son **13 libros de 7 nodos: 91 portales** contemplativos en HTM
     - Las variables del sonido se declaran arriba: con movimiento reducido el guion crea piezas en el acto, y si esas piezas tocan el sonido antes de la declaración, la página se rompe.
     - Un `filter: drop-shadow` fijo sobre un contenedor lleno de piezas animadas se recalcula en cada cuadro, y además impide `position:fixed` dentro de él. En el Libro 8 se quitó; cada pieza lleva su propio brillo.
     - Las medidas que mezclan `vw` y `vh` en el mismo elemento (ancho en una, alto en otra) vuelven elipses los círculos en el teléfono: se usa `vmin`.
+17. **Trampas encontradas en el Libro 9:**
+    - `border-image` anula `border-radius`: el «bucle del tiempo» del 59 se dibujaba cuadrado. Un anillo con degradé se hace con `conic-gradient` y una máscara radial.
+    - Las palabras centradas con `translateX(-50%)` en línea pierden el centrado cuando su animación usa `transform`: el desplazamiento va en una variable (`--tx`) dentro de cada keyframe. Lo mismo con rotaciones en línea (`--rot`).
+    - Un tachado animado (`text-decoration` en keyframes) se hace con una línea en `::after` que se funde por opacidad.
+    - Anillos de 1 px que se achican o crecen mucho: con `scale` el borde se adelgaza hasta desaparecer. Van en un lienzo, como los reflejos del 56 (57, 62 y 63).
+    - Un `AudioParam` no puede conectarse como fuente; si un armónico debe seguir a otro, se le programa la misma automatización.
+    - Un tren de impulsos hecho con `PeriodicWave` pierde nivel al subir la frecuencia (el navegador quita los armónicos que no caben): se compensa con la raíz de la frecuencia.
+    - Un LFO conectado al `detune` de cada nota deja nodos vivos: se desconecta en `onended`.
+    - Para que el sonido siga a la imagen al milisegundo, se lee `elemento.getAnimations()[0].currentTime` (o se anima con `element.animate`) en lugar de calcular la fase con el reloj de la página.
 
 | Prohibido animar | Reemplazo |
 |---|---|
@@ -129,6 +139,16 @@ El sonido encarna el concepto; no es ambiente. Andamiaje común: volumen general
 - **El signo invisible (83):** notas de vidrio al azar con un motivo de ocho pulsos escondido entre ellas; cuando la espiral se forma, el motivo ocupa más pulsos y el oído, que detecta lo que se repite, termina por oírlo.
 - **La comunicación sin emisor (84):** estática como la nieve de los televisores sin señal (una pequeña parte era radiación de fondo cósmico); mientras cada onda se cierra, una franja del mismo ruido se afina hasta volverse tono, que llega con la onda al centro vacío.
 
+El Libro 9 trata del tiempo, y el oído es el sentido del tiempo. Ninguno de sus originales tenía sonido; los siete nacieron en noviembre de 2026, cada uno de un fenómeno real de la percepción o de la física:
+
+- **El instante eterno (57):** cronostasis, la ilusión del reloj detenido (Yarrow y otros, 2001; también con el primer tono del teléfono). Un tictac seco de Kronos que acompaña a la línea, un drone de Re que gira como el círculo de Aión; al tocar llega Kairós: el tic siguiente se abre en un La sostenido, el reloj espera tres segundos y la línea de Kronos se detiene. Si nadie toca, Kairós vuelve cada medio minuto.
+- **La duración sin transcurso (58):** del pulso al tono. Por debajo de unos veinte golpes por segundo se oyen golpes; por encima, una nota. Un tren de impulsos (una `PeriodicWave` con todos los armónicos en fase) acelera de 1,6 a 55 por segundo, sostiene el La grave y vuelve a desgranarse, en ciclos de 40 s: los instantes de Zenón se vuelven la duración de Bergson. Al tocar, el ciclo se detiene donde esté durante ocho segundos y la imagen queda inmóvil en pleno vuelo.
+- **El futuro que ya fue (59):** el preeco de la cinta. En una bobina, cada vuelta magnetiza a la vecina, y antes de un sonido fuerte se oye su fantasma. Ocho notas en bucle; cada una llega anunciada por su eco sordo un segundo y medio antes, y deja otro más tenue después. Debajo, el soplo de la cinta y un leve vaivén de afinación. Al tocar, primero el eco y después la nota (y primero la onda tenue, después la fuerte).
+- **El pasado que no ha llegado (60):** la pelota que rebota. Cada salto dura el 80 % del anterior; los golpes de madera se apuran hacia un límite que no llega a oírse (en teoría de sistemas, comportamiento de Zenón). Silencio, y otra serie desde otro lado. Debajo, un Sol grave con su quinta. Al tocar, una serie nueva del lado del toque.
+- **El presente sin presencia (61):** el efecto de la cerca (Miller y Licklider, 1950). Una flauta pasa por la cerca de la imagen al mismo paso (medio segundo por casilla, sincronizada con la animación por `getAnimations`/`currentTime`): donde hay línea suena; donde hay tabla, calla y la cubre un aliento en su banda, más fuerte que ella; en la casilla vacía calla del todo y el corte se oye. Cada vuelta cambia de nota detrás de una tabla. Al tocar, el próximo hueco vacío se cubre (y una tabla fantasma pasa por el ahora).
+- **La eternidad instantánea (62):** *tota simul*, la definición de Boecio, con su imagen del círculo y el centro. La luz de la rueda despierta diez notas pentatónicas de Re al pasar por los puntos marcados, cada una del lado del círculo donde está; al volver a lo alto, el centro las suena todas juntas sobre un Re grave. Al tocar, las reúne en ese momento.
+- **El origen posterior a sí mismo (63):** el canon cangrejo (Machaut, *Ma fin est mon commencement*; Bach, *Ofrenda musical*). Doce notas en Re, una voz hacia adelante y otra hacia atrás, consonantes en cada par; la azul termina en la nota con que empezó la violeta y recién entonces entra la quinta grave de Re: el origen se reconoce a posteriori. Al tocar, las voces cambian de lado (los dos puntos del lazo giran media vuelta) y suena el origen.
+
 ---
 
 ## 6. Verificación antes de entregar
@@ -174,19 +194,19 @@ for f in sys.argv[1:]:
 | 2 a 6 | Saneados (7/7). |
 | 7 | Saneado (7/7). Reserva del 49 resuelta el 16 de noviembre de 2026 con el veto de Arturo: el ∞ lleva al Libro 8; 432 y 528 Hz vuelven como sonido y como tradición, no como física, con la línea visible de enero («∿ 528 Hz ⊗ 432 Hz → Conocimiento que se desconoce ∿»); los dos botones se volvieron dos tiempos del mismo toque. De paso: los fragmentos que orbitaban apilados en un mismo ángulo se reparten alrededor del círculo, y el nivel sube de −60 a −40 dB. |
 | 8 | Saneado (7/7) el 16 de noviembre de 2026, con lectura en el teléfono. Del 52 al 56, el original como base con arreglos puntuales y sonido nuevo en cada uno (sección 5). 52: los hilos ahora tocan los puntos que unen y vuelven las circunferencias hacia ninguna parte; es el *Para ver* de *Habitar* (anotado en el maestro). 53: la forma abstracta, que animaba bordes, es una sucesión de cinco triángulos que se funden; vuelve el grupo «Platón, Euclides, Riemann, Gauss». 54 y 55: esferas y núcleos que respiran por `transform`, con su brillo en una capa aparte. 56: las órbitas afinadas como péndulo de ondas; el plano cuadrado que giraba (una capa cortada en los bordes) pasó a ser un aura redonda; el ∞ lleva al Libro 9. El 50 y el 51 recibieron el parche común (tuteo, invitación que se apaga, rótulos laterales en diagonal en el teléfono). |
-| 9 | Original (7). Sus títulos dicen «Nodo 1» a «Nodo 7», no el número de portal. |
+| 9 | Saneado (7/7) el 16 de noviembre de 2026, con lectura en el teléfono y sonido propio en cada nodo (ninguno lo tenía; sección 5). Los siete, con el original como base: Georgia, solo `transform` y `opacity`, ∞, invitación y movimiento reducido; títulos con el número de portal («Nodo 57: …»). Las frases que solo aparecían al hacer clic entraron en la rotación; los falsos botones en mayúsculas («ACELERAR APROXIMACIÓN») se volvieron la invitación, y sus rótulos («PARADOJA ZENÓNICA ACTIVA») quedan arriba. 57: KRONOS · KAIRÓS · AIÓN · AHORA (CHRONOS repetía a KRONOS); los anillos y las líneas temporales van en un lienzo. 58: el disco de Bergson y la roseta del cristal intactos; «Persistencia inmóvil» ya no tapa la frase. 59: el bucle vuelve a ser círculo, el plano que giraba es un aura redonda, las franjas del universo bloque se desvanecen en los bordes. 60: los anillos de Zenón, cada uno a la mitad de la distancia del anterior; los fragmentos del pasado se acercan por CSS (antes, un `setInterval` por fragmento). 61: refinado a fondo, la franja de rectángulos se volvió una cerca (la línea pasa detrás de las tablas; donde falta una, se ve cortada); el tachado de los cuatro instantes se borra mientras están. 62: el lazo del infinito centrado; la cita completa de Boecio entra en la rotación. 63: la cruz de la causa de sí vuelve a ser cruz (la segunda línea perdía su giro); el ∞ lleva al Libro 10. «ETERNAL» pasó a «ETERNA» y «ETERNO» en las líneas de código. |
 | 10 | Original (7). |
 | 11 | Original, salvo el 72, *Causa Sin Precedente*, construido en octubre de 2026 con el estándar y la lectura en el teléfono: es el modelo más reciente. |
 | 12 | Saneado (7/7) el 15 de noviembre de 2026, con imagen y sonido propios en cada nodo y lectura en el teléfono. Cada imagen nace de un fenómeno real: 78, la copa de Rubin entre dos perfiles (paleta elevada a plata); 79, un punto que escribe en el aire sin cerrar una figura; 80, el ojo del otro en la pupila (*pupilla*, «muñequita»); 81, una cuerda en onda estacionaria con los nodos quietos y encendidos; 82, el cuerpo de trece puntos de Johansson, que recorre un alfabeto de posturas (ruta, frases e invitación del *Para ver* intactas); 83, una espiral visible solo en movimiento (paleta elevada a amatista); 84, ondas que se cierran sobre un centro vacío (blanco azulado sobre índigo). Ninguno lleva fuentes externas; el 84 apunta al Libro 13. |
 | 13 | Adaptado al teléfono el 29 de octubre de 2026 (enlace, letra, pantalla encendida). |
 
-**Adaptados al teléfono** (casi todos por ser *Para ver* de *Arquitectura del Destino*): portales 4, 17, 19, 20, 21, 32, 33, 39, 44, 48, 49, el Libro 8 entero (50 a 56), 65, 72, el Libro 12 entero (78 a 84) y el Libro 13. Los portales 19, 20 y 65 figuraban en el maestro y faltaban aquí; se sumaron el 16 de noviembre de 2026. Los demás saneados cumplen el estándar, pero la lectura en el teléfono no se revisó una por una.
+**Adaptados al teléfono** (casi todos por ser *Para ver* de *Arquitectura del Destino*): portales 4, 17, 19, 20, 21, 32, 33, 39, 44, 48, 49, el Libro 8 entero (50 a 56), el Libro 9 entero (57 a 63), 65, 72, el Libro 12 entero (78 a 84) y el Libro 13. Los portales 19, 20 y 65 figuraban en el maestro y faltaban aquí; se sumaron el 16 de noviembre de 2026. Los demás saneados cumplen el estándar, pero la lectura en el teléfono no se revisó una por una.
 
 ---
 
 ## 9. Pendientes y reservas
 
-**Libros 9, 10 y 11** (salvo el 72): por sanear. Revisado el 16 de noviembre de 2026: al Libro 9 y al Libro 11 solo llegan el mapa `infinito.html` y el ∞ del libro anterior. El Libro 10 sí recibe enlaces de otras series: el mapa de la Red apunta a su primer nodo (portal 64), y el cierre del Libro 12 de *Arquitectura del Destino* enlaza los portales 64 y 65 (el 65 ya está adaptado). En el Libro 10 conviene empezar por el 64.
+**Libros 10 y 11** (salvo el 72): por sanear. Revisado el 16 de noviembre de 2026: al Libro 11 solo llegan el mapa `infinito.html` y el ∞ del libro anterior. El Libro 10 sí recibe enlaces de otras series: el mapa de la Red apunta a su primer nodo (portal 64), y el cierre del Libro 12 de *Arquitectura del Destino* enlaza los portales 64 y 65 (el 65 ya está adaptado). En el Libro 10 conviene empezar por el 64, y si se toca el 64 o el 65 (son *Para ver*), anotarlo en la sección 12 del maestro.
 
 **Enlaces de otras series hacia Infinito** (para cuidar antes de tocar un nodo): el mapa de la Red (`Trinity_Portal_Publico/02_Arquitectura_del_Destino/herramientas/red_puertas.json`) apunta a los primeros nodos de los libros 1, 3, 5, 6, 7, 10, 12 y 13; los *Para ver* de la sección 12 del maestro, a los portales de su lista.
 
@@ -204,9 +224,10 @@ for f in sys.argv[1:]:
 
 1. ~~Libro 12, completo.~~ Hecho el 15 de noviembre de 2026.
 2. ~~Libro 8, del 52 al 56, y la reserva del 49.~~ Hecho el 16 de noviembre de 2026.
-3. Libros 9, 10 y 11, empezando por su primer nodo.
-4. Parche común por libro: teléfono y tuteo.
-5. Repaso del Libro 13 y del mapa, y la suite completa de punta a punta (la del Libro 12 conviene escucharla entera: los siete sonidos van del eco de la sala a la estática del universo).
+3. ~~Libro 9, completo.~~ Hecho el 16 de noviembre de 2026.
+4. Libros 10 y 11, empezando por su primer nodo.
+5. Parche común por libro: teléfono y tuteo.
+6. Repaso del Libro 13 y del mapa, y la suite completa de punta a punta (la del Libro 12 conviene escucharla entera: los siete sonidos van del eco de la sala a la estática del universo; la del Libro 9 es una suite sobre el tiempo, en pares que se reflejan).
 
 ---
 
@@ -214,6 +235,6 @@ for f in sys.argv[1:]:
 
 **Para abrir**, un primer mensaje como este:
 
-> Abrimos Trinity Infinito, Libro 9, *Tiempo Antes del Tiempo*, portales 57 a 63. Lee primero `Trinity_Infinito/TRINITY_CONTEXTO.md` en el repositorio Trinity- (https://github.com/soyartur-trinity/Trinity-/blob/main/Trinity_Infinito/TRINITY_CONTEXTO.md). Al Libro 9 no llegan enlaces de otras series, así que vamos en orden, del 57 al 63, y nodo por nodo con el estándar de saneamiento: conservar frases, paradoja, paleta y símbolo, proponer juntos los siete sonidos antes de escribir código y mirar cada versión nueva al lado del original.
+> Abrimos Trinity Infinito, Libro 10, *La Creatividad Increada*, portales 64 a 70. Lee primero `Trinity_Infinito/TRINITY_CONTEXTO.md` en el repositorio Trinity- (https://github.com/soyartur-trinity/Trinity-/blob/main/Trinity_Infinito/TRINITY_CONTEXTO.md). El Libro 10 recibe enlaces de otras series (el mapa de la Red apunta al 64; el cierre del Libro 12 de *Arquitectura del Destino*, al 64 y al 65), así que empezamos por el 64 y cuidamos esas rutas. Nodo por nodo, con el estándar de saneamiento: conservar frases, paradoja, paleta y símbolo, leer la estructura del libro, proponer juntos los siete sonidos antes de escribir código y mirar cada versión nueva al lado del original.
 
 **Para cerrar:** el chat entrega el zip con los nodos y este documento actualizado (estado por libro, reservas, sonidos nuevos en el catálogo, lecciones aprendidas). Arturo sube los dos, y el chat siguiente arranca donde terminó este.
