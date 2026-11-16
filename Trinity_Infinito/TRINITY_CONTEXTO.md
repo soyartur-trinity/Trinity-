@@ -180,13 +180,15 @@ for f in sys.argv[1:]:
 | 12 | Saneado (7/7) el 15 de noviembre de 2026, con imagen y sonido propios en cada nodo y lectura en el teléfono. Cada imagen nace de un fenómeno real: 78, la copa de Rubin entre dos perfiles (paleta elevada a plata); 79, un punto que escribe en el aire sin cerrar una figura; 80, el ojo del otro en la pupila (*pupilla*, «muñequita»); 81, una cuerda en onda estacionaria con los nodos quietos y encendidos; 82, el cuerpo de trece puntos de Johansson, que recorre un alfabeto de posturas (ruta, frases e invitación del *Para ver* intactas); 83, una espiral visible solo en movimiento (paleta elevada a amatista); 84, ondas que se cierran sobre un centro vacío (blanco azulado sobre índigo). Ninguno lleva fuentes externas; el 84 apunta al Libro 13. |
 | 13 | Adaptado al teléfono el 29 de octubre de 2026 (enlace, letra, pantalla encendida). |
 
-**Adaptados al teléfono** (casi todos por ser *Para ver* de *Arquitectura del Destino*): portales 4, 17, 21, 32, 33, 39, 44, 48, 49, el Libro 8 entero (50 a 56), 72, el Libro 12 entero (78 a 84) y el Libro 13. Los demás saneados cumplen el estándar, pero la lectura en el teléfono no se revisó una por una.
+**Adaptados al teléfono** (casi todos por ser *Para ver* de *Arquitectura del Destino*): portales 4, 17, 19, 20, 21, 32, 33, 39, 44, 48, 49, el Libro 8 entero (50 a 56), 65, 72, el Libro 12 entero (78 a 84) y el Libro 13. Los portales 19, 20 y 65 figuraban en el maestro y faltaban aquí; se sumaron el 16 de noviembre de 2026. Los demás saneados cumplen el estándar, pero la lectura en el teléfono no se revisó una por una.
 
 ---
 
 ## 9. Pendientes y reservas
 
-**Libros 9, 10 y 11** (salvo el 72): por sanear. Los primeros nodos de los libros 9, 10 y 11 reciben enlaces desde otras series y siguen siendo originales: conviene empezar cada libro por ahí.
+**Libros 9, 10 y 11** (salvo el 72): por sanear. Revisado el 16 de noviembre de 2026: al Libro 9 y al Libro 11 solo llegan el mapa `infinito.html` y el ∞ del libro anterior. El Libro 10 sí recibe enlaces de otras series: el mapa de la Red apunta a su primer nodo (portal 64), y el cierre del Libro 12 de *Arquitectura del Destino* enlaza los portales 64 y 65 (el 65 ya está adaptado). En el Libro 10 conviene empezar por el 64.
+
+**Enlaces de otras series hacia Infinito** (para cuidar antes de tocar un nodo): el mapa de la Red (`Trinity_Portal_Publico/02_Arquitectura_del_Destino/herramientas/red_puertas.json`) apunta a los primeros nodos de los libros 1, 3, 5, 6, 7, 10, 12 y 13; los *Para ver* de la sección 12 del maestro, a los portales de su lista.
 
 **Parche común por libro**, en una sesión propia: lectura en el teléfono de los portales que faltan, y el voseo que queda pasado a tuteo: las invitaciones «tocá…» de los libros 1 a 7 (el 8 ya está), y algunas formas como «vos» o «tenés» en las frases de otros siete. Las frases se tocan solo en eso, con la lectura de Arturo. En el mismo parche: la invitación que queda encendida después del toque en los saneados de julio (sección 4, punto 8; el 48 la tiene, aunque ya estaba adaptado) y el ∞ fuera del toque que enciende el sonido.
 
@@ -212,6 +214,6 @@ for f in sys.argv[1:]:
 
 **Para abrir**, un primer mensaje como este:
 
-> Abrimos Trinity Infinito, Libro 9, *Tiempo Antes del Tiempo*, portales 57 a 63. Lee primero `Trinity_Infinito/TRINITY_CONTEXTO.md` en el repositorio Trinity- (https://github.com/soyartur-trinity/Trinity-/blob/main/Trinity_Infinito/TRINITY_CONTEXTO.md). Empecemos por el 57, que recibe enlaces de otras series. Vamos nodo por nodo con el estándar de saneamiento: conservar frases, paradoja, paleta y símbolo, proponer juntos los siete sonidos antes de escribir código y mirar cada versión nueva al lado del original.
+> Abrimos Trinity Infinito, Libro 9, *Tiempo Antes del Tiempo*, portales 57 a 63. Lee primero `Trinity_Infinito/TRINITY_CONTEXTO.md` en el repositorio Trinity- (https://github.com/soyartur-trinity/Trinity-/blob/main/Trinity_Infinito/TRINITY_CONTEXTO.md). Al Libro 9 no llegan enlaces de otras series, así que vamos en orden, del 57 al 63, y nodo por nodo con el estándar de saneamiento: conservar frases, paradoja, paleta y símbolo, proponer juntos los siete sonidos antes de escribir código y mirar cada versión nueva al lado del original.
 
 **Para cerrar:** el chat entrega el zip con los nodos y este documento actualizado (estado por libro, reservas, sonidos nuevos en el catálogo, lecciones aprendidas). Arturo sube los dos, y el chat siguiente arranca donde terminó este.
