@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Nodo 51: La Singularidad que Se Expande en Sí Misma</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box;
@@ -178,71 +178,94 @@
   .dimension-text {
     position:absolute;
     color: rgba(180,150,220,0.72);
-    font-size: clamp(11px,1.8vw,12px);
+    font-size: clamp(12px,3.2vw,14px);
     letter-spacing:1px; font-weight:300;
+    white-space:nowrap;
     text-shadow: 0 0 12px rgba(150,110,200,0.4);
     opacity:0;
     transform: var(--base) translateY(20px) scale(0.8);
-    animation: textFloat 10s infinite ease-in-out;
+    animation: textFloat 16s infinite ease-in-out;
     will-change: transform, opacity;
     pointer-events:none;
   }
   .d-top    { top:20%;  left:50%;  --base: translateX(-50%); animation-delay:0s; }
-  .d-right  { top:50%;  right:15%; --base: translateY(-50%); animation-delay:2.5s; }
-  .d-bottom { bottom:20%; left:50%;--base: translateX(-50%); animation-delay:5s; }
-  .d-left   { top:50%;  left:15%;  --base: translateY(-50%); animation-delay:7.5s; }
+  .d-right  { top:50%;  right:12%; --base: translateY(-50%); animation-delay:2s; }
+  .d-bottom { bottom:20%; left:50%;--base: translateX(-50%); animation-delay:4s; }
+  .d-left   { top:50%;  left:12%;  --base: translateY(-50%); animation-delay:6s; }
   @keyframes textFloat {
-    0%,100% { opacity:0; transform: var(--base) translateY(20px) scale(0.8); }
-    30%,70% { opacity:1; transform: var(--base) translateY(0)    scale(1); }
+    0%       { opacity:0; transform: var(--base) translateY(20px) scale(0.8); }
+    12%      { opacity:1; transform: var(--base) translateY(0)    scale(1); }
+    72%      { opacity:1; transform: var(--base) translateY(0)    scale(1); }
+    84%,100% { opacity:0; transform: var(--base) translateY(20px) scale(0.8); }
   }
 
   .paradox-label {
     position:absolute; bottom:10%; left:50%;
     transform: translateX(-50%);
-    color: rgba(180,150,220,0.72);
-    font-size: clamp(13px, 2.4vw, 15px);
-    text-align:center; line-height:1.5; width:80%;
+    color: rgba(190,160,230,0.85);
+    font-size: clamp(15px,4.2vw,19px);
+    text-align:center; line-height:1.5; width:88%;
     text-shadow: 0 0 15px rgba(150,110,200,0.3);
     transition: opacity 0.9s ease;
     will-change: opacity;
   }
 
   .transmission-code {
-    position:absolute; bottom:20px; left:50%;
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 18px);
     transform: translateX(-50%);
     color: rgba(150,110,200,0.4);
     font-family:'Courier New', monospace;
-    font-size: clamp(9px,1.5vw,10px); letter-spacing:2px;
+    font-size:10px; letter-spacing:2px;
+    white-space:nowrap;
     animation: codeFlicker 5s infinite ease-in-out;
   }
   @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
 
   .hint {
-    position:fixed; bottom:52px; left:50%;
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
     transform: translateX(-50%);
-    color: rgba(245,242,234,0.55);
-    font-size: clamp(11px,2.6vw,13px); letter-spacing:1px;
-    animation: breathe 3.4s infinite ease-in-out;
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px,3.2vw,14px);
+    letter-spacing:1px;
+    color: rgba(245,240,255,0.88);
+    animation: invita 3.4s infinite ease-in-out;
     pointer-events:none;
-    transition: opacity 1.2s ease;
+    transition: opacity 1.4s ease;
+    z-index:19;
   }
-  @keyframes breathe { 0%,100% { opacity:0.25; } 50% { opacity:0.75; } }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
 
   .infinito {
-    position:fixed; bottom:22px; right:26px;
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
     font-size:30px; text-decoration:none;
-    color: rgba(208,192,160,0.35);
+    color: rgba(208,192,160,0.38);
     transition: color 0.8s ease, text-shadow 0.8s ease;
     z-index:20;
+    cursor:pointer;
   }
-  .infinito:hover { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); }
+  .infinito:hover, .infinito:focus-visible { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); outline:none; }
+
+  /* Teléfono de pie: el campo se estira y los rótulos laterales van en diagonal */
+  @media (max-aspect-ratio: 3/4) {
+    .singularity-container { height:72vh; }
+    .d-right { top:33%; right:4%; }
+    .d-left { top:67%; left:4%; }
+  }
+  @media (max-width: 480px) {
+    .transmission-code { font-size:7.5px; letter-spacing:0.5px; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; }
     .inner-expansion { transform: translate(-50%,-50%) scale(3); opacity:0.8; }
     .dimension-text.d-top { opacity:0.75; transform: translateX(-50%); }
     .paradox-label { opacity:0.8; }
-    .hint { opacity:0.5; }
+    .hint { opacity:0.85; }
+    .hint.oculto { opacity:0; }
   }
 </style>
 </head>
@@ -263,9 +286,9 @@
   </div>
 
   <div class="transmission-code">TRINITY::NODO_51::EXPANSION_INTERNA::RESONANDO</div>
-  <div class="hint">( tocá — la expansión que vuelve a sí misma )</div>
+  <div class="hint">( toca — la expansión que vuelve a sí misma )</div>
 
-  <a class="infinito" href="L8-Nodo3.html">∞</a>
+  <a class="infinito" href="L8-Nodo3.html" aria-label="Siguiente portal">∞</a>
 
 <script>
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -316,12 +339,10 @@
     ['ADENTRO / AFUERA','LO UNO / LO TODO','PARTE / ENTERO','AUTO-CONTENCI\u00D3N'],
     ['0D \u2192 \u221ED','1D \u2192 -1D','iD \u2192 -iD','\u2205D \u2192 \u03A9D']
   ];
-  let gi = 0;
-  const texts = document.querySelectorAll('.dimension-text');
-  if (!reduce) setInterval(() => {
-    gi = (gi + 1) % groups.length;
-    texts.forEach((t, i) => { t.textContent = groups[gi][i]; });
-  }, 15000);
+  document.querySelectorAll('.dimension-text').forEach((t, i) => {
+    let gi = 0;
+    t.addEventListener('animationiteration', () => { gi = (gi + 1) % groups.length; t.textContent = groups[gi][i]; });
+  });
 
   /* ---------------- Diseño sonoro: el glissando de Risset (Möbius audible) ------------
      Varias voces separadas por octavas ascienden sin cesar; una campana espectral fija
@@ -384,12 +405,11 @@
   }
 
   const hint = document.querySelector('.hint');
-  function wake() {
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
     startAudio();
-    if (hint) hint.style.opacity = '0';
-    window.removeEventListener('pointerdown', wake);
-  }
-  window.addEventListener('pointerdown', wake);
+    if (hint) hint.classList.add('oculto');
+  });
 </script>
 </body>
 </html>

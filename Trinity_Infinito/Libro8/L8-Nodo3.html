@@ -1,552 +1,509 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 52: El Centro que Está en Todas Partes</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Nodo 52: El Centro que Está en Todas Partes</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Helvetica Neue', sans-serif;
-            cursor: none;
-        }
+  html, body { height:100%; }
+  body {
+    background:#000;
+    overflow:hidden;
+    display:flex; justify-content:center; align-items:center;
+    height:100vh; height:100dvh;
+    font-family:'Georgia', serif;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-        .omnipresent-center {
-            position: relative;
-            width: min(800px, 95vw);
-            height: min(800px, 95vh);
-            filter: drop-shadow(0 0 40px rgba(147, 51, 234, 0.2));
-        }
-        
-        /* OPTIMIZACIÓN: Centro suave pero intenso */
-        .center-point {
-            position: absolute;
-            width: min(6px, 0.8vw);
-            height: min(6px, 0.8vh);
-            background: radial-gradient(circle,
-                rgba(255, 245, 235, 0.95) 0%,
-                rgba(220, 180, 255, 0.8) 30%,
-                rgba(147, 51, 234, 0.6) 60%,
-                transparent 100%);
-            border-radius: 50%;
-            animation: centerPulse 4s infinite ease-in-out;
-            box-shadow: 
-                0 0 8px rgba(255, 230, 220, 0.5),
-                0 0 16px rgba(147, 51, 234, 0.3);
-            will-change: transform, opacity;
-            pointer-events: none;
-            z-index: 5;
-        }
-        
-        @keyframes centerPulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.7;
-                box-shadow: 
-                    0 0 8px rgba(255, 230, 220, 0.5),
-                    0 0 16px rgba(147, 51, 234, 0.3);
-            }
-            50% {
-                transform: scale(1.6);
-                opacity: 0.9;
-                box-shadow: 
-                    0 0 12px rgba(255, 230, 220, 0.7),
-                    0 0 24px rgba(147, 51, 234, 0.5),
-                    0 0 36px rgba(59, 130, 246, 0.2);
-            }
-        }
-        
-        .circumference-nowhere {
-            position: absolute;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 50%;
-            animation: circumferenceExpand 10s infinite ease-out;
-            opacity: 0;
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-        
-        @keyframes circumferenceExpand {
-            0% {
-                width: min(50px, 6vw);
-                height: min(50px, 6vh);
-                opacity: 0;
-                border-width: 1px;
-            }
-            15% {
-                opacity: 0.7;
-                border-width: 1.5px;
-            }
-            85% {
-                opacity: 0.2;
-                border-width: 0.5px;
-            }
-            100% {
-                width: min(1000px, 125vw);
-                height: min(1000px, 125vh);
-                opacity: 0;
-                border-width: 0.2px;
-            }
-        }
-        
-        .pascal-sphere {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(400px, 50vw);
-            height: min(400px, 50vh);
-            border: 1px dotted rgba(147, 51, 234, 0.4);
-            border-radius: 50%;
-            animation: sphereRotate 25s infinite linear;
-            will-change: transform;
-            pointer-events: none;
-        }
-        
-        @keyframes sphereRotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        .quantum-center {
-            position: absolute;
-            width: min(4px, 0.5vw);
-            height: min(4px, 0.5vh);
-            background: rgba(6, 182, 212, 0.8);
-            border-radius: 50%;
-            opacity: 0;
-            animation: quantumAppear 5s infinite ease-in-out;
-            box-shadow: 
-                0 0 6px rgba(6, 182, 212, 0.5),
-                0 0 12px rgba(6, 182, 212, 0.2);
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-        
-        @keyframes quantumAppear {
-            0%, 100% { 
-                opacity: 0; 
-                transform: scale(0.7);
-            }
-            30%, 70% { 
-                opacity: 0.9; 
-                transform: scale(1.1);
-            }
-        }
-        
-        .hermes-text {
-            position: absolute;
-            color: rgba(147, 51, 234, 0.7);
-            font-size: clamp(10px, 1.5vw, 11px);
-            font-style: italic;
-            opacity: 0;
-            animation: textManifest 8s infinite ease-in-out;
-            text-shadow: 0 0 12px rgba(147, 51, 234, 0.4);
-            font-weight: 300;
-            letter-spacing: 1px;
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-        
-        @keyframes textManifest {
-            0%, 100% { 
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            30%, 70% { 
-                opacity: 0.9;
-                transform: scale(1);
-            }
-        }
-        
-        .holographic-principle {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: repeating-radial-gradient(
-                circle at center,
-                transparent 0,
-                transparent min(20px, 2.5vw),
-                rgba(147, 51, 234, 0.03) min(20px, 2.5vw),
-                rgba(147, 51, 234, 0.03) min(21px, 2.6vw)
-            );
-            animation: hologramShift 15s infinite linear;
-            will-change: transform;
-            pointer-events: none;
-        }
-        
-        @keyframes hologramShift {
-            from { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.05); }
-            to { transform: rotate(360deg) scale(1); }
-        }
-        
-        .indra-net {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0.4;
-            pointer-events: none;
-        }
-        
-        .indra-jewel {
-            position: absolute;
-            width: min(8px, 1vw);
-            height: min(8px, 1vh);
-            background: radial-gradient(circle,
-                rgba(147, 51, 234, 0.8),
-                rgba(59, 130, 246, 0.5),
-                rgba(6, 182, 212, 0.3));
-            border-radius: 50%;
-            animation: jewelGlimmer 6s infinite ease-in-out;
-            box-shadow: 
-                0 0 8px rgba(147, 51, 234, 0.4),
-                0 0 16px rgba(59, 130, 246, 0.2);
-            will-change: transform, filter;
-            pointer-events: none;
-        }
-        
-        @keyframes jewelGlimmer {
-            0%, 100% {
-                transform: scale(1);
-                filter: brightness(1) hue-rotate(0deg);
-            }
-            25% {
-                transform: scale(1.15);
-                filter: brightness(1.2) hue-rotate(90deg);
-            }
-            50% {
-                transform: scale(1.25);
-                filter: brightness(1.4) hue-rotate(180deg);
-            }
-            75% {
-                transform: scale(1.1);
-                filter: brightness(1.1) hue-rotate(270deg);
-            }
-        }
-        
-        .center-paradox {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.7);
-            font-size: clamp(12px, 2.2vw, 14px);
-            text-align: center;
-            animation: paradoxPulse 6s infinite ease-in-out;
-            text-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
-            line-height: 1.4;
-            width: 80%;
-            will-change: opacity;
-        }
-        
-        @keyframes paradoxPulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 0.95; }
-        }
-        
-        .transmission-code {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.4);
-            font-size: clamp(9px, 1.5vw, 10px);
-            letter-spacing: 2px;
-            animation: codeFlicker 5s infinite ease-in-out;
-            font-family: 'Courier New', monospace;
-        }
-        
-        @keyframes codeFlicker {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.7; }
-        }
+  .omnipresent-center {
+    position:relative;
+    width:min(800px, 95vw);
+    height:min(800px, 86vh);
+  }
 
-        /* NUEVO: Resonancia Trinity */
-        .trinity-resonance {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 130%;
-            height: 130%;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.02) 0%, transparent 50%);
-            animation: resonancePulse 20s infinite alternate ease-in-out;
-            pointer-events: none;
-        }
+  /* Resonancia Trinity */
+  .trinity-resonance {
+    position:absolute; top:50%; left:50%;
+    width:130%; height:130%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(160,110,230,0.05) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(90,130,220,0.05) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(80,190,140,0.025) 0%, transparent 50%);
+    transform: translate(-50%,-50%);
+    animation: resonancePulse 20s infinite alternate ease-in-out;
+    pointer-events:none;
+    will-change: transform, opacity;
+  }
+  @keyframes resonancePulse {
+    0%   { opacity:0.2; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity:0.6; transform: translate(-50%,-50%) scale(1.1); }
+  }
 
-        @keyframes resonancePulse {
-            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
-        }
+  /* Principio holográfico */
+  .holographic-principle {
+    position:absolute; top:50%; left:50%;
+    width:max(100%, 100vmin); height:max(100%, 100vmin);
+    background: repeating-radial-gradient(circle at center,
+      transparent 0, transparent min(20px,2.5vmin),
+      rgba(160,110,230,0.035) min(20px,2.5vmin), rgba(160,110,230,0.035) min(21px,2.65vmin));
+    transform: translate(-50%,-50%);
+    animation: hologramShift 15s infinite linear;
+    will-change: transform;
+    pointer-events:none;
+  }
+  @keyframes hologramShift {
+    from { transform: translate(-50%,-50%) rotate(0deg)   scale(1); }
+    50%  { transform: translate(-50%,-50%) rotate(180deg) scale(1.05); }
+    to   { transform: translate(-50%,-50%) rotate(360deg) scale(1); }
+  }
 
-        /* NUEVO: Líneas de conexión entre centros */
-        .center-connection {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(147, 51, 234, 0.3), 
-                rgba(59, 130, 246, 0.3), 
-                transparent);
-            transform-origin: 0 0;
-            animation: connectionFade 4s infinite ease-in-out;
-            pointer-events: none;
-        }
+  /* Esfera de Pascal */
+  .pascal-sphere {
+    position:absolute; top:50%; left:50%;
+    width:min(400px,58vmin); height:min(400px,58vmin);
+    border:1px dotted rgba(160,110,230,0.45);
+    border-radius:50%;
+    transform: translate(-50%,-50%);
+    animation: sphereRotate 25s infinite linear;
+    will-change: transform;
+    pointer-events:none;
+  }
+  @keyframes sphereRotate {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+  }
 
-        @keyframes connectionFade {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 0.6; }
-        }
-    </style>
+  /* Lienzo: circunferencias hacia ninguna parte e hilos entre centros */
+  canvas.trama {
+    position:absolute; inset:0; width:100%; height:100%;
+    pointer-events:none;
+  }
+
+  /* Red de Indra: joyas fijas, cada una con su color del espectro */
+  .indra-net {
+    position:absolute; inset:0;
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .indra-jewel {
+    position:absolute;
+    width:clamp(5px,1.2vmin,8px); height:clamp(5px,1.2vmin,8px);
+    margin:calc(clamp(5px,1.2vmin,8px) / -2) 0 0 calc(clamp(5px,1.2vmin,8px) / -2);
+    border-radius:50%;
+    animation: jewelGlimmer 6s infinite ease-in-out;
+    will-change: transform, opacity;
+  }
+  @keyframes jewelGlimmer {
+    0%,100% { transform: scale(1);    opacity:0.75; }
+    25%     { transform: scale(1.15); opacity:0.9; }
+    50%     { transform: scale(1.3);  opacity:1; }
+    75%     { transform: scale(1.1);  opacity:0.85; }
+  }
+
+  /* Centros que nacen en cualquier parte */
+  .center-point {
+    position:absolute;
+    width:clamp(5px,1.1vmin,7px); height:clamp(5px,1.1vmin,7px);
+    margin:calc(clamp(5px,1.1vmin,7px) / -2) 0 0 calc(clamp(5px,1.1vmin,7px) / -2);
+    animation: centerLife 6s ease-in-out forwards;
+    pointer-events:none;
+    z-index:5;
+  }
+  .center-point::after {
+    content:''; position:absolute; inset:0;
+    border-radius:50%;
+    background: radial-gradient(circle,
+      rgba(255,245,235,0.95) 0%, rgba(225,190,255,0.85) 30%, rgba(160,110,230,0.6) 60%, transparent 100%);
+    box-shadow: 0 0 10px rgba(255,230,220,0.6), 0 0 22px rgba(160,110,230,0.4), 0 0 34px rgba(90,130,220,0.15);
+    animation: centerPulse 4s infinite ease-in-out;
+    animation-delay: inherit;
+  }
+  @keyframes centerLife {
+    0%   { opacity:0; }
+    10%  { opacity:1; }
+    85%  { opacity:1; }
+    100% { opacity:0; }
+  }
+  @keyframes centerPulse {
+    0%,100% { transform: scale(1);   opacity:0.75; }
+    50%     { transform: scale(1.6); opacity:1; }
+  }
+
+  .quantum-center {
+    position:absolute;
+    width:clamp(3px,0.7vmin,4px); height:clamp(3px,0.7vmin,4px);
+    background: rgba(70,190,210,0.85);
+    border-radius:50%;
+    opacity:0;
+    box-shadow: 0 0 6px rgba(70,190,210,0.5), 0 0 12px rgba(70,190,210,0.2);
+    animation: quantumAppear 5s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes quantumAppear {
+    0%,100% { opacity:0;   transform: scale(0.7); }
+    30%,70% { opacity:0.9; transform: scale(1.1); }
+  }
+
+  /* Textos herméticos: cada par se lee unos nueve segundos y medio */
+  .hermes-text {
+    position:absolute; left:50%;
+    width:max-content; max-width:86%; text-align:center;
+    color: rgba(190,160,235,0.85);
+    font-size: clamp(13px,3.5vw,15px);
+    font-style:italic; letter-spacing:1px;
+    text-shadow: 0 0 12px rgba(160,110,230,0.45);
+    opacity:0;
+    transform: translateX(-50%) scale(0.85);
+    animation: textManifest 14s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+    z-index:6;
+  }
+  .h-top    { top:13%; }
+  .h-bottom { bottom:24%; animation-delay:1.6s; }
+  @keyframes textManifest {
+    0%      { opacity:0;    transform: translateX(-50%) scale(0.85); }
+    12%     { opacity:0.92; transform: translateX(-50%) scale(1); }
+    80%     { opacity:0.92; transform: translateX(-50%) scale(1); }
+    92%,100%{ opacity:0;    transform: translateX(-50%) scale(0.85); }
+  }
+
+  .center-paradox {
+    position:absolute; bottom:8%; left:50%;
+    transform: translateX(-50%);
+    width:88%;
+    color: rgba(195,165,240,0.9);
+    font-size: clamp(15px,4.2vw,19px);
+    text-align:center; line-height:1.5;
+    text-shadow: 0 0 20px rgba(160,110,230,0.45);
+    animation: paradoxPulse 6s infinite ease-in-out;
+    will-change: opacity;
+    z-index:6;
+  }
+  @keyframes paradoxPulse {
+    0%,100% { opacity:0.65; }
+    50%     { opacity:0.98; }
+  }
+
+  .transmission-code {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 18px);
+    transform: translateX(-50%);
+    color: rgba(160,110,230,0.42);
+    font-family:'Courier New', monospace;
+    font-size:10px; letter-spacing:2px;
+    white-space:nowrap;
+    animation: codeFlicker 5s infinite ease-in-out;
+  }
+  @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform: translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px,3.2vw,14px);
+    letter-spacing:1px;
+    color: rgba(245,240,255,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+    z-index:20;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(200,180,240,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:21;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(230,200,255,0.95); text-shadow: 0 0 18px rgba(160,110,230,0.6); outline:none; }
+
+  @media (max-width: 480px) {
+    .transmission-code { font-size:7.5px; letter-spacing:0.5px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; }
+    .indra-jewel { opacity:0.85; }
+    .center-point { opacity:1; }
+    .hermes-text { opacity:0.9; transform: translateX(-50%); }
+    .center-paradox { opacity:0.92; }
+    .hint { opacity:0.85; }
+    .hint.oculto { opacity:0; }
+  }
+</style>
 </head>
 <body>
-    <div class="omnipresent-center">
-        <div class="trinity-resonance"></div>
-        <div class="holographic-principle"></div>
-        <div class="pascal-sphere"></div>
-        <div class="indra-net"></div>
+  <div class="omnipresent-center" id="campo">
+    <div class="trinity-resonance"></div>
+    <div class="holographic-principle"></div>
+    <div class="pascal-sphere"></div>
+    <canvas class="trama" id="trama"></canvas>
+    <div class="indra-net" id="indra"></div>
 
-        <div class="hermes-text" style="top: 15%; left: 50%; transform: translateX(-50%); animation-delay: 0s;">
-            Como es arriba
-        </div>
-        <div class="hermes-text" style="bottom: 15%; left: 50%; transform: translateX(-50%); animation-delay: 4s;">
-            Es abajo
-        </div>
-        
-        <div class="center-paradox">
-            El centro está en todas partes<br>
-            La circunferencia en ninguna
-        </div>
-    </div>
+    <div class="hermes-text h-top">Como es arriba</div>
+    <div class="hermes-text h-bottom">Es abajo</div>
 
-    <div class="transmission-code">TRINITY::NODO_52::CENTRO_OMNIPRESENTE::RESONANDO</div>
+    <div class="center-paradox">El centro está en todas partes<br>La circunferencia en ninguna</div>
+  </div>
 
-    <script>
-        // MEJORA: Sistema de centros omnipresentes optimizado
-        const container = document.querySelector('.omnipresent-center');
-        const centerPoints = [];
-        const circumferenceWaves = [];
-        
-        function createCenter() {
-            const center = document.createElement('div');
-            center.className = 'center-point';
-            center.style.left = Math.random() * 100 + '%';
-            center.style.top = Math.random() * 100 + '%';
-            center.style.animationDelay = Math.random() * 4 + 's';
-            container.appendChild(center);
-            centerPoints.push(center);
-            
-            // Crear conexiones con otros centros
-            createCenterConnections(center);
-            
-            setTimeout(() => {
-                if (center.parentNode) {
-                    center.parentNode.removeChild(center);
-                    const index = centerPoints.indexOf(center);
-                    if (index > -1) centerPoints.splice(index, 1);
-                }
-            }, 6000);
-        }
-        
-        function createCenterConnections(newCenter) {
-            // Conectar con centros cercanos
-            centerPoints.forEach(center => {
-                if (center !== newCenter) {
-                    const rect1 = newCenter.getBoundingClientRect();
-                    const rect2 = center.getBoundingClientRect();
-                    
-                    const x1 = rect1.left + rect1.width / 2;
-                    const y1 = rect1.top + rect1.height / 2;
-                    const x2 = rect2.left + rect2.width / 2;
-                    const y2 = rect2.top + rect2.height / 2;
-                    
-                    const distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-                    
-                    if (distance < 200) {
-                        const connection = document.createElement('div');
-                        connection.className = 'center-connection';
-                        
-                        const angle = Math.atan2(y2 - y1, x2 - x1);
-                        connection.style.width = distance + 'px';
-                        connection.style.left = x1 + 'px';
-                        connection.style.top = y1 + 'px';
-                        connection.style.transform = `rotate(${angle}rad)`;
-                        connection.style.animationDelay = Math.random() * 2 + 's';
-                        
-                        container.appendChild(connection);
-                        
-                        setTimeout(() => {
-                            if (connection.parentNode) connection.parentNode.removeChild(connection);
-                        }, 4000);
-                    }
-                }
-            });
-        }
-        
-        // Crear centros iniciales
-        for (let i = 0; i < 8; i++) {
-            setTimeout(createCenter, i * 600);
-        }
-        
-        // Mantener densidad constante
-        const centerInterval = setInterval(createCenter, 800);
-        
-        // MEJORA: Circunferencias que se expanden hacia ninguna parte
-        function createCircumference() {
-            const circ = document.createElement('div');
-            circ.className = 'circumference-nowhere';
-            
-            const x = Math.random() * 100;
-            const y = Math.random() * 100;
-            
-            circ.style.left = x + '%';
-            circ.style.top = y + '%';
-            circ.style.transform = 'translate(-50%, -50%)';
-            circ.style.animationDelay = Math.random() * 2 + 's';
-            
-            container.appendChild(circ);
-            circumferenceWaves.push(circ);
-            
-            setTimeout(() => {
-                if (circ.parentNode) {
-                    circ.parentNode.removeChild(circ);
-                    const index = circumferenceWaves.indexOf(circ);
-                    if (index > -1) circumferenceWaves.splice(index, 1);
-                }
-            }, 10000);
-        }
-        
-        setInterval(createCircumference, 2500);
-        
-        // MEJORA: Red de Indra optimizada
-        const indraNet = document.querySelector('.indra-net');
-        const gridSize = 6;
-        const indraJewels = [];
-        
-        for (let i = 0; i <= gridSize; i++) {
-            for (let j = 0; j <= gridSize; j++) {
-                const jewel = document.createElement('div');
-                jewel.className = 'indra-jewel';
-                
-                const x = (i / gridSize) * 100;
-                const y = (j / gridSize) * 100;
-                
-                jewel.style.left = x + '%';
-                jewel.style.top = y + '%';
-                jewel.style.animationDelay = `${(i + j) * 0.3}s`;
-                jewel.style.animationDuration = `${4 + (i + j) * 0.2}s`;
-                
-                indraNet.appendChild(jewel);
-                indraJewels.push(jewel);
-            }
-        }
-        
-        // MEJORA: Centros cuánticos con mayor variación
-        for (let i = 0; i < 15; i++) {
-            const quantum = document.createElement('div');
-            quantum.className = 'quantum-center';
-            quantum.style.left = Math.random() * 100 + '%';
-            quantum.style.top = Math.random() * 100 + '%';
-            quantum.style.animationDelay = Math.random() * 5 + 's';
-            quantum.style.animationDuration = (3 + Math.random() * 3) + 's';
-            container.appendChild(quantum);
-        }
-        
-        // MEJORA: Paradoja de Pascal con requestAnimationFrame
-        let everywhereCount = 0;
-        let lastUpdate = 0;
-        
-        function updatePascalParadox(timestamp) {
-            if (!lastUpdate) lastUpdate = timestamp;
-            const deltaTime = (timestamp - lastUpdate) / 1000;
-            lastUpdate = timestamp;
-            
-            everywhereCount += deltaTime;
-            
-            // Eventos de paradoja hermética
-            if (Math.floor(everywhereCount * 40) % 157 === 0 && deltaTime < 0.1) {
-                const events = [
-                    'Esfera infinita de Pascal: Centro en todas partes, circunferencia en ninguna',
-                    'Principio holográfico: Cada punto contiene el todo',
-                    'Red de Indra: Cada joya refleja todas las demás',
-                    'Como es arriba, es abajo: El macrocosmos en el microcosmos'
-                ];
-                console.log('🌀 ' + events[Math.floor(Math.random() * events.length)]);
-            }
-            
-            // Ciclo completo cada ~15.7 segundos (5*PI)
-            if (everywhereCount > Math.PI * 5) {
-                everywhereCount = 0;
-                console.log('🌌 Ciclo hermético completado - El centro se renueva en cada punto');
-            }
-            
-            requestAnimationFrame(updatePascalParadox);
-        }
-        
-        requestAnimationFrame(updatePascalParadox);
-        
-        // MEJORA: Interacción de resonancia
-        container.addEventListener('mouseenter', () => {
-            clearInterval(centerInterval);
-            setInterval(createCenter, 400);
-            container.style.filter = 'drop-shadow(0 0 60px rgba(147, 51, 234, 0.4))';
-            
-            // Intensificar joyas de Indra
-            indraJewels.forEach(jewel => {
-                jewel.style.animationDuration = '3s';
-            });
-        });
-        
-        container.addEventListener('mouseleave', () => {
-            clearInterval(centerInterval);
-            setInterval(createCenter, 800);
-            container.style.filter = 'drop-shadow(0 0 40px rgba(147, 51, 234, 0.2))';
-            
-            // Restaurar velocidades normales
-            indraJewels.forEach((jewel, index) => {
-                jewel.style.animationDuration = `${4 + (index % 10) * 0.2}s`;
-            });
-        });
-        
-        // MEJORA: Textos herméticos cíclicos
-        const hermesTexts = [
-            { top: 'Como es arriba', bottom: 'Es abajo' },
-            { top: 'El interior', bottom: 'Es el exterior' },
-            { top: 'El centro', bottom: 'En todas partes' },
-            { top: 'El todo', bottom: 'En cada parte' }
-        ];
-        
-        let hermesIndex = 0;
-        const hermesElements = document.querySelectorAll('.hermes-text');
-        
-        setInterval(() => {
-            hermesIndex = (hermesIndex + 1) % hermesTexts.length;
-            hermesElements[0].textContent = hermesTexts[hermesIndex].top;
-            hermesElements[1].textContent = hermesTexts[hermesIndex].bottom;
-        }, 12000);
-        
-        console.log('🌌 Nodo 52 activo: El centro omnipresente se manifiesta en cada punto');
-        console.log('💫 Principio hermético: Como es arriba, es abajo');
-        console.log('🌀 Red de Indra: Cada punto refleja la totalidad del universo');
-    </script>
+  <div class="transmission-code">TRINITY::NODO_52::CENTRO_OMNIPRESENTE::RESONANDO</div>
+  <div class="hint">( toca — cada punto es el centro )</div>
+
+  <a class="infinito" href="L8-Nodo4.html" aria-label="Siguiente portal">∞</a>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const campo = document.getElementById('campo');
+  const lienzo = document.getElementById('trama');
+  const g = lienzo.getContext('2d');
+  let W = 0, H = 0, dpr = 1;
+
+  function medir() {
+    const r = campo.getBoundingClientRect();
+    W = r.width; H = r.height; dpr = Math.min(2, window.devicePixelRatio || 1);
+    lienzo.width = Math.round(W * dpr); lienzo.height = Math.round(H * dpr);
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  medir();
+
+  /* ---------------- Red de Indra: joyas fijas, color por diagonal del espectro ---------------- */
+  const JOYAS = ['rgba(160,110,230,', 'rgba(110,120,230,', 'rgba(90,150,220,', 'rgba(70,185,200,',
+                 'rgba(80,190,140,', 'rgba(215,175,95,', 'rgba(215,105,130,'];
+  const indra = document.getElementById('indra');
+  function tejerIndra() {
+    indra.innerHTML = '';
+    const cols = 6, filas = Math.max(6, Math.round(6 * H / W));
+    for (let i = 0; i <= cols; i++) for (let j = 0; j <= filas; j++) {
+      const jw = document.createElement('div');
+      jw.className = 'indra-jewel';
+      const c = JOYAS[(i + j) % JOYAS.length];
+      jw.style.left = (i / cols * 100) + '%';
+      jw.style.top = (j / filas * 100) + '%';
+      jw.style.background = 'radial-gradient(circle,' + c + '0.95),' + c + '0.45) 55%, transparent 100%)';
+      jw.style.boxShadow = '0 0 8px ' + c + '0.45), 0 0 16px ' + c + '0.18)';
+      jw.style.animationDelay = ((i + j) * 0.3) + 's';
+      jw.style.animationDuration = (4 + (i + j) * 0.2) + 's';
+      indra.appendChild(jw);
+    }
+  }
+  tejerIndra();
+
+  /* ---------------- Centros cuánticos ---------------- */
+  for (let i = 0; i < 15; i++) {
+    const q = document.createElement('div');
+    q.className = 'quantum-center';
+    q.style.left = (Math.random() * 100) + '%';
+    q.style.top = (Math.random() * 100) + '%';
+    q.style.animationDelay = (Math.random() * 5) + 's';
+    q.style.animationDuration = (3 + Math.random() * 3) + 's';
+    campo.appendChild(q);
+  }
+
+  /* ---------------- Centros que nacen en cualquier parte, con sus hilos ---------------- */
+  const centros = [];   // {x, y (fracción), nace}
+  const hilos = [];     // {a, b, nace, dura}
+  const aros = [];      // {x, y, nace, dura}
+
+  function nacerCentro(x, y) {
+    const ahora = performance.now();
+    const c = { x, y, nace: ahora };
+    const el = document.createElement('div');
+    el.className = 'center-point';
+    el.style.left = (x * 100) + '%'; el.style.top = (y * 100) + '%';
+    el.style.animationDelay = '0s';
+    campo.appendChild(el);
+    c.el = el;
+    // hilos hacia los centros cercanos que siguen vivos
+    const umbral = 0.33 * Math.min(W, H);
+    centros.forEach(o => {
+      const d = Math.hypot((o.x - x) * W, (o.y - y) * H);
+      if (d < umbral) hilos.push({ a: c, b: o, nace: ahora + Math.random() * 600, dura: 4000 });
+    });
+    centros.push(c);
+    setTimeout(() => {
+      el.remove();
+      const k = centros.indexOf(c); if (k > -1) centros.splice(k, 1);
+    }, 6000);
+    return c;
+  }
+
+  function nacerAro(x, y) {
+    aros.push({ x, y, nace: performance.now(), dura: 10000 });
+  }
+
+  /* Dibujo del lienzo: aros que se expanden hacia ninguna parte, hilos que respiran */
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  function tramo(v, pts) {           // interpolación lineal por tramos [[t, valor], ...]
+    for (let i = 1; i < pts.length; i++) {
+      if (v <= pts[i][0]) { const [t0, a] = pts[i - 1], [t1, b] = pts[i]; return a + (b - a) * (v - t0) / (t1 - t0); }
+    }
+    return pts[pts.length - 1][1];
+  }
+  function dibujar(ahora) {
+    g.clearRect(0, 0, W, H);
+    const Rmax = 0.62 * Math.max(W, H);
+    for (let i = aros.length - 1; i >= 0; i--) {
+      const a = aros[i], v = (ahora - a.nace) / a.dura;
+      if (v >= 1) { aros.splice(i, 1); continue; }
+      if (v < 0) continue;
+      const e = easeOut(v);
+      const r = 0.032 * Math.min(W, H) + (Rmax - 0.032 * Math.min(W, H)) * e;
+      const al = tramo(v, [[0, 0], [0.15, 0.7], [0.85, 0.2], [1, 0]]);
+      g.beginPath();
+      g.arc(a.x * W, a.y * H, r, 0, Math.PI * 2);
+      g.strokeStyle = 'rgba(90,140,230,' + (al * 0.42).toFixed(3) + ')';
+      g.lineWidth = tramo(v, [[0, 1], [0.15, 1.5], [0.85, 0.5], [1, 0.2]]);
+      g.stroke();
+    }
+    for (let i = hilos.length - 1; i >= 0; i--) {
+      const h = hilos[i], v = (ahora - h.nace) / h.dura;
+      if (v >= 1) { hilos.splice(i, 1); continue; }
+      if (v < 0) continue;
+      const al = 0.6 * Math.sin(Math.PI * v);
+      const x1 = h.a.x * W, y1 = h.a.y * H, x2 = h.b.x * W, y2 = h.b.y * H;
+      const gr = g.createLinearGradient(x1, y1, x2, y2);
+      gr.addColorStop(0, 'rgba(160,110,230,0)');
+      gr.addColorStop(0.3, 'rgba(170,120,235,' + (al * 0.75).toFixed(3) + ')');
+      gr.addColorStop(0.7, 'rgba(90,140,230,' + (al * 0.75).toFixed(3) + ')');
+      gr.addColorStop(1, 'rgba(90,140,230,0)');
+      g.beginPath(); g.moveTo(x1, y1); g.lineTo(x2, y2);
+      g.strokeStyle = gr; g.lineWidth = 1; g.stroke();
+    }
+  }
+
+  function vivir(ahora) { dibujar(ahora); requestAnimationFrame(vivir); }
+
+  if (reduce) {
+    // Pista quieta: algunos centros enlazados y tres circunferencias detenidas
+    const fijos = [[0.22,0.3],[0.38,0.22],[0.31,0.46],[0.7,0.35],[0.62,0.58],[0.8,0.62],[0.48,0.7]];
+    fijos.forEach(([x, y]) => {
+      const el = document.createElement('div'); el.className = 'center-point';
+      el.style.left = (x * 100) + '%'; el.style.top = (y * 100) + '%'; campo.appendChild(el);
+    });
+    g.lineWidth = 1;
+    [[0.3,0.35,0.18],[0.68,0.55,0.3],[0.5,0.5,0.5]].forEach(([x, y, r]) => {
+      g.beginPath(); g.arc(x * W, y * H, r * Math.min(W, H), 0, Math.PI * 2);
+      g.strokeStyle = 'rgba(90,140,230,0.22)'; g.stroke();
+    });
+    [[0,1],[1,2],[0,2],[3,4],[4,5],[4,6],[2,6]].forEach(([a, b]) => {
+      g.beginPath(); g.moveTo(fijos[a][0] * W, fijos[a][1] * H); g.lineTo(fijos[b][0] * W, fijos[b][1] * H);
+      g.strokeStyle = 'rgba(150,120,230,0.3)'; g.stroke();
+    });
+  } else {
+    for (let i = 0; i < 8; i++) setTimeout(() => nacerCentro(Math.random(), Math.random()), i * 600);
+    setInterval(() => nacerCentro(Math.random(), Math.random()), 800);
+    nacerAro(Math.random(), Math.random());
+    setInterval(() => nacerAro(Math.random(), Math.random()), 2500);
+    requestAnimationFrame(vivir);
+  }
+
+  addEventListener('resize', () => { medir(); tejerIndra(); });
+
+  /* ---------------- Textos herméticos: cada par cambia mientras está invisible ---------------- */
+  const hermes = [
+    { top: 'Como es arriba', bot: 'Es abajo' },
+    { top: 'El interior',    bot: 'Es el exterior' },
+    { top: 'El centro',      bot: 'En todas partes' },
+    { top: 'El todo',        bot: 'En cada parte' }
+  ];
+  const hTop = document.querySelector('.h-top'), hBot = document.querySelector('.h-bottom');
+  let iTop = 0, iBot = 0;
+  hTop.addEventListener('animationiteration', () => { iTop = (iTop + 1) % hermes.length; hTop.textContent = hermes[iTop].top; });
+  hBot.addEventListener('animationiteration', () => { iBot = (iBot + 1) % hermes.length; hBot.textContent = hermes[iBot].bot; });
+
+  /* ---------------- Diseño sonoro: la Red de Indra (centro en todas partes) -----------
+     Sin tónica privilegiada: la escala de tonos enteros es simétrica, cualquier nota puede
+     ser el centro y por eso ninguna lo es. Cada centro que suena lo hace del lado del campo
+     donde nació, y enseguida se refleja tenue en otras octavas y otros lugares del estéreo:
+     cada joya refleja a todas. Debajo, el tritono grave (Do y Fa sostenido), que divide la
+     octava en dos mitades iguales y no se asienta.
+  ------------------------------------------------------------------------------------ */
+  let started = false, ctx, master, conv;
+  const WT = [0, 2, 4, 6, 8, 10];
+  const BASE = 261.6;
+  const pitch = s => BASE * Math.pow(2, s / 12);
+
+  function makeReverbIR(ac, seconds = 3.6, decay = 2.6) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, decay);
+    }
+    return buf;
+  }
+  function bell(freq, pan, level, delay = 0) {
+    const t = ctx.currentTime + delay;
+    const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = freq;
+    const o2 = ctx.createOscillator(); o2.type = 'sine'; o2.frequency.value = freq * 2;
+    const a = ctx.createGain(); a.gain.value = 0;
+    const a2 = ctx.createGain(); a2.gain.value = 0;
+    const p = ctx.createStereoPanner(); p.pan.value = pan;
+    o.connect(a); o2.connect(a2); a.connect(p); a2.connect(p);
+    p.connect(master); p.connect(conv);
+    o.start(t); o2.start(t);
+    a.gain.setValueAtTime(0, t);
+    a.gain.linearRampToValueAtTime(level, t + 0.02);
+    a.gain.exponentialRampToValueAtTime(0.0004, t + 2.4);
+    a2.gain.setValueAtTime(0, t);
+    a2.gain.linearRampToValueAtTime(level * 0.35, t + 0.02);
+    a2.gain.exponentialRampToValueAtTime(0.0004, t + 1.8);
+    o.stop(t + 2.6); o2.stop(t + 2.6);
+  }
+  function joya(x) {
+    if (!started) return;
+    const semis = WT[Math.floor(Math.random() * WT.length)] + (Math.random() < 0.4 ? 12 : 0);
+    const f = pitch(semis);
+    bell(f, Math.max(-0.9, Math.min(0.9, (x - 0.5) * 1.8)), 0.05);
+    const n = 2 + Math.floor(Math.random() * 2);
+    for (let k = 0; k < n; k++) {
+      const oct = [0.5, 1, 2][Math.floor(Math.random() * 3)];
+      bell(f * oct, Math.random() * 1.8 - 0.9, 0.02, 0.12 + k * 0.14);
+    }
+  }
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0;
+    master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 6);
+    conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    const wet = ctx.createGain(); wet.gain.value = 0.5;
+    conv.connect(wet); wet.connect(master);
+    [pitch(0) / 2, pitch(6) / 2].forEach((f, i) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const a = ctx.createGain(); a.gain.value = 0;
+      o.connect(a); a.connect(master); o.start();
+      a.gain.linearRampToValueAtTime(0.02, ctx.currentTime + 6 + i);
+    });
+    // cada 2,5 s suena el centro más reciente, del lado donde nació
+    setTimeout(() => joya(centros.length ? centros[centros.length - 1].x : Math.random()), 900);
+    setInterval(() => joya(centros.length ? centros[centros.length - 1].x : Math.random()), 2500);
+  }
+
+  /* El toque: un centro nace donde tocas, con su circunferencia y su nota */
+  const hint = document.querySelector('.hint');
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    if (hint) hint.classList.add('oculto');
+    const r = campo.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    if (!reduce && x >= 0 && x <= 1 && y >= 0 && y <= 1) { nacerCentro(x, y); nacerAro(x, y); }
+    if (ctx) joya(Math.max(0, Math.min(1, x)));
+  });
+</script>
 </body>
 </html>

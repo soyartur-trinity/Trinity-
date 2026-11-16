@@ -2,25 +2,27 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Portal 49: El Conocimiento que Se Desconoce &mdash; Trinity Infinito</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box;
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
+  html, body { height:100%; }
   body {
     background: radial-gradient(ellipse at center, #0a0012, #000);
     overflow:hidden;
     display:flex; justify-content:center; align-items:center;
-    height:100vh;
+    height:100vh; height:100dvh;
     font-family:'Georgia', serif;
     cursor:none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .knowledge-paradox {
     position:relative;
-    width:min(700px, 95vw);
-    height:min(700px, 95vw);
+    width:min(700px, 95vw, 82vh);
+    height:min(700px, 95vw, 82vh);
     filter: drop-shadow(0 0 40px rgba(150,110,200,0.2));
   }
 
@@ -41,7 +43,7 @@
     100% { opacity:0.6; transform: translate(-50%,-50%) scale(1.1); }
   }
 
-  /* Esfera de gnosis: espectro iridiscente suavizado por mascara radial, sin desenfoque */
+  /* Esfera de gnosis: espectro iridiscente suavizado por máscara radial */
   .gnosis-sphere {
     position:absolute; top:50%; left:50%;
     width:min(350px,50vw); height:min(350px,50vw);
@@ -79,8 +81,9 @@
   .knowledge-fragment {
     position:absolute; top:50%; left:50%;
     color: rgba(180,150,220,0.8);
-    font-size: clamp(10px,1.8vw,12px);
+    font-size: clamp(10px,2.6vw,12px);
     font-weight:300;
+    white-space:nowrap;
     text-shadow: 0 0 10px rgba(150,110,200,0.4);
     animation: fragmentOrbit 18s infinite linear;
     will-change: transform;
@@ -117,7 +120,7 @@
   .erasure-line:nth-child(6){ transform: rotate(150deg); }
   @keyframes eraseRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-  /* Ouroboros del conocimiento */
+  /* Uróboros del conocimiento */
   .ouroboros-knowledge {
     position:absolute; top:50%; left:50%;
     width:min(450px,65vw); height:min(450px,65vw);
@@ -159,15 +162,15 @@
   /* Los dos nudos: saber que no se sabe / no saber que se sabe */
   .meta-knowledge, .anti-knowledge {
     position:absolute; left:50%;
-    font-size: clamp(12px,2.2vw,14px);
-    text-align:center; line-height:1.5; width:80%;
+    font-size: clamp(14px,3.8vw,16px);
+    text-align:center; line-height:1.5; width:86%;
     transform: translateX(-50%);
     animation: metaPulse 8s infinite ease-in-out;
     will-change: opacity;
   }
-  .meta-knowledge { top:10%;    color: rgba(180,150,220,0.7); text-shadow: 0 0 15px rgba(150,110,200,0.3); }
-  .anti-knowledge { bottom:10%; color: rgba(120,160,225,0.7); text-shadow: 0 0 15px rgba(90,130,210,0.3); animation-direction:reverse; }
-  @keyframes metaPulse { 0%,100% { opacity:0.4; } 50% { opacity:0.9; } }
+  .meta-knowledge { top:7%;    color: rgba(190,160,230,0.8); text-shadow: 0 0 15px rgba(150,110,200,0.3); }
+  .anti-knowledge { bottom:7%; color: rgba(130,170,230,0.8); text-shadow: 0 0 15px rgba(90,130,210,0.3); animation-direction:reverse; }
+  @keyframes metaPulse { 0%,100% { opacity:0.5; } 50% { opacity:0.95; } }
 
   .quantum-uncertainty {
     position:absolute; width:2px; height:2px;
@@ -182,59 +185,98 @@
     50%     { opacity:0.9; transform: scale(1.5); }
   }
 
+  /* Señal central: ◈ al abrir, ∅ al regresar a la ignorancia */
   .paradox-indicator {
     position:fixed; top:50%; left:50%;
     transform: translate(-50%,-50%);
-    font-size: clamp(24px,6vw,32px);
-    color: rgba(150,110,200,0);
-    letter-spacing:8px; font-weight:300;
+    width:max-content; max-width:92vw; text-align:center;
+    font-size: clamp(16px,4.6vw,32px);
+    letter-spacing: clamp(3px,1.2vw,8px);
+    color: rgba(190,160,235,0.92);
+    text-shadow: 0 0 40px rgba(150,110,200,0.9);
+    font-weight:300;
+    opacity:0;
+    transition: opacity 1.5s ease;
     pointer-events:none; z-index:999;
-    text-shadow: 0 0 30px rgba(150,110,200,0);
-    transition: color 1.5s ease, text-shadow 1.5s ease;
-    will-change: color, text-shadow;
   }
-  .paradox-indicator.active {
-    color: rgba(180,150,220,0.9);
-    text-shadow: 0 0 50px rgba(150,110,200,0.9);
+  .paradox-indicator.active { opacity:1; }
+  .paradox-indicator.grande { font-size: clamp(34px,10vw,58px); letter-spacing:0; }
+
+  /* La línea de las frecuencias (la de enero) */
+  .frecuencias {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 84px);
+    transform: translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(11px,3vw,13px); line-height:1.6;
+    letter-spacing:2px;
+    color: rgba(185,155,225,0.72);
+    animation: displayPulse 4s infinite ease-in-out;
+    pointer-events:none;
+    z-index:900;
   }
+  .frecuencias span { display:inline-block; transition: opacity 1.2s ease; }
+  .frecuencias span.fuera { opacity:0; }
+  @keyframes displayPulse { 0%,100% { opacity:0.6; } 50% { opacity:0.95; } }
 
   .transmission-code {
-    position:absolute; bottom:20px; left:50%;
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 18px);
     transform: translateX(-50%);
     color: rgba(150,110,200,0.4);
     font-family:'Courier New', monospace;
-    font-size: clamp(9px,1.5vw,10px); letter-spacing:2px;
+    font-size:10px; letter-spacing:2px;
+    white-space:nowrap;
     animation: codeFlicker 6s infinite ease-in-out;
   }
   @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
 
   .hint {
-    position:fixed; bottom:52px; left:50%;
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
     transform: translateX(-50%);
-    color: rgba(245,242,234,0.55);
-    font-size: clamp(11px,2.6vw,13px); letter-spacing:1px;
-    animation: breathe 3.4s infinite ease-in-out;
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px,3.2vw,14px);
+    letter-spacing:1px;
+    color: rgba(245,240,255,0.88);
+    animation: invita 3.4s infinite ease-in-out;
     pointer-events:none;
-    transition: opacity 1.2s ease;
+    transition: opacity 1.4s ease;
     z-index:1000;
   }
-  @keyframes breathe { 0%,100% { opacity:0.25; } 50% { opacity:0.75; } }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
 
   .infinito {
-    position:fixed; bottom:22px; right:26px;
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
     font-size:30px; text-decoration:none;
-    color: rgba(208,192,160,0.35);
+    color: rgba(208,192,160,0.38);
     transition: color 0.8s ease, text-shadow 0.8s ease;
     z-index:1001;
+    cursor:pointer;
   }
-  .infinito:hover { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); }
+  .infinito:hover, .infinito:focus-visible { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); outline:none; }
+
+  /* Pantalla alta (teléfono de pie): el campo se estira y los dos nudos quedan fuera del círculo */
+  @media (max-aspect-ratio: 3/4) {
+    .knowledge-paradox { width:95vw; height:72vh; }
+    .meta-knowledge { top:2%; }
+    .anti-knowledge { bottom:2%; }
+  }
+  @media (max-width: 480px) {
+    .transmission-code { font-size:7.5px; letter-spacing:0.3px; }
+    .frecuencias { letter-spacing:1px; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; }
     .gnosis-sphere { transform: translate(-50%,-50%); }
-    .meta-knowledge { opacity:0.75; }
-    .anti-knowledge { opacity:0.75; }
-    .hint { opacity:0.5; }
+    .knowledge-fragment.forgetting { opacity:0.55; }
+    .meta-knowledge, .anti-knowledge { opacity:0.85; }
+    .frecuencias { opacity:0.8; }
+    .hint { opacity:0.85; }
+    .hint.oculto { opacity:0; }
   }
 </style>
 </head>
@@ -261,17 +303,19 @@
     <div class="anti-knowledge">No saber que se sabe<br>que no se sabe</div>
   </div>
 
+  <div class="frecuencias"><span id="freqText">&#8767; 528 Hz &#8855; 432 Hz &rarr; Conocimiento que se desconoce &#8767;</span></div>
   <div class="transmission-code">TRINITY::PORTAL_49::GNOSIS_AMNESICA::LIBRO_7_NODO_7::RESONANDO</div>
-  <div class="hint">( tocá — el conocimiento que se desconoce a s&iacute; mismo )</div>
+  <div class="hint">( toca — el conocimiento que se desconoce a s&iacute; mismo )</div>
 
-  <a class="infinito" href="L7-Nodo1.html" title="el libro se muerde la cola">∞</a>
+  <a class="infinito" href="../Libro8/L8-Nodo1.html" aria-label="Siguiente portal">∞</a>
 
 <script>
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const paradox = document.querySelector('.knowledge-paradox');
 
-  /* Fragmentos orbitales (algunos se olvidan cíclicamente) */
-  const fragments = ['CERTEZA','DUDA','VERDAD','ILUSI\u00D3N','MEMORIA','OLVIDO','LUZ','SOMBRA','SER','NO-SER','TODO','NADA','INFINITO','VAC\u00CDO','AHORA','NUNCA'];
+  /* Fragmentos orbitales (algunos se olvidan cíclicamente). Cada uno entra en la órbita
+     con su propio desfase, para que se repartan alrededor del círculo. */
+  const fragments = ['CERTEZA','DUDA','VERDAD','ILUSIÓN','MEMORIA','OLVIDO','LUZ','SOMBRA','SER','NO-SER','TODO','NADA','INFINITO','VACÍO','AHORA','NUNCA'];
   fragments.forEach((text, index) => {
     const f = document.createElement('div');
     f.className = 'knowledge-fragment';
@@ -279,6 +323,7 @@
     const angle = (index / fragments.length) * 360;
     f.style.transform = `rotate(${angle}deg) translateX(min(175px,25vw)) rotate(-${angle}deg)`;
     if (index % 3 === 0) f.classList.add('forgetting');
+    else f.style.animationDelay = (-(angle / 360) * 18).toFixed(2) + 's';
     paradox.appendChild(f);
   });
 
@@ -308,22 +353,43 @@
   if (!reduce) requestAnimationFrame(paradoxCycle);
   else core.style.opacity = 0.6;
 
-  /* Revelación inicial del cierre del libro */
+  /* Señal central y línea de las frecuencias */
   const msg = document.getElementById('paradoxMsg');
-  setTimeout(() => {
-    msg.innerHTML = '&#9672; TRINITY INFINITO &#9672;';
+  function senal(texto, dura, grande) {
+    msg.innerHTML = texto;
+    msg.classList.toggle('grande', !!grande);
     msg.classList.add('active');
-    setTimeout(() => { msg.classList.remove('active'); setTimeout(() => { msg.innerHTML = '&#9672;'; }, 1500); }, 3200);
-  }, 1500);
+    setTimeout(() => { msg.classList.remove('active'); }, dura);
+  }
+  setTimeout(() => senal('&#9672; TRINITY INFINITO &#9672;', 3200), 1500);
+
+  const freq = document.getElementById('freqText');
+  const LINEA_BASE = '&#8767; 528 Hz &#8855; 432 Hz &rarr; Conocimiento que se desconoce &#8767;';
+  let freqTimer = null;
+  function linea(texto, dura) {
+    clearTimeout(freqTimer);
+    freq.classList.add('fuera');
+    setTimeout(() => { freq.innerHTML = texto; freq.classList.remove('fuera'); }, 1200);
+    if (dura) freqTimer = setTimeout(() => linea(LINEA_BASE), dura);
+  }
 
   /* ---------------- Diseño sonoro: la gnosis que se desconoce (cierre de la suite) ----
      El libro entero es epistemología: ausencia (N1), recursión (N2), disolución (N3),
      serie armónica (N4), autosimilitud (N5), tiniebla luminosa (N6). El cierre los recoge:
-     un acorde de gnosis (raíz + armónicos) cuyos pares laten y se ANULAN periódicamente
-     hacia el casi-silencio y vuelven —el saber que se desconoce a sí mismo y regresa—,
-     con un eco recursivo tenue (el ouroboros que se lee). Nace con el gesto, nunca solo.
+     un acorde de gnosis (raíz + armónicos) cuyos pares laten y se anulan periódicamente
+     hacia el casi silencio y vuelven, con un eco recursivo tenue (el uróboros que se lee).
+     La raíz es 132 Hz: así 396 y 528 Hz caen dentro del acorde, como sus armónicos 3 y 4.
+
+     En los valles del acorde aparecen 432 y 528 Hz. Son frecuencias de la tradición del
+     solfeggio; aquí no se les atribuye efecto alguno: suenan por lo que son juntas.
+     528/432 = 11/9, una tercera neutra (unos 347 cents), ni mayor ni menor: el intervalo
+     que no sabe lo que es. Suben cuando el acorde se hunde y se retiran cuando vuelve.
+
+     Dos tiempos del mismo toque: el primero enciende la paradoja sonora; el segundo,
+     cuando la invitación lo ofrece, regresa a la ignorancia (silencio en cuatro segundos).
   ------------------------------------------------------------------------------------ */
   let started = false, ctx, master, conv;
+  const NIVEL = 0.27;
 
   function makeReverbIR(ac, seconds = 3.4, decay = 2.8) {
     const len = Math.floor(ac.sampleRate * seconds);
@@ -340,25 +406,25 @@
     ctx = new (window.AudioContext || window.webkitAudioContext)();
     master = ctx.createGain(); master.gain.value = 0;
     master.connect(ctx.destination);
-    master.gain.linearRampToValueAtTime(0.27, ctx.currentTime + 6);
+    master.gain.linearRampToValueAtTime(NIVEL, ctx.currentTime + 6);
 
     conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
     const wet = ctx.createGain(); wet.gain.value = 0.55;
     conv.connect(wet); wet.connect(master);
 
-    // "gnosisGain": todo el saber. Un LFO lentísimo lo hunde hacia el casi-silencio y lo devuelve.
-    const gnosis = ctx.createGain(); gnosis.gain.value = 0.06;
+    // "gnosis": todo el saber. Un LFO lentísimo lo hunde hacia el casi silencio y lo devuelve.
+    const gnosis = ctx.createGain(); gnosis.gain.value = 0.3;
     const pan = ctx.createStereoPanner();
     gnosis.connect(pan); pan.connect(master); pan.connect(conv);
     const plfo = ctx.createOscillator(); plfo.frequency.value = 0.04;
     const plfoG = ctx.createGain(); plfoG.gain.value = 0.7;
     plfo.connect(plfoG); plfoG.connect(pan.pan); plfo.start();
-    // erase LFO: el conocimiento que se desconoce (dip profundo cada ~25s)
+    // el conocimiento que se desconoce: hundimiento profundo cada 25 s
     const erase = ctx.createOscillator(); erase.frequency.value = 0.04;
-    const eraseG = ctx.createGain(); eraseG.gain.value = 0.045;
+    const eraseG = ctx.createGain(); eraseG.gain.value = 0.225;
     erase.connect(eraseG); eraseG.connect(gnosis.gain); erase.start();
 
-    // Eco recursivo tenue (el ouroboros que se lee)
+    // Eco recursivo tenue (el uróboros que se lee)
     const delay = ctx.createDelay(2.0); delay.delayTime.value = 0.75;
     const fb = ctx.createGain(); fb.gain.value = 0.6;
     const fbLow = ctx.createBiquadFilter(); fbLow.type = 'lowpass'; fbLow.frequency.value = 1800;
@@ -367,11 +433,11 @@
     delay.connect(dWet); dWet.connect(master); dWet.connect(conv);
     gnosis.connect(delay);
 
-    // Acorde de gnosis: raíz + armónicos, cada uno con un GEMELO apenas desafinado (laten y se anulan)
-    const ROOT = 130.8; // C3
+    // Acorde de gnosis: raíz + armónicos, cada uno con un gemelo apenas desafinado (laten y se anulan)
+    const ROOT = 132;
     [1, 2, 3, 4, 5].forEach((h, i) => {
       const base = 0.05 / (i + 1);
-      [0, 0.6 + i * 0.35].forEach((det, k) => {   // el gemelo produce batido -> nulos periódicos
+      [0, 0.6 + i * 0.35].forEach((det, k) => {
         const o = ctx.createOscillator(); o.type = 'sine';
         o.frequency.value = ROOT * h + (k ? det : 0);
         const g = ctx.createGain(); g.gain.value = 0;
@@ -379,15 +445,70 @@
         g.gain.linearRampToValueAtTime(base * (k ? 0.9 : 1), ctx.currentTime + 6 + i);
       });
     });
+
+    // 432 y 528 Hz: el mismo LFO, invertido, las levanta en los valles del acorde
+    const par = ctx.createGain(); par.gain.value = 0.5;
+    const inv = ctx.createGain(); inv.gain.value = -0.5;
+    erase.connect(inv); inv.connect(par.gain);
+    par.connect(master); par.connect(conv);
+    const parEco = ctx.createGain(); parEco.gain.value = 0.3;
+    par.connect(parEco); parEco.connect(delay);
+    [[432, -0.4], [528, 0.4]].forEach(([f, p], i) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const g = ctx.createGain(); g.gain.value = 0;
+      const pn = ctx.createStereoPanner(); pn.pan.value = p;
+      o.connect(g); g.connect(pn); pn.connect(par); o.start();
+      g.gain.linearRampToValueAtTime(0.06, ctx.currentTime + 8 + i);
+    });
   }
 
-  const hint = document.querySelector('.hint');
-  function wake() {
-    startAudio();
-    if (hint) hint.style.opacity = '0';
-    window.removeEventListener('pointerdown', wake);
+  function subir() {
+    const t = ctx.currentTime;
+    master.gain.cancelScheduledValues(t);
+    master.gain.setValueAtTime(master.gain.value, t);
+    master.gain.linearRampToValueAtTime(NIVEL, t + 6);
   }
-  window.addEventListener('pointerdown', wake);
+  function apagar() {
+    const t = ctx.currentTime;
+    master.gain.cancelScheduledValues(t);
+    master.gain.setValueAtTime(master.gain.value, t);
+    master.gain.linearRampToValueAtTime(0, t + 4);
+  }
+
+  /* ---------------- Los dos tiempos del toque ---------------- */
+  const hint = document.querySelector('.hint');
+  const INVITA_A = '( toca — el conocimiento que se desconoce a sí mismo )';
+  const INVITA_B = '( toca — regresar a la ignorancia )';
+  let estado = 'dormido';          // dormido → activo → (invitado) → regresando → dormido
+  let invitaTimer = null;
+
+  function invitar(texto) {
+    hint.textContent = texto;
+    hint.classList.remove('oculto');
+  }
+  function activar() {
+    estado = 'activo';
+    hint.classList.add('oculto');
+    if (!started) startAudio(); else subir();
+    linea('&#8767; 528 Hz &#8855; 432 Hz &rarr; PARADOJA ACTIVADA &#8767;', 11000);
+    clearTimeout(invitaTimer);
+    invitaTimer = setTimeout(() => { estado = 'invitado'; invitar(INVITA_B); }, 40000);
+  }
+  function regresar() {
+    estado = 'regresando';
+    hint.classList.add('oculto');
+    apagar();
+    senal('&#8709;', 4200, true);
+    linea('&#8767; Retornando al silencio primordial &#8767;', 10000);
+    clearTimeout(invitaTimer);
+    invitaTimer = setTimeout(() => { estado = 'dormido'; invitar(INVITA_A); }, 9000);
+  }
+
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    if (estado === 'dormido') activar();
+    else if (estado === 'invitado') regresar();
+  });
 </script>
 </body>
 </html>

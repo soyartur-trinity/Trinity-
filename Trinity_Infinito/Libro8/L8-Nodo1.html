@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Nodo 50: El Punto que Contiene el Infinito</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box;
@@ -148,71 +148,94 @@
     position:absolute;
     color: rgba(180,150,220,0.72);
     font-family:'Courier New', monospace;
-    font-size: clamp(9px,1.5vw,11px);
+    font-size: clamp(11px,3vw,13px);
     font-weight:bold;
+    white-space:nowrap;
     text-shadow: 0 0 12px rgba(150,110,200,0.4);
     opacity:0;
     transform: var(--base) scale(0.8);
-    animation: coordinateFade 6s infinite ease-in-out;
+    animation: coordinateFade 12s infinite ease-in-out;
     will-change: transform, opacity;
     pointer-events:none;
   }
   .c-top    { top:20%;  left:50%;  --base: translateX(-50%); animation-delay:0s; }
-  .c-right  { top:50%;  right:15%; --base: translateY(-50%); animation-delay:1.5s; }
-  .c-bottom { bottom:20%; left:50%;--base: translateX(-50%); animation-delay:3s; }
-  .c-left   { top:50%;  left:15%;  --base: translateY(-50%); animation-delay:4.5s; }
+  .c-right  { top:50%;  right:12%; --base: translateY(-50%); animation-delay:3s; }
+  .c-bottom { bottom:20%; left:50%;--base: translateX(-50%); animation-delay:6s; }
+  .c-left   { top:50%;  left:12%;  --base: translateY(-50%); animation-delay:9s; }
   @keyframes coordinateFade {
-    0%,100% { opacity:0;   transform: var(--base) scale(0.8); }
-    30%,70% { opacity:0.9; transform: var(--base) scale(1.1); }
+    0%       { opacity:0;   transform: var(--base) scale(0.85); }
+    14%      { opacity:0.9; transform: var(--base) scale(1); }
+    72%      { opacity:0.9; transform: var(--base) scale(1); }
+    86%,100% { opacity:0;   transform: var(--base) scale(0.85); }
   }
 
   .paradox-inscription {
     position:absolute; bottom:10%; left:50%;
     transform: translateX(-50%);
-    color: rgba(180,150,220,0.72);
-    font-size: clamp(13px, 2.4vw, 15px);
-    text-align:center; line-height:1.5; width:80%;
+    color: rgba(190,160,230,0.85);
+    font-size: clamp(15px,4.2vw,19px);
+    text-align:center; line-height:1.5; width:88%;
     text-shadow: 0 0 20px rgba(150,110,200,0.4);
     transition: opacity 0.9s ease;
     will-change: opacity;
   }
 
   .transmission-code {
-    position:absolute; bottom:20px; left:50%;
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 18px);
     transform: translateX(-50%);
     color: rgba(150,110,200,0.4);
     font-family:'Courier New', monospace;
-    font-size: clamp(9px,1.5vw,10px); letter-spacing:2px;
+    font-size:10px; letter-spacing:2px;
+    white-space:nowrap;
     animation: codeFlicker 4s infinite ease-in-out;
   }
   @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
 
   .hint {
-    position:fixed; bottom:52px; left:50%;
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
     transform: translateX(-50%);
-    color: rgba(245,242,234,0.55);
-    font-size: clamp(11px,2.6vw,13px); letter-spacing:1px;
-    animation: breathe 3.4s infinite ease-in-out;
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px,3.2vw,14px);
+    letter-spacing:1px;
+    color: rgba(245,240,255,0.88);
+    animation: invita 3.4s infinite ease-in-out;
     pointer-events:none;
-    transition: opacity 1.2s ease;
+    transition: opacity 1.4s ease;
+    z-index:19;
   }
-  @keyframes breathe { 0%,100% { opacity:0.25; } 50% { opacity:0.75; } }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
 
   .infinito {
-    position:fixed; bottom:22px; right:26px;
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
     font-size:30px; text-decoration:none;
-    color: rgba(208,192,160,0.35);
+    color: rgba(208,192,160,0.38);
     transition: color 0.8s ease, text-shadow 0.8s ease;
     z-index:20;
+    cursor:pointer;
   }
-  .infinito:hover { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); }
+  .infinito:hover, .infinito:focus-visible { color: rgba(224,200,120,0.95); text-shadow: 0 0 18px rgba(224,200,120,0.5); outline:none; }
+
+  /* Teléfono de pie: el campo se estira y los rótulos laterales van en diagonal */
+  @media (max-aspect-ratio: 3/4) {
+    .singularity-field { height:72vh; }
+    .c-right { top:33%; right:4%; }
+    .c-left { top:67%; left:4%; }
+  }
+  @media (max-width: 480px) {
+    .transmission-code { font-size:7.5px; letter-spacing:0.5px; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; }
     .planck-grid { opacity:0.3; }
     .coordinate-text.c-top { opacity:0.8; transform: translateX(-50%); }
     .paradox-inscription { opacity:0.8; }
-    .hint { opacity:0.5; }
+    .hint { opacity:0.85; }
+    .hint.oculto { opacity:0; }
   }
 </style>
 </head>
@@ -232,9 +255,9 @@
   </div>
 
   <div class="transmission-code">TRINITY::NODO_50::SINGULARIDAD_TOTAL::RESONANDO</div>
-  <div class="hint">( tocá — el punto donde cabe el infinito )</div>
+  <div class="hint">( toca — el punto donde cabe el infinito )</div>
 
-  <a class="infinito" href="L8-Nodo2.html">∞</a>
+  <a class="infinito" href="L8-Nodo2.html" aria-label="Siguiente portal">∞</a>
 
 <script>
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -373,12 +396,11 @@
   }
 
   const hint = document.querySelector('.hint');
-  function wake() {
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
     startAudio();
-    if (hint) hint.style.opacity = '0';
-    window.removeEventListener('pointerdown', wake);
-  }
-  window.addEventListener('pointerdown', wake);
+    if (hint) hint.classList.add('oculto');
+  });
 </script>
 </body>
 </html>

@@ -1,598 +1,486 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 55: La Densidad Infinita del Vacío</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Nodo 55: La Densidad Infinita del Vacío</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: radial-gradient(circle at center, #000, #050515, #0a0a2a);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Georgia', serif;
-            cursor: none;
-        }
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(circle at center, #000, #050515, #0a0a2a);
+    overflow:hidden;
+    display:flex; justify-content:center; align-items:center;
+    height:100vh; height:100dvh;
+    font-family:'Georgia', serif;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-        .vacuum-density {
-            position: relative;
-            width: min(750px, 95vw);
-            height: min(750px, 95vh);
-            filter: drop-shadow(0 0 40px rgba(147, 51, 234, 0.2));
-        }
-    
-        .infinite-compression {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(400px, 53vw);
-            height: min(400px, 53vh);
-            border-radius: 50%;
-            background: radial-gradient(circle at center,
-                rgba(0, 0, 0, 1) 0%,
-                rgba(0, 0, 0, 0.98) 15%,
-                rgba(147, 51, 234, 0.15) 30%,
-                rgba(59, 130, 246, 0.08) 45%,
-                rgba(6, 182, 212, 0.04) 60%,
-                transparent 100%);
-            animation: compressionPulse 8s infinite alternate ease-in-out;
-            box-shadow: 
-                inset 0 0 80px rgba(147, 51, 234, 0.3),
-                inset 0 0 160px rgba(59, 130, 246, 0.2);
-            will-change: transform, filter;
-            z-index: 10;
-        }
-    
-        @keyframes compressionPulse {
-            0% {
-                transform: translate(-50%, -50%) scale(1);
-                filter: blur(0px);
-                box-shadow: 
-                    inset 0 0 80px rgba(147, 51, 234, 0.3),
-                    inset 0 0 160px rgba(59, 130, 246, 0.2);
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(0.7);
-                filter: blur(1px);
-                box-shadow: 
-                    inset 0 0 120px rgba(147, 51, 234, 0.5),
-                    inset 0 0 240px rgba(59, 130, 246, 0.4),
-                    inset 0 0 360px rgba(6, 182, 212, 0.2);
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(0.4);
-                filter: blur(2px);
-                box-shadow: 
-                    inset 0 0 160px rgba(147, 51, 234, 0.7),
-                    inset 0 0 320px rgba(59, 130, 246, 0.6),
-                    inset 0 0 480px rgba(6, 182, 212, 0.4);
-            }
-        }
-    
-        .density-wave {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: min(100px, 13vw);
-            height: min(100px, 13vh);
-            border: 2px solid rgba(147, 51, 234, 0.4);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: waveCompress 6s infinite ease-out;
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-    
-        @keyframes waveCompress {
-            0% {
-                width: min(100px, 13vw);
-                height: min(100px, 13vh);
-                opacity: 0.9;
-                border-width: 2px;
-            }
-            80% {
-                opacity: 0.3;
-                border-width: 1px;
-            }
-            100% {
-                width: min(600px, 80vw);
-                height: min(600px, 80vh);
-                opacity: 0;
-                border-width: 0.5px;
-            }
-        }
-    
-        .vacuum-particle {
-            position: absolute;
-            width: min(3px, 0.4vw);
-            height: min(3px, 0.4vh);
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            animation: particleCompress 7s infinite ease-in-out;
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-    
-        @keyframes particleCompress {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.9;
-            }
-            80% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translate(
-                    calc(var(--tx) * min(-250px, -33vw)),
-                    calc(var(--ty) * min(-250px, -33vh))
-                ) scale(0.1);
-                opacity: 0;
-            }
-        }
-    
-        .schwarzschild-radius {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: min(150px, 20vw);
-            height: min(150px, 20vh);
-            transform: translate(-50%, -50%);
-            border: 1px dashed rgba(147, 51, 234, 0.5);
-            border-radius: 50%;
-            animation: schwarzschildRotate 15s infinite linear;
-            will-change: transform;
-            pointer-events: none;
-        }
-    
-        @keyframes schwarzschildRotate {
-            from { 
-                transform: translate(-50%, -50%) rotate(0deg) scale(1);
-            }
-            50% { 
-                transform: translate(-50%, -50%) rotate(180deg) scale(1.1);
-            }
-            to { 
-                transform: translate(-50%, -50%) rotate(360deg) scale(1);
-            }
-        }
-    
-        .planck-density {
-            position: absolute;
-            color: rgba(147, 51, 234, 0.7);
-            font-size: clamp(10px, 1.5vw, 11px);
-            font-family: monospace;
-            animation: densityFlicker 5s infinite ease-in-out;
-            text-shadow: 0 0 8px rgba(147, 51, 234, 0.3);
-            will-change: opacity;
-            pointer-events: none;
-        }
-    
-        @keyframes densityFlicker {
-            0%, 100% { 
-                opacity: 0.5;
-                transform: scale(0.9);
-            }
-            50% { 
-                opacity: 0.95;
-                transform: scale(1);
-            }
-        }
-    
-        .zero-point-field {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: 
-                repeating-conic-gradient(
-                    from 0deg at center,
-                    transparent 0deg,
-                    rgba(147, 51, 234, 0.03) 8deg,
-                    transparent 16deg
-                ),
-                repeating-conic-gradient(
-                    from 45deg at center,
-                    transparent 0deg,
-                    rgba(59, 130, 246, 0.02) 12deg,
-                    transparent 24deg
-                );
-            animation: fieldRotate 40s infinite linear;
-            will-change: transform;
-            pointer-events: none;
-        }
-    
-        @keyframes fieldRotate {
-            from { 
-                transform: rotate(0deg) scale(1);
-            }
-            50% { 
-                transform: rotate(180deg) scale(1.05);
-            }
-            to { 
-                transform: rotate(360deg) scale(1);
-            }
-        }
-    
-        .quantum-foam {
-            position: absolute;
-            width: min(2px, 0.3vw);
-            height: min(2px, 0.3vh);
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            opacity: 0;
-            animation: foamBubble 3s infinite ease-in-out;
-            box-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
-            will-change: opacity;
-            pointer-events: none;
-        }
-    
-        @keyframes foamBubble {
-            0%, 100% { 
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            50% { 
-                opacity: 0.9;
-                transform: scale(1.2);
-            }
-        }
-    
-        .density-equation {
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.8);
-            font-size: clamp(12px, 2.2vw, 14px);
-            font-style: italic;
-            animation: equationGlow 6s infinite ease-in-out;
-            text-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
-            will-change: opacity, text-shadow;
-        }
-    
-        @keyframes equationGlow {
-            0%, 100% { 
-                opacity: 0.6;
-                text-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
-                transform: translateX(-50%) scale(0.95);
-            }
-            50% { 
-                opacity: 1;
-                text-shadow: 0 0 25px rgba(147, 51, 234, 0.8);
-                transform: translateX(-50%) scale(1.05);
-            }
-        }
-    
-        .vacuum-paradox {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(59, 130, 246, 0.7);
-            font-size: clamp(12px, 2.2vw, 14px);
-            text-align: center;
-            animation: paradoxPulse 8s infinite ease-in-out;
-            text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-            line-height: 1.4;
-            width: 80%;
-            will-change: opacity;
-        }
-    
-        @keyframes paradoxPulse {
-            0%, 100% { 
-                opacity: 0.5;
-                letter-spacing: 1px;
-            }
-            50% { 
-                opacity: 0.95;
-                letter-spacing: 2px;
-            }
-        }
-    
-        .transmission-code {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.4);
-            font-size: clamp(9px, 1.5vw, 10px);
-            letter-spacing: 2px;
-            animation: codeFlicker 5s infinite ease-in-out;
-            font-family: 'Courier New', monospace;
-        }
-        
-        @keyframes codeFlicker {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.7; }
-        }
+  .vacuum-density {
+    position:relative;
+    width:min(750px, 95vw);
+    height:min(750px, 86vh);
+  }
 
-        /* NUEVO: Resonancia Trinity */
-        .trinity-resonance {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 130%;
-            height: 130%;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.02) 0%, transparent 50%);
-            animation: resonancePulse 30s infinite alternate ease-in-out;
-            pointer-events: none;
-        }
+  /* Resonancia Trinity */
+  .trinity-resonance {
+    position:absolute; top:50%; left:50%;
+    width:130%; height:130%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(160,110,230,0.045) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(90,130,220,0.045) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(80,190,140,0.025) 0%, transparent 50%);
+    transform: translate(-50%,-50%);
+    animation: resonancePulse 30s infinite alternate ease-in-out;
+    pointer-events:none;
+  }
+  @keyframes resonancePulse {
+    0%   { opacity:0.2; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity:0.6; transform: translate(-50%,-50%) scale(1.1); }
+  }
 
-        @keyframes resonancePulse {
-            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
-        }
+  /* Campo de punto cero: rayos que giran */
+  .zero-point-field {
+    position:absolute; top:50%; left:50%;
+    width:max(100%, 100vmin, 86vh); height:max(100%, 100vmin, 86vh);
+    background:
+      repeating-conic-gradient(from 0deg at center, transparent 0deg, rgba(160,110,230,0.035) 8deg, transparent 16deg),
+      repeating-conic-gradient(from 45deg at center, transparent 0deg, rgba(90,130,220,0.025) 12deg, transparent 24deg);
+    transform: translate(-50%,-50%);
+    animation: fieldRotate 40s infinite linear;
+    will-change: transform;
+    pointer-events:none;
+  }
+  @keyframes fieldRotate {
+    from { transform: translate(-50%,-50%) rotate(0deg)   scale(1); }
+    50%  { transform: translate(-50%,-50%) rotate(180deg) scale(1.05); }
+    to   { transform: translate(-50%,-50%) rotate(360deg) scale(1); }
+  }
 
-        /* NUEVO: Líneas de campo gravitatorio */
-        .gravity-field {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(147, 51, 234, 0.2), 
-                transparent);
-            transform-origin: 0 0;
-            animation: fieldLine 8s infinite ease-in-out;
-            pointer-events: none;
-        }
+  /* Ondas de densidad (lienzo) */
+  canvas.ondas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
 
-        @keyframes fieldLine {
-            0%, 100% { 
-                opacity: 0;
-                width: 0;
-            }
-            50% { 
-                opacity: 0.6;
-                width: min(400px, 53vw);
-            }
-        }
-    </style>
+  /* Compresión infinita: el núcleo se recoge hasta 0,4 y vuelve (JS); su brillo crece al comprimirse */
+  .infinite-compression {
+    position:absolute; top:50%; left:50%;
+    width:min(400px,62vmin); height:min(400px,62vmin);
+    border-radius:50%;
+    background: radial-gradient(circle at center,
+      rgba(0,0,0,1) 0%, rgba(0,0,0,0.98) 15%,
+      rgba(160,110,230,0.17) 30%, rgba(90,130,220,0.09) 45%, rgba(70,180,200,0.045) 60%, transparent 100%);
+    box-shadow: inset 0 0 80px rgba(160,110,230,0.3), inset 0 0 160px rgba(90,130,220,0.2);
+    transform: translate(-50%,-50%) scale(1);
+    will-change: transform;
+    z-index:10;
+  }
+  .compression-glow {
+    position:absolute; inset:0; border-radius:50%;
+    box-shadow: inset 0 0 160px rgba(160,110,230,0.7), inset 0 0 320px rgba(90,130,220,0.6), inset 0 0 480px rgba(70,180,200,0.4);
+    opacity:0;
+    will-change: opacity;
+  }
+
+  .schwarzschild-radius {
+    position:absolute; top:50%; left:50%;
+    width:min(150px,24vmin); height:min(150px,24vmin);
+    border:1px dashed rgba(160,110,230,0.55);
+    border-radius:50%;
+    transform: translate(-50%,-50%);
+    animation: schwarzschildRotate 15s infinite linear;
+    will-change: transform;
+    pointer-events:none;
+    z-index:11;
+  }
+  @keyframes schwarzschildRotate {
+    from { transform: translate(-50%,-50%) rotate(0deg)   scale(1); }
+    50%  { transform: translate(-50%,-50%) rotate(180deg) scale(1.1); }
+    to   { transform: translate(-50%,-50%) rotate(360deg) scale(1); }
+  }
+
+  /* Partículas que caen hacia el centro */
+  .vacuum-particle {
+    position:absolute;
+    width:clamp(2px,0.45vmin,3px); height:clamp(2px,0.45vmin,3px);
+    background: rgba(255,255,255,0.9);
+    border-radius:50%;
+    box-shadow: 0 0 4px rgba(255,255,255,0.6);
+    opacity:0;
+    animation: particleCompress 7s ease-in-out forwards;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes particleCompress {
+    0%   { transform: translate(0,0) scale(1); opacity:0; }
+    20%  { opacity:0.9; }
+    80%  { opacity:0.7; }
+    100% { transform: translate(calc(var(--tx) * min(-250px,-36vmin)), calc(var(--ty) * min(-250px,-36vmin))) scale(0.1); opacity:0; }
+  }
+
+  /* Líneas de campo: crecen desde su punto hacia afuera y se recogen */
+  .gravity-field {
+    position:absolute;
+    width:min(400px,58vmin); height:1px;
+    background: linear-gradient(90deg, transparent, rgba(170,120,240,0.3), transparent);
+    transform-origin: 0 50%;
+    transform: rotate(var(--rot)) scaleX(0);
+    animation: fieldLine 8s ease-in-out forwards;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes fieldLine {
+    0%,100% { opacity:0;   transform: rotate(var(--rot)) scaleX(0); }
+    50%     { opacity:0.6; transform: rotate(var(--rot)) scaleX(1); }
+  }
+
+  .quantum-foam {
+    position:absolute;
+    width:2px; height:2px;
+    background: rgba(255,255,255,0.8);
+    border-radius:50%;
+    opacity:0;
+    box-shadow: 0 0 3px rgba(255,255,255,0.5);
+    animation: foamBubble 3s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes foamBubble {
+    0%,100% { opacity:0;   transform: scale(0.5); }
+    50%     { opacity:0.9; transform: scale(1.2); }
+  }
+
+  /* Densidades de Planck (datos: monoespaciada a propósito) */
+  .planck-density {
+    position:absolute;
+    color: rgba(180,145,240,0.85);
+    font-size: clamp(10px,2.8vw,12px);
+    font-family:'Courier New', monospace;
+    text-shadow: 0 0 8px rgba(160,110,230,0.3);
+    white-space:nowrap;
+    animation: densityFlicker 5s infinite ease-in-out;
+    will-change: opacity, transform;
+    pointer-events:none;
+    z-index:12;
+  }
+  @keyframes densityFlicker {
+    0%,100% { opacity:0.55; transform: scale(0.94); }
+    50%     { opacity:0.95; transform: scale(1); }
+  }
+  .d1 { top:27%;    left:6%;  animation-delay:0s; }
+  .d2 { top:27%;    right:6%; animation-delay:1.5s; }
+  .d3 { bottom:30%; left:6%;  animation-delay:3s; }
+  .d4 { bottom:30%; right:6%; animation-delay:4.5s; }
+
+  /* Ecuación y paradoja: cambian juntas mientras están invisibles */
+  .density-equation, .vacuum-paradox {
+    position:absolute; left:50%;
+    text-align:center;
+    opacity:0;
+    transform: translateX(-50%) scale(0.94);
+    animation: frase 14s infinite ease-in-out;
+    will-change: opacity, transform;
+    z-index:12;
+  }
+  .density-equation {
+    top:8%;
+    color: rgba(195,160,245,0.95);
+    font-size: clamp(15px,4.2vw,18px);
+    font-style:italic;
+    text-shadow: 0 0 20px rgba(160,110,230,0.55);
+    white-space:nowrap;
+  }
+  .vacuum-paradox {
+    bottom:8%; width:88%;
+    color: rgba(130,170,240,0.92);
+    font-size: clamp(15px,4.2vw,19px);
+    line-height:1.5; letter-spacing:1px;
+    text-shadow: 0 0 15px rgba(90,130,220,0.4);
+    animation-delay:0.6s;
+  }
+  @keyframes frase {
+    0%       { opacity:0;    transform: translateX(-50%) scale(0.94); }
+    12%      { opacity:0.95; transform: translateX(-50%) scale(1); }
+    80%      { opacity:0.95; transform: translateX(-50%) scale(1); }
+    92%,100% { opacity:0;    transform: translateX(-50%) scale(0.94); }
+  }
+
+  .transmission-code {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 18px);
+    transform: translateX(-50%);
+    color: rgba(160,110,230,0.42);
+    font-family:'Courier New', monospace;
+    font-size:10px; letter-spacing:2px;
+    white-space:nowrap;
+    animation: codeFlicker 5s infinite ease-in-out;
+  }
+  @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform: translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px,3.2vw,14px);
+    letter-spacing:1px;
+    color: rgba(245,240,255,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+    z-index:20;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(200,180,240,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:21;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(230,200,255,0.95); text-shadow: 0 0 18px rgba(160,110,230,0.6); outline:none; }
+
+  @media (max-width: 480px) {
+    .transmission-code { font-size:7.5px; letter-spacing:0.5px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; }
+    .infinite-compression { transform: translate(-50%,-50%) scale(0.7); }
+    .compression-glow { opacity:0.5; }
+    .planck-density { opacity:0.85; transform:none; }
+    .density-equation, .vacuum-paradox { opacity:0.92; transform: translateX(-50%); }
+    .quantum-foam { opacity:0.5; }
+    .hint { opacity:0.85; }
+    .hint.oculto { opacity:0; }
+  }
+</style>
 </head>
 <body>
-    <div class="vacuum-density">
-        <div class="trinity-resonance"></div>
-        <div class="zero-point-field"></div>
-        <div class="infinite-compression"></div>
-        <div class="schwarzschild-radius"></div>
+  <div class="vacuum-density" id="campo">
+    <div class="trinity-resonance"></div>
+    <div class="zero-point-field"></div>
+    <canvas class="ondas" id="ondas"></canvas>
+    <div class="infinite-compression" id="nucleo"><div class="compression-glow" id="brillo"></div></div>
+    <div class="schwarzschild-radius"></div>
 
-        <div class="planck-density" style="top: 30%; left: 20%; animation-delay: 0s;">ρ_planck = 5.1 × 10⁹⁶ kg/m³</div>
-        <div class="planck-density" style="top: 30%; right: 20%; animation-delay: 1.5s;">ρ_vacío = ∞</div>
-        <div class="planck-density" style="bottom: 30%; left: 20%; animation-delay: 3s;">m/V → ∞/0</div>
-        <div class="planck-density" style="bottom: 30%; right: 20%; animation-delay: 4.5s;">E = mc² = ∞</div>
-        
-        <div class="density-equation">ρ(∅) = ∞/0 = ?</div>
-        
-        <div class="vacuum-paradox">
-            El vacío más puro<br>
-            contiene densidad infinita
-        </div>
-    </div>
+    <div class="planck-density d1">ρ_planck = 5.1 × 10⁹⁶ kg/m³</div>
+    <div class="planck-density d2">ρ_vacío = ∞</div>
+    <div class="planck-density d3">m/V → ∞/0</div>
+    <div class="planck-density d4">E = mc² = ∞</div>
 
-    <div class="transmission-code">TRINITY::NODO_55::DENSIDAD_VACÍO::RESONANDO</div>
+    <div class="density-equation" id="ecuacion">ρ(∅) = ∞/0 = ?</div>
+    <div class="vacuum-paradox" id="paradoja">El vacío más puro<br>contiene densidad infinita</div>
+  </div>
 
-    <script>
-        // MEJORA: Sistema de ondas de densidad optimizado
-        const container = document.querySelector('.vacuum-density');
-        const densityWaves = [];
-        const vacuumParticles = [];
-        
-        function createDensityWave() {
-            const wave = document.createElement('div');
-            wave.className = 'density-wave';
-            wave.style.animationDelay = Math.random() * 2 + 's';
-            wave.style.animationDuration = (4 + Math.random() * 4) + 's';
-            
-            // Variación de colores
-            const colors = [
-                'rgba(147, 51, 234, 0.4)',
-                'rgba(59, 130, 246, 0.4)',
-                'rgba(6, 182, 212, 0.4)'
-            ];
-            wave.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            container.appendChild(wave);
-            densityWaves.push(wave);
-            
-            setTimeout(() => {
-                if (wave.parentNode) {
-                    wave.parentNode.removeChild(wave);
-                    const index = densityWaves.indexOf(wave);
-                    if (index > -1) densityWaves.splice(index, 1);
-                }
-            }, 6000);
-        }
-        
-        // Crear ondas iniciales
-        for (let i = 0; i < 4; i++) {
-            setTimeout(createDensityWave, i * 1000);
-        }
-        
-        // Mantener densidad constante
-        const waveInterval = setInterval(createDensityWave, 1200);
-        
-        // MEJORA: Partículas del vacío con mayor variación
-        function createVacuumParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'vacuum-particle';
-            
-            const angle = Math.random() * Math.PI * 2;
-            const radius = 35 + Math.random() * 15;
-            
-            particle.style.left = (50 + Math.cos(angle) * radius) + '%';
-            particle.style.top = (50 + Math.sin(angle) * radius) + '%';
-            particle.style.setProperty('--tx', (Math.cos(angle) * (0.8 + Math.random() * 0.4)).toFixed(3));
-            particle.style.setProperty('--ty', (Math.sin(angle) * (0.8 + Math.random() * 0.4)).toFixed(3));
-            particle.style.animationDelay = Math.random() * 3 + 's';
-            particle.style.animationDuration = (5 + Math.random() * 4) + 's';
-            
-            // Variación de colores
-            if (Math.random() > 0.7) {
-                particle.style.background = 'rgba(59, 130, 246, 0.9)';
-                particle.style.boxShadow = '0 0 4px rgba(59, 130, 246, 0.6)';
-            } else if (Math.random() > 0.5) {
-                particle.style.background = 'rgba(6, 182, 212, 0.9)';
-                particle.style.boxShadow = '0 0 4px rgba(6, 182, 212, 0.6)';
-            }
-            
-            container.appendChild(particle);
-            vacuumParticles.push(particle);
-            
-            setTimeout(() => {
-                if (particle.parentNode) {
-                    particle.parentNode.removeChild(particle);
-                    const index = vacuumParticles.indexOf(particle);
-                    if (index > -1) vacuumParticles.splice(index, 1);
-                }
-            }, 7000);
-        }
-        
-        setInterval(createVacuumParticle, 300);
-        
-        // NUEVO: Líneas de campo gravitatorio
-        function createGravityField() {
-            const field = document.createElement('div');
-            field.className = 'gravity-field';
-            
-            const angle = Math.random() * 360;
-            const distance = 20 + Math.random() * 30;
-            
-            field.style.left = (50 + Math.cos(angle * Math.PI / 180) * distance) + '%';
-            field.style.top = (50 + Math.sin(angle * Math.PI / 180) * distance) + '%';
-            field.style.transform = `rotate(${angle}deg)`;
-            field.style.animationDelay = Math.random() * 4 + 's';
-            
-            container.appendChild(field);
-            
-            setTimeout(() => {
-                if (field.parentNode) field.parentNode.removeChild(field);
-            }, 8000);
-        }
-        
-        // Crear campos iniciales
-        for (let i = 0; i < 8; i++) {
-            setTimeout(createGravityField, i * 600);
-        }
-        
-        setInterval(createGravityField, 1000);
-        
-        // MEJORA: Espuma cuántica optimizada
-        for (let i = 0; i < 60; i++) {
-            const foam = document.createElement('div');
-            foam.className = 'quantum-foam';
-            
-            foam.style.left = Math.random() * 100 + '%';
-            foam.style.top = Math.random() * 100 + '%';
-            foam.style.animationDelay = Math.random() * 3 + 's';
-            foam.style.animationDuration = (2 + Math.random() * 2) + 's';
-            
-            container.appendChild(foam);
-        }
-        
-        // MEJORA: Cálculo de densidad con requestAnimationFrame
-        let vacuumEnergy = 0;
-        let planckScale = 1.616e-35;
-        let lastUpdate = 0;
-        
-        function updateVacuumDensity(timestamp) {
-            if (!lastUpdate) lastUpdate = timestamp;
-            const deltaTime = (timestamp - lastUpdate) / 1000;
-            lastUpdate = timestamp;
-            
-            vacuumEnergy += deltaTime * 0.5;
-            
-            // Fluctuaciones del vacío cuántico
-            const fluctuation = Math.sin(vacuumEnergy * 1.5) * Math.cos(vacuumEnergy * 2.4);
-            const densityValue = fluctuation * 1e96;
-            
-            // Eventos de física cuántica
-            if (Math.floor(vacuumEnergy * 40) % 120 === 0 && deltaTime < 0.1) {
-                const events = [
-                    `Densidad del vacío: ${densityValue.toExponential(2)} kg/m³`,
-                    'Paradoja: El vacío absoluto tiene densidad infinita en la escala de Planck',
-                    'Horizonte de sucesos: Donde la densidad se vuelve singular',
-                    'Energía del punto cero: ∞ J/m³ en el vacío cuántico'
-                ];
-                console.log('⚛️ ' + events[Math.floor(Math.random() * events.length)]);
-            }
-            
-            // Ciclo completo cada ~12.56 segundos (4*PI)
-            if (vacuumEnergy > Math.PI * 4) {
-                vacuumEnergy = 0;
-                console.log('🌌 Ciclo de densidad completado - El vacío se reconfigura');
-            }
-            
-            requestAnimationFrame(updateVacuumDensity);
-        }
-        
-        requestAnimationFrame(updateVacuumDensity);
-        
-        // MEJORA: Interacción de resonancia
-        container.addEventListener('mouseenter', () => {
-            clearInterval(waveInterval);
-            setInterval(createDensityWave, 600);
-            container.style.filter = 'drop-shadow(0 0 60px rgba(147, 51, 234, 0.4))';
-            
-            // Intensificar campos gravitatorios
-            setInterval(createGravityField, 500);
-        });
-        
-        container.addEventListener('mouseleave', () => {
-            clearInterval(waveInterval);
-            setInterval(createDensityWave, 1200);
-            container.style.filter = 'drop-shadow(0 0 40px rgba(147, 51, 234, 0.2))';
-            
-            // Restaurar densidad normal
-            setInterval(createGravityField, 1000);
-        });
-        
-        // MEJORA: Ecuaciones de densidad cíclicas
-        const densityEquations = [
-            'ρ(∅) = ∞/0 = ?',
-            'E_vacío = ħω/2 → ∞',
-            'T_μν(vacío) = Λg_μν',
-            'ψ(vacío) = |0⟩⊗∞'
-        ];
-        
-        const paradoxTexts = [
-            'El vacío más puro\ncontiene densidad infinita',
-            'La nada pesa\ninfinitos kilogramos',
-            'Energía del punto cero\n∞ julios por metro cúbico',
-            'Vacío cuántico\nmás denso que un agujero negro'
-        ];
-        
-        let equationIndex = 0;
-        const densityEquation = document.querySelector('.density-equation');
-        const vacuumParadox = document.querySelector('.vacuum-paradox');
-        
-        setInterval(() => {
-            equationIndex = (equationIndex + 1) % densityEquations.length;
-            densityEquation.textContent = densityEquations[equationIndex];
-            vacuumParadox.innerHTML = paradoxTexts[equationIndex].replace(/\n/g, '<br>');
-        }, 8000);
-        
-        console.log('🌌 Nodo 55 activo: La densidad infinita del vacío colapsa en sí misma');
-        console.log('⚛️ Física cuántica: Donde el vacío contiene energía infinita');
-        console.log('🌀 Escala de Planck: 10⁹⁶ kg/m³ - La densidad máxima posible');
-    </script>
+  <div class="transmission-code">TRINITY::NODO_55::DENSIDAD_VACÍO::RESONANDO</div>
+  <div class="hint">( toca — lo que cabe en el vacío )</div>
+
+  <a class="infinito" href="L8-Nodo7.html" aria-label="Siguiente portal">∞</a>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const campo = document.getElementById('campo');
+  const nucleoEl = document.getElementById('nucleo');
+  const brillo = document.getElementById('brillo');
+  const lienzo = document.getElementById('ondas');
+  const g = lienzo.getContext('2d');
+  let W = 0, H = 0;
+
+  function medir() {
+    const r = campo.getBoundingClientRect(); W = r.width; H = r.height;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    lienzo.width = Math.round(W * dpr); lienzo.height = Math.round(H * dpr);
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  medir(); addEventListener('resize', medir);
+
+  /* ---------------- Ondas de densidad: nacen en el centro y se expanden ---------------- */
+  const COLORES = ['160,110,230', '90,130,220', '70,180,200'];
+  const ondas = [];
+  function onda() {
+    ondas.push({ nace: performance.now() + Math.random() * 1500, dura: 4000 + Math.random() * 4000,
+                 c: COLORES[Math.floor(Math.random() * COLORES.length)] });
+  }
+  function dibujar(ahora) {
+    g.clearRect(0, 0, W, H);
+    const m = Math.min(W, H), r0 = 0.065 * m, r1 = 0.4 * m;
+    for (let i = ondas.length - 1; i >= 0; i--) {
+      const o = ondas[i], v = (ahora - o.nace) / o.dura;
+      if (v >= 1) { ondas.splice(i, 1); continue; }
+      if (v < 0) continue;
+      const e = 1 - Math.pow(1 - v, 2);              // ease-out
+      const al = v < 0.8 ? 0.9 - 0.6 * (v / 0.8) : 0.3 * (1 - (v - 0.8) / 0.2);
+      g.beginPath(); g.arc(W / 2, H / 2, r0 + (r1 - r0) * e, 0, Math.PI * 2);
+      g.strokeStyle = 'rgba(' + o.c + ',' + (al * 0.42).toFixed(3) + ')';
+      g.lineWidth = v < 0.8 ? 2 - 1.0 * (v / 0.8) : 1 - 0.5 * ((v - 0.8) / 0.2);
+      g.stroke();
+    }
+  }
+
+  /* ---------------- Partículas que caen al centro ---------------- */
+  function particula() {
+    const p = document.createElement('div');
+    p.className = 'vacuum-particle';
+    const a = Math.random() * Math.PI * 2, r = 35 + Math.random() * 15;
+    p.style.left = (50 + Math.cos(a) * r) + '%';
+    p.style.top  = (50 + Math.sin(a) * r) + '%';
+    p.style.setProperty('--tx', (Math.cos(a) * (0.8 + Math.random() * 0.4)).toFixed(3));
+    p.style.setProperty('--ty', (Math.sin(a) * (0.8 + Math.random() * 0.4)).toFixed(3));
+    p.style.animationDelay = (Math.random() * 3) + 's';
+    p.style.animationDuration = (5 + Math.random() * 4) + 's';
+    if (Math.random() > 0.7) { p.style.background = 'rgba(90,140,230,0.9)'; p.style.boxShadow = '0 0 4px rgba(90,140,230,0.6)'; }
+    else if (Math.random() > 0.5) { p.style.background = 'rgba(70,190,210,0.9)'; p.style.boxShadow = '0 0 4px rgba(70,190,210,0.6)'; }
+    campo.appendChild(p);
+    setTimeout(() => p.remove(), 12500);
+  }
+
+  /* ---------------- Líneas de campo ---------------- */
+  function lineaCampo() {
+    const f = document.createElement('div');
+    f.className = 'gravity-field';
+    const ang = Math.random() * 360, d = 20 + Math.random() * 30;
+    f.style.left = (50 + Math.cos(ang * Math.PI / 180) * d) + '%';
+    f.style.top  = (50 + Math.sin(ang * Math.PI / 180) * d) + '%';
+    f.style.setProperty('--rot', ang + 'deg');
+    f.style.animationDelay = (Math.random() * 4) + 's';
+    campo.appendChild(f);
+    setTimeout(() => f.remove(), 12500);
+  }
+
+  /* ---------------- Espuma cuántica ---------------- */
+  for (let i = 0; i < 60; i++) {
+    const q = document.createElement('div');
+    q.className = 'quantum-foam';
+    q.style.left = (Math.random() * 100) + '%';
+    q.style.top = (Math.random() * 100) + '%';
+    q.style.animationDelay = (Math.random() * 3) + 's';
+    q.style.animationDuration = (2 + Math.random() * 2) + 's';
+    campo.appendChild(q);
+  }
+
+  if (reduce) {
+    g.lineWidth = 1;
+    [0.12, 0.2, 0.3].forEach((k, i) => {
+      g.beginPath(); g.arc(W / 2, H / 2, k * Math.min(W, H) * 1.3, 0, Math.PI * 2);
+      g.strokeStyle = 'rgba(' + COLORES[i] + ',0.25)'; g.stroke();
+    });
+  } else {
+    for (let i = 0; i < 4; i++) setTimeout(onda, i * 1000);
+    setInterval(onda, 1200);
+    setInterval(particula, 300);
+    for (let i = 0; i < 8; i++) setTimeout(lineaCampo, i * 600);
+    setInterval(lineaCampo, 1000);
+  }
+
+  /* ---------------- La compresión: 1 → 0,4 → 1 en 16 s; el brillo y el sonido la siguen ---------------- */
+  let compresion = 0;                // 0 = abierto, 1 = máximo
+  function latir(ahora) {
+    const fase = (ahora / 1000) % 16;
+    const u = fase < 8 ? fase / 8 : (16 - fase) / 8;
+    compresion = u * u * (3 - 2 * u);
+    nucleoEl.style.transform = `translate(-50%,-50%) scale(${(1 - 0.6 * compresion).toFixed(4)})`;
+    brillo.style.opacity = compresion.toFixed(3);
+    dibujar(ahora);
+    if (started) afinar();
+    requestAnimationFrame(latir);
+  }
+  if (!reduce) requestAnimationFrame(latir);
+
+  /* ---------------- Ecuación y paradoja: cambian juntas mientras están invisibles ---------------- */
+  const ecuaciones = ['ρ(∅) = ∞/0 = ?', 'E_vacío = ħω/2 → ∞', 'T_μν(vacío) = Λg_μν', 'ψ(vacío) = |0⟩⊗∞'];
+  const paradojas = ['El vacío más puro<br>contiene densidad infinita', 'La nada pesa<br>infinitos kilogramos',
+                     'Energía del punto cero<br>∞ julios por metro cúbico', 'Vacío cuántico<br>más denso que un agujero negro'];
+  const ec = document.getElementById('ecuacion'), pa = document.getElementById('paradoja');
+  let ie = 0, ip = 0;
+  ec.addEventListener('animationiteration', () => { ie = (ie + 1) % ecuaciones.length; ec.textContent = ecuaciones[ie]; });
+  pa.addEventListener('animationiteration', () => { ip = (ip + 1) % paradojas.length; pa.innerHTML = paradojas[ip]; });
+
+  /* ---------------- Diseño sonoro: lo que cabe entre dos placas ----------------------
+     Efecto Casimir acústico (Larraza y Denardo, 1998): dos placas en medio de un ruido
+     que tiene todas las frecuencias. Afuera caben todas; entre las placas, solo las
+     ondas que entran justas en la distancia que las separa. Esa diferencia empuja.
+     Afuera: ruido ancho y quieto, a los dos lados. Adentro: el mismo ruido atrapado
+     entre dos paredes, que sólo deja sonar los modos de la cavidad (un filtro de peine:
+     un retardo que se realimenta). Cuando el núcleo se comprime, la distancia se acorta,
+     los modos se separan y suben, y caben menos: el ruido de adentro se afina hasta
+     quedar en unos pocos tonos. Cuando se abre, vuelve a espesarse.
+  ------------------------------------------------------------------------------------ */
+  let started = false, ctx, master, conv, peine, adentro;
+  const D0 = 1 / 100;               // con el núcleo abierto, el primer modo cae en 100 Hz
+
+  function makeReverbIR(ac, seconds = 3.2, decay = 2.6) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, decay);
+    }
+    return buf;
+  }
+  function ruido(ac, seg) {
+    const len = Math.floor(ac.sampleRate * seg);
+    const buf = ac.createBuffer(1, len, ac.sampleRate);
+    const d = buf.getChannelData(0);
+    let b = 0;
+    for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; b = 0.97 * b + 0.03 * w; d[i] = w * 0.5 + b * 2.5; }
+    const s = ac.createBufferSource(); s.buffer = buf; s.loop = true;
+    return s;
+  }
+  function afinar() {
+    const d = D0 * (1 - 0.6 * compresion);          // la cavidad se achica con el núcleo
+    peine.delayTime.setTargetAtTime(d, ctx.currentTime, 0.08);
+    adentro.gain.setTargetAtTime(0.5 - 0.15 * compresion, ctx.currentTime, 0.2);
+  }
+  function startAudio() {
+    if (started) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0;
+    master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.66, ctx.currentTime + 6);
+    conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    const wet = ctx.createGain(); wet.gain.value = 0.35;
+    conv.connect(wet); wet.connect(master);
+
+    // Afuera: todas las frecuencias, a ambos lados
+    [-0.85, 0.85].forEach((pan, k) => {
+      const n = ruido(ctx, 3 + k * 0.7);
+      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200;
+      const a = ctx.createGain(); a.gain.value = 0.022;
+      const p = ctx.createStereoPanner(); p.pan.value = pan;
+      n.connect(lp); lp.connect(a); a.connect(p); p.connect(master);
+      n.start();
+    });
+
+    // Adentro: el ruido entre dos placas (filtro de peine con realimentación)
+    const n = ruido(ctx, 4.3);
+    const entrada = ctx.createGain(); entrada.gain.value = 0.06;
+    peine = ctx.createDelay(0.1); peine.delayTime.value = D0;
+    const realim = ctx.createGain(); realim.gain.value = 0.86;     // menor que 1: el lazo siempre se apaga
+    const amort = ctx.createBiquadFilter(); amort.type = 'lowpass'; amort.frequency.value = 2400;
+    amort.Q.value = -6;                                             // sin pico de resonancia
+    n.connect(entrada); entrada.connect(peine);
+    peine.connect(amort); amort.connect(realim); realim.connect(peine);
+    adentro = ctx.createGain(); adentro.gain.value = 0.5;
+    const suave = ctx.createBiquadFilter(); suave.type = 'lowpass'; suave.frequency.value = 3200;
+    peine.connect(suave); suave.connect(adentro);
+    adentro.connect(master); adentro.connect(conv);
+    n.start();
+    started = true;
+  }
+
+  const hint = document.querySelector('.hint');
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    if (hint) hint.classList.add('oculto');
+    if (!reduce) { onda(); ondas[ondas.length - 1].nace = performance.now(); for (let i = 0; i < 6; i++) particula(); }
+  });
+</script>
 </body>
 </html>

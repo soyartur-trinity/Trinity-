@@ -1,552 +1,468 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nodo 53: La Geometría Sin Espacio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Nodo 53: La Geometría Sin Espacio</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #000, #0a0a1a, #1a1a2e);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Times New Roman', serif;
-            cursor: none;
-        }
+  html, body { height:100%; }
+  body {
+    background: linear-gradient(135deg, #000, #0a0a1a, #1a1a2e);
+    overflow:hidden;
+    display:flex; justify-content:center; align-items:center;
+    height:100vh; height:100dvh;
+    font-family:'Georgia', serif;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-        .non-spatial-geometry {
-            position: relative;
-            width: min(700px, 95vw);
-            height: min(700px, 95vh);
-            filter: drop-shadow(0 0 30px rgba(147, 51, 234, 0.2));
-        }
-    
-        .abstract-form {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 0;
-            height: 0;
-            border-style: solid;
-            animation: formMorph 10s infinite ease-in-out;
-            will-change: transform, border-width, border-color;
-            z-index: 10;
-        }
-    
-        @keyframes formMorph {
-            0% {
-                border-width: 0 min(100px, 14vw) min(173px, 24vw) min(100px, 14vw);
-                border-color: transparent transparent rgba(147, 51, 234, 0.6) transparent;
-                transform: translate(-50%, -50%) rotate(0deg) scale(1);
-            }
-            20% {
-                border-width: min(100px, 14vw) min(100px, 14vw) 0 min(100px, 14vw);
-                border-color: rgba(59, 130, 246, 0.6) transparent transparent transparent;
-                transform: translate(-50%, -50%) rotate(90deg) scale(1.1);
-            }
-            40% {
-                border-width: min(100px, 14vw) 0 min(100px, 14vw) min(173px, 24vw);
-                border-color: transparent transparent transparent rgba(6, 182, 212, 0.6);
-                transform: translate(-50%, -50%) rotate(180deg) scale(0.9);
-            }
-            60% {
-                border-width: min(173px, 24vw) min(100px, 14vw) 0 min(100px, 14vw);
-                border-color: rgba(34, 197, 94, 0.6) transparent transparent transparent;
-                transform: translate(-50%, -50%) rotate(270deg) scale(1.05);
-            }
-            80% {
-                border-width: 0 min(173px, 24vw) min(100px, 14vw) min(173px, 24vw);
-                border-color: transparent transparent rgba(251, 146, 60, 0.6) transparent;
-                transform: translate(-50%, -50%) rotate(320deg) scale(1.2);
-            }
-            100% {
-                border-width: 0 min(100px, 14vw) min(173px, 24vw) min(100px, 14vw);
-                border-color: transparent transparent rgba(147, 51, 234, 0.6) transparent;
-                transform: translate(-50%, -50%) rotate(360deg) scale(1);
-            }
-        }
-    
-        .platonic-shadow {
-            position: absolute;
-            width: min(200px, 28vw);
-            height: min(200px, 28vh);
-            opacity: 0.4;
-            animation: shadowDrift 15s infinite ease-in-out;
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-    
-        @keyframes shadowDrift {
-            0%, 100% {
-                transform: translate(min(200px, 28vw), min(200px, 28vh)) scale(1);
-                opacity: 0.3;
-            }
-            25% {
-                transform: translate(min(500px, 71vw), min(200px, 28vh)) scale(0.8);
-                opacity: 0.5;
-            }
-            50% {
-                transform: translate(min(500px, 71vw), min(500px, 71vh)) scale(1.2);
-                opacity: 0.2;
-            }
-            75% {
-                transform: translate(min(200px, 28vw), min(500px, 71vh)) scale(0.9);
-                opacity: 0.4;
-            }
-        }
-    
-        .dimension-collapse {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: min(300px, 42vw);
-            height: min(300px, 42vh);
-            transform: translate(-50%, -50%);
-            border: 1px solid rgba(147, 51, 234, 0.3);
-            animation: collapseRotate 12s infinite linear;
-            will-change: transform;
-            pointer-events: none;
-        }
-    
-        @keyframes collapseRotate {
-            0% {
-                transform: translate(-50%, -50%) perspective(1000px) rotateX(0deg) rotateY(0deg);
-                width: min(300px, 42vw);
-                height: min(300px, 42vh);
-                opacity: 0.8;
-            }
-            33% {
-                transform: translate(-50%, -50%) perspective(1000px) rotateX(120deg) rotateY(120deg);
-                width: min(150px, 21vw);
-                height: min(300px, 42vh);
-                opacity: 0.6;
-            }
-            66% {
-                transform: translate(-50%, -50%) perspective(1000px) rotateX(240deg) rotateY(240deg);
-                width: min(300px, 42vw);
-                height: min(150px, 21vh);
-                opacity: 0.4;
-            }
-            100% {
-                transform: translate(-50%, -50%) perspective(1000px) rotateX(360deg) rotateY(360deg);
-                width: min(300px, 42vw);
-                height: min(300px, 42vh);
-                opacity: 0.8;
-            }
-        }
-    
-        .topology-line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg,
-                transparent,
-                rgba(147, 51, 234, 0.7),
-                rgba(59, 130, 246, 0.5),
-                transparent);
-            animation: topologyFlow 8s infinite ease-in-out;
-            will-change: width, opacity;
-            pointer-events: none;
-        }
-    
-        @keyframes topologyFlow {
-            0% {
-                width: 0;
-                opacity: 0;
-                transform: translateX(0);
-            }
-            30% {
-                width: min(400px, 57vw);
-                opacity: 0.9;
-                transform: translateX(0);
-            }
-            70% {
-                width: min(400px, 57vw);
-                opacity: 0.9;
-                transform: translateX(0);
-            }
-            100% {
-                width: 0;
-                opacity: 0;
-                transform: translateX(min(400px, 57vw));
-            }
-        }
-    
-        .point-cloud {
-            position: absolute;
-            width: min(3px, 0.4vw);
-            height: min(3px, 0.4vh);
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            animation: cloudFloat 18s infinite ease-in-out;
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
-            will-change: transform, opacity;
-            pointer-events: none;
-        }
-    
-        @keyframes cloudFloat {
-            0%, 100% {
-                transform: translate(0, 0);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.9;
-            }
-            80% {
-                opacity: 0.7;
-            }
-            50% {
-                transform: translate(
-                    calc(var(--dx) * min(250px, 35vw)),
-                    calc(var(--dy) * min(250px, 35vh))
-                );
-            }
-        }
-    
-        .euclid-text {
-            position: absolute;
-            color: rgba(147, 51, 234, 0.7);
-            font-size: clamp(11px, 1.8vw, 12px);
-            font-style: italic;
-            animation: textFade 10s infinite ease-in-out;
-            text-shadow: 0 0 12px rgba(147, 51, 234, 0.4);
-            font-weight: 300;
-            will-change: opacity;
-            pointer-events: none;
-        }
-    
-        @keyframes textFade {
-            0%, 100% { opacity: 0; transform: scale(0.8); }
-            30%, 70% { opacity: 0.9; transform: scale(1); }
-        }
-    
-        .non-euclidean-grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at center,
-                    transparent 30%,
-                    rgba(147, 51, 234, 0.08) 31%,
-                    transparent 32%,
-                    transparent 40%,
-                    rgba(59, 130, 246, 0.08) 41%,
-                    transparent 42%);
-            background-size: min(100px, 14vw) min(100px, 14vh);
-            animation: gridWarp 25s infinite ease-in-out;
-            will-change: transform;
-            pointer-events: none;
-        }
-    
-        @keyframes gridWarp {
-            0%, 100% {
-                transform: scale(1) rotate(0deg) skew(0deg);
-            }
-            25% {
-                transform: scale(1.2) rotate(45deg) skew(5deg, 5deg);
-            }
-            50% {
-                transform: scale(0.8) rotate(90deg) skew(-5deg, -5deg);
-            }
-            75% {
-                transform: scale(1.1) rotate(135deg) skew(3deg, -3deg);
-            }
-        }
-    
-        .geometry-paradox {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.7);
-            font-size: clamp(12px, 2.2vw, 14px);
-            text-align: center;
-            animation: paradoxGlow 6s infinite ease-in-out;
-            text-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
-            line-height: 1.4;
-            width: 80%;
-            will-change: opacity;
-        }
-    
-        @keyframes paradoxGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.95; }
-        }
-    
-        .transmission-code {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.4);
-            font-size: clamp(9px, 1.5vw, 10px);
-            letter-spacing: 2px;
-            animation: codeFlicker 5s infinite ease-in-out;
-            font-family: 'Courier New', monospace;
-        }
-        
-        @keyframes codeFlicker {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.7; }
-        }
+  .non-spatial-geometry {
+    position:relative;
+    width:min(700px, 95vw);
+    height:min(700px, 88vh);
+  }
 
-        /* NUEVO: Resonancia Trinity */
-        .trinity-resonance {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 130%;
-            height: 130%;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.02) 0%, transparent 50%);
-            animation: resonancePulse 30s infinite alternate ease-in-out;
-            pointer-events: none;
-        }
+  /* Resonancia Trinity */
+  .trinity-resonance {
+    position:absolute; top:50%; left:50%;
+    width:130%; height:130%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(160,110,230,0.045) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(90,130,220,0.045) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(80,190,140,0.025) 0%, transparent 50%);
+    transform: translate(-50%,-50%);
+    animation: resonancePulse 30s infinite alternate ease-in-out;
+    pointer-events:none;
+    will-change: transform, opacity;
+  }
+  @keyframes resonancePulse {
+    0%   { opacity:0.2; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity:0.6; transform: translate(-50%,-50%) scale(1.1); }
+  }
 
-        @keyframes resonancePulse {
-            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
-        }
+  /* Rejilla no euclidiana */
+  .non-euclidean-grid {
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle at center,
+        transparent 30%, rgba(160,110,230,0.085) 31%, transparent 32%,
+        transparent 40%, rgba(90,130,220,0.085) 41%, transparent 42%);
+    background-size: min(100px,14vmin) min(100px,14vmin);
+    animation: gridWarp 25s infinite ease-in-out;
+    will-change: transform;
+    pointer-events:none;
+  }
+  @keyframes gridWarp {
+    0%,100% { transform: scale(1)   rotate(0deg)   skew(0deg); }
+    25%     { transform: scale(1.2) rotate(45deg)  skew(5deg, 5deg); }
+    50%     { transform: scale(0.8) rotate(90deg)  skew(-5deg, -5deg); }
+    75%     { transform: scale(1.1) rotate(135deg) skew(3deg, -3deg); }
+  }
 
-        /* NUEVO: Formas platónicas adicionales */
-        .platonic-solid {
-            position: absolute;
-            border: 1px solid rgba(147, 51, 234, 0.3);
-            animation: solidRotate 20s infinite linear;
-            pointer-events: none;
-        }
+  /* La sombra platónica deriva por el espacio llevando la forma abstracta */
+  .platonic-shadow {
+    position:absolute; top:0; left:0;
+    width:min(200px,27vmin); height:min(200px,27vmin);
+    opacity:0.4;
+    animation: shadowDrift 15s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes shadowDrift {
+    0%,100% { transform: translate(min(200px,27vmin), min(200px,27vmin)) scale(1);   opacity:0.3; }
+    25%     { transform: translate(min(500px,62vmin), min(200px,27vmin)) scale(0.8); opacity:0.5; }
+    50%     { transform: translate(min(500px,62vmin), min(500px,62vmin)) scale(1.2); opacity:0.2; }
+    75%     { transform: translate(min(200px,27vmin), min(500px,62vmin)) scale(0.9); opacity:0.4; }
+  }
 
-        @keyframes solidRotate {
-            from { transform: rotate3d(1, 1, 1, 0deg); }
-            to { transform: rotate3d(1, 1, 1, 360deg); }
-        }
-    </style>
+  /* Forma abstracta: cinco triángulos que se suceden por opacidad mientras la forma gira */
+  .abstract-form {
+    position:absolute; top:50%; left:50%;
+    width:min(346px,48vmin); height:min(346px,48vmin);
+    transform: translate(-50%,-50%);
+    animation: formTurn 10s infinite ease-in-out;
+    will-change: transform;
+  }
+  .abstract-form svg { width:100%; height:100%; overflow:visible; }
+  .abstract-form polygon { opacity:0; animation: formShow 10s infinite ease-in-out; }
+  .abstract-form polygon.f0 { animation-delay:0s; }
+  .abstract-form polygon.f1 { animation-delay:2s; }
+  .abstract-form polygon.f2 { animation-delay:4s; }
+  .abstract-form polygon.f3 { animation-delay:6s; }
+  .abstract-form polygon.f4 { animation-delay:8s; }
+  @keyframes formShow {
+    0%   { opacity:0; }
+    6%   { opacity:1; }
+    20%  { opacity:1; }
+    28%  { opacity:0; }
+    100% { opacity:0; }
+  }
+  @keyframes formTurn {
+    0%   { transform: translate(-50%,-50%) rotate(0deg)   scale(1); }
+    20%  { transform: translate(-50%,-50%) rotate(90deg)  scale(1.1); }
+    40%  { transform: translate(-50%,-50%) rotate(180deg) scale(0.9); }
+    60%  { transform: translate(-50%,-50%) rotate(270deg) scale(1.05); }
+    80%  { transform: translate(-50%,-50%) rotate(320deg) scale(1.2); }
+    100% { transform: translate(-50%,-50%) rotate(360deg) scale(1); }
+  }
+
+  /* Colapso dimensional: el cuadro se pliega en un eje y en el otro mientras gira */
+  .dimension-collapse {
+    position:absolute; top:50%; left:50%;
+    width:min(300px,42vmin); height:min(300px,42vmin);
+    border:1px solid rgba(160,110,230,0.32);
+    transform: translate(-50%,-50%);
+    animation: collapseRotate 12s infinite linear;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes collapseRotate {
+    0%   { transform: translate(-50%,-50%) perspective(1000px) rotateX(0deg)   rotateY(0deg)   scale(1,1);   opacity:0.8; }
+    33%  { transform: translate(-50%,-50%) perspective(1000px) rotateX(120deg) rotateY(120deg) scale(0.5,1); opacity:0.6; }
+    66%  { transform: translate(-50%,-50%) perspective(1000px) rotateX(240deg) rotateY(240deg) scale(1,0.5); opacity:0.4; }
+    100% { transform: translate(-50%,-50%) perspective(1000px) rotateX(360deg) rotateY(360deg) scale(1,1);   opacity:0.8; }
+  }
+
+  /* Líneas topológicas: crecen, se sostienen y se recogen hacia su extremo */
+  .topology-line {
+    position:absolute;
+    width:min(400px,57vmin); height:1px;
+    background: linear-gradient(90deg, transparent, rgba(170,120,240,0.75), rgba(90,140,230,0.55), transparent);
+    transform-origin: 0 50%;
+    transform: translateX(0) scaleX(0);
+    animation: topologyFlow 8s ease-in-out forwards;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes topologyFlow {
+    0%   { transform: translateX(0) scaleX(0); opacity:0; }
+    30%  { transform: translateX(0) scaleX(1); opacity:0.9; }
+    70%  { transform: translateX(0) scaleX(1); opacity:0.9; }
+    100% { transform: translateX(min(400px,57vmin)) scaleX(0); opacity:0; }
+  }
+
+  /* Nube de puntos */
+  .point-cloud {
+    position:absolute;
+    width:clamp(2px,0.45vmin,3px); height:clamp(2px,0.45vmin,3px);
+    background: rgba(255,255,255,0.8);
+    border-radius:50%;
+    box-shadow: 0 0 4px rgba(255,255,255,0.6);
+    opacity:0;
+    animation: cloudFloat 18s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes cloudFloat {
+    0%,100% { transform: translate(0,0); opacity:0; }
+    20%     { opacity:0.9; }
+    50%     { transform: translate(calc(var(--dx) * min(250px,35vmin)), calc(var(--dy) * min(250px,35vmin))); }
+    80%     { opacity:0.7; }
+  }
+
+  /* Formas platónicas: planos de color que giran en tres ejes */
+  .platonic-solid {
+    position:absolute;
+    border:1px solid rgba(160,110,230,0.3);
+    animation: solidRotate 20s infinite linear;
+    opacity:0;
+    transition: opacity 2.4s ease;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  .platonic-solid.visible { opacity:1; }
+  @keyframes solidRotate {
+    from { transform: rotate3d(1, 1, 1, 0deg); }
+    to   { transform: rotate3d(1, 1, 1, 360deg); }
+  }
+
+  /* Textos euclidianos: se leen en ronda, cada uno unos nueve segundos y medio */
+  .euclid-text {
+    position:absolute;
+    width:max-content;
+    color: rgba(190,160,235,0.85);
+    font-size: clamp(13px,3.5vw,15px);
+    font-style:italic;
+    text-shadow: 0 0 12px rgba(160,110,230,0.45);
+    opacity:0;
+    transform: var(--base) scale(0.85);
+    animation: textFade 16s infinite ease-in-out;
+    will-change: opacity, transform;
+    pointer-events:none;
+    z-index:6;
+  }
+  .e-top    { top:16%;    left:50%;  --base: translateX(-50%); animation-delay:0s; }
+  .e-right  { top:50%;    right:9%;  --base: translateY(-50%); animation-delay:2s; }
+  .e-bottom { bottom:24%; left:50%;  --base: translateX(-50%); animation-delay:4s; }
+  .e-left   { top:50%;    left:9%;   --base: translateY(-50%); animation-delay:6s; }
+  @keyframes textFade {
+    0%       { opacity:0;    transform: var(--base) scale(0.85); }
+    12%      { opacity:0.92; transform: var(--base) scale(1); }
+    72%      { opacity:0.92; transform: var(--base) scale(1); }
+    84%,100% { opacity:0;    transform: var(--base) scale(0.85); }
+  }
+
+  .geometry-paradox {
+    position:absolute; bottom:8%; left:50%;
+    transform: translateX(-50%);
+    width:88%;
+    color: rgba(195,165,240,0.9);
+    font-size: clamp(15px,4.2vw,19px);
+    text-align:center; line-height:1.5;
+    text-shadow: 0 0 20px rgba(160,110,230,0.45);
+    animation: paradoxGlow 6s infinite ease-in-out;
+    will-change: opacity;
+    z-index:6;
+  }
+  @keyframes paradoxGlow {
+    0%,100% { opacity:0.6; }
+    50%     { opacity:0.98; }
+  }
+
+  .transmission-code {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 18px);
+    transform: translateX(-50%);
+    color: rgba(160,110,230,0.42);
+    font-family:'Courier New', monospace;
+    font-size:10px; letter-spacing:2px;
+    white-space:nowrap;
+    animation: codeFlicker 5s infinite ease-in-out;
+  }
+  @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform: translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px,3.2vw,14px);
+    letter-spacing:1px;
+    color: rgba(245,240,255,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+    z-index:20;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(200,180,240,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:21;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(230,200,255,0.95); text-shadow: 0 0 18px rgba(160,110,230,0.6); outline:none; }
+
+  @media (max-aspect-ratio: 3/4) {
+    .non-spatial-geometry { height:80vh; }
+  }
+  @media (max-width: 480px) {
+    .transmission-code { font-size:7.5px; letter-spacing:0.5px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; }
+    .abstract-form polygon.f0 { opacity:1; }
+    .platonic-shadow { transform: translate(min(200px,27vmin), min(200px,27vmin)); }
+    .platonic-solid { opacity:1; transition:none; }
+    .euclid-text { opacity:0.9; transform: var(--base); }
+    .geometry-paradox { opacity:0.92; }
+    .hint { opacity:0.85; }
+    .hint.oculto { opacity:0; }
+  }
+</style>
 </head>
 <body>
-    <div class="non-spatial-geometry">
-        <div class="trinity-resonance"></div>
-        <div class="non-euclidean-grid"></div>
+  <div class="non-spatial-geometry" id="campo">
+    <div class="trinity-resonance"></div>
+    <div class="non-euclidean-grid"></div>
 
-        <div class="platonic-shadow">
-            <div class="abstract-form"></div>
-        </div>
-        
-        <div class="dimension-collapse"></div>
-        
-        <div class="euclid-text" style="top: 20%; left: 50%; transform: translateX(-50%); animation-delay: 0s;">
-            Sin puntos
-        </div>
-        <div class="euclid-text" style="top: 50%; right: 15%; transform: translateY(-50%); animation-delay: 2.5s;">
-            Sin líneas
-        </div>
-        <div class="euclid-text" style="bottom: 20%; left: 50%; transform: translateX(-50%); animation-delay: 5s;">
-            Sin planos
-        </div>
-        <div class="euclid-text" style="top: 50%; left: 15%; transform: translateY(-50%); animation-delay: 7.5s;">
-            Pura forma
-        </div>
-        
-        <div class="geometry-paradox">
-            Geometría anterior al espacio<br>
-            Forma sin extensión
-        </div>
+    <div class="platonic-shadow">
+      <div class="abstract-form">
+        <svg viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="f0" points="0,-58 58,42 -58,42"   fill="rgba(160,110,230,0.6)"/>
+          <polygon class="f1" points="-58,-42 58,-42 0,58"  fill="rgba(90,130,220,0.6)"/>
+          <polygon class="f2" points="-42,-58 58,0 -42,58"  fill="rgba(70,180,200,0.6)"/>
+          <polygon class="f3" points="-58,-50 58,-50 0,50"  fill="rgba(80,190,140,0.6)"/>
+          <polygon class="f4" points="0,-34 100,34 -100,34" fill="rgba(225,150,80,0.6)"/>
+        </svg>
+      </div>
     </div>
 
-    <div class="transmission-code">TRINITY::NODO_53::GEOMETRÍA_ABSTRACTA::RESONANDO</div>
+    <div class="dimension-collapse"></div>
 
-    <script>
-        // MEJORA: Sistema de líneas topológicas optimizado
-        const container = document.querySelector('.non-spatial-geometry');
-        const topologyLines = [];
-        
-        function createTopologyLine() {
-            const line = document.createElement('div');
-            line.className = 'topology-line';
-            
-            const angle = Math.random() * 360;
-            const distance = 100 + Math.random() * 200;
-            const x = 50 + Math.cos(angle * Math.PI / 180) * (distance / 700 * 100);
-            const y = 50 + Math.sin(angle * Math.PI / 180) * (distance / 700 * 100);
-            
-            line.style.left = x + '%';
-            line.style.top = y + '%';
-            line.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-            line.style.animationDelay = Math.random() * 8 + 's';
-            line.style.animationDuration = (6 + Math.random() * 4) + 's';
-            
-            container.appendChild(line);
-            topologyLines.push(line);
-            
-            setTimeout(() => {
-                if (line.parentNode) {
-                    line.parentNode.removeChild(line);
-                    const index = topologyLines.indexOf(line);
-                    if (index > -1) topologyLines.splice(index, 1);
-                }
-            }, 8000);
-        }
-        
-        // Crear líneas iniciales
-        for (let i = 0; i < 6; i++) {
-            setTimeout(createTopologyLine, i * 1200);
-        }
-        
-        // Mantener densidad constante
-        const lineInterval = setInterval(createTopologyLine, 1500);
-        
-        // MEJORA: Nube de puntos con mayor variación
-        for (let i = 0; i < 25; i++) {
-            const point = document.createElement('div');
-            point.className = 'point-cloud';
-            
-            const angle = Math.random() * Math.PI * 2;
-            const radius = Math.random() * 40 + 10;
-            
-            point.style.left = (50 + Math.cos(angle) * radius) + '%';
-            point.style.top = (50 + Math.sin(angle) * radius) + '%';
-            point.style.setProperty('--dx', (Math.cos(angle) * (0.5 + Math.random())).toFixed(3));
-            point.style.setProperty('--dy', (Math.sin(angle) * (0.5 + Math.random())).toFixed(3));
-            point.style.animationDelay = Math.random() * 18 + 's';
-            point.style.animationDuration = (12 + Math.random() * 8) + 's';
-            
-            // Variación de colores
-            if (i % 4 === 0) {
-                point.style.background = 'rgba(59, 130, 246, 0.8)';
-                point.style.boxShadow = '0 0 4px rgba(59, 130, 246, 0.6)';
-            } else if (i % 4 === 1) {
-                point.style.background = 'rgba(6, 182, 212, 0.8)';
-                point.style.boxShadow = '0 0 4px rgba(6, 182, 212, 0.6)';
-            }
-            
-            container.appendChild(point);
-        }
-        
-        // NUEVO: Formas platónicas adicionales
-        function createPlatonicSolid() {
-            const solid = document.createElement('div');
-            solid.className = 'platonic-solid';
-            
-            const size = 80 + Math.random() * 120;
-            const sides = [3, 4, 6, 8][Math.floor(Math.random() * 4)];
-            
-            solid.style.width = size + 'px';
-            solid.style.height = size + 'px';
-            solid.style.borderRadius = sides === 3 ? '0' : '0';
-            
-            if (sides === 3) {
-                solid.style.border = 'none';
-                solid.style.background = 'conic-gradient(from 0deg, transparent, rgba(147, 51, 234, 0.2), transparent)';
-                solid.style.clipPath = 'polygon(50% 0%, 0% 100%, 100% 100%)';
-            } else if (sides === 4) {
-                solid.style.background = 'conic-gradient(from 45deg, transparent, rgba(59, 130, 246, 0.2), transparent)';
-            } else if (sides === 6) {
-                solid.style.background = 'conic-gradient(from 30deg, transparent, rgba(6, 182, 212, 0.2), transparent)';
-            } else {
-                solid.style.background = 'conic-gradient(from 22.5deg, transparent, rgba(34, 197, 94, 0.2), transparent)';
-            }
-            
-            solid.style.left = Math.random() * 100 + '%';
-            solid.style.top = Math.random() * 100 + '%';
-            solid.style.animationDuration = (15 + Math.random() * 10) + 's';
-            
-            container.appendChild(solid);
-            
-            setTimeout(() => {
-                if (solid.parentNode) solid.parentNode.removeChild(solid);
-            }, 25000);
-        }
-        
-        // Crear sólidos iniciales
-        for (let i = 0; i < 3; i++) {
-            setTimeout(createPlatonicSolid, i * 5000);
-        }
-        
-        setInterval(createPlatonicSolid, 8000);
-        
-        // MEJORA: Geometría no-euclidiana con requestAnimationFrame
-        let geometryPhase = 0;
-        let dimensionCount = 0;
-        let lastUpdate = 0;
-        
-        function updateNonEuclideanGeometry(timestamp) {
-            if (!lastUpdate) lastUpdate = timestamp;
-            const deltaTime = (timestamp - lastUpdate) / 1000;
-            lastUpdate = timestamp;
-            
-            geometryPhase += deltaTime * 0.3;
-            
-            // Eventos de colapso dimensional
-            if (Math.floor(geometryPhase * 60) % 120 === 0 && deltaTime < 0.1) {
-                dimensionCount = (dimensionCount + 1) % 13;
-                const events = [
-                    `Dimensión actual: ${dimensionCount}D → 0D`,
-                    'Forma pura sin espacio: La geometría precede a la extensión',
-                    'Topología no-métrica: Relaciones sin distancia',
-                    'Geometría proyectiva: Donde los paralelos se encuentran'
-                ];
-                console.log('📐 ' + events[Math.floor(Math.random() * events.length)]);
-            }
-            
-            // Ciclo completo cada ~20.9 segundos (2*PI*3.33)
-            if (geometryPhase > Math.PI * 6.66) {
-                geometryPhase = 0;
-                console.log('🌌 Ciclo geométrico completado - Las formas retornan a su esencia');
-            }
-            
-            requestAnimationFrame(updateNonEuclideanGeometry);
-        }
-        
-        requestAnimationFrame(updateNonEuclideanGeometry);
-        
-        // MEJORA: Interacción de resonancia
-        container.addEventListener('mouseenter', () => {
-            clearInterval(lineInterval);
-            setInterval(createTopologyLine, 800);
-            container.style.filter = 'drop-shadow(0 0 50px rgba(147, 51, 234, 0.4))';
-        });
-        
-        container.addEventListener('mouseleave', () => {
-            clearInterval(lineInterval);
-            setInterval(createTopologyLine, 1500);
-            container.style.filter = 'drop-shadow(0 0 30px rgba(147, 51, 234, 0.2))';
-        });
-        
-        // MEJORA: Textos euclidianos cíclicos
-        const geometryTexts = [
-            ['Sin puntos', 'Sin líneas', 'Sin planos', 'Pura forma'],
-            ['Geometría', 'Sin espacio', 'Formas puras', 'Ideales'],
-            ['Platón', 'Euclides', 'Riemann', 'Gauss'],
-            ['0D ∞D', '1D -1D', '2D iD', 'nD ∅D']
-        ];
-        
-        let textIndex = 0;
-        const euclidTexts = document.querySelectorAll('.euclid-text');
-        
-        setInterval(() => {
-            textIndex = (textIndex + 1) % geometryTexts.length;
-            euclidTexts.forEach((text, index) => {
-                text.textContent = geometryTexts[textIndex][index];
-            });
-        }, 12000);
-        
-        console.log('🌌 Nodo 53 activo: La geometría existe sin necesidad de espacio');
-        console.log('📐 Formas platónicas en estado puro - Geometría anterior a la métrica');
-        console.log('🌀 Topología fundamental: Donde la relación precede a la existencia');
-    </script>
+    <div class="euclid-text e-top">Sin puntos</div>
+    <div class="euclid-text e-right">Sin líneas</div>
+    <div class="euclid-text e-bottom">Sin planos</div>
+    <div class="euclid-text e-left">Pura forma</div>
+
+    <div class="geometry-paradox">Geometría anterior al espacio<br>Forma sin extensión</div>
+  </div>
+
+  <div class="transmission-code">TRINITY::NODO_53::GEOMETRÍA_ABSTRACTA::RESONANDO</div>
+  <div class="hint">( toca — la forma antes del espacio )</div>
+
+  <a class="infinito" href="L8-Nodo5.html" aria-label="Siguiente portal">∞</a>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let started = false, ctx, master, conv, voces = [];   // sonido (se enciende con el primer toque)
+  const campo = document.getElementById('campo');
+  const escala = () => Math.max(0.7, Math.min(1, campo.clientWidth / 700));
+
+  /* ---------------- Líneas topológicas ---------------- */
+  function lineaTopologica() {
+    const line = document.createElement('div');
+    line.className = 'topology-line';
+    const angle = Math.random() * 360;
+    const dist = 100 + Math.random() * 200;
+    line.style.left = (50 + Math.cos(angle * Math.PI / 180) * (dist / 700 * 100)) + '%';
+    line.style.top  = (50 + Math.sin(angle * Math.PI / 180) * (dist / 700 * 100)) + '%';
+    line.style.animationDuration = (6 + Math.random() * 4) + 's';
+    campo.appendChild(line);
+    setTimeout(() => line.remove(), 10500);
+  }
+
+  /* ---------------- Nube de puntos ---------------- */
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'point-cloud';
+    const a = Math.random() * Math.PI * 2, r = Math.random() * 40 + 10;
+    p.style.left = (50 + Math.cos(a) * r) + '%';
+    p.style.top  = (50 + Math.sin(a) * r) + '%';
+    p.style.setProperty('--dx', (Math.cos(a) * (0.5 + Math.random())).toFixed(3));
+    p.style.setProperty('--dy', (Math.sin(a) * (0.5 + Math.random())).toFixed(3));
+    p.style.animationDelay = (Math.random() * 18) + 's';
+    p.style.animationDuration = (12 + Math.random() * 8) + 's';
+    if (i % 4 === 0) { p.style.background = 'rgba(90,140,230,0.85)';  p.style.boxShadow = '0 0 4px rgba(90,140,230,0.6)'; }
+    else if (i % 4 === 1) { p.style.background = 'rgba(70,190,210,0.85)'; p.style.boxShadow = '0 0 4px rgba(70,190,210,0.6)'; }
+    campo.appendChild(p);
+  }
+
+  /* ---------------- Formas platónicas: planos de color que giran ---------------- */
+  const LADOS = [3, 4, 6, 8];
+  function formaPlatonica(x, y, lados) {
+    const s = document.createElement('div');
+    s.className = 'platonic-solid';
+    const size = (80 + Math.random() * 120) * escala();
+    lados = lados || LADOS[Math.floor(Math.random() * 4)];
+    s.style.width = size + 'px'; s.style.height = size + 'px';
+    if (lados === 3) {
+      s.style.border = 'none';
+      s.style.background = 'conic-gradient(from 0deg, transparent, rgba(150,75,235,0.24), transparent)';
+      s.style.clipPath = 'polygon(50% 0%, 0% 100%, 100% 100%)';
+    } else if (lados === 4) {
+      s.style.background = 'conic-gradient(from 45deg, transparent, rgba(65,125,240,0.24), transparent)';
+    } else if (lados === 6) {
+      s.style.background = 'conic-gradient(from 30deg, transparent, rgba(25,175,205,0.24), transparent)';
+    } else {
+      s.style.background = 'conic-gradient(from 22.5deg, transparent, rgba(45,190,115,0.24), transparent)';
+    }
+    s.style.left = (x * 100) + '%';
+    s.style.top = (y * 100) + '%';
+    s.style.marginLeft = (-size / 2) + 'px'; s.style.marginTop = (-size / 2) + 'px';
+    s.style.animationDuration = (15 + Math.random() * 10) + 's';
+    campo.appendChild(s);
+    requestAnimationFrame(() => requestAnimationFrame(() => s.classList.add('visible')));
+    setTimeout(() => s.classList.remove('visible'), 22500);
+    setTimeout(() => s.remove(), 25000);
+    acorde(lados);
+    return s;
+  }
+
+  if (reduce) {
+    [[0.28,0.3,4],[0.7,0.38,3],[0.42,0.68,6]].forEach(([x, y, l]) => formaPlatonica(x, y, l));
+  } else {
+    for (let i = 0; i < 6; i++) setTimeout(lineaTopologica, i * 1200);
+    setInterval(lineaTopologica, 1500);
+    for (let i = 0; i < 3; i++) setTimeout(() => formaPlatonica(0.1 + Math.random() * 0.8, 0.1 + Math.random() * 0.8), i * 5000);
+    setInterval(() => formaPlatonica(0.1 + Math.random() * 0.8, 0.1 + Math.random() * 0.8), 8000);
+  }
+
+  /* ---------------- Textos euclidianos: cada uno cambia mientras está invisible ---------------- */
+  const grupos = [
+    ['Sin puntos', 'Sin líneas', 'Sin planos', 'Pura forma'],
+    ['Geometría', 'Sin espacio', 'Formas puras', 'Ideales'],
+    ['Platón', 'Euclides', 'Riemann', 'Gauss'],
+    ['0D ∞D', '1D -1D', '2D iD', 'nD ∅D']
+  ];
+  document.querySelectorAll('.euclid-text').forEach((el, k) => {
+    let gi = 0;
+    el.addEventListener('animationiteration', () => { gi = (gi + 1) % grupos.length; el.textContent = grupos[gi][k]; });
+  });
+
+  /* ---------------- Diseño sonoro: la forma antes del espacio ------------------------
+     La forma pura es relación pura: proporciones de entonación justa que existen sin un
+     «dónde». Un acorde es una forma que sigue siendo la misma en cualquier registro.
+     Cuatro voces sostenidas; cada vez que nace una forma platónica, el acorde se desliza
+     hacia el suyo (tres, cuatro, seis u ocho lados). Deliberadamente seco, con poca
+     reverberación, es decir, con poco espacio. Sin pulso.
+  ------------------------------------------------------------------------------------ */
+  const F = 130.8;
+  const ACORDES = {
+    3: [1, 3/2, 2, 3],        // quintas abiertas: el triángulo
+    4: [1, 5/4, 3/2, 2],      // tríada mayor justa: el cuadrado
+    6: [1, 6/5, 3/2, 9/5],    // menor con séptima: el hexágono
+    8: [1, 4/3, 5/3, 2]       // cuarta y sexta: el octógono
+  };
+
+  function makeReverbIR(ac, seconds = 2.2, decay = 3) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, decay);
+    }
+    return buf;
+  }
+  function acorde(lados) {
+    if (!started) return;
+    const forma = ACORDES[lados] || ACORDES[4];
+    const t = ctx.currentTime;
+    voces.forEach((v, i) => {
+      v.o.frequency.setTargetAtTime(F * forma[i], t, 1.3);
+      v.a.gain.setTargetAtTime(0.05 / (i * 0.5 + 1), t, 1.0);
+    });
+  }
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0;
+    master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.42, ctx.currentTime + 6);
+    conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    const wet = ctx.createGain(); wet.gain.value = 0.22;
+    conv.connect(wet); wet.connect(master);
+    const forma = ACORDES[4];
+    for (let i = 0; i < 4; i++) {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = F * forma[i];
+      const a = ctx.createGain(); a.gain.value = 0;
+      const p = ctx.createStereoPanner(); p.pan.value = [-0.3, 0.3, -0.15, 0.15][i];
+      o.connect(a); a.connect(p); p.connect(master); p.connect(conv);
+      o.start();
+      a.gain.linearRampToValueAtTime(0.05 / (i * 0.5 + 1), ctx.currentTime + 6 + i);
+      voces.push({ o, a });
+    }
+  }
+
+  /* El toque: nace una forma donde tocas, y el acorde va hacia ella */
+  const hint = document.querySelector('.hint');
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    if (hint) hint.classList.add('oculto');
+    const r = campo.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    if (!reduce && x >= 0 && x <= 1 && y >= 0 && y <= 1) formaPlatonica(x, y);
+  });
+</script>
 </body>
 </html>
