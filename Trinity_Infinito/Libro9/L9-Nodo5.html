@@ -1,798 +1,638 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="temporal-state" content="absent_present">
-    <meta name="philosophical-concept" content="derrida_difference">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23722f97' opacity='0.4'/></svg>">
-    <title>Nodo 5: El Presente Sin Presencia</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: radial-gradient(circle at center, #050515, #000);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Courier New', monospace;
-            cursor: crosshair;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="temporal-state" content="absent_present">
+<meta name="philosophical-concept" content="derrida_difference">
+<title>Nodo 61: El Presente Sin Presencia</title>
+<!-- Portal 61. Saneado en noviembre de 2026 sobre el original: el vacío del ahora, los fantasmas
+     del presente, las trazas y los cuatro instantes tachados. La franja de rectángulos del
+     original se volvió una cerca: la línea del presente pasa detrás de las tablas y se ve
+     continua donde no está; donde falta una tabla, se ve cortada. Frases, paradoja, paleta y
+     símbolo del original; sonido nuevo (el efecto de la cerca). -->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-        .absent-present {
-            position: relative;
-            width: 750px;
-            height: 750px;
-        }
-        
-        .now-void {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
-            border: 2px dashed rgba(147, 51, 234, 0.4);
-            border-radius: 50%;
-            animation: voidFlicker 3s infinite;
-            cursor: pointer;
-        }
-        
-        .now-void:hover {
-            border-color: rgba(147, 51, 234, 0.8);
-            animation: voidFlicker 0.5s infinite;
-        }
-        
-        @keyframes voidFlicker {
-            0%, 100% {
-                opacity: 0.2;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            25% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(0.8);
-            }
-            50% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(1.2);
-            }
-            75% {
-                opacity: 0.8;
-                transform: translate(-50%, -50%) scale(0.9);
-            }
-        }
-        
-        .disappearing-moment {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300px;
-            height: 1px;
-            background: linear-gradient(90deg,
-                transparent,
-                rgba(147, 51, 234, 0.8),
-                transparent);
-            transform: translate(-50%, -50%);
-            animation: momentVanish 2s infinite;
-            cursor: pointer;
-        }
-        
-        .disappearing-moment:hover {
-            background: linear-gradient(90deg,
-                transparent,
-                rgba(147, 51, 234, 1),
-                rgba(59, 130, 246, 0.8),
-                transparent);
-            height: 2px;
-        }
-        
-        @keyframes momentVanish {
-            0%, 100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scaleX(0);
-            }
-            50% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scaleX(1);
-            }
-        }
-        
-        .phantom-now {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            animation: phantomDrift 10s infinite;
-            cursor: pointer;
-        }
-        
-        .phantom-now:hover {
-            border-color: rgba(59, 130, 246, 0.6);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-        }
-        
-        @keyframes phantomDrift {
-            0%, 100% {
-                transform: translate(0, 0);
-                opacity: 0;
-            }
-            25% {
-                transform: translate(200px, -100px);
-                opacity: 0.5;
-            }
-            50% {
-                transform: translate(-100px, 200px);
-                opacity: 0.3;
-            }
-            75% {
-                transform: translate(-200px, -200px);
-                opacity: 0.5;
-            }
-        }
-        
-        .absence-field {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: repeating-radial-gradient(
-                circle at center,
-                transparent 0,
-                transparent 30px,
-                rgba(147, 51, 234, 0.02) 30px,
-                rgba(147, 51, 234, 0.02) 31px
-            );
-            animation: fieldCollapse 8s infinite;
-        }
-        
-        @keyframes fieldCollapse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-            50% {
-                transform: scale(0);
-                opacity: 0;
-            }
-        }
-        
-        .missing-instant {
-            position: absolute;
-            color: rgba(147, 51, 234, 0.5);
-            font-size: 12px;
-            animation: instantMissing 5s infinite;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .missing-instant:hover {
-            color: rgba(147, 51, 234, 0.9);
-            text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
-            font-size: 14px;
-        }
-        
-        @keyframes instantMissing {
-            0%, 100% {
-                opacity: 0;
-                text-decoration: line-through;
-            }
-            50% {
-                opacity: 1;
-                text-decoration: none;
-            }
-        }
-        
-        .temporal-gap {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 20px;
-            background: repeating-linear-gradient(
-                90deg,
-                rgba(147, 51, 234, 0.3) 0,
-                rgba(147, 51, 234, 0.3) 40px,
-                transparent 40px,
-                transparent 80px
-            );
-            animation: gapFlow 4s infinite linear;
-        }
-        
-        @keyframes gapFlow {
-            from { transform: translateX(0); }
-            to { transform: translateX(80px); }
-        }
-        
-        .presence-absence {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 150px;
-            height: 150px;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            box-shadow: 
-                inset 0 0 30px rgba(147, 51, 234, 0.3),
-                0 0 30px rgba(59, 130, 246, 0.2);
-            animation: presenceAbsence 6s infinite;
-            cursor: pointer;
-        }
-        
-        .presence-absence:hover {
-            animation: presenceAbsence 1s infinite;
-        }
-        
-        @keyframes presenceAbsence {
-            0%, 100% {
-                box-shadow: 
-                    inset 0 0 30px rgba(147, 51, 234, 0.3),
-                    0 0 30px rgba(59, 130, 246, 0.2);
-            }
-            50% {
-                box-shadow: 
-                    inset 0 0 0px transparent,
-                    0 0 0px transparent;
-            }
-        }
-        
-        .derrida-trace {
-            position: absolute;
-            width: 2px;
-            height: 50px;
-            background: linear-gradient(to bottom,
-                transparent,
-                rgba(147, 51, 234, 0.6),
-                transparent);
-            animation: traceErase 3s infinite;
-        }
-        
-        @keyframes traceErase {
-            0%, 100% {
-                opacity: 0;
-                transform: scaleY(0);
-            }
-            50% {
-                opacity: 1;
-                transform: scaleY(1);
-            }
-        }
-        
-        .paradox-text {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(59, 130, 246, 0.5);
-            font-size: 14px;
-            text-align: center;
-            animation: textAbsence 5s infinite;
-            cursor: pointer;
-        }
-        
-        .paradox-text:hover {
-            color: rgba(59, 130, 246, 0.9);
-            text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-        }
-        
-        @keyframes textAbsence {
-            0%, 100% {
-                opacity: 0.5;
-                letter-spacing: 2px;
-            }
-            50% {
-                opacity: 0.9;
-                letter-spacing: 5px;
-            }
-        }
-        
-        .transmission-code {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.3);
-            font-size: 10px;
-            letter-spacing: 2px;
-            text-align: center;
-        }
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(circle at center, #050515, #000);
+    background-color:#000;
+    overflow:hidden;
+    display:flex; justify-content:center; align-items:center;
+    height:100vh; height:100dvh;
+    font-family:'Georgia', serif;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-        /* NUEVOS ELEMENTOS DERRIDIANOS */
-        .difference-field {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                conic-gradient(from 0deg at 50% 50%,
-                    transparent 0deg,
-                    rgba(147, 51, 234, 0.03) 120deg,
-                    transparent 240deg,
-                    rgba(59, 130, 246, 0.03) 360deg);
-            animation: differenceSpin 25s infinite linear;
-            pointer-events: none;
-        }
-        
-        @keyframes differenceSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        .trace-echo {
-            position: absolute;
-            width: 1px;
-            height: 30px;
-            background: linear-gradient(to bottom,
-                transparent,
-                rgba(59, 130, 246, 0.4),
-                transparent);
-            animation: echoFade 4s infinite;
-            pointer-events: none;
-        }
-        
-        @keyframes echoFade {
-            0%, 100% {
-                opacity: 0;
-                transform: scaleY(0) rotate(0deg);
-            }
-            50% {
-                opacity: 1;
-                transform: scaleY(1) rotate(180deg);
-            }
-        }
-        
-        .aporía-point {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgba(147, 51, 234, 0.6);
-            border-radius: 50%;
-            animation: aporiaPulse 3s infinite;
-            cursor: pointer;
-        }
-        
-        @keyframes aporiaPulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(147, 51, 234, 0.4);
-            }
-            50% {
-                transform: scale(1.5);
-                box-shadow: 0 0 0 8px rgba(147, 51, 234, 0);
-            }
-        }
-        
-        .deferral-control {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            color: rgba(59, 130, 246, 0.6);
-            font-size: 12px;
-        }
-        
-        .control-text {
-            margin-bottom: 5px;
-            animation: controlBreath 4s infinite;
-        }
-        
-        .difference-trigger {
-            color: rgba(147, 51, 234, 0.7);
-            font-size: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .difference-trigger:hover {
-            color: rgba(147, 51, 234, 1);
-            text-shadow: 0 0 8px rgba(147, 51, 234, 0.5);
-        }
-        
-        @keyframes controlBreath {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-        
-        .instant-fragment {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: rgba(147, 51, 234, 0.5);
-            border-radius: 50%;
-            animation: fragmentScatter 3s infinite;
-            pointer-events: none;
-        }
-        
-        @keyframes fragmentScatter {
-            0%, 100% {
-                transform: translate(0, 0);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
-        
-        .presence-ghost {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            border: 1px dotted rgba(59, 130, 246, 0.2);
-            border-radius: 50%;
-            animation: ghostFlicker 7s infinite;
-            pointer-events: none;
-        }
-        
-        @keyframes ghostFlicker {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            25% {
-                opacity: 0.3;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0;
-                transform: scale(1.5);
-            }
-            75% {
-                opacity: 0.2;
-                transform: scale(0.8);
-            }
-        }
-    </style>
+  .absent-present {
+    position:relative;
+    width:min(750px, 95vw);
+    height:min(750px, 86vh);
+  }
+
+  /* El campo de la diferencia: un aura redonda que gira */
+  .difference-field {
+    position:absolute; top:50%; left:50%;
+    width:min(880px, 116vmin); height:min(880px, 116vmin);
+    border-radius:50%;
+    background: conic-gradient(from 0deg at 50% 50%,
+      transparent 0deg, rgba(147,51,234,0.07) 120deg, transparent 240deg, rgba(59,130,246,0.07) 360deg);
+    -webkit-mask: radial-gradient(circle closest-side, #000 35%, rgba(0,0,0,0.6) 68%, transparent 100%);
+            mask: radial-gradient(circle closest-side, #000 35%, rgba(0,0,0,0.6) 68%, transparent 100%);
+    transform: translate(-50%,-50%);
+    animation: differenceSpin 25s infinite linear;
+    will-change: transform;
+    pointer-events:none;
+  }
+  @keyframes differenceSpin {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+
+  /* El campo de la ausencia: círculos que se recogen hacia el centro */
+  .absence-field {
+    position:absolute; top:50%; left:50%;
+    width:min(750px, 92vmin); height:min(750px, 92vmin);
+    border-radius:50%;
+    background: repeating-radial-gradient(circle at center,
+      transparent 0, transparent min(30px, 4vmin), rgba(147,51,234,0.05) min(30px, 4vmin), rgba(147,51,234,0.05) calc(min(30px, 4vmin) + 1px));
+    -webkit-mask: radial-gradient(circle closest-side, #000 60%, transparent 100%);
+            mask: radial-gradient(circle closest-side, #000 60%, transparent 100%);
+    transform: translate(-50%,-50%) scale(1);
+    animation: fieldCollapse 8s infinite;
+    pointer-events:none;
+  }
+  @keyframes fieldCollapse {
+    0%,100% { transform: translate(-50%,-50%) scale(1); opacity:0.6; }
+    50%     { transform: translate(-50%,-50%) scale(0); opacity:0; }
+  }
+
+  /* Los fantasmas del ahora */
+  .phantom-now {
+    position:absolute;
+    width:min(200px, 26vmin); height:min(200px, 26vmin);
+    border:1px solid rgba(59,130,246,0.3);
+    opacity:0;
+    animation: phantomDrift 10s infinite;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes phantomDrift {
+    0%,100% { transform: translate(0,0); opacity:0; }
+    25%     { transform: translate(min(200px,26vmin), calc(-1 * min(100px,13vmin))); opacity:0.5; }
+    50%     { transform: translate(calc(-1 * min(100px,13vmin)), min(200px,26vmin)); opacity:0.3; }
+    75%     { transform: translate(calc(-1 * min(200px,26vmin)), calc(-1 * min(200px,26vmin))); opacity:0.5; }
+  }
+
+  .presence-ghost {
+    position:absolute;
+    width:min(100px, 13vmin); height:min(100px, 13vmin);
+    border:1px dotted rgba(59,130,246,0.3);
+    border-radius:50%;
+    opacity:0;
+    animation: ghostFlicker 7s infinite;
+    pointer-events:none;
+  }
+  @keyframes ghostFlicker {
+    0%,100% { opacity:0;   transform: scale(0.5); }
+    25%     { opacity:0.3; transform: scale(1); }
+    50%     { opacity:0;   transform: scale(1.5); }
+    75%     { opacity:0.2; transform: scale(0.8); }
+  }
+
+  /* Puntos de aporía: el brillo en una capa que se abre */
+  .aporia-point {
+    position:absolute;
+    width:clamp(6px, 1.1vmin, 8px); height:clamp(6px, 1.1vmin, 8px);
+    border-radius:50%;
+    background: rgba(147,51,234,0.7);
+    animation: aporiaPulse 3s infinite;
+    pointer-events:none;
+  }
+  .aporia-point::after {
+    content:''; position:absolute; inset:-4px;
+    border-radius:50%;
+    border:1px solid rgba(147,51,234,0.45);
+    animation: aporiaHalo 3s infinite;
+    animation-delay:inherit;
+  }
+  @keyframes aporiaPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.5); } }
+  @keyframes aporiaHalo  { 0% { transform: scale(0.6); opacity:0.8; } 60%,100% { transform: scale(2.4); opacity:0; } }
+
+  /* La presencia que se ausenta: un anillo con su brillo, que se apaga y vuelve */
+  .presence-absence {
+    position:absolute; top:50%; left:50%;
+    width:min(150px, 20vmin); height:min(150px, 20vmin);
+    border-radius:50%;
+    box-shadow: inset 0 0 30px rgba(147,51,234,0.3), 0 0 30px rgba(59,130,246,0.2);
+    transform: translate(-50%,-50%);
+    animation: presenceAbsence 6s infinite ease-in-out;
+    pointer-events:none;
+  }
+  @keyframes presenceAbsence { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+  /* El vacío del ahora: aquí pasa el presente */
+  .now-void {
+    position:absolute; top:50%; left:50%;
+    width:min(100px, 13vmin); height:min(100px, 13vmin);
+    border:2px dashed rgba(160,90,240,0.5);
+    border-radius:50%;
+    transform: translate(-50%,-50%);
+    animation: voidFlicker 3s infinite;
+    pointer-events:none;
+    z-index:6;
+  }
+  @keyframes voidFlicker {
+    0%,100% { opacity:0.25; transform: translate(-50%,-50%) scale(1); }
+    25%     { opacity:1;    transform: translate(-50%,-50%) scale(0.8); }
+    50%     { opacity:0.1;  transform: translate(-50%,-50%) scale(1.2); }
+    75%     { opacity:0.8;  transform: translate(-50%,-50%) scale(0.9); }
+  }
+
+  /* La cerca: tablas que pasan; la línea del presente corre detrás de ellas */
+  .cerca {
+    position:absolute; left:0; top:50%;
+    width:100%;
+    transform: translateY(-50%);
+    overflow:hidden;
+    -webkit-mask: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+            mask: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+    pointer-events:none;
+    z-index:5;
+  }
+  .cerca svg { position:relative; display:block; will-change: transform; }
+  .tabla   { fill: rgba(52,22,96,0.92); stroke: rgba(147,51,234,0.55); stroke-width:1; }
+  .presente { stroke: rgba(200,165,255,0.95); stroke-width:2; stroke-linecap:butt; }
+  .tabla-fantasma {
+    position:absolute; top:0; left:50%;
+    height:100%;
+    background: rgba(52,22,96,0.92);
+    border:1px solid rgba(147,51,234,0.55);
+    border-radius:2px;
+    opacity:0;
+  }
+  .tabla-fantasma.cubre { animation: cubre 0.62s linear forwards; }
+  @keyframes cubre {
+    0%   { transform: translateX(0);     opacity:0; }
+    12%  { opacity:1; }
+    88%  { opacity:1; }
+    100% { transform: translateX(-100%); opacity:0; }
+  }
+
+  /* Trazas */
+  .derrida-trace {
+    position:absolute;
+    width:2px; height:50px;
+    background: linear-gradient(to bottom, transparent, rgba(147,51,234,0.6), transparent);
+    opacity:0;
+    animation: traceErase 3s infinite;
+    pointer-events:none;
+  }
+  @keyframes traceErase {
+    0%,100% { opacity:0; transform: rotate(var(--rot, 0deg)) scaleY(0); }
+    50%     { opacity:1; transform: rotate(var(--rot, 0deg)) scaleY(1); }
+  }
+  .trace-echo {
+    position:absolute;
+    width:1px; height:30px;
+    background: linear-gradient(to bottom, transparent, rgba(59,130,246,0.45), transparent);
+    opacity:0;
+    animation: echoFade 4s infinite;
+    pointer-events:none;
+  }
+  @keyframes echoFade {
+    0%,100% { opacity:0; transform: scaleY(0) rotate(0deg); }
+    50%     { opacity:1; transform: scaleY(1) rotate(180deg); }
+  }
+  .instant-fragment {
+    position:absolute;
+    width:3px; height:3px;
+    border-radius:50%;
+    background: rgba(147,51,234,0.55);
+    opacity:0;
+    animation: fragmentScatter 3s infinite;
+    pointer-events:none;
+  }
+  @keyframes fragmentScatter { 0%,100% { opacity:0; } 50% { opacity:1; } }
+
+  /* Los instantes que faltan: aparecen tachados, el tachado se borra mientras están, y vuelve */
+  .missing-instant {
+    position:absolute;
+    width:max-content;
+    color: rgba(180,130,245,0.92);
+    font-size: clamp(13px, 3.6vw, 16px);
+    letter-spacing:2px;
+    text-shadow: 0 0 10px rgba(147,51,234,0.4);
+    opacity:0;
+    transform: translateX(var(--tx, 0));
+    animation: instantMissing 14s infinite ease-in-out;
+    animation-delay: var(--d, 0s);
+    pointer-events:none;
+    z-index:20;
+  }
+  .missing-instant::after {
+    content:''; position:absolute; left:-3px; right:-1px; top:52%;
+    height:1px; background: rgba(200,160,255,0.9);
+    opacity:0.9;
+    animation: tachado 14s infinite ease-in-out;
+    animation-delay: var(--d, 0s);
+  }
+  .i1 { top:20%;    left:50%;  --tx:-50%; --d:0s; }
+  .i2 { top:40%;    right:14%; --d:3.5s; }
+  .i3 { bottom:22%; left:50%;  --tx:-50%; --d:7s; }
+  .i4 { top:40%;    left:14%;  --d:10.5s; }
+  @keyframes instantMissing {
+    0%       { opacity:0; }
+    12%      { opacity:0.92; }
+    80%      { opacity:0.92; }
+    92%,100% { opacity:0; }
+  }
+  @keyframes tachado {
+    0%,12%  { opacity:0.9; }
+    26%,62% { opacity:0; }
+    76%,100%{ opacity:0.9; }
+  }
+
+  .deferral-control {
+    position:absolute; top:4%; left:50%;
+    width:max-content; max-width:86vw;
+    text-align:center;
+    color: rgba(110,160,250,0.85);
+    font-size: clamp(10px, 2.8vw, 12px);
+    letter-spacing:2px;
+    opacity:0;
+    transform: translateX(-50%);
+    animation: controlBreath 16s infinite ease-in-out;
+    z-index:20;
+  }
+  @keyframes controlBreath {
+    0%       { opacity:0; }
+    12%      { opacity:0.9; }
+    80%      { opacity:0.9; }
+    92%,100% { opacity:0; }
+  }
+
+  .paradox-text {
+    position:absolute; bottom:7%; left:50%;
+    width:88%;
+    color: rgba(120,165,250,0.95);
+    font-size: clamp(16px, 4.4vw, 20px);
+    font-style:italic;
+    text-align:center; line-height:1.5;
+    letter-spacing:1px;
+    text-shadow: 0 0 15px rgba(59,130,246,0.4);
+    opacity:0;
+    transform: translateX(-50%) scale(0.96);
+    animation: textAbsence 16s infinite ease-in-out;
+    animation-delay:1s;
+    will-change: opacity, transform;
+    z-index:20;
+  }
+  @keyframes textAbsence {
+    0%       { opacity:0;    transform: translateX(-50%) scale(0.96); }
+    12%      { opacity:0.95; transform: translateX(-50%) scale(1); }
+    80%      { opacity:0.95; transform: translateX(-50%) scale(1.02); }
+    92%,100% { opacity:0;    transform: translateX(-50%) scale(1.02); }
+  }
+
+  .transmission-code {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);
+    transform: translateX(-50%);
+    color: rgba(147,51,234,0.45);
+    font-family:'Courier New', monospace;
+    font-size:10px; letter-spacing:2px; line-height:1.5;
+    text-align:center; white-space:nowrap;
+    animation: codeFlicker 5s infinite ease-in-out;
+  }
+  @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform: translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(240,232,255,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+    z-index:30;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(190,160,245,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:31;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(230,210,255,0.95); text-shadow: 0 0 18px rgba(147,51,234,0.6); outline:none; }
+
+  @media (max-width: 480px) {
+    .i2 { right:7%; }
+    .i4 { left:7%; }
+    .transmission-code { font-size:7px; letter-spacing:0.3px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; }
+    .missing-instant { opacity:0.9; }
+    .missing-instant.i3::after, .missing-instant.i4::after { opacity:0.9; }
+    .missing-instant.i1::after, .missing-instant.i2::after { opacity:0; }
+    .deferral-control { opacity:0.85; }
+    .paradox-text { opacity:0.95; transform: translateX(-50%); }
+    .now-void { opacity:0.8; }
+    .hint { opacity:0.85; }
+    .hint.oculto { opacity:0; }
+  }
+</style>
 </head>
 <body>
-    <div class="absent-present">
-        <div class="difference-field"></div>
-        <div class="absence-field"></div>
-        <div class="temporal-gap"></div>
+  <div class="absent-present" id="campo">
+    <div class="difference-field"></div>
+    <div class="absence-field"></div>
 
-        <div class="phantom-now" style="top: 200px; left: 200px;"></div>
-        <div class="phantom-now" style="top: 200px; right: 200px; animation-delay: 2.5s;"></div>
-        <div class="phantom-now" style="bottom: 200px; left: 200px; animation-delay: 5s;"></div>
-        <div class="phantom-now" style="bottom: 200px; right: 200px; animation-delay: 7.5s;"></div>
-        
-        <div class="presence-ghost" style="top: 30%; left: 30%;"></div>
-        <div class="presence-ghost" style="top: 30%; right: 30%; animation-delay: 1s;"></div>
-        <div class="presence-ghost" style="bottom: 30%; left: 30%; animation-delay: 2s;"></div>
-        <div class="presence-ghost" style="bottom: 30%; right: 30%; animation-delay: 3s;"></div>
-        
-        <div class="aporía-point" style="top: 40%; left: 40%;"></div>
-        <div class="aporía-point" style="top: 40%; right: 40%; animation-delay: 1.5s;"></div>
-        <div class="aporía-point" style="bottom: 40%; left: 40%; animation-delay: 3s;"></div>
-        <div class="aporía-point" style="bottom: 40%; right: 40%; animation-delay: 4.5s;"></div>
-        
-        <div class="presence-absence"></div>
-        <div class="now-void"></div>
-        <div class="disappearing-moment"></div>
-        
-        <div class="deferral-control">
-            <div class="control-text">DIFFÉRANCE ACTIVA</div>
-            <div class="difference-trigger">ACTUALIZAR DIFERIMIENTO</div>
-        </div>
-        
-        <div class="missing-instant" style="top: 20%; left: 50%; transform: translateX(-50%);">
-            AHORA
-        </div>
-        <div class="missing-instant" style="top: 50%; right: 20%; animation-delay: 1.25s;">
-            YA NO
-        </div>
-        <div class="missing-instant" style="bottom: 20%; left: 50%; transform: translateX(-50%); animation-delay: 2.5s;">
-            AÚN NO
-        </div>
-        <div class="missing-instant" style="top: 50%; left: 20%; animation-delay: 3.75s;">
-            NUNCA
-        </div>
-        
-        <div class="paradox-text">
-            El presente que nunca está<br>
-            La presencia ausente del ahora
-        </div>
-    </div>
+    <div class="phantom-now" style="top:27%; left:27%;"></div>
+    <div class="phantom-now" style="top:27%; right:27%; animation-delay:2.5s;"></div>
+    <div class="phantom-now" style="bottom:27%; left:27%; animation-delay:5s;"></div>
+    <div class="phantom-now" style="bottom:27%; right:27%; animation-delay:7.5s;"></div>
 
-    <div class="transmission-code">
-        LIBRO_9::NODO_5::PRESENTE_AUSENTE::ACTIVO<br>
-        DIFFÉRANCE::DIFERIMIENTO_ETERNAL
-    </div>
+    <div class="presence-ghost" style="top:30%; left:30%;"></div>
+    <div class="presence-ghost" style="top:30%; right:30%; animation-delay:1s;"></div>
+    <div class="presence-ghost" style="bottom:30%; left:30%; animation-delay:2s;"></div>
+    <div class="presence-ghost" style="bottom:30%; right:30%; animation-delay:3s;"></div>
 
-    <script>
-        class AbsentPresent {
-            constructor() {
-                this.container = document.querySelector('.absent-present');
-                this.nowAttempts = 0;
-                this.presenceLevel = 0;
-                this.deferralCount = 0;
-                this.init();
-            }
+    <div class="aporia-point" style="top:40%; left:40%;"></div>
+    <div class="aporia-point" style="top:40%; right:40%; animation-delay:1.5s;"></div>
+    <div class="aporia-point" style="bottom:40%; left:40%; animation-delay:3s;"></div>
+    <div class="aporia-point" style="bottom:40%; right:40%; animation-delay:4.5s;"></div>
 
-            init() {
-                this.createTraceSystem();
-                this.setupInteractions();
-                this.startDeferralLoop();
-                this.createInstantFragments();
-                this.createGhostPresences();
-            }
+    <div class="presence-absence"></div>
+    <div class="cerca" id="cerca"><div class="tabla-fantasma" id="fantasma"></div></div>
+    <div class="now-void"></div>
 
-            createTraceSystem() {
-                // Sistema continuo de trazas derridianas
-                setInterval(() => this.createTrace(), 400);
-                setInterval(() => this.createTraceEcho(), 600);
-            }
+    <div class="deferral-control" id="control">DIFFÉRANCE ACTIVA</div>
 
-            createTrace() {
-                const trace = document.createElement('div');
-                trace.className = 'derrida-trace';
-                trace.style.left = Math.random() * 100 + '%';
-                trace.style.top = Math.random() * 100 + '%';
-                trace.style.animationDelay = Math.random() * 3 + 's';
-                trace.style.transform = `rotate(${Math.random() * 360}deg)`;
-                this.container.appendChild(trace);
-                
-                setTimeout(() => trace.remove(), 3000);
-            }
+    <div class="missing-instant i1">AHORA</div>
+    <div class="missing-instant i2">YA NO</div>
+    <div class="missing-instant i3">AÚN NO</div>
+    <div class="missing-instant i4">NUNCA</div>
 
-            createTraceEcho() {
-                const echo = document.createElement('div');
-                echo.className = 'trace-echo';
-                echo.style.left = Math.random() * 100 + '%';
-                echo.style.top = Math.random() * 100 + '%';
-                echo.style.animationDelay = Math.random() * 2 + 's';
-                this.container.appendChild(echo);
-                
-                setTimeout(() => echo.remove(), 4000);
-            }
+    <div class="paradox-text" id="frase">El presente que nunca está<br>La presencia ausente del ahora</div>
+  </div>
 
-            createInstantFragments() {
-                // Fragmentos del instante que se dispersan
-                setInterval(() => {
-                    const fragment = document.createElement('div');
-                    fragment.className = 'instant-fragment';
-                    fragment.style.left = Math.random() * 100 + '%';
-                    fragment.style.top = Math.random() * 100 + '%';
-                    fragment.style.animationDelay = Math.random() * 3 + 's';
-                    this.container.appendChild(fragment);
+  <div class="transmission-code">LIBRO_9::NODO_5::PRESENTE_AUSENTE::ACTIVO<br>DIFFÉRANCE::DIFERIMIENTO_ETERNO</div>
+  <div class="hint" id="hint">( toca: escucha lo que no está )</div>
 
-                    setTimeout(() => fragment.remove(), 3000);
-                }, 500);
-            }
+  <a class="infinito" href="L9-Nodo6.html" aria-label="Siguiente portal">∞</a>
 
-            createGhostPresences() {
-                // Presencias fantasma adicionales
-                for (let i = 0; i < 4; i++) {
-                    setTimeout(() => this.createGhostPresence(), i * 500);
-                }
-            }
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const campo = document.getElementById('campo');
+  const cerca = document.getElementById('cerca');
+  const fantasma = document.getElementById('fantasma');
+  const SVGNS = 'http://www.w3.org/2000/svg';
 
-            createGhostPresence() {
-                const ghost = document.createElement('div');
-                ghost.className = 'presence-ghost';
-                ghost.style.left = (20 + Math.random() * 60) + '%';
-                ghost.style.top = (20 + Math.random() * 60) + '%';
-                ghost.style.animationDelay = Math.random() * 7 + 's';
-                this.container.appendChild(ghost);
+  /* Las variables del sonido van arriba */
+  let started = false, ctx, master, sala, tono, arm, tonoG, soplo, soploG, soploBP, ultimoSlot = -1, cubrir = false, nota = 0;
 
-                setTimeout(() => {
-                    ghost.remove();
-                    this.createGhostPresence();
-                }, 7000);
-            }
-
-            setupInteractions() {
-                // Interacción con el vacío del ahora
-                document.querySelector('.now-void').addEventListener('click', () => {
-                    this.intensifyVoid();
-                });
-
-                // Interacción con momentos que desaparecen
-                document.querySelector('.disappearing-moment').addEventListener('click', (e) => {
-                    this.createMomentEcho(e);
-                });
-
-                // Interacción con fantasmas del presente
-                document.querySelectorAll('.phantom-now').forEach(phantom => {
-                    phantom.addEventListener('click', () => {
-                        this.capturePhantom();
-                    });
-                });
-
-                // Interacción con instantes faltantes
-                document.querySelectorAll('.missing-instant').forEach(instant => {
-                    instant.addEventListener('click', () => {
-                        this.revealInstantParadox(instant.textContent);
-                    });
-                });
-
-                // Interacción con puntos de aporía
-                document.querySelectorAll('.aporía-point').forEach(point => {
-                    point.addEventListener('click', () => {
-                        this.triggerAporia(point);
-                    });
-                });
-
-                // Interacción con el trigger de differance
-                document.querySelector('.difference-trigger').addEventListener('click', () => {
-                    this.activateDifference();
-                });
-
-                // Interacción con el texto de paradoja
-                document.querySelector('.paradox-text').addEventListener('click', () => {
-                    this.revealDeferral();
-                });
-
-                // Observación del presente ausente
-                document.addEventListener('mousemove', (e) => {
-                    this.handlePresentObservation(e);
-                });
-            }
-
-            intensifyVoid() {
-                const nowVoid = document.querySelector('.now-void');
-                nowVoid.style.animation = 'voidFlicker 0.2s infinite';
-                nowVoid.style.borderColor = 'rgba(147, 51, 234, 1)';
-                
-                setTimeout(() => {
-                    nowVoid.style.animation = 'voidFlicker 3s infinite';
-                    nowVoid.style.borderColor = 'rgba(147, 51, 234, 0.4)';
-                }, 1000);
-
-                this.logDeferralEvent('Vacío del ahora intensificado por observación');
-            }
-
-            createMomentEcho(e) {
-                const echo = document.createElement('div');
-                echo.style.cssText = `
-                    position: absolute;
-                    width: 150px;
-                    height: 1px;
-                    background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.6), transparent);
-                    left: ${e.clientX}px;
-                    top: ${e.clientY}px;
-                    pointer-events: none;
-                    animation: momentVanish 1s forwards;
-                `;
-                document.body.appendChild(echo);
-                setTimeout(() => echo.remove(), 1000);
-
-                this.logDeferralEvent('Eco de momento creado en el vacío presente');
-            }
-
-            capturePhantom() {
-                this.logDeferralEvent('Intento de capturar fantasma del presente - Siempre diferido');
-                
-                // Efecto visual de captura fallida
-                document.querySelectorAll('.phantom-now').forEach(phantom => {
-                    phantom.style.animation = 'phantomDrift 2s infinite';
-                    setTimeout(() => {
-                        phantom.style.animation = 'phantomDrift 10s infinite';
-                    }, 2000);
-                });
-            }
-
-            revealInstantParadox(instantText) {
-                const inscription = document.querySelector('.paradox-text');
-                const originalText = inscription.innerHTML;
-                
-                inscription.innerHTML = `"${instantText}" - Siempre ya fue o aún no es`;
-                inscription.style.color = 'rgba(147, 51, 234, 0.9)';
-                
-                setTimeout(() => {
-                    inscription.innerHTML = originalText;
-                    inscription.style.color = 'rgba(59, 130, 246, 0.5)';
-                }, 3000);
-
-                this.logDeferralEvent(`Paradoja del instante revelada: ${instantText}`);
-            }
-
-            triggerAporia(point) {
-                point.style.animation = 'aporiaPulse 0.5s infinite';
-                point.style.background = 'rgba(147, 51, 234, 1)';
-                
-                setTimeout(() => {
-                    point.style.animation = 'aporiaPulse 3s infinite';
-                    point.style.background = 'rgba(147, 51, 234, 0.6)';
-                }, 1500);
-
-                this.logDeferralEvent('Aporía temporal activada - Callejón sin salida del presente');
-            }
-
-            activateDifference() {
-                const field = document.querySelector('.difference-field');
-                field.style.animation = 'differenceSpin 5s infinite linear';
-                
-                setTimeout(() => {
-                    field.style.animation = 'differenceSpin 25s infinite linear';
-                }, 3000);
-
-                this.deferralCount++;
-                this.logDeferralEvent(`Différance activada - Diferimiento #${this.deferralCount}`);
-            }
-
-            revealDeferral() {
-                const control = document.querySelector('.control-text');
-                const originalText = control.textContent;
-                
-                control.textContent = 'EL PRESENTE SE DIFIERE...';
-                control.style.color = 'rgba(147, 51, 234, 0.9)';
-                
-                setTimeout(() => {
-                    control.textContent = originalText;
-                    control.style.color = 'rgba(59, 130, 246, 0.6)';
-                }, 2000);
-
-                this.logDeferralEvent('Mecanismo de diferimiento revelado');
-            }
-
-            handlePresentObservation(e) {
-                // El presente se escapa de la observación
-                if (this.nowAttempts % 25 === 0) {
-                    const x = (e.clientX / window.innerWidth) * 100;
-                    const y = (e.clientY / window.innerHeight) * 100;
-                    
-                    const observation = document.createElement('div');
-                    observation.style.cssText = `
-                        position: absolute;
-                        width: 1px;
-                        height: 1px;
-                        background: rgba(6, 182, 212, 0.1);
-                        border-radius: 50%;
-                        left: ${x}%;
-                        top: ${y}%;
-                        pointer-events: none;
-                        box-shadow: 0 0 10px 2px rgba(6, 182, 212, 0.3);
-                    `;
-                    this.container.appendChild(observation);
-                    
-                    setTimeout(() => observation.remove(), 1000);
-                }
-            }
-
-            startDeferralLoop() {
-                // El presente que se escapa
-                setInterval(() => {
-                    this.nowAttempts++;
-                    this.presenceLevel = Math.sin(this.nowAttempts / 50) * 0.5 + 0.5;
-                    
-                    // El presente siempre ya pasó o aún no llega
-                    if (this.nowAttempts % 100 === 0) {
-                        this.logDeferralEvent('El presente: siempre diferido, nunca presente');
-                    }
-                    
-                    // Différance derridiana
-                    if (this.nowAttempts % 200 === 0) {
-                        this.logDeferralEvent('Différance: El presente difiere y difiere de sí mismo');
-                    }
-                    
-                    // La aporía del ahora
-                    if (this.nowAttempts % 377 === 0) {
-                        this.logDeferralEvent('Aporía temporal: El ahora no tiene duración, por lo tanto no existe');
-                    }
-                }, 50);
-            }
-
-            logDeferralEvent(message) {
-                console.log(`[AbsentPresent] ${message}`);
-            }
+  /* ---------------- La cerca ----------------
+     Ocho casillas por vuelta, medio segundo cada una al pasar por el centro: línea, tabla,
+     línea, tabla, línea, tabla, línea, y una casilla vacía. Bajo las tablas la línea no está
+     dibujada; el ojo la completa. En la casilla vacía, el corte se ve. */
+  const SLOT = 500, VUELTA = 8 * SLOT;
+  let anim = null, s = 30, h = 45, t0 = performance.now();
+  function construirCerca() {
+    const r = campo.getBoundingClientRect();
+    const W = r.width;
+    s = Math.round(Math.max(22, Math.min(38, 0.05 * Math.min(innerWidth, innerHeight))));
+    h = Math.round(s * 1.5);
+    const P = 8 * s;
+    const izq = Math.ceil(W / 2 / P) + 1, der = Math.ceil(W / 2 / P) + 2;
+    const K = izq + der;
+    const viejo = cerca.querySelector('svg');
+    const tiempo = anim ? anim.currentTime : null;
+    if (viejo) viejo.remove();
+    if (anim) anim.cancel();
+    const svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('width', K * P); svg.setAttribute('height', h);
+    svg.setAttribute('viewBox', `0 0 ${K * P} ${h}`);
+    svg.style.left = (W / 2 - izq * P) + 'px';
+    for (let k = 0; k < K; k++) {
+      for (let j = 0; j < 8; j++) {
+        const x = (k * 8 + j) * s;
+        if (j === 7) continue;
+        if (j % 2 === 0) {
+          const l = document.createElementNS(SVGNS, 'line');
+          l.setAttribute('class', 'presente');
+          l.setAttribute('x1', x); l.setAttribute('x2', x + s);
+          l.setAttribute('y1', h / 2); l.setAttribute('y2', h / 2);
+          svg.appendChild(l);
+        } else {
+          const t = document.createElementNS(SVGNS, 'rect');
+          t.setAttribute('class', 'tabla');
+          t.setAttribute('x', x + 1.5); t.setAttribute('y', 0.5);
+          t.setAttribute('width', s - 3); t.setAttribute('height', h - 1);
+          t.setAttribute('rx', 2);
+          svg.appendChild(t);
         }
+      }
+    }
+    cerca.style.height = h + 'px';
+    fantasma.style.width = s + 'px';
+    cerca.insertBefore(svg, fantasma);
+    if (!reduce) {
+      anim = svg.animate([{ transform: 'translateX(0px)' }, { transform: `translateX(${-P}px)` }],
+                         { duration: VUELTA, iterations: Infinity, easing: 'linear' });
+      if (tiempo !== null) anim.currentTime = tiempo;
+    } else {
+      svg.style.transform = `translateX(${-s / 2}px)`;
+    }
+  }
+  construirCerca();
+  addEventListener('resize', construirCerca);
+  function reloj() {                       // milisegundos de la cerca (o un reloj propio, sin movimiento)
+    return anim ? anim.currentTime : performance.now() - t0;
+  }
 
-        // Inicializar cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', () => {
-            new AbsentPresent();
-            console.log('Nodo 5 activo: El presente sin presencia, el ahora ausente de sí mismo');
-        });
+  /* ---------------- Trazas, fragmentos y fantasmas ---------------- */
+  function traza() {
+    const t = document.createElement('div');
+    t.className = 'derrida-trace';
+    t.style.left = (Math.random() * 100) + '%'; t.style.top = (Math.random() * 100) + '%';
+    t.style.setProperty('--rot', (Math.random() * 360).toFixed(0) + 'deg');
+    t.style.animationDelay = (Math.random() * 3).toFixed(2) + 's';
+    campo.appendChild(t); setTimeout(() => t.remove(), 6000);
+  }
+  function ecoTraza() {
+    const e = document.createElement('div');
+    e.className = 'trace-echo';
+    e.style.left = (Math.random() * 100) + '%'; e.style.top = (Math.random() * 100) + '%';
+    e.style.animationDelay = (Math.random() * 2).toFixed(2) + 's';
+    campo.appendChild(e); setTimeout(() => e.remove(), 6000);
+  }
+  function fragmento() {
+    const f = document.createElement('div');
+    f.className = 'instant-fragment';
+    f.style.left = (Math.random() * 100) + '%'; f.style.top = (Math.random() * 100) + '%';
+    f.style.animationDelay = (Math.random() * 3).toFixed(2) + 's';
+    campo.appendChild(f); setTimeout(() => f.remove(), 6000);
+  }
+  function fantasmaPresencia() {
+    const g = document.createElement('div');
+    g.className = 'presence-ghost';
+    g.style.left = (20 + Math.random() * 60) + '%'; g.style.top = (20 + Math.random() * 60) + '%';
+    g.style.animationDelay = (Math.random() * 7).toFixed(2) + 's';
+    campo.appendChild(g);
+    setTimeout(() => { g.remove(); fantasmaPresencia(); }, 14000);
+  }
+  if (!reduce) {
+    setInterval(traza, 400); setInterval(ecoTraza, 600); setInterval(fragmento, 500);
+    for (let i = 0; i < 4; i++) setTimeout(fantasmaPresencia, i * 500);
+  }
 
-        // Efecto de carga inicial
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 1.5s ease';
-            
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-    </script>
+  /* ---------------- Textos que alternan con los que aparecían al tocar ---------------- */
+  const frases = [
+    'El presente que nunca está<br>La presencia ausente del ahora',
+    '«Ahora»: siempre ya fue<br>o aún no es'
+  ];
+  const controles = ['DIFFÉRANCE ACTIVA', 'EL PRESENTE SE DIFIERE…'];
+  const frase = document.getElementById('frase'), control = document.getElementById('control');
+  let fi = 0, ci = 0;
+  frase.addEventListener('animationiteration', () => { fi = (fi + 1) % frases.length; frase.innerHTML = frases[fi]; });
+  control.addEventListener('animationiteration', () => { ci = (ci + 1) % controles.length; control.textContent = controles[ci]; });
+
+  /* ---------------- Diseño sonoro: el efecto de la cerca -------------------------------------
+     Miller y Licklider (1950): un tono con huecos de silencio se oye cortado; si los huecos se
+     llenan de ruido, el oído escucha el tono seguir, intacto, a través del ruido, donde ya no
+     está. Y solo lo decide cuando el tono reaparece del otro lado: el presente que oímos se
+     arma con lo que vino antes y lo que llega después. Lo llamaron el efecto de la cerca
+     porque es lo que hace el ojo con un paisaje visto entre las tablas.
+     Una flauta suave pasa por la cerca de la imagen, al mismo paso: donde hay línea, suena;
+     donde hay tabla, calla y en su lugar sopla un aliento que la cubre; en la casilla vacía,
+     calla del todo, y el corte se oye. En cada vuelta la flauta cambia de nota, y el cambio
+     ocurre detrás de una tabla: el oído oye el deslizamiento que no sonó.
+     Al tocar, el próximo hueco vacío se cubre: el tono parece seguir donde no está.
+  ------------------------------------------------------------------------------------------- */
+  const NOTAS = [440.0, 523.25, 493.88, 392.0, 440.0, 587.33, 523.25, 392.0];
+  function makeReverbIR(ac, seconds = 4, decay = 2.5) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
+  }
+  function casilla(n, t) {                 // n: número absoluto de casilla; t: cuándo empieza (reloj de audio)
+    const j = ((n % 8) + 8) % 8;
+    const dur = SLOT / 1000, r = 0.018;
+    if (j === 0) {                          // vuelve la línea: la nota de esta vuelta
+      nota = Math.floor(n / 8) % NOTAS.length;
+      tono.frequency.setValueAtTime(NOTAS[nota], t);
+      arm.frequency.setValueAtTime(2 * NOTAS[nota], t);
+      soploBP.frequency.setValueAtTime(NOTAS[nota], t);
+    }
+    if (j === 1) {                          // detrás de la primera tabla, la flauta se desliza a la nota siguiente
+      const f = NOTAS[(nota + 1) % NOTAS.length];
+      tono.frequency.setValueAtTime(NOTAS[nota], t);
+      tono.frequency.linearRampToValueAtTime(f, t + dur);
+      arm.frequency.setValueAtTime(2 * NOTAS[nota], t);
+      arm.frequency.linearRampToValueAtTime(2 * f, t + dur);
+      soploBP.frequency.setValueAtTime(NOTAS[nota], t);
+      soploBP.frequency.linearRampToValueAtTime(f, t + dur);
+    }
+    const linea = j % 2 === 0 && j !== 7;
+    const tabla = j % 2 === 1 && j !== 7;
+    const vacia = j === 7;
+    const cubre = tabla || (vacia && cubrir);
+    if (vacia && cubrir) {
+      cubrir = false;
+      if (!reduce) setTimeout(() => { fantasma.classList.remove('cubre'); void fantasma.offsetWidth; fantasma.classList.add('cubre'); },
+                              Math.max(0, (t - ctx.currentTime) * 1000));
+    }
+    tonoG.gain.setTargetAtTime(linea ? 1 : 0, t, r / 3);
+    soploG.gain.setTargetAtTime(cubre ? 1 : 0, t, r / 2);
+  }
+  function programar() {
+    if (!started) return;
+    const ms = reloj(), ahora = ctx.currentTime;
+    const n0 = Math.floor(ms / SLOT);
+    for (let n = Math.max(ultimoSlot + 1, n0); n <= n0 + 2; n++) {
+      const t = ahora + (n * SLOT - ms) / 1000;
+      if (t < ahora - 0.05) continue;
+      casilla(n, Math.max(t, ahora));
+      ultimoSlot = n;
+    }
+  }
+  function startAudio() {
+    if (started) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -14; comp.ratio.value = 3; comp.attack.value = 0.01; comp.release.value = 0.4;
+    comp.connect(ctx.destination);
+    master = ctx.createGain(); master.gain.value = 0; master.connect(comp);
+    master.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 6);
+    sala = ctx.createGain(); sala.gain.value = 0.3;
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    sala.connect(conv); conv.connect(master);
+
+    // La flauta: seno con un poco de segundo armónico y un vibrato lento
+    tono = ctx.createOscillator(); tono.type = 'sine'; tono.frequency.value = NOTAS[0];
+    arm = ctx.createOscillator(); arm.type = 'sine'; arm.frequency.value = 2 * NOTAS[0];
+    const vib = ctx.createOscillator(); vib.frequency.value = 4.6;
+    const vibG = ctx.createGain(); vibG.gain.value = 5;
+    vib.connect(vibG); vibG.connect(tono.detune); vibG.connect(arm.detune); vib.start();
+    const armG = ctx.createGain(); armG.gain.value = 0.12;
+    const mezcla = ctx.createGain(); mezcla.gain.value = 0.04;
+    tono.connect(mezcla); arm.connect(armG); armG.connect(mezcla);
+    tonoG = ctx.createGain(); tonoG.gain.value = 0;
+    mezcla.connect(tonoG); tonoG.connect(master); tonoG.connect(sala);
+    tono.start(); arm.start();
+
+    // El aliento que cubre: ruido en la banda de la nota, más fuerte que ella en esa banda
+    const len = ctx.sampleRate * 2, buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const d = buf.getChannelData(0); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    soplo = ctx.createBufferSource(); soplo.buffer = buf; soplo.loop = true;
+    soploBP = ctx.createBiquadFilter(); soploBP.type = 'bandpass'; soploBP.frequency.value = NOTAS[0]; soploBP.Q.value = 2.5;
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3000;
+    const soploN = ctx.createGain(); soploN.gain.value = 0.75;
+    soploG = ctx.createGain(); soploG.gain.value = 0;
+    soplo.connect(soploBP); soploBP.connect(lp); lp.connect(soploN); soploN.connect(soploG);
+    soploG.connect(master); soploG.connect(sala);
+    soplo.start();
+
+    // Debajo, una quinta grave muy tenue
+    const fondo = ctx.createGain(); fondo.gain.value = 0.012;
+    [[146.83, 1], [220.0, 0.5]].forEach(([f, v]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const a = ctx.createGain(); a.gain.value = v;
+      o.connect(a); a.connect(fondo); o.start();
+    });
+    fondo.connect(master); fondo.connect(sala);
+
+    started = true;
+    programar();
+    setInterval(programar, 100);
+  }
+
+  const hint = document.getElementById('hint');
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    const primera = !started;
+    startAudio();
+    if (hint) hint.classList.add('oculto');
+    if (!primera) cubrir = true;
+  });
+</script>
 </body>
 </html>

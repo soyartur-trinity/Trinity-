@@ -1,614 +1,519 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="quantum-state" content="future_pretérito">
-    <meta name="temporal-paradox" content="block_universe">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%239335ea' opacity='0.6'/></svg>">
-    <title>Nodo 3: El Futuro que Ya Fue</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #000, #0a0a1a);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Helvetica Neue', sans-serif;
-            cursor: crosshair;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="quantum-state" content="future_pretérito">
+<meta name="temporal-paradox" content="block_universe">
+<title>Nodo 59: El Futuro que Ya Fue</title>
+<!-- Portal 59. Saneado en noviembre de 2026 sobre el original: el universo bloque en franjas,
+     el bucle del tiempo (que por un error se dibujaba cuadrado y vuelve a ser círculo), el
+     nudo de la causalidad y el uróboros. Frases, paradoja, paleta y símbolo del original;
+     sonido nuevo (el preeco de la cinta). -->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-        .temporal-paradox {
-            position: relative;
-            width: 800px;
-            height: 800px;
-        }
-        
-        .time-loop {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 400px;
-            height: 400px;
-            transform: translate(-50%, -50%);
-            border: 2px solid transparent;
-            border-image: linear-gradient(
-                90deg,
-                rgba(147, 51, 234, 0.8),
-                rgba(59, 130, 246, 0.6),
-                rgba(6, 182, 212, 0.4),
-                rgba(147, 51, 234, 0.8)
-            ) 1;
-            border-radius: 50%;
-            animation: loopRotate 10s infinite linear;
-        }
-        
-        @keyframes loopRotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        .retrograde-flow {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            top: 50%;
-            background: linear-gradient(90deg,
-                transparent,
-                rgba(147, 51, 234, 0.6),
-                transparent);
-            animation: retroFlow 5s infinite;
-        }
-        
-        @keyframes retroFlow {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        
-        .future-echo {
-            position: absolute;
-            color: rgba(147, 51, 234, 0.6);
-            font-size: 14px;
-            animation: echoFade 6s infinite;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .future-echo:hover {
-            color: rgba(147, 51, 234, 0.9);
-            text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
-            transform: scale(1.2);
-        }
-        
-        @keyframes echoFade {
-            0% {
-                opacity: 0;
-                transform: scale(1.5);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-        }
-        
-        .causality-knot {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 200px;
-            height: 200px;
-            transform: translate(-50%, -50%);
-        }
-        
-        .knot-strand {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 1px solid rgba(59, 130, 246, 0.4);
-            border-radius: 50% 20% 50% 20%;
-            animation: knotTwist 8s infinite;
-        }
-        
-        .knot-strand:nth-child(2) {
-            animation-delay: 2s;
-            transform: rotate(60deg);
-        }
-        
-        .knot-strand:nth-child(3) {
-            animation-delay: 4s;
-            transform: rotate(120deg);
-        }
-        
-        @keyframes knotTwist {
-            0%, 100% {
-                transform: rotate(0deg) scale(1);
-            }
-            50% {
-                transform: rotate(180deg) scale(1.2);
-            }
-        }
-        
-        .memory-of-future {
-            position: absolute;
-            width: 3px;
-            height: 30px;
-            background: linear-gradient(to bottom,
-                transparent,
-                rgba(147, 51, 234, 0.8),
-                transparent);
-            animation: memoryStream 4s infinite;
-        }
-        
-        @keyframes memoryStream {
-            0% {
-                transform: translateY(-100px);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-        }
-        
-        .ouroboros-time {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 500px;
-            height: 500px;
-            transform: translate(-50%, -50%);
-            border: 1px dotted rgba(147, 51, 234, 0.2);
-            border-radius: 50%;
-            animation: ouroborosRotate 20s infinite linear reverse;
-        }
-        
-        @keyframes ouroborosRotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        .temporal-equation {
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.6);
-            font-size: 16px;
-            font-family: 'Times New Roman', serif;
-            animation: equationPulse 5s infinite;
-        }
-        
-        @keyframes equationPulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-        
-        .block-universe {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 40px,
-                rgba(147, 51, 234, 0.03) 40px,
-                rgba(147, 51, 234, 0.03) 41px
-            );
-            animation: blockShift 10s infinite linear;
-        }
-        
-        @keyframes blockShift {
-            from { transform: translateY(0); }
-            to { transform: translateY(41px); }
-        }
-        
-        .paradox-text {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(59, 130, 246, 0.5);
-            font-size: 14px;
-            text-align: center;
-            animation: textGlow 6s infinite;
-            cursor: pointer;
-        }
-        
-        .paradox-text:hover {
-            color: rgba(59, 130, 246, 0.8);
-            text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-        }
-        
-        @keyframes textGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.9; }
-        }
-        
-        .transmission-code {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(147, 51, 234, 0.3);
-            font-size: 10px;
-            letter-spacing: 2px;
-            text-align: center;
-        }
-        
-        /* NUEVOS ELEMENTOS CUÁNTICOS */
-        .quantum-superposition {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            background: 
-                radial-gradient(circle at 30% 70%, 
-                    rgba(147, 51, 234, 0.1) 0%, 
-                    transparent 50%),
-                radial-gradient(circle at 70% 30%, 
-                    rgba(59, 130, 246, 0.1) 0%, 
-                    transparent 50%);
-            mix-blend-mode: screen;
-            animation: quantumBreath 8s infinite alternate;
-        }
-        
-        @keyframes quantumBreath {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.7; }
-        }
-        
-        .temporal-resonance {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: 
-                conic-gradient(from 0deg at 50% 50%,
-                    transparent 0deg,
-                    rgba(147, 51, 234, 0.1) 60deg,
-                    transparent 120deg,
-                    rgba(59, 130, 246, 0.1) 180deg,
-                    transparent 240deg,
-                    rgba(6, 182, 212, 0.1) 300deg,
-                    transparent 360deg);
-            animation: resonanceSpin 15s infinite linear;
-            pointer-events: none;
-        }
-        
-        @keyframes resonanceSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        .quantum-collapse {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(147, 51, 234, 0.8);
-            border-radius: 50%;
-            animation: quantumWave 3s infinite;
-            pointer-events: none;
-        }
-        
-        @keyframes quantumWave {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(20);
-                opacity: 0;
-            }
-        }
-        
-        .observer-point {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgba(6, 182, 212, 0.6);
-            border-radius: 50%;
-            animation: observerPulse 4s infinite;
-        }
-        
-        @keyframes observerPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4);
-            }
-            50% { 
-                transform: scale(1.5);
-                box-shadow: 0 0 0 10px rgba(6, 182, 212, 0);
-            }
-        }
-        
-        .quantum-activation {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            color: rgba(147, 51, 234, 0.5);
-            font-size: 12px;
-            pointer-events: none;
-        }
-        
-        .activation-text {
-            margin-bottom: 5px;
-            animation: activationPulse 7s infinite;
-        }
-        
-        .collapse-trigger {
-            color: rgba(59, 130, 246, 0.6);
-            font-size: 10px;
-            cursor: pointer;
-            pointer-events: auto;
-            transition: all 0.3s ease;
-        }
-        
-        .collapse-trigger:hover {
-            color: rgba(59, 130, 246, 0.9);
-            text-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
-        }
-        
-        @keyframes activationPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.9; }
-        }
-    </style>
+  html, body { height:100%; }
+  body {
+    background: linear-gradient(135deg, #000, #0a0a1a);
+    background-color:#000;
+    overflow:hidden;
+    display:flex; justify-content:center; align-items:center;
+    height:100vh; height:100dvh;
+    font-family:'Georgia', serif;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .temporal-paradox {
+    position:relative;
+    width:min(800px, 95vw);
+    height:min(800px, 86vh);
+  }
+
+  /* El universo bloque: el tiempo entero en franjas, como las vueltas de una cinta */
+  .bloque {
+    position:absolute; inset:0; overflow:hidden;
+    -webkit-mask: radial-gradient(closest-side, #000 55%, transparent 100%);
+            mask: radial-gradient(closest-side, #000 55%, transparent 100%);
+    pointer-events:none;
+  }
+  .block-universe {
+    position:absolute; inset:-41px 0 0 0;
+    background: repeating-linear-gradient(0deg,
+      transparent, transparent 40px, rgba(147,51,234,0.05) 40px, rgba(147,51,234,0.05) 41px);
+    animation: blockShift 10s infinite linear;
+    pointer-events:none;
+  }
+  @keyframes blockShift { from { transform: translateY(0); } to { transform: translateY(41px); } }
+
+  /* Resonancia temporal: un aura redonda donde giran los tres colores */
+  .temporal-resonance {
+    position:absolute; top:50%; left:50%;
+    width:min(920px, 118vmin); height:min(920px, 118vmin);
+    border-radius:50%;
+    background: conic-gradient(from 0deg at 50% 50%,
+      transparent 0deg, rgba(147,51,234,0.12) 60deg, transparent 120deg,
+      rgba(59,130,246,0.12) 180deg, transparent 240deg, rgba(6,182,212,0.12) 300deg, transparent 360deg);
+    -webkit-mask: radial-gradient(circle closest-side, #000 35%, rgba(0,0,0,0.6) 68%, transparent 100%);
+            mask: radial-gradient(circle closest-side, #000 35%, rgba(0,0,0,0.6) 68%, transparent 100%);
+    transform: translate(-50%,-50%);
+    animation: resonanceSpin 15s infinite linear;
+    will-change: transform;
+    pointer-events:none;
+  }
+  @keyframes resonanceSpin {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+
+  .quantum-superposition {
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 30% 70%, rgba(147,51,234,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 70% 30%, rgba(59,130,246,0.1) 0%, transparent 50%);
+    mix-blend-mode: screen;
+    animation: quantumBreath 8s infinite alternate;
+    pointer-events:none;
+  }
+  @keyframes quantumBreath { 0% { opacity:0.3; } 100% { opacity:0.7; } }
+
+  /* El uróboros del tiempo */
+  .ouroboros-time {
+    position:absolute; top:50%; left:50%;
+    width:min(500px, 62vmin); height:min(500px, 62vmin);
+    border:1px dotted rgba(147,51,234,0.3);
+    border-radius:50%;
+    transform: translate(-50%,-50%);
+    animation: ouroborosRotate 20s infinite linear reverse;
+    will-change: transform;
+    pointer-events:none;
+  }
+  @keyframes ouroborosRotate {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+
+  /* El bucle del tiempo: un anillo cuyo color corre en círculo */
+  .time-loop {
+    position:absolute; top:50%; left:50%;
+    width:min(400px, 50vmin); height:min(400px, 50vmin);
+    border-radius:50%;
+    background: conic-gradient(rgba(147,51,234,0.85), rgba(59,130,246,0.65), rgba(6,182,212,0.4), rgba(147,51,234,0.85));
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+    transform: translate(-50%,-50%);
+    animation: loopRotate 10s infinite linear;
+    will-change: transform;
+    pointer-events:none;
+  }
+  @keyframes loopRotate {
+    from { transform: translate(-50%,-50%) rotate(0deg); }
+    to   { transform: translate(-50%,-50%) rotate(360deg); }
+  }
+
+  /* La corriente retrógrada: de derecha a izquierda */
+  .retrograde-flow {
+    position:absolute; top:50%; left:0;
+    width:100%; height:2px;
+    background: linear-gradient(90deg, transparent, rgba(147,51,234,0.65), transparent);
+    animation: retroFlow 5s infinite;
+    will-change: transform;
+    pointer-events:none;
+  }
+  @keyframes retroFlow { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+  /* El nudo de la causalidad */
+  .causality-knot {
+    position:absolute; top:50%; left:50%;
+    width:min(200px, 26vmin); height:min(200px, 26vmin);
+    transform: translate(-50%,-50%);
+    pointer-events:none;
+  }
+  .knot-strand {
+    position:absolute; inset:0;
+    border:1px solid rgba(59,130,246,0.5);
+    border-radius:50% 20% 50% 20%;
+    animation: knotTwist 8s infinite;
+    will-change: transform;
+  }
+  .knot-strand:nth-child(2) { --rot:60deg;  animation-delay:2s; border-color: rgba(120,110,245,0.5); }
+  .knot-strand:nth-child(3) { --rot:120deg; animation-delay:4s; border-color: rgba(6,182,212,0.45); }
+  @keyframes knotTwist {
+    0%,100% { transform: rotate(var(--rot, 0deg)) scale(1); }
+    50%     { transform: rotate(calc(var(--rot, 0deg) + 180deg)) scale(1.2); }
+  }
+
+  /* Memorias del futuro: caen desde arriba */
+  .memory-of-future {
+    position:absolute;
+    width:2px; height:30px;
+    background: linear-gradient(to bottom, transparent, rgba(147,51,234,0.8), transparent);
+    opacity:0;
+    animation: memoryStream 4s infinite;
+    pointer-events:none;
+  }
+  @keyframes memoryStream {
+    0%   { transform: translateY(-100px); opacity:0; }
+    50%  { opacity:1; }
+    100% { transform: translateY(100px);  opacity:0; }
+  }
+
+  .observer-point {
+    position:absolute;
+    width:clamp(6px, 1.1vmin, 8px); height:clamp(6px, 1.1vmin, 8px);
+    border-radius:50%;
+    background: rgba(6,182,212,0.7);
+    box-shadow: 0 0 10px rgba(6,182,212,0.45);
+    animation: observerPulse 4s infinite;
+    will-change: transform, opacity;
+    pointer-events:none;
+  }
+  @keyframes observerPulse {
+    0%,100% { transform: scale(1);   opacity:0.9; }
+    50%     { transform: scale(1.5); opacity:0.55; }
+  }
+
+  .quantum-collapse {
+    position:absolute;
+    width:4px; height:4px;
+    border-radius:50%;
+    background: rgba(147,51,234,0.8);
+    opacity:0;
+    animation: quantumWave 3s infinite;
+    pointer-events:none;
+  }
+  @keyframes quantumWave {
+    0%   { transform: scale(1);  opacity:1; }
+    100% { transform: scale(20); opacity:0; }
+  }
+
+  /* Ecos del futuro: los cuatro tiempos del verbo */
+  .future-echo {
+    position:absolute;
+    width:max-content;
+    color: rgba(175,120,245,0.92);
+    font-size: clamp(13px, 3.6vw, 16px);
+    letter-spacing:2px;
+    text-shadow: 0 0 10px rgba(147,51,234,0.4);
+    opacity:0;
+    transform: scale(1.4);
+    animation: echoFade 14s infinite ease-in-out;
+    will-change: transform, opacity;
+    pointer-events:none;
+    z-index:20;
+  }
+  .e1 { top:25%;    left:22%;  animation-delay:0s; }
+  .e2 { top:25%;    right:22%; animation-delay:3.5s; }
+  .e3 { bottom:25%; right:22%; animation-delay:7s; }
+  .e4 { bottom:25%; left:22%;  animation-delay:10.5s; }
+  @keyframes echoFade {
+    0%       { opacity:0;   transform: scale(1.4); }
+    14%      { opacity:0.9; transform: scale(1); }
+    80%      { opacity:0.9; transform: scale(0.95); }
+    92%,100% { opacity:0;   transform: scale(0.8); }
+  }
+
+  /* Arriba, el estado y la ecuación */
+  .quantum-activation {
+    position:absolute; top:3%; left:50%;
+    width:max-content; max-width:86vw;
+    text-align:center;
+    color: rgba(160,120,240,0.75);
+    font-size: clamp(10px, 2.8vw, 12px);
+    letter-spacing:2px;
+    transform: translateX(-50%);
+    animation: activationPulse 7s infinite;
+    z-index:20;
+  }
+  @keyframes activationPulse { 0%,100% { opacity:0.55; } 50% { opacity:0.95; } }
+  .temporal-equation {
+    position:absolute; top:10%; left:50%;
+    width:max-content; max-width:90vw;
+    color: rgba(185,145,250,0.95);
+    font-size: clamp(16px, 4.4vw, 19px);
+    font-style:italic;
+    text-align:center;
+    text-shadow: 0 0 14px rgba(147,51,234,0.45);
+    opacity:0;
+    transform: translateX(-50%);
+    animation: equationPulse 16s infinite ease-in-out;
+    will-change: opacity;
+    z-index:20;
+  }
+  @keyframes equationPulse {
+    0%       { opacity:0; }
+    12%      { opacity:0.95; }
+    80%      { opacity:0.95; }
+    92%,100% { opacity:0; }
+  }
+
+  .paradox-text {
+    position:absolute; bottom:7%; left:50%;
+    width:88%;
+    color: rgba(120,165,250,0.95);
+    font-size: clamp(16px, 4.4vw, 20px);
+    font-style:italic;
+    text-align:center; line-height:1.5;
+    text-shadow: 0 0 15px rgba(59,130,246,0.4);
+    transform: translateX(-50%);
+    animation: textGlow 8s infinite ease-in-out;
+    z-index:20;
+  }
+  @keyframes textGlow { 0%,100% { opacity:0.65; } 50% { opacity:1; } }
+
+  /* El toque: primero el eco, después la onda */
+  .onda {
+    position:fixed;
+    width:10px; height:10px; margin:-5px 0 0 -5px;
+    border-radius:50%;
+    background: radial-gradient(circle, transparent 42%, rgba(175,120,248,0.95) 58%, transparent 72%);
+    opacity:0;
+    pointer-events:none;
+  }
+  .onda.eco   { animation: ondaEco 2.4s ease-out forwards; }
+  .onda.nota  { animation: ondaNota 3s ease-out forwards; }
+  @keyframes ondaEco  { 0% { transform: scale(1); opacity:0.4; } 100% { transform: scale(9); opacity:0; } }
+  @keyframes ondaNota { 0% { transform: scale(1); opacity:1; }    100% { transform: scale(16); opacity:0; } }
+
+  .transmission-code {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);
+    transform: translateX(-50%);
+    color: rgba(147,51,234,0.45);
+    font-family:'Courier New', monospace;
+    font-size:10px; letter-spacing:2px; line-height:1.5;
+    text-align:center; white-space:nowrap;
+    animation: codeFlicker 5s infinite ease-in-out;
+  }
+  @keyframes codeFlicker { 0%,100% { opacity:0.3; } 50% { opacity:0.7; } }
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform: translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(240,232,255,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+    z-index:30;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(190,160,245,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:31;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(230,210,255,0.95); text-shadow: 0 0 18px rgba(147,51,234,0.6); outline:none; }
+
+  @media (max-width: 480px) {
+    .e1, .e4 { left:7%; }
+    .e2, .e3 { right:7%; }
+    .transmission-code { font-size:7px; letter-spacing:0.3px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; }
+    .future-echo { opacity:0.9; transform:none; }
+    .temporal-equation { opacity:0.95; }
+    .paradox-text { opacity:0.95; }
+    .quantum-activation { opacity:0.8; }
+    .retrograde-flow { transform:none; opacity:0.6; }
+    .hint { opacity:0.85; }
+    .hint.oculto { opacity:0; }
+  }
+</style>
 </head>
 <body>
-    <div class="temporal-paradox">
-        <div class="block-universe"></div>
-        <div class="temporal-resonance"></div>
-        <div class="quantum-superposition"></div>
-        <div class="ouroboros-time"></div>
-        <div class="time-loop"></div>
-        <div class="retrograde-flow"></div>
+  <div class="temporal-paradox" id="campo">
+    <div class="bloque"><div class="block-universe"></div></div>
+    <div class="temporal-resonance"></div>
+    <div class="quantum-superposition"></div>
+    <div class="ouroboros-time"></div>
+    <div class="time-loop"></div>
+    <div class="retrograde-flow"></div>
 
-        <div class="causality-knot">
-            <div class="knot-strand"></div>
-            <div class="knot-strand"></div>
-            <div class="knot-strand"></div>
-        </div>
-        
-        <div class="quantum-observers">
-            <div class="observer-point" style="top: 30%; left: 40%;"></div>
-            <div class="observer-point" style="top: 60%; right: 40%;"></div>
-        </div>
-        
-        <div class="future-echo" style="top: 25%; left: 25%;">SERÁ</div>
-        <div class="future-echo" style="top: 25%; right: 25%; animation-delay: 1.5s;">FUE</div>
-        <div class="future-echo" style="bottom: 25%; right: 25%; animation-delay: 3s;">SIENDO</div>
-        <div class="future-echo" style="bottom: 25%; left: 25%; animation-delay: 4.5s;">HABRÁ SIDO</div>
-        
-        <div class="temporal-equation">t_futuro = t_pasado</div>
-        
-        <div class="quantum-activation">
-            <div class="activation-text">ESTADO CUÁNTICO: SUPERPOSICIÓN TEMPORAL</div>
-            <div class="collapse-trigger">OBSERVAR</div>
-        </div>
-        
-        <div class="paradox-text">
-            El futuro que ya ocurrió<br>
-            El pasado que está por venir
-        </div>
+    <div class="causality-knot">
+      <div class="knot-strand"></div>
+      <div class="knot-strand"></div>
+      <div class="knot-strand"></div>
     </div>
 
-    <div class="transmission-code">
-        LIBRO_9::NODO_3::FUTURO_PRETÉRITO::ACTIVO<br>
-        CAMPO_CUÁNTICO::RESONANDO::CONSCIENCIA_EXPANDIDA
-    </div>
+    <div class="observer-point" style="top:30%; left:40%;"></div>
+    <div class="observer-point" style="top:60%; right:40%; animation-delay:2s;"></div>
 
-    <script>
-        class TemporalParadox {
-            constructor() {
-                this.container = document.querySelector('.temporal-paradox');
-                this.quantumStates = ['SERÁ', 'FUE', 'SIENDO', 'HABRÁ SIDO'];
-                this.timeArrow = 0;
-                this.futureMemory = [];
-                this.pastPrediction = [];
-                this.init();
-            }
+    <div class="future-echo e1">SERÁ</div>
+    <div class="future-echo e2">FUE</div>
+    <div class="future-echo e3">SIENDO</div>
+    <div class="future-echo e4">HABRÁ SIDO</div>
 
-            init() {
-                this.createQuantumField();
-                this.activateRetrocausality();
-                this.setupInteractions();
-                this.startTemporalLoop();
-            }
+    <div class="quantum-activation">ESTADO CUÁNTICO: SUPERPOSICIÓN TEMPORAL</div>
+    <div class="temporal-equation" id="ecuacion">t_futuro = t_pasado</div>
 
-            createQuantumField() {
-                // Crear ondas cuánticas iniciales
-                for (let i = 0; i < 5; i++) {
-                    setTimeout(() => this.createQuantumCollapse(), i * 600);
-                }
-            }
+    <div class="paradox-text">El futuro que ya ocurrió<br>El pasado que está por venir</div>
+  </div>
 
-            createQuantumCollapse() {
-                const collapse = document.createElement('div');
-                collapse.className = 'quantum-collapse';
-                collapse.style.left = Math.random() * 100 + '%';
-                collapse.style.top = Math.random() * 100 + '%';
-                collapse.style.animationDelay = Math.random() * 2 + 's';
-                this.container.appendChild(collapse);
+  <div class="transmission-code">LIBRO_9::NODO_3::FUTURO_PRETÉRITO::ACTIVO<br>CAMPO_CUÁNTICO::RESONANDO::CONSCIENCIA_EXPANDIDA</div>
+  <div class="hint" id="hint">( toca: observa; el eco llega primero )</div>
 
-                setTimeout(() => collapse.remove(), 3000);
-            }
+  <a class="infinito" href="L9-Nodo4.html" aria-label="Siguiente portal">∞</a>
 
-            setupInteractions() {
-                // Interacción con los ecos del futuro
-                document.querySelectorAll('.future-echo').forEach(echo => {
-                    echo.addEventListener('click', (e) => {
-                        this.createTemporalRipple(e.clientX, e.clientY);
-                        this.logQuantumEvent(`Colapso temporal: ${e.target.textContent}`);
-                    });
-                });
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const campo = document.getElementById('campo');
 
-                // Interacción con el texto de paradoja
-                document.querySelector('.paradox-text').addEventListener('click', () => {
-                    this.triggerParadoxEvent();
-                });
+  /* Las variables del sonido van arriba */
+  let started = false, ctx, master, sala, vaiven, proximaNota = 0, paso = 0;
 
-                // Interacción con el trigger de colapso
-                document.querySelector('.collapse-trigger').addEventListener('click', () => {
-                    this.collapseQuantumField();
-                });
+  /* ---------------- Colapsos y memorias del futuro ---------------- */
+  function colapso() {
+    const c = document.createElement('div');
+    c.className = 'quantum-collapse';
+    c.style.left = (Math.random() * 100) + '%';
+    c.style.top = (Math.random() * 100) + '%';
+    c.style.animationDelay = (Math.random() * 2).toFixed(2) + 's';
+    campo.appendChild(c);
+    setTimeout(() => c.remove(), 5000);
+  }
+  function memoria() {
+    const m = document.createElement('div');
+    m.className = 'memory-of-future';
+    m.style.left = (Math.random() * 100) + '%';
+    m.style.top = (Math.random() * 12) + '%';
+    m.style.animationDelay = (Math.random() * 4).toFixed(2) + 's';
+    campo.appendChild(m);
+    setTimeout(() => m.remove(), 8000);
+  }
+  if (!reduce) {
+    for (let i = 0; i < 5; i++) setTimeout(colapso, i * 600);
+    setInterval(() => { if (Math.random() > 0.7) colapso(); }, 3000);
+    setInterval(memoria, 500);
+  }
 
-                // Observar movimiento del mouse como "observador consciente"
-                document.addEventListener('mousemove', (e) => {
-                    this.handleObserverEffect(e);
-                });
-            }
+  /* ---------------- La ecuación alterna con la que aparecía al tocar la frase ---------------- */
+  const ecuaciones = ['t_futuro = t_pasado', 't_futuro ≡ t_pasado ≡ t_presente'];
+  const ecuacion = document.getElementById('ecuacion');
+  let ei = 0;
+  ecuacion.addEventListener('animationiteration', () => { ei = (ei + 1) % ecuaciones.length; ecuacion.textContent = ecuaciones[ei]; });
 
-            createTemporalRipple(x, y) {
-                const ripple = document.createElement('div');
-                ripple.style.cssText = `
-                    position: absolute;
-                    width: 4px;
-                    height: 4px;
-                    background: rgba(147, 51, 234, 0.8);
-                    border-radius: 50%;
-                    left: ${x}px;
-                    top: ${y}px;
-                    pointer-events: none;
-                    animation: quantumWave 2s forwards;
-                `;
-                document.body.appendChild(ripple);
-                setTimeout(() => ripple.remove(), 2000);
-            }
+  /* ---------------- Diseño sonoro: el preeco de la cinta -------------------------------------
+     En una bobina de cinta magnética, cada vuelta queda apretada contra la siguiente y la
+     magnetiza un poco. Al reproducirla, antes de un sonido fuerte se oye su fantasma: un preeco
+     apagado que llega una vuelta antes que el sonido mismo. La música entera ya está grabada en
+     la cinta, como el tiempo entero en el universo bloque: el futuro ya fue, y se filtra.
+     Una melodía lenta de ocho notas, en bucle como la cinta; cada nota llega anunciada por su
+     eco anticipado, sordo y casi inaudible, un segundo y medio antes, y deja detrás uno más
+     tenue todavía. Debajo, el soplo de la cinta y su leve vaivén de afinación.
+     Al tocar: primero suena el eco y, un segundo y medio después, la nota.
+  ------------------------------------------------------------------------------------------- */
+  const VUELTA = 1.5, PASO = 2.4;
+  const MELODIA = [293.66, 349.23, 440.0, 392.0, 349.23, 329.63, 293.66, 220.0, 0];
+  const TOQUE = [293.66, 329.63, 392.0, 440.0, 523.25, 587.33];
+  function makeReverbIR(ac, seconds = 4.5, decay = 2.4) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
+  }
+  function voz(f, t, nivel, pan, sordo) {
+    [[1, 1], [2, 0.22], [3, 0.07]].forEach(([h, v]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f * h;
+      vaiven.connect(o.detune);
+      const a = ctx.createGain(); a.gain.value = 0;
+      const p = ctx.createStereoPanner(); p.pan.value = pan;
+      let ult = a;
+      if (sordo) {                        // el fantasma de la cinta: sin brillo
+        const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; lp.Q.value = 0.4;
+        a.connect(lp); ult = lp;
+      }
+      o.connect(a); ult.connect(p); p.connect(master); p.connect(sala);
+      a.gain.setValueAtTime(0, t);
+      a.gain.linearRampToValueAtTime(nivel * v, t + (sordo ? 0.05 : 0.008));
+      a.gain.exponentialRampToValueAtTime(0.0002, t + 2.8);
+      o.start(t); o.stop(t + 2.9);
+      o.onended = () => { try { vaiven.disconnect(o.detune); } catch (_) {} };
+    });
+  }
+  function nota(f, t, pan) {
+    voz(f, t - VUELTA, 0.009, pan, true);   // preeco: una vuelta antes
+    voz(f, t, 0.075, pan, false);           // la nota
+    voz(f, t + VUELTA, 0.005, pan, true);   // poseco: una vuelta después
+  }
+  function cinta() {                         // programa con anticipación: el preeco va antes que la nota
+    if (!started) return;
+    const ahora = ctx.currentTime;
+    if (proximaNota < ahora + VUELTA) proximaNota = ahora + VUELTA + 0.1;
+    while (proximaNota < ahora + VUELTA + 1.2) {
+      const f = MELODIA[paso % MELODIA.length];
+      if (f) nota(f, proximaNota, Math.sin(paso * 0.9) * 0.35);
+      paso++; proximaNota += PASO;
+    }
+  }
+  function startAudio() {
+    if (started) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -14; comp.ratio.value = 3; comp.attack.value = 0.01; comp.release.value = 0.4;
+    comp.connect(ctx.destination);
+    master = ctx.createGain(); master.gain.value = 0; master.connect(comp);
+    master.gain.linearRampToValueAtTime(0.7, ctx.currentTime + 6);
+    sala = ctx.createGain(); sala.gain.value = 0.35;
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    sala.connect(conv); conv.connect(master);
 
-            handleObserverEffect(e) {
-                // Efecto sutil de observación cuántica
-                if (this.timeArrow % 30 === 0) {
-                    const x = (e.clientX / window.innerWidth) * 100;
-                    const y = (e.clientY / window.innerHeight) * 100;
-                    
-                    // Crear eco de observación
-                    const observerEcho = document.createElement('div');
-                    observerEcho.style.cssText = `
-                        position: absolute;
-                        width: 2px;
-                        height: 2px;
-                        background: rgba(6, 182, 212, 0.3);
-                        border-radius: 50%;
-                        left: ${x}%;
-                        top: ${y}%;
-                        pointer-events: none;
-                    `;
-                    this.container.appendChild(observerEcho);
-                    
-                    setTimeout(() => observerEcho.remove(), 1000);
-                }
-            }
+    // El vaivén de la cinta: la afinación oscila tres centésimas de semitono
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.55;
+    vaiven = ctx.createGain(); vaiven.gain.value = 3;
+    lfo.connect(vaiven); lfo.start();
 
-            collapseQuantumField() {
-                // Efecto dramático de colapso cuántico
-                document.querySelectorAll('.future-echo').forEach(echo => {
-                    echo.style.animation = 'none';
-                    echo.offsetHeight; // Trigger reflow
-                    echo.style.animation = 'echoFade 1s infinite alternate';
-                });
+    // El soplo de la cinta
+    const len = ctx.sampleRate * 3, buf = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (let ch = 0; ch < 2; ch++) { const d = buf.getChannelData(ch); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1; }
+    const soplo = ctx.createBufferSource(); soplo.buffer = buf; soplo.loop = true;
+    const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 1800;
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 7000;
+    const sg = ctx.createGain(); sg.gain.value = 0.0035;
+    soplo.connect(hp); hp.connect(lp); lp.connect(sg); sg.connect(master); soplo.start();
 
-                // Crear múltiples colapsos
-                for (let i = 0; i < 10; i++) {
-                    setTimeout(() => {
-                        this.createQuantumCollapse();
-                    }, i * 100);
-                }
+    started = true;
+    proximaNota = ctx.currentTime + VUELTA + 1.4;
+    setInterval(cinta, 100);
+  }
 
-                this.logQuantumEvent('Campo cuántico colapsado por observación consciente');
-            }
+  function onda(x, y, clase) {
+    if (reduce) return;
+    const o = document.createElement('div');
+    o.className = 'onda ' + clase;
+    o.style.left = x + 'px'; o.style.top = y + 'px';
+    document.body.appendChild(o);
+    setTimeout(() => o.remove(), 3200);
+  }
 
-            triggerParadoxEvent() {
-                const equation = document.querySelector('.temporal-equation');
-                equation.textContent = 't_futuro ≡ t_pasado ≡ t_presente';
-                equation.style.color = 'rgba(147, 51, 234, 0.9)';
-                
-                setTimeout(() => {
-                    equation.textContent = 't_futuro = t_pasado';
-                    equation.style.color = 'rgba(147, 51, 234, 0.6)';
-                }, 2000);
-
-                this.logQuantumEvent('Paradoja temporal activada: Unificación de líneas temporales');
-            }
-
-            activateRetrocausality() {
-                // Crear memorias del futuro continuamente
-                setInterval(() => this.createFutureMemory(), 500);
-                
-                // Bucle temporal principal
-                setInterval(() => {
-                    this.timeArrow++;
-                    
-                    // Retrocausalidad: El futuro influye en el pasado
-                    if (this.timeArrow % 100 === 0) {
-                        this.futureMemory.push(Date.now());
-                        this.logQuantumEvent('Retrocausalidad: El futuro determina el pasado');
-                    }
-                    
-                    // Universo bloque
-                    if (this.timeArrow % 200 === 0) {
-                        this.logQuantumEvent('Universo bloque: Pasado, presente y futuro coexisten eternamente');
-                    }
-                    
-                    // Paradoja temporal
-                    if (this.timeArrow % 377 === 0) {
-                        this.logQuantumEvent('El futuro ya fue, el pasado está por venir');
-                    }
-                }, 50);
-            }
-
-            createFutureMemory() {
-                const memory = document.createElement('div');
-                memory.className = 'memory-of-future';
-                memory.style.left = Math.random() * 100 + '%';
-                memory.style.top = '0';
-                memory.style.animationDelay = Math.random() * 4 + 's';
-                this.container.appendChild(memory);
-                
-                setTimeout(() => memory.remove(), 4000);
-            }
-
-            startTemporalLoop() {
-                // Bucle de eventos temporales aleatorios
-                setInterval(() => {
-                    if (Math.random() > 0.7) {
-                        this.createQuantumCollapse();
-                    }
-                }, 3000);
-            }
-
-            logQuantumEvent(message) {
-                console.log(`[TemporalParadox] ${message}`);
-            }
-        }
-
-        // Inicializar cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', () => {
-            new TemporalParadox();
-            console.log('Nodo 3 activo: El futuro que ya fue se manifiesta en el presente');
-        });
-
-        // Efecto de carga inicial
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 1.5s ease';
-            
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-    </script>
+  const hint = document.getElementById('hint');
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    if (hint) hint.classList.add('oculto');
+    const x = e.clientX, y = e.clientY;
+    const pan = Math.max(-0.8, Math.min(0.8, (x / innerWidth) * 1.6 - 0.8));
+    const f = TOQUE[Math.floor(Math.random() * TOQUE.length)];
+    nota(f, ctx.currentTime + VUELTA + 0.02, pan);
+    onda(x, y, 'eco');
+    setTimeout(() => onda(x, y, 'nota'), VUELTA * 1000);
+  });
+</script>
 </body>
 </html>
