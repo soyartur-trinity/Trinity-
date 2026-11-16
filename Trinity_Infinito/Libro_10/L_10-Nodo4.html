@@ -2,664 +2,597 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Libro 10 - Nodo 67: La Musa Sin Rostro</title>
+<!-- Portal 67. Saneado en noviembre de 2026 sobre el original: la presencia sin rostro, sus figuras
+     sin forma, el velo, el aliento, las voces sin palabras («susurro», antes «sussurro») y los ecos.
+     Sonido nuevo: el arpa eólica. Seis cuerdas tenues, afinadas al mismo La, que nadie pulsa: el
+     viento elige qué armónico canta cada una, y solo se ve en lo que hace cantar. -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(ellipse at center, #0d0710 0%, #060308 55%, #000 82%);
+    background-color:#000;
+    color:#fff;
+    font-family: Georgia, serif;
+    overflow:hidden;
+    height:100vh; height:100dvh;
+    display:flex; align-items:center; justify-content:center;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    -webkit-user-select:none; user-select:none;
+  }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  .cabecera {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top, 0px) + 5.5vh);
+    transform:translateX(-50%);
+    width:max-content; max-width:92vw; text-align:center;
+    z-index:5; pointer-events:none;
+  }
+  .titulo {
+    font-size: clamp(17px, 5vw, 31px);
+    font-weight:bold;
+    letter-spacing: clamp(0.16em, 1.2vw, 0.42em);
+    padding-left: clamp(0.16em, 1.2vw, 0.42em);
+    line-height:1.45;
+    color: rgba(250,244,255,0.92);
+    text-shadow: 0 0 30px rgba(150,100,255,0.5);
+  }
+  .subtitulo {
+    margin-top:0.6em;
+    font-size: clamp(11px, 2.9vw, 15px);
+    letter-spacing:0.3em; padding-left:0.3em; font-style:italic;
+    color: rgba(228,220,250,0.5);
+  }
 
-body {
-  background: radial-gradient(ellipse at center, #0a050a 0%, #000000 70%);
-  overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  /* La presencia sin rostro: un marco de dos por tres, como la caja de un arpa de viento */
+  .presencia {
+    --H: min(52vh, 600px, 125vw);
+    position:relative;
+    width:calc(var(--H) * 2 / 3); height:var(--H);
+    margin-top:-6vh;
+    background: radial-gradient(ellipse at center, rgba(30,20,40,0.45), transparent 75%);
+    border:1px solid rgba(255,255,255,0.06);
+  }
 
-.inspiration-realm {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .campo {
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 30% 40%, rgba(100,80,255,0.09), transparent 55%),
+      radial-gradient(circle at 70% 60%, rgba(200,100,255,0.07), transparent 55%);
+    animation: campo 25s ease-in-out infinite;
+  }
+  @keyframes campo { 0%,100% { opacity:0.35; } 50% { opacity:0.8; } }
 
-.faceless-presence {
-  position: relative;
-  width: 400px;
-  height: 600px;
-  background: radial-gradient(ellipse at center, rgba(30,20,40,0.4), transparent);
-  border: 1px solid rgba(255,255,255,0.06);
-}
+  .esencia {
+    position:absolute; left:50%; top:40%;
+    width:calc(var(--H) * 0.5); height:calc(var(--H) * 0.5);
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(150,100,255,0.2), rgba(150,100,255,0.06) 45%, transparent 70%);
+    animation: esencia 20s ease-in-out infinite;
+  }
+  @keyframes esencia {
+    0%,100% { transform:translate(-50%,-50%) scale(0.7); opacity:0.35; }
+    50%     { transform:translate(-50%,-50%) scale(1.5); opacity:0.65; }
+  }
 
-.whisper-trail {
-  position: absolute;
-  width: 2px;
-  height: 80px;
-  background: linear-gradient(to bottom,
-    rgba(200,150,255,0.8),
-    rgba(150,100,255,0.6),
-    transparent
-  );
-  animation: whisper-flow 12s ease-in-out infinite;
-  filter: blur(1.5px);
-  opacity: 0;
-}
+  .figura {
+    position:absolute; left:50%;
+    width:calc(var(--H) * 0.3); height:calc(var(--H) * 0.4);
+    border-radius:50% 50% 40% 60%;
+    background: radial-gradient(ellipse, rgba(150,100,255,0.24), rgba(100,150,255,0.08) 45%, transparent 70%);
+    opacity:0;
+    animation: figura 18s ease-in-out infinite;
+  }
+  @keyframes figura {
+    0%,100% { transform:translate(-50%,-50%) scale(0.8) rotate(0deg); opacity:0; }
+    25%     { transform:translate(calc(-50% + var(--H) * 0.033), calc(-50% - var(--H) * 0.05)) scale(1.1) rotate(8deg);  opacity:0.55; }
+    50%     { transform:translate(calc(-50% - var(--H) * 0.017), calc(-50% + var(--H) * 0.033)) scale(1.3) rotate(-6deg); opacity:0.75; }
+    75%     { transform:translate(calc(-50% + var(--H) * 0.025), calc(-50% + var(--H) * 0.017)) scale(0.9) rotate(4deg);  opacity:0.42; }
+  }
 
-@keyframes whisper-flow {
-  0%, 100% {
-    transform: translateY(0) translateX(0) rotate(0deg) scaleY(0);
-    opacity: 0;
+  .aliento {
+    position:absolute; left:50%; top:50%;
+    width:calc(var(--H) * 0.16); height:calc(var(--H) * 0.16);
+    margin:calc(var(--H) * -0.08) 0 0 calc(var(--H) * -0.08);
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.12), rgba(255,255,255,0.03) 45%, transparent 70%);
+    opacity:0;
+    animation: aliento 30s linear infinite;
   }
-  15% {
-    opacity: 0.7;
+  @keyframes aliento {
+    0%   { transform:translate(var(--b1x), var(--b1y)) scale(0);   opacity:0; }
+    20%  { transform:translate(var(--b2x), var(--b2y)) scale(1.2); opacity:0.45; }
+    40%  { transform:translate(var(--b3x), var(--b3y)) scale(0.8); opacity:0.35; }
+    60%  { transform:translate(var(--b4x), var(--b4y)) scale(1.5); opacity:0.55; }
+    80%  { transform:translate(var(--b5x), var(--b5y)) scale(0.6); opacity:0.22; }
+    100% { transform:translate(var(--b6x), var(--b6y)) scale(0);   opacity:0; }
   }
-  50% {
-    transform: translateY(var(--wy)) translateX(var(--wx)) rotate(var(--wr)) scaleY(1);
-    opacity: 0.9;
-  }
-  85% {
-    opacity: 0.4;
-  }
-}
 
-.formless-figure {
-  position: absolute;
-  width: 150px;
-  height: 200px;
-  background: radial-gradient(ellipse,
-    rgba(150,100,255,0.2),
-    rgba(100,150,255,0.1),
-    transparent
-  );
-  border-radius: 50% 50% 40% 60%;
-  animation: figure-shimmer 18s ease-in-out infinite;
-  filter: blur(30px);
-  opacity: 0;
-}
+  .velo {
+    position:absolute; left:50%; top:20%;
+    width:calc(var(--H) * 0.36); height:calc(var(--H) * 0.52);
+    border-radius:50% 50% 0 0;
+    background: linear-gradient(180deg, rgba(100,100,150,0.12), rgba(150,100,200,0.16) 45%, transparent);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 35%, transparent 72%);
+            mask-image: radial-gradient(ellipse at 50% 40%, #000 35%, transparent 72%);
+    animation: velo 14s ease-in-out infinite;
+  }
+  @keyframes velo {
+    0%,100% { transform:translateX(-50%) scaleY(1);   opacity:0.45; }
+    50%     { transform:translateX(calc(-50% + var(--H) * 0.05)) scaleY(1.2); opacity:0.75; }
+  }
 
-@keyframes figure-shimmer {
-  0%, 100% {
-    transform: translate(0, 0) scale(0.8);
-    opacity: 0;
-    border-radius: 50% 50% 40% 60%;
+  /* Las cuerdas: el guion fija su brillo y su ancho según lo que canta cada una */
+  .cuerda {
+    position:absolute; top:7%; bottom:7%;
+    background: linear-gradient(to bottom, transparent, rgba(222,206,255,0.95) 18%, rgba(200,170,255,0.9) 82%, transparent);
+    opacity:0.08;
+    transform: scaleX(1);
+    transition: opacity 0.18s linear, transform 0.18s linear;
+    will-change: opacity, transform;
   }
-  25% {
-    transform: translate(20px, -30px) scale(1.1);
-    opacity: 0.5;
-    border-radius: 40% 60% 50% 50%;
-  }
-  50% {
-    transform: translate(-10px, 20px) scale(1.3);
-    opacity: 0.7;
-    border-radius: 60% 40% 60% 40%;
-  }
-  75% {
-    transform: translate(15px, 10px) scale(0.9);
-    opacity: 0.4;
-    border-radius: 50% 50% 45% 55%;
-  }
-}
 
-.inspiration-spark {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background: rgba(255,255,255,0.95);
-  border-radius: 50%;
-  box-shadow: 0 0 20px rgba(255,255,255,0.9);
-  animation: spark-inspire 10s ease-in-out infinite;
-  opacity: 0;
-}
+  .voz {
+    position:absolute; left:50%;
+    font-size: clamp(15px, 4.2vw, 21px);
+    letter-spacing:0.4em; padding-left:0.4em;
+    white-space:nowrap;
+    color: rgba(255,255,255,0.68);
+    text-shadow: 0 0 15px rgba(150,100,255,0.5);
+    opacity:0;
+    animation: voz 15s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes voz {
+    0%,100% { transform:translate(-50%,-50%) translateY(26px) scale(0.9); opacity:0; }
+    20%,80% { transform:translate(-50%,-50%) translateY(0) scale(1);      opacity:0.75; }
+  }
 
-@keyframes spark-inspire {
-  0%, 100% {
-    transform: translate(0, 0) scale(0);
-    opacity: 0;
+  .eco {
+    position:absolute;
+    font-size: clamp(12px, 3.2vw, 17px);
+    letter-spacing:0.3em;
+    white-space:nowrap;
+    color: rgba(255,255,255,0.58);
+    text-shadow: 0 0 10px rgba(150,100,255,0.4);
+    opacity:0;
+    animation: eco 12s ease-in-out infinite;
+    pointer-events:none;
   }
-  10% {
-    opacity: 1;
+  @keyframes eco {
+    0%,100% { transform:translateY(18px) scale(0.85) rotate(var(--rotation)); opacity:0; }
+    25%,75% { transform:translateY(0) scale(1) rotate(var(--rotation));       opacity:0.65; }
   }
-  50% {
-    transform: translate(var(--ix), var(--iy)) scale(1.5);
-    opacity: 0.9;
-  }
-  90% {
-    opacity: 0.3;
-  }
-}
 
-.voice-without-words {
-  position: absolute;
-  font-size: 1.3em;
-  letter-spacing: 0.4em;
-  opacity: 0;
-  animation: voice-breathe 15s ease-in-out infinite;
-  color: rgba(255,255,255,0.6);
-  text-shadow: 0 0 15px rgba(150,100,255,0.5);
-  transform-origin: center;
-}
+  .toque-invisible {
+    position:absolute;
+    width:calc(var(--H) * 0.16); height:calc(var(--H) * 0.16);
+    margin:calc(var(--H) * -0.08) 0 0 calc(var(--H) * -0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:50%;
+    opacity:0;
+    animation: rizo 16s ease-out infinite;
+    pointer-events:none;
+  }
+  @keyframes rizo {
+    0%   { transform:scale(0) rotate(0deg);   opacity:0; }
+    10%  { opacity:0.5; }
+    50%  { transform:scale(3.4) rotate(180deg); opacity:0.5; }
+    100% { transform:scale(5.5) rotate(360deg); opacity:0; }
+  }
 
-@keyframes voice-breathe {
-  0%, 100% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.9);
+  .susurro-trazo {
+    position:absolute;
+    width:2px; height:calc(var(--H) * 0.13);
+    background: linear-gradient(to bottom, rgba(205,160,255,0.85), rgba(150,100,255,0.6), transparent);
+    opacity:0;
+    animation: susurro 12s ease-in-out forwards;
+    pointer-events:none;
   }
-  20%, 80% {
-    opacity: 0.7;
-    transform: translateY(0) scale(1);
+  @keyframes susurro {
+    0%   { transform:translate(0, 0) rotate(0deg) scaleY(0); opacity:0; }
+    15%  { opacity:0.7; }
+    50%  { transform:translate(var(--wx), var(--wy)) rotate(var(--wr)) scaleY(1); opacity:0.9; }
+    85%  { opacity:0.4; }
+    100% { transform:translate(var(--wx), var(--wy)) rotate(var(--wr)) scaleY(0); opacity:0; }
   }
-}
 
-.invisible-touch {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 50%;
-  animation: touch-ripple 16s ease-out infinite;
-  opacity: 0;
-}
+  .chispa {
+    position:absolute;
+    width:5px; height:5px; margin:-2.5px 0 0 -2.5px;
+    border-radius:50%;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 0 16px rgba(255,255,255,0.85);
+    opacity:0;
+    animation: chispa 10s ease-in-out forwards;
+    pointer-events:none;
+  }
+  @keyframes chispa {
+    0%   { transform:translate(0, 0) scale(0); opacity:0; }
+    10%  { opacity:1; }
+    50%  { transform:translate(var(--ix), var(--iy)) scale(1.5); opacity:0.9; }
+    90%  { opacity:0.3; }
+    100% { transform:translate(var(--ix), var(--iy)) scale(0); opacity:0; }
+  }
 
-@keyframes touch-ripple {
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(4) rotate(180deg);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(7) rotate(360deg);
-    opacity: 0;
-  }
-}
 
-.title {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2.2em;
-  letter-spacing: 0.5em;
-  opacity: 0.9;
-  text-shadow: 0 0 30px rgba(150,100,255,0.5);
-  font-weight: 600;
-  text-align: center;
-}
+  /* Mientras habla la revelación, el texto central se retira */
+  .centro { position:absolute; inset:0; pointer-events:none; transition: opacity 1.2s ease; z-index:3; }
+  .revelando .centro { opacity:0; }
 
-.subtitle {
-  position: fixed;
-  top: 120px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1em;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  font-style: italic;
-}
+  .revelacion {
+    position:absolute; left:50%; top:50%;
+    width:max-content; max-width:120%;
+    text-align:center;
+    white-space:pre-line;
+    font-size: clamp(16px, 4.8vw, 26px);
+    line-height:1.5;
+    letter-spacing:0.22em; padding-left:0.22em;
+    color: rgba(255,255,255,0.95);
+    text-shadow: 0 0 32px var(--sombra, rgba(150,100,255,0.85));
+    pointer-events:none;
+    z-index:6;
+    opacity:0;
+    animation: revela 6s ease-out forwards;
+  }
+  @keyframes revela {
+    0%   { transform:translate(-50%,-50%) translateY(20px) scale(0.92); opacity:0; }
+    18%  { transform:translate(-50%,-50%) translateY(0) scale(1);       opacity:1; }
+    75%  { transform:translate(-50%,-50%) translateY(0) scale(1);       opacity:1; }
+    100% { transform:translate(-50%,-50%) translateY(-6px) scale(1);    opacity:0; }
+  }
 
-.contemplation {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  text-align: center;
-  max-width: 700px;
-  line-height: 1.9;
-  padding: 0 40px;
-  font-style: italic;
-}
+  .frases {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh);
+    transform:translateX(-50%);
+    width:90vw; max-width:620px; height:3.4em;
+    text-align:center;
+    pointer-events:none;
+  }
+  .frase {
+    position:absolute; left:0; right:0; bottom:0;
+    font-size: clamp(14px, 3.9vw, 19px);
+    line-height:1.6;
+    letter-spacing:0.06em;
+    font-style:italic;
+    color: rgba(242,238,252,0.9);
+    text-shadow: 0 0 18px rgba(150,100,255,0.35);
+    opacity:0;
+    animation: frase 30s ease-in-out infinite;
+  }
+  .frase.f2 { animation-delay:10s; }
+  .frase.f3 { animation-delay:20s; }
+  @keyframes frase {
+    0%     { opacity:0; transform:translateY(6px); }
+    4.7%   { opacity:1; transform:translateY(0); }
+    29.3%  { opacity:1; transform:translateY(0); }
+    33.3%  { opacity:0; transform:translateY(-4px); }
+    100%   { opacity:0; transform:translateY(-4px); }
+  }
 
-.essence-glow {
-  position: absolute;
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, rgba(150,100,255,0.2), transparent);
-  border-radius: 50%;
-  animation: essence-pulse 20s ease-in-out infinite;
-  filter: blur(50px);
-}
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform:translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(242,238,252,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
 
-@keyframes essence-pulse {
-  0%, 100% {
-    transform: scale(0.7);
-    opacity: 0.3;
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(205,190,240,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+    cursor:pointer;
   }
-  50% {
-    transform: scale(1.5);
-    opacity: 0.6;
-  }
-}
+  .infinito:hover, .infinito:focus-visible { color: rgba(245,242,255,0.95); text-shadow:0 0 18px rgba(170,140,255,0.6); outline:none; }
 
-.mystery-veil {
-  position: absolute;
-  width: 200px;
-  height: 300px;
-  background: linear-gradient(180deg,
-    rgba(100,100,150,0.1),
-    rgba(150,100,200,0.15),
-    transparent
-  );
-  animation: veil-wave 14s ease-in-out infinite;
-  filter: blur(20px);
-  border-radius: 50% 50% 0 0;
-}
+  @media (max-width: 480px) {
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 14.5vh); height:4.9em; }
+  }
+  @media (orientation: landscape) and (max-height: 500px) {
+    .subtitulo { display:none; }
+    .cabecera { top:calc(env(safe-area-inset-top, 0px) + 10px); }
+    .presencia { --H: min(60vh, 600px); margin-top:-4vh; }
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 30px); height:3.3em; }
+    .frase { font-size:13px; line-height:1.45; }
+    .hint { bottom:calc(env(safe-area-inset-bottom, 0px) + 8px); font-size:11px; }
+  }
 
-@keyframes veil-wave {
-  0%, 100% {
-    transform: translateX(0) scaleY(1);
-    opacity: 0.4;
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; transition:none !important; }
+    .voz { opacity:0.7; transform:translate(-50%,-50%); }
+    .eco { opacity:0.55; transform:rotate(var(--rotation)); }
+    .figura { opacity:0.45; transform:translate(-50%,-50%); }
+    .aliento, .toque-invisible { display:none; }
+    .cuerda { opacity:0.2; }
+    .frases { height:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 9vh); }
+    .frase { position:static; opacity:0.92; margin-bottom:0.35em; font-size: clamp(12px, 3.4vw, 16px); }
+    .presencia { margin-top:-12vh; --H: min(46vh, 600px, 125vw); }
+    .hint { opacity:0.8; bottom:calc(env(safe-area-inset-bottom, 0px) + 18px); }
+    .revelacion { opacity:1; transform:translate(-50%,-50%); }
   }
-  50% {
-    transform: translateX(30px) scaleY(1.2);
-    opacity: 0.7;
-  }
-}
-
-.inspiration-field {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 30% 40%, rgba(100,80,255,0.08), transparent),
-    radial-gradient(circle at 70% 60%, rgba(200,100,255,0.06), transparent);
-  mix-blend-mode: overlay;
-  animation: field-breathe 25s ease-in-out infinite;
-}
-
-@keyframes field-breathe {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
-}
-
-.muse-echo {
-  position: absolute;
-  font-size: 1.1em;
-  color: rgba(255,255,255,0.5);
-  letter-spacing: 0.3em;
-  opacity: 0;
-  animation: echo-resonate 12s ease-in-out infinite;
-  text-shadow: 0 0 10px rgba(150,100,255,0.4);
-  transform-origin: center;
-}
-
-@keyframes echo-resonate {
-  0%, 100% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.8) rotate(var(--rotation));
-  }
-  25%, 75% {
-    opacity: 0.6;
-    transform: translateY(0) scale(1) rotate(var(--rotation));
-  }
-}
-
-.divine-breath {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
-  border-radius: 50%;
-  animation: breath-flow 30s linear infinite;
-  filter: blur(15px);
-  opacity: 0;
-}
-
-@keyframes breath-flow {
-  0% {
-    transform: translate(var(--b1x), var(--b1y)) scale(0);
-    opacity: 0;
-  }
-  20% {
-    transform: translate(var(--b2x), var(--b2y)) scale(1.2);
-    opacity: 0.4;
-  }
-  40% {
-    transform: translate(var(--b3x), var(--b3y)) scale(0.8);
-    opacity: 0.3;
-  }
-  60% {
-    transform: translate(var(--b4x), var(--b4y)) scale(1.5);
-    opacity: 0.5;
-  }
-  80% {
-    transform: translate(var(--b5x), var(--b5y)) scale(0.6);
-    opacity: 0.2;
-  }
-  100% {
-    transform: translate(var(--b6x), var(--b6y)) scale(0);
-    opacity: 0;
-  }
-}
 </style>
 </head>
 <body>
-
-<div class="title">LA MUSA SIN ROSTRO</div>
-<div class="subtitle">Libro 10 - Nodo 67</div>
-
-<div class="inspiration-realm">
-  <div class="faceless-presence">
-    <div class="inspiration-field"></div>
-    
-    <!-- Resplandor de esencia -->
-    <div class="essence-glow" style="top: 40%; left: 50%; transform: translate(-50%, -50%);"></div>
-    
-    <!-- Figura sin forma -->
-    <div class="formless-figure" style="top: 30%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
-    <div class="formless-figure" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 6s; width: 120px; height: 180px;"></div>
-    
-    <!-- Aliento divino -->
-    <div class="divine-breath" style="--b1x: -150px; --b1y: -100px; --b2x: -80px; --b2y: -150px; --b3x: 50px; --b3y: -120px; --b4x: 120px; --b4y: -50px; --b5x: 80px; --b5y: 80px; --b6x: -100px; --b6y: 100px; animation-delay: 0s;"></div>
-    <div class="divine-breath" style="--b1x: 100px; --b1y: -120px; --b2x: 150px; --b2y: -50px; --b3x: 120px; --b3y: 100px; --b4x: -50px; --b4y: 150px; --b5x: -120px; --b5y: 80px; --b6x: -150px; --b6y: -80px; animation-delay: 10s;"></div>
-    
-    <!-- Velo del misterio -->
-    <div class="mystery-veil" style="top: 20%; left: 50%; transform: translateX(-50%);"></div>
-    
-    <!-- Voz sin palabras -->
-    <div class="voice-without-words" style="top: 25%; left: 50%; transform: translate(-50%, -50%); animation-delay: 2s;">
-      sussurro
-    </div>
-    <div class="voice-without-words" style="top: 45%; left: 50%; transform: translate(-50%, -50%); animation-delay: 7s;">
-      silente
-    </div>
-    <div class="voice-without-words" style="top: 65%; left: 50%; transform: translate(-50%, -50%); animation-delay: 12s;">
-      sin nombre
-    </div>
-    
-    <!-- Ecos de la musa -->
-    <div class="muse-echo" style="top: 20%; left: 25%; --rotation: -8deg; animation-delay: 3s;">inspira</div>
-    <div class="muse-echo" style="top: 35%; left: 75%; --rotation: 5deg; animation-delay: 6s;">crea</div>
-    <div class="muse-echo" style="top: 55%; left: 20%; --rotation: -3deg; animation-delay: 9s;">fluye</div>
-    <div class="muse-echo" style="top: 70%; left: 65%; --rotation: 7deg; animation-delay: 12s;">expresa</div>
-    
-    <!-- Toques invisibles -->
-    <div class="invisible-touch" style="top: 30%; left: 30%; animation-delay: 0s;"></div>
-    <div class="invisible-touch" style="top: 60%; left: 60%; animation-delay: 5.3s;"></div>
-    <div class="invisible-touch" style="top: 45%; left: 50%; animation-delay: 10.7s;"></div>
+  <div class="cabecera">
+    <div class="titulo">LA MUSA SIN ROSTRO</div>
+    <div class="subtitulo">Libro 10 - Nodo 67</div>
   </div>
-</div>
 
-<div class="contemplation">
-  La inspiración no tiene cara ni nombre · Es el viento que mueve las velas<br>
-  Sin pedir reconocimiento ni firma en el puerto de llegada
-</div>
+  <div class="presencia" id="presencia">
+    <div class="campo"></div>
+    <div class="esencia"></div>
+    <div class="figura" style="top:30%; animation-delay:0s;"></div>
+    <div class="figura" style="top:50%; width:calc(var(--H) * 0.24); height:calc(var(--H) * 0.36); animation-delay:-6s;"></div>
+
+    <div class="aliento" style="--b1x:calc(var(--H) * -0.25); --b1y:calc(var(--H) * -0.167); --b2x:calc(var(--H) * -0.133); --b2y:calc(var(--H) * -0.25); --b3x:calc(var(--H) * 0.083); --b3y:calc(var(--H) * -0.2); --b4x:calc(var(--H) * 0.2); --b4y:calc(var(--H) * -0.083); --b5x:calc(var(--H) * 0.133); --b5y:calc(var(--H) * 0.133); --b6x:calc(var(--H) * -0.167); --b6y:calc(var(--H) * 0.167); animation-delay:0s;"></div>
+    <div class="aliento" style="--b1x:calc(var(--H) * 0.167); --b1y:calc(var(--H) * -0.2); --b2x:calc(var(--H) * 0.25); --b2y:calc(var(--H) * -0.083); --b3x:calc(var(--H) * 0.2); --b3y:calc(var(--H) * 0.167); --b4x:calc(var(--H) * -0.083); --b4y:calc(var(--H) * 0.25); --b5x:calc(var(--H) * -0.2); --b5y:calc(var(--H) * 0.133); --b6x:calc(var(--H) * -0.25); --b6y:calc(var(--H) * -0.133); animation-delay:-15s;"></div>
+
+    <div class="velo"></div>
+
+    <div class="cuerda" style="left:20%; width:2.5px; margin-left:-1.25px;"></div>
+    <div class="cuerda" style="left:32%; width:2.1px; margin-left:-1.05px;"></div>
+    <div class="cuerda" style="left:44%; width:1.8px; margin-left:-0.9px;"></div>
+    <div class="cuerda" style="left:56%; width:1.5px; margin-left:-0.75px;"></div>
+    <div class="cuerda" style="left:68%; width:1.2px; margin-left:-0.6px;"></div>
+    <div class="cuerda" style="left:80%; width:1px; margin-left:-0.5px;"></div>
+
+    <div class="centro">
+      <div class="voz" style="top:25%; animation-delay:-13s;">susurro</div>
+      <div class="voz" style="top:45%; animation-delay:-8s;">silente</div>
+      <div class="voz" style="top:65%; animation-delay:-3s;">sin nombre</div>
+    </div>
+
+    <div class="eco" style="top:18%; left:8%;  --rotation:-8deg; animation-delay:-9s;">inspira</div>
+    <div class="eco" style="top:35%; left:68%; --rotation:5deg;  animation-delay:-6s;">crea</div>
+    <div class="eco" style="top:56%; left:6%;  --rotation:-3deg; animation-delay:-3s;">fluye</div>
+    <div class="eco" style="top:76%; left:58%; --rotation:7deg;  animation-delay:0s;">expresa</div>
+
+    <div class="toque-invisible" style="top:30%; left:30%; animation-delay:0s;"></div>
+    <div class="toque-invisible" style="top:60%; left:60%; animation-delay:-10.7s;"></div>
+    <div class="toque-invisible" style="top:45%; left:50%; animation-delay:-5.3s;"></div>
+  </div>
+
+  <div class="frases" aria-live="off">
+    <p class="frase f1">La inspiración no tiene cara ni nombre</p>
+    <p class="frase f2">Es el viento que mueve las velas</p>
+    <p class="frase f3">Sin pedir reconocimiento ni firma<br>en el puerto de llegada</p>
+  </div>
+
+  <div class="hint" id="hint">( toca: sopla el viento )</div>
+
+  <a class="infinito" href="L_10-Nodo5.html" aria-label="Siguiente portal">∞</a>
 
 <script>
-const presence = document.querySelector('.faceless-presence');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const presencia = document.getElementById('presencia');
+  const hint = document.getElementById('hint');
+  const cuerdas = [...document.querySelectorAll('.cuerda')];
+  let H = presencia.clientHeight;
+  addEventListener('resize', () => { H = presencia.clientHeight; });
+  // El sonido se declara arriba
+  let ctx = null, master, seco, sala, ruidoBuf, vientoFiltro, vientoGain;
+  const voces = [];                       // por cuerda: osciladores y ganancia
+  const al = (r) => (Math.random() * 2 - 1) * r;
 
-// Crear rastros de susurro
-function createWhisperTrail() {
-  const whisper = document.createElement('div');
-  whisper.className = 'whisper-trail';
-  
-  const startY = 20 + Math.random() * 60;
-  const wy = 100 + Math.random() * 300;
-  const wx = (Math.random() - 0.5) * 150;
-  const wr = (Math.random() - 0.5) * 90;
-  
-  whisper.style.cssText = `
-    left: ${20 + Math.random() * 60}%;
-    top: ${startY}%;
-    --wy: ${wy}px;
-    --wx: ${wx}px;
-    --wr: ${wr}deg;
-    animation-delay: ${Math.random() * 6}s;
-  `;
-  
-  presence.appendChild(whisper);
-  setTimeout(() => whisper.remove(), 12000);
-}
+  /* ---------------- El arpa eólica --------------------------------------------------------------
+     Un arpa de viento tiene varias cuerdas del mismo largo, de grosores distintos, afinadas todas
+     al mismo unísono. El viento no las pulsa: al pasar por cada cuerda desprende remolinos a un
+     ritmo que depende de su velocidad y del grosor (la frecuencia de Strouhal), y cuando ese ritmo
+     coincide con uno de los armónicos de la cuerda, ese armónico canta. Nunca suena la nota a la
+     que fueron afinadas: suenan sus armónicos, y cuál suena lo elige el viento. Aquí, seis cuerdas
+     afinadas a La (55 Hz); la más gruesa canta armónicos bajos y la más fina, altos. Entre un
+     armónico y el siguiente, la cuerda calla. Al tocar, una ráfaga.
+  ------------------------------------------------------------------------------------------- */
+  const F0 = 55;
+  const STROUHAL = [1.0, 1.22, 1.5, 1.82, 2.2, 2.7];      // de la cuerda más gruesa a la más fina
+  const AFIN = [-1.5, 1.2, -0.6, 1.6, -1.1, 0.7];         // cents: ninguna afinación es perfecta
+  const T0 = performance.now() / 1000;
+  let rafaga = 0, proximaRafaga = 18 + Math.random() * 16;
+  const armonico = STROUHAL.map(() => 0);
 
-// Crear chispas de inspiración
-function createInspirationSparks() {
-  for(let i = 0; i < 12; i++) {
-    setTimeout(() => {
-      const spark = document.createElement('div');
-      spark.className = 'inspiration-spark';
-      
-      const angle = (i / 12) * Math.PI * 2;
-      const distance = 80 + Math.random() * 120;
-      const ix = Math.cos(angle) * distance;
-      const iy = Math.sin(angle) * distance;
-      
-      spark.style.cssText = `
-        left: 50%;
-        top: 40%;
-        --ix: ${ix}px;
-        --iy: ${iy}px;
-        animation-delay: ${Math.random() * 4}s;
-      `;
-      
-      presence.appendChild(spark);
-      setTimeout(() => spark.remove(), 10000);
-    }, i * 150);
+  function viento(t) {
+    const u = 3.4 + 0.9 * Math.sin(2 * Math.PI * t / 41) + 0.55 * Math.sin(2 * Math.PI * t / 17 + 1.3)
+            + 0.35 * Math.sin(2 * Math.PI * t / 7.3 + 0.4) + rafaga;
+    return Math.max(1.6, Math.min(7.8, u));
   }
-}
 
-// Crear voces etéreas
-function createEtherealVoice() {
-  const words = [
-    'llamado', 'eco', 'aliento', 'impulso',
-    'guía', 'susurro', 'señal', 'invitación',
-    'presencia', 'esencia', 'origen', 'fuente'
-  ];
-  
-  const voice = document.createElement('div');
-  voice.className = 'voice-without-words';
-  voice.textContent = words[Math.floor(Math.random() * words.length)];
-  
-  voice.style.cssText = `
-    left: ${30 + Math.random() * 40}%;
-    top: ${25 + Math.random() * 50}%;
-    animation-delay: 0s;
-    animation-duration: ${12 + Math.random() * 6}s;
-    font-size: ${1 + Math.random() * 0.6}em;
-  `;
-  
-  presence.appendChild(voice);
-  setTimeout(() => voice.remove(), 15000);
-}
+  function soplo() {
+    const t = performance.now() / 1000 - T0;
+    if (t > proximaRafaga) { rafaga += 1.6; proximaRafaga = t + 18 + Math.random() * 17; }
+    rafaga *= Math.exp(-0.06 / 3.2);
+    const U = viento(t);
+    const ahora = ctx ? ctx.currentTime : 0;
+    STROUHAL.forEach((s, k) => {
+      const r = U * s;
+      const n = Math.max(2, Math.min(16, Math.round(r)));
+      const cerca = Math.max(0, 1 - Math.abs(r - n) / 0.33);
+      const a = cerca * cerca * Math.pow(U / 4.5, 1.6) / Math.sqrt(n);
+      if (!reduce) {
+        const v = Math.min(1, a * 1.4);
+        cuerdas[k].style.opacity = (0.08 + 0.62 * v).toFixed(3);
+        cuerdas[k].style.transform = `scaleX(${(1 + 1.8 * v).toFixed(3)})`;
+      }
+      if (ctx) {
+        const vz = voces[k];
+        if (n !== armonico[k]) {
+          const f = n * F0 * Math.pow(2, AFIN[k] / 1200);
+          vz.o1.frequency.setTargetAtTime(f, ahora, 0.05);
+          vz.o2.frequency.setTargetAtTime(f * Math.pow(2, 2.5 / 1200), ahora, 0.05);
+          armonico[k] = n;
+        }
+        vz.g.gain.setTargetAtTime(0.085 * a, ahora, 0.3);
+      }
+    });
+    if (ctx) {
+      vientoFiltro.frequency.setTargetAtTime(240 + 150 * U, ahora, 0.3);
+      vientoGain.gain.setTargetAtTime(0.0016 * U * U, ahora, 0.3);
+    }
+  }
+  if (!reduce) setInterval(soplo, 60);
 
-// Crear ecos de la musa
-function createMuseEcho() {
-  const echoes = ['crea', 'inspira', 'fluye', 'expresa', 'siente', 'vive', 'ama', 'sueña'];
-  const echo = document.createElement('div');
-  echo.className = 'muse-echo';
-  echo.textContent = echoes[Math.floor(Math.random() * echoes.length)];
-  
-  echo.style.cssText = `
-    left: ${15 + Math.random() * 70}%;
-    top: ${20 + Math.random() * 60}%;
-    --rotation: ${Math.random() * 15 - 7.5}deg;
-    animation: echo-resonate ${10 + Math.random() * 8}s ease-in-out infinite;
-  `;
-  
-  presence.appendChild(echo);
-  setTimeout(() => echo.remove(), 18000);
-}
+  function makeReverbIR(ac, seconds = 5.5, decay = 2.2) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
+  }
 
-// Generar elementos continuamente
-setInterval(createWhisperTrail, 2500);
-setInterval(createInspirationSparks, 7000);
-setInterval(createEtherealVoice, 4000);
-setInterval(createMuseEcho, 5000);
+  function startAudio() {
+    if (ctx) return;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    master.gain.setValueAtTime(0, ctx.currentTime);
+    master.gain.linearRampToValueAtTime(1.15, ctx.currentTime + 6);
+    seco = ctx.createGain(); seco.gain.value = 0.6; seco.connect(master);
+    sala = ctx.createGain(); sala.gain.value = 0.55;
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    sala.connect(conv); conv.connect(master);
+    // Una cuerda vibrando: casi pura, con un poco de su octava y su duodécima
+    const onda = ctx.createPeriodicWave(new Float32Array([0, 0, 0, 0]), new Float32Array([0, 1, 0.16, 0.05]));
+    STROUHAL.forEach((s, k) => {
+      const o1 = ctx.createOscillator(); o1.setPeriodicWave(onda);
+      const o2 = ctx.createOscillator(); o2.setPeriodicWave(onda);
+      const g = ctx.createGain(); g.gain.value = 0;
+      const g2 = ctx.createGain(); g2.gain.value = 0.55;
+      const p = ctx.createStereoPanner(); p.pan.value = -0.6 + k * 0.24;
+      o1.frequency.value = 3 * F0; o2.frequency.value = 3 * F0;
+      o1.connect(g); o2.connect(g2); g2.connect(g); g.connect(p); p.connect(seco); p.connect(sala);
+      o1.start(); o2.start();
+      voces.push({ o1, o2, g });
+    });
+    // El viento mismo, apenas
+    ruidoBuf = ctx.createBuffer(1, ctx.sampleRate * 3, ctx.sampleRate);
+    const d = ruidoBuf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    const n = ctx.createBufferSource(); n.buffer = ruidoBuf; n.loop = true;
+    vientoFiltro = ctx.createBiquadFilter(); vientoFiltro.type = 'bandpass'; vientoFiltro.frequency.value = 700; vientoFiltro.Q.value = 0.7;
+    vientoGain = ctx.createGain(); vientoGain.gain.value = 0;
+    n.connect(vientoFiltro); vientoFiltro.connect(vientoGain); vientoGain.connect(seco); vientoGain.connect(sala);
+    n.start();
+    if (reduce) setInterval(soplo, 60);
+  }
 
-// Crear elementos iniciales
-for(let i = 0; i < 8; i++) {
-  setTimeout(createWhisperTrail, i * 900);
-}
-createInspirationSparks();
+  /* ---------------- La presencia que respira ---------------------------------------------------- */
+  function trazoSusurro(x, y, wx, wy, wr, dur) {
+    const w = document.createElement('div'); w.className = 'susurro-trazo';
+    w.style.cssText = `left:${x};top:${y};--wx:${wx}px;--wy:${wy}px;--wr:${wr}deg;` + (dur ? `animation-duration:${dur}s;` : `animation-delay:${(Math.random() * 3).toFixed(2)}s;`);
+    presencia.appendChild(w); setTimeout(() => w.remove(), (dur || 15) * 1000 + 100);
+  }
+  function chispas(x, y, n, dist, dur) {
+    for (let i = 0; i < n; i++) setTimeout(() => {
+      const c = document.createElement('div'); c.className = 'chispa';
+      const a = (i / n) * Math.PI * 2, d = (dist[0] + Math.random() * dist[1]) * H;
+      c.style.cssText = `left:${x};top:${y};--ix:${(Math.cos(a) * d).toFixed(1)}px;--iy:${(Math.sin(a) * d).toFixed(1)}px;animation-duration:${dur}s;` + (dur > 6 ? `animation-delay:${(Math.random() * 4).toFixed(2)}s;` : '');
+      presencia.appendChild(c); setTimeout(() => c.remove(), dur * 1000 + 4100);
+    }, i * (dur > 6 ? 150 : 60));
+  }
+  function vozEterea() {
+    const palabras = ['llamado', 'eco', 'aliento', 'impulso', 'guía', 'susurro', 'señal', 'invitación', 'presencia', 'esencia', 'origen', 'fuente'];
+    const v = document.createElement('div'); v.className = 'voz';
+    v.textContent = palabras[Math.floor(Math.random() * palabras.length)];
+    const dur = 12 + Math.random() * 6;
+    v.style.cssText = `left:${38 + Math.random() * 24}%;top:${25 + Math.random() * 50}%;animation-duration:${dur.toFixed(1)}s;animation-iteration-count:1;font-size:${(0.85 + Math.random() * 0.3).toFixed(2)}em;`;
+    presencia.appendChild(v); setTimeout(() => v.remove(), dur * 1000);
+  }
+  function ecoMusa() {
+    const ecos = ['crea', 'inspira', 'fluye', 'expresa', 'siente', 'vive', 'ama', 'sueña'];
+    const e = document.createElement('div'); e.className = 'eco';
+    e.textContent = ecos[Math.floor(Math.random() * ecos.length)];
+    const dur = 10 + Math.random() * 8;
+    e.style.cssText = `left:${8 + Math.random() * 60}%;top:${18 + Math.random() * 62}%;--rotation:${al(7.5).toFixed(1)}deg;animation-duration:${dur.toFixed(1)}s;animation-iteration-count:1;`;
+    presencia.appendChild(e); setTimeout(() => e.remove(), dur * 1000);
+  }
 
-// Interactividad - Click revela presencia
-presence.addEventListener('click', (e) => {
-  const rect = presence.getBoundingClientRect();
-  const x = ((e.clientX - rect.left) / rect.width) * 100;
-  const y = ((e.clientY - rect.top) / rect.height) * 100;
-  
-  // Ondas de toque invisible
-  for(let i = 0; i < 4; i++) {
-    setTimeout(() => {
-      const touch = document.createElement('div');
-      touch.className = 'invisible-touch';
-      touch.style.cssText = `
-        left: ${x}%;
-        top: ${y}%;
-        animation: touch-ripple ${8 + i * 2}s ease-out forwards;
-        animation-delay: 0s;
-      `;
-      presence.appendChild(touch);
-      setTimeout(() => touch.remove(), (8 + i * 2) * 1000);
+  if (!reduce) {
+    setInterval(() => trazoSusurro(`${20 + Math.random() * 60}%`, `${20 + Math.random() * 50}%`, al(0.125) * H, (0.17 + Math.random() * 0.4) * H, al(45)), 2500);
+    setInterval(() => chispas('50%', '40%', 12, [0.13, 0.2], 10), 7000);
+    setInterval(vozEterea, 4000);
+    setInterval(ecoMusa, 5000);
+    for (let i = 0; i < 8; i++) setTimeout(() => trazoSusurro(`${20 + Math.random() * 60}%`, `${20 + Math.random() * 50}%`, al(0.125) * H, (0.17 + Math.random() * 0.4) * H, al(45)), i * 900);
+    chispas('50%', '40%', 12, [0.13, 0.2], 10);
+  }
+
+  /* ---------------- El toque ---------------------------------------------------------------- */
+  let pendiente = null;
+  let revelandoHasta = null;
+  function revelacion(texto, sombra, x, y, ms) {
+    const v = document.createElement('div'); v.className = 'revelacion';
+    v.textContent = texto;
+    v.style.left = x; v.style.top = y;
+    v.style.setProperty('--sombra', sombra);
+    v.style.animationDuration = (ms / 1000) + 's';
+    presencia.appendChild(v); setTimeout(() => v.remove(), ms + 100);
+    presencia.classList.add('revelando');
+    clearTimeout(revelandoHasta); revelandoHasta = setTimeout(() => presencia.classList.remove('revelando'), Math.max(1000, ms - 900));
+  }
+  function toque(cx, cy) {
+    rafaga = Math.min(rafaga + 2.4, 3.6);
+    if (reduce) return;
+    const r = presencia.getBoundingClientRect();
+    const px = Math.max(0, Math.min(100, ((cx - r.left) / r.width) * 100));
+    const py = Math.max(0, Math.min(100, ((cy - r.top) / r.height) * 100));
+    for (let i = 0; i < 4; i++) setTimeout(() => {
+      const t = document.createElement('div'); t.className = 'toque-invisible';
+      t.style.cssText = `left:${px}%;top:${py}%;animation:rizo ${8 + i * 2}s ease-out forwards;`;
+      presencia.appendChild(t); setTimeout(() => t.remove(), (8 + i * 2) * 1000);
     }, i * 400);
+    chispas(`${px}%`, `${py}%`, 16, [0.1, 0.17], 5);
+    for (let i = 0; i < 6; i++) setTimeout(() => trazoSusurro(`${px}%`, `${py}%`, 0, 0.33 * H, i * 60, 4), i * 100);
+    pendiente = setTimeout(() => revelacion('LA INSPIRACIÓN\nES ANÓNIMA', 'rgba(150,100,255,0.85)', `${Math.max(30, Math.min(70, px))}%`, `${Math.max(15, Math.min(85, py))}%`, 6000), 400);
   }
-  
-  // Explosión de chispas
-  for(let i = 0; i < 16; i++) {
-    setTimeout(() => {
-      const spark = document.createElement('div');
-      spark.className = 'inspiration-spark';
-      
-      const angle = (i / 16) * Math.PI * 2;
-      const distance = 60 + Math.random() * 100;
-      const ix = Math.cos(angle) * distance;
-      const iy = Math.sin(angle) * distance;
-      
-      spark.style.cssText = `
-        left: ${x}%;
-        top: ${y}%;
-        --ix: ${ix}px;
-        --iy: ${iy}px;
-        animation: spark-inspire 5s ease-out forwards;
-      `;
-      
-      presence.appendChild(spark);
-      setTimeout(() => spark.remove(), 5000);
-    }, i * 60);
+  function revelar() {
+    clearTimeout(pendiente);
+    rafaga = 3.8;                                  // tu aliento: todas las cuerdas cantan
+    revelacion('LA MUSA\nERES TÚ', 'rgba(255,100,200,0.9)', '50%', '50%', reduce ? 9000 : 10000);
+    if (reduce) return;
+    const f = document.createElement('div'); f.className = 'figura';
+    f.style.cssText = `top:50%;width:calc(var(--H) * 0.4);height:calc(var(--H) * 0.6);animation:figura 8s ease-out forwards;` +
+      `background:radial-gradient(ellipse, rgba(255,100,200,0.32), rgba(150,100,255,0.14) 45%, transparent 70%);`;
+    presencia.appendChild(f); setTimeout(() => f.remove(), 8000);
   }
-  
-  // Susurros que emanan
-  for(let i = 0; i < 6; i++) {
-    setTimeout(() => {
-      const whisper = document.createElement('div');
-      whisper.className = 'whisper-trail';
-      const angle = (i / 6) * 360;
-      whisper.style.cssText = `
-        left: ${x}%;
-        top: ${y}%;
-        --wy: 200px;
-        --wx: 0px;
-        --wr: ${angle}deg;
-        animation: whisper-flow 4s ease-out forwards;
-      `;
-      presence.appendChild(whisper);
-      setTimeout(() => whisper.remove(), 4000);
-    }, i * 100);
-  }
-  
-  // Revelación central
-  const revelation = document.createElement('div');
-  revelation.className = 'voice-without-words';
-  revelation.textContent = "LA INSPIRACIÓN\nES ANÓNIMA";
-  revelation.style.cssText = `
-    left: ${x}%;
-    top: ${y}%;
-    transform: translate(-50%, -50%);
-    animation: voice-breathe 6s ease-out forwards;
-    font-size: 1.6em;
-    color: rgba(255,255,255,0.9);
-    text-shadow: 0 0 30px rgba(150,100,255,0.8);
-    text-align: center;
-    line-height: 1.5;
-  `;
-  presence.appendChild(revelation);
-  setTimeout(() => revelation.remove(), 6000);
-});
 
-// Hover crea susurros sutiles
-let lastHover = 0;
-presence.addEventListener('mousemove', (e) => {
-  const now = Date.now();
-  if(now - lastHover < 400) return;
-  lastHover = now;
-  
-  const rect = presence.getBoundingClientRect();
-  const x = ((e.clientX - rect.left) / rect.width) * 100;
-  const y = ((e.clientY - rect.top) / rect.height) * 100;
-  
-  const whisper = document.createElement('div');
-  whisper.className = 'whisper-trail';
-  whisper.style.cssText = `
-    left: ${x}%;
-    top: ${y}%;
-    --wy: ${80 + Math.random() * 100}px;
-    --wx: ${(Math.random() - 0.5) * 60}px;
-    --wr: ${(Math.random() - 0.5) * 45}deg;
-    animation: whisper-flow 5s ease-out forwards;
-  `;
-  
-  presence.appendChild(whisper);
-  setTimeout(() => whisper.remove(), 5000);
-});
+  let ultimo = 0;
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    hint.classList.add('oculto');
+    const t = performance.now();
+    if (t - ultimo < 380) { ultimo = 0; revelar(); return; }
+    ultimo = t;
+    toque(e.clientX, e.clientY);
+  });
 
-// Doble click - Revelación máxima
-presence.addEventListener('dblclick', (e) => {
-  const revelation = document.createElement('div');
-  revelation.className = 'voice-without-words';
-  revelation.textContent = "LA MUSA\nERES TÚ";
-  revelation.style.cssText = `
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    animation: voice-breathe 10s ease-out forwards;
-    font-size: 2.2em;
-    color: rgba(255,255,255,0.95);
-    text-shadow: 0 0 40px rgba(255,100,200,0.9);
-    text-align: center;
-    line-height: 1.4;
-    z-index: 1000;
-  `;
-  
-  presence.appendChild(revelation);
-  setTimeout(() => revelation.remove(), 10000);
-  
-  // Transformación de la figura
-  const transformation = document.createElement('div');
-  transformation.className = 'formless-figure';
-  transformation.style.cssText = `
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    animation: figure-shimmer 8s ease-out forwards;
-    width: 200px;
-    height: 300px;
-    filter: blur(40px);
-    background: radial-gradient(ellipse,
-      rgba(255,100,200,0.3),
-      rgba(150,100,255,0.2),
-      transparent
-    );
-  `;
-  presence.appendChild(transformation);
-  setTimeout(() => transformation.remove(), 8000);
-});
+  /* Con el ratón, susurros sutiles por donde pasa */
+  let ultimoPaso = 0;
+  window.addEventListener('pointermove', (e) => {
+    if (reduce || e.pointerType !== 'mouse') return;
+    const t = performance.now();
+    if (t - ultimoPaso < 400) return;
+    ultimoPaso = t;
+    const r = presencia.getBoundingClientRect();
+    const px = ((e.clientX - r.left) / r.width) * 100, py = ((e.clientY - r.top) / r.height) * 100;
+    if (px < 0 || py < 0 || px > 100 || py > 100) return;
+    trazoSusurro(`${px}%`, `${py}%`, al(0.05) * H, (0.13 + Math.random() * 0.17) * H, al(22), 5);
+  });
 </script>
-
 </body>
 </html>

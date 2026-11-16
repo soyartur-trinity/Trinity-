@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <!-- Adaptado al teléfono en octubre de 2026 (Arquitectura del Destino, Libro 12, «La Obra»): página en proporción a la pantalla, textos legibles y lejos de los bordes, invitación en tuteo y doble toque que funciona en el teléfono. El contenido no cambia. -->
+<!-- Portal 65. Saneado en noviembre de 2026 sin cambiar lo que describe el «Para ver»: las palabras
+     que brotan, la línea al pie de la página, «Toca la página. Con dos toques, revela lo que guarda».
+     Georgia, sin desenfoques, ∞ y movimiento reducido. Sonido nuevo: la melodía que pasa de boca
+     en boca (Anglada-Tort y otros, 2023). -->
 <title>Libro 10 - Nodo 65: La Obra Sin Autor</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
-
 * {
   margin: 0;
   padding: 0;
@@ -16,14 +18,18 @@
 
 body {
   background: radial-gradient(ellipse at center, #0a0a15 0%, #000000 70%);
+  background-color: #000;
   overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
+  font-family: Georgia, serif;
   color: #fff;
   height: 100vh;
   height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none; user-select: none;
 }
 
 .authorship-void {
@@ -36,13 +42,13 @@ body {
 }
 
 .manuscript {
+  --W: min(500px, 86vw, calc((100vh - 330px) * 0.714));
+  --W: min(500px, 86vw, calc((100dvh - 330px) * 0.714));
   position: relative;
-  width: min(500px, 86vw, calc((100vh - 330px) * 0.714));
-  width: min(500px, 86vw, calc((100dvh - 330px) * 0.714));
+  width: var(--W);
   aspect-ratio: 5 / 7;
   overflow: hidden;
   touch-action: manipulation;
-  cursor: pointer;
   background: radial-gradient(ellipse at center, rgba(20,20,30,0.6), transparent);
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 0 60px rgba(100,100,255,0.15);
@@ -51,8 +57,9 @@ body {
 .word-emergence {
   position: absolute;
   font-size: 1.1em;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.72);
   letter-spacing: 0.15em;
+  white-space: nowrap;
   opacity: 0;
   animation: word-write 15s ease-in-out infinite;
   text-shadow: 0 0 10px rgba(150,100,255,0.3);
@@ -80,7 +87,6 @@ body {
     transparent
   );
   animation: ink-drip 10s linear infinite;
-  filter: blur(0.3px);
 }
 
 @keyframes ink-drip {
@@ -131,8 +137,8 @@ body {
 
 .thought-bubble {
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: 16%;
+  aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.1);
   background: radial-gradient(circle, rgba(150,100,255,0.1), transparent);
@@ -207,12 +213,14 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 94vw;
-  font-size: clamp(1.25rem, 5.6vw, 2.2em);
+  font-size: clamp(1.15rem, 5.2vw, 2.1em);
   letter-spacing: clamp(0.12em, 1.6vw, 0.5em);
+  padding-left: clamp(0.12em, 1.6vw, 0.5em);
   opacity: 0.9;
   text-shadow: 0 0 30px rgba(150,100,255,0.5);
-  font-weight: 600;
+  font-weight: bold;
   text-align: center;
+  pointer-events: none;
 }
 
 .subtitle {
@@ -222,10 +230,11 @@ body {
   transform: translateX(-50%);
   width: 94vw;
   text-align: center;
-  font-size: clamp(0.9rem, 3.6vw, 1em);
+  font-size: clamp(0.85rem, 3.4vw, 1em);
   letter-spacing: 0.3em;
   opacity: 0.5;
   font-style: italic;
+  pointer-events: none;
 }
 
 .contemplation {
@@ -234,33 +243,33 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 94vw;
-  font-size: clamp(0.86rem, 3.5vw, 0.95em);
-  letter-spacing: clamp(0.04em, 0.7vw, 0.2em);
-  opacity: 0.72;
+  font-size: clamp(0.84rem, 3.4vw, 0.95em);
+  letter-spacing: clamp(0.03em, 0.6vw, 0.18em);
+  opacity: 0.74;
   text-align: center;
-  max-width: 700px;
+  max-width: 720px;
   line-height: 1.7;
   padding: 0 4vw;
   font-style: italic;
+  pointer-events: none;
 }
 
 .anonymous-glow {
   position: absolute;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(150,100,255,0.15), transparent);
+  width: 72%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(150,100,255,0.17), rgba(150,100,255,0.06) 40%, transparent 68%);
   border-radius: 50%;
   animation: glow-pulse 20s ease-in-out infinite;
-  filter: blur(40px);
 }
 
 @keyframes glow-pulse {
   0%, 100% {
-    transform: scale(0.8);
+    transform: translate(-50%, -50%) scale(0.8);
     opacity: 0.3;
   }
   50% {
-    transform: scale(1.5);
+    transform: translate(-50%, -50%) scale(1.5);
     opacity: 0.6;
   }
 }
@@ -273,6 +282,7 @@ body {
   animation: void-sign 16s ease-in-out infinite;
   color: rgba(255,255,255,0.2);
   font-style: italic;
+  white-space: nowrap;
   text-shadow: 0 0 20px rgba(150,100,255,0.4);
 }
 
@@ -291,11 +301,10 @@ body {
   position: absolute;
   width: 30px;
   height: 50px;
-  background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+  background: linear-gradient(45deg, rgba(255,255,255,0.12), transparent);
   clip-path: polygon(0 0, 100% 30%, 60% 100%, 0% 100%);
   animation: quill-write 25s ease-in-out infinite;
   opacity: 0;
-  filter: blur(1px);
 }
 
 @keyframes quill-write {
@@ -305,47 +314,46 @@ body {
   }
   15% {
     opacity: 0.4;
-    transform: translate(100px, 50px) rotate(15deg);
+    transform: translate(calc(var(--W) * 0.2), calc(var(--W) * 0.1)) rotate(15deg);
   }
   35% {
     opacity: 0.6;
-    transform: translate(200px, 150px) rotate(-10deg);
+    transform: translate(calc(var(--W) * 0.4), calc(var(--W) * 0.3)) rotate(-10deg);
   }
   55% {
     opacity: 0.5;
-    transform: translate(150px, 300px) rotate(20deg);
+    transform: translate(calc(var(--W) * 0.3), calc(var(--W) * 0.6)) rotate(20deg);
   }
   75% {
     opacity: 0.3;
-    transform: translate(50px, 400px) rotate(-15deg);
+    transform: translate(calc(var(--W) * 0.1), calc(var(--W) * 0.8)) rotate(-15deg);
   }
 }
 
 .universal-ink {
   position: absolute;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(100,80,255,0.1), transparent);
+  width: 36%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(100,80,255,0.11), rgba(100,80,255,0.04) 40%, transparent 68%);
   border-radius: 50%;
   animation: ink-spread 30s linear infinite;
-  filter: blur(20px);
   opacity: 0;
 }
 
 @keyframes ink-spread {
   0% {
-    transform: scale(0);
+    transform: translate(-50%, -50%) scale(0);
     opacity: 0;
   }
   20% {
     opacity: 0.3;
   }
   50% {
-    transform: scale(2);
+    transform: translate(-50%, -50%) scale(2);
     opacity: 0.1;
   }
   100% {
-    transform: scale(3);
+    transform: translate(-50%, -50%) scale(3);
     opacity: 0;
   }
 }
@@ -359,7 +367,7 @@ body {
   .title { top: calc(env(safe-area-inset-top, 0px) + 10px); font-size: clamp(1.1rem, 4.4vh, 1.6rem); }
   .contemplation { bottom: calc(env(safe-area-inset-bottom, 0px) + 8px); font-size: 0.8rem; line-height: 1.5; }
   .authorship-void { padding: calc(env(safe-area-inset-top, 0px) + 46px) 0 calc(env(safe-area-inset-bottom, 0px) + 92px); }
-  .manuscript { aspect-ratio: 7 / 5; width: min(500px, 80vw, calc((100vh - 150px) * 1.4)); width: min(500px, 80vw, calc((100dvh - 150px) * 1.4)); }
+  .manuscript { --W: min(500px, 80vw, calc((100vh - 150px) * 1.4)); --W: min(500px, 80vw, calc((100dvh - 150px) * 1.4)); aspect-ratio: 7 / 5; }
 }
 
 .invitacion {
@@ -369,13 +377,17 @@ body {
   letter-spacing: 0.08em;
   opacity: 0.85;
   font-style: normal;
+  animation: invita 3.4s infinite ease-in-out;
+  transition: opacity 1.4s ease;
 }
+.invitacion.oculto { animation: none; opacity: 0; }
+@keyframes invita { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
 
 .eternal-manuscript {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: 
+  background:
     radial-gradient(circle at 20% 30%, rgba(100,80,255,0.05), transparent),
     radial-gradient(circle at 80% 70%, rgba(255,100,200,0.03), transparent);
   mix-blend-mode: overlay;
@@ -385,6 +397,33 @@ body {
 @keyframes manuscript-breath {
   0%, 100% { opacity: 0.2; }
   50% { opacity: 0.5; }
+}
+
+.revelacion {
+  white-space: normal;
+  pointer-events: none;
+}
+
+.infinito {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); right: 22px;
+  font-size: 30px; text-decoration: none;
+  color: rgba(200,190,240,0.4);
+  transition: color 0.8s ease, text-shadow 0.8s ease;
+  z-index: 20;
+  cursor: pointer;
+}
+.infinito:hover, .infinito:focus-visible { color: rgba(245,242,255,0.95); text-shadow: 0 0 18px rgba(170,140,255,0.6); outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+  .word-emergence { opacity: 0.75; transform: none; }
+  .void-signature { opacity: 0.35; }
+  .anonymous-glow { opacity: 0.45; transform: translate(-50%, -50%); }
+  .eternal-manuscript { opacity: 0.35; }
+  .ghost-quill, .universal-ink, .thought-bubble { display: none; }
+  .invitacion { opacity: 0.85; }
+  .invitacion.oculto { opacity: 0; }
 }
 </style>
 </head>
@@ -396,7 +435,7 @@ body {
 <div class="authorship-void">
   <div class="manuscript">
     <div class="eternal-manuscript"></div>
-    
+
     <!-- Líneas de página -->
     <div class="page-line" style="top: 15%;"></div>
     <div class="page-line" style="top: 25%;"></div>
@@ -406,81 +445,83 @@ body {
     <div class="page-line" style="top: 65%;"></div>
     <div class="page-line" style="top: 75%;"></div>
     <div class="page-line" style="top: 85%;"></div>
-    
+
     <!-- Resplandor anónimo -->
-    <div class="anonymous-glow" style="top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
-    
+    <div class="anonymous-glow" style="top: 50%; left: 50%;"></div>
+
     <!-- Pluma fantasma -->
     <div class="ghost-quill" style="top: 10%; left: 10%; animation-delay: 0s;"></div>
     <div class="ghost-quill" style="top: 20%; left: 60%; animation-delay: 8s;"></div>
-    
+
     <!-- Tinta universal -->
     <div class="universal-ink" style="top: 40%; left: 30%; animation-delay: 0s;"></div>
     <div class="universal-ink" style="top: 60%; left: 70%; animation-delay: 15s;"></div>
-    
+
     <!-- Palabras que emergen -->
     <div class="word-emergence" style="top: 20%; left: 20%; animation-delay: 0s;">Las palabras</div>
     <div class="word-emergence" style="top: 30%; left: 35%; animation-delay: 2s;">brotan</div>
     <div class="word-emergence" style="top: 40%; left: 25%; animation-delay: 4s;">del silencio</div>
     <div class="word-emergence" style="top: 50%; left: 40%; animation-delay: 6s;">sin firmar</div>
     <div class="word-emergence" style="top: 60%; left: 30%; animation-delay: 8s;">su origen</div>
-    
+
     <!-- Textos adicionales -->
     <div class="word-emergence" style="top: 70%; left: 35%; animation-delay: 10s;">el vacío</div>
     <div class="word-emergence" style="top: 75%; left: 25%; animation-delay: 12s;">escribe</div>
     <div class="word-emergence" style="top: 80%; left: 40%; animation-delay: 14s;">eternamente</div>
-    
+
     <!-- Firma del vacío -->
     <div class="void-signature" style="bottom: 12%; right: 15%;">—————</div>
-    
+
     <!-- Burbujas de pensamiento -->
-    <div class="thought-bubble" style="left: 10%; top: 10%; --tx: 50px; --ty: -80px; animation-delay: 0s;"></div>
-    <div class="thought-bubble" style="left: 70%; top: 20%; --tx: -40px; --ty: -100px; animation-delay: 6s;"></div>
-    <div class="thought-bubble" style="left: 40%; top: 70%; --tx: 30px; --ty: -90px; animation-delay: 12s;"></div>
+    <div class="thought-bubble" style="left: 10%; top: 10%; --tx: calc(var(--W) * 0.1); --ty: calc(var(--W) * -0.16); animation-delay: 0s;"></div>
+    <div class="thought-bubble" style="left: 70%; top: 20%; --tx: calc(var(--W) * -0.08); --ty: calc(var(--W) * -0.2); animation-delay: 6s;"></div>
+    <div class="thought-bubble" style="left: 40%; top: 70%; --tx: calc(var(--W) * 0.06); --ty: calc(var(--W) * -0.18); animation-delay: 12s;"></div>
   </div>
 </div>
 
 <div class="contemplation">
   Ningún nombre al pie de la página · La obra se escribe a sí misma<br>
   Como el universo que no necesitó firma para comenzar a existir
-  <span class="invitacion">Toca la página. Con dos toques, revela lo que guarda.</span>
+  <span class="invitacion" id="invitacion">Toca la página. Con dos toques, revela lo que guarda.</span>
 </div>
 
+<a class="infinito" href="L_10-Nodo3.html" aria-label="Siguiente portal">∞</a>
+
 <script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const manuscript = document.querySelector('.manuscript');
+const invitacion = document.getElementById('invitacion');
+// El sonido se declara arriba
+let ctx = null, master, seco, sala;
+const esc = () => manuscript.clientWidth / 500;          // el original estaba pensado para 500 px
 
 // Crear flujos de tinta
 function createInkFlow() {
   const ink = document.createElement('div');
   ink.className = 'ink-flow';
-  
   const startX = 20 + Math.random() * 60;
-  const distance = 100 + Math.random() * 300;
-  
+  const distance = (100 + Math.random() * 300) * esc();
   ink.style.cssText = `
     left: ${startX}%;
     top: 10%;
     --distance: ${distance}px;
     animation-delay: ${Math.random() * 5}s;
   `;
-  
   manuscript.appendChild(ink);
-  setTimeout(() => ink.remove(), 10000);
+  setTimeout(() => ink.remove(), 15000);
 }
 
 // Crear ausencia de firma
 function createSignatureAbsence() {
   const sig = document.createElement('div');
   sig.className = 'signature-absence';
-  
   sig.style.cssText = `
     bottom: ${15 + Math.random() * 10}%;
     right: ${15 + Math.random() * 10}%;
     animation-delay: ${Math.random() * 6}s;
   `;
-  
   manuscript.appendChild(sig);
-  setTimeout(() => sig.remove(), 12000);
+  setTimeout(() => sig.remove(), 18000);
 }
 
 // Crear chispas creativas
@@ -489,10 +530,8 @@ function createCreativeSparks() {
     setTimeout(() => {
       const spark = document.createElement('div');
       spark.className = 'creative-spark';
-      
-      const sx = (Math.random() - 0.5) * 300;
-      const sy = (Math.random() - 0.5) * 400;
-      
+      const sx = (Math.random() - 0.5) * 300 * esc();
+      const sy = (Math.random() - 0.5) * 400 * esc();
       spark.style.cssText = `
         left: ${30 + Math.random() * 40}%;
         top: ${30 + Math.random() * 40}%;
@@ -500,9 +539,8 @@ function createCreativeSparks() {
         --sy: ${sy}px;
         animation-delay: ${Math.random() * 3}s;
       `;
-      
       manuscript.appendChild(spark);
-      setTimeout(() => spark.remove(), 7000);
+      setTimeout(() => spark.remove(), 10000);
     }, i * 200);
   }
 }
@@ -514,64 +552,188 @@ function createEmergingWord() {
     'misterio', 'surgir', 'nacer', 'manifestar', 'brotar',
     'eterno', 'crear', 'ser', 'puro', 'acto'
   ];
-  
   const word = document.createElement('div');
   word.className = 'word-emergence';
   word.textContent = words[Math.floor(Math.random() * words.length)];
-  
+  const dur = 10 + Math.random() * 5;
   word.style.cssText = `
-    left: ${20 + Math.random() * 60}%;
+    left: ${20 + Math.random() * 50}%;
     top: ${20 + Math.random() * 60}%;
     animation-delay: 0s;
-    animation-duration: ${10 + Math.random() * 5}s;
+    animation-duration: ${dur}s;
+    animation-iteration-count: 1;
   `;
-  
   manuscript.appendChild(word);
-  setTimeout(() => word.remove(), 15000);
+  setTimeout(() => word.remove(), dur * 1000);
 }
 
 // Crear plumas fantasmas adicionales
 function createGhostQuill() {
   const quill = document.createElement('div');
   quill.className = 'ghost-quill';
-  
   quill.style.cssText = `
     top: ${10 + Math.random() * 20}%;
     left: ${10 + Math.random() * 20}%;
     animation-delay: ${Math.random() * 12}s;
   `;
-  
   manuscript.appendChild(quill);
-  setTimeout(() => quill.remove(), 25000);
+  setTimeout(() => quill.remove(), 37000);
 }
 
-// Generar elementos continuamente
-setInterval(createInkFlow, 3000);
-setInterval(createSignatureAbsence, 5000);
-setInterval(createCreativeSparks, 8000);
-setInterval(createEmergingWord, 4000);
-setInterval(createGhostQuill, 15000);
+if (!reduce) {
+  // Generar elementos continuamente
+  setInterval(createInkFlow, 3000);
+  setInterval(createSignatureAbsence, 5000);
+  setInterval(createCreativeSparks, 8000);
+  setInterval(createEmergingWord, 4000);
+  setInterval(createGhostQuill, 15000);
 
-// Crear elementos iniciales
-for(let i = 0; i < 6; i++) {
-  setTimeout(createInkFlow, i * 800);
+  // Crear elementos iniciales
+  for(let i = 0; i < 6; i++) {
+    setTimeout(createInkFlow, i * 800);
+  }
+  for(let i = 0; i < 3; i++) {
+    setTimeout(createSignatureAbsence, i * 1500);
+  }
+  createCreativeSparks();
+} else {
+  // La línea al pie de la página, quieta
+  const sig = document.createElement('div');
+  sig.className = 'signature-absence';
+  sig.style.cssText = 'bottom: 18%; right: 18%; opacity: 0.5;';
+  manuscript.appendChild(sig);
 }
-for(let i = 0; i < 3; i++) {
-  setTimeout(createSignatureAbsence, i * 1500);
-}
-createCreativeSparks();
 
-// Interactividad - Click crea cascada de palabras
-let ultimoToque = 0;
-manuscript.addEventListener('click', (e) => {
+/* ---------------- Diseño sonoro: la melodía que pasa de boca en boca ----------------------
+   Anglada-Tort, Harrison, Lee y Jacoby (2023) hicieron pasar más de tres mil melodías de un
+   cantante a otro, como en el teléfono descompuesto: los pequeños errores al repetirlas las
+   llevaron hacia intervalos cortos y contornos en arco, fáciles de cantar. Nadie las compuso.
+   Aquí cada palabra que brota tiene su nota, y cada vuelta de las ocho palabras (quince
+   segundos) la canta otra voz, que repite lo que oyó con los errores de la memoria: la primera
+   es casi habla, desafinada y a saltos; unas vueltas después, es una canción en Re.
+   Al tocar, tu toque es un eslabón más: una nota de la próxima vuelta se mueve.
+------------------------------------------------------------------------------------------- */
+const VUELTA = 15;
+const RE = [0, 2, 4, 5, 7, 9, 11];
+const VOCES = [                       // registro, formantes (una vocal apenas abierta) y lugar
+  { base: 146.83, F: [320, 800, 2500],  pan: -0.55 },
+  { base: 293.66, F: [560, 1000, 2800], pan:  0.5  },
+  { base: 146.83, F: [680, 1120, 2600], pan: -0.1  },
+  { base: 293.66, F: [400, 960, 2900],  pan:  0.32 },
+  { base: 146.83, F: [460, 860, 2450],  pan: -0.35 }
+];
+let melodia = [], generacion = 0, mutar = false;
+
+function gauss() { return Math.sqrt(-2 * Math.log(1 - Math.random())) * Math.cos(2 * Math.PI * Math.random()); }
+function enEscala(x) {
+  let mejor = 0, d = 99;
+  for (let o = -12; o <= 24; o += 12) for (const g of RE) { const v = g + o; if (Math.abs(v - x) < d) { d = Math.abs(v - x); mejor = v; } }
+  return mejor;
+}
+function semilla() {                  // la primera vez, cualquier cosa: saltos y alturas sin escala
+  melodia = Array.from({ length: 8 }, () => -2 + Math.random() * 13);
+  generacion = 0;
+}
+function transmitir() {               // lo que oye el siguiente y canta de memoria
+  if (generacion >= 12) { semilla(); return; }
+  const media = melodia.reduce((a, b) => a + b, 0) / 8;
+  const sigma = Math.max(0.08, 0.38 - 0.04 * generacion);
+  const nueva = melodia.map((m, i) => {
+    const vecino = i === 0 ? melodia[1] : i === 7 ? melodia[6] : (melodia[i - 1] + melodia[i + 1]) / 2;
+    const arco = media + 3.5 * (Math.sin(Math.PI * (i + 0.5) / 8) - 0.637);
+    let v = m + 0.22 * (vecino - m) + 0.12 * (arco - m) + 0.45 * (enEscala(m) - m) + sigma * gauss();
+    return v + 0.15 * (4 - media);
+  });
+  if (mutar) { const i = Math.floor(Math.random() * 8); nueva[i] += (Math.random() < 0.5 ? -1 : 1) * (2 + Math.random() * 2); mutar = false; }
+  melodia = nueva.map(v => Math.max(-3, Math.min(12, v)));
+  generacion++;
+}
+
+function makeReverbIR(ac, seconds = 4.5, decay = 2.6) {
+  const len = Math.floor(ac.sampleRate * seconds);
+  const buf = ac.createBuffer(2, len, ac.sampleRate);
+  for (let ch = 0; ch < 2; ch++) {
+    const d = buf.getChannelData(ch);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+  }
+  return buf;
+}
+
+function cantar(t0) {
+  const v = VOCES[generacion % VOCES.length];
+  const madurez = Math.min(1, generacion / 6);
+  const src = ctx.createOscillator(); src.type = 'sawtooth';
+  const vib = ctx.createOscillator(); vib.frequency.value = 4.8 + Math.random() * 0.8;
+  const vibG = ctx.createGain(); vibG.gain.value = 14;            // vibrato, en cents
+  vib.connect(vibG); vibG.connect(src.detune);
+  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2800;
+  src.connect(lp);
+  const env = ctx.createGain(); env.gain.value = 0;
+  [[v.F[0], 5, 1.0], [v.F[1], 8, 0.42], [v.F[2], 12, 0.14]].forEach(([f, q, g]) => {
+    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = q;
+    const gg = ctx.createGain(); gg.gain.value = g;
+    lp.connect(bp); bp.connect(gg); gg.connect(env);
+  });
+  const p = ctx.createStereoPanner(); p.pan.value = v.pan;
+  env.connect(p); p.connect(seco); p.connect(sala);
+  const deriva = (1 - madurez) * 0.25;                          // al principio, la voz se arrastra entre notas
+  const desde = Math.max(t0, ctx.currentTime);
+  melodia.forEach((m, i) => {
+    const t = t0 + 2 * i + 0.5;
+    const f = v.base * Math.pow(2, m / 12);
+    if (i === 0) src.frequency.setValueAtTime(f, desde);
+    if (t < ctx.currentTime + 0.05) return;            // al primer toque, la vuelta ya empezada se canta desde donde va
+    src.frequency.setTargetAtTime(f, t - 0.06, 0.04 + deriva * 0.4);
+    env.gain.setTargetAtTime(1, t, 0.07);
+    env.gain.setTargetAtTime(0, t + 1.25, 0.12);
+  });
+  src.start(desde); vib.start(desde);
+  src.stop(t0 + 17); vib.stop(t0 + 17);
+}
+
+// La vuelta del sonido sigue a la de las palabras visibles
+const palabra0 = document.querySelector('.word-emergence');
+function faseVisible() {
+  if (reduce) return ((performance.now() / 1000) % VUELTA);
+  const a = palabra0.getAnimations()[0];
+  return a && a.currentTime != null ? (a.currentTime / 1000) % VUELTA : ((performance.now() / 1000) % VUELTA);
+}
+
+function startAudio() {
+  if (ctx) return;
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (ctx.state === 'suspended') ctx.resume();
+  master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+  master.gain.setValueAtTime(0, ctx.currentTime);
+  master.gain.linearRampToValueAtTime(0.22, ctx.currentTime + 6);
+  seco = ctx.createGain(); seco.gain.value = 0.55; seco.connect(master);
+  sala = ctx.createGain(); sala.gain.value = 0.5;
+  const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+  sala.connect(conv); conv.connect(master);
+  semilla();
+  // La vuelta del sonido coincide con la de las palabras que se ven
+  let t0 = ctx.currentTime - faseVisible();
+  const programar = () => { cantar(t0); const espera = (t0 - ctx.currentTime + VUELTA - 1.2) * 1000; t0 += VUELTA; setTimeout(() => { transmitir(); programar(); }, espera); };
+  programar();
+}
+
+// Interactividad - Toque crea cascada de signos
+let ultimoToque = 0, toques = 0;
+window.addEventListener('pointerdown', (e) => {
+  if (e.target.closest('.infinito')) return;
+  startAudio();
   const ahora = Date.now();
-  if (ahora - ultimoToque < 420) { revelar(); ultimoToque = 0; } else { ultimoToque = ahora; }
+  if (ahora - ultimoToque < 420) { revelar(); ultimoToque = 0; return; }
+  ultimoToque = ahora;
+  mutar = true;
+  if (++toques >= 3) invitacion.classList.add('oculto');
   const rect = manuscript.getBoundingClientRect();
+  if (reduce || e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) return;
   const x = ((e.clientX - rect.left) / rect.width) * 100;
   const y = ((e.clientY - rect.top) / rect.height) * 100;
-  
+
   const words = ['∞', '○', '◇', '△', '☆', '▽', '□', '●'];
-  
+
   for(let i = 0; i < 8; i++) {
     setTimeout(() => {
       const word = document.createElement('div');
@@ -587,36 +749,34 @@ manuscript.addEventListener('click', (e) => {
       setTimeout(() => word.remove(), 3000);
     }, i * 150);
   }
-  
+
   // Crear explosión de chispas
   for(let i = 0; i < 16; i++) {
     setTimeout(() => {
       const spark = document.createElement('div');
       spark.className = 'creative-spark';
-      
       const angle = (i / 16) * Math.PI * 2;
-      const distance = 80 + Math.random() * 120;
+      const distance = (80 + Math.random() * 120) * esc();
       const sx = Math.cos(angle) * distance;
       const sy = Math.sin(angle) * distance;
-      
       spark.style.cssText = `
         left: ${x}%;
         top: ${y}%;
         --sx: ${sx}px;
         --sy: ${sy}px;
+        animation: spark-dance 7s ease-in-out forwards;
       `;
-      
       manuscript.appendChild(spark);
       setTimeout(() => spark.remove(), 7000);
     }, i * 80);
   }
-  
+
   // Crear firma del vacío temporal
   const voidSig = document.createElement('div');
   voidSig.className = 'void-signature';
   voidSig.textContent = 'obra pura';
   voidSig.style.cssText = `
-    left: ${x}%;
+    left: ${Math.min(x, 62)}%;
     top: ${y}%;
     animation: void-sign 5s ease-out forwards;
     font-size: 1.2em;
@@ -625,33 +785,44 @@ manuscript.addEventListener('click', (e) => {
   setTimeout(() => voidSig.remove(), 5000);
 });
 
-// Hover crea flujo de tinta sutil
+// Con el ratón, un flujo de tinta sutil
 let lastHover = 0;
-manuscript.addEventListener('mousemove', (e) => {
+manuscript.addEventListener('pointermove', (e) => {
+  if (reduce || e.pointerType !== 'mouse') return;
   const now = Date.now();
   if(now - lastHover < 500) return;
   lastHover = now;
-  
   const rect = manuscript.getBoundingClientRect();
   const x = ((e.clientX - rect.left) / rect.width) * 100;
-  
   const ink = document.createElement('div');
   ink.className = 'ink-flow';
   ink.style.cssText = `
     left: ${x}%;
     top: 0;
-    --distance: 200px;
+    --distance: ${200 * esc()}px;
     animation: ink-drip 4s ease-out forwards;
   `;
-  
   manuscript.appendChild(ink);
   setTimeout(() => ink.remove(), 4000);
 });
 
 // Doble toque revela el secreto
 function revelar() {
+  invitacion.classList.add('oculto');
+  if (ctx) {                                   // las voces que pasaron, juntas: la tónica y su quinta
+    const t = ctx.currentTime + 0.02;
+    [146.83, 220.0, 293.66].forEach((f, i) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const g = ctx.createGain(); g.gain.value = 0;
+      o.connect(g); g.connect(sala); g.connect(seco);
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.03, t + 1.6);
+      g.gain.exponentialRampToValueAtTime(0.0003, t + 8);
+      o.start(t); o.stop(t + 8.1);
+    });
+  }
   const revelation = document.createElement('div');
-  revelation.className = 'word-emergence';
+  revelation.className = 'word-emergence revelacion';
   revelation.textContent = "LA OBRA ES EL ÚNICO AUTOR";
   revelation.style.cssText = `
     left: 6%;
@@ -663,8 +834,8 @@ function revelar() {
     color: rgba(255,255,255,0.9);
     text-shadow: 0 0 30px rgba(150,100,255,0.8);
     z-index: 1000;
+    ${reduce ? 'opacity: 0.95;' : ''}
   `;
-  
   manuscript.appendChild(revelation);
   setTimeout(() => revelation.remove(), 8000);
 }
