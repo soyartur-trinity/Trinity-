@@ -2,518 +2,485 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Libro 12 - Nodo 1: El Silencio Elocuente</title>
+<!-- Portal 78. Saneado en noviembre de 2026 con imagen y sonido propios:
+     dos perfiles enfrentados y, entre ellos, la copa que forma el silencio (figura y fondo de Rubin).
+     Frases, paradoja, paleta (elevada a plata) y símbolo (· · ·) del original. -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: radial-gradient(ellipse at center, #050508 0%, #000000 70%);
-  overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.silence-field {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.eloquent-void {
-  position: relative;
-  width: 650px;
-  height: 650px;
-}
-
-.sound-wave {
-  position: absolute;
-  width: 300px;
-  height: 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(180,180,220,0.6),
-    transparent
-  );
-  animation: wave-silent 12s ease-in-out infinite;
-  filter: blur(1px);
-  transform-origin: center;
-}
-
-@keyframes wave-silent {
-  0%, 100% {
-    transform: scaleX(0) translateY(0);
-    opacity: 0;
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(ellipse at center, #0d0e15 0%, #050508 55%, #000 82%);
+    background-color:#000;
+    color:#fff;
+    font-family:'Georgia', serif;
+    overflow:hidden;
+    height:100vh; height:100dvh;
+    display:flex; align-items:center; justify-content:center;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
   }
-  50% {
-    transform: scaleX(1) translateY(var(--wave-y));
-    opacity: 0.8;
-  }
-}
 
-.unspoken-word {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle,
-    rgba(200,200,240,0.25),
-    rgba(150,150,200,0.15),
-    transparent
-  );
-  border-radius: 50%;
-  animation: word-breathe 14s ease-in-out infinite;
-  filter: blur(20px);
-  border: 1px solid rgba(200,200,240,0.15);
-}
+  /* Título y subtítulo en un mismo bloque: si el título ocupa dos líneas, nada se pisa */
+  .cabecera {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top, 0px) + 6vh);
+    transform:translateX(-50%);
+    width:max-content; max-width:90vw; text-align:center;
+    z-index:5; pointer-events:none;
+  }
+  .titulo {
+    font-size: clamp(15px, 4.2vw, 22px);
+    letter-spacing:0.32em;
+    line-height:1.5;
+    color: rgba(228,231,242,0.9);
+    text-shadow: 0 0 26px rgba(190,195,230,0.42);
+  }
+  .subtitulo {
+    margin-top:0.7em;
+    font-size: clamp(11px, 2.8vw, 13px);
+    letter-spacing:0.28em; font-style:italic;
+    color: rgba(200,203,226,0.5);
+  }
 
-@keyframes word-breathe {
-  0%, 100% {
-    transform: scale(0.7) translate(0, 0);
-    opacity: 0.4;
+  /* El campo: la copa y los dos rostros, en proporción a la pantalla */
+  .campo {
+    position:relative;
+    height:min(52vh, 560px);
+    aspect-ratio:3 / 4;
+    max-width:86vw;
+    margin-top:-5vh;
   }
-  50% {
-    transform: scale(1.4) translate(var(--wx), var(--wy));
-    opacity: 0.8;
-  }
-}
+  .campo svg { display:block; width:100%; height:100%; overflow:visible; }
 
-.pause-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(200,200,240,0.7);
-  animation: particle-pause 10s ease-in-out infinite;
-}
+  .resplandor {
+    position:absolute; inset:6%;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(200,205,235,0.10), transparent 66%);
+    animation: respira 19s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+  @keyframes respira {
+    0%,100% { transform:scale(0.9);  opacity:0.5; }
+    50%     { transform:scale(1.14); opacity:0.9; }
+  }
 
-@keyframes particle-pause {
-  0%, 100% {
-    transform: translate(0, 0) scale(0);
-    opacity: 0;
+  /* La conversación dura 24 s: hablan los rostros, después habla el silencio */
+  .rostros { animation: rostros 24s ease-in-out infinite; }
+  @keyframes rostros {
+    0%,30%  { opacity:0.95; }
+    46%,84% { opacity:0.2; }
+    100%    { opacity:0.95; }
   }
-  20% {
-    opacity: 1;
+  .copa { animation: copa 24s ease-in-out infinite; }
+  @keyframes copa {
+    0%,30%  { opacity:0.16; }
+    50%,82% { opacity:1; }
+    100%    { opacity:0.16; }
   }
-  50% {
-    transform: translate(var(--px), var(--py)) scale(1);
-    opacity: 0.9;
-  }
-  80% {
-    opacity: 0.5;
-  }
-}
 
-.empty-space {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  border: 1px solid rgba(200,200,240,0.2);
-  border-radius: 50%;
-  animation: space-expand 16s ease-in-out infinite;
-  opacity: 0;
-}
-
-@keyframes space-expand {
-  0%, 100% {
-    transform: scale(0.5) rotate(0deg);
-    opacity: 0;
+  .alma {
+    transform-box: fill-box; transform-origin: center;
+    animation: alma 11s ease-in-out infinite;
   }
-  50% {
-    transform: scale(2.5) rotate(180deg);
-    opacity: 0.6;
+  @keyframes alma {
+    0%,100% { transform:scale(0.82); opacity:0.55; }
+    50%     { transform:scale(1.1);  opacity:1; }
   }
-}
 
-.resonance-ring {
-  position: absolute;
-  width: 350px;
-  height: 350px;
-  border: 2px solid rgba(180,180,220,0.2);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: ring-resonate 18s ease-in-out infinite;
-}
-
-@keyframes ring-resonate {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0.3;
+  /* El eco de la sala: anillos muy tenues que se abren desde la copa cuando las voces callan */
+  .eco {
+    fill:none; stroke:rgba(196,200,236,0.5); stroke-width:0.8;
+    transform-box: fill-box; transform-origin: center;
+    opacity:0;
+    animation: eco 24s ease-out infinite;
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.5);
-    opacity: 0.7;
+  @keyframes eco {
+    0%, 22% { transform:scale(0.45); opacity:0; }
+    30%     { opacity:0.38; }
+    62%     { transform:scale(1.35); opacity:0; }
+    100%    { transform:scale(1.35); opacity:0; }
   }
-}
 
-.meaning-wisp {
-  position: absolute;
-  width: 3px;
-  height: 70px;
-  background: linear-gradient(to bottom,
-    rgba(200,200,240,0.7),
-    rgba(150,150,200,0.5),
-    transparent
-  );
-  animation: wisp-float 11s ease-in-out infinite;
-  filter: blur(1.5px);
-}
-
-@keyframes wisp-float {
-  0%, 100% {
-    transform: translateY(0) translateX(0) rotate(0deg) scaleY(0);
-    opacity: 0;
+  /* El borde es uno solo: pertenece a la vez a los rostros y a la copa */
+  .halo  { fill:none; stroke:rgba(200,204,236,0.12); stroke-width:6; }
+  .linea { fill:none; stroke:rgba(230,233,246,0.8); stroke-width:1.15; }
+  .bordes { animation: bordes 13s ease-in-out infinite; }
+  @keyframes bordes {
+    0%,100% { opacity:0.7; }
+    50%     { opacity:1; }
   }
-  20% {
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(var(--wy)) translateX(var(--wx)) rotate(var(--wr)) scaleY(1);
-    opacity: 0.8;
-  }
-  80% {
-    opacity: 0.4;
-  }
-}
 
-.title {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2.1em;
-  letter-spacing: 0.45em;
-  opacity: 0.9;
-  text-shadow: 0 0 30px rgba(180,180,220,0.5);
-  font-weight: 600;
-  text-align: center;
-  z-index: 100;
-}
-
-.subtitle {
-  position: fixed;
-  top: 115px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1em;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  font-style: italic;
-  z-index: 100;
-}
-
-.central-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.6em;
-  letter-spacing: 0.5em;
-  text-align: center;
-  opacity: 0;
-  animation: text-whisper 14s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255,255,255,0.3);
-  line-height: 2.5;
-  z-index: 10;
-}
-
-@keyframes text-whisper {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
+  /* Lo que se eleva en la copa mientras nadie habla */
+  .mota {
+    fill: rgba(240,242,252,0.95);
+    opacity:0;
+    animation: mota 17s linear infinite;
   }
-  20%, 80% {
-    opacity: 0.7;
-    transform: translate(-50%, -50%) scale(1);
+  @keyframes mota {
+    0%   { transform:translate(0, 0);         opacity:0; }
+    12%  {                                   opacity:0.9; }
+    30%  { transform:translate(4px, -96px); }
+    55%  { transform:translate(-4px, -180px); opacity:0.75; }
+    80%  { transform:translate(3px, -262px); }
+    100% { transform:translate(0, -330px);    opacity:0; }
   }
-}
 
-.contemplation {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  text-align: center;
-  max-width: 780px;
-  line-height: 1.9;
-  padding: 0 40px;
-  font-style: italic;
-  z-index: 100;
-}
-
-.silence-glow {
-  position: absolute;
-  width: 450px;
-  height: 450px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(180,180,220,0.08), transparent);
-  border-radius: 50%;
-  animation: glow-silence 19s ease-in-out infinite;
-  filter: blur(80px);
-}
-
-@keyframes glow-silence {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.85);
-    opacity: 0.3;
+  /* Las voces: unos arcos salen de los labios y se apagan antes de llegar al centro */
+  .arco {
+    fill:none; stroke:rgba(232,235,248,0.85); stroke-width:1.1; stroke-linecap:round;
+    transform-box: fill-box; transform-origin: center;
+    opacity:0;
+    animation: habla 24s ease-out infinite;
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.6);
-    opacity: 0.5;
+  @keyframes habla {
+    0%       { transform:translateX(0) scale(0.6);    opacity:0; }
+    1.5%     { opacity:0.9; }
+    9%, 100% { transform:translateX(13px) scale(1.15); opacity:0; }
   }
-}
+
+  .destello { opacity:0; }
+  .destello.vivo { animation: destello 3.6s ease-out; }
+  @keyframes destello {
+    0%   { opacity:0; }
+    14%  { opacity:0.85; }
+    100% { opacity:0; }
+  }
+
+  /* El símbolo del portal: los puntos suspensivos */
+  .puntos {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 19vh + 5em);
+    transform:translateX(-50%);
+    font-size: clamp(14px, 3.6vw, 18px);
+    letter-spacing:0.6em; padding-left:0.6em;
+    color: rgba(220,224,242,0.7);
+    animation: puntos 8s ease-in-out infinite;
+  }
+  @keyframes puntos { 0%,100% { opacity:0.35; } 50% { opacity:0.8; } }
+
+  /* Las frases: cuatro, cada una legible casi diez segundos dentro de un ciclo de cuarenta */
+  .frases {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 19vh);
+    transform:translateX(-50%);
+    width:88vw; max-width:560px; height:4.4em;
+    text-align:center;
+  }
+  .frase {
+    position:absolute; left:0; right:0; top:0;
+    font-size: clamp(15px, 4.1vw, 20px);
+    line-height:1.55;
+    font-style:italic;
+    color: rgba(236,238,248,0.93);
+    text-shadow: 0 0 18px rgba(190,195,232,0.38);
+    opacity:0;
+    animation: frase 40s ease-in-out infinite;
+    will-change: opacity, transform;
+  }
+  .frase.f2 { animation-delay:10s; }
+  .frase.f3 { animation-delay:20s; }
+  .frase.f4 { animation-delay:30s; }
+  @keyframes frase {
+    0%    { opacity:0; transform:translateY(6px); }
+    3.5%  { opacity:1; transform:translateY(0); }
+    22%   { opacity:1; transform:translateY(0); }
+    25%   { opacity:0; transform:translateY(-4px); }
+    100%  { opacity:0; transform:translateY(-4px); }
+  }
+
+  .punto-toque {
+    position:fixed;
+    width:9px; height:9px; margin:-4.5px 0 0 -4.5px;
+    border-radius:50%;
+    background: rgba(240,242,252,1);
+    box-shadow: 0 0 18px rgba(200,205,240,0.9);
+    pointer-events:none;
+    animation: punto 3.4s ease-out forwards;
+    will-change: transform, opacity;
+  }
+  @keyframes punto {
+    0%   { transform:scale(0.2); opacity:0; }
+    10%  { transform:scale(1.3); opacity:1; }
+    100% { transform:scale(0.5); opacity:0; }
+  }
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform:translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(240,242,252,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
+  }
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(205,208,235,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(240,242,252,0.95); text-shadow:0 0 18px rgba(200,205,240,0.6); outline:none; }
+
+  @media (max-width: 480px) {
+    .titulo { letter-spacing:0.22em; }
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh); }
+    .puntos { bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh + 5em); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; }
+    .rostros { opacity:0.7; }
+    .copa { opacity:0.75; }
+    .motas, .voces, .ecos { display:none; }
+    .puntos { opacity:0.6; }
+    .frases { height:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 11vh); }
+    .frase { position:static; opacity:0.92; margin-bottom:0.45em; font-size: clamp(13px, 3.6vw, 18px); }
+    .puntos { bottom:auto; top:calc(50% - 5vh + min(26vh, 280px) + 0.5em); }
+    .hint { opacity:0.8; bottom:calc(env(safe-area-inset-bottom, 0px) + 24px); }
+  }
 </style>
 </head>
 <body>
-
-<div class="title">EL SILENCIO ELOCUENTE</div>
-<div class="subtitle">Libro 12 - Nodo 1</div>
-
-<div class="silence-field">
-  <div class="eloquent-void">
-    <!-- Resplandor del silencio -->
-    <div class="silence-glow"></div>
-    
-    <!-- Anillos de resonancia -->
-    <div class="resonance-ring" style="animation-delay: 0s;"></div>
-    <div class="resonance-ring" style="width: 280px; height: 280px; animation-delay: 6s;"></div>
-    <div class="resonance-ring" style="width: 420px; height: 420px; animation-delay: 12s;"></div>
-    
-    <!-- Palabras no dichas -->
-    <div class="unspoken-word" style="top: 25%; left: 30%; --wx: 40px; --wy: -35px; animation-delay: 0s;"></div>
-    <div class="unspoken-word" style="top: 65%; left: 70%; --wx: -35px; --wy: 40px; animation-delay: 4.7s;"></div>
-    <div class="unspoken-word" style="top: 45%; left: 15%; --wx: 50px; --wy: 30px; animation-delay: 9.3s;"></div>
-    
-    <!-- Espacios vacíos -->
-    <div class="empty-space" style="top: 35%; left: 65%; animation-delay: 2s;"></div>
-    <div class="empty-space" style="top: 70%; left: 35%; animation-delay: 8s;"></div>
-    
-    <!-- Texto central -->
-    <div class="central-text" style="animation-delay: 3s;">
-      · · ·<br><br>
-      Lo no dicho<br>
-      dice más<br><br>
-      · · ·
-    </div>
+  <div class="cabecera">
+    <div class="titulo">EL SILENCIO ELOCUENTE</div>
+    <div class="subtitulo">Libro 12 - Nodo 1</div>
   </div>
-</div>
 
-<div class="contemplation">
-  Las pausas hablan · Los espacios significan · El silencio comunica<br>
-  Lo más profundo nunca necesitó palabras para ser comprendido
-</div>
+  <div class="campo" id="campo">
+    <div class="resplandor"></div>
+    <svg viewBox="50 0 300 400" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <defs>
+        <linearGradient id="luzRostro" gradientUnits="userSpaceOnUse" x1="196" y1="0" x2="30" y2="0">
+          <stop offset="0"    stop-color="rgb(208,212,236)" stop-opacity="0.34"/>
+          <stop offset="0.55" stop-color="rgb(170,172,215)" stop-opacity="0.07"/>
+          <stop offset="1"    stop-color="rgb(150,150,200)" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="luzCopa" gradientUnits="userSpaceOnUse" cx="200" cy="225" r="200">
+          <stop offset="0"   stop-color="rgb(244,246,252)" stop-opacity="0.5"/>
+          <stop offset="0.5" stop-color="rgb(214,218,238)" stop-opacity="0.24"/>
+          <stop offset="1"   stop-color="rgb(180,180,220)" stop-opacity="0.05"/>
+        </radialGradient>
+        <radialGradient id="luzAlma" gradientUnits="objectBoundingBox" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0"   stop-color="rgb(255,255,255)" stop-opacity="0.55"/>
+          <stop offset="1"   stop-color="rgb(214,218,238)" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="vela" cx="0.5" cy="0.54" r="0.5">
+          <stop offset="0"    stop-color="#fff" stop-opacity="1"/>
+          <stop offset="0.5"  stop-color="#fff" stop-opacity="1"/>
+          <stop offset="0.9"  stop-color="#fff" stop-opacity="0"/>
+        </radialGradient>
+        <mask id="desvanece" maskUnits="userSpaceOnUse" x="40" y="-6" width="320" height="412">
+          <rect x="40" y="-6" width="320" height="412" fill="url(#vela)"/>
+        </mask>
+        <clipPath id="dentro"><path d="M141,-24 C142.5,-16.7 146.8,6.0 150,20 C153.2,34.0 157.3,47.3 160,60 C162.7,72.7 165.2,87.3 166,96 C166.8,104.7 166.7,107.0 165,112 C163.3,117.0 157.2,121.3 156,126 C154.8,130.7 155.3,134.3 158,140 C160.7,145.7 166.8,153.7 172,160 C177.2,166.3 186.7,174.0 189,178 C191.3,182.0 188.7,182.0 186,184 C183.3,186.0 175.7,187.3 173,190 C170.3,192.7 168.8,196.5 170,200 C171.2,203.5 179.2,207.7 180,211 C180.8,214.3 175.2,216.7 175,220 C174.8,223.3 179.7,227.2 179,231 C178.3,234.8 173.2,239.8 171,243 C168.8,246.2 165.5,246.2 166,250 C166.5,253.8 172.8,261.0 174,266 C175.2,271.0 175.3,275.7 173,280 C170.7,284.3 163.8,286.7 160,292 C156.2,297.3 152.3,304.0 150,312 C147.7,320.0 147.0,328.7 146,340 C145.0,351.3 144.5,366.0 144,380 C143.5,394.0 143.2,416.7 143,424 L257,424 C256.8,416.7 256.5,394.0 256,380 C255.5,366.0 255.0,351.3 254,340 C253.0,328.7 252.3,320.0 250,312 C247.7,304.0 243.8,297.3 240,292 C236.2,286.7 229.3,284.3 227,280 C224.7,275.7 224.8,271.0 226,266 C227.2,261.0 233.5,253.8 234,250 C234.5,246.2 231.2,246.2 229,243 C226.8,239.8 221.7,234.8 221,231 C220.3,227.2 225.2,223.3 225,220 C224.8,216.7 219.2,214.3 220,211 C220.8,207.7 228.8,203.5 230,200 C231.2,196.5 229.7,192.7 227,190 C224.3,187.3 216.7,186.0 214,184 C211.3,182.0 208.7,182.0 211,178 C213.3,174.0 222.8,166.3 228,160 C233.2,153.7 239.3,145.7 242,140 C244.7,134.3 245.2,130.7 244,126 C242.8,121.3 236.7,117.0 235,112 C233.3,107.0 233.2,104.7 234,96 C234.8,87.3 237.3,72.7 240,60 C242.7,47.3 246.8,34.0 250,20 C253.2,6.0 257.5,-16.7 259,-24 Z"/></clipPath>
+      </defs>
+
+      <!-- El eco: la sala responde después de que los dos hablaron -->
+      <g class="ecos">
+        <circle class="eco" cx="200" cy="222" r="120" style="animation-delay:0s"/>
+        <circle class="eco" cx="200" cy="222" r="120" style="animation-delay:1.6s"/>
+        <circle class="eco" cx="200" cy="222" r="120" style="animation-delay:3.2s"/>
+      </g>
+
+      <g mask="url(#desvanece)">
+        <!-- La copa: el espacio entre los dos -->
+        <g class="copa">
+          <path d="M141,-24 C142.5,-16.7 146.8,6.0 150,20 C153.2,34.0 157.3,47.3 160,60 C162.7,72.7 165.2,87.3 166,96 C166.8,104.7 166.7,107.0 165,112 C163.3,117.0 157.2,121.3 156,126 C154.8,130.7 155.3,134.3 158,140 C160.7,145.7 166.8,153.7 172,160 C177.2,166.3 186.7,174.0 189,178 C191.3,182.0 188.7,182.0 186,184 C183.3,186.0 175.7,187.3 173,190 C170.3,192.7 168.8,196.5 170,200 C171.2,203.5 179.2,207.7 180,211 C180.8,214.3 175.2,216.7 175,220 C174.8,223.3 179.7,227.2 179,231 C178.3,234.8 173.2,239.8 171,243 C168.8,246.2 165.5,246.2 166,250 C166.5,253.8 172.8,261.0 174,266 C175.2,271.0 175.3,275.7 173,280 C170.7,284.3 163.8,286.7 160,292 C156.2,297.3 152.3,304.0 150,312 C147.7,320.0 147.0,328.7 146,340 C145.0,351.3 144.5,366.0 144,380 C143.5,394.0 143.2,416.7 143,424 L257,424 C256.8,416.7 256.5,394.0 256,380 C255.5,366.0 255.0,351.3 254,340 C253.0,328.7 252.3,320.0 250,312 C247.7,304.0 243.8,297.3 240,292 C236.2,286.7 229.3,284.3 227,280 C224.7,275.7 224.8,271.0 226,266 C227.2,261.0 233.5,253.8 234,250 C234.5,246.2 231.2,246.2 229,243 C226.8,239.8 221.7,234.8 221,231 C220.3,227.2 225.2,223.3 225,220 C224.8,216.7 219.2,214.3 220,211 C220.8,207.7 228.8,203.5 230,200 C231.2,196.5 229.7,192.7 227,190 C224.3,187.3 216.7,186.0 214,184 C211.3,182.0 208.7,182.0 211,178 C213.3,174.0 222.8,166.3 228,160 C233.2,153.7 239.3,145.7 242,140 C244.7,134.3 245.2,130.7 244,126 C242.8,121.3 236.7,117.0 235,112 C233.3,107.0 233.2,104.7 234,96 C234.8,87.3 237.3,72.7 240,60 C242.7,47.3 246.8,34.0 250,20 C253.2,6.0 257.5,-16.7 259,-24 Z" fill="url(#luzCopa)"/>
+          <g clip-path="url(#dentro)">
+            <ellipse class="alma" cx="200" cy="232" rx="60" ry="150" fill="url(#luzAlma)"/>
+            <g class="motas" id="motas"></g>
+          </g>
+        </g>
+        <g class="destello" id="destello"><path d="M141,-24 C142.5,-16.7 146.8,6.0 150,20 C153.2,34.0 157.3,47.3 160,60 C162.7,72.7 165.2,87.3 166,96 C166.8,104.7 166.7,107.0 165,112 C163.3,117.0 157.2,121.3 156,126 C154.8,130.7 155.3,134.3 158,140 C160.7,145.7 166.8,153.7 172,160 C177.2,166.3 186.7,174.0 189,178 C191.3,182.0 188.7,182.0 186,184 C183.3,186.0 175.7,187.3 173,190 C170.3,192.7 168.8,196.5 170,200 C171.2,203.5 179.2,207.7 180,211 C180.8,214.3 175.2,216.7 175,220 C174.8,223.3 179.7,227.2 179,231 C178.3,234.8 173.2,239.8 171,243 C168.8,246.2 165.5,246.2 166,250 C166.5,253.8 172.8,261.0 174,266 C175.2,271.0 175.3,275.7 173,280 C170.7,284.3 163.8,286.7 160,292 C156.2,297.3 152.3,304.0 150,312 C147.7,320.0 147.0,328.7 146,340 C145.0,351.3 144.5,366.0 144,380 C143.5,394.0 143.2,416.7 143,424 L257,424 C256.8,416.7 256.5,394.0 256,380 C255.5,366.0 255.0,351.3 254,340 C253.0,328.7 252.3,320.0 250,312 C247.7,304.0 243.8,297.3 240,292 C236.2,286.7 229.3,284.3 227,280 C224.7,275.7 224.8,271.0 226,266 C227.2,261.0 233.5,253.8 234,250 C234.5,246.2 231.2,246.2 229,243 C226.8,239.8 221.7,234.8 221,231 C220.3,227.2 225.2,223.3 225,220 C224.8,216.7 219.2,214.3 220,211 C220.8,207.7 228.8,203.5 230,200 C231.2,196.5 229.7,192.7 227,190 C224.3,187.3 216.7,186.0 214,184 C211.3,182.0 208.7,182.0 211,178 C213.3,174.0 222.8,166.3 228,160 C233.2,153.7 239.3,145.7 242,140 C244.7,134.3 245.2,130.7 244,126 C242.8,121.3 236.7,117.0 235,112 C233.3,107.0 233.2,104.7 234,96 C234.8,87.3 237.3,72.7 240,60 C242.7,47.3 246.8,34.0 250,20 C253.2,6.0 257.5,-16.7 259,-24 Z" fill="rgba(246,247,253,0.32)"/></g>
+
+        <!-- Los dos rostros, a punto de hablar -->
+        <g class="rostros">
+          <path d="M141,-24 C142.5,-16.7 146.8,6.0 150,20 C153.2,34.0 157.3,47.3 160,60 C162.7,72.7 165.2,87.3 166,96 C166.8,104.7 166.7,107.0 165,112 C163.3,117.0 157.2,121.3 156,126 C154.8,130.7 155.3,134.3 158,140 C160.7,145.7 166.8,153.7 172,160 C177.2,166.3 186.7,174.0 189,178 C191.3,182.0 188.7,182.0 186,184 C183.3,186.0 175.7,187.3 173,190 C170.3,192.7 168.8,196.5 170,200 C171.2,203.5 179.2,207.7 180,211 C180.8,214.3 175.2,216.7 175,220 C174.8,223.3 179.7,227.2 179,231 C178.3,234.8 173.2,239.8 171,243 C168.8,246.2 165.5,246.2 166,250 C166.5,253.8 172.8,261.0 174,266 C175.2,271.0 175.3,275.7 173,280 C170.7,284.3 163.8,286.7 160,292 C156.2,297.3 152.3,304.0 150,312 C147.7,320.0 147.0,328.7 146,340 C145.0,351.3 144.5,366.0 144,380 C143.5,394.0 143.2,416.7 143,424 L0,424 L0,-24 Z" fill="url(#luzRostro)"/>
+          <g transform="translate(400,0) scale(-1,1)"><path d="M141,-24 C142.5,-16.7 146.8,6.0 150,20 C153.2,34.0 157.3,47.3 160,60 C162.7,72.7 165.2,87.3 166,96 C166.8,104.7 166.7,107.0 165,112 C163.3,117.0 157.2,121.3 156,126 C154.8,130.7 155.3,134.3 158,140 C160.7,145.7 166.8,153.7 172,160 C177.2,166.3 186.7,174.0 189,178 C191.3,182.0 188.7,182.0 186,184 C183.3,186.0 175.7,187.3 173,190 C170.3,192.7 168.8,196.5 170,200 C171.2,203.5 179.2,207.7 180,211 C180.8,214.3 175.2,216.7 175,220 C174.8,223.3 179.7,227.2 179,231 C178.3,234.8 173.2,239.8 171,243 C168.8,246.2 165.5,246.2 166,250 C166.5,253.8 172.8,261.0 174,266 C175.2,271.0 175.3,275.7 173,280 C170.7,284.3 163.8,286.7 160,292 C156.2,297.3 152.3,304.0 150,312 C147.7,320.0 147.0,328.7 146,340 C145.0,351.3 144.5,366.0 144,380 C143.5,394.0 143.2,416.7 143,424 L0,424 L0,-24 Z" fill="url(#luzRostro)"/></g>
+        </g>
+
+        <!-- El borde compartido -->
+        <g class="bordes">
+          <path class="halo" d="M141,-24 C142.5,-16.7 146.8,6.0 150,20 C153.2,34.0 157.3,47.3 160,60 C162.7,72.7 165.2,87.3 166,96 C166.8,104.7 166.7,107.0 165,112 C163.3,117.0 157.2,121.3 156,126 C154.8,130.7 155.3,134.3 158,140 C160.7,145.7 166.8,153.7 172,160 C177.2,166.3 186.7,174.0 189,178 C191.3,182.0 188.7,182.0 186,184 C183.3,186.0 175.7,187.3 173,190 C170.3,192.7 168.8,196.5 170,200 C171.2,203.5 179.2,207.7 180,211 C180.8,214.3 175.2,216.7 175,220 C174.8,223.3 179.7,227.2 179,231 C178.3,234.8 173.2,239.8 171,243 C168.8,246.2 165.5,246.2 166,250 C166.5,253.8 172.8,261.0 174,266 C175.2,271.0 175.3,275.7 173,280 C170.7,284.3 163.8,286.7 160,292 C156.2,297.3 152.3,304.0 150,312 C147.7,320.0 147.0,328.7 146,340 C145.0,351.3 144.5,366.0 144,380 C143.5,394.0 143.2,416.7 143,424"/><path class="linea" d="M141,-24 C142.5,-16.7 146.8,6.0 150,20 C153.2,34.0 157.3,47.3 160,60 C162.7,72.7 165.2,87.3 166,96 C166.8,104.7 166.7,107.0 165,112 C163.3,117.0 157.2,121.3 156,126 C154.8,130.7 155.3,134.3 158,140 C160.7,145.7 166.8,153.7 172,160 C177.2,166.3 186.7,174.0 189,178 C191.3,182.0 188.7,182.0 186,184 C183.3,186.0 175.7,187.3 173,190 C170.3,192.7 168.8,196.5 170,200 C171.2,203.5 179.2,207.7 180,211 C180.8,214.3 175.2,216.7 175,220 C174.8,223.3 179.7,227.2 179,231 C178.3,234.8 173.2,239.8 171,243 C168.8,246.2 165.5,246.2 166,250 C166.5,253.8 172.8,261.0 174,266 C175.2,271.0 175.3,275.7 173,280 C170.7,284.3 163.8,286.7 160,292 C156.2,297.3 152.3,304.0 150,312 C147.7,320.0 147.0,328.7 146,340 C145.0,351.3 144.5,366.0 144,380 C143.5,394.0 143.2,416.7 143,424"/>
+          <g transform="translate(400,0) scale(-1,1)"><path class="halo" d="M141,-24 C142.5,-16.7 146.8,6.0 150,20 C153.2,34.0 157.3,47.3 160,60 C162.7,72.7 165.2,87.3 166,96 C166.8,104.7 166.7,107.0 165,112 C163.3,117.0 157.2,121.3 156,126 C154.8,130.7 155.3,134.3 158,140 C160.7,145.7 166.8,153.7 172,160 C177.2,166.3 186.7,174.0 189,178 C191.3,182.0 188.7,182.0 186,184 C183.3,186.0 175.7,187.3 173,190 C170.3,192.7 168.8,196.5 170,200 C171.2,203.5 179.2,207.7 180,211 C180.8,214.3 175.2,216.7 175,220 C174.8,223.3 179.7,227.2 179,231 C178.3,234.8 173.2,239.8 171,243 C168.8,246.2 165.5,246.2 166,250 C166.5,253.8 172.8,261.0 174,266 C175.2,271.0 175.3,275.7 173,280 C170.7,284.3 163.8,286.7 160,292 C156.2,297.3 152.3,304.0 150,312 C147.7,320.0 147.0,328.7 146,340 C145.0,351.3 144.5,366.0 144,380 C143.5,394.0 143.2,416.7 143,424"/><path class="linea" d="M141,-24 C142.5,-16.7 146.8,6.0 150,20 C153.2,34.0 157.3,47.3 160,60 C162.7,72.7 165.2,87.3 166,96 C166.8,104.7 166.7,107.0 165,112 C163.3,117.0 157.2,121.3 156,126 C154.8,130.7 155.3,134.3 158,140 C160.7,145.7 166.8,153.7 172,160 C177.2,166.3 186.7,174.0 189,178 C191.3,182.0 188.7,182.0 186,184 C183.3,186.0 175.7,187.3 173,190 C170.3,192.7 168.8,196.5 170,200 C171.2,203.5 179.2,207.7 180,211 C180.8,214.3 175.2,216.7 175,220 C174.8,223.3 179.7,227.2 179,231 C178.3,234.8 173.2,239.8 171,243 C168.8,246.2 165.5,246.2 166,250 C166.5,253.8 172.8,261.0 174,266 C175.2,271.0 175.3,275.7 173,280 C170.7,284.3 163.8,286.7 160,292 C156.2,297.3 152.3,304.0 150,312 C147.7,320.0 147.0,328.7 146,340 C145.0,351.3 144.5,366.0 144,380 C143.5,394.0 143.2,416.7 143,424"/></g>
+        </g>
+
+        <!-- Lo que cada uno empieza a decir -->
+        <g class="voces">
+          <g transform="translate(186,221)">
+            <path class="arco" d="M0,-9 Q5,0 0,9" style="animation-delay:0.2s"/>
+            <path class="arco" d="M0,-9 Q5,0 0,9" style="animation-delay:0.62s"/>
+            <path class="arco" d="M0,-9 Q5,0 0,9" style="animation-delay:1.04s"/>
+          </g>
+          <g transform="translate(400,0) scale(-1,1)"><g transform="translate(186,221)">
+            <path class="arco" d="M0,-9 Q5,0 0,9" style="animation-delay:4.2s"/>
+            <path class="arco" d="M0,-9 Q5,0 0,9" style="animation-delay:4.62s"/>
+            <path class="arco" d="M0,-9 Q5,0 0,9" style="animation-delay:5.04s"/>
+          </g></g>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="puntos" aria-hidden="true">· · ·</div>
+  <div class="frases" aria-live="off">
+    <p class="frase f1">Lo no dicho dice más</p>
+    <p class="frase f2">Las pausas hablan · Los espacios significan</p>
+    <p class="frase f3">El silencio comunica</p>
+    <p class="frase f4">Lo más profundo nunca necesitó palabras para ser comprendido</p>
+  </div>
+
+  <div class="hint" id="hint">( toca: escucha lo que queda )</div>
+
+  <a class="infinito" href="L_12-Nodo2.html" aria-label="Siguiente portal">∞</a>
 
 <script>
-const silence = document.querySelector('.eloquent-void');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const CONV = 24;                          // segundos de una conversación: dos voces y su silencio
+  const inicio = performance.now();
+  const SVG = 'http://www.w3.org/2000/svg';
 
-// Crear ondas sonoras del silencio
-function createSoundWave() {
-  const wave = document.createElement('div');
-  wave.className = 'sound-wave';
-  
-  const waveY = (Math.random() - 0.5) * 100;
-  
-  wave.style.cssText = `
-    left: 50%;
-    top: ${30 + Math.random() * 40}%;
-    transform: translateX(-50%);
-    --wave-y: ${waveY}px;
-    animation-delay: ${Math.random() * 6}s;
-  `;
-  
-  silence.appendChild(wave);
-  setTimeout(() => wave.remove(), 12000);
-}
-
-// Crear partículas de pausa
-function createPauseParticles() {
-  for(let i = 0; i < 16; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'pause-particle';
-      
-      const angle = (i / 16) * Math.PI * 2;
-      const distance = 80 + Math.random() * 120;
-      const px = Math.cos(angle) * distance;
-      const py = Math.sin(angle) * distance;
-      
-      particle.style.cssText = `
-        left: 50%;
-        top: 50%;
-        --px: ${px}px;
-        --py: ${py}px;
-        animation-delay: ${Math.random() * 4}s;
-      `;
-      
-      silence.appendChild(particle);
-      setTimeout(() => particle.remove(), 10000);
-    }, i * 90);
+  /* Las motas que suben por la copa, escalonadas para que siempre haya alguna en camino */
+  if (!reduce) {
+    const motas = document.getElementById('motas');
+    for (let i = 0; i < 9; i++) {
+      const c = document.createElementNS(SVG, 'circle');
+      c.setAttribute('class', 'mota');
+      c.setAttribute('cx', (200 + (Math.random() * 8 - 4)).toFixed(1));
+      c.setAttribute('cy', '372');
+      c.setAttribute('r', (1.1 + Math.random() * 0.9).toFixed(2));
+      c.style.animationDelay = (-i * 17 / 9).toFixed(2) + 's';
+      c.style.animationDuration = (15 + Math.random() * 5).toFixed(1) + 's';
+      motas.appendChild(c);
+    }
   }
-}
 
-// Crear wisps de significado
-function createMeaningWisp() {
-  const wisp = document.createElement('div');
-  wisp.className = 'meaning-wisp';
-  
-  const wy = 60 + Math.random() * 150;
-  const wx = (Math.random() - 0.5) * 100;
-  const wr = (Math.random() - 0.5) * 90;
-  
-  wisp.style.cssText = `
-    left: ${25 + Math.random() * 50}%;
-    top: ${20 + Math.random() * 60}%;
-    --wy: ${wy}px;
-    --wx: ${wx}px;
-    --wr: ${wr}deg;
-    animation-delay: ${Math.random() * 5}s;
-  `;
-  
-  silence.appendChild(wisp);
-  setTimeout(() => wisp.remove(), 11000);
-}
+  /* ---------------- Diseño sonoro: lo que queda cuando las voces callan ---------------------
+     Dos voces breves, una a cada lado, como los dos rostros: tres notas a la izquierda, tres
+     a la derecha. Suenan casi secas; lo que perdura es el eco de la sala, que se recoge en el
+     centro y dura más que lo dicho. Durante el silencio, la copa tiene su propio tono: una
+     quinta grave y abierta que sube desde la nada y vuelve a ella.
+     Al tocar, una nota suelta del lado donde tocaste; también ella se queda en el espacio.
+  ------------------------------------------------------------------------------------------- */
+  let started = false, ctx, master, seco, sala;
+  const IZQ = [329.63, 392.0, 293.66];      // una pregunta
+  const DER = [246.94, 220.0, 293.66];      // una respuesta que vuelve al mismo lugar
+  const TOQUE = [293.66, 329.63, 440.0, 493.88, 587.33];
 
-// Generar elementos continuamente
-setInterval(createSoundWave, 2500);
-setInterval(createPauseParticles, 7000);
-setInterval(createMeaningWisp, 2800);
-
-// Crear elementos iniciales
-for(let i = 0; i < 6; i++) {
-  setTimeout(createSoundWave, i * 900);
-}
-createPauseParticles();
-for(let i = 0; i < 8; i++) {
-  setTimeout(createMeaningWisp, i * 700);
-}
-
-// Interactividad - Click crea momento de silencio
-silence.addEventListener('click', (e) => {
-  const rect = silence.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  // Anillos de resonancia desde el punto
-  for(let i = 0; i < 6; i++) {
-    setTimeout(() => {
-      const ring = document.createElement('div');
-      ring.className = 'resonance-ring';
-      const size = 80 + i * 60;
-      ring.style.cssText = `
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
-        animation: ring-resonate ${10 - i}s ease-out forwards;
-        animation-delay: 0s;
-      `;
-      silence.appendChild(ring);
-      setTimeout(() => ring.remove(), (10 - i) * 1000);
-    }, i * 300);
+  function makeReverbIR(ac, seconds = 6, decay = 2.3) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
   }
-  
-  // Palabras no dichas emergiendo
-  for(let i = 0; i < 8; i++) {
-    setTimeout(() => {
-      const word = document.createElement('div');
-      word.className = 'unspoken-word';
-      const angle = (i / 8) * Math.PI * 2;
-      const distance = 60 + Math.random() * 80;
-      word.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --wx: ${Math.cos(angle) * distance}px;
-        --wy: ${Math.sin(angle) * distance}px;
-        animation: word-breathe 6s ease-out forwards;
-      `;
-      silence.appendChild(word);
-      setTimeout(() => word.remove(), 6000);
-    }, i * 120);
-  }
-  
-  // Explosión de partículas de pausa
-  for(let i = 0; i < 24; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'pause-particle';
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 50 + Math.random() * 100;
-      particle.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --px: ${Math.cos(angle) * distance}px;
-        --py: ${Math.sin(angle) * distance}px;
-        animation: particle-pause 5s ease-out forwards;
-      `;
-      silence.appendChild(particle);
-      setTimeout(() => particle.remove(), 5000);
-    }, i * 50);
-  }
-  
-  // Wisps emanando
-  for(let i = 0; i < 10; i++) {
-    setTimeout(() => {
-      const wisp = document.createElement('div');
-      wisp.className = 'meaning-wisp';
-      const angle = (i / 10) * 360;
-      wisp.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --wy: 120px;
-        --wx: 0px;
-        --wr: ${angle}deg;
-        animation: wisp-float 5s ease-out forwards;
-      `;
-      silence.appendChild(wisp);
-      setTimeout(() => wisp.remove(), 5000);
-    }, i * 100);
-  }
-});
 
-// Hover crea ondas sutiles
-let lastHover = 0;
-silence.addEventListener('mousemove', (e) => {
-  const now = Date.now();
-  if(now - lastHover < 300) return;
-  lastHover = now;
-  
-  const rect = silence.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  const wave = document.createElement('div');
-  wave.className = 'sound-wave';
-  wave.style.cssText = `
-    left: ${x}px;
-    top: ${y}px;
-    --wave-y: 0px;
-    animation: wave-silent 4s ease-out forwards;
-    width: 150px;
-  `;
-  silence.appendChild(wave);
-  setTimeout(() => wave.remove(), 4000);
-});
+  function voz(notas, pan, t0) {
+    notas.forEach((f, i) => {
+      const t = t0 + i * 0.42;
+      const o = ctx.createOscillator(); o.type = 'triangle'; o.frequency.value = f;
+      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1500; lp.Q.value = 0.6;
+      const g = ctx.createGain(); g.gain.value = 0;
+      const p = ctx.createStereoPanner(); p.pan.value = pan;
+      o.connect(lp); lp.connect(g); g.connect(p); p.connect(seco); p.connect(sala);
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.07, t + 0.04);
+      g.gain.exponentialRampToValueAtTime(0.0008, t + 0.5);
+      o.start(t); o.stop(t + 0.6);
+    });
+  }
+
+  function copa(desde, hasta) {               // la quinta del silencio, entre dos instantes
+    const ahora = ctx.currentTime;
+    if (hasta <= ahora + 1) return;
+    const t0 = Math.max(desde, ahora);
+    [[146.83, 0.020], [220.0, 0.014], [293.66, 0.007]].forEach(([f, v]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f * (1 + (Math.random() - 0.5) * 0.002);
+      const g = ctx.createGain(); g.gain.value = 0;
+      o.connect(g); g.connect(master); g.connect(sala);
+      g.gain.setValueAtTime(0, t0);
+      g.gain.linearRampToValueAtTime(v, Math.min(t0 + 4, hasta - 4));
+      g.gain.setValueAtTime(v, hasta - 4);
+      g.gain.linearRampToValueAtTime(0, hasta);
+      o.start(t0); o.stop(hasta + 0.1);
+    });
+  }
+
+  function conversacion(c0) {                // c0: instante (en el reloj de audio) en que empieza
+    const ahora = ctx.currentTime;
+    if (c0 + 0.2 >= ahora) voz(IZQ, -0.75, c0 + 0.2);
+    if (c0 + 4.2 >= ahora) voz(DER, 0.75, c0 + 4.2);
+    copa(c0 + 9, c0 + 23);
+  }
+
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 6);
+
+    seco = ctx.createGain(); seco.gain.value = 0.45; seco.connect(master);
+    // La sala escucha en mono y responde en estéreo: el eco se recoge en el centro, entre los dos
+    sala = ctx.createGain(); sala.gain.value = 1.0;
+    sala.channelCount = 1; sala.channelCountMode = 'explicit'; sala.channelInterpretation = 'speakers';
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    const vuelta = ctx.createGain(); vuelta.gain.value = 0.85;
+    sala.connect(conv); conv.connect(vuelta); vuelta.connect(master);
+
+    // Sincronizar con la conversación visible
+    const fase = ((performance.now() - inicio) / 1000) % CONV;
+    let c0 = ctx.currentTime - fase;
+    conversacion(c0);
+    // La siguiente se programa un segundo antes de que empiece, y desde ahí cada 24 s
+    const siguiente = () => { c0 += CONV; conversacion(c0); };
+    setTimeout(() => { siguiente(); setInterval(siguiente, CONV * 1000); }, Math.max(0, CONV - fase - 1) * 1000);
+  }
+
+  function notaSuelta(x) {
+    const t = ctx.currentTime + 0.01;
+    const f = TOQUE[Math.floor(Math.random() * TOQUE.length)];
+    const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+    const g = ctx.createGain(); g.gain.value = 0;
+    const p = ctx.createStereoPanner(); p.pan.value = Math.max(-0.8, Math.min(0.8, (x / innerWidth) * 1.6 - 0.8));
+    o.connect(g); g.connect(p); p.connect(seco); p.connect(sala);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(0.08, t + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0008, t + 1.2);
+    o.start(t); o.stop(t + 1.3);
+  }
+
+  const destello = document.getElementById('destello');
+  function avivarCopa() {
+    destello.classList.remove('vivo'); void destello.getBoundingClientRect(); destello.classList.add('vivo');
+  }
+  function punto(x, y) {
+    const p = document.createElement('div'); p.className = 'punto-toque';
+    p.style.left = x + 'px'; p.style.top = y + 'px';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 3500);
+  }
+
+  const hint = document.getElementById('hint');
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    if (hint) hint.classList.add('oculto');
+    notaSuelta(e.clientX);
+    if (!reduce) { punto(e.clientX, e.clientY); avivarCopa(); }
+  });
 </script>
-
 </body>
 </html>

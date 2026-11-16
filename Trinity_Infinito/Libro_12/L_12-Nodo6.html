@@ -2,466 +2,354 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Libro 12 - Nodo 6: El Signo Invisible</title>
+<!-- Portal 83. Saneado en noviembre de 2026 con imagen y sonido propios:
+     un campo de puntos donde, en cualquier instante quieto, no hay nada; una espiral aparece solo
+     porque sus puntos se mueven juntos. Entre notas al azar, un motivo escondido que se repite.
+     Frases y paradoja del original; paleta elevada a amatista. -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: radial-gradient(ellipse at center, #07080d 0%, #000000 70%);
-  overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sign-field {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.unseen-space {
-  position: relative;
-  width: 650px;
-  height: 650px;
-}
-
-.hidden-symbol {
-  position: absolute;
-  width: 90px;
-  height: 90px;
-  background: radial-gradient(circle,
-    rgba(210,210,240,0.25),
-    rgba(190,190,220,0.12),
-    transparent
-  );
-  border-radius: 50%;
-  animation: symbol-fade 13s ease-in-out infinite;
-  filter: blur(18px);
-  border: 1px solid rgba(210,210,240,0.15);
-}
-
-@keyframes symbol-fade {
-  0%, 100% {
-    transform: scale(0.7) translate(0, 0) rotate(0deg);
-    opacity: 0.3;
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(ellipse at 50% 45%, #120c1a 0%, #07050c 55%, #000 82%);
+    background-color:#000;
+    color:#fff;
+    font-family:'Georgia', serif;
+    overflow:hidden;
+    height:100vh; height:100dvh;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
   }
-  50% {
-    transform: scale(1.4) translate(var(--sx), var(--sy)) rotate(var(--sr));
-    opacity: 0.8;
-  }
-}
 
-.meaning-trace {
-  position: absolute;
-  width: 160px;
-  height: 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(210,210,240,0.5),
-    transparent
-  );
-  animation: trace-meaning 10s ease-in-out infinite;
-  filter: blur(1px);
-}
+  #lienzo { position:fixed; inset:0; display:block; }
 
-@keyframes trace-meaning {
-  0%, 100% {
-    transform: translateX(0) scaleX(0);
-    opacity: 0;
+  .resplandor {
+    position:fixed; left:50%; top:45%;
+    width:min(96vw, 62vh); height:min(96vw, 62vh);
+    margin-left:calc(min(96vw, 62vh) / -2); margin-top:calc(min(96vw, 62vh) / -2);
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(170,120,230,0.10), transparent 64%);
+    animation: respira 20s ease-in-out infinite;
+    will-change: transform, opacity;
+    pointer-events:none;
   }
-  50% {
-    transform: translateX(var(--mx)) scaleX(1);
-    opacity: 0.7;
+  @keyframes respira {
+    0%,100% { transform:scale(0.9);  opacity:0.5; }
+    50%     { transform:scale(1.1);  opacity:0.95; }
   }
-}
 
-.subtle-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(255,255,255,0.85);
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(210,210,240,0.6);
-  animation: particle-subtle 9s ease-in-out infinite;
-}
+  .cabecera {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top, 0px) + 6vh);
+    transform:translateX(-50%);
+    width:max-content; max-width:90vw; text-align:center;
+    z-index:5; pointer-events:none;
+  }
+  .titulo {
+    font-size: clamp(15px, 4.2vw, 22px);
+    letter-spacing:0.32em;
+    line-height:1.5;
+    color: rgba(240,230,252,0.9);
+    text-shadow: 0 0 26px rgba(170,120,230,0.45);
+  }
+  .subtitulo {
+    margin-top:0.7em;
+    font-size: clamp(11px, 2.8vw, 13px);
+    letter-spacing:0.28em; font-style:italic;
+    color: rgba(212,196,236,0.5);
+  }
 
-@keyframes particle-subtle {
-  0%, 100% {
-    transform: translate(0, 0) scale(0);
-    opacity: 0;
+  .frases {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 19vh);
+    transform:translateX(-50%);
+    width:88vw; max-width:560px; height:4.4em;
+    text-align:center;
+    pointer-events:none;
   }
-  20% {
-    opacity: 0.8;
+  .frase {
+    position:absolute; left:0; right:0; top:0;
+    font-size: clamp(15px, 4.1vw, 20px);
+    line-height:1.55;
+    font-style:italic;
+    color: rgba(246,240,254,0.93);
+    text-shadow: 0 0 18px rgba(170,120,230,0.42);
+    opacity:0;
+    animation: frase 40s ease-in-out infinite;
+    will-change: opacity, transform;
   }
-  50% {
-    transform: translate(var(--px), var(--py)) scale(1);
-    opacity: 0.9;
+  .frase.f2 { animation-delay:10s; }
+  .frase.f3 { animation-delay:20s; }
+  .frase.f4 { animation-delay:30s; }
+  @keyframes frase {
+    0%    { opacity:0; transform:translateY(6px); }
+    3.5%  { opacity:1; transform:translateY(0); }
+    22%   { opacity:1; transform:translateY(0); }
+    25%   { opacity:0; transform:translateY(-4px); }
+    100%  { opacity:0; transform:translateY(-4px); }
   }
-  80% {
-    opacity: 0.4;
-  }
-}
 
-.signal-wisp {
-  position: absolute;
-  width: 3px;
-  height: 75px;
-  background: linear-gradient(to bottom,
-    rgba(210,210,240,0.6),
-    rgba(190,190,220,0.4),
-    transparent
-  );
-  animation: wisp-signal 11s ease-in-out infinite;
-  filter: blur(1.5px);
-}
-
-@keyframes wisp-signal {
-  0%, 100% {
-    transform: translateY(0) translateX(0) rotate(0deg) scaleY(0);
-    opacity: 0;
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform:translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(246,240,254,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
   }
-  20% {
-    opacity: 0.5;
-  }
-  50% {
-    transform: translateY(var(--wy)) translateX(var(--wx)) rotate(var(--wr)) scaleY(1);
-    opacity: 0.75;
-  }
-  80% {
-    opacity: 0.35;
-  }
-}
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
 
-.presence-ring {
-  position: absolute;
-  width: 270px;
-  height: 270px;
-  border: 1px solid rgba(210,210,240,0.18);
-  border-radius: 50%;
-  animation: ring-presence 16s ease-in-out infinite;
-  opacity: 0;
-}
-
-@keyframes ring-presence {
-  0%, 100% {
-    transform: scale(0.5);
-    opacity: 0;
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(200,175,240,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+    cursor:pointer;
   }
-  50% {
-    transform: scale(2.3);
-    opacity: 0.6;
+  .infinito:hover, .infinito:focus-visible { color: rgba(245,236,255,0.95); text-shadow:0 0 18px rgba(170,120,230,0.6); outline:none; }
+
+  @media (max-width: 480px) {
+    .titulo { letter-spacing:0.22em; }
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh); }
   }
-}
 
-.title {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2.1em;
-  letter-spacing: 0.45em;
-  opacity: 0.9;
-  text-shadow: 0 0 30px rgba(210,210,240,0.5);
-  font-weight: 600;
-  text-align: center;
-  z-index: 100;
-}
-
-.subtitle {
-  position: fixed;
-  top: 115px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1em;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  font-style: italic;
-  z-index: 100;
-}
-
-.central-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5em;
-  letter-spacing: 0.4em;
-  text-align: center;
-  opacity: 0;
-  animation: text-hint 14s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255,255,255,0.35);
-  line-height: 2.4;
-  z-index: 10;
-}
-
-@keyframes text-hint {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; }
+    .resplandor { opacity:0.7; }
+    .frases { height:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 11vh); }
+    .frase { position:static; opacity:0.92; margin-bottom:0.45em; font-size: clamp(13px, 3.6vw, 18px); }
+    .hint { opacity:0.8; bottom:calc(env(safe-area-inset-bottom, 0px) + 24px); }
   }
-  20%, 80% {
-    opacity: 0.7;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-.contemplation {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  text-align: center;
-  max-width: 780px;
-  line-height: 1.9;
-  padding: 0 40px;
-  font-style: italic;
-  z-index: 100;
-}
-
-.sign-glow {
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(210,210,240,0.08), transparent);
-  border-radius: 50%;
-  animation: glow-sign 18s ease-in-out infinite;
-  filter: blur(80px);
-}
-
-@keyframes glow-sign {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.6);
-    opacity: 0.5;
-  }
-}
 </style>
 </head>
 <body>
+  <div class="resplandor"></div>
+  <canvas id="lienzo" aria-hidden="true"></canvas>
 
-<div class="title">EL SIGNO INVISIBLE</div>
-<div class="subtitle">Libro 12 - Nodo 6</div>
-
-<div class="sign-field">
-  <div class="unseen-space">
-    <!-- Resplandor del signo -->
-    <div class="sign-glow"></div>
-    
-    <!-- Anillos de presencia -->
-    <div class="presence-ring" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
-    <div class="presence-ring" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 5.3s; width: 230px; height: 230px;"></div>
-    <div class="presence-ring" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 10.7s; width: 310px; height: 310px;"></div>
-    
-    <!-- Símbolos ocultos -->
-    <div class="hidden-symbol" style="top: 30%; left: 35%; --sx: 40px; --sy: -35px; --sr: 30deg; animation-delay: 0s;"></div>
-    <div class="hidden-symbol" style="top: 65%; left: 65%; --sx: -35px; --sy: 40px; --sr: -25deg; animation-delay: 4.3s;"></div>
-    <div class="hidden-symbol" style="top: 50%; left: 18%; --sx: 45px; --sy: 30px; --sr: 20deg; animation-delay: 8.7s;"></div>
-    
-    <!-- Texto central -->
-    <div class="central-text" style="animation-delay: 2.5s;">
-      Lo que apunta<br>
-      sin mostrarse<br><br>
-      El significado<br>
-      más allá<br>
-      del símbolo
-    </div>
+  <div class="cabecera">
+    <div class="titulo">EL SIGNO INVISIBLE</div>
+    <div class="subtitulo">Libro 12 - Nodo 6</div>
   </div>
-</div>
 
-<div class="contemplation">
-  Las señales que no se ven pero se sienten · El código oculto del universo<br>
-  Los símbolos que comunican sin forma visible · Signos en el aire
-</div>
+  <div class="frases" aria-live="off">
+    <p class="frase f1">Lo que apunta sin mostrarse · El significado más allá del símbolo</p>
+    <p class="frase f2">Las señales que no se ven pero se sienten</p>
+    <p class="frase f3">El código oculto del universo · Los símbolos que comunican sin forma visible</p>
+    <p class="frase f4">Signos en el aire</p>
+  </div>
+
+  <div class="hint" id="hint">( toca: el signo se revela )</div>
+
+  <a class="infinito" href="L_12-Nodo7.html" aria-label="Siguiente portal">∞</a>
 
 <script>
-const unseen = document.querySelector('.unseen-space');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lienzo = document.getElementById('lienzo');
+  const g = lienzo.getContext('2d');
+  let W, H, dpr, CX, CY, R;
 
-// Crear trazos de significado
-function createMeaningTrace() {
-  const trace = document.createElement('div');
-  trace.className = 'meaning-trace';
-  
-  const mx = (Math.random() - 0.5) * 100;
-  
-  trace.style.cssText = `
-    left: ${30 + Math.random() * 40}%;
-    top: ${30 + Math.random() * 40}%;
-    --mx: ${mx}px;
-    animation-delay: ${Math.random() * 5}s;
-  `;
-  
-  unseen.appendChild(trace);
-  setTimeout(() => trace.remove(), 10000);
-}
+  /* ---------------- El signo que solo existe en movimiento ------------------------------------
+     Un campo de puntos de igual brillo, igual tamaño, igual densidad. Detenido en cualquier
+     instante, no muestra nada. Pero los puntos que caen dentro de una espiral (la de las
+     galaxias y los caracoles) se mueven juntos, girando hacia su centro, mientras los demás
+     van cada uno por su lado. El ojo agrupa lo que se mueve en común, y el signo aparece.
+     Cada punto vive poco y renace en otro lugar, para que la densidad nunca lo delate.
+     La espiral emerge y vuelve a disolverse, como una señal que no se ve pero se siente.
+  ------------------------------------------------------------------------------------------- */
+  const CRECE = Math.log(3.2) / (2 * Math.PI);      // espiral logarítmica: crece 3,2 veces por vuelta
+  const ANCHO = 0.22;                                 // media banda, en escala logarítmica
+  const COLORES = ['200,160,240', '176,130,226', '222,196,250', '156,112,212', '236,214,255'];
+  let puntos = [];
 
-// Crear partículas sutiles
-function createSubtleParticles() {
-  for(let i = 0; i < 14; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'subtle-particle';
-      
-      const angle = (i / 14) * Math.PI * 2;
-      const distance = 75 + Math.random() * 120;
-      const px = Math.cos(angle) * distance;
-      const py = Math.sin(angle) * distance;
-      
-      particle.style.cssText = `
-        left: 50%;
-        top: 50%;
-        --px: ${px}px;
-        --py: ${py}px;
-        animation-delay: ${Math.random() * 4}s;
-      `;
-      
-      unseen.appendChild(particle);
-      setTimeout(() => particle.remove(), 9000);
-    }, i * 90);
+  function medir() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    lienzo.width = Math.round(W * dpr); lienzo.height = Math.round(H * dpr);
+    lienzo.style.width = W + 'px'; lienzo.style.height = H + 'px';
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    CX = W / 2; CY = H * 0.45; R = Math.min(W * 0.45, H * 0.25);
+    const n = Math.round(Math.min(1500, Math.max(650, R * R * Math.PI / 125)));
+    puntos = Array.from({ length: n }, () => nacer({}, true));
   }
-}
 
-// Crear wisps de señal
-function createSignalWisp() {
-  const wisp = document.createElement('div');
-  wisp.className = 'signal-wisp';
-  
-  const wy = 65 + Math.random() * 130;
-  const wx = (Math.random() - 0.5) * 100;
-  const wr = (Math.random() - 0.5) * 80;
-  
-  wisp.style.cssText = `
-    left: ${25 + Math.random() * 50}%;
-    top: ${20 + Math.random() * 60}%;
-    --wy: ${wy}px;
-    --wx: ${wx}px;
-    --wr: ${wr}deg;
-    animation-delay: ${Math.random() * 5}s;
-  `;
-  
-  unseen.appendChild(wisp);
-  setTimeout(() => wisp.remove(), 11000);
-}
+  function nacer(p, inicial) {
+    const a = Math.random() * Math.PI * 2, r = R * Math.sqrt(Math.random());
+    p.x = CX + Math.cos(a) * r; p.y = CY + Math.sin(a) * r;
+    const d = Math.random() * Math.PI * 2;
+    p.ux = Math.cos(d); p.uy = Math.sin(d);            // su rumbo propio, si no pertenece al signo
+    p.vida = 1.3 + Math.random() * 1.3;
+    p.edad = inicial ? Math.random() * p.vida : 0;
+    p.c = Math.floor(Math.random() * COLORES.length);
+    p.r = 0.8 + Math.random() * 0.9;
+    return p;
+  }
 
-// Generar elementos continuamente
-setInterval(createMeaningTrace, 2500);
-setInterval(createSubtleParticles, 6700);
-setInterval(createSignalWisp, 2800);
+  // ¿Está el punto dentro de la banda de la espiral? Si está, devuelve la dirección del giro hacia el centro.
+  const R0 = () => R * 0.05;
+  function enEspiral(x, y, giro) {
+    const dx = x - CX, dy = y - CY, r = Math.hypot(dx, dy);
+    if (r < R0() * 1.4 || r > R * 0.98) return null;
+    const th = Math.atan2(dy, dx) - giro;
+    const per = 2 * Math.PI * CRECE;
+    let u = (Math.log(r / R0()) - CRECE * th) % per;
+    if (u < 0) u += per;
+    const d = Math.min(u, per - u);
+    if (d > ANCHO) return null;
+    // tangente de la espiral, en sentido hacia adentro
+    const c = Math.cos(th + giro), s = Math.sin(th + giro);
+    let tx = -(CRECE * c - s), ty = -(CRECE * s + c);
+    const n = Math.hypot(tx, ty); tx /= n; ty /= n;
+    return { tx, ty, borde: 1 - d / ANCHO };
+  }
 
-// Crear elementos iniciales
-for(let i = 0; i < 6; i++) {
-  setTimeout(createMeaningTrace, i * 900);
-}
-createSubtleParticles();
-for(let i = 0; i < 7; i++) {
-  setTimeout(createSignalWisp, i * 750);
-}
+  /* La coherencia: cuánto del signo se mueve en común. Sube, se sostiene y se disuelve. */
+  const CICLO = 22;
+  let T = 0, ultimo = 0, toque = -99;
+  function coherencia(t) {
+    const u = ((t % CICLO) + CICLO) % CICLO;
+    let c;
+    if (u < 4) c = 0;
+    else if (u < 9) c = (u - 4) / 5;
+    else if (u < 16) c = 1;
+    else if (u < 21) c = 1 - (u - 16) / 5;
+    else c = 0;
+    c = c * c * (3 - 2 * c);
+    const tq = Math.max(0, 1 - (t - toque) / 7) * (t > toque ? 1 : 0);
+    return Math.max(c, Math.min(1, tq * 1.4));
+  }
 
-// Interactividad - Click revela lo invisible
-unseen.addEventListener('click', (e) => {
-  const rect = unseen.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  // Anillos de presencia
-  for(let i = 0; i < 6; i++) {
-    setTimeout(() => {
-      const ring = document.createElement('div');
-      ring.className = 'presence-ring';
-      const size = 80 + i * 50;
-      ring.style.cssText = `
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
-        animation: ring-presence ${9 - i}s ease-out forwards;
-        animation-delay: 0s;
-      `;
-      unseen.appendChild(ring);
-      setTimeout(() => ring.remove(), (9 - i) * 1000);
-    }, i * 240);
+  function cuadro(ms) {
+    const dt = Math.min(0.05, (ms - ultimo) / 1000 || 0.016); ultimo = ms; T += dt;
+    const c = coherencia(T);
+    const vel = Math.max(16, R * 0.13);
+    const giro = 0;
+    g.clearRect(0, 0, W, H);
+    const lotes = COLORES.map(() => []);
+    for (const p of puntos) {
+      p.edad += dt;
+      if (p.edad > p.vida || Math.hypot(p.x - CX, p.y - CY) > R * 1.02) { nacer(p, false); }
+      const e = enEspiral(p.x, p.y, giro);
+      let vx = p.ux, vy = p.uy;
+      if (e && Math.random() < 1) {
+        const k = c;                                  // cuánto sigue al signo
+        vx = p.ux * (1 - k) + e.tx * k; vy = p.uy * (1 - k) + e.ty * k;
+        const n = Math.hypot(vx, vy) || 1; vx /= n; vy /= n;
+      }
+      p.x += vx * vel * dt; p.y += vy * vel * dt;
+      const f = Math.min(1, p.edad / 0.25, (p.vida - p.edad) / 0.25);
+      const borde = Math.min(1, (R * 1.02 - Math.hypot(p.x - CX, p.y - CY)) / (R * 0.12));
+      lotes[p.c].push(p.x, p.y, p.r, Math.max(0, f * borde));
+    }
+    // todos los puntos con el mismo brillo: nada los distingue, salvo su movimiento
+    lotes.forEach((l, i) => {
+      for (let j = 0; j < l.length; j += 4) {
+        g.fillStyle = `rgba(${COLORES[i]},${(0.85 * l[j + 3]).toFixed(3)})`;
+        g.beginPath(); g.arc(l[j], l[j + 1], l[j + 2], 0, Math.PI * 2); g.fill();
+      }
+    });
+    sonar(T, c);
+    requestAnimationFrame(cuadro);
   }
-  
-  // Símbolos revelándose
-  for(let i = 0; i < 8; i++) {
-    setTimeout(() => {
-      const symbol = document.createElement('div');
-      symbol.className = 'hidden-symbol';
-      const angle = (i / 8) * Math.PI * 2;
-      const distance = 60 + Math.random() * 70;
-      symbol.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --sx: ${Math.cos(angle) * distance}px;
-        --sy: ${Math.sin(angle) * distance}px;
-        --sr: ${(Math.random() - 0.5) * 60}deg;
-        animation: symbol-fade 5s ease-out forwards;
-      `;
-      unseen.appendChild(symbol);
-      setTimeout(() => symbol.remove(), 5000);
-    }, i * 125);
+
+  function quietoDibujo() {                  // movimiento reducido: el signo, quieto y apenas más claro
+    g.clearRect(0, 0, W, H);
+    for (const p of puntos) {
+      const e = enEspiral(p.x, p.y, 0);
+      g.fillStyle = `rgba(${COLORES[p.c]},${e ? 0.95 : 0.32})`;
+      g.beginPath(); g.arc(p.x, p.y, p.r * (e ? 1.15 : 1), 0, Math.PI * 2); g.fill();
+    }
   }
-  
-  // Trazos de significado
-  for(let i = 0; i < 12; i++) {
-    setTimeout(() => {
-      const trace = document.createElement('div');
-      trace.className = 'meaning-trace';
-      const angle = (i / 12) * 360;
-      trace.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        transform: rotate(${angle}deg);
-        --mx: 0px;
-        animation: trace-meaning 5s ease-out forwards;
-      `;
-      unseen.appendChild(trace);
-      setTimeout(() => trace.remove(), 5000);
-    }, i * 70);
+
+  medir();
+  window.addEventListener('resize', () => { medir(); if (reduce) quietoDibujo(); });
+  if (reduce) quietoDibujo();
+  else requestAnimationFrame((t) => { ultimo = t; requestAnimationFrame(cuadro); });
+
+  /* ---------------- Diseño sonoro: el motivo escondido ----------------------------------------
+     Notas sueltas de vidrio, una por pulso, que parecen elegidas al azar. Escondido entre ellas
+     hay un motivo de ocho pulsos con el mismo timbre, el mismo volumen y el mismo lugar incierto
+     en el espacio. Cuando la espiral se forma, el motivo ocupa cada vez más pulsos, y el oído,
+     que detecta lo que se repite, termina por oírlo. Cuando la espiral se disuelve, el motivo se
+     pierde otra vez entre el azar. Al tocar, el signo se revela: el motivo suena completo.
+  ------------------------------------------------------------------------------------------- */
+  let started = false, ctx, master, verb, pulso = 0, proxima = 0;
+  const NOTAS = [293.66, 349.23, 392.0, 440.0, 523.25, 587.33, 698.46, 783.99];
+  const MOTIVO = [587.33, 440.0, 523.25, 0, 392.0, 440.0, 293.66, 0];   // 0 = silencio
+  const PULSO = 0.36;
+
+  function makeReverbIR(ac, seconds = 4, decay = 2.4) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
   }
-  
-  // Partículas sutiles
-  for(let i = 0; i < 18; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'subtle-particle';
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 50 + Math.random() * 90;
-      particle.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --px: ${Math.cos(angle) * distance}px;
-        --py: ${Math.sin(angle) * distance}px;
-        animation: particle-subtle 5s ease-out forwards;
-      `;
-      unseen.appendChild(particle);
-      setTimeout(() => particle.remove(), 5000);
-    }, i * 55);
+
+  function vidrio(f, t) {
+    const p = ctx.createStereoPanner(); p.pan.value = Math.random() * 1.4 - 0.7;
+    p.connect(master); p.connect(verb);
+    [[1, 0.05, 1.3], [2.76, 0.016, 0.5], [5.4, 0.006, 0.25]].forEach(([m, a, d]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f * m;
+      const gg = ctx.createGain(); gg.gain.value = 0; o.connect(gg); gg.connect(p);
+      gg.gain.setValueAtTime(0, t); gg.gain.linearRampToValueAtTime(a, t + 0.006);
+      gg.gain.exponentialRampToValueAtTime(0.0004, t + d);
+      o.start(t); o.stop(t + d + 0.05);
+    });
   }
-});
+
+  function sonar(t, c) {
+    if (!started) return;
+    // se programa un poco por delante del reloj de audio
+    while (proxima < ctx.currentTime + 0.12) {
+      const i = pulso % MOTIVO.length;
+      let f;
+      if (Math.random() < c) f = MOTIVO[i];                       // el motivo, en su lugar
+      else f = Math.random() < 0.3 ? 0 : NOTAS[Math.floor(Math.random() * NOTAS.length)];
+      if (f) vidrio(f, proxima);
+      proxima += PULSO; pulso++;
+    }
+  }
+
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.55, ctx.currentTime + 6);
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    verb = ctx.createGain(); verb.gain.value = 0.5; verb.connect(conv); conv.connect(master);
+    // un fondo de aire amatista, casi inaudible
+    [[146.83, 0.01], [220.0, 0.006]].forEach(([f, v]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const gg = ctx.createGain(); gg.gain.value = 0; o.connect(gg); gg.connect(master); gg.connect(verb); o.start();
+      gg.gain.linearRampToValueAtTime(v, ctx.currentTime + 7);
+    });
+    proxima = ctx.currentTime + 0.2;
+    if (reduce) setInterval(() => sonar(0, 0.25), 100);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (!ctx) return;
+    if (document.hidden) ctx.suspend(); else { ctx.resume(); proxima = Math.max(proxima, ctx.currentTime + 0.1); }
+  });
+
+  const hint = document.getElementById('hint');
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    if (hint) hint.classList.add('oculto');
+    toque = T;
+    if (reduce) MOTIVO.forEach((f, i) => { if (f) vidrio(f, ctx.currentTime + 0.05 + i * PULSO); });
+  });
 </script>
-
 </body>
 </html>

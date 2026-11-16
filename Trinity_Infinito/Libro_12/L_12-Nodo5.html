@@ -4,562 +4,420 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Libro 12 - Nodo 5: El Lenguaje Del Cuerpo</title>
-<!-- Adaptado al teléfono en octubre de 2026, para el «Para ver» de Arquitectura del Destino, Libro 4.
-     Saneamiento acotado: sin fuentes externas (Georgia, estándar de la serie), animaciones solo con
-     transform y opacity, versión quieta para quien reduce el movimiento, invitación a tocar y ∞.
-     La gráfica, la paleta y las frases son las del original. -->
+<!-- Portal 82. «Para ver» de Arquitectura del Destino, Libro 4: la ruta no cambia.
+     Adaptado al teléfono en octubre de 2026; saneado en noviembre de 2026 con imagen y sonido propios:
+     un cuerpo hecho de trece puntos de luz, uno por articulación (los experimentos de Johansson),
+     que recorre un alfabeto de posturas. Pasos y respiración.
+     Frases, paradoja y paleta (durazno cálido) del original; también su invitación a tocar. -->
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-body {
-  background: radial-gradient(ellipse at center, #0a0608 0%, #000000 70%);
-  background-color: #000;
-  overflow: hidden;
-  font-family: 'Georgia', 'Palatino', serif;
-  color: #fff;
-  height: 100vh;
-  height: 100dvh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: none;
-}
-
-.body-field {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.somatic-space {
-  position: relative;
-  width: 650px;
-  height: 650px;
-}
-
-.body-form {
-  position: absolute;
-  width: 120px;
-  height: 200px;
-  background: radial-gradient(ellipse,
-    rgba(240,200,180,0.3),
-    rgba(220,180,160,0.15),
-    transparent
-  );
-  border-radius: 45% 55% 50% 50%;
-  animation: body-express 14s ease-in-out infinite;
-  filter: blur(22px);
-  border: 1px solid rgba(240,200,180,0.2);
-}
-
-@keyframes body-express {
-  0%, 100% {
-    transform: scale(0.8) translate(0, 0) rotate(0deg);
-    opacity: 0.5;
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(ellipse at 50% 45%, #140c09 0%, #080505 55%, #000 82%);
+    background-color:#000;
+    color:#fff;
+    font-family:'Georgia', serif;
+    overflow:hidden;
+    height:100vh; height:100dvh;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
   }
-  50% {
-    transform: scale(1.3) translate(var(--bx), var(--by)) rotate(var(--br));
-    opacity: 0.9;
-  }
-}
 
-.posture-line {
-  position: absolute;
-  width: 180px;
-  height: 3px;
-  background: linear-gradient(90deg,
-    rgba(240,200,180,0.6),
-    rgba(220,180,160,0.4),
-    transparent
-  );
-  animation: line-posture 11s ease-in-out infinite;
-  filter: blur(1px);
-  transform-origin: left center;
-}
+  #lienzo { position:fixed; inset:0; display:block; }
 
-@keyframes line-posture {
-  0%, 100% {
-    transform: rotate(0deg) scaleX(0);
-    opacity: 0;
+  .resplandor {
+    position:fixed; left:50%; top:45%;
+    width:min(80vw, 56vh); height:min(80vw, 56vh);
+    margin-left:calc(min(80vw, 56vh) / -2); margin-top:calc(min(80vw, 56vh) / -2);
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(240,190,160,0.10), transparent 66%);
+    animation: respira 16s ease-in-out infinite;
+    will-change: transform, opacity;
+    pointer-events:none;
   }
-  50% {
-    transform: rotate(var(--angle)) scaleX(1);
-    opacity: 0.8;
+  @keyframes respira {
+    0%,100% { transform:scale(0.9);  opacity:0.55; }
+    50%     { transform:scale(1.12); opacity:0.95; }
   }
-}
 
-.kinetic-particle {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(240,200,180,0.7);
-  animation: particle-kinetic 9s ease-in-out infinite;
-}
-
-@keyframes particle-kinetic {
-  0%, 100% {
-    transform: translate(0, 0) scale(0);
-    opacity: 0;
+  .cabecera {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top, 0px) + 6vh);
+    transform:translateX(-50%);
+    width:max-content; max-width:90vw; text-align:center;
+    z-index:5; pointer-events:none;
   }
-  20% {
-    opacity: 1;
+  .titulo {
+    font-size: clamp(15px, 4.2vw, 22px);
+    letter-spacing:0.32em;
+    line-height:1.5;
+    color: rgba(250,234,224,0.9);
+    text-shadow: 0 0 26px rgba(240,180,150,0.42);
   }
-  50% {
-    transform: translate(var(--kx), var(--ky)) scale(1.2);
-    opacity: 0.9;
+  .subtitulo {
+    margin-top:0.7em;
+    font-size: clamp(11px, 2.8vw, 13px);
+    letter-spacing:0.28em; font-style:italic;
+    color: rgba(232,204,188,0.5);
   }
-  80% {
-    opacity: 0.5;
+
+  .frases {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 19vh);
+    transform:translateX(-50%);
+    width:88vw; max-width:560px; height:4.4em;
+    text-align:center;
+    pointer-events:none;
   }
-}
-
-.movement-trace {
-  position: absolute;
-  width: 4px;
-  height: 100px;
-  background: linear-gradient(to bottom,
-    rgba(240,200,180,0.7),
-    rgba(220,180,160,0.5),
-    transparent
-  );
-  animation: trace-move 12s ease-in-out infinite;
-  filter: blur(1.5px);
-}
-
-@keyframes trace-move {
-  0%, 100% {
-    transform: translateY(0) translateX(0) rotate(0deg) scaleY(0);
-    opacity: 0;
+  .frase {
+    position:absolute; left:0; right:0; top:0;
+    font-size: clamp(15px, 4.1vw, 20px);
+    line-height:1.55;
+    font-style:italic;
+    color: rgba(252,240,232,0.93);
+    text-shadow: 0 0 18px rgba(240,180,150,0.4);
+    opacity:0;
+    animation: frase 40s ease-in-out infinite;
+    will-change: opacity, transform;
   }
-  20% {
-    opacity: 0.7;
+  .frase.f2 { animation-delay:10s; }
+  .frase.f3 { animation-delay:20s; }
+  .frase.f4 { animation-delay:30s; }
+  @keyframes frase {
+    0%    { opacity:0; transform:translateY(6px); }
+    3.5%  { opacity:1; transform:translateY(0); }
+    22%   { opacity:1; transform:translateY(0); }
+    25%   { opacity:0; transform:translateY(-4px); }
+    100%  { opacity:0; transform:translateY(-4px); }
   }
-  50% {
-    transform: translateY(var(--ty)) translateX(var(--tx)) rotate(var(--tr)) scaleY(1);
-    opacity: 0.9;
+
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform:translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(252,240,232,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
   }
-  80% {
-    opacity: 0.5;
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
+
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(235,200,180,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+    cursor:pointer;
   }
-}
+  .infinito:hover, .infinito:focus-visible { color: rgba(255,240,230,0.95); text-shadow:0 0 18px rgba(240,180,150,0.6); outline:none; }
 
-.expression-wave {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  margin: -150px 0 0 -150px;
-  border: 2px solid rgba(240,200,180,0.2);
-  border-radius: 48% 52% 50% 50%;
-  animation: wave-express 15s ease-in-out infinite;
-  opacity: 0;
-}
-
-@keyframes wave-express {
-  0%, 100% {
-    transform: scale(0.4) rotate(0deg);
-    opacity: 0;
+  @media (max-width: 480px) {
+    .titulo { letter-spacing:0.22em; }
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh); }
   }
-  50% {
-    transform: scale(2.2) rotate(180deg);
-    opacity: 0.7;
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; }
+    .resplandor { opacity:0.7; }
+    .frases { height:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 11vh); }
+    .frase { position:static; opacity:0.92; margin-bottom:0.45em; font-size: clamp(13px, 3.6vw, 18px); }
+    .hint { opacity:0.8; bottom:calc(env(safe-area-inset-bottom, 0px) + 24px); }
   }
-}
-
-.title {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  font-size: 2em;
-  letter-spacing: 0.4em;
-  opacity: 0.9;
-  text-shadow: 0 0 30px rgba(240,200,180,0.5);
-  font-weight: 600;
-  text-align: center;
-  z-index: 100;
-}
-
-.subtitle {
-  position: fixed;
-  top: 113px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  text-align: center;
-  font-size: 1em;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  font-style: italic;
-  z-index: 100;
-}
-
-.central-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 90%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5em;
-  letter-spacing: 0.4em;
-  text-align: center;
-  opacity: 0;
-  animation: text-embody 14s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255,255,255,0.4);
-  line-height: 2.3;
-  z-index: 10;
-  pointer-events: none;
-}
-
-@keyframes text-embody {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9) rotate(-2deg);
-  }
-  20%, 80% {
-    opacity: 0.75;
-    transform: translate(-50%, -50%) scale(1) rotate(0deg);
-  }
-}
-
-.contemplation {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  text-align: center;
-  max-width: 780px;
-  line-height: 1.9;
-  padding: 0 40px;
-  font-style: italic;
-  z-index: 100;
-  pointer-events: none;
-}
-
-.somatic-glow {
-  position: absolute;
-  width: 440px;
-  height: 440px;
-  top: 50%;
-  left: 50%;
-  margin: -220px 0 0 -220px;
-  background: radial-gradient(circle, rgba(240,200,180,0.1), transparent);
-  border-radius: 50%;
-  animation: glow-somatic 18s ease-in-out infinite;
-  filter: blur(75px);
-}
-
-@keyframes glow-somatic {
-  0%, 100% {
-    transform: scale(0.9);
-    opacity: 0.35;
-  }
-  50% {
-    transform: scale(1.6);
-    opacity: 0.6;
-  }
-}
-
-.hint {
-  position: fixed;
-  bottom: 52px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 11px;
-  letter-spacing: 4px;
-  color: rgba(255,255,255,0.3);
-  white-space: nowrap;
-  animation: hint-breathe 4s ease-in-out infinite;
-  transition: opacity 1.5s ease;
-  pointer-events: none;
-  z-index: 110;
-}
-.hint.oculto { opacity: 0; animation: none; }
-@keyframes hint-breathe {
-  0%, 100% { opacity: 0.18; }
-  50% { opacity: 0.45; }
-}
-
-.infinito {
-  position: fixed;
-  bottom: 14px;
-  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255,255,255,0.25);
-  text-decoration: none;
-  font-size: 24px;
-  cursor: pointer;
-  transition: color 0.6s ease;
-  z-index: 120;
-}
-.infinito:hover, .infinito:focus-visible { color: rgba(255,255,255,0.85); }
-
-/* Lectura en teléfono: título que cabe, versos legibles en el centro, sin cortes por altura */
-@media (max-width: 600px) {
-  .title { top: calc(34px + env(safe-area-inset-top, 0px)); font-size: 1.32em; letter-spacing: 0.18em; line-height: 1.45; }
-  .subtitle { top: calc(108px + env(safe-area-inset-top, 0px)); font-size: 0.95em; letter-spacing: 0.16em; opacity: 0.6; }
-  .somatic-space { width: 94vw; height: 94vw; }
-  .central-text { font-size: 1.32em; letter-spacing: 0.14em; line-height: 1.75; animation-name: text-embody-m; text-shadow: 0 0 18px rgba(255,255,255,0.45); }
-  .contemplation { bottom: calc(92px + env(safe-area-inset-bottom, 0px)); font-size: 1em; letter-spacing: 0.04em; line-height: 1.6; opacity: 0.72; padding: 0 24px; }
-  .hint { font-size: 13px; letter-spacing: 2px; bottom: calc(56px + env(safe-area-inset-bottom, 0px)); }
-}
-@keyframes text-embody-m {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.94);
-  }
-  15%, 85% {
-    opacity: 0.92;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-/* Pantallas bajas: el texto contemplativo cede su lugar antes que los versos */
-@media (max-width: 600px) and (max-height: 640px) {
-  .contemplation { display: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .body-form, .posture-line, .kinetic-particle, .movement-trace, .expression-wave { animation: none; opacity: 0; }
-  .somatic-glow { animation: none; opacity: 0.45; transform: scale(1.2); }
-  .central-text { animation: none; opacity: 0.85; transform: translate(-50%, -50%); }
-  .hint { animation: none; opacity: 0.3; }
-}
 </style>
 </head>
 <body>
+  <div class="resplandor"></div>
+  <canvas id="lienzo" aria-hidden="true"></canvas>
 
-<div class="title">EL LENGUAJE DEL CUERPO</div>
-<div class="subtitle">Libro 12 - Nodo 5</div>
-
-<div class="body-field">
-  <div class="somatic-space">
-    <!-- Resplandor somático -->
-    <div class="somatic-glow"></div>
-
-    <!-- Ondas de expresión -->
-    <div class="expression-wave" style="top: 50%; left: 50%; animation-delay: 0s;"></div>
-    <div class="expression-wave" style="top: 50%; left: 50%; animation-delay: 5s; width: 250px; height: 250px; margin: -125px 0 0 -125px;"></div>
-    <div class="expression-wave" style="top: 50%; left: 50%; animation-delay: 10s; width: 350px; height: 350px; margin: -175px 0 0 -175px;"></div>
-
-    <!-- Formas corporales -->
-    <div class="body-form" style="top: 30%; left: 35%; --bx: 45px; --by: -40px; --br: 15deg; animation-delay: 0s;"></div>
-    <div class="body-form" style="top: 60%; left: 65%; --bx: -40px; --by: 45px; --br: -20deg; animation-delay: 4.7s;"></div>
-    <div class="body-form" style="top: 45%; left: 18%; --bx: 50px; --by: 35px; --br: 10deg; animation-delay: 9.3s;"></div>
-
-    <!-- Texto central -->
-    <div class="central-text" style="animation-delay: 2.5s;">
-      Cada postura<br>
-      es un verbo<br><br>
-      Cada gesto<br>
-      una frase<br><br>
-      El cuerpo<br>
-      dice verdades
-    </div>
+  <div class="cabecera">
+    <div class="titulo">EL LENGUAJE DEL CUERPO</div>
+    <div class="subtitulo">Libro 12 - Nodo 5</div>
   </div>
-</div>
 
-<div class="contemplation">
-  La gramática corporal · El alfabeto de posturas y movimientos<br>
-  Lo que el cuerpo sabe decir sin recurrir a las palabras
-</div>
+  <div class="frases" aria-live="off">
+    <p class="frase f1">Cada postura es un verbo · Cada gesto una frase</p>
+    <p class="frase f2">El cuerpo dice verdades</p>
+    <p class="frase f3">La gramática corporal · El alfabeto de posturas y movimientos</p>
+    <p class="frase f4">Lo que el cuerpo sabe decir sin recurrir a las palabras</p>
+  </div>
 
-<div class="hint" id="hint">( toca: el cuerpo responde )</div>
-<a class="infinito" href="L_12-Nodo6.html" title="Siguiente portal" aria-label="Siguiente portal">∞</a>
+  <div class="hint" id="hint">( toca: el cuerpo responde )</div>
+
+  <a class="infinito" href="L_12-Nodo6.html" title="Siguiente portal" aria-label="Siguiente portal">∞</a>
 
 <script>
-const somatic = document.querySelector('.somatic-space');
-const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-// Escala de las distancias: el espacio mide 650 px en pantalla grande y se achica en el teléfono
-const S = () => Math.max(0.5, somatic.getBoundingClientRect().width / 650);
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lienzo = document.getElementById('lienzo');
+  const g = lienzo.getContext('2d');
+  let W, H, dpr, CX, PISO, ALTO;
+  const rad = (d) => d * Math.PI / 180;
 
-// Crear líneas de postura
-function createPostureLine() {
-  const line = document.createElement('div');
-  line.className = 'posture-line';
+  /* ---------------- El cuerpo de trece puntos ------------------------------------------------
+     En 1973, Gunnar Johansson filmó a personas con trece luces en las articulaciones, a oscuras.
+     Quieto, el conjunto no es nada: unos puntos sueltos. En cuanto se mueve, cualquiera reconoce
+     un cuerpo que camina, y hasta su ánimo y su intención. El cuerpo dice verdades.
+     Aquí recorre un alfabeto de posturas: camina, abre los brazos, se inclina, se eleva, se
+     recoge. Cada una es un verbo. Gira despacio en el espacio, y un reflejo tenue lo acompaña.
+  ------------------------------------------------------------------------------------------- */
+  const B = { cadera: 0.085, muslo: 0.245, pierna: 0.245, torso: 0.3, hombro: 0.13, cuello: 0.13, brazo: 0.17, antebrazo: 0.16 };
 
-  const angle = Math.random() * 360;
+  function rotX([x, y, z], t) { const c = Math.cos(t), s = Math.sin(t); return [x, y * c - z * s, y * s + z * c]; }
+  const suma = (a, b, k = 1) => [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k];
 
-  line.style.cssText = `
-    left: ${25 + Math.random() * 50}%;
-    top: ${25 + Math.random() * 50}%;
-    --angle: ${angle}deg;
-    animation-delay: ${Math.random() * 5}s;
-  `;
+  // Las posturas: ángulos en grados. abd = brazo hacia afuera (negativo: hacia el pecho), flex = hacia adelante, codo y rodilla: flexión.
+  const POSTURAS = [
+    { verbo: 'camina',    dur: 9, giro: 90, inclina: 4,  cabeza: 0,   puntas: 0,    camina: 1,
+      bi: { abd: 6, flex: 0, codo: 18 }, bd: { abd: 6, flex: 0, codo: 18 }, pi: { flex: 0, rodilla: 4 }, pd: { flex: 0, rodilla: 4 } },
+    { verbo: 'abre',      dur: 7, giro: 12, inclina: -4, cabeza: -6,  puntas: 0,    camina: 0,
+      bi: { abd: 92, flex: 14, codo: 12 }, bd: { abd: 92, flex: 14, codo: 12 }, pi: { flex: 0, rodilla: 2 }, pd: { flex: 0, rodilla: 2 } },
+    { verbo: 'se inclina', dur: 7, giro: 78, inclina: 50, cabeza: 18, puntas: 0,    camina: 0,
+      bi: { abd: 4, flex: 22, codo: 8 }, bd: { abd: 4, flex: 22, codo: 8 }, pi: { flex: -4, rodilla: 6 }, pd: { flex: -4, rodilla: 6 } },
+    { verbo: 'se eleva',  dur: 7, giro: -18, inclina: -6, cabeza: -22, puntas: 0.035, camina: 0,
+      bi: { abd: 158, flex: 18, codo: 10 }, bd: { abd: 158, flex: 18, codo: 10 }, pi: { flex: 0, rodilla: 0 }, pd: { flex: 0, rodilla: 0 } },
+    { verbo: 'se recoge', dur: 7, giro: 30, inclina: 12, cabeza: 34, puntas: 0,    camina: 0,
+      bi: { abd: -25, flex: 40, codo: 95 }, bd: { abd: -25, flex: 40, codo: 95 }, pi: { flex: 12, rodilla: 22 }, pd: { flex: 8, rodilla: 16 } }
+  ];
+  const TRANS = 2.4;                         // segundos de paso entre una postura y la siguiente
+  const TOTAL = POSTURAS.reduce((s, p) => s + p.dur, 0);
 
-  somatic.appendChild(line);
-  setTimeout(() => line.remove(), 11000);
-}
-
-// Crear partículas cinéticas
-function createKineticParticles() {
-  const s = S();
-  for(let i = 0; i < 15; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'kinetic-particle';
-
-      const angle = (i / 15) * Math.PI * 2;
-      const distance = (75 + Math.random() * 125) * s;
-      const kx = Math.cos(angle) * distance;
-      const ky = Math.sin(angle) * distance;
-
-      particle.style.cssText = `
-        left: 50%;
-        top: 50%;
-        --kx: ${kx}px;
-        --ky: ${ky}px;
-        animation-delay: ${Math.random() * 4}s;
-      `;
-
-      somatic.appendChild(particle);
-      setTimeout(() => particle.remove(), 9000);
-    }, i * 85);
+  function mezclar(a, b, k) {
+    if (typeof a === 'number') return a + (b - a) * k;
+    if (typeof a === 'string') return k < 0.5 ? a : b;
+    const r = {}; for (const key in a) r[key] = mezclar(a[key], b[key], k); return r;
   }
-}
+  const suave = (u) => u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u);
 
-// Crear trazos de movimiento
-function createMovementTrace() {
-  const s = S();
-  const trace = document.createElement('div');
-  trace.className = 'movement-trace';
-
-  const ty = (70 + Math.random() * 140) * s;
-  const tx = (Math.random() - 0.5) * 110 * s;
-  const tr = (Math.random() - 0.5) * 90;
-
-  trace.style.cssText = `
-    left: ${25 + Math.random() * 50}%;
-    top: ${20 + Math.random() * 60}%;
-    --ty: ${ty}px;
-    --tx: ${tx}px;
-    --tr: ${tr}deg;
-    animation-delay: ${Math.random() * 6}s;
-  `;
-
-  somatic.appendChild(trace);
-  setTimeout(() => trace.remove(), 12000);
-}
-
-if (!quieto) {
-  // Generar elementos continuamente
-  setInterval(createPostureLine, 2400);
-  setInterval(createKineticParticles, 6800);
-  setInterval(createMovementTrace, 2700);
-
-  // Crear elementos iniciales
-  for(let i = 0; i < 7; i++) {
-    setTimeout(createPostureLine, i * 850);
+  function posturaEn(t) {
+    t = ((t % TOTAL) + TOTAL) % TOTAL;
+    let i = 0, acc = 0;
+    while (t >= acc + POSTURAS[i].dur) { acc += POSTURAS[i].dur; i++; }
+    const prev = POSTURAS[(i + POSTURAS.length - 1) % POSTURAS.length];
+    return mezclar(prev, POSTURAS[i], suave((t - acc) / TRANS));
   }
-  createKineticParticles();
-  for(let i = 0; i < 7; i++) {
-    setTimeout(createMovementTrace, i * 740);
-  }
-}
 
-// Interactividad - tocar crea expresión corporal
-document.body.addEventListener('click', (e) => {
-  if (e.target.closest('.infinito')) return;
+  // La marcha: un ciclo de algo más de un segundo, cuya amplitud depende de cuánto «camina» la postura
+  const PASO = 1.15;
+  function marcha(p, t) {
+    const w = p.camina; if (w < 0.001) return p;
+    const q = JSON.parse(JSON.stringify(p));
+    const ps = (2 * Math.PI * t) / PASO;
+    const pierna = (ph) => ({ flex: 24 * Math.sin(ph), rodilla: 6 + 58 * Math.pow(Math.max(0, Math.cos(ph - 0.35)), 3) });
+    const brazo = (ph) => ({ flex: 22 * Math.sin(ph), codo: 18 + 16 * Math.max(0, Math.sin(ph)) });
+    const pd = pierna(ps), pi = pierna(ps + Math.PI), bd = brazo(ps + Math.PI), bi = brazo(ps);
+    q.pd.flex += pd.flex * w; q.pd.rodilla += (pd.rodilla - 4) * w;
+    q.pi.flex += pi.flex * w; q.pi.rodilla += (pi.rodilla - 4) * w;
+    q.bd.flex += bd.flex * w; q.bd.codo += (bd.codo - 18) * w;
+    q.bi.flex += bi.flex * w; q.bi.codo += (bi.codo - 18) * w;
+    return q;
+  }
+
+  // Cinemática: de los ángulos a los trece puntos, con los pies siempre en el piso
+  function puntos(p) {
+    const P = [0, 0.5, 0];
+    const U = rotX([0, 1, 0], rad(p.inclina));
+    const S = suma(P, U, B.torso);
+    const cabeza = suma(S, rotX([0, 1, 0], rad(p.inclina + p.cabeza * 0.5)), B.cuello);
+    const out = [cabeza];
+    for (const [lado, a] of [[-1, p.bi], [1, p.bd]]) {
+      const hombro = suma(S, [lado * B.hombro, 0, 0]);
+      let d = [lado * Math.sin(rad(a.abd)), -Math.cos(rad(a.abd)), 0];
+      d = rotX(d, -rad(a.flex));
+      const codo = suma(hombro, d, B.brazo);
+      const d2 = rotX(d, -rad(a.codo));
+      out.push(hombro, codo, suma(codo, d2, B.antebrazo));
+    }
+    for (const [lado, l] of [[-1, p.pi], [1, p.pd]]) {
+      const cad = suma(P, [lado * B.cadera, 0, 0]);
+      const d = rotX([0, -1, 0], -rad(l.flex));
+      const rod = suma(cad, d, B.muslo);
+      const d2 = rotX(d, rad(l.rodilla));
+      out.push(cad, rod, suma(rod, d2, B.pierna));
+    }
+    const piso = Math.min(out[9][1], out[12][1]);     // los tobillos
+    return out.map(([x, y, z]) => [x, y - piso + p.puntas, z]);
+  }
+
+  function medir() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    lienzo.width = Math.round(W * dpr); lienzo.height = Math.round(H * dpr);
+    lienzo.style.width = W + 'px'; lienzo.style.height = H + 'px';
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ALTO = Math.min(H * 0.4, W * 0.9, 440);
+    CX = W / 2; PISO = H * 0.45 + ALTO * 0.5;
+  }
+
+  const HUESOS = [[0, 1], [0, 4], [1, 4], [1, 2], [2, 3], [4, 5], [5, 6], [1, 7], [4, 10], [7, 10], [7, 8], [8, 9], [10, 11], [11, 12]];
+
+  function dibujar(pts, giro, huesos) {
+    const c = Math.cos(rad(giro)), s = Math.sin(rad(giro));
+    const pr = pts.map(([x, y, z]) => ({ X: CX + (x * c + z * s) * ALTO, Y: PISO - y * ALTO, d: -x * s + z * c }));
+    g.clearRect(0, 0, W, H);
+    // el piso, apenas una línea de luz
+    const pg = g.createLinearGradient(CX - ALTO * 0.6, 0, CX + ALTO * 0.6, 0);
+    pg.addColorStop(0, 'rgba(240,190,160,0)'); pg.addColorStop(0.5, 'rgba(240,190,160,0.16)'); pg.addColorStop(1, 'rgba(240,190,160,0)');
+    g.strokeStyle = pg; g.lineWidth = 1; g.beginPath(); g.moveTo(CX - ALTO * 0.6, PISO + 2); g.lineTo(CX + ALTO * 0.6, PISO + 2); g.stroke();
+    if (huesos) {
+      g.strokeStyle = 'rgba(240,200,180,0.18)'; g.lineWidth = 1;
+      for (const [a, b] of HUESOS) { g.beginPath(); g.moveTo(pr[a].X, pr[a].Y); g.lineTo(pr[b].X, pr[b].Y); g.stroke(); }
+    }
+    g.globalCompositeOperation = 'lighter';
+    const r0 = Math.max(2.6, ALTO / 110);
+    for (const q of pr) {
+      const k = 0.78 + 0.22 * Math.max(-1, Math.min(1, q.d * 4));   // lo cercano brilla más
+      // reflejo en el piso
+      const ry = PISO + (PISO - q.Y) * 0.55 + 4;
+      g.fillStyle = `rgba(240,190,160,${(0.09 * k).toFixed(3)})`;
+      g.beginPath(); g.arc(q.X, ry, r0 * 0.8, 0, Math.PI * 2); g.fill();
+      // halo y punto
+      const h = g.createRadialGradient(q.X, q.Y, 0, q.X, q.Y, r0 * 6);
+      h.addColorStop(0, `rgba(250,200,170,${(0.34 * k).toFixed(3)})`); h.addColorStop(1, 'rgba(250,200,170,0)');
+      g.fillStyle = h; g.beginPath(); g.arc(q.X, q.Y, r0 * 6, 0, Math.PI * 2); g.fill();
+      g.fillStyle = `rgba(255,242,232,${(0.95 * k).toFixed(3)})`;
+      g.beginPath(); g.arc(q.X, q.Y, r0 * (0.8 + 0.25 * k), 0, Math.PI * 2); g.fill();
+    }
+    g.globalCompositeOperation = 'source-over';
+  }
+
+  /* ---------------- La respuesta al toque: el cuerpo se vuelve y alza un brazo hacia ti ----- */
+  let T = 0, ultimo = 0, toque = -99, ladoToque = 1;
+  function respuesta(p, t) {
+    const w = Math.exp(-Math.pow((t - toque - 1.1) / 1.1, 2)) * (t > toque ? 1 : 0);
+    if (w < 0.002) return p;
+    const q = mezclar(p, p, 0);
+    q.giro = p.giro * (1 - 0.7 * w);
+    q.camina = p.camina * (1 - w);
+    const brazo = ladoToque > 0 ? 'bd' : 'bi';
+    q[brazo] = mezclar(p[brazo], { abd: 128, flex: 26, codo: 14 }, w);
+    q.cabeza = p.cabeza * (1 - w) - 10 * w;
+    return q;
+  }
+
+  function cuadro(ms) {
+    const dt = Math.min(0.05, (ms - ultimo) / 1000 || 0.016); ultimo = ms; T += dt;
+    let p = posturaEn(T);
+    p = marcha(p, T);
+    p = respuesta(p, T);
+    dibujar(puntos(p), p.giro, false);
+    sonar(p, T, dt);
+    requestAnimationFrame(cuadro);
+  }
+
+  medir();
+  window.addEventListener('resize', () => { medir(); if (quieto) dibujar(puntos(POSTURAS[1]), 24, true); });
+  if (quieto) dibujar(puntos(POSTURAS[1]), 24, true);     // quieto, unos huesos tenues dejan leer el cuerpo
+  else requestAnimationFrame((t) => { ultimo = t; requestAnimationFrame(cuadro); });
+
+  /* ---------------- Diseño sonoro: pasos y respiración ----------------------------------------
+     Mientras camina, cada talón que toca el piso es un golpe suave y grave. La respiración es un
+     aire filtrado que sube y baja: se hace más honda cuando el cuerpo se abre o se eleva, y se
+     vacía cuando se inclina o se recoge. Debajo, un murmullo tibio, el del cuerpo mismo.
+     Al tocar, el cuerpo responde con un sonido breve y cálido.
+  ------------------------------------------------------------------------------------------- */
+  let started = false, ctx, master, verb, aire, aireF, fasePrev = 0;
+
+  function makeReverbIR(ac, seconds = 2.8, decay = 2.8) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
+  }
+  function ruido(ac, seg) {
+    const b = ac.createBuffer(1, Math.floor(ac.sampleRate * seg), ac.sampleRate), d = b.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    return b;
+  }
+
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.55, ctx.currentTime + 6);
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    verb = ctx.createGain(); verb.gain.value = 0.35; verb.connect(conv); conv.connect(master);
+
+    // respiración
+    const src = ctx.createBufferSource(); src.buffer = ruido(ctx, 3); src.loop = true;
+    aireF = ctx.createBiquadFilter(); aireF.type = 'bandpass'; aireF.frequency.value = 700; aireF.Q.value = 0.9;
+    aire = ctx.createGain(); aire.gain.value = 0;
+    src.connect(aireF); aireF.connect(aire); aire.connect(master); aire.connect(verb); src.start();
+
+    // el murmullo tibio del cuerpo
+    [[98.0, 0.014], [146.83, 0.009], [196.0, 0.004]].forEach(([f, v]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const gg = ctx.createGain(); gg.gain.value = 0; o.connect(gg); gg.connect(master); gg.connect(verb); o.start();
+      gg.gain.linearRampToValueAtTime(v, ctx.currentTime + 7);
+    });
+  }
+
+  function paso(fuerza, pan) {
+    const t = ctx.currentTime + 0.01;
+    const n = ctx.createBufferSource(); n.buffer = ruido(ctx, 0.12);
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 340;
+    const gn = ctx.createGain(); gn.gain.value = 0;
+    const p = ctx.createStereoPanner(); p.pan.value = pan;
+    n.connect(lp); lp.connect(gn); gn.connect(p);
+    gn.gain.setValueAtTime(0, t); gn.gain.linearRampToValueAtTime(0.28 * fuerza, t + 0.008); gn.gain.exponentialRampToValueAtTime(0.001, t + 0.11);
+    const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(92, t); o.frequency.exponentialRampToValueAtTime(52, t + 0.12);
+    const go = ctx.createGain(); go.gain.value = 0; o.connect(go); go.connect(p);
+    go.gain.setValueAtTime(0, t); go.gain.linearRampToValueAtTime(0.16 * fuerza, t + 0.006); go.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
+    p.connect(master); p.connect(verb);
+    n.start(t); n.stop(t + 0.13); o.start(t); o.stop(t + 0.18);
+  }
+
+  function sonar(p, t, dt) {
+    if (!started) return;
+    // pasos: el talón toca el piso dos veces por ciclo
+    if (p.camina > 0.25) {
+      const f = ((t / PASO) % 1 + 1) % 1;
+      if ((fasePrev < 0.25 && f >= 0.25) ) paso(p.camina, 0.15);
+      if ((fasePrev < 0.75 && f >= 0.75) ) paso(p.camina, -0.15);
+      fasePrev = f;
+    }
+    // respiración: más honda cuanto más abierto o elevado está el cuerpo
+    const apertura = Math.max(0, Math.min(1, (p.bi.abd + p.bd.abd) / 300 + p.puntas * 8 - p.inclina / 160));
+    const ciclo = 0.5 - 0.5 * Math.cos(2 * Math.PI * t / 5.2);
+    const now = ctx.currentTime;
+    aire.gain.setTargetAtTime(0.012 + 0.05 * ciclo * (0.35 + 0.65 * apertura), now, 0.25);
+    aireF.frequency.setTargetAtTime(500 + 700 * ciclo, now, 0.3);
+  }
+
+  function responde(pan) {
+    const t = ctx.currentTime + 0.01;
+    [[196.0, 0.05], [293.66, 0.03], [392.0, 0.012]].forEach(([f, v]) => {
+      const o = ctx.createOscillator(); o.type = 'triangle'; o.frequency.value = f;
+      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900;
+      const gg = ctx.createGain(); gg.gain.value = 0;
+      const pp = ctx.createStereoPanner(); pp.pan.value = pan;
+      o.connect(lp); lp.connect(gg); gg.connect(pp); pp.connect(master); pp.connect(verb);
+      gg.gain.setValueAtTime(0, t); gg.gain.linearRampToValueAtTime(v, t + 0.25); gg.gain.exponentialRampToValueAtTime(0.0006, t + 2.4);
+      o.start(t); o.stop(t + 2.5);
+    });
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (!ctx) return;
+    if (document.hidden) ctx.suspend(); else ctx.resume();
+  });
+
   const hint = document.getElementById('hint');
-  if (hint) hint.classList.add('oculto');
-  if (quieto) return;
-
-  const rect = somatic.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  const s = S();
-
-  // Ondas de expresión
-  for(let i = 0; i < 6; i++) {
-    setTimeout(() => {
-      const wave = document.createElement('div');
-      wave.className = 'expression-wave';
-      const size = (90 + i * 55) * s;
-      wave.style.cssText = `
-        width: ${size}px;
-        height: ${size}px;
-        margin: ${-size / 2}px 0 0 ${-size / 2}px;
-        left: ${x}px;
-        top: ${y}px;
-        animation: wave-express ${10 - i}s ease-out forwards;
-        animation-delay: 0s;
-      `;
-      somatic.appendChild(wave);
-      setTimeout(() => wave.remove(), (10 - i) * 1000);
-    }, i * 230);
-  }
-
-  // Formas corporales
-  for(let i = 0; i < 6; i++) {
-    setTimeout(() => {
-      const body = document.createElement('div');
-      body.className = 'body-form';
-      const angle = (i / 6) * Math.PI * 2;
-      const distance = (60 + Math.random() * 75) * s;
-      body.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        margin: -100px 0 0 -60px;
-        --bx: ${Math.cos(angle) * distance}px;
-        --by: ${Math.sin(angle) * distance}px;
-        --br: ${(Math.random() - 0.5) * 50}deg;
-        animation: body-express 5s ease-out forwards;
-      `;
-      somatic.appendChild(body);
-      setTimeout(() => body.remove(), 5000);
-    }, i * 140);
-  }
-
-  // Líneas de postura radiales
-  for(let i = 0; i < 12; i++) {
-    setTimeout(() => {
-      const line = document.createElement('div');
-      line.className = 'posture-line';
-      const angle = (i / 12) * 360;
-      line.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --angle: ${angle}deg;
-        animation: line-posture 5s ease-out forwards;
-      `;
-      somatic.appendChild(line);
-      setTimeout(() => line.remove(), 5000);
-    }, i * 75);
-  }
-
-  // Partículas cinéticas
-  for(let i = 0; i < 20; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'kinetic-particle';
-      const angle = Math.random() * Math.PI * 2;
-      const distance = (55 + Math.random() * 95) * s;
-      particle.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --kx: ${Math.cos(angle) * distance}px;
-        --ky: ${Math.sin(angle) * distance}px;
-        animation: particle-kinetic 5s ease-out forwards;
-      `;
-      somatic.appendChild(particle);
-      setTimeout(() => particle.remove(), 5000);
-    }, i * 50);
-  }
-});
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    if (hint) hint.classList.add('oculto');
+    ladoToque = e.clientX >= CX ? 1 : -1;
+    toque = T;
+    responde(Math.max(-0.6, Math.min(0.6, (e.clientX - CX) / W)));
+  });
 </script>
-
 </body>
 </html>

@@ -2,494 +2,402 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Libro 12 - Nodo 2: El Gesto Sin Forma</title>
+<!-- Portal 79. Saneado en noviembre de 2026 con imagen y sonido propios:
+     un punto de luz escribe en el aire y su estela se apaga antes de cerrar una figura;
+     un tono de theremín sigue la altura del gesto. Frases, paradoja y paleta (rosa malva) del original. -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: radial-gradient(ellipse at center, #080510 0%, #000000 70%);
-  overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.gesture-field {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.formless-space {
-  position: relative;
-  width: 650px;
-  height: 650px;
-}
-
-.movement-trace {
-  position: absolute;
-  width: 200px;
-  height: 3px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(220,180,200,0.6),
-    transparent
-  );
-  animation: trace-flow 10s ease-in-out infinite;
-  filter: blur(1.5px);
-  transform-origin: left center;
-}
-
-@keyframes trace-flow {
-  0%, 100% {
-    transform: rotate(0deg) scaleX(0);
-    opacity: 0;
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(ellipse at 50% 45%, #140a10 0%, #07040a 55%, #000 82%);
+    background-color:#000;
+    color:#fff;
+    font-family:'Georgia', serif;
+    overflow:hidden;
+    height:100vh; height:100dvh;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action:none;
   }
-  50% {
-    transform: rotate(var(--angle)) scaleX(1);
-    opacity: 0.8;
-  }
-}
 
-.hand-essence {
-  position: absolute;
-  width: 100px;
-  height: 140px;
-  background: radial-gradient(ellipse,
-    rgba(220,180,200,0.3),
-    rgba(200,160,180,0.15),
-    transparent
-  );
-  border-radius: 45% 55% 50% 50%;
-  animation: hand-wave 13s ease-in-out infinite;
-  filter: blur(22px);
-  border: 1px solid rgba(220,180,200,0.2);
-}
+  #lienzo { position:fixed; inset:0; display:block; }
 
-@keyframes hand-wave {
-  0%, 100% {
-    transform: scale(0.8) translate(0, 0) rotate(0deg);
-    opacity: 0.5;
-    border-radius: 45% 55% 50% 50%;
+  .resplandor {
+    position:fixed; left:50%; top:45%;
+    width:min(70vw, 52vh); height:min(70vw, 52vh);
+    margin-left:calc(min(70vw, 52vh) / -2); margin-top:calc(min(70vw, 52vh) / -2);
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(220,160,200,0.10), transparent 66%);
+    animation: respira 17s ease-in-out infinite;
+    will-change: transform, opacity;
+    pointer-events:none;
   }
-  50% {
-    transform: scale(1.3) translate(var(--hx), var(--hy)) rotate(var(--hr));
-    opacity: 0.85;
-    border-radius: 50% 50% 45% 55%;
+  @keyframes respira {
+    0%,100% { transform:scale(0.88); opacity:0.5; }
+    50%     { transform:scale(1.15); opacity:0.95; }
   }
-}
 
-.motion-particle {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(220,180,200,0.7);
-  animation: particle-gesture 9s ease-in-out infinite;
-}
+  .cabecera {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top, 0px) + 6vh);
+    transform:translateX(-50%);
+    width:max-content; max-width:90vw; text-align:center;
+    z-index:5; pointer-events:none;
+  }
+  .titulo {
+    font-size: clamp(15px, 4.2vw, 22px);
+    letter-spacing:0.32em;
+    line-height:1.5;
+    color: rgba(246,226,238,0.9);
+    text-shadow: 0 0 26px rgba(225,150,195,0.45);
+  }
+  .subtitulo {
+    margin-top:0.7em;
+    font-size: clamp(11px, 2.8vw, 13px);
+    letter-spacing:0.28em; font-style:italic;
+    color: rgba(225,190,212,0.5);
+  }
 
-@keyframes particle-gesture {
-  0%, 100% {
-    transform: translate(0, 0) scale(0);
-    opacity: 0;
+  /* Las frases: cuatro, cada una legible casi diez segundos dentro de un ciclo de cuarenta */
+  .frases {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 19vh);
+    transform:translateX(-50%);
+    width:88vw; max-width:560px; height:4.4em;
+    text-align:center;
+    pointer-events:none;
   }
-  20% {
-    opacity: 1;
+  .frase {
+    position:absolute; left:0; right:0; top:0;
+    font-size: clamp(15px, 4.1vw, 20px);
+    line-height:1.55;
+    font-style:italic;
+    color: rgba(250,236,244,0.93);
+    text-shadow: 0 0 18px rgba(225,150,195,0.4);
+    opacity:0;
+    animation: frase 40s ease-in-out infinite;
+    will-change: opacity, transform;
   }
-  50% {
-    transform: translate(var(--mx), var(--my)) scale(1.2);
-    opacity: 0.9;
+  .frase.f2 { animation-delay:10s; }
+  .frase.f3 { animation-delay:20s; }
+  .frase.f4 { animation-delay:30s; }
+  @keyframes frase {
+    0%    { opacity:0; transform:translateY(6px); }
+    3.5%  { opacity:1; transform:translateY(0); }
+    22%   { opacity:1; transform:translateY(0); }
+    25%   { opacity:0; transform:translateY(-4px); }
+    100%  { opacity:0; transform:translateY(-4px); }
   }
-  80% {
-    opacity: 0.4;
-  }
-}
 
-.intention-wave {
-  position: absolute;
-  width: 250px;
-  height: 250px;
-  border: 2px solid rgba(220,180,200,0.25);
-  border-radius: 50%;
-  animation: wave-intention 14s ease-in-out infinite;
-  opacity: 0;
-}
-
-@keyframes wave-intention {
-  0%, 100% {
-    transform: scale(0.3) rotate(0deg);
-    opacity: 0;
-    border-radius: 50%;
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform:translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(250,236,244,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
   }
-  50% {
-    transform: scale(2) rotate(180deg);
-    opacity: 0.7;
-    border-radius: 48% 52% 50% 50%;
-  }
-}
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
 
-.body-language {
-  position: absolute;
-  width: 4px;
-  height: 90px;
-  background: linear-gradient(to bottom,
-    rgba(220,180,200,0.7),
-    rgba(200,160,180,0.5),
-    transparent
-  );
-  animation: language-express 11s ease-in-out infinite;
-  filter: blur(1.5px);
-}
-
-@keyframes language-express {
-  0%, 100% {
-    transform: translateY(0) translateX(0) rotate(0deg) scaleY(0);
-    opacity: 0;
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(230,190,215,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+    cursor:pointer;
   }
-  20% {
-    opacity: 0.7;
-  }
-  50% {
-    transform: translateY(var(--ly)) translateX(var(--lx)) rotate(var(--lr)) scaleY(1);
-    opacity: 0.9;
-  }
-  80% {
-    opacity: 0.5;
-  }
-}
+  .infinito:hover, .infinito:focus-visible { color: rgba(255,228,242,0.95); text-shadow:0 0 18px rgba(230,150,200,0.6); outline:none; }
 
-.title {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2.1em;
-  letter-spacing: 0.45em;
-  opacity: 0.9;
-  text-shadow: 0 0 30px rgba(220,180,200,0.5);
-  font-weight: 600;
-  text-align: center;
-  z-index: 100;
-}
-
-.subtitle {
-  position: fixed;
-  top: 115px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1em;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  font-style: italic;
-  z-index: 100;
-}
-
-.central-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5em;
-  letter-spacing: 0.4em;
-  text-align: center;
-  opacity: 0;
-  animation: text-gesture 14s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255,255,255,0.35);
-  line-height: 2.3;
-  z-index: 10;
-}
-
-@keyframes text-gesture {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9) rotate(-2deg);
+  @media (max-width: 480px) {
+    .titulo { letter-spacing:0.22em; }
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh); }
   }
-  20%, 80% {
-    opacity: 0.75;
-    transform: translate(-50%, -50%) scale(1) rotate(0deg);
-  }
-}
 
-.contemplation {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  text-align: center;
-  max-width: 780px;
-  line-height: 1.9;
-  padding: 0 40px;
-  font-style: italic;
-  z-index: 100;
-}
-
-.gesture-glow {
-  position: absolute;
-  width: 450px;
-  height: 450px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(220,180,200,0.1), transparent);
-  border-radius: 50%;
-  animation: glow-gesture 18s ease-in-out infinite;
-  filter: blur(75px);
-}
-
-@keyframes glow-gesture {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.3;
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; }
+    .resplandor { opacity:0.7; }
+    .frases { height:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 11vh); }
+    .frase { position:static; opacity:0.92; margin-bottom:0.45em; font-size: clamp(13px, 3.6vw, 18px); }
+    .hint { opacity:0.8; bottom:calc(env(safe-area-inset-bottom, 0px) + 24px); }
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.6);
-    opacity: 0.55;
-  }
-}
 </style>
 </head>
 <body>
+  <div class="resplandor"></div>
+  <canvas id="lienzo" aria-hidden="true"></canvas>
 
-<div class="title">EL GESTO SIN FORMA</div>
-<div class="subtitle">Libro 12 - Nodo 2</div>
-
-<div class="gesture-field">
-  <div class="formless-space">
-    <!-- Resplandor del gesto -->
-    <div class="gesture-glow"></div>
-    
-    <!-- Ondas de intención -->
-    <div class="intention-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
-    <div class="intention-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 4.7s; width: 200px; height: 200px;"></div>
-    <div class="intention-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 9.3s; width: 300px; height: 300px;"></div>
-    
-    <!-- Esencias de manos -->
-    <div class="hand-essence" style="top: 30%; left: 35%; --hx: 50px; --hy: -40px; --hr: 20deg; animation-delay: 0s;"></div>
-    <div class="hand-essence" style="top: 60%; left: 65%; --hx: -45px; --hy: 45px; --hr: -25deg; animation-delay: 4.3s;"></div>
-    <div class="hand-essence" style="top: 45%; left: 20%; --hx: 40px; --hy: 35px; --hr: 15deg; animation-delay: 8.7s;"></div>
-    
-    <!-- Texto central -->
-    <div class="central-text" style="animation-delay: 2.5s;">
-      Sin palabras<br>
-      el cuerpo<br>
-      habla<br><br>
-      Movimiento<br>
-      como lenguaje
-    </div>
+  <div class="cabecera">
+    <div class="titulo">EL GESTO SIN FORMA</div>
+    <div class="subtitulo">Libro 12 - Nodo 2</div>
   </div>
-</div>
 
-<div class="contemplation">
-  El gesto que precede al verbo · La mano que señala antes de nombrar<br>
-  Comunicación anterior al idioma · El cuerpo como primera palabra
-</div>
+  <div class="frases" aria-live="off">
+    <p class="frase f1">Sin palabras el cuerpo habla · Movimiento como lenguaje</p>
+    <p class="frase f2">El gesto que precede al verbo</p>
+    <p class="frase f3">La mano que señala antes de nombrar</p>
+    <p class="frase f4">Comunicación anterior al idioma · El cuerpo como primera palabra</p>
+  </div>
+
+  <div class="hint" id="hint">( toca y desliza: tu gesto también habla )</div>
+
+  <a class="infinito" href="L_12-Nodo3.html" aria-label="Siguiente portal">∞</a>
 
 <script>
-const gesture = document.querySelector('.formless-space');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lienzo = document.getElementById('lienzo');
+  const g = lienzo.getContext('2d');
+  let W, H, dpr, cx, cy, R;
 
-// Crear trazos de movimiento
-function createMovementTrace() {
-  const trace = document.createElement('div');
-  trace.className = 'movement-trace';
-  
-  const angle = Math.random() * 360;
-  
-  trace.style.cssText = `
-    left: ${25 + Math.random() * 50}%;
-    top: ${25 + Math.random() * 50}%;
-    --angle: ${angle}deg;
-    animation-delay: ${Math.random() * 5}s;
-  `;
-  
-  gesture.appendChild(trace);
-  setTimeout(() => trace.remove(), 10000);
-}
+  /* ---------------- El gesto: un punto que escribe en el aire sin cerrar nunca una figura ----
+     Su camino suma tres oscilaciones de frecuencias que no guardan proporción entre sí, así que
+     jamás repite un trazo. Su velocidad cambia como la de una mano: a veces se demora, casi se
+     detiene, y entonces señala hacia adelante con un rayo tenue, antes de nombrar nada.
+     La estela es caligráfica: más ancha según el ángulo, como una pluma, y se apaga en pocos
+     segundos; lo que queda detrás es apenas un recuerdo del movimiento.
+  ------------------------------------------------------------------------------------------- */
+  const FX = [[0.55, 0.47, 0.3], [0.30, 0.83, 1.9], [0.15, 1.31, 4.1]];
+  const FY = [[0.55, 0.61, 1.2], [0.30, 1.07, 0.4], [0.15, 1.53, 2.6]];
+  const VIVA = 5.5, RECUERDO = 16;           // segundos de estela nítida y de estela tenue
+  let tau = 0, T = -11, ultimo = 0;          // empieza en una fase en que la mano va suelta
+  const estela = [], propia = [], polvo = [];
 
-// Crear partículas de movimiento
-function createMotionParticles() {
-  for(let i = 0; i < 14; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'motion-particle';
-      
-      const angle = (i / 14) * Math.PI * 2;
-      const distance = 70 + Math.random() * 130;
-      const mx = Math.cos(angle) * distance;
-      const my = Math.sin(angle) * distance;
-      
-      particle.style.cssText = `
-        left: 50%;
-        top: 50%;
-        --mx: ${mx}px;
-        --my: ${my}px;
-        animation-delay: ${Math.random() * 4}s;
-      `;
-      
-      gesture.appendChild(particle);
-      setTimeout(() => particle.remove(), 9000);
-    }, i * 95);
+  function ritmo(T) {                         // la velocidad de la mano
+    const v = 0.5 + 0.5 * Math.sin(0.23 * T + 0.8 * Math.sin(0.11 * T));
+    return 0.08 + 0.92 * Math.pow(v, 0.8);
   }
-}
-
-// Crear lenguaje corporal
-function createBodyLanguage() {
-  const language = document.createElement('div');
-  language.className = 'body-language';
-  
-  const ly = 70 + Math.random() * 140;
-  const lx = (Math.random() - 0.5) * 120;
-  const lr = (Math.random() - 0.5) * 100;
-  
-  language.style.cssText = `
-    left: ${25 + Math.random() * 50}%;
-    top: ${20 + Math.random() * 60}%;
-    --ly: ${ly}px;
-    --lx: ${lx}px;
-    --lr: ${lr}deg;
-    animation-delay: ${Math.random() * 5}s;
-  `;
-  
-  gesture.appendChild(language);
-  setTimeout(() => language.remove(), 11000);
-}
-
-// Generar elementos continuamente
-setInterval(createMovementTrace, 2200);
-setInterval(createMotionParticles, 6500);
-setInterval(createBodyLanguage, 2900);
-
-// Crear elementos iniciales
-for(let i = 0; i < 7; i++) {
-  setTimeout(createMovementTrace, i * 800);
-}
-createMotionParticles();
-for(let i = 0; i < 7; i++) {
-  setTimeout(createBodyLanguage, i * 750);
-}
-
-// Interactividad - Click crea gesto expansivo
-gesture.addEventListener('click', (e) => {
-  const rect = gesture.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  // Ondas de intención desde el punto
-  for(let i = 0; i < 5; i++) {
-    setTimeout(() => {
-      const wave = document.createElement('div');
-      wave.className = 'intention-wave';
-      const size = 100 + i * 55;
-      wave.style.cssText = `
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
-        animation: wave-intention ${8 - i}s ease-out forwards;
-        animation-delay: 0s;
-      `;
-      gesture.appendChild(wave);
-      setTimeout(() => wave.remove(), (8 - i) * 1000);
-    }, i * 250);
+  function lugar(t) {
+    let x = 0, y = 0, dx = 0, dy = 0;
+    for (const [a, w, p] of FX) { x += a * Math.sin(w * t + p); dx += a * w * Math.cos(w * t + p); }
+    for (const [a, w, p] of FY) { y += a * Math.sin(w * t + p); dy += a * w * Math.cos(w * t + p); }
+    return { x: cx + R * x, y: cy + R * y, dx, dy };
   }
-  
-  // Manos gestuales
-  for(let i = 0; i < 8; i++) {
-    setTimeout(() => {
-      const hand = document.createElement('div');
-      hand.className = 'hand-essence';
-      const angle = (i / 8) * Math.PI * 2;
-      const distance = 60 + Math.random() * 70;
-      hand.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --hx: ${Math.cos(angle) * distance}px;
-        --hy: ${Math.sin(angle) * distance}px;
-        --hr: ${(Math.random() - 0.5) * 60}deg;
-        animation: hand-wave 5s ease-out forwards;
-      `;
-      gesture.appendChild(hand);
-      setTimeout(() => hand.remove(), 5000);
-    }, i * 130);
-  }
-  
-  // Trazos radiales
-  for(let i = 0; i < 12; i++) {
-    setTimeout(() => {
-      const trace = document.createElement('div');
-      trace.className = 'movement-trace';
-      const angle = (i / 12) * 360;
-      trace.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --angle: ${angle}deg;
-        animation: trace-flow 5s ease-out forwards;
-      `;
-      gesture.appendChild(trace);
-      setTimeout(() => trace.remove(), 5000);
-    }, i * 80);
-  }
-  
-  // Partículas gestuales
-  for(let i = 0; i < 20; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'motion-particle';
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 50 + Math.random() * 90;
-      particle.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --mx: ${Math.cos(angle) * distance}px;
-        --my: ${Math.sin(angle) * distance}px;
-        animation: particle-gesture 4s ease-out forwards;
-      `;
-      gesture.appendChild(particle);
-      setTimeout(() => particle.remove(), 4000);
-    }, i * 55);
-  }
-});
 
-// Hover crea estelas de movimiento
-let lastHover = 0;
-gesture.addEventListener('mousemove', (e) => {
-  const now = Date.now();
-  if(now - lastHover < 200) return;
-  lastHover = now;
-  
-  const rect = gesture.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  const trace = document.createElement('div');
-  trace.className = 'movement-trace';
-  trace.style.cssText = `
-    left: ${x}px;
-    top: ${y}px;
-    --angle: ${Math.random() * 360}deg;
-    animation: trace-flow 3s ease-out forwards;
-    width: 120px;
-  `;
-  gesture.appendChild(trace);
-  setTimeout(() => trace.remove(), 3000);
-});
+  function medir() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    lienzo.width = Math.round(W * dpr); lienzo.height = Math.round(H * dpr);
+    lienzo.style.width = W + 'px'; lienzo.style.height = H + 'px';
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = W / 2; cy = H * 0.45; R = Math.min(W * 0.4, H * 0.25);
+  }
+
+  function avanzar(dt) {
+    T += dt;
+    const r = ritmo(T);
+    tau += dt * r * 1.8;
+    const p = lugar(tau);
+    const ang = Math.atan2(p.dy, p.dx);
+    const pluma = 0.3 + 0.7 * Math.abs(Math.sin(ang - Math.PI / 4));
+    estela.push({ x: p.x, y: p.y, t: T, w: 3.4 * pluma * (1 + 0.7 * (1 - r)) });
+    // La mano suelta un polvo de luz al moverse, más cuanto más rápido va
+    if (Math.random() < r * 0.55 && polvo.length < 160) {
+      const a = Math.random() * Math.PI * 2, v = 4 + Math.random() * 10;
+      polvo.push({ x: p.x, y: p.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 3, t: T, vida: 2.5 + Math.random() * 3, r: 0.6 + Math.random() * 1.1 });
+    }
+    for (let i = polvo.length - 1; i >= 0; i--) {
+      const q = polvo[i]; q.x += q.vx * dt; q.y += q.vy * dt; q.vx *= 0.985; q.vy *= 0.985;
+      if (T - q.t > q.vida) polvo.splice(i, 1);
+    }
+    while (estela.length && T - estela[0].t > RECUERDO) estela.shift();
+    return { p, r };
+  }
+
+  function mezcla(a, b, k) { return a.map((v, i) => Math.round(v + (b[i] - v) * k)); }
+  const CABEZA = [255, 232, 244], MEDIO = [236, 168, 206], COLA = [186, 132, 184];
+
+  function trazar(lista, ahora, viva, recuerdo, calida) {
+    for (let i = 1; i < lista.length; i++) {
+      const a = lista[i - 1], b = lista[i];
+      const edad = ahora - b.t;
+      if (edad > recuerdo || b.corte) continue;
+      let alfa, ancho, col;
+      if (edad <= viva) {
+        const k = edad / viva;
+        col = k < 0.35 ? mezcla(CABEZA, MEDIO, k / 0.35) : mezcla(MEDIO, COLA, (k - 0.35) / 0.65);
+        if (calida) col = mezcla(col, [255, 214, 196], 0.35);
+        alfa = 0.88 * Math.pow(1 - k, 1.2) + 0.3 * k;
+        ancho = b.w * (1 - 0.75 * k);
+      } else {
+        const k = (edad - viva) / (recuerdo - viva);
+        col = COLA; alfa = 0.3 * Math.pow(1 - k, 1.1); ancho = 1.1;
+      }
+      g.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},${alfa.toFixed(3)})`;
+      g.lineWidth = Math.max(0.4, ancho);
+      g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(b.x, b.y); g.stroke();
+    }
+  }
+
+  function cabeza(x, y, fuerza) {
+    const halo = g.createRadialGradient(x, y, 0, x, y, 22);
+    halo.addColorStop(0, `rgba(255,214,236,${0.5 * fuerza})`);
+    halo.addColorStop(1, 'rgba(255,214,236,0)');
+    g.fillStyle = halo; g.beginPath(); g.arc(x, y, 22, 0, Math.PI * 2); g.fill();
+    g.fillStyle = `rgba(255,246,251,${0.95 * fuerza})`; g.beginPath(); g.arc(x, y, 2.4, 0, Math.PI * 2); g.fill();
+  }
+
+  function senalar(p, r) {                   // cuando la mano se demora, señala
+    if (r > 0.32) return;
+    const k = (0.32 - r) / 0.25;
+    const n = Math.hypot(p.dx, p.dy) || 1;
+    const ux = p.dx / n, uy = p.dy / n, L = R * 0.55 * Math.min(1, k);
+    const grad = g.createLinearGradient(p.x, p.y, p.x + ux * L, p.y + uy * L);
+    grad.addColorStop(0, `rgba(255,222,240,${0.42 * Math.min(1, k)})`);
+    grad.addColorStop(1, 'rgba(255,222,240,0)');
+    g.strokeStyle = grad; g.lineWidth = 1; g.lineCap = 'round';
+    g.beginPath(); g.moveTo(p.x + ux * 8, p.y + uy * 8); g.lineTo(p.x + ux * L, p.y + uy * L); g.stroke();
+  }
+
+  function cuadro(ahoraMs) {
+    const dt = Math.min(0.05, (ahoraMs - ultimo) / 1000 || 0.016); ultimo = ahoraMs;
+    const { p, r } = avanzar(dt);
+    g.clearRect(0, 0, W, H);
+    g.lineCap = 'butt';                       // sin cuentas en las uniones: un trazo continuo
+    trazar(estela, T, VIVA, RECUERDO, false);
+    trazar(propia, T, 3.2, 6, true);
+    while (propia.length && T - propia[0].t > 6) propia.shift();
+    g.globalCompositeOperation = 'lighter';
+    for (const q of polvo) {
+      const k = (T - q.t) / q.vida;
+      g.fillStyle = `rgba(246,196,226,${(0.75 * Math.sin(Math.PI * Math.min(1, k * 1.4 + 0.05))).toFixed(3)})`;
+      g.beginPath(); g.arc(q.x, q.y, q.r, 0, Math.PI * 2); g.fill();
+    }
+    senalar(p, r);
+    cabeza(p.x, p.y, 1);
+    if (dibujando && propia.length) { const u = propia[propia.length - 1]; cabeza(u.x, u.y, 0.8); }
+    g.globalCompositeOperation = 'source-over';
+    sonar(p, r);
+    requestAnimationFrame(cuadro);
+  }
+
+  function quieto() {                         // movimiento reducido: un solo gesto, detenido
+    estela.length = 0; T = 0; tau = 2;
+    for (let i = 0; i < 420; i++) avanzar(1 / 60);
+    g.clearRect(0, 0, W, H); g.lineCap = 'butt';
+    trazar(estela, T, VIVA, RECUERDO, false);
+    const u = estela[estela.length - 1]; cabeza(u.x, u.y, 1);
+  }
+
+  medir();
+  window.addEventListener('resize', () => {
+    const viejoCx = cx, viejoCy = cy, viejoR = R;
+    medir();
+    // Reubicar la estela ya trazada en el nuevo tamaño
+    for (const s of estela) { s.x = cx + (s.x - viejoCx) * R / viejoR; s.y = cy + (s.y - viejoCy) * R / viejoR; }
+    propia.length = 0;
+    if (reduce) quieto();
+  });
+
+  if (reduce) { quieto(); }
+  else {
+    for (let i = 0; i < 60 * 14; i++) avanzar(1 / 60);   // la escena empieza con el gesto en curso
+    requestAnimationFrame((t) => { ultimo = t; requestAnimationFrame(cuadro); });
+  }
+
+  /* ---------------- Diseño sonoro: el theremín, el instrumento que se toca sin tocarlo --------
+     Una sola voz, como una mano en el aire: la altura del tono sigue la altura del gesto, sin
+     notas fijas, deslizándose; el volumen sigue su velocidad, así que cuando la mano se demora
+     la voz casi calla, como una pausa entre frases. Vibrato suave, el de una mano viva.
+     Mientras dibujas con el dedo, la voz te sigue a ti.
+  ------------------------------------------------------------------------------------------- */
+  let started = false, ctx, master, voz, osc, osc2, panner, filtro;
+  let previo = null;
+
+  function makeReverbIR(ac, seconds = 3.6, decay = 2.6) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
+  }
+
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.34, ctx.currentTime + 6);
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    const verb = ctx.createGain(); verb.gain.value = 0.5; verb.connect(conv); conv.connect(master);
+
+    osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 330;
+    osc2 = ctx.createOscillator(); osc2.type = 'sine'; osc2.frequency.value = 660;
+    const arm = ctx.createGain(); arm.gain.value = 0.22;           // un poco de segundo armónico
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 5.6;
+    const prof = ctx.createGain(); prof.gain.value = 14;            // vibrato, en cents
+    lfo.connect(prof); prof.connect(osc.detune); prof.connect(osc2.detune);
+    filtro = ctx.createBiquadFilter(); filtro.type = 'lowpass'; filtro.frequency.value = 2000; filtro.Q.value = 0.5;
+    voz = ctx.createGain(); voz.gain.value = 0;
+    panner = ctx.createStereoPanner();
+    osc.connect(filtro); osc2.connect(arm); arm.connect(filtro);
+    filtro.connect(voz); voz.connect(panner); panner.connect(master); panner.connect(verb);
+    osc.start(); osc2.start(); lfo.start();
+  }
+
+  function altura(y) {                        // de abajo (grave) hacia arriba (agudo), sin escalones
+    const k = Math.max(0, Math.min(1, 1 - (y - (cy - R)) / (2 * R)));
+    return 196 * Math.pow(2, k * 1.6);
+  }
+
+  function sonar(p, r) {
+    if (!started || reduce) return;
+    const t = ctx.currentTime;
+    let x = p.x, y = p.y, vel = r;
+    if (dibujando && propia.length > 1) {
+      const a = propia[propia.length - 2], b = propia[propia.length - 1];
+      x = b.x; y = b.y;
+      vel = Math.min(1, Math.hypot(b.x - a.x, b.y - a.y) / Math.max(0.008, b.t - a.t) / 260);
+      if (T - b.t > 0.12) vel = 0.05;        // el dedo quieto: casi silencio
+    }
+    const f = altura(y);
+    osc.frequency.setTargetAtTime(f, t, 0.07);
+    osc2.frequency.setTargetAtTime(f * 2, t, 0.07);
+    voz.gain.setTargetAtTime(0.085 * Math.max(0.04, Math.pow(vel, 1.2)), t, 0.12);
+    panner.pan.setTargetAtTime(Math.max(-0.7, Math.min(0.7, (x - cx) / R * 0.6)), t, 0.1);
+  }
+
+  function deslizar(y) {                      // con movimiento reducido: un gesto sonoro por toque
+    const t = ctx.currentTime, f = altura(y);
+    osc.frequency.cancelScheduledValues(t); osc2.frequency.cancelScheduledValues(t); voz.gain.cancelScheduledValues(t);
+    osc.frequency.setValueAtTime(f, t); osc.frequency.exponentialRampToValueAtTime(f * 1.33, t + 1.8);
+    osc2.frequency.setValueAtTime(f * 2, t); osc2.frequency.exponentialRampToValueAtTime(f * 2.66, t + 1.8);
+    voz.gain.setValueAtTime(0, t); voz.gain.linearRampToValueAtTime(0.07, t + 0.4); voz.gain.linearRampToValueAtTime(0, t + 2.6);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (!ctx) return;
+    if (document.hidden) ctx.suspend(); else ctx.resume();
+  });
+
+  /* ---------------- El gesto propio ---------------- */
+  let dibujando = false;
+  const hint = document.getElementById('hint');
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    if (hint) hint.classList.add('oculto');
+    if (reduce) { deslizar(e.clientY); return; }
+    dibujando = true;
+    propia.push({ x: e.clientX, y: e.clientY, t: T, w: 3.6, corte: true });
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!dibujando) return;
+    const u = propia[propia.length - 1];
+    const ang = u ? Math.atan2(e.clientY - u.y, e.clientX - u.x) : 0;
+    propia.push({ x: e.clientX, y: e.clientY, t: T, w: 4.2 * (0.3 + 0.7 * Math.abs(Math.sin(ang - Math.PI / 4))) });
+  });
+  const soltar = () => { dibujando = false; };
+  window.addEventListener('pointerup', soltar);
+  window.addEventListener('pointercancel', soltar);
 </script>
-
 </body>
 </html>

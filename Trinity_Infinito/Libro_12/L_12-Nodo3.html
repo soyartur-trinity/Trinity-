@@ -2,499 +2,415 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Libro 12 - Nodo 3: La Mirada Que Comprende</title>
+<!-- Portal 80. Saneado en noviembre de 2026 con imagen y sonido propios:
+     un ojo se abre y, en su pupila, aparece pequeño el ojo del otro (pupilla, «muñequita»);
+     la mirada entra en él, y en él aparece otra vez la primera. Resonancia por simpatía.
+     Frases, paradoja y paleta (azul, elevada a zafiro) del original. -->
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: radial-gradient(ellipse at center, #05080f 0%, #000000 70%);
-  overflow: hidden;
-  font-family: 'Crimson Text', 'Palatino', serif;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.vision-field {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.understanding-space {
-  position: relative;
-  width: 650px;
-  height: 650px;
-}
-
-.eye-presence {
-  position: absolute;
-  width: 110px;
-  height: 65px;
-  background: radial-gradient(ellipse,
-    rgba(180,200,240,0.35),
-    rgba(150,180,220,0.2),
-    transparent
-  );
-  border-radius: 50%;
-  animation: eye-see 12s ease-in-out infinite;
-  filter: blur(18px);
-  border: 1px solid rgba(180,200,240,0.25);
-}
-
-@keyframes eye-see {
-  0%, 100% {
-    transform: scale(0.8) translate(0, 0);
-    opacity: 0.5;
+  html, body { height:100%; }
+  body {
+    background: radial-gradient(ellipse at 50% 45%, #0a0e1c 0%, #04060e 55%, #000 82%);
+    background-color:#000;
+    color:#fff;
+    font-family:'Georgia', serif;
+    overflow:hidden;
+    height:100vh; height:100dvh;
+    cursor:none;
+    -webkit-tap-highlight-color: transparent;
   }
-  50% {
-    transform: scale(1.4) translate(var(--ex), var(--ey));
-    opacity: 0.9;
-  }
-}
 
-.pupil-core {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  background: radial-gradient(circle,
-    rgba(100,120,180,0.7),
-    rgba(80,100,160,0.4),
-    transparent
-  );
-  border-radius: 50%;
-  animation: pupil-dilate 8s ease-in-out infinite;
-  filter: blur(5px);
-}
+  #lienzo { position:fixed; inset:0; display:block; }
 
-@keyframes pupil-dilate {
-  0%, 100% {
-    transform: scale(0.7);
-    opacity: 0.6;
+  .cabecera {
+    position:fixed; left:50%; top:calc(env(safe-area-inset-top, 0px) + 6vh);
+    transform:translateX(-50%);
+    width:max-content; max-width:90vw; text-align:center;
+    z-index:5; pointer-events:none;
   }
-  50% {
-    transform: scale(1.3);
-    opacity: 1;
+  .titulo {
+    font-size: clamp(15px, 4.2vw, 22px);
+    letter-spacing:0.32em;
+    line-height:1.5;
+    color: rgba(226,234,252,0.9);
+    text-shadow: 0 0 26px rgba(120,160,240,0.45);
   }
-}
+  .subtitulo {
+    margin-top:0.7em;
+    font-size: clamp(11px, 2.8vw, 13px);
+    letter-spacing:0.28em; font-style:italic;
+    color: rgba(180,200,240,0.5);
+  }
 
-.sight-line {
-  position: absolute;
-  width: 180px;
-  height: 2px;
-  background: linear-gradient(90deg,
-    rgba(180,200,240,0.6),
-    rgba(150,180,220,0.4),
-    transparent
-  );
-  animation: line-gaze 10s ease-in-out infinite;
-  filter: blur(1px);
-  transform-origin: left center;
-}
+  .frases {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 19vh);
+    transform:translateX(-50%);
+    width:88vw; max-width:560px; height:4.4em;
+    text-align:center;
+    pointer-events:none;
+  }
+  .frase {
+    position:absolute; left:0; right:0; top:0;
+    font-size: clamp(15px, 4.1vw, 20px);
+    line-height:1.55;
+    font-style:italic;
+    color: rgba(234,240,254,0.93);
+    text-shadow: 0 0 18px rgba(120,160,240,0.4);
+    opacity:0;
+    animation: frase 40s ease-in-out infinite;
+    will-change: opacity, transform;
+  }
+  .frase.f2 { animation-delay:10s; }
+  .frase.f3 { animation-delay:20s; }
+  .frase.f4 { animation-delay:30s; }
+  @keyframes frase {
+    0%    { opacity:0; transform:translateY(6px); }
+    3.5%  { opacity:1; transform:translateY(0); }
+    22%   { opacity:1; transform:translateY(0); }
+    25%   { opacity:0; transform:translateY(-4px); }
+    100%  { opacity:0; transform:translateY(-4px); }
+  }
 
-@keyframes line-gaze {
-  0%, 100% {
-    transform: rotate(0deg) scaleX(0);
-    opacity: 0;
+  .hint {
+    position:fixed; left:50%;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 50px);
+    transform:translateX(-50%);
+    width:max-content; max-width:88vw; text-align:center;
+    font-size: clamp(12px, 3.2vw, 14px);
+    letter-spacing:1px;
+    color: rgba(234,240,254,0.88);
+    animation: invita 3.4s infinite ease-in-out;
+    pointer-events:none;
+    transition: opacity 1.4s ease;
   }
-  50% {
-    transform: rotate(var(--angle)) scaleX(1);
-    opacity: 0.8;
-  }
-}
+  .hint.oculto { animation:none; opacity:0; }
+  @keyframes invita { 0%,100% { opacity:0.45; } 50% { opacity:0.95; } }
 
-.recognition-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  box-shadow: 0 0 12px rgba(180,200,240,0.7);
-  animation: particle-recognize 9s ease-in-out infinite;
-}
+  .infinito {
+    position:fixed;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 14px); right:22px;
+    font-size:30px; text-decoration:none;
+    color: rgba(170,195,240,0.4);
+    transition: color 0.8s ease, text-shadow 0.8s ease;
+    z-index:20;
+    cursor:pointer;
+  }
+  .infinito:hover, .infinito:focus-visible { color: rgba(230,238,255,0.95); text-shadow:0 0 18px rgba(120,160,240,0.6); outline:none; }
 
-@keyframes particle-recognize {
-  0%, 100% {
-    transform: translate(0, 0) scale(0);
-    opacity: 0;
+  @media (max-width: 480px) {
+    .titulo { letter-spacing:0.22em; }
+    .frases { bottom:calc(env(safe-area-inset-bottom, 0px) + 15vh); }
   }
-  20% {
-    opacity: 1;
-  }
-  50% {
-    transform: translate(var(--rx), var(--ry)) scale(1.1);
-    opacity: 0.9;
-  }
-  80% {
-    opacity: 0.5;
-  }
-}
 
-.understanding-wave {
-  position: absolute;
-  width: 280px;
-  height: 280px;
-  border: 2px solid rgba(180,200,240,0.2);
-  border-radius: 50%;
-  animation: wave-comprehend 15s ease-in-out infinite;
-  opacity: 0;
-}
-
-@keyframes wave-comprehend {
-  0%, 100% {
-    transform: scale(0.4);
-    opacity: 0;
+  @media (prefers-reduced-motion: reduce) {
+    * { animation:none !important; }
+    .frases { height:auto; bottom:calc(env(safe-area-inset-bottom, 0px) + 11vh); }
+    .frase { position:static; opacity:0.92; margin-bottom:0.45em; font-size: clamp(13px, 3.6vw, 18px); }
+    .hint { opacity:0.8; bottom:calc(env(safe-area-inset-bottom, 0px) + 24px); }
   }
-  50% {
-    transform: scale(2.3);
-    opacity: 0.7;
-  }
-}
-
-.connection-ray {
-  position: absolute;
-  width: 4px;
-  height: 100px;
-  background: linear-gradient(to bottom,
-    rgba(180,200,240,0.7),
-    rgba(150,180,220,0.5),
-    transparent
-  );
-  animation: ray-connect 11s ease-in-out infinite;
-  filter: blur(1.5px);
-}
-
-@keyframes ray-connect {
-  0%, 100% {
-    transform: translateY(0) translateX(0) rotate(0deg) scaleY(0);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.7;
-  }
-  50% {
-    transform: translateY(var(--cy)) translateX(var(--cx)) rotate(var(--cr)) scaleY(1);
-    opacity: 0.9;
-  }
-  80% {
-    opacity: 0.5;
-  }
-}
-
-.title {
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2em;
-  letter-spacing: 0.4em;
-  opacity: 0.9;
-  text-shadow: 0 0 30px rgba(180,200,240,0.5);
-  font-weight: 600;
-  text-align: center;
-  z-index: 100;
-}
-
-.subtitle {
-  position: fixed;
-  top: 113px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1em;
-  letter-spacing: 0.3em;
-  opacity: 0.5;
-  font-style: italic;
-  z-index: 100;
-}
-
-.central-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5em;
-  letter-spacing: 0.4em;
-  text-align: center;
-  opacity: 0;
-  animation: text-see 14s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(255,255,255,0.4);
-  line-height: 2.3;
-  z-index: 10;
-}
-
-@keyframes text-see {
-  0%, 100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
-  }
-  20%, 80% {
-    opacity: 0.75;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-.contemplation {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.95em;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  text-align: center;
-  max-width: 780px;
-  line-height: 1.9;
-  padding: 0 40px;
-  font-style: italic;
-  z-index: 100;
-}
-
-.vision-glow {
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(180,200,240,0.12), transparent);
-  border-radius: 50%;
-  animation: glow-vision 17s ease-in-out infinite;
-  filter: blur(70px);
-}
-
-@keyframes glow-vision {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.35;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.5);
-    opacity: 0.6;
-  }
-}
 </style>
 </head>
 <body>
+  <canvas id="lienzo" aria-hidden="true"></canvas>
 
-<div class="title">LA MIRADA QUE COMPRENDE</div>
-<div class="subtitle">Libro 12 - Nodo 3</div>
-
-<div class="vision-field">
-  <div class="understanding-space">
-    <!-- Resplandor de visión -->
-    <div class="vision-glow"></div>
-    
-    <!-- Ondas de comprensión -->
-    <div class="understanding-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
-    <div class="understanding-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 5s; width: 240px; height: 240px;"></div>
-    <div class="understanding-wave" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 10s; width: 320px; height: 320px;"></div>
-    
-    <!-- Ojos presentes -->
-    <div class="eye-presence" style="top: 35%; left: 30%; --ex: 40px; --ey: -35px; animation-delay: 0s;">
-      <div class="pupil-core" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s;"></div>
-    </div>
-    <div class="eye-presence" style="top: 55%; left: 70%; --ex: -45px; --ey: 40px; animation-delay: 4s;">
-      <div class="pupil-core" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 4s;"></div>
-    </div>
-    <div class="eye-presence" style="top: 70%; left: 40%; --ex: 35px; --ey: 30px; animation-delay: 8s;">
-      <div class="pupil-core" style="top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 8s;"></div>
-    </div>
-    
-    <!-- Texto central -->
-    <div class="central-text" style="animation-delay: 2.5s;">
-      Un vistazo<br>
-      basta<br><br>
-      Los ojos<br>
-      entienden<br>
-      sin palabras
-    </div>
+  <div class="cabecera">
+    <div class="titulo">LA MIRADA QUE COMPRENDE</div>
+    <div class="subtitulo">Libro 12 - Nodo 3</div>
   </div>
-</div>
 
-<div class="contemplation">
-  La mirada que dice todo · El intercambio silencioso entre pupilas<br>
-  Comprender sin necesidad de explicación · La visión como diálogo
-</div>
+  <div class="frases" aria-live="off">
+    <p class="frase f1">Un vistazo basta · Los ojos entienden sin palabras</p>
+    <p class="frase f2">La mirada que dice todo</p>
+    <p class="frase f3">El intercambio silencioso entre pupilas</p>
+    <p class="frase f4">Comprender sin necesidad de explicación · La visión como diálogo</p>
+  </div>
+
+  <div class="hint" id="hint">( toca: cruza una mirada )</div>
+
+  <a class="infinito" href="L_12-Nodo4.html" aria-label="Siguiente portal">∞</a>
 
 <script>
-const vision = document.querySelector('.understanding-space');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lienzo = document.getElementById('lienzo');
+  const g = lienzo.getContext('2d');
+  let W, H, dpr, CX, CY, S0;
 
-// Crear líneas de mirada
-function createSightLine() {
-  const line = document.createElement('div');
-  line.className = 'sight-line';
-  
-  const angle = Math.random() * 360;
-  
-  line.style.cssText = `
-    left: ${25 + Math.random() * 50}%;
-    top: ${25 + Math.random() * 50}%;
-    --angle: ${angle}deg;
-    animation-delay: ${Math.random() * 5}s;
-  `;
-  
-  vision.appendChild(line);
-  setTimeout(() => line.remove(), 10000);
-}
+  /* ---------------- La imagen: pupila viene de pupilla, «muñequita» ----------------------------
+     La figura diminuta de uno mismo que se ve en los ojos del otro. Un ojo se abre; en su pupila
+     está, pequeño, el ojo de quien mira. La mirada se acerca hasta entrar en él, y entonces es ese
+     otro ojo el que mira, con la primera mirada otra vez en su pupila. Un intercambio sin fin.
+     Cada ojo reconoce antes de entrar: su pupila se dilata, como sucede ante lo que nos importa.
+  ------------------------------------------------------------------------------------------- */
+  const RP = 0.09;                  // radio de la pupila en reposo, en proporción al ancho del ojo
+  const INTERIOR = 1.6 * RP;        // ancho del ojo reflejado, en la misma proporción
+  const Z = 1 / INTERIOR;           // cuánto crece la mirada para entrar en la pupila
+  const TONOS = [                   // dos iris del mismo azul: zafiro profundo y azul de agua
+    { centro: [128, 165, 228], borde: [32, 52, 128], fibra: [168, 200, 248] },
+    { centro: [160, 190, 232], borde: [58, 86, 158], fibra: [200, 220, 250] }
+  ];
+  const FIBRAS = Array.from({ length: 110 }, () => ({
+    a: Math.random() * Math.PI * 2, l: 0.55 + Math.random() * 0.45,
+    o: 0.12 + Math.random() * 0.32, c: (Math.random() - 0.5) * 0.25
+  }));
 
-// Crear partículas de reconocimiento
-function createRecognitionParticles() {
-  for(let i = 0; i < 16; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'recognition-particle';
-      
-      const angle = (i / 16) * Math.PI * 2;
-      const distance = 80 + Math.random() * 120;
-      const rx = Math.cos(angle) * distance;
-      const ry = Math.sin(angle) * distance;
-      
-      particle.style.cssText = `
-        left: 50%;
-        top: 50%;
-        --rx: ${rx}px;
-        --ry: ${ry}px;
-        animation-delay: ${Math.random() * 4}s;
-      `;
-      
-      vision.appendChild(particle);
-      setTimeout(() => particle.remove(), 9000);
-    }, i * 85);
+  function medir() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    lienzo.width = Math.round(W * dpr); lienzo.height = Math.round(H * dpr);
+    lienzo.style.width = W + 'px'; lienzo.style.height = H + 'px';
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    CX = W / 2; CY = H * 0.45; S0 = Math.min(W * 0.86, H * 0.46, 560);
   }
-}
 
-// Crear rayos de conexión
-function createConnectionRay() {
-  const ray = document.createElement('div');
-  ray.className = 'connection-ray';
-  
-  const cy = 80 + Math.random() * 130;
-  const cx = (Math.random() - 0.5) * 110;
-  const cr = (Math.random() - 0.5) * 90;
-  
-  ray.style.cssText = `
-    left: ${25 + Math.random() * 50}%;
-    top: ${20 + Math.random() * 60}%;
-    --cy: ${cy}px;
-    --cx: ${cx}px;
-    --cr: ${cr}deg;
-    animation-delay: ${Math.random() * 5}s;
-  `;
-  
-  vision.appendChild(ray);
-  setTimeout(() => ray.remove(), 11000);
-}
-
-// Generar elementos continuamente
-setInterval(createSightLine, 2300);
-setInterval(createRecognitionParticles, 6800);
-setInterval(createConnectionRay, 2800);
-
-// Crear elementos iniciales
-for(let i = 0; i < 7; i++) {
-  setTimeout(createSightLine, i * 850);
-}
-createRecognitionParticles();
-for(let i = 0; i < 7; i++) {
-  setTimeout(createConnectionRay, i * 720);
-}
-
-// Interactividad - Click crea momento de comprensión
-vision.addEventListener('click', (e) => {
-  const rect = vision.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  // Ondas de comprensión
-  for(let i = 0; i < 6; i++) {
-    setTimeout(() => {
-      const wave = document.createElement('div');
-      wave.className = 'understanding-wave';
-      const size = 90 + i * 55;
-      wave.style.cssText = `
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
-        animation: wave-comprehend ${9 - i}s ease-out forwards;
-        animation-delay: 0s;
-      `;
-      vision.appendChild(wave);
-      setTimeout(() => wave.remove(), (9 - i) * 1000);
-    }, i * 220);
+  function almendra(x, y, S, abre) {
+    g.beginPath();
+    g.moveTo(x - S / 2, y);
+    g.quadraticCurveTo(x, y - abre * S * 0.42, x + S / 2, y);
+    g.quadraticCurveTo(x, y + abre * S * 0.36, x - S / 2, y);
+    g.closePath();
   }
-  
-  // Ojo emergente
-  const eye = document.createElement('div');
-  eye.className = 'eye-presence';
-  eye.style.cssText = `
-    left: ${x}px;
-    top: ${y}px;
-    --ex: 0px;
-    --ey: 0px;
-    animation: eye-see 4s ease-out forwards;
-  `;
-  const pupil = document.createElement('div');
-  pupil.className = 'pupil-core';
-  pupil.style.cssText = `
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pupil-dilate 4s ease-out forwards;
-  `;
-  eye.appendChild(pupil);
-  vision.appendChild(eye);
-  setTimeout(() => eye.remove(), 4000);
-  
-  // Líneas de mirada radiales
-  for(let i = 0; i < 12; i++) {
-    setTimeout(() => {
-      const line = document.createElement('div');
-      line.className = 'sight-line';
-      const angle = (i / 12) * 360;
-      line.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --angle: ${angle}deg;
-        animation: line-gaze 5s ease-out forwards;
-      `;
-      vision.appendChild(line);
-      setTimeout(() => line.remove(), 5000);
-    }, i * 75);
+
+  // Dibuja un ojo y, dentro de su pupila, el ojo del otro (y dentro de ese, el primero...)
+  function ojo(x, y, S, e) {
+    if (S < 5) return;
+    const t = TONOS[e.tono % 2];
+    const ri = 0.2 * S, rp = e.pupila * S;
+    const ix = x + e.mx * S, iy = y + e.my * S;          // la mirada se desplaza un poco
+
+    g.save();
+    g.globalAlpha = e.alfa;
+    // un aura muy tenue alrededor del ojo
+    const au = g.createRadialGradient(x, y, S * 0.1, x, y, S * 0.75);
+    au.addColorStop(0, 'rgba(90,130,220,0.10)'); au.addColorStop(1, 'rgba(90,130,220,0)');
+    g.fillStyle = au; g.fillRect(x - S * 0.75, y - S * 0.75, S * 1.5, S * 1.5);
+    // blanco del ojo, apenas sugerido
+    almendra(x, y, S, e.abre);
+    const bl = g.createRadialGradient(x, y, 0, x, y, S * 0.55);
+    bl.addColorStop(0, 'rgba(170,190,235,0.10)'); bl.addColorStop(1, 'rgba(120,150,220,0.02)');
+    g.fillStyle = bl; g.fill();
+    g.save(); g.clip();
+
+    // iris
+    const ir = g.createRadialGradient(ix, iy, rp * 0.9, ix, iy, ri);
+    ir.addColorStop(0, `rgba(${t.centro},0.95)`);
+    ir.addColorStop(0.55, `rgba(${t.borde.map((v, i) => Math.round((v + t.centro[i]) / 2))},0.9)`);
+    ir.addColorStop(0.86, `rgba(${t.borde},0.95)`);
+    ir.addColorStop(1, 'rgba(8,12,34,0.98)');
+    g.fillStyle = ir; g.beginPath(); g.arc(ix, iy, ri, 0, Math.PI * 2); g.fill();
+
+    // fibras del iris, que giran muy despacio
+    if (S > 40) {
+      g.lineWidth = Math.max(0.5, S / 520);
+      for (const f of FIBRAS) {
+        const a = f.a + e.giro;
+        const r0 = rp * 1.05, r1 = rp + (ri - rp) * f.l;
+        g.strokeStyle = `rgba(${t.fibra},${f.o})`;
+        g.beginPath();
+        g.moveTo(ix + Math.cos(a) * r0, iy + Math.sin(a) * r0);
+        g.quadraticCurveTo(ix + Math.cos(a + f.c) * (r0 + r1) / 2, iy + Math.sin(a + f.c) * (r0 + r1) / 2,
+                           ix + Math.cos(a) * r1, iy + Math.sin(a) * r1);
+        g.stroke();
+      }
+    }
+
+    // pupila, y en ella el otro
+    g.fillStyle = 'rgba(2,3,10,1)';
+    g.beginPath(); g.arc(ix, iy, rp, 0, Math.PI * 2); g.fill();
+    if (e.interior) {
+      g.save();
+      g.beginPath(); g.arc(ix, iy, rp, 0, Math.PI * 2); g.clip();
+      ojo(ix, iy, S * INTERIOR, e.interior);
+      g.restore();
+    }
+
+    // brillo de la luz en la córnea
+    const bx = ix - ri * 0.32, by = iy - ri * 0.38;
+    const br = g.createRadialGradient(bx, by, 0, bx, by, ri * 0.22);
+    br.addColorStop(0, 'rgba(240,246,255,0.5)'); br.addColorStop(1, 'rgba(240,246,255,0)');
+    g.fillStyle = br; g.beginPath(); g.arc(bx, by, ri * 0.22, 0, Math.PI * 2); g.fill();
+    g.restore();
+
+    // los párpados: dos líneas de luz que se desvanecen hacia las comisuras
+    const lin = g.createLinearGradient(x - S / 2, 0, x + S / 2, 0);
+    lin.addColorStop(0, 'rgba(200,220,255,0)'); lin.addColorStop(0.22, 'rgba(200,220,255,0.7)');
+    lin.addColorStop(0.78, 'rgba(200,220,255,0.7)'); lin.addColorStop(1, 'rgba(200,220,255,0)');
+    almendra(x, y, S, e.abre);
+    g.strokeStyle = 'rgba(150,180,245,0.10)'; g.lineWidth = Math.max(2, S / 70); g.stroke();
+    g.strokeStyle = lin; g.lineWidth = Math.max(0.6, S / 280); g.stroke();
+    g.restore();
   }
-  
-  // Partículas de reconocimiento
-  for(let i = 0; i < 20; i++) {
-    setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'recognition-particle';
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 60 + Math.random() * 90;
-      particle.style.cssText = `
-        left: ${x}px;
-        top: ${y}px;
-        --rx: ${Math.cos(angle) * distance}px;
-        --ry: ${Math.sin(angle) * distance}px;
-        animation: particle-recognize 5s ease-out forwards;
-      `;
-      vision.appendChild(particle);
-      setTimeout(() => particle.remove(), 5000);
-    }, i * 50);
+
+  /* ---------------- El tiempo de cada mirada -------------------------------------------------
+     Reposo (el ojo mira, parpadea, reconoce) y después la entrada en la pupila del otro.        */
+  const REPOSO = 7, ENTRADA = 9, CICLO = REPOSO + ENTRADA;
+  let nivel = 0, t0 = 0, primera = true;
+  let mirada = { x: 0, y: 0, tx: 0, ty: 0 }, proximoVistazo = 1.6, giro = 0;
+  let toque = -10;
+
+  function suave(u) { return u < 0 ? 0 : u > 1 ? 1 : u * u * (3 - 2 * u); }
+
+  function estado(T) {
+    let t = T - t0;
+    const reposo = primera ? REPOSO + 2.5 : REPOSO;
+    if (t >= reposo + ENTRADA) {                 // la mirada ya entró: ahora mira el otro
+      t0 += reposo + ENTRADA; nivel++; primera = false; t = T - t0;
+      mirada = { x: 0, y: 0, tx: 0, ty: 0 }; proximoVistazo = 1.4;
+      if (started) reconocer(nivel, REPOSO - 4);
+    }
+    const rep = primera ? REPOSO + 2.5 : REPOSO;
+    // apertura: lenta la primera vez; después, un parpadeo al llegar
+    let abre = 1;
+    if (primera) abre = 0.04 + 0.96 * suave(t / 4.5);
+    else if (t < 0.9) abre = 1 - 0.9 * Math.sin(Math.PI * Math.min(1, t / 0.9));
+    // pupila que reconoce: se dilata a mitad del reposo
+    const rec = Math.exp(-Math.pow((t - (rep - 4)) / 1.3, 2));
+    const vist = Math.exp(-Math.pow((T - toque - 0.6) / 0.8, 2));
+    const pupila = RP * (1 + 0.22 * Math.max(rec, vist));
+    // entrada
+    const u = (t - rep) / ENTRADA;
+    const z = Math.pow(Z, suave(u));
+    const alfaFuera = 1 - suave((z - 2.2) / (Z - 2.2));
+    const alfaDentro = 0.55 + 0.45 * suave((z - 1) / (Z - 1));
+    return { t, abre, pupila, z, alfaFuera, alfaDentro, entrando: u > 0 };
   }
-});
+
+  let T = 0, ultimo = 0;
+  function cuadro(ms) {
+    const dt = Math.min(0.05, (ms - ultimo) / 1000 || 0.016); ultimo = ms; T += dt;
+    const s = estado(T);
+    giro += dt * 0.012;
+
+    // vistazos: pequeños desplazamientos de la mirada, como hacen los ojos vivos
+    if (!s.entrando && s.t > proximoVistazo) {
+      mirada.tx = (Math.random() - 0.5) * 0.07; mirada.ty = (Math.random() - 0.5) * 0.035;
+      proximoVistazo = s.t + 1.6 + Math.random() * 2.2;
+    }
+    if (s.entrando) { mirada.tx = 0; mirada.ty = 0; }
+    const k = 1 - Math.exp(-dt * 9);
+    mirada.x += (mirada.tx - mirada.x) * k; mirada.y += (mirada.ty - mirada.y) * k;
+
+    g.clearRect(0, 0, W, H);
+    const S = S0 * s.z;
+    // centro: al entrar, la pupila del ojo exterior se acerca al centro de la pantalla
+    const ox = CX - mirada.x * S, oy = CY - mirada.y * S;
+    const giroDe = (n) => (n % 2 ? -1 : 1) * giro + n * 0.7;   // cada ojo conserva su giro al pasar al frente
+    const interior2 = { tono: nivel + 2, abre: 1, pupila: RP, mx: 0, my: 0, giro: giroDe(nivel + 2), alfa: 0.55, interior: null };
+    const interior = { tono: nivel + 1, abre: 1, pupila: RP, mx: 0, my: 0, giro: giroDe(nivel + 1), alfa: s.alfaDentro, interior: interior2 };
+    const exterior = { tono: nivel, abre: s.abre, pupila: s.pupila, mx: mirada.x, my: mirada.y, giro: giroDe(nivel), alfa: s.alfaFuera, interior };
+    if (s.alfaFuera > 0.01) ojo(ox, oy, S, exterior);
+    else ojo(CX, CY, S * INTERIOR, interior);
+    requestAnimationFrame(cuadro);
+  }
+
+  function quieto() {
+    g.clearRect(0, 0, W, H);
+    const interior = { tono: 1, abre: 1, pupila: RP, mx: 0, my: 0, giro: 0, alfa: 0.75, interior: null };
+    ojo(CX, CY, S0, { tono: 0, abre: 1, pupila: RP * 1.1, mx: 0, my: 0, giro: 0, alfa: 1, interior });
+  }
+
+  medir();
+  window.addEventListener('resize', () => { medir(); if (reduce) quieto(); });
+  if (reduce) quieto();
+  else requestAnimationFrame((t) => { ultimo = t; requestAnimationFrame(cuadro); });
+
+  /* ---------------- Diseño sonoro: la resonancia por simpatía --------------------------------
+     Cuando un ojo reconoce, suena una cuerda pulsada de su lado. Del otro lado, una cuerda que
+     nadie tocó empieza a vibrar en la misma nota: llega despacio, sin golpe, y dura más. Así
+     responden las cuerdas por simpatía, y así se entiende una mirada sin explicación.
+     Los ojos se alternan a izquierda y derecha; cada intercambio dice una nota distinta.
+  ------------------------------------------------------------------------------------------- */
+  let started = false, ctx, master, verb;
+  const NOTAS = [293.66, 220.0, 329.63, 246.94, 196.0, 261.63];
+
+  function makeReverbIR(ac, seconds = 4.5, decay = 2.6) {
+    const len = Math.floor(ac.sampleRate * seconds);
+    const buf = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+    return buf;
+  }
+
+  function pulsar(f, pan, t) {                 // la cuerda tocada: armónicos que se apagan
+    const p = ctx.createStereoPanner(); p.pan.value = pan; p.connect(master); p.connect(verb);
+    for (let n = 1; n <= 7; n++) {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f * n * (1 + 0.0007 * n * n);
+      const gg = ctx.createGain(); gg.gain.value = 0;
+      o.connect(gg); gg.connect(p);
+      const a = 0.07 / Math.pow(n, 1.25), dur = 3.2 / Math.sqrt(n);
+      gg.gain.setValueAtTime(0, t); gg.gain.linearRampToValueAtTime(a, t + 0.004);
+      gg.gain.exponentialRampToValueAtTime(0.0004, t + dur);
+      o.start(t); o.stop(t + dur + 0.1);
+    }
+  }
+
+  function simpatia(f, pan, t) {               // la cuerda que nadie tocó: llega sin golpe
+    const p = ctx.createStereoPanner(); p.pan.value = pan; p.connect(master); p.connect(verb);
+    [[1, 0.035], [2, 0.012], [3, 0.004]].forEach(([n, a]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f * n;
+      const gg = ctx.createGain(); gg.gain.value = 0;
+      o.connect(gg); gg.connect(p);
+      gg.gain.setValueAtTime(0, t);
+      gg.gain.linearRampToValueAtTime(a, t + 1.6);
+      gg.gain.exponentialRampToValueAtTime(0.0003, t + 9);
+      o.start(t); o.stop(t + 9.2);
+    });
+  }
+
+  function reconocer(n, demora) {
+    if (!started) return;
+    const t = ctx.currentTime + demora;
+    const lado = n % 2 === 0 ? -0.6 : 0.6;
+    const f = NOTAS[n % NOTAS.length];
+    pulsar(f, lado, t);
+    simpatia(f, -lado, t + 0.15);
+  }
+
+  function startAudio() {
+    if (started) return; started = true;
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.55, ctx.currentTime + 6);
+    const conv = ctx.createConvolver(); conv.buffer = makeReverbIR(ctx);
+    verb = ctx.createGain(); verb.gain.value = 0.45; verb.connect(conv); conv.connect(master);
+    // Un fondo muy quieto: el espacio entre las dos miradas
+    [[110, 0.012], [164.81, 0.008]].forEach(([f, v]) => {
+      const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+      const gg = ctx.createGain(); gg.gain.value = 0; o.connect(gg); gg.connect(master); gg.connect(verb); o.start();
+      gg.gain.linearRampToValueAtTime(v, ctx.currentTime + 7);
+    });
+    // Si el ojo de ahora todavía no reconoció, su reconocimiento sonará a tiempo
+    if (!reduce) {
+      const s = estado(T), rep = primera ? REPOSO + 2.5 : REPOSO, falta = (rep - 4) - s.t;
+      if (falta > 0.2) reconocer(nivel, falta);
+    }
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (!ctx) return;
+    if (document.hidden) ctx.suspend(); else ctx.resume();
+  });
+
+  const hint = document.getElementById('hint');
+  window.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.infinito')) return;
+    startAudio();
+    if (hint) hint.classList.add('oculto');
+    // el ojo mira hacia donde tocaste y su pupila se abre: un vistazo basta
+    toque = T;
+    mirada.tx = Math.max(-0.06, Math.min(0.06, (e.clientX - CX) / W * 0.12));
+    mirada.ty = Math.max(-0.03, Math.min(0.03, (e.clientY - CY) / H * 0.08));
+    proximoVistazo = T - t0 + 2.4;
+    const f = NOTAS[Math.floor(Math.random() * NOTAS.length)] * 2;
+    const lado = Math.max(-0.7, Math.min(0.7, (e.clientX / W) * 1.4 - 0.7));
+    pulsar(f, lado, ctx.currentTime + 0.01);
+    simpatia(f, -lado, ctx.currentTime + 0.12);
+  });
 </script>
-
 </body>
 </html>

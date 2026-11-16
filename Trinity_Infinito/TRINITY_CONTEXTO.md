@@ -5,8 +5,8 @@
 > Para el resto de la constelación (Origen, Quantum, Portal Público, La Red), la referencia es el maestro:
 > https://github.com/soyartur-trinity/Trinity_Portal_Publico/blob/main/02_Arquitectura_del_Destino/maestro.md
 >
-> **Estado al 15 de noviembre de 2026:** Libros 1 a 7 saneados. Libro 8 a medias (portales 50 y 51). Libros 9 a 12 por sanear, salvo el portal 72 (construido) y el 82 (adaptado al teléfono). Libro 13 adaptado al teléfono.
-> **Próximo: Libro 12, *La Palabra Antes del Verbo*.**
+> **Estado al 15 de noviembre de 2026:** Libros 1 a 7 saneados. Libro 8 a medias (portales 50 y 51). Libros 9 a 11 por sanear, salvo el portal 72 (construido). Libro 12 saneado entero, con imagen y sonido propios en cada nodo y lectura en el teléfono. Libro 13 adaptado al teléfono.
+> **Próximo: Libro 8, del 52 al 56, y la reserva del portal 49.**
 
 ---
 
@@ -52,7 +52,7 @@ Trinity Infinito son **13 libros de 7 nodos: 91 portales** contemplativos en HTM
 2. **Tres salidas por nodo:** conservar con arreglos puntuales, refinar o reconstruir. Reconstruir es la excepción, no la regla.
 3. **Lo que se conserva siempre:** las frases, la paradoja, la paleta y el símbolo.
 4. **La lección de julio de 2026.** En el Libro 8, Claude reconstruyó los nodos 3 y 4 y perdió complejidad gráfica: el entramado de líneas sutiles entre los puntos luminosos y las formas que danzaban libres, sin coordenadas fijas. Arturo objetó: «El original es muy superior». Desde entonces, antes de entregar, la versión nueva se mira al lado del original. Si tiene menos vida, no está terminada.
-5. **Los atractores.** El mismo modelo tiende a repetir las mismas soluciones ante el mismo concepto. El Libro 12 es el ejemplo: siete nodos con una misma escena. Al rehacerlo, cuidar que las siete imágenes nuevas no vuelvan a parecerse.
+5. **Los atractores.** El mismo modelo tiende a repetir las mismas soluciones ante el mismo concepto. El Libro 12 era el ejemplo: siete nodos con una misma escena. Lo que funcionó para rehacerlo (noviembre de 2026): proponer primero las siete imágenes juntas, antes de escribir código, y buscar para cada nodo un fenómeno real, de la percepción o de la física, que diga lo mismo que su paradoja en la vista y en el oído. Así las imágenes salen distintas porque los fenómenos lo son.
 6. **El repositorio es la fuente de verdad** para nombres, títulos, orden y enlaces.
 
 ---
@@ -70,6 +70,9 @@ Trinity Infinito son **13 libros de 7 nodos: 91 portales** contemplativos en HTM
 9. **Glifos, no emojis**, también en el `<title>`: ☉ ◉ ✦ ∞.
 10. **Color:** desde el Libro 4, conservar y elevar. Los neones y arcoíris crudos se afinan a tonos joya; el color que significa se queda. En campos de partículas, mejor que cada una tenga un color fijo del espectro; el cambio animado de color, solo cuando ese cambio *es* el concepto y son pocos elementos.
 11. **Teléfono:** medidas en proporción (`%`, `vmin`, `clamp()`), textos grandes y lejos de los bordes, nada cortado por la altura, lienzos que se ajustan al girar la pantalla. Se prueba a 390 × 844.
+12. **Plantilla del Libro 12** (noviembre de 2026), que sirve de modelo junto con el portal 72: título y subtítulo dentro de un mismo bloque (`.cabecera`), para que un título de dos líneas no pise al subtítulo; imagen al centro, algo por encima de la mitad; debajo, cuatro frases en rotación de 40 s (`0%{opacity:0} 3.5%{opacity:1} 22%{opacity:1} 25%{opacity:0}`, con retrasos de 10, 20 y 30 s), cada una legible unos nueve segundos y media; con movimiento reducido, las cuatro apiladas. Si la pantalla es alta, la imagen puede ponerse de pie (la cuerda del 81 es horizontal en la computadora y vertical en el teléfono).
+13. **Imágenes que solo existen en movimiento** (el cuerpo de puntos del 82, la espiral del 83): con movimiento reducido necesitan una pista quieta que deje leerlas, como unos huesos tenues o la figura apenas más clara.
+14. **Volumen:** los saneados suenan entre −36 y −43 dB de RMS medio (medido con un analizador inyectado antes del destino, durante 30 s después del primer toque). El Libro 12 quedó entre −42 y −44.
 
 | Prohibido animar | Reemplazo |
 |---|---|
@@ -106,6 +109,13 @@ El sonido encarna el concepto; no es ambiente. Andamiaje común: volumen general
 - **El centro que está en todas partes (52, versión de julio):** escala de tonos enteros, sin tónica; cada joya suena y se refleja en otras octavas y lugares del estéreo, como la Red de Indra.
 - **La geometría sin espacio (53, versión de julio):** acordes en entonación justa que se deslizan de un sólido platónico a otro, secos, sin pulso ni lugar.
 - **Causa sin precedente (72):** cada eslabón suena cuando la chispa lo alcanza; solo la primera nota nace del silencio; al tocar, una campana limpia que nada anunció.
+- **El silencio elocuente (78):** dos voces breves, una a cada lado, casi secas; la sala escucha en mono y responde en estéreo, así que el eco se recoge en el centro y dura más que lo dicho. En el silencio, una quinta grave y abierta: el tono de la copa.
+- **El gesto sin forma (79):** un theremín. La altura sigue la del gesto, sin notas fijas; el volumen, su velocidad, de modo que la mano que se demora casi calla. Al deslizar el dedo, la voz sigue al dedo.
+- **La mirada que comprende (80):** resonancia por simpatía. Una cuerda pulsada de un lado; del otro, la misma nota llega sin golpe y dura más. Los lados se alternan con los ojos.
+- **El susurro sin sonido (81):** el fundamental ausente. Suenan los armónicos 2 a 6 y el oído oye la nota que nadie toca (por eso un parlante pequeño deja oír el bajo); cada 13 s se deslizan juntos, y la melodía es de notas que no suenan.
+- **El lenguaje del cuerpo (82):** pasos (un golpe grave en cada talón, solo mientras camina) y respiración (ruido filtrado, más hondo cuando el cuerpo se abre o se eleva), sobre un murmullo tibio.
+- **El signo invisible (83):** notas de vidrio al azar con un motivo de ocho pulsos escondido entre ellas; cuando la espiral se forma, el motivo ocupa más pulsos y el oído, que detecta lo que se repite, termina por oírlo.
+- **La comunicación sin emisor (84):** estática como la nieve de los televisores sin señal (una pequeña parte era radiación de fondo cósmico); mientras cada onda se cierra, una franja del mismo ruido se afina hasta volverse tono, que llega con la onda al centro vacío.
 
 ---
 
@@ -127,7 +137,9 @@ for f in sys.argv[1:]:
 
 **Señales rápidas de un original sin sanear:** Courier o Times, sin `makeReverbIR`, sin `prefers-reduced-motion`, sin `class="infinito"`, Tone.js por CDN.
 
-**Prueba en navegador (Playwright):** 390 × 844, escritorio y movimiento reducido. Sin errores en consola; al tocar, la invitación se apaga y el sonido nace; el ∞ apunta a un archivo que existe; nada se superpone ni se corta. Mirar las capturas, y mirarlas al lado del original.
+**Prueba en navegador (Playwright):** 390 × 844, escritorio y movimiento reducido. Sin errores en consola; al tocar, la invitación se apaga y el sonido nace; el ∞ apunta a un archivo que existe; nada se superpone ni se corta. Mirar las capturas, y mirarlas al lado del original. En los nodos que cambian con el tiempo, una tira de cuadros cada pocos segundos; en los que solo se leen en movimiento (83), superponer diez capturas seguidas para ver los trazos.
+
+**Sonido sin oírlo:** correr cada nodo 40 s con toques, sin errores y con el contexto de audio en marcha; y medir el nivel inyectando un analizador antes del destino (un script de inicio que envuelve `AudioContext`), para compararlo con los saneados vecinos (sección 4, punto 14).
 
 ---
 
@@ -153,22 +165,20 @@ for f in sys.argv[1:]:
 | 9 | Original (7). Sus títulos dicen «Nodo 1» a «Nodo 7», no el número de portal. |
 | 10 | Original (7). |
 | 11 | Original, salvo el 72, *Causa Sin Precedente*, construido en octubre de 2026 con el estándar y la lectura en el teléfono: es el modelo más reciente. |
-| 12 | Original. El 82, *El lenguaje del cuerpo*, fue adaptado al teléfono (sin sonido y con la misma escena que los demás). |
+| 12 | Saneado (7/7) el 15 de noviembre de 2026, con imagen y sonido propios en cada nodo y lectura en el teléfono. Cada imagen nace de un fenómeno real: 78, la copa de Rubin entre dos perfiles (paleta elevada a plata); 79, un punto que escribe en el aire sin cerrar una figura; 80, el ojo del otro en la pupila (*pupilla*, «muñequita»); 81, una cuerda en onda estacionaria con los nodos quietos y encendidos; 82, el cuerpo de trece puntos de Johansson, que recorre un alfabeto de posturas (ruta, frases e invitación del *Para ver* intactas); 83, una espiral visible solo en movimiento (paleta elevada a amatista); 84, ondas que se cierran sobre un centro vacío (blanco azulado sobre índigo). Ninguno lleva fuentes externas; el 84 apunta al Libro 13. |
 | 13 | Adaptado al teléfono el 29 de octubre de 2026 (enlace, letra, pantalla encendida). |
 
-**Adaptados al teléfono** (casi todos por ser *Para ver* de *Arquitectura del Destino*): portales 4, 17, 21, 32, 33, 39, 44, 48, 72, 82 y el Libro 13. Los demás saneados cumplen el estándar, pero la lectura en el teléfono no se revisó una por una.
+**Adaptados al teléfono** (casi todos por ser *Para ver* de *Arquitectura del Destino*): portales 4, 17, 21, 32, 33, 39, 44, 48, 72, el Libro 12 entero (78 a 84) y el Libro 13. Los demás saneados cumplen el estándar, pero la lectura en el teléfono no se revisó una por una.
 
 ---
 
 ## 9. Pendientes y reservas
 
-**Libro 12, *La Palabra Antes del Verbo*** (próximo, en un chat propio). Nodos: 1 *El Silencio Elocuente*, 2 *El Gesto Sin Forma*, 3 *La Mirada Que Comprende*, 4 *El Susurro Sin Sonido*, 5 *El Lenguaje Del Cuerpo*, 6 *El Signo Invisible*, 7 *La Comunicación Sin Emisor*. Los siete archivos son idénticos entre un 94 y un 97 %: la misma escena con otras palabras. Ninguno tiene sonido; solo el 5 tiene movimiento reducido; en el teléfono, los textos del 6 y el 7 se superponen. Sus keyframes ya están limpios: el problema no es la técnica sino la falta de imagen propia. Tarea: conservar frases, paradoja, paleta y símbolo, y darle a cada nodo su imagen y su sonido. El 82 es el *Para ver* del Libro 4 de *Arquitectura del Destino*: su ruta no cambia y su adaptación al teléfono se mantiene. El 78 recibe tres enlaces de otras series.
-
-**Libro 8, del 52 al 56.** Las versiones de julio del 52 y el 53, rehechas después de la objeción de Arturo, quedaron en el chat «Pulido final del libro 7 de Trinity Infinito» (9 de julio de 2026) y quizás en sus descargas. Recuperarlas antes de rehacer. Del 54 al 56 (*El Volumen de la Nada*, *La Densidad Infinita del Vacío*, *El Universo en una Mónada*), por sanear.
+**Libro 8, del 52 al 56** (próximo, en un chat propio). Las versiones de julio del 52 y el 53, rehechas después de la objeción de Arturo, quedaron en el chat «Pulido final del libro 7 de Trinity Infinito» (9 de julio de 2026) y quizás en sus descargas. Recuperarlas antes de rehacer. Del 54 al 56 (*El Volumen de la Nada*, *La Densidad Infinita del Vacío*, *El Universo en una Mónada*), por sanear.
 
 **Reserva del portal 49** (`L7-Nodo7`), con el veto de Arturo: si vuelven las etiquetas de frecuencias «sanadoras» (528/432 Hz, sin respaldo científico), si vuelve el gesto ceremonial de dos botones, y si el ∞ sigue volviendo al portal 43 (la serpiente que se muerde la cola) o pasa a `../Libro8/L8-Nodo1.html`. Hoy vuelve al 43.
 
-**Libros 9, 10 y 11** (salvo el 72): por sanear. Los primeros nodos de los libros 9, 10, 11 y 12 reciben enlaces desde otras series y siguen siendo originales: conviene empezar cada libro por ahí.
+**Libros 9, 10 y 11** (salvo el 72): por sanear. Los primeros nodos de los libros 9, 10 y 11 reciben enlaces desde otras series y siguen siendo originales: conviene empezar cada libro por ahí.
 
 **Parche común por libro**, en una sesión propia: lectura en el teléfono de los portales que faltan, y el voseo que queda pasado a tuteo: las invitaciones «tocá…» de 38 archivos de los libros 1 a 8, y algunas formas como «vos» o «tenés» en las frases de otros siete. Las frases se tocan solo en eso, con la lectura de Arturo.
 
@@ -182,11 +192,11 @@ for f in sys.argv[1:]:
 
 ## 10. Orden sugerido
 
-1. Libro 12, completo.
+1. ~~Libro 12, completo.~~ Hecho el 15 de noviembre de 2026.
 2. Libro 8, del 52 al 56 (con las versiones de julio, si aparecen), y la reserva del 49.
 3. Libros 9, 10 y 11, empezando por su primer nodo.
 4. Parche común por libro: teléfono y tuteo.
-5. Repaso del Libro 13 y del mapa, y la suite completa de punta a punta.
+5. Repaso del Libro 13 y del mapa, y la suite completa de punta a punta (la del Libro 12 conviene escucharla entera: los siete sonidos van del eco de la sala a la estática del universo).
 
 ---
 
@@ -194,6 +204,6 @@ for f in sys.argv[1:]:
 
 **Para abrir**, un primer mensaje como este:
 
-> Abrimos Trinity Infinito, Libro 12, *La Palabra Antes del Verbo*. Lee primero `Trinity_Infinito/TRINITY_CONTEXTO.md` en el repositorio Trinity- (https://github.com/soyartur-trinity/Trinity-/blob/main/Trinity_Infinito/TRINITY_CONTEXTO.md). Los siete nodos repiten la misma escena y en el teléfono los textos se superponen. Vamos nodo por nodo con el estándar de saneamiento: conservar frases, paradoja, paleta y símbolo, y darle a cada nodo su imagen propia.
+> Abrimos Trinity Infinito, Libro 8, *El Punto Sin Dimensión*, del portal 52 al 56, y la reserva del 49. Lee primero `Trinity_Infinito/TRINITY_CONTEXTO.md` en el repositorio Trinity- (https://github.com/soyartur-trinity/Trinity-/blob/main/Trinity_Infinito/TRINITY_CONTEXTO.md). Antes de rehacer el 52 y el 53, busquemos las versiones de julio. Vamos nodo por nodo con el estándar de saneamiento: conservar frases, paradoja, paleta y símbolo, y mirar cada versión nueva al lado del original.
 
 **Para cerrar:** el chat entrega el zip con los nodos y este documento actualizado (estado por libro, reservas, sonidos nuevos en el catálogo, lecciones aprendidas). Arturo sube los dos, y el chat siguiente arranca donde terminó este.
