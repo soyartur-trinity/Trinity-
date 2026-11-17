@@ -5,8 +5,8 @@
 > Para el resto de la constelación (Origen, Quantum, Portal Público, La Red), la referencia es el maestro:
 > https://github.com/soyartur-trinity/Trinity_Portal_Publico/blob/main/02_Arquitectura_del_Destino/maestro.md
 >
-> **Estado al 17 de noviembre de 2026:** los trece libros saneados y los 91 portales con lectura en el teléfono. Del 8 al 13, enteros con sonido propio en cada nodo; la reserva del portal 49, resuelta; el Libro 13, revisado a fondo con un fenómeno real en cada nodo y el Motor de Observación intacto. El parche común de los libros 1 a 7 (tuteo, invitación que se apaga, ∞ fuera del toque, teléfono) quedó hecho el 16 y el 17 de noviembre. El repaso del mapa y de la suite, el 17: el mapa nombra los 91 y abre a la constelación; en el teléfono, el ∞ y la invitación quedan dentro de la pantalla en los 84 portales sueltos; el volumen es parejo de punta a punta; el final del Libro 13 es luz y no una pantalla gris (sección 8).
-> **Próximo: escuchar y mirar la suite entera en el teléfono, y decidir las miradas que quedan (sección 9).**
+> **Estado al 17 de noviembre de 2026:** los trece libros saneados y los 91 portales con lectura en el teléfono. Del 8 al 13, enteros con sonido propio en cada nodo; la reserva del portal 49, resuelta; el Libro 13, revisado a fondo con un fenómeno real en cada nodo y el Motor de Observación intacto. El parche común de los libros 1 a 7 (tuteo, invitación que se apaga, ∞ fuera del toque, teléfono) quedó hecho el 16 y el 17 de noviembre. El repaso del mapa y de la suite, el 17: el mapa nombra los 91 y abre a la constelación; en el teléfono, el ∞ y la invitación quedan dentro de la pantalla en los 84 portales sueltos; el volumen es parejo de punta a punta; el final del Libro 13 es luz y no una pantalla gris (sección 8). Ese mismo día Arturo decidió las miradas de la sección 9: «Lúcido» en el 8, las sensaciones del 10 fuera del centro, MUERTE centrada en el 35 con movimiento reducido, los `<title>` unificados y los títulos del Libro 13 como en el mapa; lo demás queda como estaba (sección 8).
+> **Próximo: la escucha de la suite entera en el teléfono, que hace Arturo (sección 10, punto 10). Lo que pida su oído o su ojo, sobre todo en el 85, el 89 y el 91, se afina en un chat breve.**
 
 ---
 
@@ -15,7 +15,7 @@
 Trinity Infinito son **13 libros de 7 nodos: 91 portales** contemplativos en HTML, cada uno con una paradoja, unas pocas frases, una imagen en movimiento y un sonido propio.
 
 - **Número de portal** = (libro − 1) × 7 + nodo. El Libro 13 es una sola página que reúne los portales 85 a 91.
-- **Mapa:** `infinito.html`, en la raíz del repositorio. Desde octubre de 2026 coincide con los títulos reales de los nodos. El título de un portal se toma siempre del nodo, nunca del plan viejo. Desde el 17 de noviembre de 2026 nombra también los siete portales del Libro 13 (sin enlace propio: son una sola página) y cierra con la Constelación Trinity (La Puerta, Origen, Quantum, Infinito), como los índices de Quantum y La Puerta; antes era la única página de la constelación sin salida.
+- **Mapa:** `infinito.html`, en la raíz del repositorio. Desde octubre de 2026 coincide con los títulos reales de los nodos. El título de un portal se toma siempre del nodo, nunca del plan viejo. En el mapa y en los nodos, los títulos llevan en minúscula los artículos y las preposiciones («del», «en», «al», «el», «la», «una», «y») y en mayúscula lo demás («Que», «Sin», «Se», «Lo»). Desde el 17 de noviembre de 2026 nombra también los siete portales del Libro 13 (sin enlace propio: son una sola página) y cierra con la Constelación Trinity (La Puerta, Origen, Quantum, Infinito), como los índices de Quantum y La Puerta; antes era la única página de la constelación sin salida.
 - **Su lugar:** Origen da la sabiduría, Quantum piensa la conciencia con imágenes de la física, Infinito ofrece la contemplación y La Puerta es la entrada. En los libros de *Arquitectura del Destino* (Portal Público), cada cierre lleva un *Para ver* que suele ser un portal de Infinito; el maestro los registra en su sección 12.
 
 | Libro | Título | Portales |
@@ -69,7 +69,7 @@ Trinity Infinito son **13 libros de 7 nodos: 91 portales** contemplativos en HTM
 6. **Movimiento reducido:** `@media (prefers-reduced-motion: reduce)` que detiene las animaciones y deja todo legible (muchos elementos parten de `opacity:0`). En JS: `const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;` y nada de generadores, lienzos animados ni `requestAnimationFrame` si `reduce`.
 7. **Navegación ∞:** `<a class="infinito" href="LN-Nodo(M+1).html" aria-label="Siguiente portal">∞</a>`, fijo abajo a la derecha (con `env(safe-area-inset-bottom)`), tenue, que se intensifica al pasar. Queda fuera del toque que enciende el sonido. El último nodo de un libro apunta al primero del siguiente (verificar la ruta en el repositorio).
 8. **`cursor:none` + invitación** `( toca: … )` que respira y se apaga al primer toque. Comprobar que su propia animación no la mantenga encendida (pasó en el portal 72, y en todos los saneados de julio: poner `opacity` en línea no gana contra la animación). La forma segura es la del Libro 12: `.hint.oculto { animation:none; opacity:0; }` y `hint.classList.add('oculto')`.
-9. **Glifos, no emojis**, también en el `<title>`: ☉ ◉ ✦ ∞.
+9. **Glifos, no emojis**, también en el `<title>`: ☉ ◉ ✦ ∞. Desde el 17 de noviembre de 2026, el `<title>` sigue al mapa: «Portal 43 · El Ojo Que No Puede Verse — Trinity Infinito»; el del Libro 13, «∞ · El Libro Que Se Escribe al Ser Observado — Trinity Infinito».
 10. **Color:** desde el Libro 4, conservar y elevar. Los neones y arcoíris crudos se afinan a tonos joya; el color que significa se queda. En campos de partículas, mejor que cada una tenga un color fijo del espectro; el cambio animado de color, solo cuando ese cambio *es* el concepto y son pocos elementos.
 11. **Teléfono:** la etiqueta `<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">` (con `viewport-fit=cover` donde ya estaba; punto 22); medidas en proporción (`%`, `vmin`, `clamp()`), textos grandes y lejos de los bordes, nada cortado por la altura, lienzos que se ajustan al girar la pantalla. Se prueba a 412 × 883 (el Samsung S23 Ultra de Arturo), 390 × 844 y 360 × 740; la tablet, a 800 × 1280 y 1366 × 1024. Arturo lee también en una tablet y en la Mac; en las tablets prefiere la pantalla horizontal.
 12. **Plantilla del Libro 12** (noviembre de 2026), que sirve de modelo junto con el portal 72: título y subtítulo dentro de un mismo bloque (`.cabecera`), para que un título de dos líneas no pise al subtítulo; imagen al centro, algo por encima de la mitad; debajo, cuatro frases en rotación de 40 s (`0%{opacity:0} 3.5%{opacity:1} 22%{opacity:1} 25%{opacity:0}`, con retrasos de 10, 20 y 30 s), cada una legible unos nueve segundos y media; con movimiento reducido, las cuatro apiladas. Si la pantalla es alta, la imagen puede ponerse de pie (la cuerda del 81 es horizontal en la computadora y vertical en el teléfono).
@@ -236,6 +236,8 @@ for f in sys.argv[1:]:
     print(f.split('/')[-1], sorted(set(mal)) or 'limpio')
 ```
 
+**Un cambio que no se dibuja** (el `<title>`) se prueba con el diff: en cada archivo, una línea sale y otra entra, y nada más. Congelar esos portales da diferencias que aparecen igual al comparar el original consigo mismo (elementos que el guion crea a su ritmo), así que la comparación cuadro por cuadro se concentra en los archivos donde cambia lo que se ve, con el original contra sí mismo como línea de base.
+
 **Señales rápidas de un original sin sanear:** Courier o Times, sin `makeReverbIR`, sin `prefers-reduced-motion`, sin `class="infinito"`, Tone.js por CDN.
 
 **Movimiento contra el original** (sección 4, punto 21): todas las animaciones congeladas en los mismos instantes, elemento por elemento, en escritorio, tablet y teléfono. En escritorio y tablet, idéntico.
@@ -282,11 +284,20 @@ for f in sys.argv[1:]:
 - **Libro 12:** a pedido de Arturo, imagen nueva para el 78, el 80 y el 82, sin figura humana (arriba, en su fila). Títulos, frases, invitaciones y ∞, idénticos al original en escritorio, tablet y teléfono, con movimiento y sin él.
 - Comparados elemento por elemento con el original, con las animaciones congeladas en los mismos instantes: en escritorio, idénticos; en teléfono y tablet solo cambian los elementos fijos que vuelven a la pantalla y las escenas que el guion centra con el ancho de la pantalla (26, 27, 31, 35, 42). Las demás diferencias aparecen también al comparar el original consigo mismo (azar y tiempos del guion).
 
+**Miradas decididas** (17 de noviembre de 2026, con el veto de Arturo: «Aprobado todo»):
+- 8: «Aware» pasa a «Lúcido», en pareja con «Despierto» («Consciente» repetía la consciencia de la frase de arriba y del título).
+- 10: cada sensación se detiene a leerse por encima o por debajo de «NADIE experimenta», en cuatro alturas (`--lado` de −1, 1, −1,45 y 1,45 por `--alto`, que vale 78 px en escritorio y 62 en el teléfono), alternadas en el orden en que llegan: la que llega no pisa el centro ni a la que se va. Recorridos y tiempos, intactos. Cambia también en escritorio.
+- 35: con movimiento reducido, MUERTE queda centrada (`translate(-50%, -50%)`; antes empezaba en el centro y se salía por la derecha). Con movimiento, idéntico.
+- Los 85 `<title>`, unificados con el título del mapa (sección 4, punto 9). Había seis formatos; el Libro 12 numeraba sus nodos del 1 al 7, el 82 decía «Del» y el 1 llevaba un emoji.
+- Libro 13: los títulos visibles, como en el mapa (86 «en Blanco», 87 «al Mirar», 88 «el Lector», 89 «la Obra», 90 «al Ser Leído», 91 «al Misterio»). El maestro no se tocó: su entrada del *Para ver* ya los escribe así.
+- Quedan como estaban: el 72, cuya sobriedad es su sentido (una chispa sola, nada antes de la causa); el 77, centrado (los anillos excéntricos del original eran un error, y en el teléfono tapaban las frases); la invitación del 6; las animaciones de color del 25, el 29, el 33 y el 38; el título que comparten el 14 y el 43, que es un eco (uno cierra el Libro 2 y el otro abre el 7); y las ecuaciones del Libro 6, que son «ropajes decorativos», en palabras de Arturo.
+- Comparación: 81 de los 85 archivos cambian solo en la línea del `<title>`. En los otros cuatro, con las animaciones congeladas en escritorio, tablet y teléfono, con movimiento y sin él, cambia solo lo aprobado: la caja de «Lúcido» (de 57 a 64,5 px de ancho), la altura de las sensaciones del 10 en su parada, la caja de MUERTE con movimiento reducido y el ancho de seis títulos del Libro 13 (de 1 a 5 px menos, centrados).
+
 ---
 
 ## 9. Pendientes y reservas
 
-**Libro 11:** saneado el 16 de noviembre de 2026, con las rutas intactas (al Libro 11 solo llegan el mapa `infinito.html` y el ∞ del portal 70; ninguno de sus portales es *Para ver*). Quedan dos miradas para Arturo: el 72 es el más sobrio del libro al lado de los otros seis (si le falta trama, se le puede dar); y en el 77 los tres anillos del original se veían excéntricos, abajo a la derecha, por un error de centrado que ahora está corregido (si esa excentricidad tenía vida, se puede reproducir a propósito).
+**Libro 11:** saneado el 16 de noviembre de 2026, con las rutas intactas (al Libro 11 solo llegan el mapa `infinito.html` y el ∞ del portal 70; ninguno de sus portales es *Para ver*). Sus dos miradas (la sobriedad del 72 y los anillos del 77) se decidieron el 17 de noviembre de 2026: quedan como están (sección 8).
 
 **Libro 13:** revisado el 16 de noviembre de 2026 (sección 8; sonidos en la sección 5). La estructura se confirmó como espejo con centro: 85 ↔ 91 (aparecer y volver al vacío con la quietud), 86 ↔ 90 (el blanco que lo contiene todo, el texto que solo existe al leerlo), 87 ↔ 89 (el ojo que se ve a sí mismo, la obra que contiene a sus autores) y el 88, «La página te lee», al centro. En los siete, quien percibe escribe lo percibido; en varios (Chladni, Troxler), el fenómeno solo ocurre si nada se mueve: el Motor encuentra ahí su física. Rutas intactas: `Libro_13/Libro_13.html`, con «← índice» hacia `infinito.html`; el cambio quedó anotado en la sección 12 del maestro. Quedan cuatro miradas para Arturo, por si su ojo pide ajuste:
 - En el 85, la espiral se ve en relieve solo con la mirada «a través» (como en los estereogramas de una sola imagen); para quien no la logra, se enciende apenas en el último tramo. Si hace falta, esa pista puede ser más clara o llegar antes.
@@ -305,23 +316,16 @@ for f in sys.argv[1:]:
 - 22 y 27: anillos y espiral redondos, achicados con `zoom`; 24, 25 y 28: del tamaño de siempre, centrados; 23: los marcadores de escala orbitan dentro de la pantalla. En los libros 4 a 6, los lienzos se ajustan al girar.
 - El 32, el 33, el 39, el 44, el 48 y el 49 ya estaban adaptados; recibieron solo lo común.
 
-**Miradas que quedan para Arturo** (anotadas en el parche, sin tocar):
-- 6: la invitación «( escucha — toca para entrar en el silencio )» repite el «Escucha…» de la línea fija; Arturo la aprobó así. Si la repetición molesta, la corta es «( toca para entrar en el silencio )».
-- 8: «Aware», en inglés, entre las frases en castellano.
-- 10: cada sensación se detiene a leerse encima de «NADIE experimenta» y las dos se superponen, también en escritorio. Podrían detenerse un poco por encima del centro.
-- 25, 29, 33 y 38 conservan animaciones de julio que cambian un color (`background` o `border-color`). Funcionan; cambiarlas altera la imagen.
-- 35, con movimiento reducido en el teléfono: MUERTE, quieta, queda medio fuera de la pantalla (igual en el original).
+**Miradas del parche** (6, 8, 10, 25, 29, 33, 35 y 38): decididas el 17 de noviembre de 2026 (sección 8).
 
 **Miradas que deja el repaso de la suite** (17 de noviembre de 2026):
 - Libro 12. En el 78, el cuadrado aparece hacia el segundo 12 de cada conversación de 24 y dura unos 8; es más nítido mirando el centro, no los discos. En el 80, los péndulos tardan unos 20 s en encontrarse; tocar adelanta el de ese lado, y los dos vuelven a buscarse. En el 82, el ciclo dura 63 s y se lee mejor siguiendo una sola figura; si alguna escena no se entiende, se ajusta esa sola.
 - En el teléfono, los portales que antes se veían achicados o con el ∞ fuera de la pantalla se ven ahora a su tamaño. Si alguno se siente distinto, es esto: el tamaño para el que se pensó su lectura en el teléfono.
 - El volumen nuevo de los libros 1 a 6 conviene escucharlo de corrido, con el mismo volumen del teléfono que en los libros 8 a 13.
-- En el mapa, los títulos del Libro 13 van como los demás («La Página en Blanco», «al Mirar»); dentro del libro, cada palabra lleva mayúscula («En», «Al», «Lo»). Igualarlos adentro es decisión de Arturo.
 
 **Detalles anotados:**
-- Los portales 14 (`L2-Nodo7`) y 43 (`L7-Nodo1`) comparten el título *El Ojo Que No Puede Verse*.
-- Los `<title>` tienen formatos distintos según el libro («Portal 43: …», «Nodo 50: …», «Libro 10 - Nodo 64: …»), y el del portal 1 lleva un emoji. Unificarlos queda a decisión de Arturo; una forma posible: «Portal 43 · El Ojo Que No Puede Verse — Trinity Infinito».
-- En el Libro 6 hay ecuaciones simbólicas (E=mc²=Amor) que son poesía metafísica, no física. Si alguna vez se quiere evitar que se lean como literalidad científica, se afina. Decisión de Arturo.
+- Los portales 14 (`L2-Nodo7`) y 43 (`L7-Nodo1`) comparten el título *El Ojo Que No Puede Verse*, a propósito: es un eco (sección 8).
+- Las ecuaciones del Libro 6 (E = mc² = Amor) son ropaje decorativo y se quedan (sección 8).
 - El **Motor de Observación** está reservado para el Libro 13.
 
 ---
@@ -336,7 +340,8 @@ for f in sys.argv[1:]:
 6. ~~Libro 13, revisado a fondo.~~ Hecho el 16 de noviembre de 2026.
 7. ~~Parche común por libro: teléfono y tuteo.~~ Hecho el 16 y el 17 de noviembre de 2026.
 8. ~~Repaso del mapa y la suite completa.~~ Hecho el 17 de noviembre de 2026 (sección 8).
-9. Escuchar y mirar la suite entera en el teléfono, de punta a punta, y decidir las miradas de la sección 9 (y, si se quiere, unificar los `<title>`). Para el oído, lo que se anotó al cerrar cada libro: la suite del Libro 11 va de la campana al revés del 71 a la campana sin golpe del 77, con dos lazos en el medio y el Fa de la respuesta al centro; la del Libro 12 conviene escucharla entera: los siete sonidos van del eco de la sala a la estática del universo; la del Libro 9 es una suite sobre el tiempo, en pares que se reflejan; la del Libro 10 empieza y termina con la misma melodía, la que se pinta en el 64 y se sueña en el 70; la del Libro 13 va del ruido que se vuelve figura al silencio que suena, y se oye entera solo quedándose quieto los dos minutos.
+9. ~~Decidir las miradas de la sección 9 y unificar los `<title>`.~~ Hecho el 17 de noviembre de 2026 (sección 8).
+10. Escuchar y mirar la suite entera en el teléfono, de punta a punta, con el mismo volumen del teléfono y un libro por hueco (siete portales, unos cinco minutos). Lo hace Arturo; lo que pida su oído o su ojo se afina en un chat breve. Para el ojo quedan abiertos el 85, el 89 y el 91 (sección 9). Para el oído, lo que se anotó al cerrar cada libro: la suite del Libro 11 va de la campana al revés del 71 a la campana sin golpe del 77, con dos lazos en el medio y el Fa de la respuesta al centro; la del Libro 12 conviene escucharla entera: los siete sonidos van del eco de la sala a la estática del universo; la del Libro 9 es una suite sobre el tiempo, en pares que se reflejan; la del Libro 10 empieza y termina con la misma melodía, la que se pinta en el 64 y se sueña en el 70; la del Libro 13 va del ruido que se vuelve figura al silencio que suena, y se oye entera solo quedándose quieto los dos minutos.
 
 ---
 
@@ -344,6 +349,6 @@ for f in sys.argv[1:]:
 
 **Para abrir** el chat siguiente, un primer mensaje como este:
 
-> Abrimos Trinity Infinito, la escucha de la suite en el teléfono y las miradas que quedan (sección 10, punto 9). Lee primero `Trinity_Infinito/TRINITY_CONTEXTO.md` en el repositorio Trinity- (https://github.com/soyartur-trinity/Trinity-/blob/main/Trinity_Infinito/TRINITY_CONTEXTO.md). Antes de entregar, compara cada cambio contra el original, cuadro por cuadro.
+> Abrimos Trinity Infinito: lo que dejó la escucha de la suite en el teléfono (sección 10, punto 10). Lee primero `Trinity_Infinito/TRINITY_CONTEXTO.md` en el repositorio Trinity- (https://github.com/soyartur-trinity/Trinity-/blob/main/Trinity_Infinito/TRINITY_CONTEXTO.md). Antes de entregar, compara cada cambio contra el original, cuadro por cuadro.
 
 **Para cerrar:** el chat entrega el zip con los nodos y este documento actualizado (estado por libro, reservas, sonidos nuevos en el catálogo, lecciones aprendidas). Arturo sube los dos, y el chat siguiente arranca donde terminó este.
