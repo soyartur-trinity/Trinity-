@@ -1,223 +1,176 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TRINITY · Niveles Avanzados</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>Trinity · Niveles Avanzados — Quantum e Infinito</title>
   <style>
-    :root{
-      --color-quantum:#9C27B0;
-      --color-infinito:#00BCD4;
-      --text:#f5f2ff;
-      --muted:rgba(245,242,255,.72);
+    :root {
+      --noche: #0b0616;
+      --ciruela: #1d1232;
+      --oro: #ecc96e;
+      --oro-tenue: rgba(236, 201, 110, 0.55);
+      --quantum: #bb7bff;
+      --quantum-tenue: rgba(187, 123, 255, 0.42);
+      --infinito: #93d6dd;
+      --infinito-tenue: rgba(147, 214, 221, 0.4);
+      --texto: #f5f0ff;
+      --texto-suave: rgba(245, 240, 255, 0.78);
+      --texto-leve: rgba(245, 240, 255, 0.55);
     }
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    html, body{ height:100%; }
-    body{
-      font-family: Georgia, serif;
-      background: #000;
-      color: var(--text);
-      overflow: hidden;
+    * { box-sizing: border-box; }
+    html { font-size: 17px; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--texto);
+      font-family: Georgia, "Times New Roman", serif; line-height: 1.62;
+      background:
+        radial-gradient(ellipse 120% 60% at 50% 0%, #26163f 0%, rgba(38, 22, 63, 0) 72%),
+        var(--noche);
     }
+    a { color: inherit; }
+    a:focus-visible { outline: 2px solid var(--oro); outline-offset: 3px; border-radius: 4px; }
+    .marco { max-width: 760px; margin: 0 auto; padding: 22px 22px 48px; }
 
-    .bg{
-      position:fixed; inset:0;
-      background: url("./assets/img/stargate_bg.jpg") center/cover no-repeat;
-      z-index:0;
+    .volver {
+      display: inline-block; font-size: 0.86rem; color: var(--oro); text-decoration: none;
+      border: 1px solid rgba(236, 201, 110, 0.25); border-radius: 999px; padding: 7px 15px;
     }
+    .volver:hover { border-color: var(--oro-tenue); }
 
-    #field{
-      position:fixed; inset:0;
-      z-index:2; pointer-events:none; opacity:.55;
+    /* Portada, como La Puerta y Quantum */
+    .portada { text-align: center; padding: 16px 0 0; }
+    .portada h1 {
+      margin: 0.15em 0 0.3em; font-weight: normal; text-transform: uppercase;
+      font-size: clamp(1.9rem, 7.6vw, 3.1rem); letter-spacing: 0.2em; padding-left: 0.2em; line-height: 1.15;
     }
+    .portada h1 small { display: block; font-size: 0.42em; letter-spacing: 0.42em; color: var(--texto-leve); margin-bottom: 0.35em; }
+    .lema { text-wrap: balance; margin: 0 auto; font-size: 1.2rem; font-style: italic; color: var(--oro); }
 
-    .wrap{
-      position:relative; z-index:3;
-      height:100%;
-      display:flex; align-items:center; justify-content:center;
-      padding:24px;
+    /* Las dos espirales: un mismo centro, dos brazos */
+    .espirales { display: block; width: min(100%, 330px); margin: 14px auto 6px; overflow: visible; }
+    .aro { fill: none; stroke: rgba(236, 201, 110, 0.13); stroke-width: 0.5; }
+    .aro.fino { stroke: rgba(236, 201, 110, 0.07); }
+    .brazo { fill: none; stroke-width: 1.15; stroke-linecap: round; }
+    .brazo.q { stroke: var(--quantum-tenue); }
+    .brazo.i { stroke: var(--infinito-tenue); }
+    .brazo.vivo { stroke-width: 1.5; opacity: 0; transition: opacity 0.5s ease; }
+    .brazo.vivo.q { stroke: var(--quantum); }
+    .brazo.vivo.i { stroke: var(--infinito); }
+    .espirales.mira-q .brazo.vivo.q, .espirales.mira-i .brazo.vivo.i { opacity: 0.85; }
+    .centro-aro { fill: none; stroke: var(--oro-tenue); stroke-width: 0.6; }
+    .centro { fill: var(--oro); }
+
+    /* Las dos puertas */
+    .puertas { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 6px 0 30px; }
+    .puerta {
+      display: block; text-decoration: none; text-align: center;
+      padding: 20px 16px 18px; border-radius: 18px;
+      background: rgba(255, 255, 255, 0.022); border: 1px solid rgba(255, 255, 255, 0.07);
+      transition: border-color 0.3s ease, background-color 0.3s ease;
     }
-
-    .stage{
-      width: min(580px, 92vw);
-      text-align:center;
+    .puerta .glifo { display: block; font-size: 1.1rem; line-height: 1; margin-bottom: 10px; }
+    .puerta .kicker {
+      display: block; font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--texto-leve); margin-bottom: 8px; line-height: 1.5;
     }
+    .puerta .nombre { display: block; font-size: 1.45rem; letter-spacing: 0.04em; line-height: 1.25; margin-bottom: 6px; }
+    .puerta .desc { display: block; font-size: 0.93rem; font-style: italic; color: var(--texto-suave); }
+    .puerta.q .glifo, .puerta.q .nombre { color: var(--quantum); }
+    .puerta.i .glifo, .puerta.i .nombre { color: var(--infinito); }
+    .puerta.q:hover, .puerta.q:focus-visible { border-color: var(--quantum-tenue); background-color: rgba(187, 123, 255, 0.05); }
+    .puerta.i:hover, .puerta.i:focus-visible { border-color: var(--infinito-tenue); background-color: rgba(147, 214, 221, 0.045); }
 
-    .sigil{
-      font-size:40px; line-height:1;
-      display:inline-block;
-      background: linear-gradient(90deg, var(--color-quantum), var(--color-infinito));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      filter: drop-shadow(0 0 18px rgba(160,90,230,.4));
-      animation: pulse 3.8s ease-in-out infinite;
-      margin-bottom:16px;
+    .aviso { text-align: center; margin: 0 auto 22px; font-size: 0.9rem; font-style: italic; color: var(--texto-leve); line-height: 1.8; }
+    .mini { text-align: center; margin: 0; font-size: 0.72rem; letter-spacing: 0.04em; color: rgba(245, 240, 255, 0.3); }
+
+    @media (max-width: 560px) {
+      .puertas { grid-template-columns: 1fr; gap: 12px; }
+      .espirales { width: min(100%, 320px); margin-top: 14px; }
     }
-    @keyframes pulse{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
-
-    .titulo{
-      font-size: clamp(13px, 1.8vw, 16px);
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .subtitulo{
-      font-size: clamp(11px, 1.5vw, 13px);
-      letter-spacing: 0.16em;
-      color: rgba(245,242,255,.42);
-      font-style: italic;
-      margin-bottom: 52px;
-    }
-
-    .doors{
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      margin-bottom: 44px;
-    }
-
-    .door{
-      text-decoration: none;
-      color: var(--text);
-      display: block;
-      transition: all .3s ease;
-    }
-    .door:hover{ transform: translateY(-3px); }
-
-    .door .kicker{
-      font-size: clamp(10px, 1.3vw, 11px);
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      margin-bottom: 7px;
-    }
-    .door-quantum .kicker{ color: rgba(156,39,176,.8); }
-    .door-infinito .kicker{ color: rgba(0,188,212,.8); }
-
-    .door .name{
-      font-size: clamp(24px, 4.5vw, 34px);
-      letter-spacing: 0.06em;
-      margin-bottom: 5px;
-      text-shadow: 0 2px 24px rgba(0,0,0,.95), 0 0 40px rgba(0,0,0,.7);
-    }
-    .door-quantum .name{ color: var(--color-quantum); }
-    .door-infinito .name{ color: var(--color-infinito); }
-
-    .door .desc{
-      font-size: clamp(12px, 1.5vw, 13px);
-      color: rgba(245,242,255,.52);
-      font-style: italic;
-    }
-
-    .divisor{
-      width: 48px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
-      margin: 0 auto;
-    }
-
-    .aviso{
-      color: rgba(245,242,255,.32);
-      font-size: clamp(10px, 1.3vw, 12px);
-      font-style: italic;
-      line-height: 1.8;
-      margin-bottom: 32px;
-    }
-
-    .btn-volver{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      color: rgba(245,242,255,.48);
-      font-size: clamp(11px, 1.3vw, 12px);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      transition: color .25s;
-    }
-    .btn-volver:hover{ color: rgba(245,242,255,.85); }
-
-    .mini{
-      margin-top: 24px;
-      color: rgba(245,242,255,.22);
-      font-size: 10px;
-      letter-spacing: .3px;
-    }
-
-    @media (max-width: 480px){
-      .doors{ gap: 24px; }
-      .subtitulo{ margin-bottom: 36px; }
+    @media (prefers-reduced-motion: reduce) {
+      .luz { display: none; }
+      .brazo.vivo { transition: none; }
     }
   </style>
 </head>
 <body>
-  <div class="bg"></div>
-  <canvas id="field"></canvas>
+  <div class="marco">
+    <a class="volver" href="index.html#atrio">⟵ La Espiral</a>
 
-  <div class="wrap">
-    <div class="stage">
+    <header class="portada">
+      <h1><small>Niveles Avanzados</small>Dos Espirales</h1>
+      <p class="lema">No es un siguiente paso. Es otro estado.</p>
+    </header>
 
-      <div class="sigil">◈</div>
-      <div class="titulo">Niveles Avanzados · Dos Espirales</div>
-      <div class="subtitulo">No es un siguiente paso. Es otro estado.</div>
+    <svg class="espirales" id="espirales" viewBox="-100 -100 200 200" aria-hidden="true">
+      <defs>
+        <radialGradient id="halo-q"><stop offset="0" stop-color="#bb7bff" stop-opacity="0.9"/><stop offset="1" stop-color="#bb7bff" stop-opacity="0"/></radialGradient>
+        <radialGradient id="halo-i"><stop offset="0" stop-color="#93d6dd" stop-opacity="0.9"/><stop offset="1" stop-color="#93d6dd" stop-opacity="0"/></radialGradient>
+        <path id="brazo-q" d="M-3.20,0.00 L-3.24,-0.16 L-3.27,-0.32 L-3.29,-0.48 L-3.30,-0.65 L-3.31,-0.82 L-3.31,-0.99 L-3.30,-1.16 L-3.28,-1.34 L-3.25,-1.51 L-3.22,-1.69 L-3.17,-1.86 L-3.12,-2.04 L-3.05,-2.22 L-2.98,-2.39 L-2.90,-2.57 L-2.80,-2.74 L-2.70,-2.91 L-2.59,-3.07 L-2.47,-3.23 L-2.34,-3.39 L-2.20,-3.55 L-2.05,-3.69 L-1.90,-3.84 L-1.73,-3.98 L-1.56,-4.11 L-1.37,-4.23 L-1.18,-4.35 L-0.98,-4.45 L-0.78,-4.55 L-0.56,-4.64 L-0.34,-4.73 L-0.12,-4.80 L0.12,-4.86 L0.36,-4.91 L0.60,-4.95 L0.85,-4.98 L1.10,-4.99 L1.36,-4.99 L1.62,-4.99 L1.88,-4.96 L2.15,-4.93 L2.41,-4.88 L2.68,-4.82 L2.95,-4.74 L3.21,-4.66 L3.48,-4.55 L3.74,-4.43 L4.00,-4.30 L4.26,-4.16 L4.51,-4.00 L4.76,-3.82 L5.00,-3.63 L5.24,-3.43 L5.46,-3.21 L5.68,-2.98 L5.90,-2.74 L6.10,-2.48 L6.29,-2.21 L6.47,-1.93 L6.64,-1.64 L6.80,-1.33 L6.94,-1.01 L7.07,-0.69 L7.19,-0.35 L7.29,-0.00 L7.37,0.36 L7.44,0.72 L7.49,1.09 L7.52,1.47 L7.54,1.86 L7.53,2.25 L7.51,2.64 L7.47,3.04 L7.40,3.44 L7.32,3.84 L7.22,4.25 L7.09,4.65 L6.95,5.05 L6.78,5.45 L6.59,5.84 L6.38,6.23 L6.15,6.62 L5.90,6.99 L5.63,7.36 L5.33,7.72 L5.02,8.07 L4.68,8.41 L4.32,8.74 L3.94,9.05 L3.55,9.35 L3.13,9.63 L2.69,9.89 L2.24,10.14 L1.77,10.37 L1.28,10.57 L0.78,10.76 L0.26,10.92 L-0.27,11.06 L-0.81,11.18 L-1.37,11.26 L-1.93,11.33 L-2.51,11.36 L-3.10,11.37 L-3.69,11.35 L-4.29,11.30 L-4.89,11.22 L-5.50,11.11 L-6.10,10.97 L-6.71,10.80 L-7.32,10.60 L-7.92,10.36 L-8.52,10.10 L-9.11,9.80 L-9.69,9.46 L-10.27,9.10 L-10.83,8.70 L-11.38,8.27 L-11.92,7.81 L-12.44,7.32 L-12.94,6.79 L-13.42,6.24 L-13.88,5.65 L-14.32,5.04 L-14.73,4.40 L-15.12,3.73 L-15.48,3.03 L-15.80,2.31 L-16.10,1.56 L-16.36,0.79 L-16.59,0.00 L-16.78,-0.81 L-16.94,-1.64 L-17.05,-2.49 L-17.13,-3.35 L-17.16,-4.23 L-17.15,-5.12 L-17.10,-6.02 L-17.00,-6.92 L-16.86,-7.83 L-16.67,-8.75 L-16.44,-9.67 L-16.15,-10.58 L-15.82,-11.50 L-15.44,-12.40 L-15.01,-13.30 L-14.54,-14.19 L-14.01,-15.06 L-13.43,-15.92 L-12.81,-16.77 L-12.14,-17.59 L-11.42,-18.38 L-10.65,-19.15 L-9.84,-19.90 L-8.98,-20.61 L-8.07,-21.29 L-7.12,-21.93 L-6.13,-22.53 L-5.10,-23.09 L-4.03,-23.61 L-2.92,-24.08 L-1.78,-24.50 L-0.60,-24.87 L0.61,-25.18 L1.85,-25.44 L3.11,-25.65 L4.41,-25.79 L5.72,-25.87 L7.05,-25.89 L8.40,-25.85 L9.76,-25.74 L11.13,-25.56 L12.51,-25.31 L13.89,-24.99 L15.28,-24.60 L16.66,-24.13 L18.03,-23.60 L19.39,-22.99 L20.74,-22.30 L22.07,-21.55 L23.38,-20.72 L24.67,-19.81 L25.92,-18.83 L27.14,-17.78 L28.33,-16.66 L29.47,-15.47 L30.57,-14.20 L31.61,-12.87 L32.61,-11.47 L33.55,-10.01 L34.42,-8.48 L35.24,-6.90 L35.98,-5.25 L36.66,-3.55 L37.25,-1.80 L37.77,-0.00 L38.21,1.85 L38.56,3.74 L38.82,5.67 L38.99,7.63 L39.07,9.63 L39.05,11.65 L38.93,13.70 L38.71,15.76 L38.39,17.84 L37.96,19.92 L37.42,22.01 L36.78,24.09 L36.02,26.17 L35.16,28.24 L34.18,30.28 L33.10,32.31 L31.90,34.30 L30.59,36.26 L29.17,38.17 L27.64,40.04 L26.00,41.86 L24.25,43.61 L22.40,45.30 L20.44,46.92 L18.38,48.46 L16.22,49.92 L13.97,51.29 L11.62,52.57 L9.18,53.75 L6.66,54.82 L4.05,55.78 L1.37,56.62 L-1.39,57.34 L-4.21,57.93 L-7.09,58.40 L-10.03,58.73 L-13.02,58.91 L-16.05,58.96 L-19.12,58.85 L-22.22,58.60 L-25.35,58.19 L-28.49,57.62 L-31.64,56.89 L-34.78,56.00 L-37.93,54.95 L-41.05,53.73 L-44.16,52.34 L-47.23,50.78 L-50.26,49.06 L-53.24,47.17 L-56.16,45.11 L-59.02,42.88 L-61.80,40.49 L-64.49,37.93 L-67.10,35.21 L-69.59,32.34 L-71.98,29.31 L-74.25,26.12 L-76.38,22.79 L-78.38,19.32 L-80.23,15.71 L-81.93,11.96 L-83.46,8.09 L-84.82,4.10 L-86.00,0.00"/>
+        <path id="brazo-i" d="M3.20,0.00 L3.24,0.16 L3.27,0.32 L3.29,0.48 L3.30,0.65 L3.31,0.82 L3.31,0.99 L3.30,1.16 L3.28,1.34 L3.25,1.51 L3.22,1.69 L3.17,1.86 L3.12,2.04 L3.05,2.22 L2.98,2.39 L2.90,2.57 L2.80,2.74 L2.70,2.91 L2.59,3.07 L2.47,3.23 L2.34,3.39 L2.20,3.55 L2.05,3.69 L1.90,3.84 L1.73,3.98 L1.56,4.11 L1.37,4.23 L1.18,4.35 L0.98,4.45 L0.78,4.55 L0.56,4.64 L0.34,4.73 L0.12,4.80 L-0.12,4.86 L-0.36,4.91 L-0.60,4.95 L-0.85,4.98 L-1.10,4.99 L-1.36,4.99 L-1.62,4.99 L-1.88,4.96 L-2.15,4.93 L-2.41,4.88 L-2.68,4.82 L-2.95,4.74 L-3.21,4.66 L-3.48,4.55 L-3.74,4.43 L-4.00,4.30 L-4.26,4.16 L-4.51,4.00 L-4.76,3.82 L-5.00,3.63 L-5.24,3.43 L-5.46,3.21 L-5.68,2.98 L-5.90,2.74 L-6.10,2.48 L-6.29,2.21 L-6.47,1.93 L-6.64,1.64 L-6.80,1.33 L-6.94,1.01 L-7.07,0.69 L-7.19,0.35 L-7.29,0.00 L-7.37,-0.36 L-7.44,-0.72 L-7.49,-1.09 L-7.52,-1.47 L-7.54,-1.86 L-7.53,-2.25 L-7.51,-2.64 L-7.47,-3.04 L-7.40,-3.44 L-7.32,-3.84 L-7.22,-4.25 L-7.09,-4.65 L-6.95,-5.05 L-6.78,-5.45 L-6.59,-5.84 L-6.38,-6.23 L-6.15,-6.62 L-5.90,-6.99 L-5.63,-7.36 L-5.33,-7.72 L-5.02,-8.07 L-4.68,-8.41 L-4.32,-8.74 L-3.94,-9.05 L-3.55,-9.35 L-3.13,-9.63 L-2.69,-9.89 L-2.24,-10.14 L-1.77,-10.37 L-1.28,-10.57 L-0.78,-10.76 L-0.26,-10.92 L0.27,-11.06 L0.81,-11.18 L1.37,-11.26 L1.93,-11.33 L2.51,-11.36 L3.10,-11.37 L3.69,-11.35 L4.29,-11.30 L4.89,-11.22 L5.50,-11.11 L6.10,-10.97 L6.71,-10.80 L7.32,-10.60 L7.92,-10.36 L8.52,-10.10 L9.11,-9.80 L9.69,-9.46 L10.27,-9.10 L10.83,-8.70 L11.38,-8.27 L11.92,-7.81 L12.44,-7.32 L12.94,-6.79 L13.42,-6.24 L13.88,-5.65 L14.32,-5.04 L14.73,-4.40 L15.12,-3.73 L15.48,-3.03 L15.80,-2.31 L16.10,-1.56 L16.36,-0.79 L16.59,-0.00 L16.78,0.81 L16.94,1.64 L17.05,2.49 L17.13,3.35 L17.16,4.23 L17.15,5.12 L17.10,6.02 L17.00,6.92 L16.86,7.83 L16.67,8.75 L16.44,9.67 L16.15,10.58 L15.82,11.50 L15.44,12.40 L15.01,13.30 L14.54,14.19 L14.01,15.06 L13.43,15.92 L12.81,16.77 L12.14,17.59 L11.42,18.38 L10.65,19.15 L9.84,19.90 L8.98,20.61 L8.07,21.29 L7.12,21.93 L6.13,22.53 L5.10,23.09 L4.03,23.61 L2.92,24.08 L1.78,24.50 L0.60,24.87 L-0.61,25.18 L-1.85,25.44 L-3.11,25.65 L-4.41,25.79 L-5.72,25.87 L-7.05,25.89 L-8.40,25.85 L-9.76,25.74 L-11.13,25.56 L-12.51,25.31 L-13.89,24.99 L-15.28,24.60 L-16.66,24.13 L-18.03,23.60 L-19.39,22.99 L-20.74,22.30 L-22.07,21.55 L-23.38,20.72 L-24.67,19.81 L-25.92,18.83 L-27.14,17.78 L-28.33,16.66 L-29.47,15.47 L-30.57,14.20 L-31.61,12.87 L-32.61,11.47 L-33.55,10.01 L-34.42,8.48 L-35.24,6.90 L-35.98,5.25 L-36.66,3.55 L-37.25,1.80 L-37.77,0.00 L-38.21,-1.85 L-38.56,-3.74 L-38.82,-5.67 L-38.99,-7.63 L-39.07,-9.63 L-39.05,-11.65 L-38.93,-13.70 L-38.71,-15.76 L-38.39,-17.84 L-37.96,-19.92 L-37.42,-22.01 L-36.78,-24.09 L-36.02,-26.17 L-35.16,-28.24 L-34.18,-30.28 L-33.10,-32.31 L-31.90,-34.30 L-30.59,-36.26 L-29.17,-38.17 L-27.64,-40.04 L-26.00,-41.86 L-24.25,-43.61 L-22.40,-45.30 L-20.44,-46.92 L-18.38,-48.46 L-16.22,-49.92 L-13.97,-51.29 L-11.62,-52.57 L-9.18,-53.75 L-6.66,-54.82 L-4.05,-55.78 L-1.37,-56.62 L1.39,-57.34 L4.21,-57.93 L7.09,-58.40 L10.03,-58.73 L13.02,-58.91 L16.05,-58.96 L19.12,-58.85 L22.22,-58.60 L25.35,-58.19 L28.49,-57.62 L31.64,-56.89 L34.78,-56.00 L37.93,-54.95 L41.05,-53.73 L44.16,-52.34 L47.23,-50.78 L50.26,-49.06 L53.24,-47.17 L56.16,-45.11 L59.02,-42.88 L61.80,-40.49 L64.49,-37.93 L67.10,-35.21 L69.59,-32.34 L71.98,-29.31 L74.25,-26.12 L76.38,-22.79 L78.38,-19.32 L80.23,-15.71 L81.93,-11.96 L83.46,-8.09 L84.82,-4.10 L86.00,-0.00"/>
+      </defs>
+      <!-- El aro de la puerta, apenas -->
+      <circle class="aro" r="95"/>
+      <circle class="aro fino" r="98.5"/>
+      <!-- Dos brazos de un mismo centro: Quantum termina a la izquierda, Infinito a la derecha -->
+      <use href="#brazo-q" class="brazo q"/>
+      <use href="#brazo-i" class="brazo i"/>
+      <use href="#brazo-q" class="brazo vivo q"/>
+      <use href="#brazo-i" class="brazo vivo i"/>
+      <!-- Una luz nace en el centro y recorre cada brazo hacia su puerta -->
+      <g class="luz">
+        <circle r="5.5" fill="url(#halo-q)" opacity="0">
+          <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.8;1" calcMode="linear"><mpath href="#brazo-q"/></animateMotion>
+          <animate attributeName="opacity" dur="12s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.08;0.66;0.8;1"/>
+        </circle>
+        <circle r="1.6" fill="#e9d6ff" opacity="0">
+          <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.8;1" calcMode="linear"><mpath href="#brazo-q"/></animateMotion>
+          <animate attributeName="opacity" dur="12s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.08;0.66;0.8;1"/>
+        </circle>
+        <circle r="5.5" fill="url(#halo-i)" opacity="0">
+          <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.8;1" calcMode="linear"><mpath href="#brazo-i"/></animateMotion>
+          <animate attributeName="opacity" dur="12s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.08;0.66;0.8;1"/>
+        </circle>
+        <circle r="1.6" fill="#e2f7f9" opacity="0">
+          <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.8;1" calcMode="linear"><mpath href="#brazo-i"/></animateMotion>
+          <animate attributeName="opacity" dur="12s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.08;0.66;0.8;1"/>
+        </circle>
+      </g>
+      <circle class="centro-aro" r="8"/>
+      <circle class="centro" r="2.1"/>
+    </svg>
 
-      <div class="doors">
+    <nav class="puertas">
+      <a class="puerta q" href="02_Trinity_Quantum/index.html" data-brazo="q">
+        <span class="glifo">✦</span>
+        <span class="kicker">Los 13 portales del campo cuántico</span>
+        <span class="nombre">Trinity Quantum</span>
+        <span class="desc">El despertar de la consciencia colectiva.</span>
+      </a>
+      <a class="puerta i" href="infinito.html" data-brazo="i">
+        <span class="glifo">∞</span>
+        <span class="kicker">Más allá de la consciencia cósmica</span>
+        <span class="nombre">Trinity Infinito</span>
+        <span class="desc">La unión con el todo.</span>
+      </a>
+    </nav>
 
-        <a class="door door-quantum" href="02_Trinity_Quantum/index.html">
-          <div class="kicker">Los 13 portales del campo cuántico</div>
-          <div class="name">◈ Trinity Quantum</div>
-          <div class="desc">El despertar de la consciencia colectiva.</div>
-        </a>
-
-        <div class="divisor"></div>
-
-        <a class="door door-infinito" href="infinito.html">
-          <div class="kicker">Más allá de la consciencia cósmica</div>
-          <div class="name">🌀 Trinity Infinito</div>
-          <div class="desc">La unión con el todo.</div>
-        </a>
-
-      </div>
-
-      <div class="aviso">
-        El mapa fue construido para ser atravesado en orden.<br>
-        La responsabilidad del viaje pertenece al viajero.
-      </div>
-
-      <a href="index.html" class="btn-volver">← Volver a La Espiral</a>
-
-      <div class="mini">Trinity © 2024–2026 · No es mío, vino a través de mí</div>
-
-    </div>
+    <p class="aviso">El mapa fue construido para ser atravesado en orden.<br>La responsabilidad del viaje pertenece al viajero.</p>
+    <p class="mini">Trinity © 2024–2026 · No es mío, vino a través de mí</p>
   </div>
 
   <script>
-    const canvas = document.getElementById('field');
-    const ctx = canvas.getContext('2d');
-    function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-    window.addEventListener('resize', resize); resize();
-    const colors = ["rgba(156,39,176,.65)","rgba(0,188,212,.55)","rgba(255,215,0,.35)"];
-    function rand(a,b){ return Math.random()*(b-a)+a; }
-    const dots = Array.from({length:42}, ()=>({
-      x:rand(0,canvas.width), y:rand(0,canvas.height),
-      vx:rand(-0.18,0.18), vy:rand(-0.18,0.18),
-      r:rand(0.9,2.1), a:rand(0.15,0.7),
-      c:colors[Math.floor(Math.random()*colors.length)]
-    }));
-    (function tick(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for(const d of dots){
-        d.x+=d.vx; d.y+=d.vy;
-        if(d.x<0) d.x=canvas.width;
-        if(d.x>canvas.width) d.x=0;
-        if(d.y<0) d.y=canvas.height;
-        if(d.y>canvas.height) d.y=0;
-        ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
-        ctx.globalAlpha=d.a; ctx.fillStyle=d.c; ctx.fill();
-      }
-      ctx.globalAlpha=1;
-      requestAnimationFrame(tick);
-    })();
+    // Al mirar una puerta, se enciende su brazo de la espiral.
+    const svg = document.getElementById('espirales');
+    document.querySelectorAll('.puerta').forEach(p => {
+      const clase = 'mira-' + p.dataset.brazo;
+      ['mouseenter', 'focus'].forEach(e => p.addEventListener(e, () => svg.classList.add(clase)));
+      ['mouseleave', 'blur'].forEach(e => p.addEventListener(e, () => svg.classList.remove(clase)));
+    });
+    // Con movimiento reducido, las espirales quedan quietas: sin la luz que las recorre.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      svg.querySelectorAll('animate, animateMotion').forEach(el => el.remove());
+    }
   </script>
 </body>
 </html>
