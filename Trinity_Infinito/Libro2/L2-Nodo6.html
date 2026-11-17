@@ -70,11 +70,26 @@
             100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
         }
 
+        .presence-note {
+            position: absolute;
+            /* por encima de la invitación */
+            bottom: max(8%, 104px);
+            width: 100%;
+            text-align: center;
+            opacity: 0.25;
+            font-style: italic;
+            letter-spacing: 0.3em;
+            font-size: 0.9em;
+        }
+
         .hint {
             position: fixed;
-            bottom: 66px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 66px);
             left: 50%;
             transform: translateX(-50%);
+            width: max-content;
+            max-width: 88vw;
+            text-align: center;
             font-size: 11px;
             letter-spacing: 4px;
             color: rgba(255,255,255,0.3);
@@ -83,16 +98,15 @@
             pointer-events: none;
             z-index: 50;
         }
-        .hint.oculto { opacity: 0; }
+        .hint.oculto { animation: none; opacity: 0; }
         @keyframes hint-breathe {
             0%, 100% { opacity: 0.16; }
             50% { opacity: 0.4; }
         }
         .infinito {
             position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+            right: 24px;
             color: rgba(255, 255, 255, 0.25);
             text-decoration: none;
             font-size: 24px;
@@ -101,6 +115,12 @@
             z-index: 60;
         }
         .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (max-width: 640px) {
+            .presence-note { bottom: calc(env(safe-area-inset-bottom, 0px) + 112px); font-size: 0.82em; letter-spacing: 0.15em; padding: 0 8%; box-sizing: border-box; text-wrap: balance; }
+            .no-center { font-size: 2.2em; }
+            .hint { font-size: 12px; letter-spacing: 2px; }
+        }
 
         @media (prefers-reduced-motion: reduce) {
             .everywhere-circle { animation: none; opacity: 0; }
@@ -129,12 +149,12 @@
 
         <div class="no-center">◯</div>
 
-        <div style="position: absolute; bottom: 8%; width: 100%; text-align: center; opacity: 0.25; font-style: italic; letter-spacing: 0.3em; font-size: 0.9em;">
+        <div class="presence-note">
             El centro está en todas partes · La circunferencia en ninguna
         </div>
     </div>
 
-    <div class="hint" id="hint">( tocá para que la presencia resuene )</div>
+    <div class="hint" id="hint">( toca para que la presencia resuene )</div>
     <a class="infinito" href="L2-Nodo7.html" title="Siguiente portal">∞</a>
 
     <script>
@@ -231,7 +251,8 @@
         startScheduling();
         const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    // El ∞ navega: queda fuera del toque que enciende el sonido
+    document.body.addEventListener('click', (e) => { if (!e.target.closest('.infinito')) initSound(); });
     </script>
 </body>
 </html>

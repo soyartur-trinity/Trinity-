@@ -36,9 +36,11 @@
             animation: circular-motion 15s infinite linear;
             animation-delay: calc(var(--delay) * -3s);
         }
+        /* La palabra gira con su propio centro sobre la órbita (antes la órbita
+           quedaba corrida hacia abajo a la derecha). --r: radio de la órbita. */
         @keyframes circular-motion {
-            0%   { transform: rotate(0deg) translateX(200px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(200px) rotate(-360deg); }
+            0%   { transform: rotate(0deg) translateX(var(--r, 200px)) rotate(0deg) translate(-50%, -50%); }
+            100% { transform: rotate(360deg) translateX(var(--r, 200px)) rotate(-360deg) translate(-50%, -50%); }
         }
 
         .stillness-center {
@@ -86,9 +88,12 @@
 
         .hint {
             position: fixed;
-            bottom: 66px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 66px);
             left: 50%;
             transform: translateX(-50%);
+            width: max-content;
+            max-width: 88vw;
+            text-align: center;
             font-size: 11px;
             letter-spacing: 4px;
             color: rgba(255,255,255,0.3);
@@ -97,7 +102,7 @@
             pointer-events: none;
             z-index: 50;
         }
-        .hint.oculto { opacity: 0; }
+        .hint.oculto { animation: none; opacity: 0; }
         @keyframes hint-breathe {
             0%, 100% { opacity: 0.16; }
             50% { opacity: 0.4; }
@@ -105,9 +110,8 @@
 
         .infinito {
             position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+            right: 24px;
             color: rgba(255, 255, 255, 0.25);
             text-decoration: none;
             font-size: 24px;
@@ -116,6 +120,13 @@
             z-index: 60;
         }
         .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (max-width: 640px) {
+            .motion-field { --r: 34vw; }
+            .stillness-center { font-size: 1.6em; letter-spacing: 0.35em; }
+            .paradox-statement { font-size: 0.85em; letter-spacing: 0.15em; }
+            .hint { font-size: 12px; letter-spacing: 2px; }
+        }
 
         @media (prefers-reduced-motion: reduce) {
             .moving-nothing   { animation: none; opacity: 0; }
@@ -146,7 +157,7 @@
         </div>
     </div>
 
-    <div class="hint" id="hint">( tocá para que el movimiento resuene )</div>
+    <div class="hint" id="hint">( toca para que el movimiento resuene )</div>
     <a class="infinito" href="L2-Nodo6.html" title="Siguiente portal">∞</a>
 
     <script>
@@ -225,7 +236,8 @@
         startScheduling();
         const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    // El ∞ navega: queda fuera del toque que enciende el sonido
+    document.body.addEventListener('click', (e) => { if (!e.target.closest('.infinito')) initSound(); });
     </script>
 </body>
 </html>
