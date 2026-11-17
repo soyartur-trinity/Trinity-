@@ -17,8 +17,10 @@
             /* Georgia: tipografía del estándar Trinity Infinito (antes Garamond) */
             font-family: 'Georgia', 'Times New Roman', serif;
             margin: 0;
-            padding: 60px 40px 100px;
+            /* Las distancias respiran con la altura: nada queda fuera de la pantalla */
+            padding: clamp(16px, 2.8vh, 60px) 40px clamp(20px, 2.6vh, 100px);
             min-height: 100vh;
+            overflow-x: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -57,7 +59,7 @@
            Sólo opacity + transform. Delay NEGATIVO para que el bucle
            conserve el desfase en todas las iteraciones. */
         .state {
-            margin: 38px 0;
+            margin: clamp(8px, 2vh, 38px) 0;
             font-size: 1.1em;
             letter-spacing: 0.2em;
             opacity: 0;
@@ -79,7 +81,7 @@
            la regla de animar sólo transform/opacity. */
         .no-state {
             font-size: 2em;
-            margin: 80px 0;
+            margin: clamp(14px, 5vh, 80px) 0;
             letter-spacing: 0.4em;
             text-shadow: 0 0 24px rgba(255, 255, 255, 0.18);
             animation: no-estado-disuelve 12s ease-in-out infinite;
@@ -96,7 +98,7 @@
             width: 100px;
             height: 1px;
             background: var(--tinta);
-            margin: 60px auto;
+            margin: clamp(10px, 3.8vh, 60px) auto;
             opacity: 0.2;
             transform-origin: center;
             animation: linea-respira 8s ease-in-out infinite;
@@ -110,7 +112,7 @@
         /* === CIERRE (el sentido) ===
            Siempre legible, presencia serena. */
         .cierre {
-            margin-top: 100px;
+            margin-top: clamp(16px, 5vh, 100px);
             opacity: 0.32;
             font-style: italic;
             line-height: 1.9;
@@ -119,7 +121,7 @@
 
         /* === CAPA SONORA (controles discretos) === */
         .resonancia {
-            margin-top: 80px;
+            margin-top: clamp(16px, 4.5vh, 80px);
             display: flex;
             flex-wrap: wrap;
             gap: 14px;
@@ -142,7 +144,7 @@
             letter-spacing: 5px;
         }
         .son-estado {
-            margin-top: 26px;
+            margin-top: clamp(10px, 2.4vh, 26px);
             font-size: 11px;
             letter-spacing: 3px;
             color: rgba(255, 255, 255, 0.25);
@@ -151,9 +153,8 @@
         /* === NAVEGACIÓN ∞ (respeta nomenclatura: L1-NodoN.html) === */
         .infinito {
             position: fixed;
-            bottom: 26px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
+            right: 24px;
             color: rgba(255, 255, 255, 0.25);
             text-decoration: none;
             font-size: 26px;
@@ -173,9 +174,15 @@
         }
 
         @media (max-width: 640px) {
-            .no-state   { font-size: 1.5em; letter-spacing: 0.3em; }
-            .primordial { font-size: 3em; }
-            .state      { font-size: 1em; }
+            body        { padding: 18px 18px calc(env(safe-area-inset-bottom, 0px) + 64px); }
+            .no-state   { font-size: 1.5em; letter-spacing: 0.3em; margin: 3.4vh 0; }
+            .primordial { font-size: 2.4em; letter-spacing: 0.6em; }
+            .state      { font-size: 1em; margin: 1.8vh 0; }
+            .void-line  { margin: 3.4vh auto; }
+            .cierre     { margin-top: 4.5vh; font-size: 0.95em; line-height: 1.7; }
+            .resonancia { margin-top: 4vh; gap: 8px; }
+            .son-btn    { padding: 10px 16px; font-size: 11px; letter-spacing: 2px; }
+            .son-estado { margin-top: 12px; }
         }
     </style>
 </head>

@@ -101,9 +101,12 @@
         }
         .hint {
             position: fixed;
-            bottom: 116px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 116px);
             left: 50%;
             transform: translateX(-50%);
+            width: max-content;
+            max-width: 88vw;
+            text-align: center;
             font-size: 11px;
             letter-spacing: 4px;
             color: rgba(255,255,255,0.3);
@@ -112,16 +115,15 @@
             pointer-events: none;
             z-index: 40;
         }
-        .hint.oculto { opacity: 0; }
+        .hint.oculto { animation: none; opacity: 0; }
         @keyframes hint-breathe {
             0%, 100% { opacity: 0.18; }
             50% { opacity: 0.45; }
         }
         .infinito {
             position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+            right: 24px;
             color: rgba(255, 255, 255, 0.25);
             text-decoration: none;
             font-size: 24px;
@@ -150,6 +152,9 @@
             .question { font-size: 1.18em; color: #b4b4b4; letter-spacing: 0.04em; padding: 0 18px; box-sizing: border-box; animation-name: question-breathe-m; }
             .infinite-regression { font-size: 0.8em; letter-spacing: 0.1em; opacity: 0.55; line-height: 1.7; padding: 0 12px; box-sizing: border-box; bottom: 64px; }
             .hint { font-size: 13px; letter-spacing: 2px; width: 90%; text-align: center; bottom: 150px; }
+        }
+        @media (max-width: 600px) and (prefers-reduced-motion: reduce) {
+            .witness { font-size: 0.85em; }
         }
         @keyframes question-breathe-m {
             0%   { opacity: 0; transform: translateY(-12px); }
@@ -283,7 +288,8 @@
         startScheduling();
         const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    // El ∞ navega: queda fuera del toque que enciende el sonido
+    document.body.addEventListener('click', (e) => { if (!e.target.closest('.infinito')) initSound(); });
     </script>
 </body>
 </html>

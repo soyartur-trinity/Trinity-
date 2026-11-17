@@ -23,13 +23,14 @@
             width: 100%;
             max-width: 600px;
             text-align: center;
-            padding: 40px;
+            /* Las distancias respiran con la altura: nada queda fuera de la pantalla */
+            padding: clamp(12px, 2.8vh, 40px) 40px;
         }
 
         /* Respirar persistente (delay negativo) con tiempo de lectura real */
         .word {
             opacity: 0;
-            margin: 60px 0;
+            margin: clamp(10px, 4.4vh, 60px) 0;
             font-size: 1.2em;
             letter-spacing: 0.5em;
             animation: word-appearance 32s infinite ease-in-out;
@@ -44,7 +45,7 @@
         }
 
         .deep-silence {
-            height: 200px;
+            height: clamp(50px, 16vh, 200px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -54,9 +55,9 @@
         }
 
         .pre-silence {
-            margin: 100px 0;
+            margin: clamp(14px, 8vh, 100px) 0;
             opacity: 0;
-            line-height: 2;
+            line-height: clamp(22px, 2.9vh, 32px);
             animation: pre-silence-show 40s infinite ease-in-out;
         }
         @keyframes pre-silence-show {
@@ -94,9 +95,12 @@
 
         .hint {
             position: fixed;
-            bottom: 78px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 78px);
             left: 50%;
             transform: translateX(-50%);
+            width: max-content;
+            max-width: 88vw;
+            text-align: center;
             font-size: 11px;
             letter-spacing: 4px;
             color: rgba(255,255,255,0.3);
@@ -105,7 +109,7 @@
             pointer-events: none;
             z-index: 50;
         }
-        .hint.oculto { opacity: 0; }
+        .hint.oculto { animation: none; opacity: 0; }
         @keyframes hint-breathe {
             0%, 100% { opacity: 0.16; }
             50% { opacity: 0.4; }
@@ -113,9 +117,8 @@
 
         .infinito {
             position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+            right: 24px;
             color: rgba(255, 255, 255, 0.25);
             text-decoration: none;
             font-size: 24px;
@@ -124,6 +127,15 @@
             z-index: 60;
         }
         .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (max-width: 640px) {
+            .silence-container { padding: 16px 18px calc(env(safe-area-inset-bottom, 0px) + 110px); box-sizing: border-box; }
+            .word { font-size: 1em; letter-spacing: 0.25em; margin: 2.2vh 0; text-wrap: balance; }
+            .deep-silence { height: 9vh; font-size: 3em; letter-spacing: 1em; }
+            .pre-silence { margin: 3vh 0; font-size: 0.95em; line-height: 1.6; }
+            .listening-instruction { font-size: 0.85em; letter-spacing: 0.12em; bottom: calc(env(safe-area-inset-bottom, 0px) + 60px); }
+            .hint { font-size: 12px; letter-spacing: 2px; bottom: calc(env(safe-area-inset-bottom, 0px) + 92px); }
+        }
 
         @media (prefers-reduced-motion: reduce) {
             .word        { animation: none; opacity: 0.4; transform: none; }
@@ -163,7 +175,7 @@
         Escucha... más profundo que escuchar
     </div>
 
-    <div class="hint" id="hint">( escuchá — tocá para entrar en el silencio )</div>
+    <div class="hint" id="hint">( escucha — toca para entrar en el silencio )</div>
     <a class="infinito" href="L1-Nodo7.html" title="Siguiente portal">∞</a>
 
     <script>
@@ -233,7 +245,8 @@
         startScheduling();
         const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    // El ∞ navega: queda fuera del toque que enciende el sonido
+    document.body.addEventListener('click', (e) => { if (!e.target.closest('.infinito')) initSound(); });
     </script>
 </body>
 </html>
