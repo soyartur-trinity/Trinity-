@@ -106,17 +106,20 @@
         0% { opacity: 0; } 12% { opacity: 0.92; } 80% { opacity: 0.92; } 92% { opacity: 0; } 100% { opacity: 0; }
     }
 
-    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.4; }
+    /* al girar la pantalla, el lienzo se ve sin deformarse (sin efecto si no se gira) */
+
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
 
     .hint {
-        position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+        position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 28px); left: 50%; transform: translateX(-50%);
+        width: max-content; max-width: 88vw; text-align: center;
         font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
         animation: hint-breathe 4s ease-in-out infinite; transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
     }
-    .hint.oculto { opacity: 0; }
+    .hint.oculto { animation: none; opacity: 0; }
     @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
     .infinito {
-        position: fixed; bottom: 24px; right: 28px;
+        position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); right: 28px;
         color: rgba(255,182,193,0.45); text-decoration: none; font-size: 24px;
         cursor: pointer; transition: color 0.6s ease; z-index: 60;
     }

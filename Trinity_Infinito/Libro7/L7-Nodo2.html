@@ -176,7 +176,7 @@
   @keyframes breathe { 0%,100% { opacity:0.5; } 50% { opacity:0.95; } }
 
   .infinito {
-    position:fixed; bottom:22px; right:26px;
+    position:fixed; bottom:calc(22px + env(safe-area-inset-bottom, 0px)); right:26px;
     font-size:30px; text-decoration:none;
     color: rgba(208,192,160,0.35);
     transition: color 0.8s ease, text-shadow 0.8s ease;
@@ -307,9 +307,10 @@
   }
 
   const hint = document.querySelector('.hint');
-  function wake() {
+  function wake(e) {
+    if (e && e.target.closest && e.target.closest('.infinito')) return;  // el ∞ navega: no enciende el sonido
     startAudio();
-    if (hint) hint.style.opacity = '0';
+    if (hint) { hint.style.animation = 'none'; hint.style.opacity = '0'; }  // sin esto, la respiración la mantenía encendida
     window.removeEventListener('pointerdown', wake);
   }
   window.addEventListener('pointerdown', wake);

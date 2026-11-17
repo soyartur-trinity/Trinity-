@@ -103,21 +103,28 @@
         50%      { transform: translateX(-50%) translateY(-10px); opacity: 0.9; }
     }
 
-    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.5; }
+    /* al girar la pantalla, el lienzo se ve sin deformarse (sin efecto si no se gira) */
+
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
 
     .hint {
-        position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+        position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 28px); left: 50%; transform: translateX(-50%);
+        width: max-content; max-width: 88vw; text-align: center;
         font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
         animation: hint-breathe 4s ease-in-out infinite; transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
     }
-    .hint.oculto { opacity: 0; }
+    .hint.oculto { animation: none; opacity: 0; }
     @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
     .infinito {
-        position: fixed; bottom: 24px; right: 28px;
+        position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); right: 28px;
         color: rgba(255,120,160,0.45); text-decoration: none; font-size: 24px;
         cursor: pointer; transition: color 0.6s ease; z-index: 60;
     }
     .infinito:hover { color: rgba(255,120,160,0.95); }
+
+    @media (max-width: 640px) {
+        .hint { font-size: 12px; letter-spacing: 2px; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
         .love-void { animation: none; opacity: 0.9; }
@@ -145,7 +152,7 @@
         es la sustancia misma del vacío
     </div>
 
-    <div class="hint" id="hint">( tocá: el vacío resuena )</div>
+    <div class="hint" id="hint">( toca: el vacío resuena )</div>
     <a class="infinito" href="L6-Nodo2.html" title="Siguiente portal">∞</a>
 
     <script>
@@ -274,7 +281,8 @@
         em(); timers.push(setInterval(em, 4200));
         const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    // El ∞ navega: queda fuera del toque que enciende el sonido
+    document.body.addEventListener('click', (e) => { if (!e.target.closest('.infinito')) initSound(); });
     </script>
 </body>
 </html>

@@ -125,8 +125,8 @@
             animation: markerFloat 24s infinite linear;
         }
         @keyframes markerFloat {
-            from { transform: rotate(0deg) translateX(250px) rotate(0deg); }
-            to   { transform: rotate(360deg) translateX(250px) rotate(-360deg); }
+            from { transform: rotate(0deg) translateX(var(--orbita, 250px)) rotate(0deg); }
+            to   { transform: rotate(360deg) translateX(var(--orbita, 250px)) rotate(-360deg); }
         }
 
         canvas {
@@ -134,19 +134,26 @@
         }
 
         .hint {
-            position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+            position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 28px); left: 50%; transform: translateX(-50%);
+        width: max-content; max-width: 88vw; text-align: center;
             font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
             animation: hint-breathe 4s ease-in-out infinite;
             transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
         }
-        .hint.oculto { opacity: 0; }
+        .hint.oculto { animation: none; opacity: 0; }
         @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
         .infinito {
-            position: fixed; bottom: 24px; right: 28px;
+            position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); right: 28px;
             color: rgba(208,192,160,0.35); text-decoration: none; font-size: 24px;
             cursor: pointer; transition: color 0.6s ease; z-index: 60;
         }
         .infinito:hover { color: rgba(208,192,160,0.95); }
+
+        @media (max-width: 640px) {
+            /* los marcadores orbitan dentro de la pantalla (250px en escritorio) */
+            body { --orbita: 34vw; }
+            .hint { font-size: 12px; letter-spacing: 2px; }
+        }
 
         @media (prefers-reduced-motion: reduce) {
             .scale-level   { animation: none; opacity: 0.18; }
@@ -170,7 +177,7 @@
         La misma danza en todas las escalas
     </div>
 
-    <div class="hint" id="hint">( tocá: las escalas resuenan )</div>
+    <div class="hint" id="hint">( toca: las escalas resuenan )</div>
     <a class="infinito" href="L4-Nodo3.html" title="Siguiente portal">∞</a>
 
     <script>
@@ -318,7 +325,17 @@
         step(); timers.push(setInterval(step, 2400));
         const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    // Al girar la pantalla, la escena y el lienzo toman la nueva medida
+    let anchoPrevio = innerWidth;
+    addEventListener('resize', () => {
+        if (innerWidth !== anchoPrevio) {
+            anchoPrevio = innerWidth;
+            canvas.width = innerWidth; canvas.height = innerHeight;
+        }
+    });
+
+    // El ∞ navega: queda fuera del toque que enciende el sonido
+    document.body.addEventListener('click', (e) => { if (!e.target.closest('.infinito')) initSound(); });
     </script>
 </body>
 </html>

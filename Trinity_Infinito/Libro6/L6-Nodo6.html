@@ -97,21 +97,28 @@
         0% { opacity: 0; } 14% { opacity: 0.9; } 82% { opacity: 0.9; } 94% { opacity: 0; } 100% { opacity: 0; }
     }
 
-    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.6; }
+    /* al girar la pantalla, el lienzo se ve sin deformarse (sin efecto si no se gira) */
+
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
 
     .hint {
-        position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+        position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 28px); left: 50%; transform: translateX(-50%);
+        width: max-content; max-width: 88vw; text-align: center;
         font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
         animation: hint-breathe 4s ease-in-out infinite; transition: opacity 1.5s ease; pointer-events: none; z-index: 60;
     }
-    .hint.oculto { opacity: 0; }
+    .hint.oculto { animation: none; opacity: 0; }
     @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
     .infinito {
-        position: fixed; bottom: 24px; right: 28px;
+        position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); right: 28px;
         color: rgba(255,100,200,0.45); text-decoration: none; font-size: 24px;
         cursor: pointer; transition: color 0.6s ease; z-index: 60;
     }
     .infinito:hover { color: rgba(255,100,200,0.95); }
+
+    @media (max-width: 640px) {
+        .hint { font-size: 12px; letter-spacing: 2px; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
         .absolute-closeness { animation: none; opacity: 0.85; }
@@ -137,11 +144,11 @@
 
     <div class="intimacy-wisdom">
         No estás EN el universo<br>
-        sos el universo conociéndose<br>
+        eres el universo conociéndose<br>
         la intimidad más absoluta: ser uno mismo
     </div>
 
-    <div class="hint" id="hint">( tocá: la cercanía resuena )</div>
+    <div class="hint" id="hint">( toca: la cercanía resuena )</div>
     <a class="infinito" href="L6-Nodo7.html" title="Siguiente portal">∞</a>
 
     <script>
@@ -194,9 +201,9 @@
     // ── Citas místicas (con tiempo de lectura) ──
     const quotes = [
         '"Más cerca que tu yugular"',
-        '"El amado está más cerca que vos mismo"',
+        '"El amado está más cerca que tú mismo"',
         '"No hay distancia en el amor"',
-        '"Vos sos lo que buscás"',
+        '"Tú eres lo que buscas"',
         '"El que busca es lo buscado"'
     ];
     let qIdx = 0;
@@ -204,11 +211,11 @@
 
     // ── Sabiduría (con tiempo de lectura) ──
     const wisdoms = [
-        "No estás EN el universo<br>sos el universo conociéndose<br>la intimidad más absoluta: ser uno mismo",
-        "La distancia entre vos y lo divino es cero<br>la distancia entre vos y el otro es cero<br>solo la ilusión crea separación",
-        "Buscás fuera lo que está más adentro<br>tan adentro que es todo<br>la intimidad del ser consigo mismo",
+        "No estás EN el universo<br>eres el universo conociéndose<br>la intimidad más absoluta: ser uno mismo",
+        "La distancia entre tú y lo divino es cero<br>la distancia entre tú y el otro es cero<br>solo la ilusión crea separación",
+        "Buscas fuera lo que está más adentro<br>tan adentro que es todo<br>la intimidad del ser consigo mismo",
         "No hay observador y observado<br>solo el abrazo infinito<br>del ser conociéndose a sí mismo",
-        "Más íntimo que íntimo<br>más cerca que cerca<br>sos aquello que buscás conocer"
+        "Más íntimo que íntimo<br>más cerca que cerca<br>eres aquello que buscas conocer"
     ];
     let wIdx = 0;
     setInterval(() => { wIdx = (wIdx + 1) % wisdoms.length; document.querySelector('.intimacy-wisdom').innerHTML = wisdoms[wIdx]; }, 13000);
@@ -269,7 +276,8 @@
         co(); timers.push(setInterval(co, 7000));
         const h = document.getElementById('hint'); if (h) h.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    // El ∞ navega: queda fuera del toque que enciende el sonido
+    document.body.addEventListener('click', (e) => { if (!e.target.closest('.infinito')) initSound(); });
     </script>
 </body>
 </html>
