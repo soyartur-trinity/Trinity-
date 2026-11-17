@@ -24,11 +24,12 @@
             width: 100%;
             max-width: 700px;
             text-align: center;
-            padding: 40px;
+            /* Las distancias respiran con la altura; abajo, lugar para la invitación */
+            padding: clamp(12px, 3vh, 40px) 40px clamp(60px, 11vh, 100px);
         }
 
         .recognition-moment {
-            margin: 50px 0;
+            margin: clamp(8px, 3vh, 50px) 0;
             font-size: 1.2em;
             letter-spacing: 0.3em;
             opacity: 0;
@@ -47,7 +48,7 @@
            que despierta (reemplaza al emoji). Florece girando. */
         .awakening-sun {
             font-size: 3em;
-            margin: 80px 0;
+            margin: clamp(14px, 5vh, 80px) 0;
             color: rgba(255, 235, 200, 0.9);
             text-shadow: 0 0 30px rgba(255, 220, 160, 0.5), 0 0 60px rgba(255, 190, 120, 0.25);
             animation: cosmic-laugh 10s infinite ease-in-out;
@@ -75,10 +76,10 @@
         }
 
         .liberation-text {
-            margin-top: 100px;
+            margin-top: clamp(18px, 5.5vh, 100px);
             font-style: italic;
             opacity: 0;
-            line-height: 2;
+            line-height: clamp(22px, 3.2vh, 32px);
             animation: liberation 30s infinite ease-in-out;
         }
         @keyframes liberation {
@@ -88,15 +89,18 @@
         }
 
         .hint {
-            position: fixed; bottom: 66px; left: 50%; transform: translateX(-50%);
+            position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 66px); left: 50%; transform: translateX(-50%);
+            width: max-content;
+            max-width: 88vw;
+            text-align: center;
             font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.3);
             animation: hint-breathe 4s ease-in-out infinite;
             transition: opacity 1.5s ease; pointer-events: none; z-index: 50;
         }
-        .hint.oculto { opacity: 0; }
+        .hint.oculto { animation: none; opacity: 0; }
         @keyframes hint-breathe { 0%,100% { opacity: 0.16; } 50% { opacity: 0.4; } }
         .infinito {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); right: 24px;
             color: rgba(255,255,255,0.25); text-decoration: none; font-size: 24px;
             cursor: pointer; transition: color 0.6s ease; z-index: 60;
         }
@@ -111,12 +115,12 @@
         }
         /* Lectura en teléfono: el texto respira, crece y no se corta */
         @media (max-width: 600px) {
-            body { height: auto; min-height: 100vh; min-height: 100dvh; overflow-y: auto; align-items: flex-start; }
-            .recognition-field { padding: 64px 22px 150px; }
-            .recognition-moment { margin: 22px 0; font-size: 1.3em; letter-spacing: 0.12em; line-height: 1.5; animation-name: recognition-wave-m; }
-            .awakening-sun { margin: 36px 0; font-size: 2.6em; }
+            body { height: auto; min-height: 100vh; min-height: 100dvh; overflow-y: auto; align-items: center; }
+            .recognition-field { padding: 4vh 22px calc(env(safe-area-inset-bottom, 0px) + 104px); }
+            .recognition-moment { margin: 2vh 0; font-size: 1.3em; letter-spacing: 0.12em; line-height: 1.5; text-wrap: balance; animation-name: recognition-wave-m; }
+            .awakening-sun { margin: 3.4vh 0; font-size: 2.6em; }
             .game-revealed { font-size: 1.5em; letter-spacing: 0.35em; }
-            .liberation-text { margin-top: 44px; font-size: 1.12em; }
+            .liberation-text { margin-top: 4vh; font-size: 1.12em; line-height: 1.7; }
             .hint { font-size: 13px; letter-spacing: 2px; bottom: 62px; width: 90%; text-align: center; }
         }
         @keyframes recognition-wave-m {
@@ -244,7 +248,8 @@
         startScheduling();
         const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    // El ∞ navega: queda fuera del toque que enciende el sonido
+    document.body.addEventListener('click', (e) => { if (!e.target.closest('.infinito')) initSound(); });
     </script>
 </body>
 </html>

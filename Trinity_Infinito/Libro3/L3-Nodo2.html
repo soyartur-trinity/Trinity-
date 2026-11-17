@@ -11,7 +11,9 @@
             font-family: 'Georgia', serif;
             margin: 0;
             min-height: 100vh;
-            padding: 40px;
+            /* Abajo queda lugar para la invitación; las distancias respiran con la altura */
+            padding: clamp(16px, 3vh, 40px) 40px clamp(80px, 11vh, 100px);
+            box-sizing: border-box;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -28,7 +30,7 @@
            El tachado ya no es text-decoration (discreto) sino una línea
            que se dibuja con scaleX (transform), sincronizada al ciclo. */
         .rule {
-            margin: 30px 0;
+            margin: clamp(6px, 2vh, 30px) 0;
             font-size: 1.1em;
             letter-spacing: 0.2em;
             position: relative;
@@ -67,7 +69,7 @@
         }
 
         .meta-rule {
-            margin: 60px 0;
+            margin: clamp(14px, 4vh, 60px) 0;
             font-size: 1.5em;
             letter-spacing: 0.5em;
             line-height: 1.6;
@@ -79,7 +81,7 @@
         }
 
         .paradox-note {
-            margin-top: 80px;
+            margin-top: clamp(16px, 4.5vh, 80px);
             font-style: italic;
             opacity: 0.25;
             letter-spacing: 0.3em;
@@ -94,9 +96,12 @@
 
         .hint {
             position: fixed;
-            bottom: 66px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 66px);
             left: 50%;
             transform: translateX(-50%);
+            width: max-content;
+            max-width: 88vw;
+            text-align: center;
             font-size: 11px;
             letter-spacing: 4px;
             color: rgba(255,255,255,0.3);
@@ -105,16 +110,15 @@
             pointer-events: none;
             z-index: 50;
         }
-        .hint.oculto { opacity: 0; }
+        .hint.oculto { animation: none; opacity: 0; }
         @keyframes hint-breathe {
             0%, 100% { opacity: 0.16; }
             50% { opacity: 0.4; }
         }
         .infinito {
             position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+            right: 24px;
             color: rgba(255, 255, 255, 0.25);
             text-decoration: none;
             font-size: 24px;
@@ -123,6 +127,25 @@
             z-index: 60;
         }
         .infinito:hover { color: rgba(255, 255, 255, 0.85); }
+
+        @media (max-width: 640px) {
+            body { padding: 16px 20px calc(env(safe-area-inset-bottom, 0px) + 100px); }
+            .rule { font-size: 0.95em; letter-spacing: 0.1em; margin: 1.1vh 0; line-height: 1.35; text-wrap: balance; }
+            /* En dos líneas, la raya única pasaba entre renglones: ahora se tacha
+               cada renglón (la copia transparente del texto lleva el tachado) */
+            .rule::after {
+                content: attr(data-texto);
+                top: 0; height: 100%;
+                background: none;
+                color: transparent;
+                text-decoration: line-through;
+                text-decoration-color: #fff;
+                text-decoration-thickness: 1px;
+            }
+            .meta-rule { font-size: 1.25em; letter-spacing: 0.35em; margin: 3vh 0; }
+            .paradox-note { margin-top: 3.4vh; font-size: 0.85em; letter-spacing: 0.15em; }
+            .hint { font-size: 12px; letter-spacing: 2px; }
+        }
 
         @media (prefers-reduced-motion: reduce) {
             .rule        { animation: none; opacity: 0.6; transform: none; }
@@ -135,9 +158,9 @@
 </head>
 <body>
     <div class="rules-container">
-        <div class="rule" style="--index: 0;">Regla 1: No hay reglas fijas</div>
-        <div class="rule" style="--index: 1;">Regla 2: Cada movimiento crea su propia ley</div>
-        <div class="rule" style="--index: 2;">Regla 3: Lo prohibido puede volverse obligatorio</div>
+        <div class="rule" style="--index: 0;" data-texto="Regla 1: No hay reglas fijas">Regla 1: No hay reglas fijas</div>
+        <div class="rule" style="--index: 1;" data-texto="Regla 2: Cada movimiento crea su propia ley">Regla 2: Cada movimiento crea su propia ley</div>
+        <div class="rule" style="--index: 2;" data-texto="Regla 3: Lo prohibido puede volverse obligatorio">Regla 3: Lo prohibido puede volverse obligatorio</div>
 
         <div class="meta-rule">
             LAS REGLAS<br>
@@ -145,10 +168,10 @@
             AL JUGAR
         </div>
 
-        <div class="rule" style="--index: 3;">Regla 4: El tablero se expande con cada jugada</div>
-        <div class="rule" style="--index: 4;">Regla 5: Ganar es perder, perder es ganar</div>
-        <div class="rule" style="--index: 5;">Regla 6: Esta regla se autodestruye al leerse</div>
-        <div class="rule" style="--index: 6;">Regla 7: No hay regla 7</div>
+        <div class="rule" style="--index: 3;" data-texto="Regla 4: El tablero se expande con cada jugada">Regla 4: El tablero se expande con cada jugada</div>
+        <div class="rule" style="--index: 4;" data-texto="Regla 5: Ganar es perder, perder es ganar">Regla 5: Ganar es perder, perder es ganar</div>
+        <div class="rule" style="--index: 5;" data-texto="Regla 6: Esta regla se autodestruye al leerse">Regla 6: Esta regla se autodestruye al leerse</div>
+        <div class="rule" style="--index: 6;" data-texto="Regla 7: No hay regla 7">Regla 7: No hay regla 7</div>
 
         <div class="paradox-note">
             El juego inventa sus propias leyes<br>
@@ -157,7 +180,7 @@
         </div>
     </div>
 
-    <div class="hint" id="hint">( tocá: las reglas se escriben solas )</div>
+    <div class="hint" id="hint">( toca: las reglas se escriben solas )</div>
     <a class="infinito" href="L3-Nodo3.html" title="Siguiente portal">∞</a>
 
     <script>
@@ -260,7 +283,8 @@
         escribir();
         const hint = document.getElementById('hint'); if (hint) hint.classList.add('oculto');
     }
-    document.body.addEventListener('click', initSound, { once: true });
+    // El ∞ navega: queda fuera del toque que enciende el sonido
+    document.body.addEventListener('click', (e) => { if (!e.target.closest('.infinito')) initSound(); });
     </script>
 </body>
 </html>
