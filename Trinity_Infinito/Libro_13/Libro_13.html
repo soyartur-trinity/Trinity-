@@ -145,14 +145,32 @@
   .node[data-state="future"]    { opacity: 0; }
   .node[data-state="completed"] { opacity: 0; }
 
-  /* La página se aclara un instante cuando el libro se completa: ahí asoman las posimágenes */
+  /* La página se aclara un instante cuando el libro se completa: ahí asoman las posimágenes.
+     La luz nace donde estaban las manchas y se pierde en la noche hacia los bordes, y el punto
+     donde se apoya la mirada sigue encendido, para que la mirada se quede y los colores asomen. */
   #velo {
+    --S: min(84vw, 46vh, 560px);
     position: fixed; inset: 0; z-index: 6; pointer-events: none;
-    background: rgb(70, 66, 60);
+    background: radial-gradient(circle at 50% 47%,
+      rgb(98, 91, 81) 0,
+      rgb(93, 87, 78) calc(var(--S) * 0.5),
+      rgba(84, 78, 70, 0.9) calc(var(--S) * 0.75),
+      rgba(62, 57, 54, 0.62) calc(var(--S) * 1),
+      rgba(36, 32, 38, 0.3) calc(var(--S) * 1.35),
+      rgba(0, 0, 0, 0) calc(var(--S) * 1.8));
     opacity: 0;
-    transition: opacity 2.4s ease;
+    transition: opacity 2.6s ease;
   }
-  body.posimagen #velo { opacity: 1; transition: opacity 0.45s ease; }
+  body.posimagen #velo { opacity: 1; transition: opacity 0.6s ease-out; }
+  #mira {
+    position: fixed; left: 50%; top: 47%; z-index: 6; pointer-events: none;
+    width: 4.4px; height: 4.4px; border-radius: 50%;
+    background: rgba(255, 244, 214, 0.95);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 2.6s ease;
+  }
+  body.posimagen #mira { opacity: 1; transition: none; }
 
   #completion {
     position: fixed; inset: 0;
@@ -352,6 +370,7 @@
 </main>
 
 <div id="velo" aria-hidden="true"></div>
+<div id="mira" aria-hidden="true"></div>
 
 <div id="completion" aria-hidden="true">
   <div class="completion-infinity">∞</div>

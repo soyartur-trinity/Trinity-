@@ -2,12 +2,14 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
 <title>Libro 12 - Nodo 5: El Lenguaje Del Cuerpo</title>
 <!-- Portal 82. «Para ver» de Arquitectura del Destino, Libro 4: la ruta no cambia.
      Adaptado al teléfono en octubre de 2026; saneado en noviembre de 2026 con imagen y sonido propios:
-     un cuerpo hecho de trece puntos de luz, uno por articulación (los experimentos de Johansson),
-     que recorre un alfabeto de posturas. Pasos y respiración.
+     imagen rehecha el 17 de noviembre, sin figura humana: dos triángulos y un círculo que se mueven
+     como en la película de Heider y Simmel (1944), donde nadie vio formas y todos vieron intenciones.
+     Recorren un alfabeto de gestos: acercarse, acompañar, irrumpir, proteger, retirarse, reunirse,
+     descansar, despedirse. Pasos (cada arranque) y respiración.
      Frases, paradoja y paleta (durazno cálido) del original; también su invitación a tocar. -->
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -155,93 +157,102 @@
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const lienzo = document.getElementById('lienzo');
   const g = lienzo.getContext('2d');
-  let W, H, dpr, CX, PISO, ALTO;
-  const rad = (d) => d * Math.PI / 180;
+  let W, H, dpr, CX, CY, S;
 
-  /* ---------------- El cuerpo de trece puntos ------------------------------------------------
-     En 1973, Gunnar Johansson filmó a personas con trece luces en las articulaciones, a oscuras.
-     Quieto, el conjunto no es nada: unos puntos sueltos. En cuanto se mueve, cualquiera reconoce
-     un cuerpo que camina, y hasta su ánimo y su intención. El cuerpo dice verdades.
-     Aquí recorre un alfabeto de posturas: camina, abre los brazos, se inclina, se eleva, se
-     recoge. Cada una es un verbo. Gira despacio en el espacio, y un reflejo tenue lo acompaña.
+  /* ---------------- Tres figuras que hablan con el cuerpo -------------------------------------
+     En 1944, Fritz Heider y Marianne Simmel mostraron una película breve: dos triángulos y un
+     círculo que se mueven alrededor de un rectángulo. Casi nadie describió figuras geométricas;
+     contaron una historia, con miedo, persecución, protección y afecto. El sentido no estaba en la
+     forma sino en el movimiento: cuándo una figura arranca sola, cuándo duda, cuándo se acerca o
+     huye, cuándo se queda. El cuerpo dice verdades aunque no tenga forma de cuerpo.
+     Aquí, un triángulo grande, uno pequeño y un círculo recorren un alfabeto de gestos, y cada uno
+     es un verbo: acercarse, acompañar, irrumpir, proteger, retirarse, reunirse, descansar,
+     despedirse. Cada arranque es un paso; la respiración se hace honda cuando están juntos.
   ------------------------------------------------------------------------------------------- */
-  const B = { cadera: 0.085, muslo: 0.245, pierna: 0.245, torso: 0.3, hombro: 0.13, cuello: 0.13, brazo: 0.17, antebrazo: 0.16 };
+  const COLOR = { A: [232, 150, 112], B: [250, 198, 168], C: [255, 228, 212] };
+  const INICIO = { A: [0.3, 0.26], B: [-0.25, 0.1], C: [0.18, -0.22] };
+  const AX = 0.45, AY = 0.4;                     // el escenario, en proporción a la escena
 
-  function rotX([x, y, z], t) { const c = Math.cos(t), s = Math.sin(t); return [x, y * c - z * s, y * s + z * c]; }
-  const suma = (a, b, k = 1) => [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k];
+  function figura(nombre, tam, giro) {
+    return { nombre, tam, giro, x: INICIO[nombre][0], y: INICIO[nombre][1], vx: 0, vy: 0,
+             rumbo: nombre === 'A' ? 0.6 : 0, quieta: true, golpe: -9 };
+  }
+  const F = { A: figura('A', 0.17, 2.4), B: figura('B', 0.105, 3.4), C: figura('C', 0.045, 0) };
+  const RADIO = { A: 0.085, B: 0.048, C: 0.045 };   // nadie atraviesa a nadie
+  const pos = (f) => [f.x, f.y];
+  const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+  const hacia = (de, a, d) => { const l = dist(de, a) || 1; return [de[0] + (a[0] - de[0]) / l * d, de[1] + (a[1] - de[1]) / l * d]; };
+  const medio = () => [(F.B.x + F.C.x) / 2, (F.B.y + F.C.y) / 2];
+  const suave = (a, b, u) => { const k = Math.max(0, Math.min(1, (u - a) / (b - a))); return k * k * (3 - 2 * k); };
+  const LEJOS = [0.62, 0.52];                    // hacia donde mira el grande cuando se aparta
 
-  // Las posturas: ángulos en grados. abd = brazo hacia afuera (negativo: hacia el pecho), flex = hacia adelante, codo y rodilla: flexión.
-  const POSTURAS = [
-    { verbo: 'camina',    dur: 9, giro: 90, inclina: 4,  cabeza: 0,   puntas: 0,    camina: 1,
-      bi: { abd: 6, flex: 0, codo: 18 }, bd: { abd: 6, flex: 0, codo: 18 }, pi: { flex: 0, rodilla: 4 }, pd: { flex: 0, rodilla: 4 } },
-    { verbo: 'abre',      dur: 7, giro: 12, inclina: -4, cabeza: -6,  puntas: 0,    camina: 0,
-      bi: { abd: 92, flex: 14, codo: 12 }, bd: { abd: 92, flex: 14, codo: 12 }, pi: { flex: 0, rodilla: 2 }, pd: { flex: 0, rodilla: 2 } },
-    { verbo: 'se inclina', dur: 7, giro: 78, inclina: 50, cabeza: 18, puntas: 0,    camina: 0,
-      bi: { abd: 4, flex: 22, codo: 8 }, bd: { abd: 4, flex: 22, codo: 8 }, pi: { flex: -4, rodilla: 6 }, pd: { flex: -4, rodilla: 6 } },
-    { verbo: 'se eleva',  dur: 7, giro: -18, inclina: -6, cabeza: -22, puntas: 0.035, camina: 0,
-      bi: { abd: 158, flex: 18, codo: 10 }, bd: { abd: 158, flex: 18, codo: 10 }, pi: { flex: 0, rodilla: 0 }, pd: { flex: 0, rodilla: 0 } },
-    { verbo: 'se recoge', dur: 7, giro: 30, inclina: 12, cabeza: 34, puntas: 0,    camina: 0,
-      bi: { abd: -25, flex: 40, codo: 95 }, bd: { abd: -25, flex: 40, codo: 95 }, pi: { flex: 12, rodilla: 22 }, pd: { flex: 8, rodilla: 16 } }
+  // Cada escena da a cada figura un destino, una rapidez y, si hace falta, hacia dónde mirar.
+  const ESCENAS = [
+    { dur: 9, verbo: 'acercarse', orden(t, e) {
+        const b = t > 5.5 ? hacia(INICIO.B, pos(F.C), 0.03) : INICIO.B;
+        return {
+          C: { p: hacia(pos(F.B), pos(F.C), 0.09), v: 0.11, duda: true },
+          B: { p: b, v: 0.05, mira: pos(F.C) },
+          A: { p: INICIO.A, v: 0.05, mira: LEJOS } };
+    } },
+    { dur: 9, verbo: 'acompañar', ritmo: 1.15, orden(t, e) {
+        if (e.th0 === undefined) e.th0 = Math.atan2(F.B.y, F.B.x);
+        const th = e.th0 + 0.33 * t + 0.28, R = 0.2;
+        const v = 0.1 * (0.8 + 0.2 * Math.sin(2 * Math.PI * t / 1.15));
+        return {
+          B: { p: [R * Math.cos(th), R * Math.sin(th)], v },
+          C: { p: [(R + 0.07) * Math.cos(th - 0.12), (R + 0.07) * Math.sin(th - 0.12)], v },
+          A: { p: INICIO.A, v: 0.04, mira: t > 5 ? medio() : LEJOS } };
+    } },
+    { dur: 6, verbo: 'irrumpir', orden(t, e) {
+        const m = medio();
+        const a = t < 0.8 ? { p: hacia(pos(F.A), m, -0.03), v: 0.05, mira: m }
+                : t < 2.6 ? { p: m, v: 0.42 }
+                : { p: pos(F.C), v: 0.3 };
+        return {
+          A: a,
+          B: t > 0.9 ? { p: [-0.38, -0.3], v: 0.32 } : { p: pos(F.B), v: 0, mira: pos(F.A) },
+          C: t > 1.05 ? { p: [-0.36, 0.3], v: 0.33 } : { p: pos(F.C), v: 0 } };
+    } },
+    { dur: 8, verbo: 'proteger', orden(t, e) {
+        const c = [-0.36 + 0.004 * Math.sin(t * 41), 0.3 + 0.003 * Math.sin(t * 37)];   // tiembla
+        return {
+          C: { p: c, v: 0.06 },
+          B: { p: hacia(c, pos(F.A), 0.13), v: 0.26, mira: pos(F.A) },
+          A: { p: hacia(c, pos(F.A), 0.3 + 0.05 * Math.sin(2 * Math.PI * t / 1.7)), v: 0.2, mira: pos(F.B) } };
+    } },
+    { dur: 6, verbo: 'retirarse', orden(t, e) {
+        return {
+          A: { p: INICIO.A, v: 0.06, mira: dist(pos(F.A), INICIO.A) < 0.03 ? LEJOS : null },
+          B: { p: pos(F.B), v: 0, mira: t < 3 ? pos(F.A) : pos(F.C) },
+          C: { p: [-0.36, 0.3], v: 0.04 } };
+    } },
+    { dur: 8, verbo: 'reunirse', orden(t, e) {
+        if (t < 4) return {
+          B: { p: hacia(pos(F.C), pos(F.B), 0.095), v: 0.12, mira: pos(F.C) },
+          C: { p: hacia(pos(F.C), pos(F.B), 0.012), v: 0.04 },
+          A: { p: INICIO.A, v: 0.03, mira: LEJOS } };
+        if (!e.m) { e.m = medio(); e.f0 = Math.atan2(F.B.y - e.m[1], F.B.x - e.m[0]); }
+        const f = e.f0 + 0.7 * (t - 4), r = 0.048;
+        return {
+          B: { p: [e.m[0] + r * Math.cos(f), e.m[1] + r * Math.sin(f)], v: 0.15, mira: pos(F.C) },
+          C: { p: [e.m[0] - r * Math.cos(f), e.m[1] - r * Math.sin(f)], v: 0.15 },
+          A: { p: INICIO.A, v: 0.03, mira: LEJOS } };
+    } },
+    { dur: 9, verbo: 'descansar', respira: 1, orden(t, e) {
+        return {
+          B: { p: [-0.07, 0.06], v: 0.04, mira: pos(F.C) },
+          C: { p: [-0.165, 0.07], v: 0.04 },
+          A: { p: INICIO.A, v: 0.03, mira: LEJOS } };
+    } },
+    { dur: 8, verbo: 'despedirse', orden(t, e) {
+        return {
+          C: t > 1 ? { p: INICIO.C, v: 0.085, duda: t < 3 } : { p: pos(F.C), v: 0 },
+          B: { p: t > 3 ? INICIO.B : pos(F.B), v: 0.05, mira: pos(F.C) },
+          A: { p: INICIO.A, v: 0.03, mira: LEJOS } };
+    } }
   ];
-  const TRANS = 2.4;                         // segundos de paso entre una postura y la siguiente
-  const TOTAL = POSTURAS.reduce((s, p) => s + p.dur, 0);
-
-  function mezclar(a, b, k) {
-    if (typeof a === 'number') return a + (b - a) * k;
-    if (typeof a === 'string') return k < 0.5 ? a : b;
-    const r = {}; for (const key in a) r[key] = mezclar(a[key], b[key], k); return r;
-  }
-  const suave = (u) => u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u);
-
-  function posturaEn(t) {
-    t = ((t % TOTAL) + TOTAL) % TOTAL;
-    let i = 0, acc = 0;
-    while (t >= acc + POSTURAS[i].dur) { acc += POSTURAS[i].dur; i++; }
-    const prev = POSTURAS[(i + POSTURAS.length - 1) % POSTURAS.length];
-    return mezclar(prev, POSTURAS[i], suave((t - acc) / TRANS));
-  }
-
-  // La marcha: un ciclo de algo más de un segundo, cuya amplitud depende de cuánto «camina» la postura
-  const PASO = 1.15;
-  function marcha(p, t) {
-    const w = p.camina; if (w < 0.001) return p;
-    const q = JSON.parse(JSON.stringify(p));
-    const ps = (2 * Math.PI * t) / PASO;
-    const pierna = (ph) => ({ flex: 24 * Math.sin(ph), rodilla: 6 + 58 * Math.pow(Math.max(0, Math.cos(ph - 0.35)), 3) });
-    const brazo = (ph) => ({ flex: 22 * Math.sin(ph), codo: 18 + 16 * Math.max(0, Math.sin(ph)) });
-    const pd = pierna(ps), pi = pierna(ps + Math.PI), bd = brazo(ps + Math.PI), bi = brazo(ps);
-    q.pd.flex += pd.flex * w; q.pd.rodilla += (pd.rodilla - 4) * w;
-    q.pi.flex += pi.flex * w; q.pi.rodilla += (pi.rodilla - 4) * w;
-    q.bd.flex += bd.flex * w; q.bd.codo += (bd.codo - 18) * w;
-    q.bi.flex += bi.flex * w; q.bi.codo += (bi.codo - 18) * w;
-    return q;
-  }
-
-  // Cinemática: de los ángulos a los trece puntos, con los pies siempre en el piso
-  function puntos(p) {
-    const P = [0, 0.5, 0];
-    const U = rotX([0, 1, 0], rad(p.inclina));
-    const S = suma(P, U, B.torso);
-    const cabeza = suma(S, rotX([0, 1, 0], rad(p.inclina + p.cabeza * 0.5)), B.cuello);
-    const out = [cabeza];
-    for (const [lado, a] of [[-1, p.bi], [1, p.bd]]) {
-      const hombro = suma(S, [lado * B.hombro, 0, 0]);
-      let d = [lado * Math.sin(rad(a.abd)), -Math.cos(rad(a.abd)), 0];
-      d = rotX(d, -rad(a.flex));
-      const codo = suma(hombro, d, B.brazo);
-      const d2 = rotX(d, -rad(a.codo));
-      out.push(hombro, codo, suma(codo, d2, B.antebrazo));
-    }
-    for (const [lado, l] of [[-1, p.pi], [1, p.pd]]) {
-      const cad = suma(P, [lado * B.cadera, 0, 0]);
-      const d = rotX([0, -1, 0], -rad(l.flex));
-      const rod = suma(cad, d, B.muslo);
-      const d2 = rotX(d, rad(l.rodilla));
-      out.push(cad, rod, suma(rod, d2, B.pierna));
-    }
-    const piso = Math.min(out[9][1], out[12][1]);     // los tobillos
-    return out.map(([x, y, z]) => [x, y - piso + p.puntas, z]);
-  }
+  const CICLO = ESCENAS.reduce((a, e) => a + e.dur, 0);
 
   function medir() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -249,78 +260,110 @@
     lienzo.width = Math.round(W * dpr); lienzo.height = Math.round(H * dpr);
     lienzo.style.width = W + 'px'; lienzo.style.height = H + 'px';
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ALTO = Math.min(H * 0.4, W * 0.9, 440);
-    CX = W / 2; PISO = H * 0.45 + ALTO * 0.5;
+    S = Math.min(W * 0.86, H * 0.46, 560);
+    CX = W / 2; CY = H * 0.45;
   }
 
-  const HUESOS = [[0, 1], [0, 4], [1, 4], [1, 2], [2, 3], [4, 5], [5, 6], [1, 7], [4, 10], [7, 10], [7, 8], [8, 9], [10, 11], [11, 12]];
+  // la duda: avanza un poco, se detiene, vuelve a avanzar
+  const duda = (t) => { const u = t % 1.8; return suave(0, 0.15, u) * (1 - suave(0.95, 1.1, u)); };
 
-  function dibujar(pts, giro, huesos) {
-    const c = Math.cos(rad(giro)), s = Math.sin(rad(giro));
-    const pr = pts.map(([x, y, z]) => ({ X: CX + (x * c + z * s) * ALTO, Y: PISO - y * ALTO, d: -x * s + z * c }));
-    g.clearRect(0, 0, W, H);
-    // el piso, apenas una línea de luz
-    const pg = g.createLinearGradient(CX - ALTO * 0.6, 0, CX + ALTO * 0.6, 0);
-    pg.addColorStop(0, 'rgba(240,190,160,0)'); pg.addColorStop(0.5, 'rgba(240,190,160,0.16)'); pg.addColorStop(1, 'rgba(240,190,160,0)');
-    g.strokeStyle = pg; g.lineWidth = 1; g.beginPath(); g.moveTo(CX - ALTO * 0.6, PISO + 2); g.lineTo(CX + ALTO * 0.6, PISO + 2); g.stroke();
-    if (huesos) {
-      g.strokeStyle = 'rgba(240,200,180,0.18)'; g.lineWidth = 1;
-      for (const [a, b] of HUESOS) { g.beginPath(); g.moveTo(pr[a].X, pr[a].Y); g.lineTo(pr[b].X, pr[b].Y); g.stroke(); }
+  function mover(f, o, dt) {
+    const v = o.v * (o.duda ? duda(T) : 1);
+    const dx = o.p[0] - f.x, dy = o.p[1] - f.y, d = Math.hypot(dx, dy);
+    const rap = d > 1e-4 ? v * Math.min(1, d / 0.07) : 0;
+    const qx = (d > 1e-4 ? dx / d * rap : 0) - f.vx, qy = (d > 1e-4 ? dy / d * rap : 0) - f.vy;
+    const q = Math.hypot(qx, qy), lim = (f.nombre === 'A' ? 1.5 : 1.9) * dt, k = q > lim ? lim / q : 1;
+    f.vx += qx * k; f.vy += qy * k;
+    f.x = Math.max(-AX, Math.min(AX, f.x + f.vx * dt));
+    f.y = Math.max(-AY, Math.min(AY, f.y + f.vy * dt));
+    const r = Math.hypot(f.vx, f.vy);
+    const mira = o.mira ? Math.atan2(o.mira[1] - f.y, o.mira[0] - f.x) : r > 0.012 ? Math.atan2(f.vy, f.vx) : null;
+    if (mira !== null && f.giro) {
+      const da = Math.atan2(Math.sin(mira - f.rumbo), Math.cos(mira - f.rumbo));
+      f.rumbo += Math.max(-f.giro * dt, Math.min(f.giro * dt, da));
     }
+    // un arranque propio, sin que nada lo empuje, se ve vivo: es un paso
+    if (f.quieta && r > 0.035) { f.quieta = false; if (T - f.golpe > 0.35) { f.golpe = T; paso(f, Math.min(1, 0.35 + rap * 2)); } }
+    else if (!f.quieta && r < 0.012) f.quieta = true;
+  }
+
+  function separar() {
+    const L = [F.A, F.B, F.C];
+    for (let i = 0; i < 3; i++) for (let j = i + 1; j < 3; j++) {
+      const a = L[i], b = L[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1e-6;
+      const m = RADIO[a.nombre] + RADIO[b.nombre];
+      if (d < m) { const k = (m - d) / d / 2; a.x -= dx * k; a.y -= dy * k; b.x += dx * k; b.y += dy * k; }
+    }
+  }
+
+  function dibujar(escala) {
+    g.clearRect(0, 0, W, H);
     g.globalCompositeOperation = 'lighter';
-    const r0 = Math.max(2.6, ALTO / 110);
-    for (const q of pr) {
-      const k = 0.78 + 0.22 * Math.max(-1, Math.min(1, q.d * 4));   // lo cercano brilla más
-      // reflejo en el piso
-      const ry = PISO + (PISO - q.Y) * 0.55 + 4;
-      g.fillStyle = `rgba(240,190,160,${(0.09 * k).toFixed(3)})`;
-      g.beginPath(); g.arc(q.X, ry, r0 * 0.8, 0, Math.PI * 2); g.fill();
-      // halo y punto
-      const h = g.createRadialGradient(q.X, q.Y, 0, q.X, q.Y, r0 * 6);
-      h.addColorStop(0, `rgba(250,200,170,${(0.34 * k).toFixed(3)})`); h.addColorStop(1, 'rgba(250,200,170,0)');
-      g.fillStyle = h; g.beginPath(); g.arc(q.X, q.Y, r0 * 6, 0, Math.PI * 2); g.fill();
-      g.fillStyle = `rgba(255,242,232,${(0.95 * k).toFixed(3)})`;
-      g.beginPath(); g.arc(q.X, q.Y, r0 * (0.8 + 0.25 * k), 0, Math.PI * 2); g.fill();
+    for (const f of [F.A, F.B, F.C]) {
+      const X = CX + f.x * S, Y = CY + f.y * S, col = COLOR[f.nombre];
+      const L = f.tam * S * (f.nombre === 'A' ? 1 : escala);
+      const h = g.createRadialGradient(X, Y, 0, X, Y, L * 1.6);
+      h.addColorStop(0, `rgba(${col},0.16)`); h.addColorStop(1, `rgba(${col},0)`);
+      g.fillStyle = h; g.beginPath(); g.arc(X, Y, L * 1.6, 0, Math.PI * 2); g.fill();
+      g.beginPath();
+      if (f.nombre === 'C') g.arc(X, Y, L, 0, Math.PI * 2);
+      else {
+        const c = Math.cos(f.rumbo), s = Math.sin(f.rumbo), b = 0.36 * L;
+        g.moveTo(X + c * L * 0.62, Y + s * L * 0.62);
+        g.lineTo(X - c * L * 0.38 - s * b, Y - s * L * 0.38 + c * b);
+        g.lineTo(X - c * L * 0.38 + s * b, Y - s * L * 0.38 - c * b);
+        g.closePath();
+      }
+      g.fillStyle = `rgba(${col},0.1)`; g.fill();
+      g.strokeStyle = `rgba(${col},0.92)`; g.lineWidth = Math.max(1.2, S / 300); g.lineJoin = 'round'; g.stroke();
     }
     g.globalCompositeOperation = 'source-over';
   }
 
-  /* ---------------- La respuesta al toque: el cuerpo se vuelve y alza un brazo hacia ti ----- */
-  let T = 0, ultimo = 0, toque = -99, ladoToque = 1;
-  function respuesta(p, t) {
-    const w = Math.exp(-Math.pow((t - toque - 1.1) / 1.1, 2)) * (t > toque ? 1 : 0);
-    if (w < 0.002) return p;
-    const q = mezclar(p, p, 0);
-    q.giro = p.giro * (1 - 0.7 * w);
-    q.camina = p.camina * (1 - w);
-    const brazo = ladoToque > 0 ? 'bd' : 'bi';
-    q[brazo] = mezclar(p[brazo], { abd: 128, flex: 26, codo: 14 }, w);
-    q.cabeza = p.cabeza * (1 - w) - 10 * w;
-    return q;
-  }
+  /* ---------------- El tiempo: escenas, respiración y la respuesta al toque ------------------ */
+  let T = 0, ultimo = 0, n = 0, tEsc = 0, estado = {}, ritmoPrev = 0, alterna = 0;
+  let resp = 0, tension = 0, respira = 0, toque = null;
 
   function cuadro(ms) {
-    const dt = Math.min(0.05, (ms - ultimo) / 1000 || 0.016); ultimo = ms; T += dt;
-    let p = posturaEn(T);
-    p = marcha(p, T);
-    p = respuesta(p, T);
-    dibujar(puntos(p), p.giro, false);
-    sonar(p, T, dt);
+    const dt = Math.min(0.05, (ms - ultimo) / 1000 || 0.016); ultimo = ms; T += dt; tEsc += dt;
+    if (tEsc >= ESCENAS[n].dur) { tEsc -= ESCENAS[n].dur; n = (n + 1) % ESCENAS.length; estado = {}; ritmoPrev = 0; }
+    const esc = ESCENAS[n], ord = esc.orden(tEsc, estado);
+    if (toque && T < toque.hasta) ord[toque.f.nombre] = { p: toque.p, v: 0.25, mira: toque.mira };
+    for (const k of ['A', 'B', 'C']) mover(F[k], ord[k], dt);
+    separar();
+    // caminar juntos: pasos alternados, uno de cada uno
+    if (esc.ritmo) { const r = Math.floor(tEsc / esc.ritmo); if (r !== ritmoPrev) { ritmoPrev = r; paso(alterna++ % 2 ? F.B : F.C, 0.45); } }
+    // la respiración: honda cuando los pequeños están juntos y en calma; corta cuando el grande irrumpe
+    const m = medio();
+    tension += (Math.max(0, Math.min(1, 1 - dist(pos(F.A), m) / 0.35)) - tension) * Math.min(1, dt * 1.5);
+    respira += ((esc.respira || (esc.verbo === 'reunirse' && tEsc > 4 ? 0.5 : 0)) - respira) * Math.min(1, dt * 0.8);
+    resp += 2 * Math.PI * dt / (5.2 - 2.4 * tension);
+    const ciclo = 0.5 - 0.5 * Math.cos(resp);
+    dibujar(1 + 0.07 * (ciclo - 0.5) * 2 * respira);
+    sonar(ciclo, dist(pos(F.B), pos(F.C)));
     requestAnimationFrame(cuadro);
   }
 
+  function quieta() {                            // los dos pequeños juntos, el grande aparte y de espaldas
+    F.B.x = -0.06; F.B.y = 0.04; F.B.rumbo = Math.atan2(0.01, -0.1);
+    F.C.x = -0.16; F.C.y = 0.05;
+    F.A.x = 0.3; F.A.y = 0.24; F.A.rumbo = 0.6;
+    dibujar(1);
+  }
+
   medir();
-  window.addEventListener('resize', () => { medir(); if (quieto) dibujar(puntos(POSTURAS[1]), 24, true); });
-  if (quieto) dibujar(puntos(POSTURAS[1]), 24, true);     // quieto, unos huesos tenues dejan leer el cuerpo
+  window.addEventListener('resize', () => { medir(); if (quieto) quieta(); });
+  if (quieto) quieta();
   else requestAnimationFrame((t) => { ultimo = t; requestAnimationFrame(cuadro); });
 
   /* ---------------- Diseño sonoro: pasos y respiración ----------------------------------------
-     Mientras camina, cada talón que toca el piso es un golpe suave y grave. La respiración es un
-     aire filtrado que sube y baja: se hace más honda cuando el cuerpo se abre o se eleva, y se
-     vacía cuando se inclina o se recoge. Debajo, un murmullo tibio, el del cuerpo mismo.
-     Al tocar, el cuerpo responde con un sonido breve y cálido.
+     Cada vez que una figura arranca sola, suena un paso: un golpe suave y grave, del lado donde
+     está (más hondo el del grande, más claro el del círculo); cuando los pequeños caminan juntos,
+     sus pasos se alternan. La respiración es un aire filtrado que sube y baja: se hace honda
+     cuando los pequeños están juntos y en calma, y corta y rápida cuando el grande irrumpe.
+     Debajo, un murmullo tibio. Al tocar, la figura más cercana responde con un sonido cálido.
   ------------------------------------------------------------------------------------------- */
-  let started = false, ctx, master, verb, aire, aireF, fasePrev = 0;
+  let started = false, ctx, master, verb, aire, aireF;
 
   function makeReverbIR(ac, seconds = 2.8, decay = 2.8) {
     const len = Math.floor(ac.sampleRate * seconds);
@@ -359,35 +402,31 @@
     });
   }
 
-  function paso(fuerza, pan) {
+  function paso(f, fuerza) {
+    if (!started) return;
     const t = ctx.currentTime + 0.01;
+    const pan = Math.max(-0.7, Math.min(0.7, f.x / AX * 0.7));
+    const tono = f.nombre === 'A' ? 0.8 : f.nombre === 'C' ? 1.3 : 1;
     const n = ctx.createBufferSource(); n.buffer = ruido(ctx, 0.12);
     const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 340;
     const gn = ctx.createGain(); gn.gain.value = 0;
     const p = ctx.createStereoPanner(); p.pan.value = pan;
     n.connect(lp); lp.connect(gn); gn.connect(p);
     gn.gain.setValueAtTime(0, t); gn.gain.linearRampToValueAtTime(0.28 * fuerza, t + 0.008); gn.gain.exponentialRampToValueAtTime(0.001, t + 0.11);
-    const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(92, t); o.frequency.exponentialRampToValueAtTime(52, t + 0.12);
+    const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(92 * tono, t); o.frequency.exponentialRampToValueAtTime(52 * tono, t + 0.12);
     const go = ctx.createGain(); go.gain.value = 0; o.connect(go); go.connect(p);
     go.gain.setValueAtTime(0, t); go.gain.linearRampToValueAtTime(0.16 * fuerza, t + 0.006); go.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
     p.connect(master); p.connect(verb);
     n.start(t); n.stop(t + 0.13); o.start(t); o.stop(t + 0.18);
   }
 
-  function sonar(p, t, dt) {
+  function sonar(ciclo, separacion) {
     if (!started) return;
-    // pasos: el talón toca el piso dos veces por ciclo
-    if (p.camina > 0.25) {
-      const f = ((t / PASO) % 1 + 1) % 1;
-      if ((fasePrev < 0.25 && f >= 0.25) ) paso(p.camina, 0.15);
-      if ((fasePrev < 0.75 && f >= 0.75) ) paso(p.camina, -0.15);
-      fasePrev = f;
-    }
-    // respiración: más honda cuanto más abierto o elevado está el cuerpo
-    const apertura = Math.max(0, Math.min(1, (p.bi.abd + p.bd.abd) / 300 + p.puntas * 8 - p.inclina / 160));
-    const ciclo = 0.5 - 0.5 * Math.cos(2 * Math.PI * t / 5.2);
+    // más honda cuanto más juntos y en calma están los pequeños
+    const juntos = Math.max(0, Math.min(1, 1 - separacion / 0.4));
+    const hondura = 0.3 + 0.7 * juntos * (1 - tension);
     const now = ctx.currentTime;
-    aire.gain.setTargetAtTime(0.012 + 0.05 * ciclo * (0.35 + 0.65 * apertura), now, 0.25);
+    aire.gain.setTargetAtTime(0.012 + 0.05 * ciclo * hondura, now, 0.25);
     aireF.frequency.setTargetAtTime(500 + 700 * ciclo, now, 0.3);
   }
 
@@ -414,8 +453,12 @@
     if (e.target.closest('.infinito')) return;
     startAudio();
     if (hint) hint.classList.add('oculto');
-    ladoToque = e.clientX >= CX ? 1 : -1;
-    toque = T;
+    // la figura más cercana se vuelve hacia ti y da un paso
+    const p = [(e.clientX - CX) / S, (e.clientY - CY) / S];
+    if (!quieto) {
+      const f = [F.A, F.B, F.C].reduce((a, b) => dist(pos(a), p) < dist(pos(b), p) ? a : b);
+      toque = { f, p: hacia(pos(f), p, 0.07), mira: p, hasta: T + 1.8 };
+    }
     responde(Math.max(-0.6, Math.min(0.6, (e.clientX - CX) / W)));
   });
 </script>
