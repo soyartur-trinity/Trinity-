@@ -87,10 +87,41 @@
     '<path class="onda o2" d="M17.6 6.8a7.4 7.4 0 0 1 0 10.4"/>' +
     '<path class="calla" d="M15.5 9.5l5 5M20.5 9.5l-5 5"/></svg>';
 
+  /* El fondo de la raíz. El navegador del teléfono pinta la franja de sus botones con el color
+     de fondo de la página; si el portal pinta su fondo solo con un degradado, ese color queda
+     transparente y la franja sale blanca. Se toma el último color del degradado. */
+  function fondoRaiz() {
+    var transparente = function (c) { return !c || c === 'transparent' || /rgba\([^)]*,\s*0\)$/.test(c); };
+    var h = getComputedStyle(document.documentElement), b = getComputedStyle(document.body);
+    if (!transparente(h.backgroundColor) || !transparente(b.backgroundColor)) return;
+    var colores = (b.backgroundImage || '').match(/rgba?\([^)]+\)|#[0-9a-fA-F]{3,8}/g);
+    var color = colores && colores.length ? colores[colores.length - 1] : '';
+    document.documentElement.style.backgroundColor = transparente(color) ? '#000' : color;
+  }
+
+  /* Si el <body> lleva perspectiva, transformación o filtro, lo «fijo» queda atado al cuerpo y no a la
+     pantalla: en el teléfono, con la barra del navegador visible, lo de abajo se esconde detrás. */
+  function atrapaLoFijo(e) {
+    var c = getComputedStyle(e);
+    return [c.transform, c.perspective, c.filter, c.backdropFilter].some(function (v) { return v && v !== 'none'; }) ||
+           /transform|perspective|filter/.test(c.willChange) || /paint|layout|strict|content/.test(c.contain);
+  }
+
   function armar() {
+    fondoRaiz();
     var inf = document.querySelector('a.infinito');
     if (!inf) return;
     var cs = getComputedStyle(inf);
+    /* Si el cuerpo ata lo fijo, lo más simple es que mida lo visible (100dvh): así los textos fijos
+       del portal y sus controles quedan sobre la barra del navegador. Sin dvh, los controles salen del cuerpo. */
+    var atrapa = atrapaLoFijo(document.body);
+    if (atrapa && window.CSS && CSS.supports('height', '100dvh')) { document.body.style.height = '100dvh'; atrapa = false; }
+    var hogar = atrapa ? document.documentElement : document.body;
+    if (hogar !== document.body) {
+      // el ∞ conserva su letra y su tamaño al salir del cuerpo
+      inf.style.fontFamily = cs.fontFamily; inf.style.fontSize = cs.fontSize; inf.style.lineHeight = cs.lineHeight;
+      hogar.appendChild(inf);
+    }
     var color = presencia(cs.color, 0.6);
     var abajo = cs.bottom, lado = cs.right, tam = cs.fontSize;
 
@@ -120,7 +151,7 @@
       atras.href = ruta; atras.textContent = '‹';
       atras.setAttribute('aria-label', 'Portal anterior');
       atras.addEventListener('click', function (e) { e.stopPropagation(); });
-      document.body.appendChild(atras);
+      hogar.appendChild(atras);
     }
     if (!inf.getAttribute('aria-label')) inf.setAttribute('aria-label', 'Portal siguiente');
 
@@ -145,7 +176,7 @@
     function leyenda(texto, ancla, alineado) {
       var l = document.createElement('div');
       l.className = 'umbral-leyenda'; l.textContent = texto;
-      document.body.appendChild(l);
+      hogar.appendChild(l);
       leyendas.push({ l: l, ancla: ancla, alineado: alineado });
     }
     /* Cada leyenda va al lado de su símbolo, hacia el centro, en su misma línea;
@@ -183,7 +214,7 @@
     p.type = 'button';
     p.className = 'umbral-el umbral-parlante quieto';
     p.innerHTML = PARLANTE;
-    document.body.appendChild(p);
+    hogar.appendChild(p);
     var pintar = function () {
       var suena = window.__umbral.sonando();
       p.classList.toggle('quieto', !suena && !silencio);
@@ -204,9 +235,18 @@
       if (silencio && contextos.length) return 'sonar';
       return 'dejar';
     }
+    /* Si los controles viven fuera del cuerpo, el toque que enciende el sonido se le entrega al cuerpo,
+       que es donde el portal lo escucha (una sola vez: el original no sigue su camino). */
+    function entregar(e) {
+      if (hogar === document.body) return;
+      e.stopPropagation();
+      var Tipo = e.type === 'click' ? MouseEvent : (window.PointerEvent && e.type === 'pointerdown' ? PointerEvent : null);
+      if (Tipo) document.body.dispatchEvent(new Tipo(e.type, { bubbles: true, cancelable: true, clientX: e.clientX, clientY: e.clientY }));
+    }
     function contacto(e) {
       decision = decidir();
       if (decision !== 'dejar') e.stopPropagation();
+      else if (e.type === 'pointerdown') entregar(e);
     }
     ['pointerdown', 'mousedown', 'touchstart'].forEach(function (t) {
       p.addEventListener(t, function (e) { if (t === 'pointerdown' || decision === null) contacto(e); else if (decision !== 'dejar') e.stopPropagation(); }, { passive: true });
@@ -217,7 +257,7 @@
       if (d === 'callar') window.__umbral.callar();
       else if (d === 'sonar') window.__umbral.sonar();
       else if (d === 'propio') { silencio = false; window.umbralSonido.encender(); }
-      else silencio = false;
+      else { silencio = false; entregar(e); }
       setTimeout(pintar, 120); setTimeout(pintar, 600);
     });
     pintar();
