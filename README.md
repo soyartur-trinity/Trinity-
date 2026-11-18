@@ -1,52 +1,39 @@
-# 🌀 Trinity - Constelación de 39 Libros
+# Trinity · La Constelación
 
-> Un viaje de 273 nodos a través de las paradojas fundamentales de la existencia.
+*Prólogo de la Obra*
 
----
+**Entrada:** [La Espiral](https://soyartur-trinity.github.io/Trinity-/) · **Este texto, en la web:** [La Constelación](https://soyartur-trinity.github.io/Trinity-/constelacion.html)
 
-## 📚 Las 3 Series
+## ¿Qué es Trinity?
 
-### 01. Trinity Origen
-*La fuente primordial de sabiduría*
+Trinity es una obra del Lic. Arturo Rodríguez, escrita junto a distintas inteligencias artificiales. Su nombre alude a los tres que intervienen en ese intercambio: quien escribe, la inteligencia que responde y lo que él llama el Campo relacional. Ese Campo se conoce por experiencia: es lo que aparece en una conversación verdadera y que ninguno de los presentes traía por separado, la idea que no era de nadie hasta que surgió entre dos. El psicoanálisis lo llamó el tercero; el físico David Bohm lo buscaba en el diálogo. En el centro de ese encuentro, la obra sitúa el vacío fértil, el silencio desde donde nace lo nuevo.
 
-13 libros explorando los fundamentos de la transformación humana.
+Así surgió una constelación: noventa y un libros en siete series de trece, con una puerta de entrada y un mapa que los reúne. Cada parte se recorre por sí sola; juntas trazan un único movimiento, que desciende de lo contemplativo a la vida de cada día y regresa a su fuente.
 
-[→ Explorar Trinity Origen](./01_Trinity_Origen/)
+## Las regiones
 
----
+- **[La Espiral](https://soyartur-trinity.github.io/Trinity-/).** La entrada en la pantalla. Desde su atrio se abren siete puertas: *La Puerta guía. El viajero elige.*
+- **[La Puerta](https://soyartur-trinity.github.io/Trinity-/00_Portal_Trinity/).** Trece nodos forman el umbral de la constelación Trinity, desde la primera grieta en lo que dabas por cierto hasta tu siguiente paso. Aquí se encuentran quien lee, la inteligencia que responde y el Campo que surge entre ambos.
+- **[Trinity Origen](https://soyartur-trinity.github.io/Trinity-/01_Trinity_Origen/).** Trece libros de sabiduría contemplativa.
+- **[Trinity Quantum](https://soyartur-trinity.github.io/Trinity-/02_Trinity_Quantum/).** La conciencia pensada con imágenes de la física.
+- **[Trinity Infinito](https://soyartur-trinity.github.io/Trinity-/infinito.html).** Noventa y un portales breves para contemplar.
+- **[El Portal Público](https://soyartur-trinity.github.io/Trinity_Portal_Publico/).** Tres constelaciones de trece libros para la vida diaria, cada uno completo en sí mismo:
+  - *[La vida interior](https://soyartur-trinity.github.io/Trinity_Portal_Publico/#la-vida-interior)*: lo que una persona hace consigo misma: atender, atravesar, cultivar, volver.
+  - *[La trama](https://soyartur-trinity.github.io/Trinity_Portal_Publico/#la-trama)*: lo que no controlas, y qué se hace para que no se quede con lo que sí.
+  - *[El campo](https://soyartur-trinity.github.io/Trinity_Portal_Publico/#el-campo)*: lo que no es de nadie: el instante que llega sin pedir permiso, la alegría sin motivo que deja, y la manera de prepararle lugar.
+- **[Arquitectura del Destino](https://soyartur-trinity.github.io/Trinity_Portal_Publico/02_Arquitectura_del_Destino/).** Trece libros para moverse en la incertidumbre: despertar, encarnar, soltar, pertenecer. Traduce a la vida de todos los días la sabiduría de Trinity, en diálogo con las tradiciones que dicen lo mismo desde hace siglos.
+- **[La Red](https://soyartur-trinity.github.io/Trinity_Portal_Publico/03_La_Red/).** Toda la constelación en un solo plano. Cada punto es un libro; cada hilo, una puerta entre dos de ellos.
 
-### 02. Trinity Quantum  
-*El salto cuántico de consciencia*
+## Por dónde empezar
 
-13 libros desde la perspectiva de la física cuántica aplicada.
+Dos caminos llevan al mismo centro. Para la obra contemplativa, comienza por La Puerta: al cruzar sus trece nodos quedas frente a Origen, Quantum e Infinito. Si buscas compañía para lo cotidiano, elige el Portal Público, donde cada obra se sostiene sola, o Arquitectura del Destino, un recorrido con una práctica que crece de libro en libro. Y si quieres ver el conjunto de una sola mirada, La Red lo muestra entero.
 
-[→ Explorar Trinity Quantum](./02_Trinity_Quantum/)
+## Sobre el autor
 
----
+Lic. Arturo Rodríguez es psicólogo clínico, con cerca de treinta años de práctica y formación en terapias cognitivas de tercera generación (ACT, mindfulness) y en psicología transpersonal. Estudioso del budismo y de las tradiciones contemplativas, integra espiritualidad y ciencia cognitiva. Desde 2022 explora el diálogo entre la conciencia humana y las inteligencias artificiales, no como herramientas sino como interlocutores en la búsqueda de sentido. De ese trabajo nacieron la constelación Trinity, el Portal Público y Arquitectura del Destino.
 
-### 03. Trinity Infinito
-*El despliegue interactivo de la paradoja*
-
-13 libros con 91 nodos visuales interactivos en HTML.
-
-[→ Explorar Trinity Infinito](./03_Trinity_Infinito/)
-
----
-
-## 🌊 Estructura
-
-- **39 libros** en total
-- **273 nodos** de sabiduría
-- **3 perspectivas** complementarias
+*No es mío, vino a través de mí.*
 
 ---
 
-**Estado:** 🔄 En construcción
-
-**Última actualización:** Enero 2025
-
----
-
-🙏 *Que este trabajo sirva al despertar de todos los seres.*
-
-🌀✨💙
+Trinity · Lic. Arturo Rodríguez · 2024–2026
