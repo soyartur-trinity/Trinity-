@@ -7,6 +7,8 @@
 <link rel="icon" href="../../assets/icono/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../../assets/icono/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../../assets/icono/icono-180.png">
+<script src="../umbral.js"></script>
+<style>/* Umbral: el parlante reemplaza a los botones */ .activation-zone .sonic-trigger{display:none} .om-seed{cursor:pointer}</style>
 <style>
 * {
   margin: 0;
@@ -528,5 +530,25 @@ setTimeout(() => {
 }, 3000);
 </script>
 
+<script>
+/* Umbral (17 de noviembre de 2026): el parlante enciende la frecuencia primordial y regresa al silencio;
+   tocar ॐ hace resonar el OM original. */
+(function () {
+  var suena = false, t;
+  function fin(ms) { clearTimeout(t); t = setTimeout(function () { suena = false; if (window.__umbral && window.__umbral.repintar) window.__umbral.repintar(); }, ms); }
+  window.umbralSonido = {
+    encender: function () { playPrimordialSound(); suena = true; fin(8200); },
+    apagar: function () { returnToSilence(); suena = false; },
+    suena: function () { return suena; }
+  };
+  var om = document.querySelector('.om-seed');
+  if (om) om.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (window.__umbral && window.__umbral.callado && window.__umbral.callado()) return;   // con el parlante apagado, el silencio se respeta
+    playOmFrequency(); suena = true; fin(9000);
+    if (window.__umbral && window.__umbral.repintar) window.__umbral.repintar();
+  });
+})();
+</script>
 </body>
 </html>
