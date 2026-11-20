@@ -4,7 +4,7 @@
 
 **Entrada:** [La Espiral](https://soyartur-trinity.github.io/Trinity-/) · **Este texto, en la web:** [La Constelación](https://soyartur-trinity.github.io/Trinity-/constelacion.html)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24346806.svg)](https://doi.org/10.5281/zenodo.24346806)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24347165.svg)](https://doi.org/10.5281/zenodo.24347165)
 
 ## ¿Qué es Trinity?
 
@@ -38,7 +38,7 @@ Lic. Arturo Rodríguez es psicólogo clínico, con cerca de treinta años de pr�
 
 ## Licencia
 
-Toda la constelación se comparte libre y gratuitamente bajo la licencia Creative Commons [Atribución-NoComercial-CompartirIgual 4.0 Internacional](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es) (CC BY-NC-SA 4.0): se puede compartir y adaptar, con atribución, sin uso comercial y con la misma licencia. Las citas de otros autores conservan sus propios derechos. Más detalle, y lo que pasa con los datos de quien visita: [Licencia y privacidad](https://soyartur-trinity.github.io/Trinity-/licencia.html). Archivo permanente en Zenodo: [10.5281/zenodo.24346806](https://doi.org/10.5281/zenodo.24346806).
+Toda la constelación se comparte libre y gratuitamente bajo la licencia Creative Commons [Atribución-NoComercial-CompartirIgual 4.0 Internacional](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es) (CC BY-NC-SA 4.0): se puede compartir y adaptar, con atribución, sin uso comercial y con la misma licencia. Las citas de otros autores conservan sus propios derechos. Más detalle, y lo que pasa con los datos de quien visita: [Licencia y privacidad](https://soyartur-trinity.github.io/Trinity-/licencia.html). Archivo permanente en Zenodo: [10.5281/zenodo.24347165](https://doi.org/10.5281/zenodo.24347165).
 
 ---
 
